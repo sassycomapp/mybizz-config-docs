@@ -1,0 +1,777 @@
+Step 8.1 — `projects.py
+
+---
+Phase 8 — Project Onboarding & Dormant Handling
+
+Pulling the real step definitions from the workflow document before designing anything, same discipline as every phase so far.
+
+Ran a command
+
+Before building anything, I want to check whether Step 8.1's actual functionality already exists — POST /memory/projects and the dormant toggle have both been used constantly throughout live testing since Step 5.1, just possibly not living in a dedicated projects.py module the way the Workflow's wording specifies.
+
+Send that output. Once I can see the real state, I'll know whether Step 8.1 is genuinely new work, or whether — like Step 7.2's register_write handler — it's mostly a matter of confirming and possibly relocating something that already works, and Step 8.2 is where the real, new work actually is.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+
+# Check what actually exists for projects right now
+grep -n "def create_project\|def update_project_dormant\|@router.post(\"/memory/projects\"\|@router.patch(\"/memory/projects" app/api.py
+echo "---"
+ls app/ | grep -i project
+echo "---"
+# Check whether any dormant-aware filtering already exists anywhere
+grep -rn "dormant" app/worker.py app/storage.py
+670:@router.post("/memory/projects", status_code=201, responses={
+674:def create_project(
+703:@router.patch("/memory/projects/{project_id}", responses={
+707:def update_project_dormant(
+---
+projects.py
+---
+app/storage.py:212:def set_project_dormant(project_id: str, dormant: bool) -> None:
+app/storage.py:214:    Toggles a project's dormant flag (Scope Doc §8). Raises ValueError if
+app/storage.py:221:                "UPDATE projects SET dormant = %s WHERE project_id = %s",
+app/storage.py:222:                (dormant, project_id),
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+
+Two real findings — one confirms the hypothesis, one is genuinely unexpected and needs checking before I assume anything: app/projects.py already exists as a file. I have no record of creating it in any step reviewed so far in this conversation. Checking its actual content directly rather than guessing what it is.
+
+Send that output. This could be an empty scaffold stub left over from Step 0.4 (same as tests/test_registers.py was until Step 7.1), or something else entirely — I want to see the real content and its commit history before deciding what Step 8.1 actually needs to do.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat app/projects.py
+wc -l app/projects.py
+git log --oneline --follow app/projects.py
+0 app/projects.py
+4403b2b chore: scaffold repository structure per Architecture Spec §9
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed — genuinely empty, 0 lines, untouched since the very first scaffolding commit back in Step 0.4. Same pattern as tests/test_registers.py was before Step 7.1: a placeholder file that's simply never been filled in, not something with hidden content to reconcile.
+
+So the real picture for Phase 8 is now clear: create_project() and update_project_dormant() already exist, live, tested, and used constantly — but as inline endpoint handlers in api.py, not in the dedicated app/projects.py module the Workflow specifies. And confirmed separately — no dormant-aware filtering exists anywhere in worker.py. That's genuinely new work, not a relocation.
+
+Step 8.1's real task, then, is a refactor, not new functionality: move the actual project-management logic out of api.py and into projects.py, matching this codebase's own established pattern — every other domain (state transitions, policy decisions, provenance, registers) already lives in its own dedicated module, with api.py staying a thin HTTP layer that calls into them. Right now, projects are the one exception, sitting inline. Worth fixing before Phase 8 builds more onto it, same reasoning as Phase 6.5's realignment.
+
+One design question before I write anything: create_project()'s existing body has its own NUL-byte validation (per Step 5.3) that happens before the duplicate-project check. If I move this logic into projects.py, should that validation move with it, or does it belong staying in api.py since it's really an HTTP-layer input-sanitization concern rather than project-management business logic? My inclination is it moves too — the check is specifically about protecting insert_project()'s Postgres write, which is exactly the kind of thing that belongs living next to the function it protects — but I want to flag this as a real design choice rather than just do it silently.
+---
+Proceeding as designed — the validation moves with the logic into projects.py, matching the established pattern.
+
+Step 8.1 — projects.py
+
+Checking the real, current content of both endpoints before writing any patch.
+
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+sed -n '660,725p' app/api.py
+    append_audit_entry(decision, policy_version=candidate.provenance.policy_version)
+
+    return {"memory_id": req.memory_id, "status": updated.status, "event_id": event_id}
+
+
+class ProjectCreateRequest(NoNulBytesModel):
+    project_id: str
+    display_name: str
+
+
+@router.post("/memory/projects", status_code=201, responses={
+    400: {"description": "Malformed request body"},
+    409: {"description": "Project already exists"},
+})
+def create_project(
+    req: ProjectCreateRequest,
+    presented_credential: str = Depends(get_presented_credential),
+) -> dict:
+    """
+    Architecture §3.2 / Scope Doc §7: the new-project onboarding
+    mechanism. Deliberately thin -- storage.insert_project() already does
+    exactly what's needed (Step 2.2); this endpoint is a pure HTTP wrapper,
+    no additional business logic, matching Scope Doc §7's stated intent
+    that onboarding costs "no schema migration, no redeploy."
+
+    NUL-byte check happens FIRST, before ANY database call -- a Schemathesis
+    finding (Step 5.3) showed the original fix only guarded
+    storage.insert_project(), but get_project() (the duplicate check, called
+    BEFORE insert_project() in this same function) hits Postgres with the
+    identical unvalidated string one call earlier, reproducing the same 500
+    via a different code path. Validating at the true entry point closes
+    this for both calls at once, rather than chasing it function by function.
+    """
+    if get_project(req.project_id) is not None:
+        raise HTTPException(status_code=409, detail=f"Project '{req.project_id}' already exists")
+    storage_insert_project(req.project_id, req.display_name)
+    return {"project_id": req.project_id, "display_name": req.display_name, "dormant": False}
+
+
+class ProjectDormantRequest(NoNulBytesModel):
+    dormant: bool
+
+
+@router.patch("/memory/projects/{project_id}", responses={
+    400: {"description": "Malformed request body, or path parameters with NUL bytes"},
+    404: {"description": "Project does not exist"},
+})
+def update_project_dormant(
+    project_id: str,
+    req: ProjectDormantRequest,
+    presented_credential: str = Depends(get_presented_credential),
+) -> dict:
+    """Architecture §3.2 / Scope Doc §8: the dormancy toggle."""
+    try:
+        set_project_dormant(project_id, req.dormant)
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc))
+    project = get_project(project_id)
+    return {"project_id": project["project_id"], "dormant": project["dormant"]}
+
+
+class PolicyProposalRequest(NoNulBytesModel):
+    """
+    Request body for POST /memory/policy. Deliberately thin: this endpoint
+    does NOT write to policy_versions (that's Phase 11's job, per
+    Architecture §7 -- applying an approved policy change is part of the
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed. Two things worth flagging before I write anything: the docstring's NUL-byte explanation references an inline check that no longer exists in the code — it's now handled by NoNulBytesModel, the shared Pydantic base class from Step 5.3, and the docstring is stale, historical context left behind rather than an actual description of current behavior. And extracting ProjectCreateRequest/ProjectDormantRequest into projects.py creates a real dependency problem I need to resolve properly: those two classes inherit NoNulBytesModel, which currently lives in api.py — if projects.py needs to import it from there while api.py also needs to import projects.py's functions, that's a circular import. The correct fix is moving NoNulBytesModel to models.py, where every other shared Pydantic type in this codebase already lives — a small, independently-justified improvement, not scope creep, since models.py is already the natural home for exactly this kind of shared building block.
+
+Checking the current definition before moving it.
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+grep -n "class NoNulBytesModel\|def _contains_nul_byte" app/api.py
+sed -n '/def _contains_nul_byte/,/^class NoNulBytesModel/p' app/api.py | head -40
+123:def _contains_nul_byte(value) -> bool:
+141:class NoNulBytesModel(BaseModel):
+def _contains_nul_byte(value) -> bool:
+    """
+    Recursively checks strings, dict keys/values, and list/tuple items for
+    a NUL byte. Used by NoNulBytesModel below to close the gap the
+    router-wide path/query dependency explicitly does NOT cover (request
+    JSON bodies) -- found via Schemathesis fuzzing two separate times in
+    Step 5.3 (POST /memory/policy's "reason" field, and a nested field in
+    a stateful POST /memory/candidate test case).
+    """
+    if isinstance(value, str):
+        return "\x00" in value
+    if isinstance(value, dict):
+        return any(_contains_nul_byte(k) or _contains_nul_byte(v) for k, v in value.items())
+    if isinstance(value, (list, tuple)):
+        return any(_contains_nul_byte(item) for item in value)
+    return False
+
+
+class NoNulBytesModel(BaseModel):
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Need the full class body too before moving it.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+sed -n '141,160p' app/api.py
+class NoNulBytesModel(BaseModel):
+    """
+    Shared base for every request body model in this file. Recursively
+    rejects NUL bytes anywhere in the payload, including nested objects
+    (e.g. content.structured, proposed_thresholds) that a per-field string
+    check would miss. Raises a standard Pydantic ValidationError -- FastAPI
+    turns this into a 422, a code every endpoint already documents, so
+    this closes the gap with zero new response-code declarations needed.
+    """
+    @model_validator(mode="after")
+    def _reject_nul_bytes(self):
+        if _contains_nul_byte(self.model_dump()):
+            raise ValueError("Request fields cannot contain NUL bytes")
+        return self
+
+DECISION_PATH_TO_STATUS = {
+    "auto_promote": "promoted",
+    "quarantine": "quarantined",
+    "reject": "rejected",
+    "needs_review": "under_review",
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Now I have everything needed. Building this in the right order: move _contains_nul_byte/NoNulBytesModel into models.py first, update api.py to import from there and re-base every request model that used to inherit from the local class, then extract the project logic into projects.py.
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/step_8_1_part1.py <<'PYEOF'
+# --- Part 1: move NoNulBytesModel into models.py ---
+models_content = open("app/models.py").read()
+
+anchor = "class BaseModel(PydanticBaseModel):"
+if anchor not in models_content:
+    # models.py doesn't subclass BaseModel itself -- just append at end of imports section
+    import_anchor = models_content.split("\n\n", 1)[0]
+    assert import_anchor, "could not find import block anchor in models.py"
+
+addition = '''
+
+def _contains_nul_byte(value) -> bool:
+    """
+    Recursively checks strings, dict keys/values, and list/tuple items for
+    a NUL byte. Moved here from api.py in Step 8.1 -- projects.py needs
+    NoNulBytesModel too, and api.py importing from projects.py while
+    projects.py imported NoNulBytesModel from api.py would be circular.
+    models.py is the correct home: every other shared Pydantic building
+    block in this codebase already lives here.
+    """
+    if isinstance(value, str):
+        return "\\x00" in value
+    if isinstance(value, dict):
+        return any(_contains_nul_byte(k) or _contains_nul_byte(v) for k, v in value.items())
+    if isinstance(value, (list, tuple)):
+grep -n "^from pydantic" app/models.pyulBytesModel, _contains_nul_byte; print('models.py imports cleanly')"
+PART_1_MODELS_UPDATED: true
+models.py imports cleanly
+1:from pydantic import BaseModel, model_validator, Field, constr, confloat
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed correct — model_validator is present in the import line alongside the pre-existing Field, constr, confloat, and both new symbols import cleanly.
+
+Now Part 2 — updating api.py to import from models.py instead of defining locally, and removing the now-duplicated local definitions.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/step_8_1_part2.py <<'PYEOF'
+content = open("app/api.py").read()
+
+old_block = '''def _contains_nul_byte(value) -> bool:
+    """
+    Recursively checks strings, dict keys/values, and list/tuple items for
+    a NUL byte. Used by NoNulBytesModel below to close the gap the
+    router-wide path/query dependency explicitly does NOT cover (request
+    JSON bodies) -- found via Schemathesis fuzzing two separate times in
+    Step 5.3 (POST /memory/policy's "reason" field, and a nested field in
+    a stateful POST /memory/candidate test case).
+    """
+    if isinstance(value, str):
+        return "\\x00" in value
+    if isinstance(value, dict):
+        return any(_contains_nul_byte(k) or _contains_nul_byte(v) for k, v in value.items())
+    if isinstance(value, (list, tuple)):
+        return any(_contains_nul_byte(item) for item in value)
+    return False
+
+
+class NoNulBytesModel(BaseModel):
+    """
+    Shared base for every request body model in this file. Recursively
+    rejects NUL bytes anywhere in the payload, including nested objects
+    (e.g. content.structured, proposed_thresholds) that a per-field string
+rm /tmp/step_8_1_part2.pyt2.pyREMOVED: true")BytesModel and _contains_nul_byte moved to models.py in Step 8.1", 1)
+OLD_BLOCK_MATCH_COUNT: 1
+PART_2_OLD_DEFINITIONS_REMOVED: true
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed — matched exactly once, old definitions removed cleanly.
+
+Now Part 3 — updating api.py's import statement to pull NoNulBytesModel from models.py, and checking whether it imports cleanly before moving on to the actual projects.py extraction.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+grep -n "^from .models import\|^from app.models import" app/api.py
+8:from .models import (
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Multi-line import — need the full block, not just the opening line.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+sed -n '8,30p' app/api.py
+from .models import (
+    GovernedMemoryCandidate, Scope, Subject, Content, Timestamps,
+    Confidence, Contradiction, Policy, SourceType, MemoryType,
+    Visibility, Retention, Authority, Method,
+)
+import os
+from pathlib import Path
+
+from .provenance import build_provenance
+
+# Step 6.1: explicit allowlist of directories a source_ref path submission
+# may read from. Resolved via Path.resolve() before comparison (below) to
+# close path-traversal bypasses (../../etc/passwd-style tricks) -- a plain
+# string-prefix check would NOT be sufficient on its own.
+ALLOWED_SOURCE_ROOTS = [
+    Path("/mnt/c/dev").resolve(),
+    Path("/home/dev-p/memory-governor").resolve(),
+]
+
+
+def _is_path_allowed(path: Path) -> bool:
+    resolved = path.resolve()
+    return any(
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed the exact block. Adding NoNulBytesModel to the import list.
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/step_8_1_part3.py <<'PYEOF'
+content = open("app/api.py").read()
+
+old = '''from .models import (
+    GovernedMemoryCandidate, Scope, Subject, Content, Timestamps,
+    Confidence, Contradiction, Policy, SourceType, MemoryType,
+    Visibility, Retention, Authority, Method,
+)'''
+
+new = '''from .models import (
+    GovernedMemoryCandidate, Scope, Subject, Content, Timestamps,
+    Confidence, Contradiction, Policy, SourceType, MemoryType,
+    Visibility, Retention, Authority, Method, NoNulBytesModel,
+)'''
+
+count = content.count(old)
+print(f"IMPORT_BLOCK_MATCH_COUNT: {count}")
+assert count == 1, f"expected 1, found {count}"
+content = content.replace(old, new, 1)
+open("app/api.py", "w").write(content)
+print("PART_3_IMPORT_UPDATED: true")
+PYEOF
+
+python3 /tmp/step_8_1_part3.py
+rm /tmp/step_8_1_part3.py
+
+python3 -m pytest tests/ -qport router; print('api.py imports cleanly')"
+IMPORT_BLOCK_MATCH_COUNT: 1
+PART_3_IMPORT_UPDATED: true
+api.py imports cleanly
+............................................................................................................................. [ 49%]
+............................................................................................................................. [ 98%]
+...                                                                                                                           [100%]
+253 passed in 39.24s
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+All 253 tests pass — the relocation is confirmed behaviorally invisible, exactly as intended.
+
+Now the actual extraction. Building projects.py with the real logic (correcting the stale docstring along the way, since the NUL-byte handling it describes no longer works the way it says), then reducing api.py's two endpoints to thin HTTP wrappers calling into it — matching the pattern every other module in this codebase already follows.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > app/projects.py <<'PYEOF'
+"""
+Architecture §3.2 / Scope Doc §7-8: project onboarding and the dormancy
+toggle. Extracted from api.py in Step 8.1 to match this codebase's own
+established pattern -- every other domain (state transitions, policy
+decisions, provenance, registers) already lives in its own module, with
+api.py staying a thin HTTP layer. Projects were the one exception.
+"""
+from fastapi import HTTPException
+
+from .models import NoNulBytesModel
+from .storage import get_project, insert_project, set_project_dormant
+
+
+class ProjectCreateRequest(NoNulBytesModel):
+    project_id: str
+    display_name: str
+
+
+class ProjectDormantRequest(NoNulBytesModel):
+    dormant: bool
+
+
+def create_project(req: ProjectCreateRequest) -> dict:
+    """
+    The new-project onboarding mechanism. Deliberately thin --
+wc -l app/projects.pyly')"cts import create_project, update_project_dormant, ProjectCreateRequest, ProjectDormantRequest; print('proj
+projects.py imports cleanly
+51 app/projects.py
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/step_8_1_part4.py <<'PYEOF'
+content = open("app/api.py").read()
+
+old_create = '''class ProjectCreateRequest(NoNulBytesModel):
+    project_id: str
+    display_name: str
+
+
+@router.post("/memory/projects", status_code=201, responses={
+    400: {"description": "Malformed request body"},
+    409: {"description": "Project already exists"},
+})
+def create_project(
+    req: ProjectCreateRequest,
+    presented_credential: str = Depends(get_presented_credential),
+) -> dict:
+    """
+    Architecture §3.2 / Scope Doc §7: the new-project onboarding
+    mechanism. Deliberately thin -- storage.insert_project() already does
+    exactly what's needed (Step 2.2); this endpoint is a pure HTTP wrapper,
+    no additional business logic, matching Scope Doc §7's stated intent
+    that onboarding costs "no schema migration, no redeploy."
+
+    NUL-byte check happens FIRST, before ANY database call -- a Schemathesis
+    finding (Step 5.3) showed the original fix only guarded
+    storage.insert_project(), but get_project() (the duplicate check, called
+rm /tmp/step_8_1_part4.pyt4.pyD: true")new_dormant, 1)pper -- see projects.py (Step 8.1)."""}''')
+CREATE_BLOCK_MATCH_COUNT: 1
+DORMANT_BLOCK_MATCH_COUNT: 1
+PART_4_ENDPOINTS_REDUCED: true
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Both matched exactly once. Now wiring the actual import that connects _create_project/_update_project_dormant to projects.py's real functions.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/step_8_1_part5.py <<'PYEOF'
+content = open("app/api.py").read()
+
+old = '''from .models import (
+    GovernedMemoryCandidate, Scope, Subject, Content, Timestamps,
+    Confidence, Contradiction, Policy, SourceType, MemoryType,
+    Visibility, Retention, Authority, Method, NoNulBytesModel,
+)'''
+
+new = '''from .models import (
+    GovernedMemoryCandidate, Scope, Subject, Content, Timestamps,
+    Confidence, Contradiction, Policy, SourceType, MemoryType,
+    Visibility, Retention, Authority, Method, NoNulBytesModel,
+)
+from .projects import (
+    ProjectCreateRequest, ProjectDormantRequest,
+    create_project as _create_project,
+    update_project_dormant as _update_project_dormant,
+)'''
+
+count = content.count(old)
+print(f"IMPORT_MATCH_COUNT: {count}")
+assert count == 1, f"expected 1, found {count}"
+content = content.replace(old, new, 1)
+open("app/api.py", "w").write(content)
+print("PART_5_IMPORT_WIRED: true")
+python3 -c "from app.api import router; print('api.py imports cleanly')"
+IMPORT_MATCH_COUNT: 1
+PART_5_IMPORT_WIRED: true
+api.py imports cleanly
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed — imports cleanly. Now checking for genuinely dead imports before deciding whether to remove anything.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+grep -n "storage_insert_project\|get_project\|set_project_dormant" app/api.py
+294:    from .storage import get_project
+296:    if not get_project(req.owning_project):
+593:from .storage import get_project, set_project_dormant, insert_project as storage_insert_project
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed exactly what I expected: get_project is still genuinely needed (line 296, the project-existence check inside submit_candidate()), but set_project_dormant and storage_insert_project (the insert_project alias) are now dead — nothing left in api.py calls either one. Cleaning up the import line at 593 rather than leaving unused imports sitting in the file.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/step_8_1_part6.py <<'PYEOF'
+content = open("app/api.py").read()
+
+old = "from .storage import get_project, set_project_dormant, insert_project as storage_insert_project"
+new = "from .storage import get_project"
+
+count = content.count(old)
+print(f"IMPORT_LINE_MATCH_COUNT: {count}")
+assert count == 1, f"expected 1, found {count}"
+content = content.replace(old, new, 1)
+open("app/api.py", "w").write(content)
+print("PART_6_DEAD_IMPORTS_REMOVED: true")
+PYEOF
+
+python3 /tmp/step_8_1_part6.py
+rm /tmp/step_8_1_part6.py
+
+python3 -c "from app.api import router; print('api.py imports cleanly')"
+
+set -a
+source .env
+set +a
+python3 -m pytest tests/ -q
+IMPORT_LINE_MATCH_COUNT: 1
+PART_6_DEAD_IMPORTS_REMOVED: true
+api.py imports cleanly
+............................................................................................................................. [ 49%]
+............................................................................................................................. [ 98%]
+...                                                                                                                           [100%]
+253 passed in 39.21s
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+All 253 tests pass — the full extraction is confirmed behaviorally invisible, exactly as a clean refactor should be.
+
+Step 8.1 — projects.py: exit criteria met. Real, verified proof of a genuine architectural improvement: api.py's two project endpoints are now thin HTTP wrappers, the actual business logic lives in a dedicated module matching every other domain in this codebase, the circular-import problem was correctly identified and resolved by relocating NoNulBytesModel to models.py where it belongs, a stale docstring was corrected along the way, and dead imports were found and removed rather than left behind — all without disturbing a single existing behavior, six separate patches applied in sequence with every match count confirmed before trusting the next step.
+
+Committing this before moving to Step 8.2 — worker exclusion logic, which is genuinely new work, not a relocation.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+git status
+git add app/projects.py app/api.py app/models.py
+git status
+
+git commit -m "refactor: Phase 8.1 - extract project logic into projects.py
+
+Moved create_project() and update_project_dormant() out of api.py and
+into their own module, matching the established pattern every other
+domain in this codebase already follows (state_machine, policy,
+provenance, registers). api.py is now a thin HTTP wrapper for both
+endpoints, calling into projects.py's real logic.
+
+Relocating NoNulBytesModel (and its _contains_nul_byte helper) from
+api.py to models.py was a necessary prerequisite, not scope creep --
+projects.py needed it too, and api.py importing from projects.py while
+projects.py imported from api.py would have been circular. models.py
+is the correct home regardless: every other shared Pydantic building
+block in this codebase already lives there.
+
+Also corrected a stale docstring (referenced a hand-written NUL-byte
+check that was actually superseded by NoNulBytesModel back in Step
+5.3) and removed two now-genuinely-dead imports from api.py
+(set_project_dormant, insert_project) that nothing in that file calls
+anymore. Full 253-test suite confirms the entire extraction is
+behaviorally invisible."
+
+git log --oneline -3
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   app/api.py
+        modified:   app/models.py
+        modified:   app/projects.py
+        modified:   registers/register-memory-governor.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   app/api.py
+        modified:   app/models.py
+        modified:   app/projects.py
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   registers/register-memory-governor.md
+
+[main 324f5c6] refactor: Phase 8.1 - extract project logic into projects.py
+ 3 files changed, 97 insertions(+), 70 deletions(-)
+Enumerating objects: 11, done.
+Counting objects: 100% (11/11), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 2.95 KiB | 2.96 MiB/s, done.
+Total 6 (delta 4), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+To https://github.com/sassycomapp/memory-governor.git
+   8430965..324f5c6  main -> main
+324f5c6 (HEAD -> main, origin/main) refactor: Phase 8.1 - extract project logic into projects.py
+8430965 test: Phase 7.5 - permanent disaster-recovery drill
+da6843b test: Phase 7.4 - permanent regression coverage for registers.py
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Clean commit — 324f5c6, 3 files, 97 insertions, 70 deletions, confirmed on origin/main, correctly excluding the register file this time (it stayed unstaged, exactly as it should have).
+
+One thing worth checking before moving on, not ignoring: registers/register-memory-governor.md shows modified again — same pattern as the Step 7.5 dangling-reference incident. Given the 253-test suite ran clean before this commit, this is very likely test-suite noise from the disaster-recovery or registers tests writing to the real file rather than a sandbox this time, or a leftover row. Checking before deciding whether to revert it or investigate further.
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+git diff registers/register-memory-governor.md
+diff --git a/registers/register-memory-governor.md b/registers/register-memory-governor.md
+index 78e48b2..9803025 100644
+--- a/registers/register-memory-governor.md
++++ b/registers/register-memory-governor.md
+@@ -3,3 +3,6 @@
+ | mem-reg-old-001 | candidates/mem-reg-old-001.json | registers/candidates/ | fact | promoted | 2026-08-21T11:38:28.158510+00:00 | 2026-08-21T11:38:28.158510+00:00 | mem-reg-new-001 | project=mb-3-cs-code; writer=w1 |
+ | mem-reg-new-001 | candidates/mem-reg-new-001.json | registers/candidates/ | fact | promoted | 2026-08-21T11:38:28.160749+00:00 | 2026-08-21T11:38:28.160749+00:00 |  | project=mb-3-cs-code; writer=w1 |
+ | c8b9360c-d7db-4114-8f48-85fd2a657291 | candidates/c8b9360c-d7db-4114-8f48-85fd2a657291.json | registers/candidates/ | fact | promoted | 2026-08-21T12:00:35.634741+00:00 | 2026-08-21T12:00:35.634741+00:00 |  | project=test-project-commit-push; writer=manual_submission |
++| mem-drt-001 | candidates/mem-drt-001.json | registers/candidates/ | relationship | promoted | 2026-08-23T05:44:48.164887+00:00 | 2026-08-23T05:44:48.164887+00:00 |  | project=test-project-disaster-recovery-pytest; writer=w1 |
++| mem-drt-002 | candidates/mem-drt-002.json | registers/candidates/ | relationship | promoted | 2026-08-23T05:44:48.220356+00:00 | 2026-08-23T05:44:48.220356+00:00 |  | project=test-project-disaster-recovery-pytest; writer=w1 |
++| mem-drt-003 | candidates/mem-drt-003.json | registers/candidates/ | relationship | promoted | 2026-08-23T05:44:48.306559+00:00 | 2026-08-23T05:44:48.306559+00:00 |  | project=test-project-disaster-recovery-pytest; writer=w1 |
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Real, and worse than the Step 7.5 incident — this isn't a one-off leftover, it's a repeating defect in permanent test infrastructure. Confirming exactly what happened: test_disaster_recovery.py uses the real CANDIDATES_DIR/REGISTER_FILE (unlike test_registers.py, which sandboxes them via monkeypatch), because it needs the real Postgres connection for the delete-reconstruct-restore proof. But register_candidate() still writes to the real registers/ directory when called that way — and the fixture's cleanup deletes the JSON payload files but has no way to remove the corresponding register rows, since registers.py deliberately has no "delete a row" function.
+
+This means every single future run of the full test suite adds three new dangling rows to the real, committed register file. Not a one-time accident — a standing bug that will keep recurring, silently, until someone notices git status is dirty again. This needs fixing now, not deferred, since it directly contradicts Phase 7's entire purpose: keeping the register trustworthy.
+
+The correct fix mirrors test_registers.py's already-proven approach: sandbox the register/payload paths via monkeypatch, while keeping the database connection real, since the drill's actual proof requires genuine Postgres delete/insert behavior, just not a genuine write to the real project register.
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+
+# First, revert the real register file back to its last committed state --
+# the three dangling rows currently sitting there, uncommitted
+git checkout -- registers/register-memory-governor.md
+git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Good — clean working tree confirmed. Now fixing the actual test file. Checking its current fixture structure before patching, same discipline as every edit this session.
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+sed -n '1,45p' tests/test_disaster_recovery.py
+"""
+Architecture §10, test #10: reconstructing a candidate from
+registers/candidates/<memory_id>.json alone (no Postgres) reproduces every
+field of the original.
+
+Proven live during Step 7.5's drill against the real, running system.
+This file makes that proof permanent -- a future change to models.py or
+registers.py that silently breaks JSON round-tripping should fail here,
+not be discovered for the first time during a real disaster, which is
+the worst possible moment to learn the recovery path doesn't work.
+"""
+import json
+from datetime import datetime, timezone
+
+import pytest
+
+from app.storage import get_connection, insert_project, insert_candidate, get_candidate
+from app.registers import register_candidate, CANDIDATES_DIR
+from app.models import (
+    GovernedMemoryCandidate, Scope, Content, Provenance,
+    Timestamps, Confidence, Policy, Subject, Contradiction,
+)
+
+
+def _now():
+    return datetime.now(timezone.utc)
+
+
+TEST_PROJECT = "test-project-disaster-recovery-pytest"
+
+
+@pytest.fixture
+def dr_project():
+    def cleanup():
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("DELETE FROM audit_log WHERE memory_id LIKE 'mem-drt-%'")
+                cur.execute("DELETE FROM memory_events WHERE memory_id LIKE 'mem-drt-%'")
+                cur.execute("DELETE FROM memory_candidates WHERE owning_project = %s", (TEST_PROJECT,))
+                cur.execute("DELETE FROM projects WHERE project_id = %s", (TEST_PROJECT,))
+            conn.commit()
+        for f in CANDIDATES_DIR.glob("mem-drt-*.json"):
+            f.unlink()
+
+    cleanup()
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+One more thing needed before writing the fix — there's a real, subtle correctness detail here. test_registers.py's working sandbox fixture accesses paths via registers_module.CANDIDATES_DIR (the module object), never a directly-imported name — because from app.registers import CANDIDATES_DIR binds the value at import time, and monkeypatch.setattr on the module afterward wouldn't actually change what that already-bound name points to. I need to see the rest of the file to find every place that imports or uses these names directly, or the fix will look correct but silently fail to redirect anything.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+grep -n "CANDIDATES_DIR\|REGISTER_FILE\|REGISTERS_DIR" tests/test_disaster_recovery.py
+18:from app.registers import register_candidate, CANDIDATES_DIR
+42:        for f in CANDIDATES_DIR.glob("mem-drt-*.json"):
+86:        payload_path = CANDIDATES_DIR / "mem-drt-001.json"
+110:        payload_path = CANDIDATES_DIR / "mem-drt-002.json"
+130:        payload_path = CANDIDATES_DIR / "mem-drt-003.json"
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed — five direct uses, every one of which would keep silently pointing at the real directory. Rewriting the whole file fresh, same approach used successfully for test_policy.py's full rewrite in Step 6.5.2, since this many changes scattered across one small file is safer as a complete replacement than a series of fragile patches.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > tests/test_disaster_recovery.py <<'PYEOF'
+"""
+Architecture §10, test #10: reconstructing a candidate from
+registers/candidates/<memory_id>.json alone (no Postgres) reproduces every
+field of the original.
+
+Proven live during Step 7.5's drill against the real, running system.
+This file makes that proof permanent -- a future change to models.py or
+registers.py that silently breaks JSON round-tripping should fail here,
+not be discovered for the first time during a real disaster, which is
+the worst possible moment to learn the recovery path doesn't work.
+
+Register/payload paths are sandboxed via monkeypatch (Step 8.1 fix --
+see commit history for the real incident this closes: the original
+version of this file wrote real rows into the real, committed
+registers/register-memory-governor.md on every test run, with no way
+to clean them up since registers.py deliberately has no delete-a-row
+function -- discovered when `git status` kept coming back dirty after
+clean test runs). The Postgres connection stays completely real --
+only the register/payload FILE paths are redirected, matching
+test_registers.py's already-proven pattern.
+"""
+import json
+from datetime import datetime, timezone
+
+git statusconfirm the real register file was NOT touched this time ---"').read()); print('FILE_IS_VALID_PYTHON_SYNTAX: true')"
+FILE_IS_VALID_PYTHON_SYNTAX: true
+======================================================== test session starts ========================================================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/dev-p/memory-governor/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /home/dev-p/memory-governor
+configfile: pyproject.toml
+plugins: schemathesis-4.24.3, hypothesis-6.165.10, anyio-4.14.2
+collected 3 items
+
+tests/test_disaster_recovery.py::TestDisasterRecovery::test_reconstruction_from_json_matches_original_in_every_field PASSED   [ 33%]
+tests/test_disaster_recovery.py::TestDisasterRecovery::test_full_recovery_loop_delete_reconstruct_restore PASSED              [ 66%]
+tests/test_disaster_recovery.py::TestDisasterRecovery::test_reconstruction_preserves_nested_structured_content PASSED         [100%]
+
+========================================================= 3 passed in 0.75s =========================================================
+--- confirm the real register file was NOT touched this time ---
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   tests/test_disaster_recovery.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+All 3 tests still pass, and — the actual proof — git status shows only tests/test_disaster_recovery.py modified, with the real registers/register-memory-governor.md completely untouched this time. The sandboxing genuinely works: three real disaster-recovery drills ran, real Postgres deletes and inserts happened, and the real project register never saw any of it.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+git add tests/test_disaster_recovery.py
+git status
+
+git commit -m "fix: sandbox register/payload paths in test_disaster_recovery.py
+
+Real defect found immediately after the Step 8.1 commit: the original
+version of this file called register_candidate() against the REAL
+registers/ directory, writing three real rows into the real, committed
+register-memory-governor.md on every single test run -- with no way to
+clean them up afterward, since registers.py deliberately has no
+delete-a-row function. git status kept coming back dirty after every
+clean test run as a result.
+
+Fixed by monkeypatching registers.py's REGISTERS_DIR/CANDIDATES_DIR/
+REGISTER_FILE to a tmp_path sandbox, matching test_registers.py's
+already-proven pattern -- the Postgres connection stays completely
+real, only the register/payload file paths are redirected. Confirmed:
+three real drills now run against real Postgres with zero impact on
+the actual project register."
+
+git push
+git log --oneline -3
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   tests/test_disaster_recovery.py
+
+[main 152f01e] fix: sandbox register/payload paths in test_disaster_recovery.py
+ 1 file changed, 21 insertions(+), 7 deletions(-)
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 1.35 KiB | 1.35 MiB/s, done.
+Total 4 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/sassycomapp/memory-governor.git
+   324f5c6..152f01e  main -> main
+152f01e (HEAD -> main, origin/main) fix: sandbox register/payload paths in test_disaster_recovery.py
+324f5c6 refactor: Phase 8.1 - extract project logic into projects.py
+8430965 test: Phase 7.5 - permanent disaster-recovery drill
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Matches everything reviewed live so far. Continuing through the rest, including the dead-import cleanup, the commit, and — most importantly — the dangling register-row discovery and fix.
+
+Read Step 8.1 transcript, remainder
+
+Full 771-line file reviewed end-to-end across both passes — every part matches the live exchange exactly: the empty-file discovery on projects.py, the six-part extraction with every match count confirmed, the circular-import problem correctly identified and resolved, the stale docstring caught, dead imports found and removed, the clean 253-test regression, the commit 324f5c6 — and then the real, unglossed-over discovery immediately after: the dangling register rows, the correct root-cause diagnosis (the disaster-recovery test writing to the real register with no way to clean up after itself), the proper sandboxing fix mirroring test_registers.py's already-proven pattern, and the final verified commit 152f01e confirming the real register file stayed genuinely untouched. Nothing missing, nothing inconsistent.
+
+Step 8.1 — projects.py: closed, agreed, in full — including the immediate post-commit defect it surfaced and fixed, which is exactly the kind of thing worth having on record rather than a tidier account of events.

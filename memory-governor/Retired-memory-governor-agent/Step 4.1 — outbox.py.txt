@@ -1,0 +1,203 @@
+Step 4.1 — outbox.py
+
+One real architectural gap surfaced designing this step — flagging it before code, same discipline as always.
+
+Architecture §4 requires the event insert to happen "in the same transaction as the state change itself." Nothing built so far can actually do that. Checking the existing code: storage.update_candidate() opens its own connection, does its own UPDATE, and calls conn.commit() internally — the transaction is already closed by the time control returns to the caller. There is no way for a second, separate call (an event insert) to join a transaction that's already committed. "Insert the event in the same transaction as the state change" is a real requirement Architecture §4 states outright — it can't be satisfied by calling storage.update_candidate() followed by a separate event-insert call, no matter how quickly they run one after another.
+
+Fix: outbox.py does not call storage.update_candidate()/storage.insert_candidate() at all. It provides its own atomic, composed functions that open exactly one connection, perform the candidate write and the event write together, and commit once. This reuses storage.py's internal _serialize() (same package, deliberately reused rather than duplicated) but does not go through storage.py's existing public functions, since those functions' own internal commit is precisely the thing that breaks atomicity here. storage.insert_candidate()/update_candidate() remain correct and useful on their own — for read-modify-write flows where atomicity with an event isn't needed — this is an additional, atomic path alongside them, not a replacement.
+
+One more design choice, flagged: NOTIFY payloads can't use normal parameter binding in raw SQL — Postgres's NOTIFY channel, 'payload' syntax only accepts a string literal, not a bind parameter. Using pg_notify(channel, payload) instead, which is a real function and does accept normal parameterized calls — the standard, safe way to do this.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > app/outbox.py <<'PYEOF'
+from typing import Optional
+
+from .models import GovernedMemoryCandidate
+from .storage import get_connection, _serialize
+
+NOTIFY_CHANNEL = "memory_governor_events"
+
+VALID_EVENT_TYPES = frozenset({
+    "candidate_created", "contradiction_detected", "review_requested",
+    "expiry_due", "scheduled_consolidation", "register_write", "gbrain_write",
+})
+
+
+def _validate_event_type(event_type: str) -> None:
+    if event_type not in VALID_EVENT_TYPES:
+        raise ValueError(
+            f"Unknown event_type '{event_type}'. Must be one of: {sorted(VALID_EVENT_TYPES)}"
+        )
+
+
+def emit_event(cur, event_type: str, memory_id: Optional[str], payload: dict) -> int:
+    """
+    Low-level, composable primitive. Takes an ALREADY-OPEN cursor (does
+    NOT open its own connection, does NOT commit) so the caller can
+    include this insert inside a larger transaction. Issues NOTIFY via
+    pg_notify() (transactional -- Postgres queues it and only delivers
+    after the enclosing transaction commits, so a rolled-back transaction
+wc -l app/outbox.pyt('outbox.py imports cleanly')"ert_candidate_and_emit_event, update_candidate_and_emit_event, VALID_EVENT_TYPES, N
+outbox.py imports cleanly
+104 app/outbox.py
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+104 lines, imports cleanly, all five exports confirmed importable. Matches expectation — same terminal-compression pattern as every successful step, not a truncation.
+
+Direct file check before the atomicity test, same discipline as always:
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+
+# Confirm _json_or_null import inside emit_event resolved correctly
+# (it's imported locally inside the function, not at module top)
+python3 -c "
+from app.outbox import emit_event
+import inspect
+src = inspect.getsource(emit_event)
+assert '_json_or_null' in src, 'expected local import of _json_or_null'
+print('LOCAL_IMPORT_PRESENT: true')
+"
+
+cat -A app/outbox.py | tail -20
+LOCAL_IMPORT_PRESENT: true
+    memory_id does not already exist -- mirroring storage.update_candidate()'s$
+    own existence guard, but atomically paired with the event this time.$
+    """$
+    data = _serialize(candidate)$
+    set_clause = ", ".join(f"{k} = %({k})s" for k in data.keys() if k != "memory_id")$
+    with get_connection() as conn:$
+        with conn.cursor() as cur:$
+            cur.execute($
+                f"UPDATE memory_candidates SET {set_clause} WHERE memory_id = %(memory_id)s",$
+                data,$
+            )$
+            if cur.rowcount == 0:$
+                conn.rollback()$
+                raise ValueError(f"Cannot update: memory_id '{candidate.memory_id}' does not exist")$
+            event_id = emit_event($
+                cur, event_type, candidate.memory_id,$
+                payload or {"memory_id": candidate.memory_id, "status": candidate.status},$
+            )$
+        conn.commit()$
+    return event_id$
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+
+python3 <<'PYEOF'
+from datetime import datetime, timezone
+from app.storage import get_connection, insert_project
+from app.outbox import insert_candidate_and_emit_event, update_candidate_and_emit_event
+from app.models import (
+    GovernedMemoryCandidate, Scope, Content, Provenance,
+    Timestamps, Confidence, Policy,
+)
+import psycopg
+
+def now():
+    return datetime.now(timezone.utc)
+
+TEST_PROJECT = "test-project-outbox-liveness"
+
+# Clean slate
+with get_connection() as conn:
+    with conn.cursor() as cur:
+        cur.execute("DELETE FROM memory_events WHERE memory_id LIKE 'mem-outbox-%'")
+        cur.execute("DELETE FROM memory_candidates WHERE owning_project = %s", (TEST_PROJECT,))
+        cur.execute("DELETE FROM projects WHERE project_id = %s", (TEST_PROJECT,))
+    conn.commit()
+insert_project(TEST_PROJECT, "Outbox Liveness Test")
+
+# TEST 1: happy path -- candidate AND event both persist together
+PYEOF("ALL_OUTBOX_LIVENESS_CHECKS_PASSED: true")project_id = %s", (TEST_PROJECT,))ST_PROJECT,))should-not-exist'")"),
+HAPPY_PATH_EVENT_ID: 1
+HAPPY_PATH_BOTH_PERSISTED: true
+FK_VIOLATION_RAISED_AS_EXPECTED: true
+ATOMICITY_PROVEN_NEITHER_ROW_SURVIVED: true
+ALL_OUTBOX_LIVENESS_CHECKS_PASSED: true
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+All checks pass. ATOMICITY_PROVEN_NEITHER_ROW_SURVIVED: true confirms the actual point of this module: a transaction that fails partway leaves genuinely zero trace — not the candidate, not the event, not a stray notification — exactly the guarantee Architecture §4 demands and that calling storage.py's existing functions could never provide.
+
+Now tests/test_outbox.py:
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > tests/test_outbox.py <<'PYEOF'
+from datetime import datetime, timezone
+
+import psycopg
+import pytest
+
+from app.outbox import (
+    emit_event, insert_candidate_and_emit_event, update_candidate_and_emit_event,
+    VALID_EVENT_TYPES, NOTIFY_CHANNEL, _validate_event_type,
+)
+from app.storage import get_connection, insert_project, insert_candidate, get_candidate
+from app.models import (
+    GovernedMemoryCandidate, Scope, Content, Provenance,
+    Timestamps, Confidence, Policy,
+)
+
+TEST_PROJECT_ID = "test-project-outbox"
+
+
+def _now():
+    return datetime.now(timezone.utc)
+
+
+def _candidate(memory_id: str, **overrides) -> GovernedMemoryCandidate:
+    base = dict(
+        memory_id=memory_id,
+        owning_project=TEST_PROJECT_ID,
+        scope=Scope(visibility="project_local", retention="long_term",
+                     owning_project=TEST_PROJECT_ID),
+python3 -m pytest tests/test_outbox.py -v"]-this",),y_events WHERE payload->>'test' = %s",this"}),))event_id,))
+======================================================== test session starts ========================================================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/dev-p/memory-governor/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /home/dev-p/memory-governor
+configfile: pyproject.toml
+plugins: schemathesis-4.24.3, hypothesis-6.165.10, anyio-4.14.2
+collected 17 items
+
+tests/test_outbox.py::TestValidateEventType::test_every_documented_event_type_is_accepted[candidate_created] PASSED           [  5%]
+tests/test_outbox.py::TestValidateEventType::test_every_documented_event_type_is_accepted[contradiction_detected] PASSED      [ 11%]
+tests/test_outbox.py::TestValidateEventType::test_every_documented_event_type_is_accepted[expiry_due] PASSED                  [ 17%]
+tests/test_outbox.py::TestValidateEventType::test_every_documented_event_type_is_accepted[gbrain_write] PASSED                [ 23%]
+tests/test_outbox.py::TestValidateEventType::test_every_documented_event_type_is_accepted[register_write] PASSED              [ 29%]
+tests/test_outbox.py::TestValidateEventType::test_every_documented_event_type_is_accepted[review_requested] PASSED            [ 35%]
+tests/test_outbox.py::TestValidateEventType::test_every_documented_event_type_is_accepted[scheduled_consolidation] PASSED     [ 41%]
+tests/test_outbox.py::TestValidateEventType::test_unknown_event_type_rejected PASSED                                          [ 47%]
+tests/test_outbox.py::TestInsertCandidateAndEmitEvent::test_both_candidate_and_event_persist_together PASSED                  [ 52%]
+tests/test_outbox.py::TestInsertCandidateAndEmitEvent::test_failed_insert_leaves_no_candidate_and_no_event PASSED             [ 58%]
+tests/test_outbox.py::TestInsertCandidateAndEmitEvent::test_duplicate_memory_id_leaves_no_event_either PASSED                 [ 64%]
+tests/test_outbox.py::TestInsertCandidateAndEmitEvent::test_custom_payload_is_stored_correctly PASSED                         [ 70%]
+tests/test_outbox.py::TestUpdateCandidateAndEmitEvent::test_update_and_event_persist_together PASSED                          [ 76%]
+tests/test_outbox.py::TestUpdateCandidateAndEmitEvent::test_update_nonexistent_candidate_raises_and_emits_no_event PASSED     [ 82%]
+tests/test_outbox.py::TestUpdateCandidateAndEmitEvent::test_invalid_event_type_rejected_before_any_write PASSED               [ 88%]
+tests/test_outbox.py::TestEmitEventNotify::test_notify_channel_constant_is_correct PASSED                                     [ 94%]
+tests/test_outbox.py::TestEmitEventNotify::test_low_level_emit_event_requires_open_cursor_shares_caller_transaction PASSED    [100%]
+
+======================================================== 17 passed in 1.30s =========================================================
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+All 17 tests pass, 1.30s, zero failures. Both critical proofs confirmed: test_failed_insert_leaves_no_candidate_and_no_event (atomicity at the composed-function level) and test_low_level_emit_event_requires_open_cursor_shares_caller_transaction (atomicity at the raw cursor-sharing level, confirming emit_event() genuinely has no independent transaction of its own — a manual rollback by the caller erases it completely). Also well covered: every declared event_type accepted, an invalid one rejected before any write occurs, the duplicate-memory_id path confirmed to leave exactly one event (not zero, not two) when only the first of two attempts succeeds, and custom payloads round-tripping correctly through JSONB.
+
+Step 4.1 — outbox.py: exit criteria met.
+---
+Full file reviewed end-to-end — the architectural gap identified (storage.py's existing functions each commit internally, making true same-transaction event insertion impossible through them), the deliberate design choice to build separate atomic composed functions rather than route through storage.py's public API, the pg_notify() vs. raw NOTIFY parameter-binding note, outbox.py's full content and both verification passes, the live atomicity proof (happy path plus the genuine rollback case), and the full 17-test suite. Nothing missing, nothing inconsistent.
+
+Step 4.1 — outbox.py: closed, agreed.
+
+Final state on record:
+
+emit_event() — low-level, cursor-sharing primitive, no independent transaction of its own, proven by a test that rolls back the caller's transaction and confirms the event vanishes too
+insert_candidate_and_emit_event() / update_candidate_and_emit_event() — atomic composed writes, deliberately bypassing storage.py's own insert/update functions specifically because their internal commits would break the same-transaction guarantee Architecture §4 requires
+pg_notify() used over raw NOTIFY for safe parameter binding
+Atomicity proven twice — once live against real Postgres during design verification, once again permanently in the test suite (test_failed_insert_leaves_no_candidate_and_no_event)
+All existing storage.py functions remain valid and unchanged for their own non-atomic use cases

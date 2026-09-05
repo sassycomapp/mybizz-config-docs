@@ -1,0 +1,155 @@
+Before writing registers.py, I want to pull up the exact register schema from Architecture §8 rather than work from memory — the whole point of this module is disaster recovery, so guessing at column names here would be exactly the wrong place to cut corners.
+
+Wiring the single entry point tying writes together
+Step 7.1 — registers.py
+
+Pulled the real register schema directly from Architecture §8.2 rather than guess — nine columns: doc-id/filename/folder/type/state/date-registered/date-state-changed/superseded-by/notes. This schema was designed for tracking documents living elsewhere on disk, and a GovernedMemoryCandidate doesn't quite fit that shape natively, so mapping it required a few real decisions — flagging them rather than silently picking:
+
+Column mapping. doc-id → memory_id, filename → candidates/<memory_id>.json, type → memory_type, state → status, notes → owning_project + writer_identity (for quick human scanning without opening the JSON). date-registered is set once, on first write; date-state-changed updates every time the row is touched again.
+superseded-by is written on the old candidate's row, not the new one. When candidate B supersedes candidate A, A's register row gets superseded-by = B's memory_id — never deleted, matching this project's standing "never delete, only retire" rule already established for documentation elsewhere.
+This module writes files only — it does not commit or push to git. That stays the worker's responsibility (Step 7.2), keeping registers.py narrowly scoped to file mechanics, consistent with every other module's single-responsibility boundary in this codebase.
+One honest gap: I don't have the literal register-global.md/register-local.md markdown table formatting convention already established elsewhere in this environment in front of me this session. I've used a standard markdown table as a reasonable default — flagging this explicitly so it can be corrected to match the exact existing convention if it differs, rather than silently assuming mine is right.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > app/registers.py <<'PYEOF'
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import List
+
+from .models import GovernedMemoryCandidate
+
+# Registers live inside this application's own repo (Architecture §8.1) --
+# not a separately managed external location.
+REGISTERS_DIR = Path(__file__).resolve().parent.parent / "registers"
+CANDIDATES_DIR = REGISTERS_DIR / "candidates"
+REGISTER_FILE = REGISTERS_DIR / "register-memory-governor.md"
+
+REGISTER_HEADER = (
+    "| doc-id | filename | folder | type | state | date-registered | "
+    "date-state-changed | superseded-by | notes |\n"
+    "|---|---|---|---|---|---|---|---|---|\n"
+)
+
+
+def _now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def write_payload(candidate: GovernedMemoryCandidate) -> Path:
+wc -l app/registers.pyports cleanly')"register_candidate, write_payload, append_or_update_register_row, update_supersession_pointer;
+registers.py imports cleanly
+125 app/registers.py
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+125 lines, imports cleanly, all four exports confirmed importable. Matches expectation.
+
+Direct file check before the live test:
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat -A app/registers.py | tail -20
+    rows = _read_register_rows()$
+    for row in rows:$
+        if row[0] == old_memory_id:$
+            row[7] = new_memory_id$
+            break$
+    _write_register_rows(rows)$
+$
+$
+def register_candidate(candidate: GovernedMemoryCandidate) -> Path:$
+    """$
+    Single entry point (Architecture M-BM-'8.2): writes the JSON payload and the$
+    register row/update together for one candidate. If this candidate$
+    supersedes another, also updates the old candidate's superseded-by$
+    pointer. Does NOT commit or push -- that's the worker's job (Step 7.2).$
+    """$
+    payload_path = write_payload(candidate)$
+    append_or_update_register_row(candidate)$
+    if candidate.supersedes_id:$
+        update_supersession_pointer(candidate.supersedes_id, candidate.memory_id)$
+    return payload_path$
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed correct — file ends exactly as intended (M-BM-'8.2 is the familiar § byte-artifact, harmless).
+
+Now the live test — a real candidate, its JSON payload and register row inspected directly, and a supersession case proving the old row's pointer gets filled in correctly.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+
+python3 <<'PYEOF'
+from datetime import datetime, timezone
+from pathlib import Path
+import json
+from app.registers import register_candidate, REGISTER_FILE, CANDIDATES_DIR, _read_register_rows
+from app.models import (
+    GovernedMemoryCandidate, Scope, Content, Provenance,
+    Timestamps, Confidence, Policy,
+)
+
+def now():
+    return datetime.now(timezone.utc)
+
+def make(memory_id, status="promoted", supersedes_id=None):
+    return GovernedMemoryCandidate(
+        memory_id=memory_id, owning_project="mb-3-cs-code",
+        scope=Scope(visibility="project_local", retention="long_term", owning_project="mb-3-cs-code"),
+        memory_type="fact", content=Content(text="Register test content."),
+        provenance=Provenance(source_type="user", source_ref="/tmp/x.md",
+                               writer_identity="w1", policy_version="v1"),
+        timestamps=Timestamps(created_at=now(), updated_at=now()),
+        confidence=Confidence(score=0.9, method="human_verified"),
+cat registers/candidates/mem-reg-old-001.json | head -20 presentew-001")n
+PAYLOAD_PATH: /home/dev-p/memory-governor/registers/candidates/mem-reg-old-001.json
+PAYLOAD_MEMORY_ID: mem-reg-old-001
+PAYLOAD_CONTENT_TEXT: Register test content.
+PAYLOAD_CONTENT_CORRECT: true
+REGISTER_ROW: ['mem-reg-old-001', 'candidates/mem-reg-old-001.json', 'registers/candidates/', 'fact', 'promoted', '2026-08-21T11:38:28.158510+00:00', '2026-08-21T11:38:28.158510+00:00', '', 'project=mb-3-cs-code; writer=w1']
+REGISTER_ROW_CORRECT: true
+OLD_ROW_AFTER_SUPERSESSION: ['mem-reg-old-001', 'candidates/mem-reg-old-001.json', 'registers/candidates/', 'fact', 'promoted', '2026-08-21T11:38:28.158510+00:00', '2026-08-21T11:38:28.158510+00:00', 'mem-reg-new-001', 'project=mb-3-cs-code; writer=w1']
+NEW_ROW: ['mem-reg-new-001', 'candidates/mem-reg-new-001.json', 'registers/candidates/', 'fact', 'promoted', '2026-08-21T11:38:28.160749+00:00', '2026-08-21T11:38:28.160749+00:00', '', 'project=mb-3-cs-code; writer=w1']
+SUPERSEDED_BY_POINTER_CORRECT: true
+OLD_ROW_NOT_DELETED: true
+ALL_REGISTER_LIVENESS_CHECKS_PASSED: true
+| doc-id | filename | folder | type | state | date-registered | date-state-changed | superseded-by | notes |
+|---|---|---|---|---|---|---|---|---|
+| mem-reg-old-001 | candidates/mem-reg-old-001.json | registers/candidates/ | fact | promoted | 2026-08-21T11:38:28.158510+00:00 | 2026-08-21T11:38:28.158510+00:00 | mem-reg-new-001 | project=mb-3-cs-code; writer=w1 |
+| mem-reg-new-001 | candidates/mem-reg-new-001.json | registers/candidates/ | fact | promoted | 2026-08-21T11:38:28.160749+00:00 | 2026-08-21T11:38:28.160749+00:00 |  | project=mb-3-cs-code; writer=w1 |
+---
+{
+  "memory_id": "mem-reg-old-001",
+  "owning_project": "mb-3-cs-code",
+  "agent_id": null,
+  "session_id": null,
+  "scope": {
+    "visibility": "project_local",
+    "retention": "long_term",
+    "authority": null,
+    "owning_project": "mb-3-cs-code",
+    "shared_with": []
+  },
+  "memory_type": "fact",
+  "subject": null,
+  "content": {
+    "text": "Register test content.",
+    "structured": null
+  },
+  "provenance": {
+    "source_type": "user",
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Every check passes, and the raw files confirm it directly, not just the assertions — the actual markdown table shows mem-reg-old-001's superseded-by column correctly filled with mem-reg-new-001, the row still fully present rather than deleted, and the new row correctly starting with an empty superseded-by of its own. The JSON payload holds the complete, real candidate structure — exactly the field-level detail the register's own nine columns can't represent, which is the entire reason this module exists.
+
+Step 7.1 — registers.py: exit criteria met.
+
+One thing worth flagging before we move on: this test left real files behind — registers/register-memory-governor.md and two JSON payloads — sitting in your actual git working tree, since this module writes to real paths inside the repo by design, not a disposable test database. Given Phase 7's whole purpose is version-controlled backup, I'd suggest treating these as legitimate content to commit alongside the code, rather than cleaning them up — a first real register entry is arguably a meaningful thing to have on record from day one. Your call, same as the ADR-candidates decision back in Step 6.2, but flagging it now rather than assuming either way before we go further.
+
+Per Workflow Step 7.2, next is wiring register_candidate() in as a register_write event consumer in the worker — a promoted transition inserting the event in the same transaction, the worker processing it via the Phase 4.3 retry wrapper, never a synchronous call inside the promotion request. Ready to continue whenever you've decided on the test files question.
+---
+Full file reviewed end-to-end — the register schema pulled from Architecture §8.2 rather than guessed, the honest flag on the unverified markdown-table formatting convention, registers.py's content and both verification passes, the full live proof including the supersession-pointer mechanic, and the raw file confirmation. Nothing missing, nothing inconsistent.
+
+Step 7.1 — registers.py: closed, agreed.
+
+Still waiting on one decision before Step 7.2: keep the two test register entries (mem-reg-old-001, mem-reg-new-001) as real, committed content, or clean them up first. Let me know which, and we'll move straight into wiring register_candidate() into the outbox as a register_write event consumer.

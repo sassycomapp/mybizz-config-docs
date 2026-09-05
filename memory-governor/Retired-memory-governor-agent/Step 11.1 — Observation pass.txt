@@ -1,0 +1,407 @@
+Step 11.1 — Observation pass
+
+Checking what already exists before assuming anything — same discipline as every phase so far. scheduled_consolidation is one of the nine event types scaffolded back in Phase 4, but I don't recall anything ever actually emitting it, unlike register_write or gbrain_write, which real candidate transitions trigger.
+
+
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+grep -n "scheduled_consolidation" app/*.py
+echo "---"
+grep -n "^## 7\." -A 40 /mnt/user-data/outputs/memory-governor-agent-architecture-and-specification.md
+app/outbox.py:11:    "scheduled_consolidation", "register_write", "gbrain_write",
+app/worker.py:23:    scheduled_consolidation -> Phase 11, etc). This step proves the
+app/worker.py:68:    "scheduled_consolidation": _noop_handler,
+---
+grep: /mnt/user-data/outputs/memory-governor-agent-architecture-and-specification.md: No such file or directory
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+One real naming mismatch worth flagging plainly: the spec calls the trigger scheduled_consolidation_window, but the actual code has scheduled_consolidation (no _window suffix) — I'll use the real name already wired into VALID_EVENT_TYPES and HANDLER_REGISTRY, since renaming working code to match a spec typo would be pure churn for no benefit.
+
+Pulling the full Phase 11 breakdown before designing Step 11.1 specifically, so I don't build something that actually belongs to 11.2.
+
+Ran a command
+
+One more thing to confirm before writing the actual detection logic — the real audit_log schema, since the pattern-detection query needs to group real decision history correctly, and guessing at column names here would be exactly the wrong place to improvise.
+
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+find . -path ./.venv -prune -o -name "*.sql" -print 2>/dev/null | xargs grep -l "audit_log" 2>/dev/null
+grep -n "def append_audit_entry\|def get_audit_history" -A 15 app/audit.py
+./migrations/002_audit_log.sql
+7:def append_audit_entry(decision: MemoryDecision, policy_version: Optional[str] = None) -> int:
+8-    """
+9-    Writes ONE immutable row to audit_log for a decision that has already
+10-    been validated and applied by state_machine.apply_decision(). This
+11-    function does NOT call apply_decision() itself and does NOT touch
+12-    memory_candidates -- it is purely an append-only historian, matching
+13-    Architecture §9's description exactly ("append immutable decision
+14-    records"). The caller is responsible for calling apply_decision()
+15-    first, then this, together -- see Phase 5's api.py for where that
+16-    pairing is actually enforced at the request level.
+17-
+18-    Returns the new row's audit_id.
+19-    """
+20-    with get_connection() as conn:
+21-        with conn.cursor() as cur:
+22-            cur.execute(
+--
+47:def get_audit_history(memory_id: str) -> List[dict]:
+48-    """
+49-    Returns the FULL decision history for a candidate, oldest first --
+50-    this is what Architecture §3.2's GET /memory/{memory_id}/provenance
+51-    endpoint (Phase 5) will actually serve. Unlike memory_candidates.audit
+52-    (a single JSONB column that only ever holds the MOST RECENT decision),
+53-    this reflects every decision ever made, in order.
+54-    """
+55-    with get_connection() as conn:
+56-        with conn.cursor() as cur:
+57-            cur.execute(
+58-                """
+59-                SELECT audit_id, memory_id, previous_status, new_status,
+60-                       decision_by, decision_reason, reviewer, policy_version,
+61-                       recorded_at
+62-                FROM audit_log
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed — audit_log doesn't carry memory_type/owning_project directly, only memory_id/status transitions/reviewer; the pattern-detection query needs to join against memory_candidates for those. Building this as its own module, matching the established one-concern-per-file pattern already used for registers.py, projects.py, and rendering.py.
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > app/self_healing.py <<'PYEOF'
+"""
+Architecture §7: the Self-Healing / Iterative Learning Mechanism.
+
+Step 11.1 scope, per Workflow: read-only pattern-detection ONLY. This
+module never writes anything -- no candidate submission, no
+policy_versions row. Step 11.2 (procedural candidate generation) and
+Step 11.3 (the approved-change write path) are deliberately separate,
+later steps, consuming what this module detects.
+
+"The governor is permitted to notice things about itself. It is never
+permitted to act on that noticing without the same human gate every
+other high-risk candidate goes through." -- Architecture §7.
+"""
+from typing import List
+
+from .storage import get_connection
+
+# Conservative by design (Architecture §7's own wording: "a separately,
+# conservatively set noteworthiness threshold"). Two independent guards,
+# not one: a rate threshold alone would flag noise from tiny sample
+# sizes (1 out of 1 rejected is not a pattern), and a sample-size
+# threshold alone would flag large groups with an unremarkable rate.
+# Both must be crossed together.
+MIN_SAMPLE_SIZE = 5
+NOTEWORTHY_RATE_THRESHOLD = 0.5
+python3 -c "from app.self_healing import detect_review_outcome_patterns; print('self_healing.py imports cleanly')"
+self_healing.py imports cleanly
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+Confirmed — imports cleanly. Now checking memory_candidates.policy's actual column type before trusting my query syntax against it.
+
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+PGPASSWORD="${MEMORY_GOVERNOR_DB_PASSWORD}" psql -U memory_governor_svc -h localhost -d memory_governor -c "
+SELECT column_name, data_type FROM information_schema.columns
+WHERE table_name = 'memory_candidates' AND column_name = 'policy';
+"
+ column_name | data_type
+-------------+-----------
+ policy      | jsonb
+(1 row)
+
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+Confirmed correct — jsonb, so ->>'classification' is the right operator. Now proving the actual detection logic works against real data — building a real scenario that should trigger a pattern, and a real scenario that shouldn't, confirming both thresholds (sample size and rate) genuinely guard independently, not just in combination.
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+
+python3 <<'PYEOF'
+from datetime import datetime, timezone
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+from app.api import router
+from app.storage import get_connection, insert_project
+from app.self_healing import detect_review_outcome_patterns
+import os
+
+app = FastAPI()
+app.include_router(router)
+client = TestClient(app)
+
+TEST_PROJECT = "test-11-1-observation-pass"
+real_credential = os.environ["MEMORY_GOVERNOR_WRITER_MANUAL_SUBMISSION"]
+headers = {"X-Governor-Credential": real_credential}
+
+def cleanup():
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM audit_log WHERE memory_id IN (SELECT memory_id FROM memory_candidates WHERE owning_project = %s)", (TEST_PROJECT,))
+            cur.execute("DELETE FROM memory_events WHERE memory_id IN (SELECT memory_id FROM memory_candidates WHERE owning_project =PYEOFleanup()L_STEP_11_1_LIVE_CHECKS_PASSED: true")SE_POSITIVE: true")detection"EST_PROJECT), None),
+DETECTED_PATTERNS: [{'memory_type': 'policy', 'owning_project': 'test-11-1-observation-pass', 'classification': 'high_risk_type', 'total_reviewed': 6, 'unfavorable_count': 6, 'rate': 1.0}]
+PATTERN_CORRECTLY_DETECTED: true
+SAMPLE_SIZE_GUARD_CORRECTLY_PREVENTS_FALSE_POSITIVE: true
+ALL_STEP_11_1_LIVE_CHECKS_PASSED: true
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+Both checks pass. Real pattern correctly detected — total_reviewed: 6, unfavorable_count: 6, rate: 1.0, correctly grouped by memory_type, owning_project, and classification — and the sample-size guard correctly prevents a small, high-rate sample from being mistaken for a genuine pattern.
+
+Step 11.1 — Observation pass: exit criteria met, with the actual scope correctly narrowed against the real Workflow breakdown (read-only detection only, submission deliberately deferred to Step 11.2) and one real design decision — dual independent thresholds, sample size and rate — made and proven rather than assumed sufficient with just one.
+
+Now permanent regression coverage, then the commit.
+
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > tests/test_self_healing.py <<'PYEOF'
+"""
+Architecture §7, Step 11.1: permanent coverage for the read-only
+pattern-detection logic. Proven live in Step 11.1's own verification;
+this file makes that proof permanent. This module never writes anything
+-- Step 11.2/11.3 own submission and the approved-change write path.
+"""
+from fastapi.testclient import TestClient
+from fastapi import FastAPI
+
+from app.api import router
+from app.storage import get_connection, insert_project
+from app.self_healing import detect_review_outcome_patterns
+
+
+TEST_PROJECT = "test-self-healing-pytest"
+
+
+def _app_client():
+    app = FastAPI()
+    app.include_router(router)
+    return TestClient(app)
+
+
+def _cleanup():
+    with get_connection() as conn:
+python3 -m pytest tests/test_self_healing.py -vest_self_healing.py').read()); print('FILE_IS_VALID_PYTHON_SYNTAX: true')"
+FILE_IS_VALID_PYTHON_SYNTAX: true
+======================================================== test session starts ========================================================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/dev-p/memory-governor/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /home/dev-p/memory-governor
+configfile: pyproject.toml
+plugins: schemathesis-4.24.3, hypothesis-6.165.10, anyio-4.14.2
+collected 3 items
+
+tests/test_self_healing.py::TestObservationPass::test_pattern_crossing_both_thresholds_is_detected ERROR                      [ 33%]
+tests/test_self_healing.py::TestObservationPass::test_sample_size_below_minimum_is_not_flagged_even_at_100_percent_rate ERROR [ 66%]
+tests/test_self_healing.py::TestObservationPass::test_never_writes_anything ERROR                                             [100%]
+
+============================================================== ERRORS ===============================================================
+______________________ ERROR at setup of TestObservationPass.test_pattern_crossing_both_thresholds_is_detected ______________________
+file /home/dev-p/memory-governor/tests/test_self_healing.py, line 59
+      def test_pattern_crossing_both_thresholds_is_detected(self, real_credential_headers):
+E       fixture 'real_credential_headers' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/home/dev-p/memory-governor/tests/test_self_healing.py:59
+___________ ERROR at setup of TestObservationPass.test_sample_size_below_minimum_is_not_flagged_even_at_100_percent_rate ____________
+file /home/dev-p/memory-governor/tests/test_self_healing.py, line 77
+      def test_sample_size_below_minimum_is_not_flagged_even_at_100_percent_rate(
+E       fixture 'real_credential_headers' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/home/dev-p/memory-governor/tests/test_self_healing.py:77
+_________________________________ ERROR at setup of TestObservationPass.test_never_writes_anything __________________________________
+file /home/dev-p/memory-governor/tests/test_self_healing.py, line 93
+      def test_never_writes_anything(self, real_credential_headers):
+E       fixture 'real_credential_headers' not found
+>       available fixtures: anyio_backend, anyio_backend_name, anyio_backend_options, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, doctest_namespace, free_tcp_port, free_tcp_port_factory, free_udp_port, free_udp_port_factory, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, subtests, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/home/dev-p/memory-governor/tests/test_self_healing.py:93
+====================================================== short test summary info ======================================================
+ERROR tests/test_self_healing.py::TestObservationPass::test_pattern_crossing_both_thresholds_is_detected
+ERROR tests/test_self_healing.py::TestObservationPass::test_sample_size_below_minimum_is_not_flagged_even_at_100_percent_rate
+ERROR tests/test_self_healing.py::TestObservationPass::test_never_writes_anything
+========================================================= 3 errors in 0.45s =========================================================
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+No, you did everything right — this is a real, genuine mistake in the test file I gave you, not something you did wrong. real_credential_headers is a fixture that only exists inside tests/test_api.py, where it's defined once at the top of that file — every other test I've written that used it lived in test_api.py itself and could reach it automatically. This new file, test_self_healing.py, is a separate file, and pytest fixtures aren't automatically shared across files unless they're placed in a shared conftest.py. I built the credential header directly inline instead of relying on a fixture that doesn't exist here.
+
+
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/fix_self_healing_test.py <<'PYEOF'
+content = open("tests/test_self_healing.py").read()
+
+old_import = '''from fastapi.testclient import TestClient
+from fastapi import FastAPI
+
+from app.api import router
+from app.storage import get_connection, insert_project
+from app.self_healing import detect_review_outcome_patterns
+
+
+TEST_PROJECT = "test-self-healing-pytest"'''
+
+new_import = '''import os
+
+from fastapi.testclient import TestClient
+from fastapi import FastAPI
+
+from app.api import router
+from app.storage import get_connection, insert_project
+from app.self_healing import detect_review_outcome_patterns
+
+
+TEST_PROJECT = "test-self-healing-pytest"
+
+
+python3 -m pytest tests/test_self_healing.py -vest_self_healing.py').read()); print('FILE_IS_VALID_PYTHON_SYNTAX: true')"    ):",
+MATCH_COUNT: 1
+FIXTURE_ISSUE_FIXED: true
+FILE_IS_VALID_PYTHON_SYNTAX: true
+======================================================== test session starts ========================================================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/dev-p/memory-governor/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /home/dev-p/memory-governor
+configfile: pyproject.toml
+plugins: schemathesis-4.24.3, hypothesis-6.165.10, anyio-4.14.2
+collected 3 items
+
+tests/test_self_healing.py::TestObservationPass::test_pattern_crossing_both_thresholds_is_detected PASSED                     [ 33%]
+tests/test_self_healing.py::TestObservationPass::test_sample_size_below_minimum_is_not_flagged_even_at_100_percent_rate PASSED [ 66%]
+tests/test_self_healing.py::TestObservationPass::test_never_writes_anything PASSED                                            [100%]
+
+========================================================= 3 passed in 2.27s =========================================================
+(.venv) dev-p@dev-p:~/memory-governor$
+
+
+---
+
+
+All 3 pass. Now the full regression before committing.
+
+
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+python3 -m pytest tests/ -q
+............................................................................................................................. [ 45%]
+............................................................................................................................. [ 91%]
+......................                                                                                                        [100%]
+272 passed in 42.02s
+(.venv) dev-p@dev-p:~/memory-governor$
+
+
+---
+
+All 272 tests pass — the full suite, clean, up from 269 by exactly the three new tests.
+
+
+---
+
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+git status
+git add app/self_healing.py tests/test_self_healing.py
+git status
+
+git commit -m "feat: Phase 11.1 - self-healing observation pass (read-only)
+
+Architecture §7. New module app/self_healing.py, scoped narrowly to
+Step 11.1's actual boundary per the real Workflow breakdown --
+read-only pattern detection ONLY. No candidate submission, no
+policy_versions write; those are Step 11.2 and 11.3's jobs
+deliberately, not built here.
+
+detect_review_outcome_patterns() groups audit_log's developer-recorded
+review decisions by (memory_type, owning_project, classification) and
+flags a group only when BOTH a minimum sample size AND a minimum
+unfavorable rate are crossed together -- a rate threshold alone would
+flag noise from tiny samples, a sample-size threshold alone would flag
+large groups with an unremarkable rate. Deliberately looks at
+'reject'/'quarantined' as developer-CHOSEN dispositions (Scope Doc §3,
+Principle 2's two-outcome model) rather than an old auto-quarantine
+signal that no longer exists since Step 6.5.
+
+One real naming note: Architecture §7 calls the trigger
+'scheduled_consolidation_window'; the actual code has
+'scheduled_consolidation' (no _window suffix), scaffolded since Phase
+4. Used the real, already-wired name rather than churn working code to
+git log --oneline -3his pass genuinely never writes anything."cit
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        app/self_healing.py
+        tests/test_self_healing.py
+
+nothing added to commit but untracked files present (use "git add" to track)
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   app/self_healing.py
+        new file:   tests/test_self_healing.py
+
+[main 8bf91c5] feat: Phase 11.1 - self-healing observation pass (read-only)
+ 2 files changed, 218 insertions(+)
+ create mode 100644 app/self_healing.py
+ create mode 100644 tests/test_self_healing.py
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (6/6), 4.14 KiB | 4.14 MiB/s, done.
+Total 6 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/sassycomapp/memory-governor.git
+   ad875f3..8bf91c5  main -> main
+8bf91c5 (HEAD -> main, origin/main) feat: Phase 11.1 - self-healing observation pass (read-only)
+ad875f3 test: Phase 10.3 - end-to-end review cycle test
+8a9bb63 feat: Phase 10.2 - Q&A sheet rendering, implemented in-repo (not deferred)
+(.venv) dev-p@dev-p:~/memory-governor$
+
+
+---
+
+Clean commit — 8bf91c5, confirmed on origin/main.
+
+Step 11.1 — Observation pass: closed, agreed.
+
+
+---
+
+
+
+
+
+
+
+

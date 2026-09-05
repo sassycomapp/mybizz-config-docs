@@ -1,0 +1,435 @@
+Step 2.1 — Apply Postgres schema
+
+Per Architecture §1.2, this creates the five tables (projects, memory_candidates, policy_versions, memory_events) against the memory_governor database provisioned in Step 0.1. Per Workflow Step 2.1, exit criteria: all tables exist with correct constraints, notably the memory_candidates.owning_project foreign key to projects.
+
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+source .env
+
+cat > migrations/001_initial_schema.sql <<'SQLEOF'
+CREATE TABLE projects (
+    project_id      TEXT PRIMARY KEY,
+    display_name    TEXT NOT NULL,
+    dormant         BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE memory_candidates (
+    memory_id           TEXT PRIMARY KEY,
+    owning_project       TEXT NOT NULL REFERENCES projects(project_id),
+    agent_id            TEXT,
+    session_id          TEXT,
+    scope                JSONB NOT NULL,
+    memory_type          TEXT NOT NULL,
+    subject              JSONB,
+    content              JSONB NOT NULL,
+    provenance            JSONB NOT NULL,
+    created_at           TIMESTAMPTZ NOT NULL,
+    updated_at           TIMESTAMPTZ NOT NULL,
+r_svc -h localhost -d memory_governor -c "\di"ql -U memory_governo
+-bash: migrations/001_initial_schema.sql: No such file or directory
+psql: error: migrations/001_initial_schema.sql: No such file or directory
+Did not find any relations.
+ conname | table_name | references_table
+---------+------------+------------------
+(0 rows)
+
+Did not find any relations.
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+Real failure, and the cause is visible directly in your own paste: -bash: migrations/001_initial_schema.sql: No such file or directory. The heredoc got cut off mid-write — your terminal's compressed echo shows the cat > migrations/... block stopping partway through the CREATE TABLE memory_candidates definition (right after updated_at TIMESTAMPTZ NOT NULL,), meaning the closing SQLEOF delimiter never arrived before the block got interrupted by the next commands scrolling in. The file was never actually created — psql -f then correctly failed to find it, and everything downstream (\dt, the FK query, \di) ran against a database that received no schema at all, which is exactly why they all report empty.
+
+This is a paste-truncation problem, not a Postgres or SQL problem — nothing wrong with the connection, credentials, or schema design. Re-running the exact same block should work; only flagging in case it happens again, since a partial heredoc silently succeeding with truncated-but-valid SQL would be a much worse failure mode than this clean, obvious one.
+
+---
+What already happened (in the past, done, finished): That first paste ran. It failed — the file never got created because the paste got cut off partway through, and everything after that (the psql commands) correctly reported errors because there was no file and no schema. That's over. Nothing from that attempt needs undoing, because nothing was actually created — no file, no tables, nothing in your database. It failed safely.
+
+What's happening now: You're sitting at a clean, empty prompt. Nothing is running. Nothing is pending. Your database is still completely empty, exactly as it was after Step 0.1 — untouched.
+
+We are starting completely fresh from here. Nothing to clean up, nothing to reverse.
+
+Now, to stop this same paste-corruption from happening a second time, I'm going to give you the schema file in four small pieces instead of one big block — small enough that your terminal can't scramble them. First piece only, nothing else yet:
+
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > migrations/001_initial_schema.sql <<'SQLEOF'
+CREATE TABLE projects (
+    project_id TEXT PRIMARY KEY,
+    display_name TEXT NOT NULL,
+    dormant BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+SQLEOF
+-bash: migrations/001_initial_schema.sql: No such file or directory
+(.venv) dev-p@dev-p:~/memory-governor$ cat migrations/001_initial_schema.sql
+cat: migrations/001_initial_schema.sql: No such file or directory
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+Found it — and it's a genuine gap on my end, not a paste problem after all. Good that we slowed down, because this proves it clearly now: even this small, clean 6-line paste failed with the exact same No such file or directory error. That rules out paste corruption as the cause entirely — a corrupted paste would still create some file, just with wrong content. This error means the migrations/ directory itself doesn't exist.
+
+Checking back on Step 0.4 (repo scaffolding): I gave you mkdir -p app tests docs registers/candidates — I never included migrations in that list, even though Architecture §9 calls for it. That's a real omission from that step, only surfacing now because this is the first time anything's tried to write into it.
+
+Fixing it properly — nothing about your pasting was wrong:
+
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+mkdir -p migrations
+ls -la migrations
+total 8
+drwxr-xr-x  2 dev-p dev-p 4096 Aug 17 17:32 .
+drwxr-xr-x 12 dev-p dev-p 4096 Aug 17 17:32 ..
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+Confirmed — migrations/ now exists, empty, ready. That was the actual root cause the whole time; good that we found it cleanly.
+
+Now retry piece one, the same small block as before:
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > migrations/001_initial_schema.sql <<'SQLEOF'
+CREATE TABLE projects (
+    project_id TEXT PRIMARY KEY,
+    display_name TEXT NOT NULL,
+    dormant BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+SQLEOF
+
+cat migrations/001_initial_schema.sql
+CREATE TABLE projects (
+    project_id TEXT PRIMARY KEY,
+    display_name TEXT NOT NULL,
+    dormant BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Matches exactly — piece one confirmed correct on disk.
+
+Piece two — appending the memory_candidates table. Using >> (append) this time, not > (overwrite), so it adds to the file rather than replacing it:
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cat >> migrations/001_initial_schema.sql <<'SQLEOF'
+
+CREATE TABLE memory_candidates (
+    memory_id TEXT PRIMARY KEY,
+    owning_project TEXT NOT NULL REFERENCES projects(project_id),
+    agent_id TEXT,
+    session_id TEXT,
+    scope JSONB NOT NULL,
+    memory_type TEXT NOT NULL,
+    subject JSONB,
+    content JSONB NOT NULL,
+    provenance JSONB NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL,
+    valid_from TIMESTAMPTZ,
+    valid_until TIMESTAMPTZ,
+    valid_until_reason TEXT,
+    confidence JSONB NOT NULL,
+    policy JSONB NOT NULL,
+    status TEXT NOT NULL,
+    supersedes_id TEXT REFERENCES memory_candidates(memory_id),
+    contradiction JSONB,
+    review JSONB,
+    audit JSONB
+cat migrations/001_initial_schema.sqlcandidates(status);project);
+CREATE TABLE projects (
+    project_id TEXT PRIMARY KEY,
+    display_name TEXT NOT NULL,
+    dormant BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE memory_candidates (
+    memory_id TEXT PRIMARY KEY,
+    owning_project TEXT NOT NULL REFERENCES projects(project_id),
+    agent_id TEXT,
+    session_id TEXT,
+    scope JSONB NOT NULL,
+    memory_type TEXT NOT NULL,
+    subject JSONB,
+    content JSONB NOT NULL,
+    provenance JSONB NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL,
+    valid_from TIMESTAMPTZ,
+    valid_until TIMESTAMPTZ,
+    valid_until_reason TEXT,
+    confidence JSONB NOT NULL,
+    policy JSONB NOT NULL,
+    status TEXT NOT NULL,
+    supersedes_id TEXT REFERENCES memory_candidates(memory_id),
+    contradiction JSONB,
+    review JSONB,
+    audit JSONB
+);
+CREATE INDEX idx_mc_project ON memory_candidates(owning_project);
+CREATE INDEX idx_mc_status ON memory_candidates(status);
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+
+Both tables confirmed present and correct, in the right order — projects followed by memory_candidates with both indexes. Piece two landed cleanly.
+
+One thing to note before we continue, purely so you're not confused if you look back at your own screen: the ); closing line and the SQLEOF marker itself don't appear in your terminal echo, but the cat output at the end proves the file is genuinely correct and complete regardless — that's just the terminal's display compressing the echo again, not a real problem, and we no longer need to worry about it since the file content itself is what matters and it's right.
+
+Piece three — policy_versions:
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cat >> migrations/001_initial_schema.sql <<'SQLEOF'
+
+CREATE TABLE policy_versions (
+    policy_version TEXT PRIMARY KEY,
+    thresholds JSONB NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT FALSE,
+    effective_from TIMESTAMPTZ NOT NULL DEFAULT now(),
+    approved_by TEXT NOT NULL
+);
+SQLEOF
+
+cat migrations/001_initial_schema.sql
+CREATE TABLE projects (
+    project_id TEXT PRIMARY KEY,
+    display_name TEXT NOT NULL,
+    dormant BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE memory_candidates (
+    memory_id TEXT PRIMARY KEY,
+    owning_project TEXT NOT NULL REFERENCES projects(project_id),
+    agent_id TEXT,
+    session_id TEXT,
+    scope JSONB NOT NULL,
+    memory_type TEXT NOT NULL,
+    subject JSONB,
+    content JSONB NOT NULL,
+    provenance JSONB NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL,
+    valid_from TIMESTAMPTZ,
+    valid_until TIMESTAMPTZ,
+    valid_until_reason TEXT,
+    confidence JSONB NOT NULL,
+    policy JSONB NOT NULL,
+    status TEXT NOT NULL,
+    supersedes_id TEXT REFERENCES memory_candidates(memory_id),
+    contradiction JSONB,
+    review JSONB,
+    audit JSONB
+);
+CREATE INDEX idx_mc_project ON memory_candidates(owning_project);
+CREATE INDEX idx_mc_status ON memory_candidates(status);
+
+CREATE TABLE policy_versions (
+    policy_version TEXT PRIMARY KEY,
+    thresholds JSONB NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT FALSE,
+    effective_from TIMESTAMPTZ NOT NULL DEFAULT now(),
+    approved_by TEXT NOT NULL
+);
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+All three tables confirmed present and correct. Piece three landed cleanly.
+
+Last piece — memory_events, the outbox table:
+
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cat >> migrations/001_initial_schema.sql <<'SQLEOF'
+
+CREATE TABLE memory_events (
+    event_id BIGSERIAL PRIMARY KEY,
+    event_type TEXT NOT NULL,
+    memory_id TEXT REFERENCES memory_candidates(memory_id),
+    payload JSONB NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    processed_at TIMESTAMPTZ,
+    processed_by TEXT,
+    attempt_count INT NOT NULL DEFAULT 0,
+    last_error TEXT
+);
+CREATE INDEX idx_events_unprocessed ON memory_events(created_at) WHERE processed_at IS NULL;
+SQLEOF
+
+cat migrations/001_initial_schema.sql
+CREATE TABLE projects (
+    project_id TEXT PRIMARY KEY,
+    display_name TEXT NOT NULL,
+    dormant BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE memory_candidates (
+    memory_id TEXT PRIMARY KEY,
+    owning_project TEXT NOT NULL REFERENCES projects(project_id),
+    agent_id TEXT,
+    session_id TEXT,
+    scope JSONB NOT NULL,
+    memory_type TEXT NOT NULL,
+    subject JSONB,
+    content JSONB NOT NULL,
+    provenance JSONB NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL,
+    valid_from TIMESTAMPTZ,
+    valid_until TIMESTAMPTZ,
+    valid_until_reason TEXT,
+    confidence JSONB NOT NULL,
+    policy JSONB NOT NULL,
+    status TEXT NOT NULL,
+    supersedes_id TEXT REFERENCES memory_candidates(memory_id),
+    contradiction JSONB,
+    review JSONB,
+    audit JSONB
+);
+CREATE INDEX idx_mc_project ON memory_candidates(owning_project);
+CREATE INDEX idx_mc_status ON memory_candidates(status);
+
+CREATE TABLE policy_versions (
+    policy_version TEXT PRIMARY KEY,
+    thresholds JSONB NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT FALSE,
+    effective_from TIMESTAMPTZ NOT NULL DEFAULT now(),
+    approved_by TEXT NOT NULL
+);
+
+CREATE TABLE memory_events (
+    event_id BIGSERIAL PRIMARY KEY,
+    event_type TEXT NOT NULL,
+    memory_id TEXT REFERENCES memory_candidates(memory_id),
+    payload JSONB NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    processed_at TIMESTAMPTZ,
+    processed_by TEXT,
+    attempt_count INT NOT NULL DEFAULT 0,
+    last_error TEXT
+);
+CREATE INDEX idx_events_unprocessed ON memory_events(created_at) WHERE processed_at IS NULL;
+(.venv) dev-p@dev-p:~/memory-governor$
+
+
+---
+
+All four tables and all three indexes present, complete, in the correct order. The full schema file is now correctly assembled on disk.
+
+Final check before applying:
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ grep -c "^CREATE TABLE" migrations/001_initial_schema.sql
+grep -c "^CREATE INDEX" migrations/001_initial_schema.sql
+4
+3
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+Confirmed — 4 tables, 3 indexes, exactly as expected. The schema file is complete and correct.
+
+Now applying it to the memory_governor database:
+
+bash
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+source .env
+
+PGPASSWORD="${MEMORY_GOVERNOR_DB_PASSWORD}" psql -U memory_governor_svc -h localhost -d memory_governor -f migrations/001_initial_schema.sql
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+Applied successfully — four CREATE TABLE and three CREATE INDEX, no ERROR lines. Schema is live in the database.
+
+Now the verification queries, one small block:
+
+--
+(.venv) dev-p@dev-p:~/memory-governor$ source .env
+
+PGPASSWORD="${MEMORY_GOVERNOR_DB_PASSWORD}" psql -U memory_governor_svc -h localhost -d memory_governor -c "\dt"
+                    List of relations
+ Schema |       Name        | Type  |        Owner
+--------+-------------------+-------+---------------------
+ public | memory_candidates | table | memory_governor_svc
+ public | memory_events     | table | memory_governor_svc
+ public | policy_versions   | table | memory_governor_svc
+ public | projects          | table | memory_governor_svc
+(4 rows)
+
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+All four tables confirmed present, correctly owned by memory_governor_svc.
+
+Next — the foreign key check:
+
+---
+
+                conname                |    table_name     | references_table
+---------------------------------------+-------------------+-------------------
+ memory_candidates_owning_project_fkey | memory_candidates | projects
+ memory_candidates_supersedes_id_fkey  | memory_candidates | memory_candidates
+ memory_events_memory_id_fkey          | memory_events     | memory_candidates
+(3 rows)
+
+~
+
+---
+
+All three foreign keys confirmed exactly as expected — memory_candidates.owning_project → projects (the critical one Step 2.1's exit criteria names specifically), memory_candidates.supersedes_id → memory_candidates (self-referencing, correct), and memory_events.memory_id → memory_candidates.
+
+(That trailing ~ is just the pager again, less waiting — press q if it's still sitting there before running the next command.)
+
+Last check — the indexes:
+
+---
+
+
+
+                                 List of relations
+ Schema |          Name          | Type  |        Owner        |       Table
+--------+------------------------+-------+---------------------+-------------------
+ public | idx_events_unprocessed | index | memory_governor_svc | memory_events
+ public | idx_mc_project         | index | memory_governor_svc | memory_candidates
+ public | idx_mc_status          | index | memory_governor_svc | memory_candidates
+ public | memory_candidates_pkey | index | memory_governor_svc | memory_candidates
+ public | memory_events_pkey     | index | memory_governor_svc | memory_events
+ public | policy_versions_pkey   | index | memory_governor_svc | policy_versions
+ public | projects_pkey          | index | memory_governor_svc | projects
+(7 rows)
+
+
+---
+
+All seven indexes confirmed — exactly as expected: the three explicit ones (idx_mc_project, idx_mc_status, idx_events_unprocessed) plus all four automatic primary-key indexes.
+
+Step 2.1 — Apply Postgres schema: exit criteria met. All four tables exist with correct constraints, the critical owning_project → projects foreign key confirmed, all indexes in place.
+
+Worth naming plainly before we close this one: the real problem today wasn't your pasting — it was a genuine gap in my own Step 0.4 scaffolding (I never created the migrations/ directory, even though Architecture §9 calls for it), and the small-piece approach we switched to was what actually let us find that cleanly rather than chasing a phantom paste-corruption theory. Good instinct on your part to stop and say something looked wrong rather than pushing through.
+
+Whenever you're ready, send me the full Step 2.1 file — worth including the whole back-and-forth from the original failed attempt through to this final confirmation, since the migrations/ directory gap is exactly the kind of thing worth having on record. Once agreed closed, next is Step 2.2 — storage.py, the Postgres-backed persistence layer that replaces Phase 1's in-memory stubs.
+
+---
+
+Step 2.1 — Apply Postgres schema: closed, agreed.
+
+Final state on record:
+
+All four tables created: projects, memory_candidates, policy_versions, memory_events
+Critical FK confirmed: memory_candidates.owning_project → projects, plus supersedes_id self-reference and memory_events.memory_id → memory_candidates
+All seven indexes present (3 explicit + 4 automatic PK indexes)
+One real defect found and fixed: Step 0.4's scaffolding never created migrations/, despite Architecture §9 requiring it — now created and confirmed present
+Working method change adopted mid-step and worth carrying forward: small, single-piece file writes with an immediate cat-verify after each piece, rather than one large multi-statement heredoc — this is what actually separated "terminal display artifact" from "real missing directory," and should be the default approach for any future multi-part file write in this project, not just a one-off fix
+
+That closes Phase 2's first step.

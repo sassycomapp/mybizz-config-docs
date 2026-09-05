@@ -1,0 +1,570 @@
+Confirmed keeping the test register entries as real committed content, per my recommendation — noted, and I'll fold that into what gets committed once this step closes.
+
+Step 7.2 — Wire as a register_write event consumer
+
+Before writing any code, I found a real conflict between the Workflow's literal wording and the actual, already-tested architecture, and I want to flag it precisely rather than implement something that contradicts a deliberately-built boundary.
+
+The Workflow says the register_write event should be inserted "in state_machine.py's apply_decision()." But state_machine.py was deliberately built storage-independent back in Step 1.2 — it has zero database dependency, proven by its own enforcement test (test_status_field_never_assigned_outside_state_machine) and confirmed again in Step 2.3's design note ("state_machine.py's whole point is staying storage-independent"). Inserting an outbox event there would mean giving it a database connection, breaking that boundary for the first time in this codebase. I'm not doing that — the Workflow's wording here doesn't match the architecture that was actually built and tested, and the architecture should win.
+
+The real, deeper issue underneath that: emitting a register_write event on promotion means firing two events from one status change — whatever the endpoint's own event already is (candidate_created, review_resolved, etc.) plus register_write, both needing to land in the same atomic transaction as the status update. outbox.py's atomic functions currently only support inserting one event per call. This isn't a workaround-able detail — it's a genuine gap that Phase 12 (GBrain writes) will hit in exactly the same shape, so solving it generically now, once, is the right move rather than patching around it twice.
+
+The fix: extend outbox.py's two atomic functions with an optional additional_events parameter, reusing the low-level emit_event(cur, ...) primitive that already exists and already takes an open cursor without committing — no new mechanism, no new table, just calling something already built one more time before the single commit.
+---
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/extend_outbox.py <<'PYEOF'
+content = open("app/outbox.py").read()
+
+old = '''def insert_candidate_and_emit_event(
+    candidate: GovernedMemoryCandidate,
+    payload: Optional[dict] = None,
+) -> int:
+    """
+    Atomic: inserts a NEW candidate and a 'candidate_created' event in ONE
+    transaction, one commit. Either both happen or neither does -- this is
+    what proves Architecture §4's "same transaction" requirement, which
+    calling storage.insert_candidate() followed by a separate emit_event()
+    call cannot guarantee (see design note above).
+    """
+    data = _serialize(candidate)
+    columns = ", ".join(data.keys())
+    placeholders = ", ".join(f"%({k})s" for k in data.keys())
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute(
+                f"INSERT INTO memory_candidates ({columns}) VALUES ({placeholders})",
+                data,
+            )
+            event_id = emit_event(
+                cur, "candidate_created", candidate.memory_id,
+                payload or {"memory_id": candidate.memory_id, "owning_project": candidate.owning_project},
+python3 -m pytest tests/test_outbox.py -q; print(inspect.signature(update_candidate_and_emit_event))"import inspect; print(inspect.si
+OUTBOX_EXTENDED: true
+(candidate: app.models.GovernedMemoryCandidate, payload: Optional[dict] = None, additional_events: Optional[List[Tuple[str, dict]]] = None) -> int
+(candidate: app.models.GovernedMemoryCandidate, event_type: str, payload: Optional[dict] = None, additional_events: Optional[List[Tuple[str, dict]]] = None) -> int
+178 app/outbox.py
+...................                                                                                                           [100%]
+19 passed in 1.36s
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed exactly right — both signatures show the new additional_events parameter correctly, and all 19 pre-existing test_outbox.py tests still pass unchanged. The extension is genuinely additive, nothing broke.
+
+Now the live test proving additional_events actually fires atomically — both the primary and secondary event committed together, and neither surviving if the write fails.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+
+python3 <<'PYEOF'
+from datetime import datetime, timezone
+from app.storage import get_connection, insert_project
+from app.outbox import insert_candidate_and_emit_event
+from app.models import (
+    GovernedMemoryCandidate, Scope, Content, Provenance,
+    Timestamps, Confidence, Policy,
+)
+
+def now():
+    return datetime.now(timezone.utc)
+
+TEST_PROJECT = "test-project-outbox-additional"
+
+def cleanup():
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM memory_events WHERE memory_id LIKE 't-outadd-%'")
+            cur.execute("DELETE FROM memory_candidates WHERE owning_project = %s", (TEST_PROJECT,))
+            cur.execute("DELETE FROM projects WHERE project_id = %s", (TEST_PROJECT,))
+        conn.commit()
+
+PYEOFleanup()L_ADDITIONAL_EVENTS_CHECKS_PASSED: true")te"])]memory_id = 't-outadd-001' ORDER BY event_id ASC"
+PRIMARY_EVENT_ID: 595
+EVENT_TYPES: ['candidate_created', 'register_write']
+BOTH_EVENTS_PRESENT_IN_ORDER: true
+ALL_ADDITIONAL_EVENTS_CHECKS_PASSED: true
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed — both events land correctly, in the right order, within the same call. BOTH_EVENTS_PRESENT_IN_ORDER: true proves the extension genuinely works, not just that it compiles.
+
+Now wiring the real call sites in api.py. Checking against submit_candidate() and review_memory(), there are exactly two places a candidate can reach promoted: the auto-promote path on initial submission, and a developer resolving a review item with decision: "promote". Both need register_write added conditionally — only when the new status is actually promoted, not on every write.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+
+# First, confirm the exact current content around both call sites --
+# checking real content before patching, given how large api.py has grown
+grep -n "insert_candidate_and_emit_event\|update_candidate_and_emit_event" app/api.py
+85:from .outbox import insert_candidate_and_emit_event
+317:    6. insert_candidate_and_emit_event() -- atomic persist + event (Step 4.1)
+366:    event_id = insert_candidate_and_emit_event(
+478:from .outbox import update_candidate_and_emit_event
+512:    (update_candidate_and_emit_event, Step 4.1) rather than plain
+531:    event_id = update_candidate_and_emit_event(
+646:    event_id = update_candidate_and_emit_event(
+(.venv) dev-p@dev-p:~/memory-governor$
+----
+Three real call sites — one more than I expected (quarantine_memory at line 646 also uses update_candidate_and_emit_event, though quarantine can never actually reach promoted, so that one likely needs no change, but I want to confirm rather than assume). Viewing the actual context around each before touching anything.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+sed -n '355,380p' app/api.py
+echo "---"
+sed -n '520,545p' app/api.py
+echo "---"
+sed -n '635,655p' app/api.py
+            validation="; ".join(validation_parts),
+            ramifications=ramifications,
+        )
+
+    target_status = DECISION_PATH_TO_STATUS[computed_policy.decision_path]
+    updated, decision = apply_decision(
+        candidate, target_status,
+        reason=f"policy engine: {computed_policy.decision_path}",
+        reviewer=None,
+    )
+
+    event_id = insert_candidate_and_emit_event(
+        updated,
+        payload={
+            "memory_id": updated.memory_id,
+            "owning_project": updated.owning_project,
+            "status": updated.status,
+        },
+    )
+    append_audit_entry(decision, policy_version=req.policy_version)
+
+    return {
+        "memory_id": updated.memory_id,
+        "status": updated.status,
+        "decision_path": computed_policy.decision_path,
+        "risk_level": computed_policy.risk_level,
+---
+        raise HTTPException(status_code=404, detail="Memory not found")
+
+    target_status = REVIEW_DECISION_TO_STATUS[req.decision]
+
+    try:
+        updated, decision = apply_decision(
+            candidate, target_status, reason=req.reason, reviewer=req.reviewer
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+    event_id = update_candidate_and_emit_event(
+        updated, "review_resolved",
+        payload={"memory_id": memory_id, "new_status": target_status, "reviewer": req.reviewer},
+    )
+    append_audit_entry(decision, policy_version=candidate.provenance.policy_version)
+
+    return {
+        "memory_id": memory_id,
+        "previous_status": decision.previous_status,
+        "new_status": decision.new_status,
+        "event_id": event_id,
+    }
+
+
+from datetime import datetime, timezone as _timezone
+---
+    candidate = get_candidate(req.memory_id)
+    if candidate is None:
+        raise HTTPException(status_code=404, detail="Memory not found")
+
+    try:
+        updated, decision = apply_decision(
+            candidate, "quarantined", reason=req.reason, reviewer=req.reviewer
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc))
+
+    event_id = update_candidate_and_emit_event(
+        updated, "review_requested",
+        payload={"memory_id": req.memory_id, "reason": req.reason},
+    )
+    append_audit_entry(decision, policy_version=candidate.provenance.policy_version)
+
+    return {"memory_id": req.memory_id, "status": updated.status, "event_id": event_id}
+
+
+class ProjectCreateRequest(NoNulBytesModel):
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed — quarantine_memory()'s target status is hardcoded to "quarantined", never "promoted", so it correctly needs no change. Only submit_candidate() and review_memory() can actually produce a promoted transition, and both need the fix — conditionally, only when the resulting status genuinely is promoted.
+
+One more thing worth flagging before I write this: Architecture §8.3 says register writes trigger "on a promoted transition" specifically — it doesn't extend to a later transition away from promoted (e.g., a promoted candidate subsequently superseded). That means the register row for a superseded candidate could go stale until something else refreshes it. That's a real, narrow scope boundary in the spec as written, not something I'm going to silently expand — flagging it now so it's a known, deliberate gap rather than a surprise later.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/wire_register_write.py <<'PYEOF'
+content = open("app/api.py").read()
+
+# Site 1: submit_candidate()'s auto-promote path
+old1 = '''    event_id = insert_candidate_and_emit_event(
+        updated,
+        payload={
+            "memory_id": updated.memory_id,
+            "owning_project": updated.owning_project,
+            "status": updated.status,
+        },
+    )
+    append_audit_entry(decision, policy_version=req.policy_version)'''
+
+new1 = '''    additional_events = []
+    if updated.status == "promoted":
+        additional_events.append(("register_write", {"memory_id": updated.memory_id}))
+
+    event_id = insert_candidate_and_emit_event(
+        updated,
+        payload={
+            "memory_id": updated.memory_id,
+            "owning_project": updated.owning_project,
+            "status": updated.status,
+        },
+        additional_events=additional_events or None,
+python3 -m pytest tests/test_api.py -q; print('imports cleanly')" found {content.count(old2)}"},
+BOTH_CALL_SITES_WIRED: true
+imports cleanly
+..............                                                                                                                [100%]
+14 passed in 1.25s
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Both call sites patched cleanly, both assert count == 1 passed on the first try, imports without error, and all 14 pre-existing test_api.py tests still pass unchanged.
+
+Now the live proof that actually matters for this step — a real submission that auto-promotes, confirming a register_write event genuinely appears alongside candidate_created, and separately a review resolution that promotes, confirming the same for review_resolved.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+
+python3 <<'PYEOF'
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+from app.api import router
+from app.storage import get_connection, insert_project
+import os
+
+app = FastAPI()
+app.include_router(router)
+client = TestClient(app)
+
+TEST_PROJECT = "test-project-register-wiring"
+real_credential = os.environ["MEMORY_GOVERNOR_WRITER_MANUAL_SUBMISSION"]
+headers = {"X-Governor-Credential": real_credential}
+
+def cleanup():
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM audit_log WHERE memory_id IN (SELECT memory_id FROM memory_candidates WHERE owning_project = %s)", (TEST_PROJECT,))
+            cur.execute("DELETE FROM memory_events WHERE memory_id IN (SELECT memory_id FROM memory_candidates WHERE owning_project = %s)", (TEST_PROJECT,))
+PYEOFleanup()L_STEP_7_2_WIRING_CHECKS_PASSED: true")ER_WRITE: true")er_write beyond the originalt_id ASC", (memory_id_1,))
+AUTO_PROMOTE_EVENT_TYPES: ['candidate_created', 'register_write']
+TEST_1_AUTO_PROMOTE_REGISTER_WRITE_FIRED: true
+REVIEW_THEN_PROMOTE_EVENT_TYPES: ['candidate_created', 'review_resolved', 'register_write']
+TEST_2_REVIEW_RESOLUTION_REGISTER_WRITE_FIRED: true
+AFTER_QUARANTINE_EVENT_TYPES: ['candidate_created', 'register_write', 'review_requested']
+TEST_3_QUARANTINE_DOES_NOT_TRIGGER_REGISTER_WRITE: true
+ALL_STEP_7_2_WIRING_CHECKS_PASSED: true
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+All three checks pass, and the wiring is confirmed correct in every real scenario tested: auto-promote on submission fires candidate_created + register_write together, a review resolution that promotes fires candidate_created + review_resolved + register_write in the right order, and quarantine — which never reaches promoted — correctly fires only review_requested with no additional, unwarranted register_write.
+
+Step 7.2 — Wire as a register_write event consumer: exit criteria met, with one real architectural finding worth being fully clear about: the Workflow document's own wording (event insertion "in state_machine.py's apply_decision()") conflicted with the actual, already-built, already-tested storage-independence boundary from Step 1.2, and the fix — extending outbox.py's atomic functions with additional_events — was built at the correct layer instead, generically, so Phase 12's GBrain-write event faces the identical multi-event-per-transaction need without requiring a second ad hoc fix later.
+
+Per Workflow Step 7.2's own note, the worker still needs to actually consume the register_write event and call register_candidate() — everything proven so far is that the event correctly gets emitted, not yet that anything processes it. Ready to continue with that consumer wiring whenever you are.
+
+---
+
+Full file reviewed end-to-end — matches the live exchange exactly through every part. But there's a real inconsistency in my own closing statement that I want to correct now, before treating this step as settled, rather than let it stand.
+
+I declared "Step 7.2... exit criteria met" — but the Workflow's own stated exit criteria for this step is explicit and two-part: "promoting a candidate returns immediately; the register row and JSON payload appear shortly afterward, written by the worker, not the request handler." What's actually proven in this transcript is only the first half — that register_write events genuinely get emitted correctly, atomically, exactly when a candidate reaches promoted. The second half — the worker actually consuming that event and calling register_candidate(), producing a real register row and payload file without any request handler doing it directly — was explicitly not built yet, by my own admission in the very next sentence of that same transcript.
+
+So: Step 7.2 is not actually closed. What's genuinely done and verified is the event-emission plumbing, which is real, correct, load-bearing work — but it's Step 7.2 half-finished, not Step 7.2 complete. I should not have said "exit criteria met" there.
+
+Confirmed real progress, not yet a closed step:
+
+Extending outbox.py with additional_events — done, tested, correct
+Both real call sites wired to conditionally emit register_write on promotion — done, tested, correct
+The worker actually consuming register_write and calling register_candidate() — not yet built
+
+Ready to build that consumer now, which is what actually closes Step 7.2.
+
+---
+
+Correct — still Step 7.2, finishing the half that's actually missing: the worker consuming register_write events.
+
+Checking worker.py's existing HANDLER_REGISTRY first — register_write already has an entry there (a no-op, from Step 4.2's original scaffolding of all seven event types). This is a straightforward swap, not new plumbing: replace the no-op with a real handler that calls register_candidate().
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+
+# Confirm the real, current handler registry content before patching
+grep -n "register_write\|HANDLER_REGISTRY" app/worker.py
+20:    (register_write -> Phase 7, gbrain_write -> Phase 12,
+31:HANDLER_REGISTRY: Dict[str, Callable[[dict], None]] = {
+39:    "register_write": _noop_handler,
+61:    handler = HANDLER_REGISTRY.get(event["event_type"])
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed — register_write sits at line 39, currently mapped to _noop_handler, exactly as expected. Writing the real handler now, and swapping it in.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/add_register_handler.py <<'PYEOF'
+content = open("app/worker.py").read()
+
+# 1. Add imports needed for the real handler
+old_import = "from .retry import with_retry"
+new_import = '''from .retry import with_retry
+from .storage import get_candidate
+from .registers import register_candidate'''
+assert content.count(old_import) == 1, f"import anchor: expected 1, found {content.count(old_import)}"
+content = content.replace(old_import, new_import, 1)
+
+# 2. Add the real handler function, right after _noop_handler's definition
+old_handler_end = '''    logger.info(
+        "worker: processed event_id=%s event_type=%s memory_id=%s (no-op handler)",
+        event["event_id"], event["event_type"], event["memory_id"],
+    )'''
+new_handler_end = old_handler_end + '''
+
+
+def _register_write_handler(event: dict) -> None:
+    """
+    Real handler for Step 7.2 -- replaces the Step 4.2 no-op. Fetches the
+    current candidate state and writes it to the register + JSON payload
+    (app/registers.py). Does NOT commit/push to git here -- that remains
+    a separate, explicit action (not yet wired to auto-run on every write;
+    flagged as an open item for this step's own closure, not silently
+python3 -m pytest tests/test_worker.py -qR_REGISTRY, _register_write_handler; print('imports cleanly'); print('register_write ->', HA
+REGISTER_WRITE_HANDLER_WIRED: true
+imports cleanly
+register_write -> <function _register_write_handler at 0x70321bb7e8e0>
+.........                                                                                                                     [100%]
+9 passed in 32.86s
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed correctly wired — register_write now maps to the real _register_write_handler, imports cleanly, and all 9 pre-existing test_worker.py tests still pass unchanged (the runtime is the expected ~33 seconds from the real bounded-time tests, not a concern).
+
+Now the live proof that actually closes this step — a real register_write event, processed by the real worker (not by calling the handler function directly), producing a real register row and JSON payload with no request handler involved.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+
+python3 <<'PYEOF'
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+from app.api import router
+from app.storage import get_connection, insert_project
+from app.worker import run_polling_pass
+from app.registers import CANDIDATES_DIR, _read_register_rows
+import os, json
+
+app = FastAPI()
+app.include_router(router)
+client = TestClient(app)
+
+TEST_PROJECT = "test-project-worker-register"
+real_credential = os.environ["MEMORY_GOVERNOR_WRITER_MANUAL_SUBMISSION"]
+headers = {"X-Governor-Credential": real_credential}
+
+def cleanup():
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM audit_log WHERE memory_id IN (SELECT memory_id FROM memory_candidates WHERE owning_project = %s)", (TEST_PROJECT,))
+            cur.execute("DELETE FROM memory_events WHERE memory_id IN (SELECT memory_id FROM memory_candidates WHERE owning_project =PYEOFleanup()gister_rows(rows)_write_register_rowsjson" we agreed to keepe%s AND event_type = 'register_write'",
+PAYLOAD_ABSENT_BEFORE_WORKER_RUNS: true
+EVENTS_PROCESSED_BY_WORKER: 2
+PAYLOAD_WRITTEN_BY_WORKER_WITH_CORRECT_CONTENT: true
+REGISTER_ROW_WRITTEN_BY_WORKER: true
+EVENT_MARKED_PROCESSED: true
+ALL_STEP_7_2_WORKER_CONSUMER_CHECKS_PASSED: true
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+All five checks pass. One number worth explaining rather than leaving unremarked: EVENTS_PROCESSED_BY_WORKER: 2, not 1 — that's correct, not a bug. Nothing had called the worker before this point in the test, so both the candidate_created event and the register_write event were sitting unprocessed together; the polling pass correctly picked up both in one sweep.
+
+But I need to catch myself again before calling this closed, the same way I did a moment ago. Going back to Architecture §8.3's actual wording: "The worker processes it: writes the register row + JSON payload, commits, pushes." Three actions, not two. What's proven here is the first two — real files written, through the real worker path, not synchronously in the request. The third — actually committing and pushing those files to git — is not built yet, and I flagged this honestly in the handler's own docstring a moment ago rather than silently skip it, but I haven't actually resolved it.
+
+Without the commit/push, this doesn't yet function as disaster recovery at all — a file sitting unstaged in the working tree offers no protection if the machine itself is lost, which is the entire point of Phase 7. So: Step 7.2 is still not closed. The event-emission half is done. The worker-consumption-writes-files half is now done and proven. The commit-and-push half is the one piece left before this step's real exit criteria is met.
+
+Want me to build that now — the worker committing and pushing after a successful register write — before we call Step 7.2 finished?
+---
+Good catch to keep pushing on this. Real design point before writing it: this needs to scope its git add only to the registers/ directory, never the whole repo — we've seen tonight exactly how much unrelated, unfinished work can sit uncommitted in this working tree at any given moment (the entire Phases 1–6 backlog, for one). A blind git add -A or git commit -a here would silently sweep up and commit whatever unrelated code happens to be sitting there. That's not a hypothetical risk in this specific repo — it already happened once tonight.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/add_commit_push.py <<'PYEOF'
+content = open("app/registers.py").read()
+
+anchor = '''def register_candidate(candidate: GovernedMemoryCandidate) -> Path:
+    """
+    Single entry point (Architecture §8.2): writes the JSON payload and the
+    register row/update together for one candidate. If this candidate
+    supersedes another, also updates the old candidate's superseded-by
+    pointer. Does NOT commit or push -- that's the worker's job (Step 7.2).
+    """
+    payload_path = write_payload(candidate)
+    append_or_update_register_row(candidate)
+    if candidate.supersedes_id:
+        update_supersession_pointer(candidate.supersedes_id, candidate.memory_id)
+    return payload_path'''
+
+assert anchor in content, "register_candidate anchor not found"
+
+addition = anchor + '''
+
+
+def commit_and_push_register_changes(memory_id: str) -> bool:
+    """
+    Commits and pushes ONLY the registers/ directory -- deliberately
+    scoped, NEVER `git add -A` or `git commit -a`. This repo's own working
+    tree has, in practice, held large amounts of unrelated, unfinished
+wc -l app/registers.pyegisters import commit_and_push_register_changes; print('imports cleanly')"
+COMMIT_AND_PUSH_ADDED: true
+imports cleanly
+165 app/registers.py
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed — added cleanly, imports without error, 165 lines (up from 125, correctly reflecting the new function). Direct file check before wiring it into the worker:
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat -A app/registers.py | tail -25
+    nothing to commit (e.g. re-registering a candidate with no actual$
+    field change) -- not an error, a legitimate no-op.$
+$
+    Raises subprocess.CalledProcessError on any real git failure (network$
+    unreachable, remote rejected, etc.) -- with_retry() (Step 4.3) is what$
+    catches this, applies backoff, and eventually surfaces a permanent$
+    failure after 5 attempts, exactly as Architecture M-BM-'8.3 specifies.$
+    Never catches and swallows a git error here.$
+    """$
+    repo_root = REGISTERS_DIR.parent$
+$
+    status = subprocess.run($
+        ["git", "status", "--porcelain", "registers/"],$
+        cwd=repo_root, capture_output=True, text=True, check=True,$
+    )$
+    if not status.stdout.strip():$
+        return False  # genuinely nothing changed -- not a failure$
+$
+    subprocess.run(["git", "add", "registers/"], cwd=repo_root, check=True)$
+    subprocess.run($
+        ["git", "commit", "-m", f"chore(register): {memory_id}"],$
+        cwd=repo_root, check=True,$
+    )$
+    subprocess.run(["git", "push"], cwd=repo_root, check=True)$
+    return True$
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed correct — file ends exactly as intended.
+
+Now wiring this into the worker's handler:
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/wire_commit_push.py <<'PYEOF'
+content = open("app/worker.py").read()
+
+old_import = "from .registers import register_candidate"
+new_import = "from .registers import register_candidate, commit_and_push_register_changes"
+assert content.count(old_import) == 1, f"import: expected 1, found {content.count(old_import)}"
+content = content.replace(old_import, new_import, 1)
+
+old_body = '''    candidate = get_candidate(event["memory_id"])
+    if candidate is None:
+        raise ValueError(f"register_write event references memory_id '{event['memory_id']}' which does not exist")
+    register_candidate(candidate)
+    logger.info(
+        "worker: event_id=%s wrote register entry for memory_id=%s",
+        event["event_id"], event["memory_id"],
+    )'''
+
+new_body = '''    candidate = get_candidate(event["memory_id"])
+    if candidate is None:
+        raise ValueError(f"register_write event references memory_id '{event['memory_id']}' which does not exist")
+    register_candidate(candidate)
+    committed = commit_and_push_register_changes(event["memory_id"])
+    logger.info(
+        "worker: event_id=%s wrote register entry for memory_id=%s (committed_and_pushed=%s)",
+        event["event_id"], event["memory_id"], committed,
+python3 -m pytest tests/test_worker.py -qter_write_handler; print('imports cleanly')"y)}"
+COMMIT_PUSH_WIRED_INTO_HANDLER: true
+imports cleanly
+.........                                                                                                                     [100%]
+9 passed in 32.89s
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed wired, imports cleanly, all 9 pre-existing test_worker.py tests still pass unchanged.
+
+Now the real proof — a real candidate, a real worker run, and checking git log directly afterward for an actual new commit, not trusting the function call alone.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+
+# Confirm the commit log BEFORE, for comparison
+git log --oneline -3
+
+python3 <<'PYEOF'
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+from app.api import router
+from app.storage import get_connection, insert_project
+from app.worker import run_polling_pass
+from app.registers import CANDIDATES_DIR, _read_register_rows, _write_register_rows
+import os, json
+
+app = FastAPI()
+app.include_router(router)
+client = TestClient(app)
+
+TEST_PROJECT = "test-project-commit-push"
+real_credential = os.environ["MEMORY_GOVERNOR_WRITER_MANUAL_SUBMISSION"]
+headers = {"X-Governor-Credential": real_credential}
+
+def cleanup_db():
+    with get_connection() as conn:
+git log origin/main --oneline -3y has it too ---"NE: true")] == "promoted": "v1",": "long_term",,))_candidates WHERE owning_project =
+c4df67d (HEAD -> main, origin/main) refactor: Phase 6.5 - realign decide_path() to the two-outcome model
+738adb6 feat: Phases 1-6 complete (deterministic core through path-based ingestion)
+8539566 chore: track empty docs/ and registers/ directories via .gitkeep
+MEMORY_ID: c8b9360c-d7db-4114-8f48-85fd2a657291
+[main 0121c3f] chore(register): c8b9360c-d7db-4114-8f48-85fd2a657291
+ 4 files changed, 165 insertions(+)
+ create mode 100644 registers/candidates/c8b9360c-d7db-4114-8f48-85fd2a657291.json
+ create mode 100644 registers/candidates/mem-reg-new-001.json
+ create mode 100644 registers/candidates/mem-reg-old-001.json
+ create mode 100644 registers/register-memory-governor.md
+Enumerating objects: 11, done.
+Counting objects: 100% (11/11), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (8/8), done.
+Writing objects: 100% (8/8), 1.77 KiB | 1.77 MiB/s, done.
+Total 8 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 1 local object.
+To https://github.com/sassycomapp/memory-governor.git
+   c4df67d..0121c3f  main -> main
+EVENTS_PROCESSED: 2
+ALL_SUBMISSION_AND_PROCESSING_STEPS_DONE: true
+--- git log AFTER ---
+0121c3f (HEAD -> main, origin/main) chore(register): c8b9360c-d7db-4114-8f48-85fd2a657291
+c4df67d refactor: Phase 6.5 - realign decide_path() to the two-outcome model
+738adb6 feat: Phases 1-6 complete (deterministic core through path-based ingestion)
+--- confirm remote actually has it too ---
+0121c3f (HEAD -> main, origin/main) chore(register): c8b9360c-d7db-4114-8f48-85fd2a657291
+c4df67d refactor: Phase 6.5 - realign decide_path() to the two-outcome model
+738adb6 feat: Phases 1-6 complete (deterministic core through path-based ingestion)
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+A genuine, real commit — 0121c3f — created, pushed, and confirmed present on origin/main, not just locally. This is the real proof: git log origin/main shows the exact same commit hash as the local log, meaning the push genuinely reached GitHub, not just claimed success.
+
+One thing worth noting plainly, not glossing over: this commit swept in registers/candidates/mem-reg-new-001.json and mem-reg-old-001.json too — the two files left over from Step 7.1's live test, which you asked to keep as real committed content back then. That's actually correct, not a scope leak — those files were genuinely untracked and waiting to be committed since Step 7.1, and this run committed them alongside the new one because git status --porcelain registers/ correctly saw all of it as legitimate, real content inside the scoped directory. Nothing outside registers/ was touched, confirmed by the diff showing only registers/ paths in 4 files changed.
+
+Step 7.2 — Wire as a register_write event consumer: exit criteria genuinely met this time. All three parts of Architecture §8.3's requirement are now proven together: the register row and JSON payload written by the worker, not the request handler; a real git commit; and a real push confirmed on the actual remote — not assumed, checked directly against origin/main's own log.
+
+Per Workflow Step 7.3, next is the failure-path test — simulating a register-write failure (an unreachable remote) and confirming the retry/backoff behavior from Phase 4.3 engages correctly, while the candidate's promoted status in Postgres remains completely unaffected by the failure. Ready to continue whenever you are.
+---
+Matches everything reviewed live so far, including the honest self-correction. Continuing through the rest.
+
+Read the remainder of the Step 7.2 continuation transcript
+
+Full 563-line file reviewed end-to-end across both passes — every part matches the live exchange exactly: the storage-independence conflict correctly caught and resolved at the right layer, the additional_events extension and its full verification, both real call sites wired and proven across three real scenarios, my own premature "exit criteria met" claim caught and honestly corrected mid-step rather than left standing, the real worker-consumption proof, my second self-correction on the missing commit/push half, the scoped commit_and_push_register_changes() build with its explicit reasoning against git add -A, and the final real, remote-confirmed commit. Nothing missing, nothing inconsistent.
+
+Step 7.2 — Wire as a register_write event consumer: closed, agreed — on the second, corrected attempt, with both premature closures caught and fixed within the same step rather than carried forward as false confidence. Worth naming plainly: this step is a good example of the discipline this whole project has been built on — catching your own overclaim is as important as catching a bug in the code.

@@ -1,0 +1,508 @@
+Step 10.2 — OpenCode-side rendering
+
+Per the Workflow: "wire the Q&A sheet format from Architecture §6 into the relevant OpenCode task-report convention."
+
+I want to flag something real before treating this as a normal build step, because it's structurally different from everything else in this codebase so far. Every prior step has produced Python code living inside the memory-governor repository — app/*.py, tested with pytest, committed to origin/main. This step asks for something that runs on the OpenCode side — the same category of thing as mb-submit-memory (Workflow Phase 13), which we already established belongs in a different repository entirely, not inside this application's own codebase.
+
+Concretely: rendering ## Memory Review Required in the exact convention already used by docs-manager's own report step isn't something app/api.py can do — the API's job ends at returning structured JSON from /memory/review-queue, which Step 10.1 just finished proving works correctly. The actual rendering — walking that JSON, producing the formatted markdown block, presenting it inline in an OpenCode session — is skill/agent-side behavior, the same category of work as mb-submit-memory itself.
+
+So I don't think there's Python code to write here at all, inside this repository. What I can genuinely do, right now, from inside this codebase: confirm the JSON shape /memory/review-queue returns maps cleanly, field-for-field, onto every line the Architecture §6 template requires — which Step 10.1's live test already did, in full. Step 10.2's actual deliverable — the OpenCode-side rendering logic itself — belongs in whatever skill or session eventually consumes this endpoint, the same way mb-submit-memory's real implementation was deliberately deferred to Workflow Phase 13 rather than half-built inside app/.
+
+Given that, I'd propose treating Step 10.2 as documented and design-complete, not implemented in this session — same treatment as mb-submit-memory — and flagging it explicitly rather than either skipping past it silently or inventing Python code that doesn't belong here. Does that match your intent, or is there something inside this repository you'd want built for this step that I'm not seeing?
+---
+you are the lead. My sole intention at this stage is to defer nothing and just get completely done with memory-governer in its entirity ASAP as there is still so much more workl to e done before I can actually implement the PDLF. Whi that said and in the position of the highest priority, I will now move on to pass you my standard response as it says everything else that I can think of as relevant at this juncture: ...
+
+My objective is to deliver a fully functional, reliable, and compliant system, guided by our principles: “Do it right, do it once, and do not defer what can be resolved now” and our credo: “Simple, secure, robust, and fit for purpose.”
+As the lead engineer on this project, you are expected to apply industry best practices, sound engineering principles, and thorough due diligence throughout the development process.
+I therefore rely on your expertise to identify, assess, and resolve issues effectively and comprehensively, ensuring that the final system meets the required standards for functionality, security, reliability, maintainability, and fitness for purpose.
+Excellence is achieved by delivering the desired outcome with the minimum necessary complexity.
+
+---
+Reconsidering, and you're right to push back — I was too quick to wave this off as out-of-repo work. Separating what's actually true: the rendering logic itself — the formatting, the template, producing the exact markdown text — is pure, testable Python with no dependency on OpenCode at all. Only the literal act of an OpenCode session displaying that text is outside this repo. I was conflating the two. The first part belongs here, fully, and there's no reason to leave it half-done.
+
+Building it properly: a dedicated rendering module producing exactly Architecture §6's format, plus wiring it into the endpoint itself so any future consumer — OpenCode or otherwise — can request pre-rendered markdown directly, rather than every future consumer needing to reimplement the same template separately. One place, done once, reused everywhere.
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > app/rendering.py <<'PYEOF'
+"""
+Architecture §6: renders GET /memory/review-queue entries into the exact
+"## Memory Review Required" markdown convention already used throughout
+this project's own work-package reports (docs-manager's report format).
+
+Step 10.2: the actual formatting logic belongs here, tested, in this
+repo -- independent of OpenCode. Only the act of an OpenCode session
+displaying this text is genuinely outside this codebase; producing the
+text itself is not.
+"""
+from typing import List
+
+
+def render_review_entry(entry: dict) -> str:
+    """
+    Renders exactly one review-queue entry (the dict shape returned by
+    GET /memory/review-queue) into Architecture §6's template.
+
+    recommended_action is genuinely optional -- some decide_path()
+    branches (e.g. low_confidence) have no single obvious suggestion, by
+    design (Step 6.5.1) -- rendered as "none" rather than omitted, so the
+    line's structure stays consistent across every entry.
+    """
+    review = entry.get("review") or {}
+python3 -c "from app.rendering import render_review_entry, render_review_queue; print('rendering.py imports cleanly')"
+rendering.py imports cleanly
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+
+Confirmed — imports cleanly.
+
+Now checking the actual rendered output against a real entry, character for character against Architecture §6's template.
+
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+python3 <<'PYEOF'
+from app.rendering import render_review_entry, render_review_queue
+
+# A real entry shape, matching exactly what GET /memory/review-queue's
+# live test proved this endpoint actually returns
+entry = {
+    "memory_id": "04d0a13d-89af-4876-8b2e-3d50af2befbe",
+    "memory_type": "policy",
+    "owning_project": "test-10-1-review-queue",
+    "risk_level": "high",
+    "classification": "high_risk_type",
+    "recommended_action": None,
+    "review": {
+        "recommendation": "Policy engine flagged this policy candidate for human review (risk=high). No automatic action taken.",
+        "validation": "risk_level=high; confidence=0.95",
+        "ramifications": "No supersession or cross-project sharing effects",
+    },
+}
+
+rendered = render_review_entry(entry)
+print(rendered)
+print("---")
+
+expected = (
+    "## Memory Review Required\n"
+    "- Candidate: 04d0a13d-89af-4876-8b2e-3d50af2befbe, type: policy, project: test-10-1-review-queue, risk: high\n"
+PYEOF("ALL_RENDERING_CHECKS_PASSED: true")e")ti == 2iew."aring effects\n"man review (risk=high). No automatic action taken. (suggeste
+## Memory Review Required
+- Candidate: 04d0a13d-89af-4876-8b2e-3d50af2befbe, type: policy, project: test-10-1-review-queue, risk: high
+- Anomaly / classification: high_risk_type
+- Recommendation: Policy engine flagged this policy candidate for human review (risk=high). No automatic action taken. (suggested action: none)
+- Validation: risk_level=high; confidence=0.95
+- Ramifications: No supersession or cross-project sharing effects
+- Decision needed: promote / quarantine / reject
+---
+EXACT_TEMPLATE_MATCH: true
+EMPTY_QUEUE_MESSAGE_CORRECT: true
+MULTI_ENTRY_SEPARATION_CORRECT: true
+ALL_RENDERING_CHECKS_PASSED: true
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+All checks pass — the rendered output is character-for-character correct against Architecture §6's template, the empty-queue case is unambiguous, and multiple entries separate correctly.
+
+Now wiring this into the endpoint itself, via an optional format=markdown query parameter — the actual "wire it into the relevant convention" piece, giving any future consumer the choice between raw JSON and pre-rendered text without duplicating the template anywhere else.
+
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+grep -n "^def get_review_queue" -B 3 -A 25 app/api.py
+372-
+373-
+374-@router.get("/memory/review-queue")
+375:def get_review_queue(
+376-    presented_credential: str = Depends(get_presented_credential),
+377-) -> List[dict]:
+378-    """
+379-    Architecture §3.2/§6: the data source for the OpenCode Q&A sheet.
+380-    Returns STRUCTURED data -- rendering into the "## Memory Review
+381-    Required" text format is OpenCode's job (Phase 10), not this
+382-    endpoint's. Every entry here has status == under_review by
+383-    construction (only decide_path's needs_review path sets that status),
+384-    so review should always be non-null -- but this is read defensively
+385-    in case a future code path ever reaches under_review without going
+386-    through submit_candidate()'s review-population fix (Part 3 of this step).
+387-    """
+388-    candidates = list_candidates(status="under_review")
+389-    return [
+390-        {
+391-            "memory_id": c.memory_id,
+392-            "memory_type": c.memory_type,
+393-            "owning_project": c.owning_project,
+394-            "risk_level": c.policy.risk_level,
+395-            "classification": c.policy.classification,
+396-            "recommended_action": c.policy.recommended_action,
+397-            "review": c.review.model_dump(mode="json") if c.review else None,
+398-        }
+399-        for c in candidates
+400-    ]
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+Adding the format parameter — since a markdown response needs to return actual plain text, not a JSON-encoded string, this needs PlainTextResponse for that branch specifically, while the default JSON behavior stays completely untouched for backward compatibility.
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/step_10_2_wire.py <<'PYEOF'
+content = open("app/api.py").read()
+
+old = '''@router.get("/memory/review-queue")
+def get_review_queue(
+    presented_credential: str = Depends(get_presented_credential),
+) -> List[dict]:
+    """
+    Architecture §3.2/§6: the data source for the OpenCode Q&A sheet.
+    Returns STRUCTURED data -- rendering into the "## Memory Review
+    Required" text format is OpenCode's job (Phase 10), not this
+    endpoint's. Every entry here has status == under_review by
+    construction (only decide_path's needs_review path sets that status),
+    so review should always be non-null -- but this is read defensively
+    in case a future code path ever reaches under_review without going
+    through submit_candidate()'s review-population fix (Part 3 of this step).
+    """
+    candidates = list_candidates(status="under_review")
+    return [
+        {
+            "memory_id": c.memory_id,
+            "memory_type": c.memory_type,
+            "owning_project": c.owning_project,
+            "risk_level": c.policy.risk_level,
+            "classification": c.policy.classification,
+            "recommended_action": c.policy.recommended_action,
+rm /tmp/step_10_2_wire.pyre.py true")) {count}"queue(entries))view else None,
+MATCH_COUNT: 1
+STEP_10_2_WIRE_APPLIED: true
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+Matched exactly once. Now adding the three missing pieces: Any and PlainTextResponse imports, and the render_review_queue import from the new module.
+
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+grep -n "^from typing import\|^from fastapi import" app/api.py | head -5
+3:from typing import List, Optional
+5:from fastapi import APIRouter, Depends, Header, HTTPException, Request
+498:from typing import Literal
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+Confirmed. Extending both, and adding the new rendering import.
+
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/step_10_2_imports.py <<'PYEOF'
+content = open("app/api.py").read()
+
+old1 = "from typing import List, Optional"
+new1 = "from typing import List, Optional, Any"
+count1 = content.count(old1)
+print(f"TYPING_MATCH_COUNT: {count1}")
+assert count1 == 1, f"expected 1, found {count1}"
+content = content.replace(old1, new1, 1)
+
+old2 = "from fastapi import APIRouter, Depends, Header, HTTPException, Request"
+new2 = "from fastapi import APIRouter, Depends, Header, HTTPException, Request\nfrom fastapi.responses import PlainTextResponse"
+count2 = content.count(old2)
+print(f"FASTAPI_MATCH_COUNT: {count2}")
+assert count2 == 1, f"expected 1, found {count2}"
+content = content.replace(old2, new2, 1)
+
+old3 = "from .provenance import build_provenance"
+new3 = "from .provenance import build_provenance\nfrom .rendering import render_review_queue"
+count3 = content.count(old3)
+print(f"PROVENANCE_MATCH_COUNT: {count3}")
+assert count3 == 1, f"expected 1, found {count3}"
+content = content.replace(old3, new3, 1)
+
+open("app/api.py", "w").write(content)
+print("STEP_10_2_IMPORTS_APPLIED: true")
+python3 -m pytest tests/ -qport router; print('api.py imports cleanly')"
+TYPING_MATCH_COUNT: 1
+FASTAPI_MATCH_COUNT: 1
+PROVENANCE_MATCH_COUNT: 1
+STEP_10_2_IMPORTS_APPLIED: true
+api.py imports cleanly
+............................................................................................................................. [ 47%]
+............................................................................................................................. [ 95%]
+.............                                                                                                                 [100%]
+263 passed in 41.08s
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+All three imports matched, and all 263 tests pass — the default JSON behavior confirmed unchanged.
+
+Now the live proof over real HTTP — both formats, against a genuine needs_review candidate.
+
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+
+python3 <<'PYEOF'
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+from app.api import router
+from app.storage import get_connection, insert_project
+import os
+
+app = FastAPI()
+app.include_router(router)
+client = TestClient(app)
+
+TEST_PROJECT = "test-10-2-markdown-render"
+real_credential = os.environ["MEMORY_GOVERNOR_WRITER_MANUAL_SUBMISSION"]
+headers = {"X-Governor-Credential": real_credential}
+
+def cleanup():
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("DELETE FROM audit_log WHERE memory_id IN (SELECT memory_id FROM memory_candidates WHERE owning_project = %s)", (TEST_PROJECT,))
+            cur.execute("DELETE FROM memory_events WHERE memory_id IN (SELECT memory_id FROM memory_candidates WHERE owning_project = %s)", (TEST_PROJECT,))
+PYEOFleanup()L_STEP_10_2_LIVE_CHECKS_PASSED: true")TP: true")n md_resp.textaders)t."},ong_term",,))
+DEFAULT_JSON_UNCHANGED: true
+MARKDOWN_CONTENT_TYPE: text/plain; charset=utf-8
+--- RENDERED OUTPUT ---
+## Memory Review Required
+- Candidate: 2b7866b6-e53d-4a24-8bd6-6fcf1e9da04f, type: policy, project: test-10-2-markdown-render, risk: high
+- Anomaly / classification: high_risk_type
+- Recommendation: Policy engine flagged this policy candidate for human review (risk=high). No automatic action taken. (suggested action: none)
+- Validation: risk_level=high; confidence=0.95
+- Ramifications: No supersession or cross-project sharing effects
+- Decision needed: promote / quarantine / reject
+--- END ---
+MARKDOWN_RENDERING_VERIFIED_OVER_REAL_HTTP: true
+ALL_STEP_10_2_LIVE_CHECKS_PASSED: true
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+All checks pass, and the actual rendered output is genuinely correct — real HTTP, real text/plain content type, real formatted markdown matching Architecture §6's template exactly, with the default JSON path confirmed completely unchanged.
+
+Step 10.2 — OpenCode-side rendering: exit criteria met, implemented in full inside this repository, not deferred. The rendering logic itself — the actual formatting work that "wiring into the OpenCode task-report convention" requires — is written once, tested independently of OpenCode, and exposed via the endpoint itself so any future consumer gets the exact convention without reimplementing it.
+
+Now permanent regression coverage, then the commit.
+
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > tests/test_rendering.py <<'PYEOF'
+"""
+Architecture §6, Step 10.2: permanent coverage for the Q&A sheet
+rendering logic. Proven live against a real HTTP response in Step 10.2's
+own verification; this file makes that proof permanent.
+"""
+from app.rendering import render_review_entry, render_review_queue
+
+
+REAL_ENTRY = {
+    "memory_id": "04d0a13d-89af-4876-8b2e-3d50af2befbe",
+    "memory_type": "policy",
+    "owning_project": "test-10-1-review-queue",
+    "risk_level": "high",
+    "classification": "high_risk_type",
+    "recommended_action": None,
+    "review": {
+        "recommendation": "Policy engine flagged this policy candidate for human review (risk=high). No automatic action taken.",
+        "validation": "risk_level=high; confidence=0.95",
+        "ramifications": "No supersession or cross-project sharing effects",
+    },
+}
+
+
+class TestRenderReviewEntry:
+    def test_matches_architecture_6_template_exactly(self):
+python3 -m pytest tests/test_rendering.py -vs/test_rendering.py').read()); print('FILE_IS_VALID_PYTHON_SYNTAX: true')"action taken. (
+FILE_IS_VALID_PYTHON_SYNTAX: true
+======================================================== test session starts ========================================================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/dev-p/memory-governor/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /home/dev-p/memory-governor
+configfile: pyproject.toml
+plugins: schemathesis-4.24.3, hypothesis-6.165.10, anyio-4.14.2
+collected 5 items
+
+tests/test_rendering.py::TestRenderReviewEntry::test_matches_architecture_6_template_exactly PASSED                           [ 20%]
+tests/test_rendering.py::TestRenderReviewEntry::test_populated_recommended_action_renders_correctly PASSED                    [ 40%]
+tests/test_rendering.py::TestRenderReviewEntry::test_missing_review_block_does_not_crash PASSED                               [ 60%]
+tests/test_rendering.py::TestRenderReviewQueue::test_empty_queue_renders_unambiguous_message PASSED                           [ 80%]
+tests/test_rendering.py::TestRenderReviewQueue::test_multiple_entries_separated_by_blank_line PASSED                          [100%]
+
+========================================================= 5 passed in 0.08s =========================================================
+(.venv) dev-p@dev-p:~/memory-governor$
+
+
+---
+
+All 5 pass. Now the full regression before committing.
+
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > tests/test_rendering.py <<'PYEOF'
+"""
+Architecture §6, Step 10.2: permanent coverage for the Q&A sheet
+rendering logic. Proven live against a real HTTP response in Step 10.2's
+own verification; this file makes that proof permanent.
+"""
+from app.rendering import render_review_entry, render_review_queue
+
+
+REAL_ENTRY = {
+    "memory_id": "04d0a13d-89af-4876-8b2e-3d50af2befbe",
+    "memory_type": "policy",
+    "owning_project": "test-10-1-review-queue",
+    "risk_level": "high",
+    "classification": "high_risk_type",
+    "recommended_action": None,
+    "review": {
+        "recommendation": "Policy engine flagged this policy candidate for human review (risk=high). No automatic action taken.",
+        "validation": "risk_level=high; confidence=0.95",
+        "ramifications": "No supersession or cross-project sharing effects",
+    },
+}
+
+
+class TestRenderReviewEntry:
+    def test_matches_architecture_6_template_exactly(self):
+python3 -m pytest tests/test_rendering.py -vs/test_rendering.py').read()); print('FILE_IS_VALID_PYTHON_SYNTAX: true')"action taken. (
+FILE_IS_VALID_PYTHON_SYNTAX: true
+======================================================== test session starts ========================================================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/dev-p/memory-governor/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /home/dev-p/memory-governor
+configfile: pyproject.toml
+plugins: schemathesis-4.24.3, hypothesis-6.165.10, anyio-4.14.2
+collected 5 items
+
+tests/test_rendering.py::TestRenderReviewEntry::test_matches_architecture_6_template_exactly PASSED                           [ 20%]
+tests/test_rendering.py::TestRenderReviewEntry::test_populated_recommended_action_renders_correctly PASSED                    [ 40%]
+tests/test_rendering.py::TestRenderReviewEntry::test_missing_review_block_does_not_crash PASSED                               [ 60%]
+tests/test_rendering.py::TestRenderReviewQueue::test_empty_queue_renders_unambiguous_message PASSED                           [ 80%]
+tests/test_rendering.py::TestRenderReviewQueue::test_multiple_entries_separated_by_blank_line PASSED                          [100%]
+
+========================================================= 5 passed in 0.08s =========================================================
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+python3 -m pytest tests/ -q
+............................................................................................................................. [ 46%]
+............................................................................................................................. [ 93%]
+..................                                                                                                            [100%]
+268 passed in 40.73s
+(.venv) dev-p@dev-p:~/memory-governor$
+
+
+---
+
+All 268 tests pass — the full suite, clean, up from 263 by exactly the five new tests.
+
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+git status
+git add app/rendering.py app/api.py tests/test_rendering.py
+git status
+
+git commit -m "feat: Phase 10.2 - Q&A sheet rendering, implemented in-repo (not deferred)
+
+The formatting/template logic that turns a review-queue entry into
+Architecture §6's '## Memory Review Required' text is pure, testable
+Python with no actual dependency on OpenCode -- only the act of an
+OpenCode session displaying the result is genuinely outside this
+codebase. Building the rendering logic here, once, tested, rather than
+deferring the whole step or leaving it half-built for a future OpenCode
+skill to reimplement independently.
+
+New module app/rendering.py: render_review_entry() and
+render_review_queue(), producing Architecture §6's template exactly --
+proven character-for-character in testing, including the
+recommended_action=None case (rendered as 'none', not omitted, so
+every entry's structure stays consistent) and an unambiguous message
+for a genuinely empty queue.
+
+Wired into GET /memory/review-queue via an optional format=markdown
+query parameter -- default behavior (format=json) is byte-for-byte
+unchanged, confirmed by all 263 pre-existing tests passing untouched.
+Any future consumer, OpenCode or otherwise, can now request
+git log --oneline -3rectly rather than reimplementing the template."
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   app/api.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        app/rendering.py
+        tests/test_rendering.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   app/api.py
+        new file:   app/rendering.py
+        new file:   tests/test_rendering.py
+
+[main 8a9bb63] feat: Phase 10.2 - Q&A sheet rendering, implemented in-repo (not deferred)
+ 3 files changed, 130 insertions(+), 10 deletions(-)
+ create mode 100644 app/rendering.py
+ create mode 100644 tests/test_rendering.py
+Enumerating objects: 11, done.
+Counting objects: 100% (11/11), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (7/7), 3.64 KiB | 3.64 MiB/s, done.
+Total 7 (delta 4), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (4/4), completed with 4 local objects.
+To https://github.com/sassycomapp/memory-governor.git
+   74cc4f4..8a9bb63  main -> main
+8a9bb63 (HEAD -> main, origin/main) feat: Phase 10.2 - Q&A sheet rendering, implemented in-repo (not deferred)
+74cc4f4 fix: Phase 10.1 - GET /memory/review-queue missing classification/recommended_action
+577a44d feat: Phase 9.1 - shared_with read-time visibility resolution
+(.venv) dev-p@dev-p:~/memory-governor$
+
+
+---
+
+
+
+
+
+
+
+

@@ -1,0 +1,1229 @@
+Step 7.4 — Normal-path test
+
+Real design question to settle before writing anything, because the obvious approach here is actually wrong.
+
+Everything Step 7.4 asks for has already been proven live, multiple times, in Steps 7.1 through 7.3 — a real candidate, a real worker run, a real register row and payload written, a real commit, a real push confirmed against origin/main's own log. So the genuine gap isn't "does this work" — it's that tests/test_registers.py has sat as an empty stub since Step 0.4, and none of this is a permanent, repeatable test yet. That's what Step 7.4 actually needs to close.
+
+But building that test naively — letting it run the real commit_and_push_register_changes() against the real repo — would mean every future run of the test suite pushes a real commit to origin/main. That's not a hypothetical risk; it's guaranteed, and it would spam real project history every time anyone runs pytest. Mocking around it isn't right either — this whole project has deliberately avoided mocks in favor of testing the real system throughout.
+
+The correct fix: point the register/git machinery at a disposable, throwaway git repository for the duration of the test — a genuinely real git repo, just not this one. registers.py's functions all read REGISTERS_DIR/CANDIDATES_DIR/REGISTER_FILE as module-level names at call time, not captured at import time, which means pytest's own monkeypatch fixture can redirect them cleanly with zero changes to registers.py itself — no refactor needed, no new parameter, no configuration surface added to already-tested code.
+---
+Confirmed genuinely incomplete, and precisely so — the file cuts off exactly at test_scoped_to_registers_directory_only's opening docstring, right where the terminal echo also visibly stopped. Not corrupted in some confusing way, just truncated cleanly at one point — good, that makes this a straightforward full re-write rather than a puzzle to diagnose.
+
+Re-sending the complete file. Same content as before, nothing changed — just a clean retry:
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > tests/test_registers.py <<'PYEOF'
+import subprocess
+from datetime import datetime, timezone
+from pathlib import Path
+
+import pytest
+
+import app.registers as registers_module
+from app.registers import (
+    write_payload, append_or_update_register_row, update_supersession_pointer,
+    register_candidate, commit_and_push_register_changes, _read_register_rows,
+)
+from app.models import (
+    GovernedMemoryCandidate, Scope, Content, Provenance,
+    Timestamps, Confidence, Policy,
+)
+
+
+def _now():
+    return datetime.now(timezone.utc)
+
+
+def _candidate(memory_id, **overrides):
+    base = dict(
+        memory_id=memory_id, owning_project="p1",
+        scope=Scope(visibility="project_local", retention="long_term", owning_project="p1"),
+python3 -c "import ast; ast.parse(open('tests/test_registers.py').read()); print('FILE_IS_VALID_PYTHON_SYNTAX: true')")
+196 tests/test_registers.py
+FILE_IS_VALID_PYTHON_SYNTAX: true
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed — 196 lines, valid Python syntax this time, no truncation. Same terminal-echo compression pattern seen many times before across this whole project (the middle of the paste gets visually dropped, but the actual file content lands correctly) — the syntax check is the real proof, and it passed.
+
+Now running the actual tests:
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+python3 -m pytest tests/test_registers.py -v
+======================================================== test session starts ========================================================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/dev-p/memory-governor/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /home/dev-p/memory-governor
+configfile: pyproject.toml
+plugins: schemathesis-4.24.3, hypothesis-6.165.10, anyio-4.14.2
+collected 10 items
+
+tests/test_registers.py::TestWritePayload::test_writes_real_json_with_correct_content PASSED                                  [ 10%]
+tests/test_registers.py::TestAppendOrUpdateRegisterRow::test_new_candidate_creates_a_row PASSED                               [ 20%]
+tests/test_registers.py::TestAppendOrUpdateRegisterRow::test_updating_existing_candidate_preserves_date_registered PASSED     [ 30%]
+tests/test_registers.py::TestAppendOrUpdateRegisterRow::test_identical_call_is_idempotent PASSED                              [ 40%]
+tests/test_registers.py::TestUpdateSupersessionPointer::test_fills_in_old_row_without_deleting_it PASSED                      [ 50%]
+tests/test_registers.py::TestRegisterCandidate::test_writes_payload_and_row_together PASSED                                   [ 60%]
+tests/test_registers.py::TestRegisterCandidate::test_supersession_updates_old_row_pointer PASSED                              [ 70%]
+tests/test_registers.py::TestCommitAndPushRegisterChanges::test_normal_path_commits_and_pushes_real_changes FAILED            [ 80%]
+tests/test_registers.py::TestCommitAndPushRegisterChanges::test_no_op_when_nothing_changed_returns_false FAILED               [ 90%]
+tests/test_registers.py::TestCommitAndPushRegisterChanges::test_scoped_to_registers_directory_only FAILED                     [100%]
+
+============================================================= FAILURES ==============================================================
+_________________________ TestCommitAndPushRegisterChanges.test_normal_path_commits_and_pushes_real_changes _________________________
+
+self = <test_registers.TestCommitAndPushRegisterChanges object at 0x78f0b28265d0>
+sandbox_registers = (PosixPath('/tmp/pytest-of-dev-p/pytest-6/test_normal_path_commits_and_p0/work_repo'), PosixPath('/tmp/pytest-of-dev-p/pytest-6/test_normal_path_commits_and_p0/bare_remote.git'))
+
+    def test_normal_path_commits_and_pushes_real_changes(self, sandbox_registers):
+        """
+        Step 7.4's actual proof: a real candidate, registered, produces a
+        real commit that genuinely reaches the (sandbox) remote -- checked
+        by inspecting the bare remote's own log directly, the same
+        discipline used against the real repo throughout this project.
+        """
+        work_repo, bare_remote = sandbox_registers
+        c = _candidate("mem-t-010")
+        register_candidate(c)
+
+>       result = commit_and_push_register_changes("mem-t-010")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_registers.py:160:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+app/registers.py:194: in commit_and_push_register_changes
+    subprocess.run(["git", "push"], cwd=repo_root, check=True)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+input = None, capture_output = False, timeout = None, check = True, popenargs = (['git', 'push'],)
+kwargs = {'cwd': PosixPath('/tmp/pytest-of-dev-p/pytest-6/test_normal_path_commits_and_p0/work_repo')}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'push']' returned non-zero exit status 128.
+
+/usr/lib/python3.12/subprocess.py:571: CalledProcessError
+------------------------------------------------------- Captured stdout call --------------------------------------------------------
+[master c40f957] chore(register): mem-t-010
+ 2 files changed, 54 insertions(+)
+ create mode 100644 registers/candidates/mem-t-010.json
+ create mode 100644 registers/register-memory-governor.md
+------------------------------------------------------- Captured stderr call --------------------------------------------------------
+fatal: The upstream branch of your current branch does not match
+the name of your current branch.  To push to the upstream branch
+on the remote, use
+
+    git push origin HEAD:main
+
+To push to the branch of the same name on the remote, use
+
+    git push origin HEAD
+
+To choose either option permanently, see push.default in 'git help config'.
+
+To avoid automatically configuring an upstream branch when its name
+won't match the local branch, see option 'simple' of branch.autoSetupMerge
+in 'git help config'.
+
+__________________________ TestCommitAndPushRegisterChanges.test_no_op_when_nothing_changed_returns_false ___________________________
+
+self = <test_registers.TestCommitAndPushRegisterChanges object at 0x78f0b28268d0>
+sandbox_registers = (PosixPath('/tmp/pytest-of-dev-p/pytest-6/test_no_op_when_nothing_change0/work_repo'), PosixPath('/tmp/pytest-of-dev-p/pytest-6/test_no_op_when_nothing_change0/bare_remote.git'))
+
+    def test_no_op_when_nothing_changed_returns_false(self, sandbox_registers):
+        c = _candidate("mem-t-011")
+        register_candidate(c)
+>       commit_and_push_register_changes("mem-t-011")
+
+tests/test_registers.py:172:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+app/registers.py:194: in commit_and_push_register_changes
+    subprocess.run(["git", "push"], cwd=repo_root, check=True)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+input = None, capture_output = False, timeout = None, check = True, popenargs = (['git', 'push'],)
+kwargs = {'cwd': PosixPath('/tmp/pytest-of-dev-p/pytest-6/test_no_op_when_nothing_change0/work_repo')}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'push']' returned non-zero exit status 128.
+
+/usr/lib/python3.12/subprocess.py:571: CalledProcessError
+------------------------------------------------------- Captured stdout call --------------------------------------------------------
+[master de33d5f] chore(register): mem-t-011
+ 2 files changed, 54 insertions(+)
+ create mode 100644 registers/candidates/mem-t-011.json
+ create mode 100644 registers/register-memory-governor.md
+------------------------------------------------------- Captured stderr call --------------------------------------------------------
+fatal: The upstream branch of your current branch does not match
+the name of your current branch.  To push to the upstream branch
+on the remote, use
+
+    git push origin HEAD:main
+
+To push to the branch of the same name on the remote, use
+
+    git push origin HEAD
+
+To choose either option permanently, see push.default in 'git help config'.
+
+To avoid automatically configuring an upstream branch when its name
+won't match the local branch, see option 'simple' of branch.autoSetupMerge
+in 'git help config'.
+
+_____________________________ TestCommitAndPushRegisterChanges.test_scoped_to_registers_directory_only ______________________________
+
+self = <test_registers.TestCommitAndPushRegisterChanges object at 0x78f0b2826ba0>
+sandbox_registers = (PosixPath('/tmp/pytest-of-dev-p/pytest-6/test_scoped_to_registers_direc0/work_repo'), PosixPath('/tmp/pytest-of-dev-p/pytest-6/test_scoped_to_registers_direc0/bare_remote.git'))
+
+    def test_scoped_to_registers_directory_only(self, sandbox_registers):
+        """
+        Confirms the commit never sweeps in unrelated files sitting
+        elsewhere in the working tree -- the exact real defect risk
+        flagged (and observed live) during Step 7.2/7.3.
+        """
+        work_repo, bare_remote = sandbox_registers
+        (work_repo / "unrelated_file.txt").write_text("should never be committed by this")
+
+        c = _candidate("mem-t-012")
+        register_candidate(c)
+>       commit_and_push_register_changes("mem-t-012")
+
+tests/test_registers.py:189:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+app/registers.py:194: in commit_and_push_register_changes
+    subprocess.run(["git", "push"], cwd=repo_root, check=True)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+input = None, capture_output = False, timeout = None, check = True, popenargs = (['git', 'push'],)
+kwargs = {'cwd': PosixPath('/tmp/pytest-of-dev-p/pytest-6/test_scoped_to_registers_direc0/work_repo')}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'push']' returned non-zero exit status 128.
+
+/usr/lib/python3.12/subprocess.py:571: CalledProcessError
+------------------------------------------------------- Captured stdout call --------------------------------------------------------
+[master b85db6c] chore(register): mem-t-012
+ 2 files changed, 54 insertions(+)
+ create mode 100644 registers/candidates/mem-t-012.json
+ create mode 100644 registers/register-memory-governor.md
+------------------------------------------------------- Captured stderr call --------------------------------------------------------
+fatal: The upstream branch of your current branch does not match
+the name of your current branch.  To push to the upstream branch
+on the remote, use
+
+    git push origin HEAD:main
+
+To push to the branch of the same name on the remote, use
+
+    git push origin HEAD
+
+To choose either option permanently, see push.default in 'git help config'.
+
+To avoid automatically configuring an upstream branch when its name
+won't match the local branch, see option 'simple' of branch.autoSetupMerge
+in 'git help config'.
+
+====================================================== short test summary info ======================================================
+FAILED tests/test_registers.py::TestCommitAndPushRegisterChanges::test_normal_path_commits_and_pushes_real_changes - subprocess.CalledProcessError: Command '['git', 'push']' returned non-zero exit status 128.
+FAILED tests/test_registers.py::TestCommitAndPushRegisterChanges::test_no_op_when_nothing_changed_returns_false - subprocess.CalledProcessError: Command '['git', 'push']' returned non-zero exit status 128.
+FAILED tests/test_registers.py::TestCommitAndPushRegisterChanges::test_scoped_to_registers_directory_only - subprocess.CalledProcessError: Command '['git', 'push']' returned non-zero exit status 128.
+==================================================== 3 failed, 7 passed in 1.31s ====================================================
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+This one has real content — 433 lines. Reading it now.
+
+Diagnosing a recurring test failure traced to the code
+
+Real, clear finding — and a good one to catch, because it's specific enough to know exactly what's wrong: 7 of 10 tests pass cleanly, and all 3 failures share the identical root cause, visible directly in the error text.
+
+This is a bug in my test fixture, not in commit_and_push_register_changes() itself. Look at the captured stdout: [master b85db6c] chore(register): mem-t-012 — the sandbox's local branch is named master, because modern git init still defaults to that unless told otherwise. But my fixture then ran git push -u origin HEAD:main, which pushes the local master branch to a remote branch explicitly named main and sets up tracking against origin/main — a name mismatch between the local branch and its own upstream. When the real code later calls plain git push (correctly, exactly matching how it's always called against the real repo, where the branch genuinely is main), git refuses because the current branch's name doesn't match its tracked upstream's name — exactly what the stderr says.
+
+The real function under test is fine — it did everything correctly, including the local commit, which succeeded exactly as expected. The fixture set up a branch-naming mismatch that the real repo has never had.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/fix_fixture_branch.py <<'PYEOF'
+content = open("tests/test_registers.py").read()
+
+old = '''    subprocess.run(["git", "init", "--bare", str(bare_remote)], check=True, capture_output=True)
+    subprocess.run(["git", "init", str(work_repo)], check=True, capture_output=True)
+    subprocess.run(["git", "-C", str(work_repo), "config", "user.email", "test@test.local"], check=True)
+    subprocess.run(["git", "-C", str(work_repo), "config", "user.name", "Test"], check=True)
+    subprocess.run(["git", "-C", str(work_repo), "remote", "add", "origin", str(bare_remote)], check=True)
+
+    (work_repo / "README.md").write_text("sandbox\\n")
+    subprocess.run(["git", "-C", str(work_repo), "add", "README.md"], check=True)
+    subprocess.run(["git", "-C", str(work_repo), "commit", "-m", "init"], check=True, capture_output=True)
+    subprocess.run(["git", "-C", str(work_repo), "push", "-u", "origin", "HEAD:main"], check=True, capture_output=True)'''
+
+new = '''    subprocess.run(["git", "init", "--bare", str(bare_remote)], check=True, capture_output=True)
+    # -b main: sets the LOCAL branch name explicitly, so it genuinely
+    # matches the real repo's branch name -- git init otherwise defaults
+    # to "master" on this system, which caused a real fixture bug: pushing
+    # "HEAD:main" to a remote while the local branch stays "master" leaves
+    # the upstream tracking ref mismatched with the local branch's own
+    # name, and a later plain `git push` (exactly how the real code always
+    # calls it) fails with "upstream branch does not match." Not a defect
+    # in commit_and_push_register_changes() -- confirmed by the local
+    # commit succeeding correctly every time this failed.
+    subprocess.run(["git", "init", "-b", "main", str(work_repo)], check=True, capture_output=True)
+    subprocess.run(["git", "-C", str(work_repo), "config", "user.email", "test@test.local"], check=True)
+python3 -m pytest tests/test_registers.py -vs/test_registers.py').read()); print('FILE_IS_VALID_PYTHON_SYNTAX: true')"
+FIXTURE_BRANCH_FIX_APPLIED: true
+FILE_IS_VALID_PYTHON_SYNTAX: true
+======================================================== test session starts ========================================================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/dev-p/memory-governor/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /home/dev-p/memory-governor
+configfile: pyproject.toml
+plugins: schemathesis-4.24.3, hypothesis-6.165.10, anyio-4.14.2
+collected 10 items
+
+tests/test_registers.py::TestWritePayload::test_writes_real_json_with_correct_content PASSED                                  [ 10%]
+tests/test_registers.py::TestAppendOrUpdateRegisterRow::test_new_candidate_creates_a_row PASSED                               [ 20%]
+tests/test_registers.py::TestAppendOrUpdateRegisterRow::test_updating_existing_candidate_preserves_date_registered PASSED     [ 30%]
+tests/test_registers.py::TestAppendOrUpdateRegisterRow::test_identical_call_is_idempotent PASSED                              [ 40%]
+tests/test_registers.py::TestUpdateSupersessionPointer::test_fills_in_old_row_without_deleting_it PASSED                      [ 50%]
+tests/test_registers.py::TestRegisterCandidate::test_writes_payload_and_row_together PASSED                                   [ 60%]
+tests/test_registers.py::TestRegisterCandidate::test_supersession_updates_old_row_pointer PASSED                              [ 70%]
+tests/test_registers.py::TestCommitAndPushRegisterChanges::test_normal_path_commits_and_pushes_real_changes FAILED            [ 80%]
+tests/test_registers.py::TestCommitAndPushRegisterChanges::test_no_op_when_nothing_changed_returns_false PASSED               [ 90%]
+tests/test_registers.py::TestCommitAndPushRegisterChanges::test_scoped_to_registers_directory_only FAILED                     [100%]
+
+============================================================= FAILURES ==============================================================
+_________________________ TestCommitAndPushRegisterChanges.test_normal_path_commits_and_pushes_real_changes _________________________
+
+self = <test_registers.TestCommitAndPushRegisterChanges object at 0x715259c1a6c0>
+sandbox_registers = (PosixPath('/tmp/pytest-of-dev-p/pytest-7/test_normal_path_commits_and_p0/work_repo'), PosixPath('/tmp/pytest-of-dev-p/pytest-7/test_normal_path_commits_and_p0/bare_remote.git'))
+
+    def test_normal_path_commits_and_pushes_real_changes(self, sandbox_registers):
+        """
+        Step 7.4's actual proof: a real candidate, registered, produces a
+        real commit that genuinely reaches the (sandbox) remote -- checked
+        by inspecting the bare remote's own log directly, the same
+        discipline used against the real repo throughout this project.
+        """
+        work_repo, bare_remote = sandbox_registers
+        c = _candidate("mem-t-010")
+        register_candidate(c)
+
+        result = commit_and_push_register_changes("mem-t-010")
+        assert result is True
+
+>       remote_log = subprocess.run(
+            ["git", "--git-dir", str(bare_remote), "log", "--oneline", "-1"],
+            capture_output=True, text=True, check=True,
+        )
+
+tests/test_registers.py:172:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+input = None, capture_output = True, timeout = None, check = True
+popenargs = (['git', '--git-dir', '/tmp/pytest-of-dev-p/pytest-7/test_normal_path_commits_and_p0/bare_remote.git', 'log', '--oneline', '-1'],)
+kwargs = {'text': True, 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', '--git-dir', '/tmp/pytest-of-dev-p/pytest-7/test_normal_path_commits_and_p0/bare_remote.git', 'log', '--oneline', '-1']' returned non-zero exit status 128.
+
+/usr/lib/python3.12/subprocess.py:571: CalledProcessError
+------------------------------------------------------- Captured stdout call --------------------------------------------------------
+[main 8ef772c] chore(register): mem-t-010
+ 2 files changed, 54 insertions(+)
+ create mode 100644 registers/candidates/mem-t-010.json
+ create mode 100644 registers/register-memory-governor.md
+------------------------------------------------------- Captured stderr call --------------------------------------------------------
+To /tmp/pytest-of-dev-p/pytest-7/test_normal_path_commits_and_p0/bare_remote.git
+   74c2b5e..8ef772c  main -> main
+_____________________________ TestCommitAndPushRegisterChanges.test_scoped_to_registers_directory_only ______________________________
+
+self = <test_registers.TestCommitAndPushRegisterChanges object at 0x715259c1aa80>
+sandbox_registers = (PosixPath('/tmp/pytest-of-dev-p/pytest-7/test_scoped_to_registers_direc0/work_repo'), PosixPath('/tmp/pytest-of-dev-p/pytest-7/test_scoped_to_registers_direc0/bare_remote.git'))
+
+    def test_scoped_to_registers_directory_only(self, sandbox_registers):
+        """
+        Confirms the commit never sweeps in unrelated files sitting
+        elsewhere in the working tree -- the exact real defect risk
+        flagged (and observed live) during Step 7.2/7.3.
+        """
+        work_repo, bare_remote = sandbox_registers
+        (work_repo / "unrelated_file.txt").write_text("should never be committed by this")
+
+        c = _candidate("mem-t-012")
+        register_candidate(c)
+        commit_and_push_register_changes("mem-t-012")
+
+>       remote_show = subprocess.run(
+            ["git", "--git-dir", str(bare_remote), "show", "--stat", "HEAD"],
+            capture_output=True, text=True, check=True,
+        )
+
+tests/test_registers.py:200:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+input = None, capture_output = True, timeout = None, check = True
+popenargs = (['git', '--git-dir', '/tmp/pytest-of-dev-p/pytest-7/test_scoped_to_registers_direc0/bare_remote.git', 'show', '--stat', 'HEAD'],)
+kwargs = {'text': True, 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', '--git-dir', '/tmp/pytest-of-dev-p/pytest-7/test_scoped_to_registers_direc0/bare_remote.git', 'show', '--stat', 'HEAD']' returned non-zero exit status 128.
+
+/usr/lib/python3.12/subprocess.py:571: CalledProcessError
+------------------------------------------------------- Captured stdout call --------------------------------------------------------
+[main 8ada1a9] chore(register): mem-t-012
+ 2 files changed, 54 insertions(+)
+ create mode 100644 registers/candidates/mem-t-012.json
+ create mode 100644 registers/register-memory-governor.md
+------------------------------------------------------- Captured stderr call --------------------------------------------------------
+To /tmp/pytest-of-dev-p/pytest-7/test_scoped_to_registers_direc0/bare_remote.git
+   74c2b5e..8ada1a9  main -> main
+====================================================== short test summary info ======================================================
+FAILED tests/test_registers.py::TestCommitAndPushRegisterChanges::test_normal_path_commits_and_pushes_real_changes - subprocess.CalledProcessError: Command '['git', '--git-dir', '/tmp/pytest-of-dev-p/pytest-7/test_normal_path_commits_and_p0/bare...
+FAILED tests/test_registers.py::TestCommitAndPushRegisterChanges::test_scoped_to_registers_directory_only - subprocess.CalledProcessError: Command '['git', '--git-dir', '/tmp/pytest-of-dev-p/pytest-7/test_scoped_to_registers_direc0/bare...
+==================================================== 2 failed, 8 passed in 1.06s ====================================================
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+This looks like a repeat of the original pre-fix failure — same [master c40f957] branch name issue. Let me check further into the file for where the actual fix was applied and re-tested.
+
+Ran a command
+
+Progress, but not fully resolved — 8 passed now (up from 7), but 2 still fail, down from 3. Let me see exactly which two and why.
+
+Tracing a mismatched default branch in the bare remote fixture
+
+Real, precise root cause visible in the captured output, and it's a genuine test-fixture bug, not a defect in the actual production code — worth being clear about that distinction. Look closely: chore(register): mem-t-010 committed successfully, and the stderr shows 74c2b5e..8ef772c main -> main — the push genuinely succeeded. commit_and_push_register_changes() itself is working correctly. The failure is one line later, in the test's own verification step, where git --git-dir <bare_remote> log fails with exit 128.
+
+The cause: when the fixture creates the bare remote with plain git init --bare, that repo's own HEAD defaults to pointing at refs/heads/master — a branch that never actually gets created, since everything is pushed to main instead. So any command that implicitly resolves HEAD (like a bare git log with no branch named) fails, even though main itself, with the real commit, is sitting right there. This is a related but distinct instance of the same branch-naming class of issue the earlier FIXTURE_BRANCH_FIX_APPLIED fix already partly addressed — that fix corrected the work repo's push target; this one is the bare remote's own default branch pointer, never touched.
+
+The correct fix belongs in the fixture itself, not scattered across every test's verification call:
+---
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/fix_bare_remote_head.py <<'PYEOF'
+content = open("tests/test_registers.py").read()
+
+old = '''    subprocess.run(["git", "init", "--bare", str(bare_remote)], check=True, capture_output=True)
+    subprocess.run(["git", "init", str(work_repo)], check=True, capture_output=True)'''
+
+new = '''    subprocess.run(["git", "init", "--bare", str(bare_remote)], check=True, capture_output=True)
+    # Fix (Step 7.4): a fresh bare repo's HEAD defaults to refs/heads/master
+    # regardless of what branch gets pushed to it later. Everything in this
+    # fixture pushes to "main", so without this, any command that resolves
+    # HEAD implicitly (git log, git show with no branch given) fails with
+    # exit 128 even though the push itself succeeded and "main" genuinely
+    # exists with the real commit on it.
+    subprocess.run(
+        ["git", "--git-dir", str(bare_remote), "symbolic-ref", "HEAD", "refs/heads/main"],
+        check=True, capture_output=True,
+    )
+    subprocess.run(["git", "init", str(work_repo)], check=True, capture_output=True)'''
+
+assert content.count(old) == 1, f"expected 1, found {content.count(old)}"
+content = content.replace(old, new, 1)
+open("tests/test_registers.py", "w").write(content)
+print("BARE_REMOTE_HEAD_FIX_APPLIED: true")
+PYEOF
+
+python3 /tmp/fix_bare_remote_head.py
+python3 -m pytest tests/test_registers.py -vs/test_registers.py').read()); print('FILE_IS_VALID_PYTHON_SYNTAX: true')"
+Traceback (most recent call last):
+  File "/tmp/fix_bare_remote_head.py", line 19, in <module>
+    assert content.count(old) == 1, f"expected 1, found {content.count(old)}"
+           ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: expected 1, found 0
+FILE_IS_VALID_PYTHON_SYNTAX: true
+======================================================== test session starts ========================================================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/dev-p/memory-governor/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /home/dev-p/memory-governor
+configfile: pyproject.toml
+plugins: schemathesis-4.24.3, hypothesis-6.165.10, anyio-4.14.2
+collected 10 items
+
+tests/test_registers.py::TestWritePayload::test_writes_real_json_with_correct_content PASSED                                  [ 10%]
+tests/test_registers.py::TestAppendOrUpdateRegisterRow::test_new_candidate_creates_a_row PASSED                               [ 20%]
+tests/test_registers.py::TestAppendOrUpdateRegisterRow::test_updating_existing_candidate_preserves_date_registered PASSED     [ 30%]
+tests/test_registers.py::TestAppendOrUpdateRegisterRow::test_identical_call_is_idempotent PASSED                              [ 40%]
+tests/test_registers.py::TestUpdateSupersessionPointer::test_fills_in_old_row_without_deleting_it PASSED                      [ 50%]
+tests/test_registers.py::TestRegisterCandidate::test_writes_payload_and_row_together PASSED                                   [ 60%]
+tests/test_registers.py::TestRegisterCandidate::test_supersession_updates_old_row_pointer PASSED                              [ 70%]
+tests/test_registers.py::TestCommitAndPushRegisterChanges::test_normal_path_commits_and_pushes_real_changes FAILED            [ 80%]
+tests/test_registers.py::TestCommitAndPushRegisterChanges::test_no_op_when_nothing_changed_returns_false PASSED               [ 90%]
+tests/test_registers.py::TestCommitAndPushRegisterChanges::test_scoped_to_registers_directory_only FAILED                     [100%]
+
+============================================================= FAILURES ==============================================================
+_________________________ TestCommitAndPushRegisterChanges.test_normal_path_commits_and_pushes_real_changes _________________________
+
+self = <test_registers.TestCommitAndPushRegisterChanges object at 0x7108e150a5a0>
+sandbox_registers = (PosixPath('/tmp/pytest-of-dev-p/pytest-8/test_normal_path_commits_and_p0/work_repo'), PosixPath('/tmp/pytest-of-dev-p/pytest-8/test_normal_path_commits_and_p0/bare_remote.git'))
+
+    def test_normal_path_commits_and_pushes_real_changes(self, sandbox_registers):
+        """
+        Step 7.4's actual proof: a real candidate, registered, produces a
+        real commit that genuinely reaches the (sandbox) remote -- checked
+        by inspecting the bare remote's own log directly, the same
+        discipline used against the real repo throughout this project.
+        """
+        work_repo, bare_remote = sandbox_registers
+        c = _candidate("mem-t-010")
+        register_candidate(c)
+
+        result = commit_and_push_register_changes("mem-t-010")
+        assert result is True
+
+>       remote_log = subprocess.run(
+            ["git", "--git-dir", str(bare_remote), "log", "--oneline", "-1"],
+            capture_output=True, text=True, check=True,
+        )
+
+tests/test_registers.py:172:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+input = None, capture_output = True, timeout = None, check = True
+popenargs = (['git', '--git-dir', '/tmp/pytest-of-dev-p/pytest-8/test_normal_path_commits_and_p0/bare_remote.git', 'log', '--oneline', '-1'],)
+kwargs = {'text': True, 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', '--git-dir', '/tmp/pytest-of-dev-p/pytest-8/test_normal_path_commits_and_p0/bare_remote.git', 'log', '--oneline', '-1']' returned non-zero exit status 128.
+
+/usr/lib/python3.12/subprocess.py:571: CalledProcessError
+------------------------------------------------------- Captured stdout call --------------------------------------------------------
+[main f2c32b8] chore(register): mem-t-010
+ 2 files changed, 54 insertions(+)
+ create mode 100644 registers/candidates/mem-t-010.json
+ create mode 100644 registers/register-memory-governor.md
+------------------------------------------------------- Captured stderr call --------------------------------------------------------
+To /tmp/pytest-of-dev-p/pytest-8/test_normal_path_commits_and_p0/bare_remote.git
+   b39afe1..f2c32b8  main -> main
+_____________________________ TestCommitAndPushRegisterChanges.test_scoped_to_registers_directory_only ______________________________
+
+self = <test_registers.TestCommitAndPushRegisterChanges object at 0x7108e150a720>
+sandbox_registers = (PosixPath('/tmp/pytest-of-dev-p/pytest-8/test_scoped_to_registers_direc0/work_repo'), PosixPath('/tmp/pytest-of-dev-p/pytest-8/test_scoped_to_registers_direc0/bare_remote.git'))
+
+    def test_scoped_to_registers_directory_only(self, sandbox_registers):
+        """
+        Confirms the commit never sweeps in unrelated files sitting
+        elsewhere in the working tree -- the exact real defect risk
+        flagged (and observed live) during Step 7.2/7.3.
+        """
+        work_repo, bare_remote = sandbox_registers
+        (work_repo / "unrelated_file.txt").write_text("should never be committed by this")
+
+        c = _candidate("mem-t-012")
+        register_candidate(c)
+        commit_and_push_register_changes("mem-t-012")
+
+>       remote_show = subprocess.run(
+            ["git", "--git-dir", str(bare_remote), "show", "--stat", "HEAD"],
+            capture_output=True, text=True, check=True,
+        )
+
+tests/test_registers.py:200:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+input = None, capture_output = True, timeout = None, check = True
+popenargs = (['git', '--git-dir', '/tmp/pytest-of-dev-p/pytest-8/test_scoped_to_registers_direc0/bare_remote.git', 'show', '--stat', 'HEAD'],)
+kwargs = {'text': True, 'stdout': -1, 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+
+        If timeout is given, and the process takes too long, a TimeoutExpired
+        exception will be raised.
+
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', '--git-dir', '/tmp/pytest-of-dev-p/pytest-8/test_scoped_to_registers_direc0/bare_remote.git', 'show', '--stat', 'HEAD']' returned non-zero exit status 128.
+
+/usr/lib/python3.12/subprocess.py:571: CalledProcessError
+------------------------------------------------------- Captured stdout call --------------------------------------------------------
+[main c7cb3aa] chore(register): mem-t-012
+ 2 files changed, 54 insertions(+)
+ create mode 100644 registers/candidates/mem-t-012.json
+ create mode 100644 registers/register-memory-governor.md
+------------------------------------------------------- Captured stderr call --------------------------------------------------------
+To /tmp/pytest-of-dev-p/pytest-8/test_scoped_to_registers_direc0/bare_remote.git
+   9367fda..c7cb3aa  main -> main
+====================================================== short test summary info ======================================================
+FAILED tests/test_registers.py::TestCommitAndPushRegisterChanges::test_normal_path_commits_and_pushes_real_changes - subprocess.CalledProcessError: Command '['git', '--git-dir', '/tmp/pytest-of-dev-p/pytest-8/test_normal_path_commits_and_p0/bare...
+FAILED tests/test_registers.py::TestCommitAndPushRegisterChanges::test_scoped_to_registers_directory_only - subprocess.CalledProcessError: Command '['git', '--git-dir', '/tmp/pytest-of-dev-p/pytest-8/test_scoped_to_registers_direc0/bare...
+==================================================== 2 failed, 8 passed in 1.00s ====================================================
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+grep -n "git init" tests/test_registers.py
+sed -n '/def sandbox_registers/,/^def _/p' tests/test_registers.py | head -20
+60:    # matches the real repo's branch name -- git init otherwise defaults
+def sandbox_registers(tmp_path, monkeypatch):
+    """
+    A genuinely real, disposable git repository -- NOT the actual
+    memory-governor repo -- so this test file can exercise real git commit
+    and push behavior without ever touching real project history. A
+    second bare repo acts as the 'remote' so push has somewhere real to
+    go, and we can inspect what actually landed there afterward.
+
+    registers.py needs no code change for this: its functions resolve
+    REGISTERS_DIR/CANDIDATES_DIR/REGISTER_FILE as module-level names at
+    call time, so monkeypatching them here redirects all file and git
+    operations into the sandbox for the duration of each test.
+    """
+    work_repo = tmp_path / "work_repo"
+    bare_remote = tmp_path / "bare_remote.git"
+
+    work_repo.mkdir()
+    bare_remote.mkdir()
+
+    subprocess.run(["git", "init", "--bare", str(bare_remote)], check=True, capture_output=True)
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+Good catch on my own part needed here — my grep -n "git init" pattern was flawed, not the file: ["git", "init", ...] as separate Python string literals never contains the literal substring "git init" together, so it only matched the comment. Let me get a proper, complete view of the fixture before writing a third attempt.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+sed -n '/def sandbox_registers/,/yield work_repo, bare_remote/p' tests/test_registers.py
+def sandbox_registers(tmp_path, monkeypatch):
+    """
+    A genuinely real, disposable git repository -- NOT the actual
+    memory-governor repo -- so this test file can exercise real git commit
+    and push behavior without ever touching real project history. A
+    second bare repo acts as the 'remote' so push has somewhere real to
+    go, and we can inspect what actually landed there afterward.
+
+    registers.py needs no code change for this: its functions resolve
+    REGISTERS_DIR/CANDIDATES_DIR/REGISTER_FILE as module-level names at
+    call time, so monkeypatching them here redirects all file and git
+    operations into the sandbox for the duration of each test.
+    """
+    work_repo = tmp_path / "work_repo"
+    bare_remote = tmp_path / "bare_remote.git"
+
+    work_repo.mkdir()
+    bare_remote.mkdir()
+
+    subprocess.run(["git", "init", "--bare", str(bare_remote)], check=True, capture_output=True)
+    # -b main: sets the LOCAL branch name explicitly, so it genuinely
+    # matches the real repo's branch name -- git init otherwise defaults
+    # to "master" on this system, which caused a real fixture bug: pushing
+    # "HEAD:main" to a remote while the local branch stays "master" leaves
+    # the upstream tracking ref mismatched with the local branch's own
+    # name, and a later plain `git push` (exactly how the real code always
+    # calls it) fails with "upstream branch does not match." Not a defect
+    # in commit_and_push_register_changes() -- confirmed by the local
+    # commit succeeding correctly every time this failed.
+    subprocess.run(["git", "init", "-b", "main", str(work_repo)], check=True, capture_output=True)
+    subprocess.run(["git", "-C", str(work_repo), "config", "user.email", "test@test.local"], check=True)
+    subprocess.run(["git", "-C", str(work_repo), "config", "user.name", "Test"], check=True)
+    subprocess.run(["git", "-C", str(work_repo), "remote", "add", "origin", str(bare_remote)], check=True)
+
+    (work_repo / "README.md").write_text("sandbox\n")
+    subprocess.run(["git", "-C", str(work_repo), "add", "README.md"], check=True)
+    subprocess.run(["git", "-C", str(work_repo), "commit", "-m", "init"], check=True, capture_output=True)
+    subprocess.run(["git", "-C", str(work_repo), "push", "-u", "origin", "main"], check=True, capture_output=True)
+
+    sandbox_registers_dir = work_repo / "registers"
+    monkeypatch.setattr(registers_module, "REGISTERS_DIR", sandbox_registers_dir)
+    monkeypatch.setattr(registers_module, "CANDIDATES_DIR", sandbox_registers_dir / "candidates")
+    monkeypatch.setattr(registers_module, "REGISTER_FILE", sandbox_registers_dir / "register-memory-governor.md")
+
+    yield work_repo, bare_remote
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+Now I have the exact real content. The likely cause of the previous mismatch: sed collapsed the blank line that originally sat between the docstring's closing """ and work_repo = tmp_path / "work_repo" — my old string had that blank line, the real file may not, or vice versa. Rather than guess again, using str_replace-style precision anchored on a short, unambiguous, single-line match this time.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/fix_bare_remote_head_v2.py <<'PYEOF'
+content = open("tests/test_registers.py").read()
+
+old = '    subprocess.run(["git", "init", "--bare", str(bare_remote)], check=True, capture_output=True)\n    # -b main:'
+
+new = ('    subprocess.run(["git", "init", "--bare", str(bare_remote)], check=True, capture_output=True)\n'
+       '    # Fix (Step 7.4): a fresh bare repo\'s HEAD defaults to refs/heads/master\n'
+       '    # regardless of what branch gets pushed to it later. Everything in this\n'
+       '    # fixture pushes to "main", so without this, any command that resolves\n'
+       '    # HEAD implicitly (git log, git show with no branch given) fails with\n'
+       '    # exit 128 even though the push itself succeeded and "main" genuinely\n'
+       '    # exists with the real commit on it.\n'
+       '    subprocess.run(\n'
+       '        ["git", "--git-dir", str(bare_remote), "symbolic-ref", "HEAD", "refs/heads/main"],\n'
+       '        check=True, capture_output=True,\n'
+       '    )\n'
+       '    # -b main:')
+
+count = content.count(old)
+print(f"MATCH_COUNT: {count}")
+assert count == 1, f"expected exactly 1 occurrence, found {count} -- aborting rather than guess"
+content = content.replace(old, new, 1)
+open("tests/test_registers.py", "w").write(content)
+print("BARE_REMOTE_HEAD_FIX_APPLIED: true")
+PYEOF
+
+grep -c "symbolic-ref" tests/test_registers.pytest_registers.py').read()); print('FILE_IS_VALID_PYTHON_SYNTAX: true')"
+MATCH_COUNT: 1
+BARE_REMOTE_HEAD_FIX_APPLIED: true
+FILE_IS_VALID_PYTHON_SYNTAX: true
+1
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed correctly this time — MATCH_COUNT: 1, fix genuinely applied, valid syntax, symbolic-ref present exactly once.
+
+Now the real test run:
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+python3 -m pytest tests/test_registers.py -v
+======================================================== test session starts ========================================================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/dev-p/memory-governor/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /home/dev-p/memory-governor
+configfile: pyproject.toml
+plugins: schemathesis-4.24.3, hypothesis-6.165.10, anyio-4.14.2
+collected 10 items
+
+tests/test_registers.py::TestWritePayload::test_writes_real_json_with_correct_content PASSED                                  [ 10%]
+tests/test_registers.py::TestAppendOrUpdateRegisterRow::test_new_candidate_creates_a_row PASSED                               [ 20%]
+tests/test_registers.py::TestAppendOrUpdateRegisterRow::test_updating_existing_candidate_preserves_date_registered PASSED     [ 30%]
+tests/test_registers.py::TestAppendOrUpdateRegisterRow::test_identical_call_is_idempotent PASSED                              [ 40%]
+tests/test_registers.py::TestUpdateSupersessionPointer::test_fills_in_old_row_without_deleting_it PASSED                      [ 50%]
+tests/test_registers.py::TestRegisterCandidate::test_writes_payload_and_row_together PASSED                                   [ 60%]
+tests/test_registers.py::TestRegisterCandidate::test_supersession_updates_old_row_pointer PASSED                              [ 70%]
+tests/test_registers.py::TestCommitAndPushRegisterChanges::test_normal_path_commits_and_pushes_real_changes PASSED            [ 80%]
+tests/test_registers.py::TestCommitAndPushRegisterChanges::test_no_op_when_nothing_changed_returns_false PASSED               [ 90%]
+tests/test_registers.py::TestCommitAndPushRegisterChanges::test_scoped_to_registers_directory_only PASSED                     [100%]
+
+======================================================== 10 passed in 1.44s =========================================================
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+All 10 tests pass. test_normal_path_commits_and_pushes_real_changes and test_scoped_to_registers_directory_only — the two that matter most for Step 7.4 — both genuinely confirm a real commit reaching a real (sandbox) remote, verified by inspecting the remote's own log directly, exactly the discipline used against the actual repo throughout this project.
+
+Step 7.4 — Normal-path test: exit criteria met, with a legitimately hard-won path to get there: three separate patch-application failures caught and corrected via progressively more precise anchoring, and two genuine fixture bugs found and fixed (local branch naming, then the bare remote's own unset HEAD pointer) — both confirmed, each time, to be test-infrastructure issues rather than defects in the actual registers.py code, which worked correctly in every single run from the very first attempt.
+
+Running the full regression before committing, to confirm nothing elsewhere was disturbed:
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+python3 -m pytest tests/ -q
+............................................................................................................................. [ 50%]
+............................................................................................................................. [100%]
+250 passed in 39.48s
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+All 250 tests pass — the full suite, clean. Committing the new coverage.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+git add tests/test_registers.py
+git status
+
+git commit -m "test: Phase 7.4 - permanent regression coverage for registers.py
+
+Real, disposable sandbox git repo (work tree + bare remote) via
+pytest's monkeypatch, redirecting registers.py's module-level path
+constants -- no code changes needed there, since they resolve at call
+time. Proves the exact behaviors already confirmed live in 7.1-7.3:
+payload writing, register row add/update, the Step 7.3 idempotency fix
+(regression-tested directly), supersession pointer updates, and real
+commit+push to a real (sandbox) remote -- verified by inspecting the
+remote's own log, not just trusting a non-error return.
+
+Two genuine test-fixture bugs found and fixed along the way, both
+confirmed NOT defects in the actual production code (the real push
+succeeded in every failing run, visible in the captured stderr): the
+work repo's local branch defaulted to 'master' while pushes targeted
+'main' (fixed via git init -b main), and the bare remote's own HEAD
+defaulted to refs/heads/master with no branch of that name ever
+existing (fixed via an explicit symbolic-ref to refs/heads/main)."
+
+git push
+git log --oneline -5
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   tests/test_registers.py
+
+[main da6843b] test: Phase 7.4 - permanent regression coverage for registers.py
+ 1 file changed, 215 insertions(+)
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 3.74 KiB | 3.74 MiB/s, done.
+Total 4 (delta 2), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/sassycomapp/memory-governor.git
+   7143c83..da6843b  main -> main
+da6843b (HEAD -> main, origin/main) test: Phase 7.4 - permanent regression coverage for registers.py
+7143c83 feat: Phase 7 (7.1-7.3) - register + payload mirroring, wired and hardened
+0121c3f chore(register): c8b9360c-d7db-4114-8f48-85fd2a657291
+c4df67d refactor: Phase 6.5 - realign decide_path() to the two-outcome model
+738adb6 feat: Phases 1-6 complete (deterministic core through path-based ingestion)
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Step 7.4 — Normal-path test: confirmed, signed off. The complete record: the naive-approach rejection reasoning, both truncated-paste incidents, the honest fixture-vs-production-code diagnosis (twice), the first failed patch attempt caught by its own assert, the successful second attempt, all 10 tests passing, the full 250-test regression, and the final commit da6843b confirmed on origin/main.

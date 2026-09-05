@@ -1,0 +1,473 @@
+Step 2.2 — storage.py
+
+Two design notes before the code, same discipline as every module so far — real gaps found while building this, not silently resolved.
+
+1. A real dependency the schema forces, not optional: memory_candidates.owning_project has a NOT NULL foreign key to projects. That means insert_candidate() can never succeed unless the target project already exists in the projects table — and Architecture §9 doesn't give storage.py a project-creation function; that's projects.py's job, but projects.py isn't built until Phase 8. Rather than block Phase 2 on Phase 8, I'm adding one minimal insert_project() helper directly to storage.py now — low-level, no dormancy logic, no validation beyond what the DB itself enforces. Phase 8's projects.py will build the richer project-management API on top of this same low-level function later, not duplicate it.
+
+2. A real gap in Architecture §9's own test-file list: the scaffolded test files from Step 0.4 are test_models.py, test_policy.py, test_state_machine.py, test_provenance.py, test_supersede.py, test_registers.py, test_api.py — there is no test_storage.py anywhere in the spec, even though Workflow Step 2.2's own exit criteria requires proving persistence. I'm creating tests/test_storage.py as a necessary addition to close that gap, not inventing new scope — flagging it here so it's understood as a spec correction, not scope creep.
+
+Back to a single heredoc for this one, not the small-piece method — app/ already exists (unlike migrations/ last time), and models.py/state_machine.py/policy.py all pasted correctly as single blocks of similar size. The small-piece method was the right fix for a missing-directory problem specifically; it's not needed here.
+
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > app/storage.py <<'PYEOF'
+import os
+from typing import Optional
+
+import psycopg
+from psycopg.rows import dict_row
+
+from .models import GovernedMemoryCandidate
+
+
+def get_connection() -> psycopg.Connection:
+    """
+    Opens a connection using MEMORY_GOVERNOR_DATABASE_URL from the
+    environment. Request-scoped, opened/closed per call -- fine at this
+    project's scale (Phase 4's worker introduces a persistent connection
+    for the outbox listener specifically; this remains the simple path
+    for everything else).
+    """
+    database_url = os.environ["MEMORY_GOVERNOR_DATABASE_URL"]
+wc -l app/storage.pypy imports cleanly')"_candidate, candidate_exi
+
+---
+
+Let's not assume it failed yet — I don't see an actual error message in what you pasted (no bash: or No such file or directory line like last time), just the same visual compression your terminal always does when echoing a long paste back. That compression happened for models.py, state_machine.py, and policy.py too, and all three landed correctly every time — so seeing it here isn't automatically a bad sign.
+
+One important difference from the migrations/ incident: app/ already exists and has existed since Step 0.4 — storage.py itself was already sitting there as an empty stub file, the same as the other modules that pasted successfully. So the specific failure mode from last time (a missing directory) can't repeat here.
+
+Before we assume anything's wrong, I need one honest answer: did you already press enter and see the terminal actually respond — either an error, or the wc -l line count, or anything at all — or are you showing me the paste as it sits typed in, not yet run?
+
+Either way, let's check the ground truth directly rather than guessing from the echo:
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ ls -la app/storage.py
+wc -l app/storage.py
+-rw-r--r-- 1 dev-p dev-p 5596 Aug 17 17:50 app/storage.py
+147 app/storage.py
+(.venv) dev-p@dev-p:~/memory-governor$
+
+
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+
+python3 -c "from app.storage import get_connection, insert_project, insert_candidate, update_candidate, get_candidate, candidate_exists; print('storage.py imports cleanly')"
+
+cat -A app/storage.py | tail -15
+storage.py imports cleanly
+$
+$
+def get_candidate(memory_id: str) -> Optional[GovernedMemoryCandidate]:$
+    with get_connection() as conn:$
+        with conn.cursor() as cur:$
+            cur.execute("SELECT * FROM memory_candidates WHERE memory_id = %s", (memory_id,))$
+            row = cur.fetchone()$
+    return _deserialize(row) if row is not None else None$
+$
+$
+def candidate_exists(memory_id: str) -> bool:$
+    with get_connection() as conn:$
+        with conn.cursor() as cur:$
+            cur.execute("SELECT 1 FROM memory_candidates WHERE memory_id = %s", (memory_id,))$
+            return cur.fetchone() is not None$
+(.venv) dev-p@dev-p:~/memory-governor$
+
+--
+
+Confirmed — imports cleanly, and the file ends exactly where it should, candidate_exists() correctly matching the intended content. storage.py is genuinely complete and correct. No issue at all this time; good that we checked rather than assumed either way.
+
+Now a real, live database round-trip — this is the thing an import check can't prove: that the connection string, credentials, and actual table schema all agree with what storage.py expects.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+source .env
+
+python3 <<'PYEOF'
+from datetime import datetime, timezone
+from app.storage import insert_project, insert_candidate, get_candidate, candidate_exists
+from app.models import (
+    GovernedMemoryCandidate, Scope, Content, Provenance,
+    Timestamps, Confidence, Policy,
+)
+
+def now():
+    return datetime.now(timezone.utc)
+
+# Step 1: register a real project (required by the FK)
+insert_project("mb-3-cs-code", "mb-3-cs")
+print("PROJECT_INSERTED: true")
+
+# Step 2: build and insert a real candidate
+c = GovernedMemoryCandidate(
+    memory_id="mem-storage-liveness-001",
+    owning_project="mb-3-cs-code",
+    scope=Scope(visibility="project_local", retention="long_term", owning_project="mb-3-cs-code"),
+    memory_type="fact",
+    content=Content(text="Live storage round-trip test."),
+    provenance=Provenance(source_type="user", source_ref="/tmp/liveness.md",
+                           writer_identity="w1", policy_version="v1"),
+    timestamps=Timestamps(created_at=now(), updated_at=now()),
+    confidence=Confidence(score=0.9, method="human_verified"),
+    policy=Policy(risk_level="low", decision_path="auto_promote"),
+PYEOF("ALL_STORAGE_LIVENESS_CHECKS_PASSED: true")False True
+Traceback (most recent call last):
+  File "<stdin>", line 12, in <module>
+  File "/home/dev-p/memory-governor/app/storage.py", line 28, in insert_project
+    with get_connection() as conn:
+         ^^^^^^^^^^^^^^^^
+  File "/home/dev-p/memory-governor/app/storage.py", line 18, in get_connection
+    database_url = os.environ["MEMORY_GOVERNOR_DATABASE_URL"]
+                   ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen os>", line 685, in __getitem__
+KeyError: 'MEMORY_GOVERNOR_DATABASE_URL'
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Real, clear failure — and the cause is stated exactly in the traceback: KeyError: 'MEMORY_GOVERNOR_DATABASE_URL'. source .env doesn't actually export the variables into the environment the way python3's os.environ needs — source-ing a plain KEY=value file sets them as shell variables, but a Python subprocess only inherits variables that were explicitly exported, not just set. This has been silently working around itself in every earlier step because those steps used PGPASSWORD="${MEMORY_GOVERNOR_DB_PASSWORD}" — reading the shell variable directly inline — never asking a child process to inherit it via the environment. This is the first step that actually needs true environment-variable inheritance, and it's exposed a real gap in how .env has been loaded this whole time.
+
+Not a bug in your typing — a real gap in the command I gave you.
+
+Fix: use set -a before sourcing, which tells bash to automatically export every variable it sets from that point on, then set +a to turn that back off afterward so we don't leave it on permanently.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+
+set -a
+source .env
+set +a
+
+# Confirm it actually exported this time, not just set as a shell variable
+python3 -c "import os; print('MEMORY_GOVERNOR_DATABASE_URL' in os.environ)"
+True
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Confirmed — True. The variable is now genuinely exported into the environment, available to any child process, not just visible to bash itself.
+
+Now retry the full liveness test:
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+
+python3 <<'PYEOF'
+from datetime import datetime, timezone
+from app.storage import insert_project, insert_candidate, get_candidate, candidate_exists
+from app.models import (
+    GovernedMemoryCandidate, Scope, Content, Provenance,
+    Timestamps, Confidence, Policy,
+)
+
+def now():
+    return datetime.now(timezone.utc)
+
+# Step 1: register a real project (required by the FK)
+insert_project("mb-3-cs-code", "mb-3-cs")
+print("PROJECT_INSERTED: true")
+
+# Step 2: build and insert a real candidate
+c = GovernedMemoryCandidate(
+    memory_id="mem-storage-liveness-001",
+    owning_project="mb-3-cs-code",
+    scope=Scope(visibility="project_local", retention="long_term", owning_project="mb-3-cs-code"),
+    memory_type="fact",
+    content=Content(text="Live storage round-trip test."),
+    provenance=Provenance(source_type="user", source_ref="/tmp/liveness.md",
+                           writer_identity="w1", policy_version="v1"),
+    timestamps=Timestamps(created_at=now(), updated_at=now()),
+PYEOF("ALL_STORAGE_LIVENESS_CHECKS_PASSED: true")False Truemote"),
+PROJECT_INSERTED: true
+Traceback (most recent call last):
+  File "<stdin>", line 29, in <module>
+  File "/home/dev-p/memory-governor/app/storage.py", line 108, in insert_candidate
+    cur.execute(
+  File "/home/dev-p/memory-governor/.venv/lib/python3.12/site-packages/psycopg/cursor.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.ProgrammingError: cannot adapt type 'dict' using placeholder '%s' (format: AUTO)
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+Real, clear bug — and this one's in the code I gave you, not anything you did. The traceback is exact: cannot adapt type 'dict' using placeholder '%s'. psycopg3 (unlike its predecessor) does not automatically convert a Python dict into a JSONB value on insert — it needs to be explicitly wrapped in psycopg.types.json.Json(...) so the driver knows to serialize it. _serialize() hands raw dicts straight to the query for scope, content, provenance, confidence, policy, and the nullable subject/contradiction/review/audit fields — none of them wrapped. insert_project worked because it has no JSONB columns at all, which is why it got further before failing.
+
+Good news: PROJECT_INSERTED: true succeeded, so the project row (mb-3-cs-code) is already sitting in the database correctly — nothing to redo there.
+
+Fixing storage.py directly — same file, corrected _serialize():
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > app/storage.py <<'PYEOF'
+import os
+from typing import Optional
+
+import psycopg
+from psycopg.rows import dict_row
+from psycopg.types.json import Json
+
+from .models import GovernedMemoryCandidate
+
+
+def get_connection() -> psycopg.Connection:
+    """
+    Opens a connection using MEMORY_GOVERNOR_DATABASE_URL from the
+    environment. Request-scoped, opened/closed per call -- fine at this
+    project's scale (Phase 4's worker introduces a persistent connection
+    for the outbox listener specifically; this remains the simple path
+    for everything else).
+    """
+    database_url = os.environ["MEMORY_GOVERNOR_DATABASE_URL"]
+    return psycopg.connect(database_url, row_factory=dict_row)
+
+
+def insert_project(project_id: str, display_name: str) -> None:
+    """
+    Minimal project registration, needed here because memory_candidates
+    has a NOT NULL FK to projects. Phase 8's projects.py builds the real
+    onboarding/dormancy API on top of this same low-level insert.
+    """
+wc -l app/storage.pyrint('storage.py imports cleanly')"ert_project, insert_candidate, update_candidate, get_candidate, candidate_exis
+storage.py imports cleanly
+159 app/storage.py
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+159 lines (up from 147, correctly reflecting the added Json import, _json_or_null() helper, and its docstring), imports cleanly. Matches expectation.
+
+Direct file check before we retry the liveness test, same discipline as always:
+---
+10 — checking my own arithmetic against the actual file rather than the other way around: 1 function definition (def _json_or_null) + 1 self-reference inside its own docstring-adjacent code + 8 real call sites in _serialize() (scope, subject, content, provenance, confidence, policy, contradiction, review, audit — that's actually 9 fields, let me recount from the file itself rather than trust memory)... rather than reconcile this by arithmetic in my head, let's just confirm directly, since guessing at my own count defeats the purpose of verifying:
+---
+(.venv) dev-p@dev-p:~/memory-governor$ grep -n "_json_or_null" app/storage.py
+38:def _json_or_null(value):
+56:        "scope": _json_or_null(data["scope"]),
+58:        "subject": _json_or_null(data["subject"]),
+59:        "content": _json_or_null(data["content"]),
+60:        "provenance": _json_or_null(data["provenance"]),
+66:        "confidence": _json_or_null(data["confidence"]),
+67:        "policy": _json_or_null(data["policy"]),
+70:        "contradiction": _json_or_null(data["contradiction"]),
+71:        "review": _json_or_null(data["review"]),
+72:        "audit": _json_or_null(data["audit"]),
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+That accounts for it cleanly: 1 definition + 9 call sites = 10. Every JSONB-backed field (scope, subject, content, provenance, confidence, policy, contradiction, review, audit) is correctly wrapped, exactly the nine that needed it, nothing missed and nothing double-wrapped. Fix confirmed complete and correct.
+
+Now the corrected liveness retry — same as before, minus the insert_project() call since mb-3-cs-code already exists in the database from the prior attempt, and using a fresh memory_id so we're not colliding with anything either:
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+
+python3 <<'PYEOF'
+from datetime import datetime, timezone
+from app.storage import insert_candidate, get_candidate, candidate_exists
+from app.models import (
+    GovernedMemoryCandidate, Scope, Content, Provenance,
+    Timestamps, Confidence, Policy,
+)
+
+def now():
+    return datetime.now(timezone.utc)
+
+# mb-3-cs-code already exists from the prior attempt -- skipping insert_project
+
+c = GovernedMemoryCandidate(
+    memory_id="mem-storage-liveness-002",
+    owning_project="mb-3-cs-code",
+    scope=Scope(visibility="project_local", retention="long_term", owning_project="mb-3-cs-code"),
+    memory_type="fact",
+    content=Content(text="Live storage round-trip test, retry after JSON fix."),
+    provenance=Provenance(source_type="user", source_ref="/tmp/liveness.md",
+                           writer_identity="w1", policy_version="v1"),
+    timestamps=Timestamps(created_at=now(), updated_at=now()),
+    confidence=Confidence(score=0.9, method="human_verified"),
+    policy=Policy(risk_level="low", decision_path="auto_promote"),
+    status="proposed",
+PYEOF("ALL_STORAGE_LIVENESS_CHECKS_PASSED: true")False True
+CANDIDATE_INSERTED: true
+ROUND_TRIP_FIDELITY: true
+CANDIDATE_EXISTS_CORRECT: true
+ALL_STORAGE_LIVENESS_CHECKS_PASSED: true
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+
+ALL_STORAGE_LIVENESS_CHECKS_PASSED: true — the persistence layer is genuinely proven working end-to-end against real Postgres: candidate insert, full round-trip read with fidelity on nested Pydantic objects (scope.visibility, content.text, confidence.score), and candidate_exists() correctly distinguishing a real row from a nonexistent one.
+
+Two real defects found and fixed in this step, worth having both on record when we close it:
+
+source .env alone doesn't export variables to child processes (only PGPASSWORD=... inline assignment had been used until now, which never needed real export) — fixed with set -a / set +a around the source.
+psycopg3 doesn't auto-adapt Python dict/list to JSONB the way psycopg2 did — every JSONB column needed explicit Json(...) wrapping, with None deliberately kept as real None rather than Json(None) to preserve true SQL NULL on nullable columns.
+
+Before writing tests/test_storage.py, we do need to decide what to do with the leftover data, as flagged:
+
+Test data currently sitting in the real memory_governor database:
+
+Project mb-3-cs-code (display name "mb-3-cs")
+Candidate mem-storage-liveness-001
+Candidate mem-storage-liveness-002
+
+Two real options, not a false choice — genuinely different tradeoffs:
+
+Option A — clean up now, keep the database empty until real test suite/real data populates it. Delete these three rows manually, then tests/test_storage.py uses its own disposable test-only project IDs (e.g. test-project-storage) so it never touches anything meaningful.
+
+Option B — keep mb-3-cs-code registered deliberately (it's a real project in your PDLF environment per Scope Doc §6, so registering it now isn't wrong, just early), delete only the two throwaway liveness candidates, and have tests/test_storage.py use a separate disposable test project ID so real and test data never mix.
+
+I'd lean toward B — mb-3-cs-code existing as a registered project isn't a mistake to undo, it's just Phase 8's onboarding work happening a little ahead of schedule by accident. But this is a real decision, not something to default silently either way — which do you want?
+
+---
+
+Confirmed — B. Cleaning up only the two throwaway liveness candidates, keeping mb-3-cs-code registered as a real project.
+
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+
+# Delete only the two throwaway liveness candidates
+PGPASSWORD="${MEMORY_GOVERNOR_DB_PASSWORD}" psql -U memory_governor_svc -h localhost -d memory_governor -c "DELETE FROM memory_candidates WHERE memory_id IN ('mem-storage-liveness-001', 'mem-storage-liveness-002');"
+
+# Confirm exactly those two are gone, and mb-3-cs-code remains
+PGPASSWORD="${MEMORY_GOVERNOR_DB_PASSWORD}" psql -U memory_governor_svc -h localhost -d memory_governor -c "SELECT memory_id FROM memory_candidates;"
+PGPASSWORD="${MEMORY_GOVERNOR_DB_PASSWORD}" psql -U memory_governor_svc -h localhost -d memory_governor -c "SELECT project_id, display_name FROM projects;"
+DELETE 1
+ memory_id
+-----------
+(0 rows)
+
+  project_id  | display_name
+--------------+--------------
+ mb-3-cs-code | mb-3-cs
+(1 row)
+
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+Worth pausing on before moving forward: DELETE 1, not DELETE 2. Only one row was actually deleted, yet memory_candidates now shows zero rows total — which is consistent, but means only one of the two liveness candidates was ever actually there to begin with.
+
+Thinking back through the transcript rather than guessing: the first liveness attempt (mem-storage-liveness-001) failed with the Json wrapping error inside insert_candidate(), on the cur.execute(...) call — meaning that INSERT never completed, and conn.commit() was never reached for that row. Under psycopg3's default transaction handling, an execute that raises leaves the transaction uncommitted, and closing the connection without an explicit commit rolls it back. So mem-storage-liveness-001 most likely never actually persisted at all — only mem-storage-liveness-002 (the successful retry) did, and that's the one row this DELETE just removed.
+
+That's a fully consistent explanation, not a loose end — but I want to say it as a plausible explanation, not a certainty, since I didn't independently verify it at the time. The empty memory_candidates table right now is the actual ground truth that matters, and it's confirmed correct and clean. mb-3-cs-code correctly remains as the one real project. Nothing left to clean up.
+
+Now tests/test_storage.py — using a disposable test project (test-project-storage) with proper setup/teardown via pytest fixtures, so the suite is self-contained and never touches mb-3-cs-code, and cleans up after itself automatically rather than needing manual deletion like we just did.
+
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > tests/test_storage.py <<'PYEOF'
+from datetime import datetime, timezone
+
+import psycopg
+import pytest
+
+from app.models import (
+    GovernedMemoryCandidate, Scope, Content, Provenance,
+    Timestamps, Confidence, Policy,
+)
+from app.storage import (
+    get_connection, insert_project, insert_candidate, update_candidate,
+    get_candidate, candidate_exists,
+)
+
+TEST_PROJECT_ID = "test-project-storage"
+
+
+def _now():
+    return datetime.now(timezone.utc)
+
+
+def _candidate(memory_id: str, **overrides) -> GovernedMemoryCandidate:
+    base = dict(
+        memory_id=memory_id,
+        owning_project=TEST_PROJECT_ID,
+        scope=Scope(visibility="project_local", retention="long_term",
+                     owning_project=TEST_PROJECT_ID),
+        memory_type="fact",
+python3 -m pytest tests/test_storage.py -vot None, "mb-3-cs-code was unexpectedly removed"",)) memory_id = %s",
+======================================================== test session starts ========================================================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/dev-p/memory-governor/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /home/dev-p/memory-governor
+configfile: pyproject.toml
+plugins: schemathesis-4.24.3, hypothesis-6.165.10, anyio-4.14.2
+collected 12 items
+
+tests/test_storage.py::TestInsertAndGet::test_insert_then_get_round_trips_all_scalar_fields PASSED                            [  8%]
+tests/test_storage.py::TestInsertAndGet::test_insert_then_get_round_trips_nested_json_fields PASSED                           [ 16%]
+tests/test_storage.py::TestInsertAndGet::test_get_nonexistent_returns_none PASSED                                             [ 25%]
+tests/test_storage.py::TestInsertAndGet::test_insert_duplicate_memory_id_raises PASSED                                        [ 33%]
+tests/test_storage.py::TestInsertAndGet::test_insert_with_missing_project_fk_raises PASSED                                    [ 41%]
+tests/test_storage.py::TestInsertAndGet::test_null_optional_fields_stay_true_null_not_json_null PASSED                        [ 50%]
+tests/test_storage.py::TestCandidateExists::test_exists_true_after_insert PASSED                                              [ 58%]
+tests/test_storage.py::TestCandidateExists::test_exists_false_before_insert PASSED                                            [ 66%]
+tests/test_storage.py::TestUpdateCandidate::test_update_existing_candidate_persists_change PASSED                             [ 75%]
+tests/test_storage.py::TestUpdateCandidate::test_update_nonexistent_candidate_raises_value_error PASSED                       [ 83%]
+tests/test_storage.py::TestUpdateCandidate::test_update_does_not_create_a_row PASSED                                          [ 91%]
+tests/test_storage.py::TestProjectFixtureIsolation::test_mb_3_cs_code_untouched_by_this_suite PASSED                          [100%]
+
+======================================================== 12 passed in 1.18s =========================================================
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+
+All 12 tests pass, 1.18s. Every real behavior confirmed: round-trip fidelity on scalar and nested JSON fields, None correctly preserved as SQL NULL not JSON null, the PRIMARY KEY constraint genuinely blocking a duplicate insert (UniqueViolation), the FK genuinely blocking an orphaned candidate (ForeignKeyViolation), update_candidate()'s existence guard working both ways (raises on missing, and provably creates nothing), and the isolation test confirming mb-3-cs-code survived untouched.
+
+Independent database check, confirming the fixture teardown actually did its job rather than trusting the green test run alone:
+
+---
+cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+
+PGPASSWORD="${MEMORY_GOVERNOR_DB_PASSWORD}" psql -U memory_governor_svc -h localhost -d memory_governor -c "SELECT project_id FROM projects;"
+PGPASSWORD="${MEMORY_GOVERNOR_DB_PASSWORD}" psql -U memory_governor_svc -h localhost -d memory_governor -c "SELECT count(*) FROM memory_candidates;"
+
+---
+
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+
+PGPASSWORD="${MEMORY_GOVERNOR_DB_PASSWORD}" psql -U memory_governor_svc -h localhost -d memory_governor -c "SELECT project_id FROM projects;"
+PGPASSWORD="${MEMORY_GOVERNOR_DB_PASSWORD}" psql -U memory_governor_svc -h localhost -d memory_governor -c "SELECT count(*) FROM memory_candidates;"
+  project_id
+--------------
+ mb-3-cs-code
+(1 row)
+
+ count
+-------
+     0
+(1 row)
+
+(.venv) dev-p@dev-p:~/memory-governor$
+
+---
+
+Confirmed independently — exactly mb-3-cs-code remains in projects, test-project-storage is genuinely gone, and memory_candidates has zero rows. The fixture's setup/teardown worked correctly, not just the test assertions themselves.
+
+Step 2.2 — storage.py: exit criteria met.
+
+Two real defects found and fixed in this step, both worth keeping on record clearly when you send the full file:
+
+source .env alone doesn't export variables to a child process's environment — needed set -a/set +a around it. This affects every future step that runs Python against the database, not just this one — worth remembering as a standing pattern going forward, not a one-off fix.
+psycopg3 requires explicit Json(...) wrapping for JSONB columns — psycopg2's automatic dict-adaptation doesn't carry over. Fixed with a _json_or_null() helper that also correctly preserves real NULL for optional fields rather than writing the JSON literal "null".
+
+Also worth noting for Phase 2's exit gate later: this step also added one function (insert_project()) that's really Phase 8's territory, done as a minimal necessary stub because the schema's FK forced the dependency early — flagged in the design notes at the top of this step, not silently smuggled in.
+
+Whenever you're ready, send me the full Step 2.2 file — this one's worth including in full given the two real bugs and the resulting Option B decision. Once agreed closed, per Workflow Step 2.3, next is re-running Phase 1's full test suite (test_models.py, test_state_machine.py, test_policy.py) pointed at real storage to confirm no behavioral drift — the last step before Phase 2's own exit gate.
+
+---
+Ran a command, viewed a file
+Ran a command, viewed a file
+Full file reviewed end-to-end — the complete arc is on record: the two design notes flagged up front (the forced insert_project() dependency, the missing test_storage.py in Architecture §9's own test list), the initial paste-echo scare that turned out to be nothing, the two real defects (.env export, psycopg3's Json() requirement) found and fixed through live database testing rather than assumed away, the honest "plausible, not certain" explanation for the DELETE 1 discrepancy, the Option B cleanup decision, the full test_storage.py build with proper fixture-based isolation, and the final independent database verification. Nothing missing, nothing inconsistent.
+
+Step 2.2 — storage.py: closed, agreed.
+
+Final state on record:
+
+app/storage.py — connection handling, serialize/deserialize, insert/update/get/exists, plus the necessary insert_project() stub (flagged as Phase 8 territory borrowed early)
+Two real defects found and fixed: .env requiring set -a/set +a for true export (a standing pattern for all future steps, not a one-off), and psycopg3's explicit Json() requirement for JSONB columns with correct NULL-preservation
+tests/test_storage.py — a necessary addition beyond Architecture §9's own test-file list, 12 tests, fixture-based setup/teardown, all passing, independently verified against the live database afterward (not just trusting the green test run)
+Real project mb-3-cs-code deliberately kept registered (Option B); all disposable test data cleaned up automatically by the fixture
+Per Workflow Step 2.3, ready to re-run Phase 1's full test suite against real storage whenever you say go — the last step before Phase 2's own exit gate.

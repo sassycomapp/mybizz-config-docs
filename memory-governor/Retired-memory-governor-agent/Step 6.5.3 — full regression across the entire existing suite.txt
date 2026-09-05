@@ -1,0 +1,326 @@
+Step 6.5.3 — Full regression
+
+Running the entire suite now, not just test_policy.py. Genuinely expecting this to surface real fallout elsewhere — anything in test_api.py that submitted a bad-provenance or low-confidence candidate and asserted an immediate quarantined/rejected status would have been written against the old automatic behavior, and should now correctly fail, since that candidate lands on under_review instead. Finding that here, rather than assuming it's fine, is exactly the point of this step.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+python3 -m pytest tests/ -v --tb=short
+======================================================== test session starts ========================================================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/dev-p/memory-governor/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /home/dev-p/memory-governor
+configfile: pyproject.toml
+plugins: schemathesis-4.24.3, hypothesis-6.165.10, anyio-4.14.2
+collected 240 items
+
+tests/test_api.py::TestGlobalNulByteRejection::test_path_parameter_nul_byte_rejected_get_memory PASSED                        [  0%]
+tests/test_api.py::TestGlobalNulByteRejection::test_path_parameter_nul_byte_rejected_provenance PASSED                        [  0%]
+tests/test_api.py::TestGlobalNulByteRejection::test_path_parameter_nul_byte_rejected_project_patch PASSED                     [  1%]
+tests/test_api.py::TestGlobalNulByteRejection::test_query_parameter_nul_byte_rejected_list_memory PASSED                      [  1%]
+tests/test_api.py::TestGlobalNulByteRejection::test_legitimate_request_without_nul_bytes_still_works PASSED                   [  2%]
+tests/test_api.py::TestGlobalNulByteRejection::test_request_body_nul_byte_rejected_via_shared_pydantic_validator PASSED       [  2%]
+tests/test_api.py::TestGlobalNulByteRejection::test_nested_request_body_nul_byte_also_rejected PASSED                         [  2%]
+tests/test_api.py::TestPathBasedIngestion::test_single_file_submission_preserves_original_response_shape PASSED               [  3%]
+tests/test_api.py::TestPathBasedIngestion::test_folder_submission_returns_one_result_per_file PASSED                          [  3%]
+tests/test_api.py::TestPathBasedIngestion::test_binary_file_isolated_not_fatal_to_batch PASSED                                [  4%]
+tests/test_api.py::TestPathBasedIngestion::test_existence_oracle_closed_nonexistent_outside_allowlist PASSED                  [  4%]
+tests/test_api.py::TestPathBasedIngestion::test_existence_oracle_closed_existing_outside_allowlist PASSED                     [  5%]
+tests/test_api.py::TestPathBasedIngestion::test_nonexistent_path_inside_allowlist_returns_404 PASSED                          [  5%]
+tests/test_api.py::TestPathBasedIngestion::test_non_httpexception_failure_isolated_within_batch PASSED                        [  5%]
+tests/test_audit.py::TestAppendAuditEntry::test_append_returns_a_real_audit_id PASSED                                         [  6%]
+tests/test_audit.py::TestAppendAuditEntry::test_append_does_not_modify_memory_candidates_table PASSED                         [  6%]
+tests/test_audit.py::TestAppendAuditEntry::test_decision_by_defaults_to_governor_when_no_reviewer PASSED                      [  7%]
+tests/test_audit.py::TestGetAuditHistory::test_empty_history_for_candidate_with_no_decisions PASSED                           [  7%]
+tests/test_audit.py::TestGetAuditHistory::test_multiple_decisions_accumulate_not_overwrite PASSED                             [  7%]
+tests/test_audit.py::TestGetAuditHistory::test_history_returned_oldest_first PASSED                                           [  8%]
+tests/test_audit.py::TestGetAuditHistory::test_history_is_scoped_to_the_correct_memory_id_only PASSED                         [  8%]
+tests/test_audit.py::TestGetAuditHistory::test_current_candidate_jsonb_audit_shows_only_most_recent PASSED                    [  9%]
+tests/test_models.py::TestScope::test_construct_valid_visibility_project_local PASSED                                         [  9%]
+tests/test_models.py::TestScope::test_construct_shared_all PASSED                                                             [ 10%]
+tests/test_models.py::TestScope::test_invalid_visibility_rejected PASSED                                                      [ 10%]
+tests/test_models.py::TestScope::test_invalid_retention_rejected PASSED                                                       [ 10%]
+tests/test_models.py::TestScope::test_owning_project_max_length_enforced PASSED                                               [ 11%]
+tests/test_models.py::TestSubject::test_construct_valid_spo_triple PASSED                                                     [ 11%]
+tests/test_models.py::TestSubject::test_object_accepts_bool PASSED                                                            [ 12%]
+tests/test_models.py::TestSubject::test_entity_max_length_enforced PASSED                                                     [ 12%]
+tests/test_models.py::TestContent::test_construct_text_only PASSED                                                            [ 12%]
+tests/test_models.py::TestContent::test_construct_with_structured_dict PASSED                                                 [ 13%]
+tests/test_models.py::TestContent::test_construct_with_structured_list PASSED                                                 [ 13%]
+tests/test_models.py::TestProvenance::test_construct_valid PASSED                                                             [ 14%]
+tests/test_models.py::TestProvenance::test_invalid_source_type_rejected PASSED                                                [ 14%]
+tests/test_models.py::TestProvenance::test_missing_required_field_rejected PASSED                                             [ 15%]
+tests/test_models.py::TestTimestamps::test_construct_minimal PASSED                                                           [ 15%]
+tests/test_models.py::TestTimestamps::test_construct_with_valid_until_reason PASSED                                           [ 15%]
+tests/test_models.py::TestTimestamps::test_invalid_valid_until_reason_rejected PASSED                                         [ 16%]
+tests/test_models.py::TestConfidence::test_construct_valid_boundary_zero PASSED                                               [ 16%]
+tests/test_models.py::TestConfidence::test_construct_valid_boundary_one PASSED                                                [ 17%]
+tests/test_models.py::TestConfidence::test_score_above_one_rejected PASSED                                                    [ 17%]
+tests/test_models.py::TestConfidence::test_score_below_zero_rejected PASSED                                                   [ 17%]
+tests/test_models.py::TestConfidence::test_invalid_method_rejected PASSED                                                     [ 18%]
+tests/test_models.py::TestPolicy::test_construct_minimal PASSED                                                               [ 18%]
+tests/test_models.py::TestPolicy::test_invalid_risk_level_rejected PASSED                                                     [ 19%]
+tests/test_models.py::TestPolicy::test_invalid_decision_path_rejected PASSED                                                  [ 19%]
+tests/test_models.py::TestPolicy::test_invalid_allowed_action_rejected PASSED                                                 [ 20%]
+tests/test_models.py::TestContradiction::test_default_not_detected PASSED                                                     [ 20%]
+tests/test_models.py::TestContradiction::test_cross_project_flag PASSED                                                       [ 20%]
+tests/test_models.py::TestContradiction::test_invalid_resolution_rejected PASSED                                              [ 21%]
+tests/test_models.py::TestReviewPresentation::test_construct_requires_all_three_fields PASSED                                 [ 21%]
+tests/test_models.py::TestReviewPresentation::test_missing_field_rejected PASSED                                              [ 22%]
+tests/test_models.py::TestAudit::test_construct_empty PASSED                                                                  [ 22%]
+tests/test_models.py::TestAudit::test_construct_full PASSED                                                                   [ 22%]
+tests/test_models.py::TestGovernedMemoryCandidate::test_construct_minimal_valid PASSED                                        [ 23%]
+tests/test_models.py::TestGovernedMemoryCandidate::test_procedural_memory_type_accepted PASSED                                [ 23%]
+tests/test_models.py::TestGovernedMemoryCandidate::test_invalid_memory_type_rejected PASSED                                   [ 24%]
+tests/test_models.py::TestGovernedMemoryCandidate::test_invalid_status_rejected PASSED                                        [ 24%]
+tests/test_models.py::TestGovernedMemoryCandidate::test_memory_id_max_length_enforced PASSED                                  [ 25%]
+tests/test_models.py::TestGovernedMemoryCandidate::test_construct_with_full_review_block PASSED                               [ 25%]
+tests/test_models.py::TestGovernedMemoryCandidate::test_construct_with_cross_project_contradiction PASSED                     [ 25%]
+tests/test_models.py::TestMemoryDecision::test_construct_valid PASSED                                                         [ 26%]
+tests/test_models.py::TestMemoryDecision::test_invalid_status_rejected PASSED                                                 [ 26%]
+tests/test_outbox.py::TestValidateEventType::test_every_documented_event_type_is_accepted[candidate_created] PASSED           [ 27%]
+tests/test_outbox.py::TestValidateEventType::test_every_documented_event_type_is_accepted[candidate_superseded] PASSED        [ 27%]
+tests/test_outbox.py::TestValidateEventType::test_every_documented_event_type_is_accepted[contradiction_detected] PASSED      [ 27%]
+tests/test_outbox.py::TestValidateEventType::test_every_documented_event_type_is_accepted[expiry_due] PASSED                  [ 28%]
+tests/test_outbox.py::TestValidateEventType::test_every_documented_event_type_is_accepted[gbrain_write] PASSED                [ 28%]
+tests/test_outbox.py::TestValidateEventType::test_every_documented_event_type_is_accepted[register_write] PASSED              [ 29%]
+tests/test_outbox.py::TestValidateEventType::test_every_documented_event_type_is_accepted[review_requested] PASSED            [ 29%]
+tests/test_outbox.py::TestValidateEventType::test_every_documented_event_type_is_accepted[review_resolved] PASSED             [ 30%]
+tests/test_outbox.py::TestValidateEventType::test_every_documented_event_type_is_accepted[scheduled_consolidation] PASSED     [ 30%]
+tests/test_outbox.py::TestValidateEventType::test_unknown_event_type_rejected PASSED                                          [ 30%]
+tests/test_outbox.py::TestInsertCandidateAndEmitEvent::test_both_candidate_and_event_persist_together PASSED                  [ 31%]
+tests/test_outbox.py::TestInsertCandidateAndEmitEvent::test_failed_insert_leaves_no_candidate_and_no_event PASSED             [ 31%]
+tests/test_outbox.py::TestInsertCandidateAndEmitEvent::test_duplicate_memory_id_leaves_no_event_either PASSED                 [ 32%]
+tests/test_outbox.py::TestInsertCandidateAndEmitEvent::test_custom_payload_is_stored_correctly PASSED                         [ 32%]
+tests/test_outbox.py::TestUpdateCandidateAndEmitEvent::test_update_and_event_persist_together PASSED                          [ 32%]
+tests/test_outbox.py::TestUpdateCandidateAndEmitEvent::test_update_nonexistent_candidate_raises_and_emits_no_event PASSED     [ 33%]
+tests/test_outbox.py::TestUpdateCandidateAndEmitEvent::test_invalid_event_type_rejected_before_any_write PASSED               [ 33%]
+tests/test_outbox.py::TestEmitEventNotify::test_notify_channel_constant_is_correct PASSED                                     [ 34%]
+tests/test_outbox.py::TestEmitEventNotify::test_low_level_emit_event_requires_open_cursor_shares_caller_transaction PASSED    [ 34%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_only_policy_is_high_risk PASSED                                   [ 35%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_policy_type_is_high_risk PASSED                                   [ 35%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_no_other_memory_type_is_high_risk_by_type_alone[fact] PASSED      [ 35%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_no_other_memory_type_is_high_risk_by_type_alone[preference] PASSED [ 36%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_no_other_memory_type_is_high_risk_by_type_alone[episode] PASSED   [ 36%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_no_other_memory_type_is_high_risk_by_type_alone[trace] PASSED     [ 37%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_no_other_memory_type_is_high_risk_by_type_alone[task_state] PASSED [ 37%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_no_other_memory_type_is_high_risk_by_type_alone[relationship] PASSED [ 37%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_no_other_memory_type_is_high_risk_by_type_alone[summary] PASSED   [ 38%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_no_other_memory_type_is_high_risk_by_type_alone[procedural] PASSED [ 38%]
+tests/test_policy.py::TestComputeRiskLevel::test_project_local_high_confidence_is_low_risk PASSED                             [ 39%]
+tests/test_policy.py::TestComputeRiskLevel::test_shared_all_is_elevated_to_medium PASSED                                      [ 39%]
+tests/test_policy.py::TestComputeRiskLevel::test_shared_specific_is_elevated_to_medium PASSED                                 [ 40%]
+tests/test_policy.py::TestComputeRiskLevel::test_low_confidence_elevates_to_medium PASSED                                     [ 40%]
+tests/test_policy.py::TestComputeRiskLevel::test_confidence_boundary_exactly_half_is_not_elevated PASSED                      [ 40%]
+tests/test_policy.py::TestCheckProvenance::test_complete_provenance_passes PASSED                                             [ 41%]
+tests/test_policy.py::TestCheckProvenance::test_empty_writer_identity_fails PASSED                                            [ 41%]
+tests/test_policy.py::TestCheckProvenance::test_empty_policy_version_fails PASSED                                             [ 42%]
+tests/test_policy.py::TestCheckScope::test_project_local_with_empty_shared_with_passes PASSED                                 [ 42%]
+tests/test_policy.py::TestCheckScope::test_project_local_with_nonempty_shared_with_fails PASSED                               [ 42%]
+tests/test_policy.py::TestCheckScope::test_shared_all_with_exact_all_list_passes PASSED                                       [ 43%]
+tests/test_policy.py::TestCheckScope::test_shared_all_with_empty_list_fails PASSED                                            [ 43%]
+tests/test_policy.py::TestCheckScope::test_shared_specific_with_real_list_passes PASSED                                       [ 44%]
+tests/test_policy.py::TestCheckScope::test_shared_specific_with_empty_list_fails PASSED                                       [ 44%]
+tests/test_policy.py::TestCheckScope::test_shared_specific_with_all_literal_fails PASSED                                      [ 45%]
+tests/test_policy.py::TestDecidePathOrdering::test_missing_provenance_routes_to_review_with_reject_recommendation PASSED      [ 45%]
+tests/test_policy.py::TestDecidePathOrdering::test_bad_scope_routes_to_review_with_quarantine_recommendation PASSED           [ 45%]
+tests/test_policy.py::TestDecidePathOrdering::test_high_risk_type_always_needs_review_even_with_perfect_confidence PASSED     [ 46%]
+tests/test_policy.py::TestDecidePathOrdering::test_below_review_threshold_routes_to_review_with_no_recommendation PASSED      [ 46%]
+tests/test_policy.py::TestDecidePathOrdering::test_at_review_threshold_boundary_does_not_trigger_low_confidence_review PASSED [ 47%]
+tests/test_policy.py::TestDecidePathOrdering::test_medium_risk_below_auto_promote_threshold_needs_review PASSED               [ 47%]
+tests/test_policy.py::TestDecidePathOrdering::test_low_risk_high_confidence_auto_promotes PASSED                              [ 47%]
+tests/test_policy.py::TestDecidePathContradictionUniformity::test_unresolved_contradiction_on_low_risk_fact_blocks_promotion PASSED [ 48%]
+tests/test_policy.py::TestDecidePathContradictionUniformity::test_manual_review_resolution_on_low_risk_fact_still_blocks PASSED [ 48%]
+tests/test_policy.py::TestDecidePathContradictionUniformity::test_cross_project_contradiction_on_low_risk_fact_always_blocks PASSED [ 49%]
+tests/test_policy.py::TestDecidePathContradictionUniformity::test_genuinely_resolved_non_cross_project_contradiction_does_not_block PASSED [ 49%]
+tests/test_policy.py::TestDecidePathContradictionUniformity::test_contradiction_not_detected_does_not_block PASSED            [ 50%]
+tests/test_policy.py::TestDecidePathContradictionUniformity::test_no_contradiction_object_at_all_does_not_block PASSED        [ 50%]
+tests/test_policy.py::TestDecidePathDoesNotMutate::test_decide_path_never_touches_status PASSED                               [ 50%]
+tests/test_policy.py::TestDecidePathDoesNotMutate::test_decide_path_returns_new_policy_object_not_mutating_existing PASSED    [ 51%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[missing_provenance-overrides0] PASSED [ 51%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[bad_scope-overrides1] PASSED [ 52%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[high_risk_type-overrides2] PASSED [ 52%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[low_confidence-overrides3] PASSED [ 52%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[unresolved_contradiction-overrides4] PASSED [ 53%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[cross_project_contradiction-overrides5] PASSED [ 53%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[medium_risk_moderate_confidence-overrides6] PASSED [ 54%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[clean_candidate-overrides7] PASSED [ 54%]
+tests/test_policy.py::TestTwoOutcomeModel::test_recommended_action_is_never_treated_as_final_by_construction PASSED           [ 55%]
+tests/test_provenance.py::TestBuildProvenanceHasNoWriterIdentityParameter::test_writer_identity_is_not_an_accepted_parameter PASSED [ 55%]
+tests/test_provenance.py::TestBuildProvenanceHasNoWriterIdentityParameter::test_exact_expected_parameter_set PASSED           [ 55%]
+tests/test_provenance.py::TestResolveWriterIdentity::test_real_credential_env_vars_are_registered PASSED                      [ 56%]
+tests/test_provenance.py::TestResolveWriterIdentity::test_fake_credential_raises_permission_error PASSED                      [ 56%]
+tests/test_provenance.py::TestResolveWriterIdentity::test_empty_string_credential_raises_permission_error PASSED              [ 57%]
+tests/test_provenance.py::TestResolveWriterIdentity::test_a_real_writer_identity_string_used_AS_a_credential_is_rejected PASSED [ 57%]
+tests/test_provenance.py::TestBuildProvenanceIgnoresPayloadWriterIdentity::test_injecting_writer_identity_via_kwargs_raises_type_error PASSED [ 57%]
+tests/test_provenance.py::TestBuildProvenanceIgnoresPayloadWriterIdentity::test_legitimate_call_resolves_writer_identity_from_credential_only PASSED [ 58%]
+tests/test_provenance.py::TestComputeLineageHash::test_same_inputs_produce_same_hash PASSED                                   [ 58%]
+tests/test_provenance.py::TestComputeLineageHash::test_different_source_ref_produces_different_hash PASSED                    [ 59%]
+tests/test_provenance.py::TestComputeLineageHash::test_different_source_type_produces_different_hash PASSED                   [ 59%]
+tests/test_provenance.py::TestComputeLineageHash::test_hash_is_valid_sha256_hex_digest PASSED                                 [ 60%]
+tests/test_provenance.py::TestReconstructLineage::test_candidate_with_no_supersedes_returns_single_element PASSED             [ 60%]
+tests/test_provenance.py::TestReconstructLineage::test_two_link_chain_returns_oldest_first PASSED                             [ 60%]
+tests/test_provenance.py::TestReconstructLineage::test_three_link_chain_full_order PASSED                                     [ 61%]
+tests/test_provenance.py::TestReconstructLineage::test_nonexistent_memory_id_raises_value_error PASSED                        [ 61%]
+tests/test_retry.py::TestComputeBackoffSeconds::test_exact_documented_sequence PASSED                                         [ 62%]
+tests/test_retry.py::TestWithRetrySuccess::test_successful_handler_returns_true_and_does_not_touch_retry_columns PASSED       [ 62%]
+tests/test_retry.py::TestWithRetryFailure::test_single_failure_increments_attempt_count_and_schedules_backoff PASSED          [ 62%]
+tests/test_retry.py::TestWithRetryFailure::test_never_raises_back_to_caller PASSED                                            [ 63%]
+tests/test_retry.py::TestWithRetryFailure::test_permanently_failed_after_max_attempts_and_next_retry_after_cleared PASSED     [ 63%]
+tests/test_retry.py::TestPollingPassEligibilityFilter::test_freshly_failed_event_not_immediately_repolled PASSED              [ 64%]
+tests/test_retry.py::TestPollingPassEligibilityFilter::test_permanently_failed_event_never_repolled_even_after_time_passes PASSED [ 64%]
+tests/test_state_machine.py::TestTransitionTable::test_allowed_transition_succeeds[proposed-promoted] PASSED                  [ 65%]
+tests/test_state_machine.py::TestTransitionTable::test_allowed_transition_succeeds[proposed-superseded] PASSED                [ 65%]
+tests/test_state_machine.py::TestTransitionTable::test_allowed_transition_succeeds[proposed-under_review] PASSED              [ 65%]
+tests/test_state_machine.py::TestTransitionTable::test_allowed_transition_succeeds[proposed-rejected] PASSED                  [ 66%]
+tests/test_state_machine.py::TestTransitionTable::test_allowed_transition_succeeds[proposed-quarantined] PASSED               [ 66%]
+tests/test_state_machine.py::TestTransitionTable::test_allowed_transition_succeeds[under_review-promoted] PASSED              [ 67%]
+tests/test_state_machine.py::TestTransitionTable::test_allowed_transition_succeeds[under_review-rejected] PASSED              [ 67%]
+tests/test_state_machine.py::TestTransitionTable::test_allowed_transition_succeeds[under_review-superseded] PASSED            [ 67%]
+tests/test_state_machine.py::TestTransitionTable::test_allowed_transition_succeeds[under_review-quarantined] PASSED           [ 68%]
+tests/test_state_machine.py::TestTransitionTable::test_allowed_transition_succeeds[promoted-superseded] PASSED                [ 68%]
+tests/test_state_machine.py::TestTransitionTable::test_allowed_transition_succeeds[promoted-expired] PASSED                   [ 69%]
+tests/test_state_machine.py::TestTransitionTable::test_allowed_transition_succeeds[promoted-quarantined] PASSED               [ 69%]
+tests/test_state_machine.py::TestTransitionTable::test_allowed_transition_succeeds[quarantined-promoted] PASSED               [ 70%]
+tests/test_state_machine.py::TestTransitionTable::test_allowed_transition_succeeds[quarantined-rejected] PASSED               [ 70%]
+tests/test_state_machine.py::TestTransitionTable::test_allowed_transition_succeeds[quarantined-expired] PASSED                [ 70%]
+tests/test_state_machine.py::TestTransitionTable::test_allowed_transition_succeeds[superseded-expired] PASSED                 [ 71%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[proposed-proposed] PASSED [ 71%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[proposed-expired] PASSED [ 72%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[under_review-proposed] PASSED [ 72%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[under_review-under_review] PASSED [ 72%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[under_review-expired] PASSED [ 73%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[promoted-proposed] PASSED [ 73%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[promoted-under_review] PASSED [ 74%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[promoted-promoted] PASSED [ 74%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[promoted-rejected] PASSED [ 75%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[quarantined-proposed] PASSED [ 75%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[quarantined-under_review] PASSED [ 75%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[quarantined-quarantined] PASSED [ 76%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[quarantined-superseded] PASSED [ 76%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[rejected-proposed] PASSED [ 77%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[rejected-under_review] PASSED [ 77%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[rejected-promoted] PASSED [ 77%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[rejected-quarantined] PASSED [ 78%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[rejected-rejected] PASSED [ 78%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[rejected-superseded] PASSED [ 79%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[rejected-expired] PASSED [ 79%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[superseded-proposed] PASSED [ 80%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[superseded-under_review] PASSED [ 80%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[superseded-promoted] PASSED [ 80%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[superseded-quarantined] PASSED [ 81%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[superseded-rejected] PASSED [ 81%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[superseded-superseded] PASSED [ 82%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[expired-proposed] PASSED [ 82%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[expired-under_review] PASSED [ 82%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[expired-promoted] PASSED [ 83%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[expired-quarantined] PASSED [ 83%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[expired-rejected] PASSED [ 84%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[expired-superseded] PASSED [ 84%]
+tests/test_state_machine.py::TestTransitionTable::test_disallowed_transition_raises_and_does_not_mutate[expired-expired] PASSED [ 85%]
+tests/test_state_machine.py::TestTransitionTable::test_rejected_is_a_true_terminal_state PASSED                               [ 85%]
+tests/test_state_machine.py::TestTransitionTable::test_expired_is_a_true_terminal_state PASSED                                [ 85%]
+tests/test_state_machine.py::TestTransitionTable::test_can_transition_matches_table_directly PASSED                           [ 86%]
+tests/test_state_machine.py::TestTransitionTable::test_can_transition_unknown_from_status_returns_false PASSED                [ 86%]
+tests/test_state_machine.py::TestInitializeCandidate::test_forces_proposed_regardless_of_input PASSED                         [ 87%]
+tests/test_state_machine.py::TestInitializeCandidate::test_forces_proposed_even_when_claiming_terminal_state PASSED           [ 87%]
+tests/test_state_machine.py::TestInitializeCandidate::test_returns_same_object_mutated_in_place PASSED                        [ 87%]
+tests/test_state_machine.py::TestApplyDecisionAudit::test_creates_audit_block_if_absent PASSED                                [ 88%]
+tests/test_state_machine.py::TestApplyDecisionAudit::test_defaults_decision_by_to_governor_when_no_reviewer PASSED            [ 88%]
+tests/test_state_machine.py::TestApplyDecisionAudit::test_decision_object_fields_match_transition PASSED                      [ 89%]
+tests/test_state_machine.py::TestNoDirectStatusAssignmentOutsideStateMachine::test_status_field_never_assigned_outside_state_machine PASSED [ 89%]
+tests/test_state_machine.py::TestNoDirectStatusAssignmentOutsideStateMachine::test_state_machine_itself_is_the_only_file_assigning_status PASSED [ 90%]
+tests/test_storage.py::TestInsertAndGet::test_insert_then_get_round_trips_all_scalar_fields PASSED                            [ 90%]
+tests/test_storage.py::TestInsertAndGet::test_insert_then_get_round_trips_nested_json_fields PASSED                           [ 90%]
+tests/test_storage.py::TestInsertAndGet::test_get_nonexistent_returns_none PASSED                                             [ 91%]
+tests/test_storage.py::TestInsertAndGet::test_insert_duplicate_memory_id_raises PASSED                                        [ 91%]
+tests/test_storage.py::TestInsertAndGet::test_insert_with_missing_project_fk_raises PASSED                                    [ 92%]
+tests/test_storage.py::TestInsertAndGet::test_null_optional_fields_stay_true_null_not_json_null PASSED                        [ 92%]
+tests/test_storage.py::TestCandidateExists::test_exists_true_after_insert PASSED                                              [ 92%]
+tests/test_storage.py::TestCandidateExists::test_exists_false_before_insert PASSED                                            [ 93%]
+tests/test_storage.py::TestUpdateCandidate::test_update_existing_candidate_persists_change PASSED                             [ 93%]
+tests/test_storage.py::TestUpdateCandidate::test_update_nonexistent_candidate_raises_value_error PASSED                       [ 94%]
+tests/test_storage.py::TestUpdateCandidate::test_update_does_not_create_a_row PASSED                                          [ 94%]
+tests/test_storage.py::TestProjectFixtureIsolation::test_mb_3_cs_code_untouched_by_this_suite PASSED                          [ 95%]
+tests/test_storage.py::TestStateMachineStorageIntegration::test_initialized_and_promoted_candidate_round_trips_correctly PASSED [ 95%]
+tests/test_storage.py::TestStateMachineStorageIntegration::test_invalid_transition_is_rejected_before_any_storage_write PASSED [ 95%]
+tests/test_storage.py::TestStateMachineStorageIntegration::test_resubmitting_existing_memory_id_via_insert_still_blocked_at_storage_level PASSED [ 96%]
+tests/test_worker.py::TestHandlerRegistry::test_every_valid_event_type_has_a_handler PASSED                                   [ 96%]
+tests/test_worker.py::TestProcessEvent::test_process_event_marks_event_as_processed PASSED                                    [ 97%]
+tests/test_worker.py::TestProcessEvent::test_unknown_event_type_raises PASSED                                                 [ 97%]
+tests/test_worker.py::TestRunPollingPass::test_polling_pass_processes_all_pending_events PASSED                               [ 97%]
+tests/test_worker.py::TestRunPollingPass::test_polling_pass_does_not_reprocess_already_processed_events PASSED                [ 98%]
+tests/test_worker.py::TestRunPollingPass::test_polling_pass_processes_oldest_first PASSED                                     [ 98%]
+tests/test_worker.py::TestListenLoopBoundedRun::test_listen_loop_stops_after_specified_seconds PASSED                         [ 99%]
+tests/test_worker.py::TestListenLoopBoundedRun::test_listen_loop_stops_after_specified_iterations PASSED                      [ 99%]
+tests/test_worker.py::TestListenLoopBoundedRun::test_listen_loop_processes_event_emitted_during_its_run PASSED                [100%]
+
+======================================================= 240 passed in 38.72s ========================================================
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+All 240 tests pass, 38.72s, zero failures — and worth being honest about my own prediction rather than just moving past it: I expected real fallout in test_api.py, and there wasn't any. Checking why, rather than just accepting the good news: TestGlobalNulByteRejection asserts Pydantic validation errors (422/400) that happen before decide_path() ever runs, and TestPathBasedIngestion asserts response shape, allowlist enforcement, and error isolation — none of those tests ever actually exercised the automatic quarantine/reject paths in the first place. My prediction was wrong for a real, identifiable reason, not by luck.
+
+Step 6.5.3 — Full regression: exit criteria met.
+
+That closes all three steps of Phase 6.5. Per the workflow's own exit gate: "the real, running code matches Architecture §2's two-outcome model exactly, with the full existing test suite passing against the corrected version, before Phase 7 begins." Confirmed, in full — the two new Policy fields exist and work, decide_path() genuinely never returns reject/quarantine automatically (proven both by source inspection and by live behavior across every real trigger condition), and the entire pre-existing suite, including the parts I expected to break, passes clean.
+
+One thing worth doing before we move to Phase 7, matching the discipline we just established for Phases 1–6: commit this as its own clean, isolated commit.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+git status
+git add app/models.py app/policy.py tests/test_policy.py
+git status
+
+git commit -m "refactor: Phase 6.5 - realign decide_path() to the two-outcome model
+
+Architecture §2.2 revision: decide_path() now only ever returns
+auto_promote or needs_review automatically. Added Policy.classification
+and Policy.recommended_action so a review item can carry a suggested
+disposition without the system deciding anything unilaterally -- reject
+and quarantine are now developer-chosen outcomes only, never
+system-assigned. Rewrote test_policy.py accordingly, including a new
+TestTwoOutcomeModel class proving the guarantee behaviorally across
+every trigger condition, not just by source inspection. Full 240-test
+regression confirms no unintended fallout elsewhere in the suite."
+
+git push
+git log --oneline -3
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   app/models.py
+        modified:   app/policy.py
+        modified:   tests/test_policy.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   app/models.py
+        modified:   app/policy.py
+        modified:   tests/test_policy.py
+
+[main c4df67d] refactor: Phase 6.5 - realign decide_path() to the two-outcome model
+ 3 files changed, 146 insertions(+), 40 deletions(-)
+Enumerating objects: 13, done.
+Counting objects: 100% (13/13), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (7/7), 3.72 KiB | 3.72 MiB/s, done.
+Total 7 (delta 6), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (6/6), completed with 6 local objects.
+To https://github.com/sassycomapp/memory-governor.git
+   738adb6..c4df67d  main -> main
+c4df67d (HEAD -> main, origin/main) refactor: Phase 6.5 - realign decide_path() to the two-outcome model
+738adb6 feat: Phases 1-6 complete (deterministic core through path-based ingestion)
+8539566 chore: track empty docs/ and registers/ directories via .gitkeep
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Full file reviewed end-to-end — the complete 240-test regression run, the honest reconciliation of my wrong prediction against the real reason it didn't materialize, and the commit-and-push sequence. Exactly three files staged (app/models.py, app/policy.py, tests/test_policy.py), nothing extraneous, clean commit c4df67d, pushed and confirmed matching origin/main. Nothing missing, nothing inconsistent.

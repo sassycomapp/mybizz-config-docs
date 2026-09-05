@@ -1,0 +1,97 @@
+Step 5.2 — main.py
+
+Two design points, both genuinely unspecified by either foundation document — flagging rather than silently picking defaults without saying so.
+
+1. OpenAPI metadata (title/description/version) isn't specified anywhere. Using values consistent with the project's own identity: title "Memory Governor", description drawn directly from Scope Doc §2's own framing, version 0.1.0 matching pyproject.toml. Cosmetic, but worth naming as a choice rather than an accident.
+
+2. No route prefix. Architecture §3.2 lists every endpoint as a bare /memory/... path — api.py's router was already built without a prefix, so main.py mounts it as-is. Confirming this explicitly now, since a prefix mismatch here would be exactly the kind of silent drift this whole step exists to prevent.
+
+Nothing else belongs in this file — Architecture §9 scopes main.py narrowly ("FastAPI app; OpenAPI generated live, not hand-written"), and per Architecture §3.1, a static docs/openapi-export.json snapshot is explicitly a periodic, separate action, not part of this step
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > app/main.py <<'PYEOF'
+from fastapi import FastAPI
+
+from .api import router
+
+app = FastAPI(
+    title="Memory Governor",
+    description="Governance control plane for GBrain durable memory writes.",
+    version="0.1.0",
+)
+
+app.include_router(router)
+PYEOF
+
+python3 -c "from app.main import app; print('main.py imports cleanly')"
+wc -l app/main.py
+cat -A app/main.py
+main.py imports cleanly
+11 app/main.py
+from fastapi import FastAPI$
+$
+from .api import router$
+$
+app = FastAPI($
+    title="Memory Governor",$
+    description="Governance control plane for GBrain durable memory writes.",$
+    version="0.1.0",$
+)$
+$
+app.include_router(router)$
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+11 lines, imports cleanly, content matches exactly. Confirmed correct — clean and minimal, matching Architecture §9's narrow scope for this file.
+
+Now the actual proof this step exists for — not just that /openapi.json renders, but that it's provably impossible for it to describe a route that doesn't exist, or omit one that does, since it's generated live from the same router object every request actually runs through.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+
+python3 <<'PYEOF'
+from fastapi.testclient import TestClient
+from app.main import app
+from app.api import router
+
+client = TestClient(app)
+
+# Fetch the live-generated spec
+resp = client.get("/openapi.json")
+print("OPENAPI_STATUS:", resp.status_code)
+assert resp.status_code == 200
+spec = resp.json()
+
+# Build the set of (method, path) pairs the spec claims to expose
+spec_routes = set()
+for path, methods in spec["paths"].items():
+    for method in methods.keys():
+        if method.upper() in ("GET", "POST", "PATCH", "PUT", "DELETE"):
+            spec_routes.add((method.upper(), path))
+
+# Build the set of (method, path) pairs actually registered on the router
+real_routes = set()
+for route in router.routes:
+    for method in route.methods:
+        if method != "HEAD":  # FastAPI auto-adds HEAD for every GET; not a distinct endpoint
+PYEOF("ALL_MAIN_LIVENESS_CHECKS_PASSED: true")or"rectly toocted_count} routes, found {len(real_routes)}"
+OPENAPI_STATUS: 200
+SPEC_ROUTE_COUNT: 11
+REAL_ROUTE_COUNT: 11
+ONLY_IN_SPEC (should be empty): set()
+ONLY_IN_REAL (should be empty): set()
+SPEC_MATCHES_IMPLEMENTATION_EXACTLY: true
+ALL_11_ENDPOINTS_PRESENT: true
+METADATA_CORRECT: true
+ALL_MAIN_LIVENESS_CHECKS_PASSED: true
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Every check passes. SPEC_MATCHES_IMPLEMENTATION_EXACTLY: true with both ONLY_IN_SPEC and ONLY_IN_REAL genuinely empty — proven by bidirectional set comparison, not assumed. All 11 endpoints present, metadata correct.
+
+Step 5.2 — main.py: exit criteria met. This closes Architecture §3.1's structural fix directly: the spec can no longer silently drift from the implementation, because it isn't a separate artifact anyone has to remember to keep in sync — it's generated from the exact object that serves every request.
+
+Per Workflow Step 5.3, next is contract testing — running Schemathesis against the live /openapi.json to fuzz-test the actual implementation against its own generated contract. Given pyproject.toml already declares schemathesis>=3.25 as a dev dependency (installed since Step 5.1's environment setup), this should be straightforward, though contract-testing tools sometimes surface real edge cases in request validation that individual endpoint tests don't catch — worth going in expecting genuine findings, not just a clean pass. Ready to continue whenever you say go.
+---
+
+

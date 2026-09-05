@@ -1,0 +1,137 @@
+Step 8.4 — Dormancy test
+
+Per the Workflow's literal wording: "mark a project dormant, confirm it's excluded from the next scheduled sweep; reactivate, confirm it resumes without data loss or migration."
+
+Same honest reconciliation as Step 8.2, because the same gap applies here directly: there is no "scheduled sweep" anywhere in this codebase to confirm exclusion from. That's not a new finding — it's the identical fact Step 8.2 already established, just now showing up in the next step's wording too, since both steps were clearly written assuming a proactive sweep mechanism that was never actually built.
+
+What this step can genuinely, honestly test, given what Step 8.2 actually built:
+
+Mark a project dormant, confirm the flag genuinely persists in Postgres — not just that the API call succeeded.
+Confirm new submissions are rejected while dormant (already proven live and permanently tested in Step 8.2 — worth referencing, not re-proving from scratch).
+The part that's actually new and matters most: confirm existing data survives dormancy completely untouched. A candidate that was promoted before the project went dormant should remain fully intact and fully retrievable while the project is dormant — dormancy blocks new writes, never reads, and never touches what's already there. This hasn't been explicitly tested anywhere yet.
+Reactivate, confirm the flag flips back, and confirm submissions resume — this part Step 8.2 already tested directly (test_reactivated_project_accepts_submission_with_no_special_handling), so writing a near-duplicate here would be redundant, not thorough.
+
+I'd propose Step 8.4's real, honest scope is the flag-persistence check and the untouched-existing-data check specifically — the two things not yet covered — rather than re-testing what 8.2 already proved, or inventing a sweep mechanism that doesn't exist just to satisfy literal wording a second time. Confirm you're good with that scope, or tell me if you see it differently, before I write anything.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > /tmp/add_dormancy_test.py <<'PYEOF'
+test_content = '''
+
+class TestDormancyDataIntegrity:
+    """
+    Step 8.4. The Workflow's literal wording ("confirm exclusion from the
+    next scheduled sweep") has no real target -- Step 8.2 already
+    established no proactive sweep exists anywhere in this codebase.
+    Submission rejection while dormant, and normal resumption on
+    reactivation, are already covered by Step 8.2's own tests
+    (TestDormantProjectSubmissionGate) and are not re-tested here.
+
+    What genuinely hasn't been tested anywhere yet: that dormancy only
+    ever blocks NEW writes and never touches existing data. A candidate
+    promoted before a project goes dormant must remain fully intact and
+    fully retrievable while dormant -- dormancy is a write gate, not a
+    read gate and not an archival/deletion mechanism.
+    """
+
+    def test_dormant_flag_genuinely_persists_in_postgres(self, api_client, real_credential_headers):
+        from app.storage import insert_project, set_project_dormant, get_project, get_connection
+
+        project_id = "test-dormancy-flag-pytest"
+        with get_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("DELETE FROM projects WHERE project_id = %s", (project_id,))
+python3 -m pytest tests/test_api.py -v -k Dormancy_api.py').read()); print('FILE_IS_VALID_PYTHON_SYNTAX: true')"
+DORMANCY_TESTS_APPENDED: true
+FILE_IS_VALID_PYTHON_SYNTAX: true
+======================================================== test session starts ========================================================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/dev-p/memory-governor/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /home/dev-p/memory-governor
+configfile: pyproject.toml
+plugins: schemathesis-4.24.3, hypothesis-6.165.10, anyio-4.14.2
+collected 19 items / 17 deselected / 2 selected
+
+tests/test_api.py::TestDormancyDataIntegrity::test_dormant_flag_genuinely_persists_in_postgres PASSED                         [ 50%]
+tests/test_api.py::TestDormancyDataIntegrity::test_existing_data_survives_dormancy_completely_untouched PASSED                [100%]
+
+================================================= 2 passed, 17 deselected in 0.73s ==================================================
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Both tests pass — the flag genuinely persists across both transitions, and the more substantial proof holds: a candidate's full content, its presence in project-filtered listing, and its complete provenance/audit trail all remain fully intact and retrievable while the project is dormant.
+
+Now the full regression before committing.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+set -a
+source .env
+set +a
+python3 -m pytest tests/ -q
+............................................................................................................................. [ 48%]
+............................................................................................................................. [ 96%]
+........                                                                                                                      [100%]
+258 passed in 39.66s
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+All 258 tests pass — the full suite, clean, up from 256 by exactly the two new tests.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+git status
+git add tests/test_api.py
+git status
+
+git commit -m "test: Phase 8.4 - dormancy data-integrity test
+
+Same honest reconciliation as Step 8.2 required: the Workflow's literal
+wording ('confirm exclusion from the next scheduled sweep') has no
+real target, since no proactive sweep mechanism exists anywhere in
+this codebase -- an established fact from Step 8.2, not a new finding.
+Submission rejection while dormant and clean resumption on
+reactivation are already covered by Step 8.2's own tests
+(TestDormantProjectSubmissionGate) and deliberately not re-tested here
+to avoid redundant coverage.
+
+What this step actually adds, genuinely new: proof that dormancy is a
+write gate only, never a read gate and never an archival or deletion
+mechanism. A candidate promoted before a project goes dormant remains
+fully intact and fully retrievable while dormant -- checked via direct
+retrieval, project-filtered listing, AND its complete provenance/audit
+trail, not just the status flag alone."
+
+git push
+git log --oneline -3
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   tests/test_api.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   tests/test_api.py
+
+[main 5835a1e] test: Phase 8.4 - dormancy data-integrity test
+ 1 file changed, 108 insertions(+)
+Enumerating objects: 7, done.
+Counting objects: 100% (7/7), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 1.88 KiB | 1.88 MiB/s, done.
+Total 4 (delta 3), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To https://github.com/sassycomapp/memory-governor.git
+   ed00f8f..5835a1e  main -> main
+5835a1e (HEAD -> main, origin/main) test: Phase 8.4 - dormancy data-integrity test
+ed00f8f test: Phase 8.3 - dedicated project onboarding end-to-end test
+2973191 feat: Phase 8.2 - dormant-project submission gate
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+Step 8.4 — Dormancy test: closed, agreed.
+
+Phase 8 — Project Onboarding & Dormant Handling: closed, in full. Four steps, five commits (324f5c6, 152f01e, 2973191, ed00f8f, 5835a1e), covering: a genuine architectural extraction of project logic into its own module with two circular-import and dead-code issues found and fixed along the way; a real correctness conflict between the Workflow's literal wording and the actual, already-tested outbox architecture, resolved by redesigning dormancy as a write gate rather than a nonexistent sweep exclusion; a dedicated onboarding proof going beyond the stated minimum to confirm genuine queryable scoping, not just a status code; and a dormancy data-integrity proof confirming existing state — including full provenance history — survives untouched while a project is dormant. One immediate post-commit defect (the dangling register rows from the disaster-recovery test) found and fixed within the same session rather than left to compound.

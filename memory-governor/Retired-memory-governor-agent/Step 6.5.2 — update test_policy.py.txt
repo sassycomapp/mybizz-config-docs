@@ -1,0 +1,159 @@
+Step 6.5.2 — Update test_policy.py
+
+Looking at what actually needs to change: TestHighRiskTypesInterpretation, TestComputeRiskLevel, TestCheckProvenance, TestCheckScope, TestDecidePathContradictionUniformity, and TestDecidePathDoesNotMutate all call the individual helper functions directly or only ever asserted needs_review/auto_promote — none of them touch the old reject/quarantine automatic behavior, so they're unaffected. Only TestDecidePathOrdering actually asserts the old behavior and needs rewriting. I'm also adding a new class that directly proves the two-outcome guarantee at the test level, not just by inspecting source.
+
+Given how many tests are affected within that one class, I'm writing the whole file fresh rather than patching piecemeal — same approach as the original Step 1.3 build, and safer than guessing at exact current file content for a partial patch.
+---
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > tests/test_policy.py <<'PYEOF'
+from datetime import datetime, timezone
+
+import pytest
+
+from app.models import (
+    GovernedMemoryCandidate, Scope, Content, Provenance, Timestamps,
+    Confidence, Policy, Contradiction,
+)
+from app.policy import (
+    decide_path, compute_risk_level, check_provenance, check_scope,
+    HIGH_RISK_TYPES, REVIEW_THRESHOLD, AUTO_PROMOTE_THRESHOLD,
+)
+
+
+def _now():
+    return datetime.now(timezone.utc)
+
+
+def _candidate(**overrides) -> GovernedMemoryCandidate:
+    base = dict(
+        memory_id="mem-pol-001",
+        owning_project="mb-3-cs-code",
+        scope=overrides.pop("scope", Scope(
+            visibility="project_local", retention="long_term",
+            owning_project="mb-3-cs-code",
+    behavior, not just the5.1's source-inspection check -- proving theherrified"))f):based"),esigned"))
+>
+> ^C
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$
+(.venv) dev-p@dev-p:~/memory-governor$ cd /home/dev-p/memory-governor
+cat > tests/test_policy.py <<'PYEOF'
+from datetime import datetime, timezone
+
+import pytest
+
+from app.models import (
+    GovernedMemoryCandidate, Scope, Content, Provenance, Timestamps,
+    Confidence, Policy, Contradiction,
+)
+from app.policy import (
+    decide_path, compute_risk_level, check_provenance, check_scope,
+    HIGH_RISK_TYPES, REVIEW_THRESHOLD, AUTO_PROMOTE_THRESHOLD,
+)
+
+
+def _now():
+    return datetime.now(timezone.utc)
+
+
+def _candidate(**overrides) -> GovernedMemoryCandidate:
+    base = dict(
+        memory_id="mem-pol-001",
+        owning_project="mb-3-cs-code",
+        scope=overrides.pop("scope", Scope(
+            visibility="project_local", retention="long_term",
+            owning_project="mb-3-cs-code",
+python3 -m pytest tests/test_policy.py -vunchanged -- the suggestion was never applieddes):)),signed"))
+======================================================== test session starts ========================================================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /home/dev-p/memory-governor/.venv/bin/python3
+cachedir: .pytest_cache
+hypothesis profile 'default'
+rootdir: /home/dev-p/memory-governor
+configfile: pyproject.toml
+plugins: schemathesis-4.24.3, hypothesis-6.165.10, anyio-4.14.2
+collected 49 items
+
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_only_policy_is_high_risk PASSED                                   [  2%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_policy_type_is_high_risk PASSED                                   [  4%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_no_other_memory_type_is_high_risk_by_type_alone[fact] PASSED      [  6%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_no_other_memory_type_is_high_risk_by_type_alone[preference] PASSED [  8%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_no_other_memory_type_is_high_risk_by_type_alone[episode] PASSED   [ 10%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_no_other_memory_type_is_high_risk_by_type_alone[trace] PASSED     [ 12%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_no_other_memory_type_is_high_risk_by_type_alone[task_state] PASSED [ 14%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_no_other_memory_type_is_high_risk_by_type_alone[relationship] PASSED [ 16%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_no_other_memory_type_is_high_risk_by_type_alone[summary] PASSED   [ 18%]
+tests/test_policy.py::TestHighRiskTypesInterpretation::test_no_other_memory_type_is_high_risk_by_type_alone[procedural] PASSED [ 20%]
+tests/test_policy.py::TestComputeRiskLevel::test_project_local_high_confidence_is_low_risk PASSED                             [ 22%]
+tests/test_policy.py::TestComputeRiskLevel::test_shared_all_is_elevated_to_medium PASSED                                      [ 24%]
+tests/test_policy.py::TestComputeRiskLevel::test_shared_specific_is_elevated_to_medium PASSED                                 [ 26%]
+tests/test_policy.py::TestComputeRiskLevel::test_low_confidence_elevates_to_medium PASSED                                     [ 28%]
+tests/test_policy.py::TestComputeRiskLevel::test_confidence_boundary_exactly_half_is_not_elevated PASSED                      [ 30%]
+tests/test_policy.py::TestCheckProvenance::test_complete_provenance_passes PASSED                                             [ 32%]
+tests/test_policy.py::TestCheckProvenance::test_empty_writer_identity_fails PASSED                                            [ 34%]
+tests/test_policy.py::TestCheckProvenance::test_empty_policy_version_fails PASSED                                             [ 36%]
+tests/test_policy.py::TestCheckScope::test_project_local_with_empty_shared_with_passes PASSED                                 [ 38%]
+tests/test_policy.py::TestCheckScope::test_project_local_with_nonempty_shared_with_fails PASSED                               [ 40%]
+tests/test_policy.py::TestCheckScope::test_shared_all_with_exact_all_list_passes PASSED                                       [ 42%]
+tests/test_policy.py::TestCheckScope::test_shared_all_with_empty_list_fails PASSED                                            [ 44%]
+tests/test_policy.py::TestCheckScope::test_shared_specific_with_real_list_passes PASSED                                       [ 46%]
+tests/test_policy.py::TestCheckScope::test_shared_specific_with_empty_list_fails PASSED                                       [ 48%]
+tests/test_policy.py::TestCheckScope::test_shared_specific_with_all_literal_fails PASSED                                      [ 51%]
+tests/test_policy.py::TestDecidePathOrdering::test_missing_provenance_routes_to_review_with_reject_recommendation PASSED      [ 53%]
+tests/test_policy.py::TestDecidePathOrdering::test_bad_scope_routes_to_review_with_quarantine_recommendation PASSED           [ 55%]
+tests/test_policy.py::TestDecidePathOrdering::test_high_risk_type_always_needs_review_even_with_perfect_confidence PASSED     [ 57%]
+tests/test_policy.py::TestDecidePathOrdering::test_below_review_threshold_routes_to_review_with_no_recommendation PASSED      [ 59%]
+tests/test_policy.py::TestDecidePathOrdering::test_at_review_threshold_boundary_does_not_trigger_low_confidence_review PASSED [ 61%]
+tests/test_policy.py::TestDecidePathOrdering::test_medium_risk_below_auto_promote_threshold_needs_review PASSED               [ 63%]
+tests/test_policy.py::TestDecidePathOrdering::test_low_risk_high_confidence_auto_promotes PASSED                              [ 65%]
+tests/test_policy.py::TestDecidePathContradictionUniformity::test_unresolved_contradiction_on_low_risk_fact_blocks_promotion PASSED [ 67%]
+tests/test_policy.py::TestDecidePathContradictionUniformity::test_manual_review_resolution_on_low_risk_fact_still_blocks PASSED [ 69%]
+tests/test_policy.py::TestDecidePathContradictionUniformity::test_cross_project_contradiction_on_low_risk_fact_always_blocks PASSED [ 71%]
+tests/test_policy.py::TestDecidePathContradictionUniformity::test_genuinely_resolved_non_cross_project_contradiction_does_not_block PASSED [ 73%]
+tests/test_policy.py::TestDecidePathContradictionUniformity::test_contradiction_not_detected_does_not_block PASSED            [ 75%]
+tests/test_policy.py::TestDecidePathContradictionUniformity::test_no_contradiction_object_at_all_does_not_block PASSED        [ 77%]
+tests/test_policy.py::TestDecidePathDoesNotMutate::test_decide_path_never_touches_status PASSED                               [ 79%]
+tests/test_policy.py::TestDecidePathDoesNotMutate::test_decide_path_returns_new_policy_object_not_mutating_existing PASSED    [ 81%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[missing_provenance-overrides0] PASSED [ 83%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[bad_scope-overrides1] PASSED [ 85%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[high_risk_type-overrides2] PASSED [ 87%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[low_confidence-overrides3] PASSED [ 89%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[unresolved_contradiction-overrides4] PASSED [ 91%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[cross_project_contradiction-overrides5] PASSED [ 93%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[medium_risk_moderate_confidence-overrides6] PASSED [ 95%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[clean_candidate-overrides7] PASSED [ 97%]
+tests/test_policy.py::TestTwoOutcomeModel::test_recommended_action_is_never_treated_as_final_by_construction PASSED           [100%]
+
+======================================================== 49 passed in 0.24s =========================================================
+(.venv) dev-p@dev-p:~/memory-governor$
+---
+
+tests/test_policy.py::TestDecidePathDoesNotMutate::test_decide_path_returns_new_policy_object_not_mutating_existing PASSED    [ 81%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[missing_provenance-overrides0] PASSED [ 83%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[bad_scope-overrides1] PASSED [ 85%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[high_risk_type-overrides2] PASSED [ 87%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[low_confidence-overrides3] PASSED [ 89%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[unresolved_contradiction-overrides4] PASSED [ 91%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[cross_project_contradiction-overrides5] PASSED [ 93%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[medium_risk_moderate_confidence-overrides6] PASSED [ 95%]
+tests/test_policy.py::TestTwoOutcomeModel::test_decision_path_is_always_one_of_the_two_allowed_values[clean_candidate-overrides7] PASSED [ 97%]
+tests/test_policy.py::TestTwoOutcomeModel::test_recommended_action_is_never_treated_as_final_by_construction PASSED           [100%]
+
+======================================================== 49 passed in 0.24s =========================================================
+(.venv) dev-p@dev-p:~/memory-governor$
