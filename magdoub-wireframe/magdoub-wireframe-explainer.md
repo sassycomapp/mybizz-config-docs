@@ -1,0 +1,107 @@
+# magdoub-wireframe — Explainer
+
+*Companion note: for current confirmed state (paths, versions, integration,
+open items) see `magdoub-wireframe-config.md`. For invocation, operation,
+update, and the do-not list, see `magdoub-wireframe-reference.md`.*
+
+---
+
+## 1. What this actually is
+
+The Magdoub Wireframe Skill is a third-party agent skill — built for Claude Code
+by an individual developer, installed here through a manual symlink because
+OpenCode understands the same SKILL.md format — that turns a one-line feature
+description into five alternative interactive wireframes of that feature,
+delivered as a single self-contained HTML file. It exists to answer a question
+that is expensive to answer by building: *what should this screen's structure
+be?* — before any real UI work starts. The five proposals always include one
+safe extension of the project's existing design and four deliberate departures,
+so the comparison is between a baseline and genuine alternatives, not between
+five flavors of the same idea.
+
+Its role in this system is specific: PDLF's applications are built on Anvil,
+and Anvil's designer cannot import from or export to conventional design tools
+like Figma. This skill supplies the missing iteration loop — a fast, structured
+way to explore and discard screen designs natively inside the agent workflow,
+between the design-direction phase and actual form-building.
+
+## 2. Feature summary — conceptual
+
+- **Progressive exploration.** A structural black-and-white comparison arrives in about a minute; color treatment is a separate, later decision. Structure is decided before styling, on purpose.
+- **Five philosophies per run.** Options draw from a wide repertoire (progressive disclosure, wizard, dashboard-first, search-first, and more), each named, scored against the run's stated goal, and reduced to a recommendation.
+- **Parallel visual enrichment.** Each option can receive two color treatments — a flat "Clean" and a crafted "Polished" — generated independently, so one structural decision yields a full visual spectrum.
+- **Persistent per-project memory.** First use scans the codebase and asks for screenshots, producing a design-context file that makes every later run's "safe option" a genuine extension of the existing product rather than a generic template.
+- **Goal extraction.** A directional phrase in the request ("reduce clutter", "more conversions") becomes the lens that weights both the proposals and the scoring — no separate configuration step.
+- **Zero-dependency output.** The comparison artifact is plain HTML/CSS with system fonts — no CDNs, no build step; openable anywhere, disposable by design.
+
+## 3. Suitability
+
+**Best for:** early structural exploration of a feature or screen in a
+PDLF-governed Anvil project — choosing between genuinely different information
+architectures before committing to Anvil forms; and for iterating visual
+treatment over a locked layout once structure is agreed.
+
+**Good for:** standalone throwaway prototypes for any web feature, as a
+communication artifact between developer and stakeholder; bootstrapping a
+persistent design-context file for an existing codebase, which has standalone
+value beyond the wireframes themselves.
+
+**Not good for:** production UI — the output is deliberately disposable HTML,
+not Anvil components, and none of it is meant to ship. Construction-instruction
+wireframes in projects governed by the `design-rules` ADR — that ADR's fixed
+three-section instructive format and this skill's fixed comparison-page format
+are different document genres, and their reconciliation is an open item; until
+resolved, an ADR-conforming deliverable requires work beyond what this skill
+emits. Any flow requiring sub-agent delegation — standing policy prohibits
+sub-agent creation in this environment, enforced when active at three
+independent layers (enforcement status not fixed — see §8), and the skill's
+Phase 2 was written assuming it exists. Visual design comps — the skill deliberately refuses to make styling
+decisions in its structural phase.
+
+## 4. Design reasoning
+
+### Why two phases with a hard B&W wall between them
+
+Wireframe failures are usually visual decisions arriving too early: a hero
+gradient polished onto a screen whose information architecture is wrong.
+Forcing the structural pass to a gray-only palette makes styling literally
+impossible and drives every debate onto layout, hierarchy, and flow — the
+things that are expensive to change later and cheap to change now. The color
+phases are separate because, once structure is locked, visual treatment is
+genuinely parallelizable: nothing in one option's color variant affects
+another's.
+
+### Why the output is one shared HTML file with CSS-swapped variants
+
+All three sub-tabs render the same DOM; switching tabs only swaps a class on
+the wrapper, and each variant's CSS overrides treatment properties, never
+layout. That architecture guarantees the thing the skill exists to guarantee:
+a colored version cannot silently diverge from the structure that was approved.
+The completion banner works through a CSS self-reveal mechanism — badges hide
+themselves once variant CSS loads — so the page reports its own readiness
+without polling or a page reload.
+
+### Why the template-based workflow exists
+
+Earlier versions had the agent regenerate the comparison page's boilerplate —
+tabs, browser frame, annotations, footer — on every run: inconsistent, and a
+recurring source of drift. Extracting that chrome into bundled templates, and
+cutting the content-CSS budgets to a few hundred lines, confines the agent's
+creativity to the only layer where it pays: the wireframe content itself. This
+is also why an update can matter materially — template paths and budget rules
+changed in recent upstream history.
+
+### Where this sits relative to the rest of the system
+
+- **PDLF** registers the skill as its visual-iteration stage: a structural pass between the design reviews, then a second pass with an approval gate before screen work. It is one of five deliberately narrow skill families; it owns visual iteration and nothing else.
+- **Cupcake** constrains it more than any other component — with one standing caveat: enforcement status is not fixed and should not be assumed current at any given time (check `cupcake-config.md`'s Current Operational Status). Standing policy denies sub-agent creation, enforced when active at three independent layers, and the skill's Phase 2 was written assuming sub-agents exist. The structural phase is unaffected; the color phase's mechanism on this machine is the suite's principal open question.
+- **Memory Governor** does not see it: skill content is vendor-published reference material arriving via a real git clone, so it takes the same permanent ordinary-sync bypass as Anvil's agent references. The update command, unlike the content, is confined to the developer's own terminal because it rewrites files outside every project root — a deliberate split between how the skill's content flows and who may touch the clone.
+- **security-global's review-before-trust principle** is the standard this skill was supposed to be admitted under: publisher, license, maintenance, spawn-capability. Its profile is benign on every axis, but no record of that review exists — which is itself the finding.
+- **The `design-rules` ADR** governs what a wireframe *document* must be in project-library-global — instructive, three-section, scaffold-read-first. This skill produces a different genre: a comparison artifact. Whether one derives from the other, or they coexist for different purposes, is undecided.
+
+### Open architectural questions
+
+1. **What executes Phase 2 here?** The honest candidates are a main-agent fallback (sequential CSS authorship — losing the parallelism, keeping the output contract) or treating the skill as Phase-1-only in this environment. The answer determines whether PDLF's gated second stage can run as designed or needs its own adaptation.
+2. **The first real run is a verification event, not a routine use.** Everything in the config doc except run behavior is verified; the skill's actual behavior here — first-run flows against Anvil projects, interplay with the ADR's mandatory reading — is untested. Treating the first run as routine would let unverified assumptions harden into practice.
+3. **ADR reconciliation.** If PDLF projects need ADR-conforming wireframes, either the skill's output needs a conformance pass after generation, or the ADR needs a documented carve-out for exploratory comparison artifacts. Deciding before the first governed run avoids producing non-compliant deliverables at scale.
+4. **Retiring the old in-folder reference doc.** It predates this suite, carries two stale claims, and lives where a clone reset won't touch it but a reinstall would. Keeping two reference documents for one component recreates the drift problem the doc-suite pattern exists to prevent.

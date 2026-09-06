@@ -1,88 +1,97 @@
-# Anvil Docs — Reference
+# anvil-docs — Reference: Navigation, Verification, Maintenance
 
-Companion to `anvil-docs-config.md` (current state) and
-`anvil-docs-explainer.md` (mechanics and real incidents). Agent-facing.
+Companion to `anvil-docs-config.md` (current state, open items) and
+`anvil-docs-explainer.md` (what this is and why, incident history).
+Agent-facing — exact commands, exact rules.
 
 ---
 
-## Finding official documentation content
+## Finding documentation content
 
-`site-map.md` is the authoritative URL → path lookup for every one of
-the 298 real, scraped documentation pages. Given a real
-`anvil.works/docs/...` URL, the exact local file path is directly
-derivable from it (URL-slug naming — no separate lookup needed beyond
-`site-map.md` for confirming a page's exact location in the tree).
+`site-map.md` is the authoritative URL → path lookup for every scraped
+documentation page. Given a real `anvil.works/docs/...` URL, the exact local
+file path is directly derivable from it — URL-slug naming, no separate lookup
+beyond `site-map.md` for confirming a page's location.
 
 Example: `anvil.works/docs/users` → `users/_index.md`.
-`anvil.works/docs/users/presenting-a-login-form` →
-`users/presenting-a-login-form.md`.
+`anvil.works/docs/users/presenting-a-login-form` → `users/presenting-a-login-form.md`.
 
-## Finding absorbed runtime source content
+## Finding absorbed runtime source
 
-**No separate index exists for this — real content was placed by subject
-during absorption, directly into the matching documentation topic
-folder.** To find real source code for a given Anvil feature, go to that
-feature's own topic folder first (e.g. `integrations/stripe/` for
-Stripe, `data-tables/` for Data Tables) — the real source sits alongside
-the real documentation for the same subject, not in a separate location.
+**No separate index exists — real source was placed by subject during
+absorption, directly into the matching documentation topic folder.** To find
+real source code for a given Anvil feature, go to that feature's own topic
+folder first (`integrations/stripe/` for Stripe, `data-tables/` for Data
+Tables) — the source sits alongside the documentation for the same subject.
 
-## Re-running the content-stripping pipeline
+Do not search for runtime source by the Anvil Runtime's own internal folder
+names (`services/`, `native_rpc_handlers/`, `dispatcher/`) — that structure
+does not exist in this corpus.
 
-`step1b-strip-write.py` is a real, working, reusable tool — not
-historical. If any single official documentation page ever needs
-re-scraping (a live-site correction, a page previously missed), this is
-the correct, validated tool for it:
+## Verifying file counts
+
+```bash
+find /mnt/c/mybizz/mybizz-config-docs/anvil-docs -type f | wc -l
+```
+
+Baseline at this suite's rewrite (2026-09-06): **730 files** (326 `.md` + 404
+other). **No standing backup exists.** Any bulk operation must be preceded by
+a real count like this and followed by the same command to confirm the
+expected before/after delta.
+
+## Re-scraping a documentation page
+
+`step1b-strip-write.py` is a real, working, reusable tool (verified 2026-09-06):
 
 ```bash
 python3 step1b-strip-write.py TARGET_RELPATH < RAW_MARKDOWN_FILE
 ```
 
-`TARGET_RELPATH` is the file's real path relative to this corpus's root
-(e.g. `overview/faq.md`). `RAW_MARKDOWN_FILE` is a real `webfetch`
-markdown capture of the live page, piped in via stdin. The script
-preserves the target file's existing frontmatter byte-for-byte and
-replaces only the body.
+- `TARGET_RELPATH` — the file's real path relative to the corpus root (e.g. `overview/faq.md`).
+- `RAW_MARKDOWN_FILE` — a real `webfetch` markdown capture of the live page, piped via stdin.
+- The script preserves the target file's existing frontmatter byte-for-byte and replaces only the body.
+- Validated strip rule (proven on the original scrape): article body starts at the page's own first `# ` heading, ends at `### Do you still have questions?` or a `TM[](` footer-logo marker.
+- Do not modify the script before reuse — it is generic and validated.
 
-**Real, validated strip rule** (proven on the original 298-page scrape,
-zero known failures): article body starts at the page's own first `# `
-heading, ends at either `### Do you still have questions?` or a
-`TM[](` footer-logo marker, with the chrome separator between body and
-footer correctly excluded.
+## Runtime re-absorption
 
-## Real cross-references left as plain hyperlinks, not wikilinks
+Only relevant when upstream `master` moves past the absorbed commit
+(`34067eb` — it was upstream HEAD at verification, 2026-09-06). Re-absorption
+is a deliberate construction event: fresh clone → subject-mapped placement
+alongside matching documentation → count-verified before/after. It is a
+developer decision, not routine maintenance.
 
-Links inside scraped documentation pages (e.g.
-`[Quickstart for logins](users/quickstart-login)`) are real, plain,
-relative markdown links — not GBrain wikilinks. This was a deliberate
-choice: GBrain's `mb-wikilinks` resolver is scoped to markdown files by
-its own design (confirmed directly from its source), and would not
-meaningfully apply to the many non-markdown source files also present
-in this corpus. Fixing a broken relative link, if one is found, means
-correcting the relative path directly in the file — there is no
-automatic resolution mechanism for these.
+## Cross-references — plain links, not wikilinks
 
-## Verifying real file counts (no backup currently exists for this corpus)
+Links inside scraped pages (e.g. `[Quickstart for logins](users/quickstart-login)`)
+are plain, relative markdown links — not GBrain wikilinks, by design
+(`mb-wikilinks`'s resolver is scoped to markdown and would not cover the
+corpus's non-markdown source files). A broken relative link is fixed directly
+in the file; there is no automatic resolution mechanism.
 
-```bash
-find /mnt/c/mybizz/config/anvil/anvil-docs -type f | wc -l
-```
+## Using GBrain against this corpus
 
-Given there is no standing backup of this corpus, any bulk operation
-against it should be preceded by a real count like this, and followed
-by the same command to confirm the expected before/after delta — the
-same discipline used throughout the corpus's own construction.
+The corpus is searchable via its host source `mybizz-config-docs`. Precedence
+rule: **corpus files are ground truth; GBrain summaries of corpus content are
+secondary** — verify against the file when they disagree (settled policy;
+reasoning in `anvil-docs-explainer.md`). Content reaches GBrain by ordinary
+host-source sync only — never through Memory Governor's API (settled policy:
+no bypass exemption for this corpus).
+
+## Licence posture
+
+Absorbed runtime source is AGPL-licensed upstream. This corpus is
+reference-only: read, diff, and cite the source — never execute, serve, or
+distribute it as part of an application (reasoning in `anvil-docs-explainer.md`).
 
 ## Do not
 
-- Do not assume a wikilink (`[[name]]`) will resolve anything in this
-  corpus — none exist here by design.
-- Do not assume `step1b-strip-write.py` needs modification before
-  reuse — it is a generic, validated tool, not tied to any specific
-  page's content.
-- Do not search for runtime source code by the Anvil Runtime's own
-  internal folder names (`services/`, `native_rpc_handlers/`) — that
-  structure no longer exists in this corpus; search by subject/topic
-  instead.
-- Do not perform a bulk operation against this corpus without a real,
-  independent file-count check before and after — there is no backup
-  to fall back on.
+- Do not perform a bulk operation against this corpus without a real, independent file-count check before and after — there is no backup to fall back on.
+- Do not re-run scaffold-generation against the populated corpus — it really did wipe every scraped page once (see `anvil-docs-explainer.md` §5, incident 3A).
+- Do not assume a wikilink (`[[name]]`) will resolve anything in this corpus — none exist here by design.
+- Do not search for runtime source by the runtime's own internal folder names — search by subject.
+- Do not attempt to resolve `_components.py` — confirmed upstream as having no real source; its claimed orphan notes in the corpus are themselves unverified (config.md, content gaps).
+- Do not execute, serve, or distribute the absorbed runtime source — reference-only material (AGPL upstream; see `anvil-docs-explainer.md`).
+- Do not treat the 91 excluded `server/` files as missing by accident — deliberately excluded, per category, in `anvil-docs-explainer.md`.
+- Do not submit corpus content through Memory Governor — ordinary host-source sync only (settled policy, config.md).
+- Do not treat GBrain summaries of corpus content as authoritative over the files themselves — the file wins (settled policy).
