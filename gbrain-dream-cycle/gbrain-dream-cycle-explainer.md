@@ -1,54 +1,173 @@
 # GBrain Dream Cycle — Explainer
 
+*Companion note: for current confirmed state (invocation model, provider
+dependency, acceptance-test record, open items) see
+`gbrain-dream-cycle-config.md`. For commands and the mandatory post-run
+verification procedure, see `gbrain-dream-cycle-reference.md`. For the full
+23-phase sequence and the cross-component framing, see
+`memory-master-explainer.md` §4.*
+
+---
+
 ## 1. What It Actually Is
 
-The Dream Cycle is GBrain's own autonomous maintenance mechanism — a background process that runs against everything already stored in the brain and tries to build a deeper, more structured understanding of it, without a human asking a specific question first.
+The Dream Cycle is GBrain's own deepening mechanism: a long, fixed sequence of
+23 phases that runs against everything already stored in the brain and tries
+to build a deeper, more structured understanding of it — extracting facts,
+attempting code-symbol relationships, scanning for contradictions, synthesizing
+concepts across documents, proposing and grading its own interpretive
+conclusions, and maintaining the brain's hygiene. Ordinary GBrain search
+answers "find me something related to X"; the Dream Cycle does the different
+kind of work that makes GBrain's memory more than a pile of separately-
+searchable pages.
 
-Ordinary GBrain search answers "find me something related to X." The Dream Cycle does a different kind of work: it extracts facts, attempts to resolve which code symbols call which other symbols, checks whether stored content contradicts itself, and synthesizes concepts across many separate documents rather than treating each one in isolation. It is the mechanism through which GBrain's memory becomes more than a pile of separately-searchable pages.
+Two framings of its phase structure exist, both recorded with provenance: the
+confirmed 23-phase sequence for this environment — now live-verified in exact
+order by the 2026-09-06 acceptance run (master explainer §4: housekeeping,
+extraction, synthesis, judgment/calibration, maintenance) — and upstream's
+simplified harness-side framing (entity sweep → citation repair →
+consolidation → sync). The 23-phase list is the operative one here.
 
-It matters to understand where it sits relative to everything else: the Dream Cycle only ever operates on GBrain's own stored content. It has no authority over real files, and nothing it produces overrides what's actually written in a repository, an ADR, or a spec. Its output is advisory, exactly like the rest of GBrain.
+Three structural facts define it. **It is advisory** — it operates only on
+GBrain's stored content, has no authority over real files, and nothing it
+produces overrides a repository, an ADR, or a spec. **It is ungovernable** —
+Memory Governor structurally cannot intercept it (a permanent, exhaustively
+verified limit), so its output reaches durable memory unreviewed; the
+compensation is a manual, always-applied discipline: every dream run is
+followed by a suspected-contradictions evaluation whose findings get reviewed.
+And — the deliberate design choice confirmed 2026-09-06 — **it runs only when
+invoked.** An autopilot schedule that would have run it every five minutes was
+found completely inert (the cron daemon never ran; its target path predated
+the current machine layout; its log file had never been created) and was
+removed. On-demand invocation is the intended design, not a gap.
 
----
+## 2. What It Can Actually Do
 
-## 2. How It Actually Works
+- **Fact extraction** (`extract_facts`, `extract_atoms`) — pull discrete, structured facts out of stored documents; `extract_atoms` makes its own Anthropic calls and is the phase most exposed to credential failure.
+- **Code-symbol relationship resolution** (`resolve_symbol_edges`) — GBrain's own attempt at the call graph, permanently partial (see Limitations).
+- **Contradiction surface** — the cycle's output feeds the suspected-contradictions evaluation that follows every run.
+- **Concept synthesis and pattern-finding** (`patterns`, `synthesize_concepts`, `consolidate`) — higher-level concept pages summarizing many individual facts; near-duplicate consolidation. The verified acceptance run produced +89 synthesized concept pages.
+- **Self-judgment and calibration** (`propose_takes`, `grade_takes`, `calibration_profile`, `drift`) — the system proposing interpretive conclusions, grading its own confidence, and tracking drift.
+- **Maintenance and closure** (`enrich_thin`, `embed`, `orphans`, `schema-suggest`, `purge`) — filling thin pages, embedding new content, disconnecting orphans, suggesting schema improvements, removing what is genuinely no longer needed.
 
-The Dream Cycle runs as a set of distinct, separately-invocable phases, not one monolithic pass. The two phases most directly relevant day to day:
+## 3. Suitability
 
-- **`extract_atoms`** — pulls discrete facts out of stored content. This phase makes its own LLM calls, using Anthropic, and is the phase most likely to be affected by a credential problem (see Section 4).
-- **`resolve_symbol_edges`** — attempts to build the call-graph relationships between code symbols GBrain has ingested.
+**Best for:** periodic deepening of an already-synced brain — after ingestion
+bursts, before design or review work that depends on synthesized understanding;
+surfacing contradictions between stored documents; keeping concept pages and
+fact coverage current without manual per-page effort.
 
-Both are part of the active `gbrain-everything` schema pack, which is the only schema pack currently installed. Each phase can be invoked individually — `gbrain dream --phase extract_atoms`, `gbrain dream --phase resolve_symbol_edges` — rather than only as a full, all-phases run.
+**Good for:** source-scoped refreshes (`--source`) after heavy work in one
+project; targeted single-phase re-runs during diagnosis; the emotional-weight
+and calibration passes that keep GBrain's self-assessment honest.
 
-A dream cycle can be triggered manually, or run as part of a fuller `sync --dream` pass. Its own JSON output can be inspected directly per-phase, which is the real, reliable way to check whether a specific phase actually succeeded, rather than trusting only the cycle's own summary line.
+**Not good for:** replacing `gbrain sync` — different operations, different
+bookkeeping; a dream that "completed" does not mean sources are fresh, and
+freshness counters do not prove a dream did work. Producing governed memory —
+its output is structurally outside Memory Governor's reach, which is why the
+post-run contradiction discipline exists. Running autonomously — deliberately
+rejected here after its scheduled mechanism was found inert; unattended dream
+runs would compound exactly the silent-failure risk its own incident history
+documents. Resolving the code call graph — permanently partial; Graphify owns
+that.
 
----
+## 4. Why Manual-On-Demand, and Why the Incident Justifies It
 
-## 3. What It's Actually For, In This Project
+Upstream designs the dream cycle as a nightly cron — "the most important cron
+job," running while you sleep, part of a 20-job autonomous schedule. This
+environment ran the opposite experiment without meaning to: an autopilot
+schedule was installed in the old machine-layout era and never fired once —
+the cron daemon was never running, its target path died in a layout move, and
+its log file was never created. Three independent signals of total inertness,
+discovered only when deliberately checked.
 
-The most direct, practical payoff of the Dream Cycle in this environment is the code call-graph it attempts to build via `resolve_symbol_edges`. This matters because of a real, permanent limitation elsewhere in GBrain: no schema pack — not even `gbrain-engineer`, despite its name — actually extracts resolved code-symbol call-graph edges. `code-callers`/`code-callees` can name a symbol but cannot resolve it to a defining location. The Dream Cycle's `resolve_symbol_edges` phase is GBrain's own attempt to close part of that gap from the memory side; **Graphify remains the correct, fully-resolved tool for cross-file call/import/containment relationships** — see `graphify-explainer.md`.
+The incident history supplies the reason the on-demand choice is right here:
+the one confirmed extended dream-cycle outage (every run, every source,
+failing at `extract_atoms` with a bare "5 failed" count) was **silent** — the
+real error existed in the code but was never surfaced, and finding it required
+temporarily instrumenting GBrain's own source. A failure mode that hides its
+own cause is precisely the kind of thing that must not run unattended: an
+autonomous dream cycle failing silently would degrade the brain's quality for
+weeks exactly as it did before, invisibly. On-demand invocation means a human
+is present at every run, and the mandatory post-run verification procedure
+means every run's real work is checked, not assumed — the 2026-09-06
+acceptance run was the procedure's first live application, and it immediately
+proved its worth by catching a broken diagnostic recipe and a stale
+discipline command before they reached documentation.
 
----
+The removal itself was the design decision made explicit: the inert autopilot
+was removed on 2026-09-06 (crontab entry and script; the log never existed),
+and on-demand invocation was confirmed as the intended design — not a gap
+awaiting a fix.
 
-## 4. A Real Incident Worth Understanding, Not Just Noting
+## 5. A Real Incident Worth Understanding, Not Just Noting
 
-For a real stretch of time, every Dream Cycle run, across every registered source, failed completely at the `extract_atoms` phase — and the tool's own summary output never explained why. It reported a bare count: "5 failed," with no further detail, no matter how many times it was re-run.
+For a real stretch of time, every Dream Cycle run, across every registered
+source, failed completely at the `extract_atoms` phase — and the tool's own
+summary output never explained why. It reported a bare count: "5 failed," with
+no further detail, no matter how many times it was re-run.
 
-The actual cause required direct investigation: `extract_atoms` uses its own Anthropic API key, and that key had quietly expired. The real error — "API key is invalid" — existed in the code but was never surfaced to the terminal; it was silently swallowed and reduced to a bare failure count. Finding it required temporarily adding one diagnostic line directly into GBrain's own source, catching the real message on a single run, then removing the diagnostic line immediately afterward.
+The actual cause required direct investigation: `extract_atoms` uses its own
+Anthropic API key, and that key had quietly expired. The real error — "API key
+is invalid" — existed in the code but was silently swallowed and reduced to a
+bare failure count. Finding it required temporarily adding one diagnostic line
+directly into GBrain's own source, catching the real message on a single run,
+then removing the diagnostic line immediately afterward.
 
-Fixing the key wasn't the end of it either. The replacement key, once pasted into its configuration, had picked up a single stray line break inside its quoted value — invisible on a plain read of the file, but enough to corrupt every request using it, producing a completely different, misleading "invalid JSON" error with no obvious connection to the real problem.
+Fixing the key wasn't the end of it. The replacement key, once pasted into its
+configuration, had picked up a single stray line break inside its quoted
+value — invisible on a plain read of the file, but enough to corrupt every
+request using it, producing a completely different, misleading "invalid JSON"
+error with no obvious connection to the real problem.
 
-**Why this belongs here, not just in a changelog:** both failures share the same lesson, and it applies every time a dream cycle run reports a bare failure count with no visible reason — go find the actual underlying error rather than accepting "it just doesn't work" as an answer. A clean-looking config file is not proof the value inside it is actually clean.
+**Why this belongs here:** both failures share the same lesson, and it applies
+every time a dream run reports a bare failure count — go find the actual
+underlying error rather than accepting "it just doesn't work" as an answer. A
+clean-looking config file is not proof the value inside it is actually clean.
+It is also the reason the post-run verification procedure exists in its
+current form: a completed run is not proof of real work.
 
----
+## 6. Where It Sits — The Six-Component System
 
-## 5. Known Limitations, Honestly Stated
+Within the six-component memory system (developer-stated framing; see
+`gbrain-config.md`), the Dream Cycle is the autonomous-deepening layer of
+GBrain itself — the third component in the grouping. Its relationships:
+**GBrain** owns it (it deepens GBrain's own stored content); **Memory
+Governor** cannot see it (the structural non-interception limit; the manual
+contradiction discipline is the standing compensation); **PostgreSQL** carries
+its output; **mb-submit-memory** is its governed opposite — the two paths
+write different layers (facts vs pages) and neither substitutes for the other;
+**gstack** supplies the `/sync-gbrain --dream` trigger, whose orchestrator
+carries a real source-overlap trap with a confirmed incident. The
+four-mechanism framing (master explainer) places it as the third mechanism,
+with the same permanent limits. External recognition: another memory project's
+feature request (claude-mem#1792) models its own consolidation directly on
+this cycle — "the dream cycle is NOT optional; without it, signal leaks out of
+every conversation" — evidence the design is the differentiator, and equally a
+description of what an unattended, silently-failing dream cycle leaks.
 
-**`resolve_symbol_edges` does not fully close GBrain's call-graph gap.** It is GBrain's own attempt at the problem, not a complete solution to it. Graphify remains the tool of record for anything requiring fully resolved, cross-file call/import/containment relationships.
+## 7. Known Limitations, Honestly Stated
 
-**Dream cycle failures can be silent.** A phase can fail and report only a bare count, with the real, underlying error never surfacing on its own. Section 4 is the standing reminder of why that matters and how to actually find the real cause when it happens again.
+**`resolve_symbol_edges` does not close the call-graph gap.** GBrain's own
+attempt, permanently partial — `code` is `extractable: false` in every bundled
+pack. Graphify remains the tool of record for resolved cross-file
+relationships.
 
-**Provider dependency.** `extract_atoms` specifically depends on a valid, current Anthropic API key. A dream cycle that suddenly starts failing across the board is worth checking against credential validity before assuming anything more complex is wrong.
+**Failures can be silent.** A phase can fail and report only a bare count.
+§5 is the standing reminder; the per-phase JSON procedure is the standing
+answer.
 
----
+**Provider dependency.** `extract_atoms` requires a valid, current Anthropic
+key — the confirmed cause of the one extended outage. Check credentials first
+when it fails (verified valid 2026-09-06).
 
-*Companion documents: `gbrain-dream-cycle-config.md` (current configuration facts), `gbrain-dream-cycle-reference.md` (invocation and query syntax).*
+**"Completed" is not "worked."** The cycle reaching its end says nothing about
+whether each phase did meaningful work — on the verified acceptance run, 11 of
+23 phases legitimately skipped and one warned (orphan backlog) while the run
+still produced +89 pages. The verification procedure exists because of this,
+and the autopilot finding adds the corollary: an unattended cycle cannot be
+verified at all, which is why there are none.
+
+**The orphan backlog is real.** 1,177 of 1,755 pages have no inbound links
+(verified 2026-09-06) — the deepening passes create content faster than
+linking covers it. Recorded as an open item, not a failure of the mechanism.

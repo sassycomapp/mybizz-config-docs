@@ -305,3 +305,4 @@ opencode web --hostname 0.0.0.0
 - Do not treat an offline test pass as live verification for anything GBrain-adjacent — the same evidence-not-proof standard as everywhere else.
 - Do not upgrade GBrain on version-newness alone — the standing policy is upgrade-only-on-check-failure and is an open item (config.md).
 - Do not assume the standing sync script covers newly registered sources — run `gbrain sync --source <id>` for a new source's first import.
+- Do not re-enable the `gbrain autopilot` schedule or put the dream cycle on a scheduler — on-demand invocation is the deliberate design; the autopilot was found inert and removed 2026-09-06 (see `gbrain-dream-cycle-config.md`).

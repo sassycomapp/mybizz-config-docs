@@ -110,6 +110,13 @@ installed skills per upstream `USING_GBRAIN_WITH_GSTACK.md` — not this
 environment's operational path; the custom script is (verified against
 `logs/gbrain-logs/`).
 
+## Scheduled jobs
+
+| Item | Verified state |
+|---|---|
+| Crontab | A `gbrain autopilot` entry (every 5 minutes, targeting `--repo '/mnt/c/projects'`) was found **doubly inert** — cron daemon not running, target path from the pre-`C:\dev` layout no longer existing, log file never created — and was **deliberately removed 2026-09-06** |
+| Design consequence | The Dream Cycle runs on-demand only; nothing GBrain-related is scheduled (see `gbrain-dream-cycle-config.md`) |
+
 ## OpenCode MCP integration
 
 | Item | Value |

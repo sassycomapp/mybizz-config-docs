@@ -114,9 +114,13 @@ brains with per-user scoping, Google/calendar connectors, transcript and chat
 ingestion, ambient memory writeback, LLM-as-judge oversight, HTTP MCP with
 OAuth, and schema authoring. **This environment deliberately runs a narrow
 slice:** Postgres engine, the `gbrain-everything` pack, OpenCode stdio MCP,
-source-sync as the ingestion model, and the Dream Cycle as the only
-autonomous component — no 24/7 daemon, no identity layer, no connector
-ingestion. The suite documents this slice; upstream docs cover the rest.
+source-sync as the ingestion model, and the Dream Cycle invoked manually on
+demand. The one autonomous mechanism upstream ships — the `gbrain autopilot`
+daemon — was found here as an installed-but-doubly-inert cron entry (cron not
+running; a target path dead since the pre-`C:\dev` layout; its log never
+created) and was deliberately removed on 2026-09-06: no 24/7 daemon, no
+identity layer, no connector ingestion, and no scheduled cycles. The suite
+documents this slice; upstream docs cover the rest.
 
 **One upstream warning worth carrying verbatim in practice:** GBrain is not
 distributed on npm — the npm package named `gbrain` is unrelated and will
