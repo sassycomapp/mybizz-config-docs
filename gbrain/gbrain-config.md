@@ -1,10 +1,17 @@
-# GBrain Configuration — mb-3-cs
+# GBrain — Configuration
 
-Canonical current-state configuration record. Agent-facing. Reflects the
-working state of GBrain as integrated into the `mb-3-cs` project as of the
-end of the setup/closeout sequence (2026-08-16). This document states facts,
-not history — where a decision was made and the reasoning matters, see
-`memory-explainer.md`.
+Canonical current-state configuration record for GBrain as a division-wide
+system component. Agent-facing. Reflects the live-verified state as of
+2026-09-06. States facts, not history — where the reasoning matters, see
+`gbrain-explainer.md` and `memory-master-explainer.md`; for commands and
+procedures, see `gbrain-reference.md`.
+
+**System context (developer-stated, 2026-09-06):** GBrain is one of six
+closely-related components — GBrain, gbrain-dream-cycle, gstack,
+memory-governor, PostgreSQL, and the installed `mb-submit-memory` skill — that
+are assessed together, not in isolation. Cross-component reasoning lives in
+`memory-master-explainer.md` (`mybizz-os-docs`), which owns the how-they-fit-
+together layer; this suite owns GBrain-specific state, commands, and incidents.
 
 ---
 
@@ -12,36 +19,32 @@ not history — where a decision was made and the reasoning matters, see
 
 | Item | Value |
 |---|---|
-| Version | `0.46.1.0` |
-| Schema version | `128` (latest, migrations current) |
-| Engine | PostgreSQL (self-hosted, WSL-native) |
+| Version | `0.46.1.0` — CLI and live install agree (`/home/dev-p/gbrain/VERSION`) |
+| Version drift | **`0.48.2.0` available** (update banner + upstream `VERSION` verified identical). Standing policy: upgrade only on check failure — never re-affirmed as ongoing (open item) |
+| Upstream | `github.com/garrytan/gbrain` — MIT; by Garry Tan; 29.6k stars / 1,061 commits (verified 2026-09-06). **Not distributed on npm** — the npm `gbrain` package is unrelated and shadows the binary (upstream warning; see `gbrain-reference.md` Do-not) |
+| Engine | PostgreSQL 16.14, self-hosted, WSL-native; pgvector 0.6.0 |
 | Connection | `postgresql://postgres:***@localhost:5432/gbrain` |
-| Boot behavior | Auto-starts on every WSL boot — `[boot]` section in `/etc/wsl.conf` runs `service postgresql start` |
-| PostgreSQL server | 16.14 |
-| pgvector | `0.6.0` |
+| Boot behavior | Auto-starts on WSL boot (`service postgresql start` in `/etc/wsl.conf`) |
 | Executable | `/home/dev-p/.bun/bin/gbrain` (bun-link → `/home/dev-p/gbrain/src/cli.ts`) |
+| Two checkouts | **Live install:** `/home/dev-p/gbrain` (0.46.1.0 — authoritative for diagnosis). **Source clone:** `/mnt/c/mybizz/gbrain` at v0.25.0 — far behind, not the running code (open item: refresh or retire) |
 | Config file | `~/.gbrain/config.json` |
 | Self-upgrade mode | `notify` (does not auto-apply) |
-| Legacy artifact | `/home/dev-p/.gbrain/brain.pglite` — stale, unused; live engine is Postgres |
+| Legacy artifact | `~/.gbrain/brain.pglite` — stale, unused; live engine is Postgres |
 
 ## Schema pack
 
 | Item | Value |
 |---|---|
 | Active pack | `gbrain-everything@1.0.0` (sha8 `7021205a`) |
-| Page types | 30 |
-| Link types | 12 |
+| Page types / link types | 30 / 12 |
 | Installed packs on disk | `gbrain-everything` only |
-| Bundled but not installed | `gbrain-base`, `gbrain-recommended`, `gbrain-creator`, `gbrain-investor`, `gbrain-engineer`, `gbrain-base-v2` |
+| Bundled, not installed | `gbrain-base`, `gbrain-recommended`, `gbrain-creator`, `gbrain-investor`, `gbrain-engineer`, `gbrain-base-v2` |
 
-**Known limitation:** no bundled or installed pack extracts code-symbol
-call-graph edges. The `code` page type is `extractable: false` in every
-bundled pack, including `gbrain-engineer`. `code-callers`/`code-callees`
-return symbol names but cannot resolve them to defining chunks
-(`resolved: false`, `to_chunk_id: null`). This is not fixable by switching
-packs within the bundled set. Graphify's `get_neighbors` is the correct tool
-for resolved cross-file call/import/containment relationships — see
-`graphify-config.md` and `graphify-reference.md`.
+Known permanent limitation: no bundled pack extracts code-symbol call-graph
+edges (`code` type is `extractable: false` in every pack); `code-callers`/
+`code-callees` cannot resolve to defining chunks. Graphify's `get_neighbors`
+is the correct tool — full account in `gbrain-reference.md` and
+`gbrain-explainer.md`.
 
 ## Models
 
@@ -50,137 +53,113 @@ for resolved cross-file call/import/containment relationships — see
 | Embedding | `openai:text-embedding-3-large` (1536 dims) |
 | Chat / expansion | `openai:gpt-5.2` |
 
-## Database statistics (last verified)
+## Live database statistics (verified 2026-09-06)
 
-- 1142 pages / 2524 chunks / 2524 embedded / 469 links / 5 tags
-- Pages by type: concept 554, code 254, atom 229, note 87, extract_receipt 18
-- Embeddings 100%; RLS enabled on all 62/62 tables
-- `brain_score` 57/100 — content-quality signal, not operational; not a target for remediation
+- 1,666 pages / 5,437 chunks / 5,437 embedded (100%) / 656 links / 9 tags
+- By type: concept 972, code 307, note 194, atom 164, extract_receipt 20, email 5, media 4
 
-## Registered sources
-
-**Active (kept synced/cycled):**
+## Registered sources (13 — verified 2026-09-06)
 
 | Source ID | Path | Pages | Federated |
 |---|---|---|---|
-| `default` | `/mnt/c/dev/project-library-global` | 200 | **yes** — only federated source |
+| `default` | `/mnt/c/dev/project-library-global` | 281 | **yes** |
+| `dev-root-hub` | `/mnt/c/dev/dev-root` | 12 | **yes** |
+| `mybizz-config-docs` | `/mnt/c/mybizz/mybizz-config-docs` | 425 | **yes** |
+| `mybizz-os-docs` | `/mnt/c/mybizz/mybizz-os-docs` | 8 | **yes** |
+| `anvil-agent-references-code` | `/mnt/c/mybizz/anvil-agent-references` | 34 | no |
+| `makepdlf-project-library` | `/mnt/c/dev/dev-makepdlf/makepdlf-project-library` | 128 | no |
 | `mb-3-cs-code` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs` | 263 | no |
 | `mb-3-cs-project-library` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library` | 435 | no |
-| `dev-makepdlf` | `/mnt/c/dev/dev-makepdlf/makepdlf-project-library` | 181 | no |
-| `dev-root-hub` | `/mnt/c/dev/dev-root` | 20 | no |
+| `mb4ecom-code` | `/mnt/c/dev/dev-mb4ecom/mb4ecom` | 5 | no |
+| `mb4ecom-project-library` | `/mnt/c/dev/dev-mb4ecom/mb4ecom-project-library` | 5 | no |
+| `mb5pdlf-code` | `/mnt/c/dev/dev-mb5pdlf/mb5pdlf` | 5 | no |
+| `mb5pdlf-project-library` | `/mnt/c/dev/dev-mb5pdlf/mb5pdlf-project-library` | 12 | no |
+| `memory-governor-code` | `/home/dev-p/memory-governor` | 53 | no |
 
-**Deferred (registered, data intact, intentionally left stale — not a fault
-condition, do not refresh without explicit instruction):**
+All sources synced 2026-09-05 or 2026-09-06. The prior suite's
+"deferred sources" framing is obsolete — every registered source currently
+holds real, recently-synced content. Inactive-project sources stay registered
+rather than removed (advisory memory retains value); only a content-free
+scaffold was ever removed.
 
-| Source ID | Path | Pages |
-|---|---|---|
-| `mb4ecom-code` | `/mnt/c/dev/dev-mb4ecom/mb4ecom` | 5 |
-| `mb4ecom-project-library` | `/mnt/c/dev/dev-mb4ecom/mb4ecom-project-library` | 6 |
-| `mb5pdlf-code` | `/mnt/c/dev/dev-mb5pdlf/mb5pdlf` | 5 |
-| `mb5pdlf-project-library` | `/mnt/c/dev/dev-mb5pdlf/mb5pdlf-project-library` | 13 |
-| `pdlf` | `/mnt/c/pdlf` | 14 |
+**Why a source is named `default`:** GBrain's own hardcoded fallback source ID
+(upstream `docs/architecture/brains-and-sources.md`; resolution chain ends in
+`fallback: 'default'`) — the first source this brain created. Not a
+user-chosen name; do not rename.
 
-Policy: inactive-project sources stay registered rather than removed. The
-only source ever removed was `template-project-library` (a content-free
-scaffold). Deferred sources' `sync_freshness`/`cycle_freshness` doctor checks
-are expected to fail and are excluded from health scope.
+## Content paths into GBrain (verified division of labor, 2026-09-06)
 
-**Why the source is named `default`:** this is not an arbitrary or
-user-chosen name — it is GBrain's own hardcoded fallback source ID.
-Confirmed in the upstream repo's `docs/architecture/brains-and-sources.md`:
-the documented source-resolution precedence chain ends in
-`6. fallback: 'default'`, and the doc's reference topology for a
-single-person developer setup shows exactly one source, named `default`,
-`federated: true` — the same shape as this registration. Directly queried
-from the live `sources` table: `id='default'`, `created_at = 2026-08-01
-11:12:32+02`, `config = {"federated": true, ...}` — the earliest
-`created_at` of any registered source (next-earliest is 2026-08-10),
-consistent with it being the first source GBrain created/accepted when
-this brain was first initialized, before any project-specific source
-existed to need a distinguishing name. See `gbrain-reference.md` §
-"Source Management" for the full resolution-precedence mechanics.
+| Path | Mechanism | GBrain layer written | Carries | Real usage |
+|---|---|---|---|---|
+| **Sync path** | Standing script (`sync-gbrain.sh`: `gbrain sync` + `embed --stale`) + per-source `gbrain sync --source <id>`; daily-ops.md documents per-repo sync as the standing after-work workflow | **Pages/corpus** | Whole repos: vendor bypass sources (anvil-agent-references, magdoub-wireframe — permanent governor bypasses), developer doc repos, project code+library sources | 18 logged runs (2026-07-28 → 2026-09-06); all 13 sources; the dominant path by volume |
+| **Governed path** | Developer or PDLF step → `mb-submit-memory` → governor API → promote → async `gbrain_write` → `remember` (MEMORY_VERBS) | **Facts layer** (hot memory) | Individual judgment-bearing content meant to be checked before becoming durable | Exactly one real run (2026-08-27, promoted; its `gbrain_write` initially queued pending the dev-makepdlf source rename, since resolved); `pdlf_step_sync` writer parked pending PDLF go-live |
 
-`mb-3-cs-code`'s sync strategy is `code` (confirmed real Python content
-indexed — 254 code files). Note: `strategy` is applied as a **sync-time CLI
-flag** (`gbrain sync --strategy code`), not a field persisted in and read
-back from the source's stored config — see `gbrain-reference.md` for the
-mechanics.
+**The boundary (by design, from `memory-governor-config.md`):** sync must
+never carry governed content — it would ingest raw content regardless of
+governor approval; `remember` never creates corpus pages. Neither path
+supersedes the other — they write to different layers and cannot substitute
+for each other. The script syncs **only the repo source** — a newly
+registered source needs its own `gbrain sync --source <id>` (proven today).
+`daily-ops.md` (located at `C:\_data-mybizz-mgt\WIP\_desktop\`, not the
+docmap's `C:\mybizz\WIP\desktop\`) documents the sync path as the standing
+after-work workflow and predates the governed path — its repo table is stale
+against the current source list.
+
+**GStack integration flow** (`/setup-gbrain`, 3-stage `/sync-gbrain`):
+installed skills per upstream `USING_GBRAIN_WITH_GSTACK.md` — not this
+environment's operational path; the custom script is (verified against
+`logs/gbrain-logs/`).
 
 ## OpenCode MCP integration
 
 | Item | Value |
 |---|---|
-| Scope | global `~/.config/opencode/opencode.jsonc` |
-| Entry | `mcp.gbrain` |
-| Type | `local` |
-| Command | `["/home/dev-p/.bun/bin/gbrain", "serve"]` |
+| Scope | global `~/.config/opencode/opencode.jsonc`, entry `mcp.gbrain` |
+| Type / command | `local`; `["/home/dev-p/.bun/bin/gbrain", "serve"]` |
 | Enabled | `true` |
 | Environment passed | `OPENAI_API_KEY`, `ZEROENTROPY_API_KEY` |
+| MCP bootstrap | servers start once at OpenCode process boot, never per chat session — config changes need a full process restart |
 
-## Credentials required
+## Credentials
+
+**Masking decision (standing, 2026-09-06):** the database URL appears in this
+suite only as `postgresql://postgres:***@localhost:5432/gbrain` — structure
+visible, password always `***`, in every table and command example. The real
+value appears nowhere in this suite.
 
 | Variable | Status | Used for |
 |---|---|---|
-| `OPENAI_API_KEY` | required, present | embeddings + default chat/expansion |
-| `ANTHROPIC_API_KEY` | required, present | Dream Cycle `extract_atoms` phase — see `gbrain-dream-cycle-config.md` |
-| `ZEROENTROPY_API_KEY` | present, not currently the active embedding provider | reserved |
+| `OPENAI_API_KEY` | required, present (env-only) | embeddings + default chat/expansion |
+| `ANTHROPIC_API_KEY` | required, present (env-only) | Dream Cycle `extract_atoms` phase |
+| `ZEROENTROPY_API_KEY` | present, reserved (env-only) | not the active embedding provider |
+| Database URL | in `~/.gbrain/config.json`, **masked everywhere in this suite** | local Postgres connection (local-dev value) |
 
-Not present, not required by current config: `VOYAGE_API_KEY`,
-`GEMINI_API_KEY`/`GOOGLE_API_KEY`, `KIMI_API_KEY`, `DEEPSEEK_API_KEY`,
-`PERPLEXITY_API_KEY`.
+API keys live in the environment only, never in `config.json` (verified).
+`config.json` does carry the database URL with the local password — stated
+here precisely; masked per the standing decision above.
 
-**All credentials live in the environment (`~/.bashrc`) only — never in
-`~/.gbrain/config.json`.** Confirmed and verified directly against the
-live system: `config.json` carries no `openai_api_key`,
-`zeroentropy_api_key`, or `anthropic_api_key` fields, and each key is
-genuinely present in the actual spawned `gbrain` process's own
-environment (`/proc/<PID>/environ`), not just the shell.
-
-## OpenCode skills (GBrain skillpack)
+## OpenCode skills (GBrain skillpack — mb-3-cs)
 
 | Item | Value |
 |---|---|
-| Bundle version | tracks CLI (`0.46.1.0`), 61 skills total |
-| Scaffolded | 60 of 61 — `skillify` deliberately excluded (name collision with a pre-existing GStack skill) |
+| Bundle | tracks CLI (0.46.1.0), 61 skills |
+| Scaffolded | 60 of 61 — `skillify` excluded (name collision with a GStack skill) |
 | Destination | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs/.opencode/skills/` (project-local, gitignored) |
-| Total files | 119 — 60 `SKILL.md` + 38 `routing-eval.jsonl` + 20 shared deps (16 `conventions/*` + 4 root `_` files) + 1 extra skill file (`bulk-ingestion/MANIFEST-PATTERN.md`) |
-| `RESOLVER.md` | not scaffolded (never is, by design — irrelevant to OpenCode, which routes skills by name/description, not a resolver) |
-| Confirmed post-restart | exactly 60 GBrain skills + exactly one `skillify` (the original GStack skill, unmodified) |
+| Confirmed post-restart | exactly 60 GBrain skills + exactly one `skillify` |
 
-Scaffold command used (per-skill, not `--all`, to exclude `skillify`):
-```bash
-gbrain skillpack scaffold <name> --workspace /mnt/c/dev/dev-mb-3-cs/mb-3-cs/.opencode --trust --json
-```
-(run once for each of the 60 approved skill names)
+## Master explainer maintenance rule (settled, 2026-09-06)
 
-## agents.md / AGENTS.md
+`mybizz-os-docs/memory-master-explainer.md` is passed to every
+memory-component run and must be updated by each such session to reflect
+current verified state. At that run's close-out, the update is committed and
+pushed to `mybizz-os-docs` as its own commit — standing authorization, not
+re-decided per run.
 
-- Physical file: `agents.md` at the project root (case-insensitive filesystem
-  makes this identical to `AGENTS.md`). Gitignored, local-only, never
-  committed.
-- Contains: an "Access Model" section (pre-existing) plus a managed
-  `<!-- BEGIN GRAPH MEMORY GUIDANCE -->` … `<!-- END GRAPH MEMORY GUIDANCE -->`
-  block. Full block text and authority model: see `memory-explainer.md`.
-- The **global** `~/.config/opencode/AGENTS.md` is a separate file with its
-  own `## GBrain Search Guidance` managed block (different markers) — not to
-  be confused with the project file.
-- **Open, unresolved as of last review:** whether to fold the Access Model
-  bullets into the Graph Memory Guidance block, and whether the block/config
-  should ever be committed vs. staying local-only. No instruction has been
-  given either way — do not act on either without explicit direction.
+## Open items
 
-## Health baseline (last known-good)
-
-- `sync_freshness`: pass for all 5 active sources; `sync-failures.jsonl` empty.
-- `cycle_freshness`: pass for all 5 active sources; fails (by design, excluded from scope) for all 5 deferred sources.
-- `schema_version`, `connection`, `pgvector`: green.
-- Known non-blocking, out-of-scope signals: `brain_score` 57/100; one queued `embed-backfill` job (targets deferred source `mb4ecom-code`); one queued `facts-absorb` job (targets deferred source `pdlf`); `graph_signals_coverage` 9.6%; `contextual_retrieval_coverage` 670 pages.
-
-## Do not
-
-- Do not switch or install a different schema pack expecting it to fix the call-graph limitation — investigated and confirmed not possible with any bundled pack.
-- Do not run `gbrain sync --skip-failed` as a default remedy for a parse failure — fix the offending file's YAML frontmatter (usually: quote a `document:` value containing `: ` or a backtick) and re-sync cleanly instead.
-- Do not refresh the 5 deferred sources without explicit instruction.
-- Do not edit `agents.md`'s Access Model / Graph Memory Guidance sections without explicit instruction — the fold/commit decisions are open.
-- Do not enable `MEMORY_VERBS` (`mcp_surface: verbs`) — never evaluated or enabled in this project; the full tool surface is what's in active use.
-- **Open item:** `0.46.1.0` is in use while `0.46.6.0` was already available as of the close of the last upgrade sequence, under a standing "upgrade only on check failure" policy that was never explicitly re-affirmed as ongoing. Do not upgrade on the strength of a newer version alone — confirm the policy first.
+| # | Item | Status |
+|---|---|---|
+| 1 | Upgrade policy: `0.46.1.0` in use while `0.48.2.0` is available (upstream `VERSION` verified); the "upgrade only on check failure" policy was never explicitly re-affirmed as ongoing. Do not upgrade on version-newness alone. | Open |
+| 2 | MEMORY_VERBS premise reconciled: `memory-governor-config.md` records `mcp_surface: verbs` enabled as its Step 0.2 build prerequisite, while current `~/.gbrain/config.json` carries no `mcp_surface` key and the current version's default MCP surface includes the memory verbs (observed 2026-09-06). Both records stated with provenance; the verbs-only surface (`gbrain config set mcp_surface verbs`) remains available as a config choice. | Open |
+| 3 | Source clone at `/mnt/c/mybizz/gbrain` is v0.25.0 vs the 0.46.1.0 live install — refresh or retire it (diagnosis uses the live install). | Open |
+| 4 | Project `agents.md` managed-block decisions: whether to fold the Access Model bullets into the Graph Memory Guidance block, and whether the block should ever be committed — raised, never decided; do not act without explicit direction. | Open |
