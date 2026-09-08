@@ -1,183 +1,173 @@
 # GStack Skills Reference
 
-**Location:** skills are generated from `/mnt/c/mybizz/gstack/` (the
-GStack source repo) and installed into
-`~/.config/opencode/skills/gstack-<name>/SKILL.md` by running
-`cd /mnt/c/mybizz/gstack && ./setup --host opencode`.
+Catalog of invocable GStack commands, verified live 2026-09-08 against the
+installed `1.58.1.0` set. Topology and versions: `gstack-config.md`.
+Workflows and authority: `gstack-reference.md`.
 
-**Invocation — read this before typing a command.** The folder name and
-the actual invocable command are not the same thing. Each skill's
-`SKILL.md` frontmatter declares a `name:` field, and that field — not
-the folder name — is what OpenCode registers as the slash command. In
-current practice this `name:` field is the bare skill name without the
-`gstack-` prefix. Example: the folder is `gstack-qa/SKILL.md`, its
-`name:` field is `qa`, and the real command is **`/qa`**, not
-`/gstack-qa`. Confirmed directly: `/gstack-qa` returns nothing;
-`/qa` works. Type the bare name for every skill below.
+## Invocation rules — read before typing a command
 
-**Verified count:** 52 skills currently installed and confirmed present
-(per the setup script's own "linked skills" output, cross-checked
-against the reference install at `/mnt/c/mybizz/gstack/.agents/skills/`).
-The two items below are listed with their status marked, not silently
-dropped or silently kept:
-- `/handoff` — no corresponding folder found in the source repo. Not
-  confirmed to exist. Do not assume it's installed.
-- `/hackernews-frontpage` — exists as a sub-skill under
-  `/mnt/c/mybizz/gstack/browser-skills/hackernews-frontpage/`, not as a
-  top-level `gstack-*` folder. Not confirmed wired as a standalone
-  OpenCode command.
+- The slash command is the `name:` field in the skill's SKILL.md frontmatter
+  — not the folder name. In current practice that is the bare skill name
+  with the `gstack-` prefix dropped: the folder is `gstack-qa/`, the command
+  is **`/qa`**. The prefixed form (`/gstack-qa`) returns nothing.
+- **Exceptions that keep their full name:** `/gstack-upgrade` (frontmatter
+  `name: gstack-upgrade`) and the aggregate `/gstack` router entry
+  (frontmatter `name: gstack`).
+- The `skill_prefix: true` option in `~/.gstack/config.yaml` would namespace
+  all commands as `/gstack-<name>` — it is unset (default bare) here.
+- If a known skill is missing or broken in OpenCode, re-run the installer:
+  `cd /mnt/c/mybizz/gstack && ./setup --host opencode` — see
+  `C:\_data-mybizz-mgt\WIP\_desktop\daily-ops.md`, "FIX: GSTACK SKILLS
+  MISSING, OUTDATED, OR ONLY PARTIALLY WORKING IN OPENCODE".
+- SKILL.md files are auto-generated — never edit one directly (see
+  `gstack-config.md` for regeneration).
 
-**Separate, unrelated set — do not confuse with the catalog below:**
-four `gstack-openclaw-*` folders (`gstack-openclaw-ceo-review`,
-`gstack-openclaw-investigate`, `gstack-openclaw-office-hours`,
-`gstack-openclaw-retro`) also exist in
-`~/.config/opencode/skills/`. These are OpenClaw-specific skills
-installed via a different mechanism (`clawhub install`), not part of
-this GStack catalog. Not yet investigated for relevance — see
-`master-task-list.md`.
+**Count: 53 invocable skills + the aggregate `/gstack` entry = 54** (verified
+live 2026-09-08; supersedes all earlier counts of 52).
 
----
+## Planning
 
-## Planning Skills
-
-| Skill | What it does |
+| Command | What it does |
 |---|---|
-| `/office-hours` | YC Office Hours — six forcing questions for product ideas. Produces design doc. |
+| `/office-hours` | YC Office Hours — six forcing questions for product ideas. Produces a design doc. |
 | `/plan-ceo-review` | CEO/founder-mode plan review. Four modes: scope expansion, selective, hold, reduce. |
 | `/plan-eng-review` | Eng manager review — locks in architecture, data flow, edge cases, test coverage. |
-| `/plan-design-review` | Designer's eye review — rates design dimensions 0-10, fixes the plan. |
+| `/plan-design-review` | Designer's-eye review — rates design dimensions 0–10, fixes the plan. |
 | `/plan-devex-review` | Developer experience review — personas, benchmarks, friction points. |
 | `/plan-tune` | Self-tuning question sensitivity — set per-question preferences. |
-| `/autoplan` | Auto-review pipeline — runs CEO, design, eng, DX reviews sequentially. |
-| `/spec` | Turns vague intent into a precise, executable spec. Files as GitHub issue. |
+| `/autoplan` | Auto-review pipeline — runs CEO, design, DX reviews sequentially; eng review always last. |
+| `/spec` | Turns vague intent into a precise, executable spec. Files a GitHub issue. |
 
-## Build & Ship Skills
+## Build & Ship
 
-| Skill | What it does |
+| Command | What it does |
 |---|---|
-| `/review` | Pre-landing PR review — SQL safety, trust boundaries, conditional side effects. |
+| `/review` | Pre-landing PR review — SQL safety, LLM trust-boundary violations, conditional side effects. |
 | `/ship` | Detect + merge base, run tests, bump VERSION, update CHANGELOG, create PR. |
 | `/land-and-deploy` | Merges PR, waits for CI, verifies production health via canary. |
-| `/landing-report` | Read-only queue dashboard — shows claimed VERSION slots and open PRs. |
+| `/landing-report` | Read-only queue dashboard — claimed VERSION slots and open PRs. |
 
-## Design Skills
+## Design
 
-| Skill | What it does |
+| Command | What it does |
 |---|---|
-| `/design-consultation` | Creates DESIGN.md — researches landscape, proposes full design system. |
-| `/design-shotgun` | Generates multiple AI design variants, opens comparison board. |
-| `/design-html` | Generates production-quality Pretext-native HTML/CSS. |
-| `/design-review` | Designer's eye QA — finds visual issues, fixes with atomic commits. |
-| `/diagram` | English description to mermaid + editable .excalidraw + SVG/PNG. |
+| `/design-consultation` | Creates `DESIGN.md` — researches landscape, proposes full design system. |
+| `/design-shotgun` | Generates multiple AI design variants, opens a comparison board. |
+| `/design-html` | Generates production-quality HTML/CSS. |
+| `/design-review` | Designer's-eye QA — finds visual issues, fixes with atomic commits. |
+| `/diagram` | English description → Mermaid + editable `.excalidraw` + SVG/PNG. |
 
-## QA & Testing Skills
+## QA & Testing
 
-| Skill | What it does |
+| Command | What it does |
 |---|---|
-| `/qa` | Systematic QA testing + iterative bug fixing. Three tiers: Quick, Standard, Exhaustive. Confirmed working — direct test, correct agent response. |
-| `/qa-only` | Report-only QA — produces structured bug report without fixing. |
+| `/qa` | Systematically QA-tests a web app and fixes bugs found, committing each fix atomically. Three tiers: Quick, Standard, Exhaustive. |
+| `/qa-only` | Report-only QA — structured bug report, no fixing. |
 | `/benchmark` | Performance regression detection — Core Web Vitals, bundle sizes. |
-| `/benchmark-models` | Cross-model benchmark — compares LLMs on latency, tokens, cost, quality. |
+| `/benchmark-models` | Cross-model benchmark — latency, tokens, cost, quality. |
 
 ## Investigation & Debugging
 
-| Skill | What it does |
+| Command | What it does |
 |---|---|
 | `/investigate` | Systematic debugging with root cause. Four phases: investigate, analyze, hypothesize, implement. |
-| `/health` | Code quality dashboard — type checker, linter, tests, dead code, composite 0-10 score. |
-| `/cso` | Security audit — secrets, supply chain, CI/CD, OWASP, STRIDE. |
+| `/health` | Code quality dashboard — type checker, linter, tests, dead code, composite 0–10 score. |
+| `/cso` | Chief Security Officer audit — secrets, dependency supply chain, CI/CD, LLM/AI security, OWASP, STRIDE. Daily (near-zero-noise) and monthly (comprehensive) modes. |
 
-## GBrain Skills
+## Live audit
 
-| Skill | What it does |
+| Command | What it does |
 |---|---|
-| `/setup-gbrain` | One-time GBrain setup — CLI, PGLite, MCP, trust policy. |
-| `/sync-gbrain` | Keep GBrain current — sync code, memory, update AGENTS.md guidance. Accepts `--dream`, `--full`, `--code-only`, `--dry-run`. |
-| `/sync-gbrain --dream` | Build call graph via dream cycle. Prerequisite: code-aware schema pack. |
-| `/sync-gbrain --full` | Full code reindex (~25-35 min). Auto-builds call graph if never built. |
+| `/devex-review` | Live developer experience audit — actually tests the DX: navigates docs, times TTHW, screenshots errors. Compares against `/plan-devex-review` scores (the plan-vs-reality boomerang). Verified real 2026-09-08 (frontmatter + upstream description agree). |
+
+## GBrain
+
+| Command | What it does |
+|---|---|
+| `/setup-gbrain` | Installs and configures GBrain. **Do not trust its own backend description (PGLite/Supabase) — this environment runs self-hosted PostgreSQL; authority is `gbrain-config.md`.** |
+| `/sync-gbrain` | Keeps GBrain current with a repo's code, refreshes agent search guidance. Flags: `--dream`, `--full`, `--code-only`, `--dry-run`. Idempotent. **`--dream` has a source-overlap trap against manually-registered sources — see `gbrain-reference.md` before using it.** |
 | `/setup-deploy` | Configures deployment settings for `/land-and-deploy`. |
 
-## Context & State Skills
+## Context & State
 
-| Skill | What it does |
+| Command | What it does |
 |---|---|
 | `/context-save` | Captures git state, decisions, remaining work for cross-session resume. |
-| `/context-restore` | Loads most recent saved context — picks up where you left off. |
+| `/context-restore` | Loads the most recent saved context. |
 | `/learn` | Manage project learnings — review, search, prune, export. |
 | `/retro` | Weekly engineering retrospective — commit history, code quality, trends. |
 
-## Safety Skills
+## Safety
 
-| Skill | What it does |
+| Command | What it does |
 |---|---|
-| `/careful` | Warns before destructive commands (rm -rf, DROP TABLE, force-push). |
+| `/careful` | Warns before destructive commands (`rm -rf`, `DROP TABLE`, force-push). |
 | `/freeze` | Restricts file edits to a specific directory for the session. |
 | `/unfreeze` | Clears the freeze boundary. |
-| `/guard` | Full safety: `/careful` + `/freeze` combined. |
+| `/guard` | `/careful` + `/freeze` combined. |
 
-## Browser & Web Skills
+## Browser & Web
 
-**Requires headless Chromium (Playwright) to actually launch.** If these
-skills fail or hang, see `daily-ops.md`, "FIX: GSTACK BROWSER SKILLS
-WON'T LAUNCH."
+Browser skills run on GStack's bundled headless Chromium (Playwright) at
+`1.58.1.0`. If they fail or hang, see
+`C:\_data-mybizz-mgt\WIP\_desktop\daily-ops.md`, "FIX: GSTACK BROWSER SKILLS
+WON'T LAUNCH".
 
-| Skill | What it does |
+| Command | What it does |
 |---|---|
 | `/browse` | Fast headless Chromium for QA — navigate, interact, screenshot, test. |
 | `/open-gstack-browser` | Launch visible Chromium — watch agent actions in real time. |
 | `/scrape` | Pull data from a web page. Returns JSON. |
-| `/skillify` | Codify a `/scrape` flow into a permanent browser-skill (~200ms). |
-| `/setup-browser-cookies` | Import cookies from real Chromium into headless session. |
+| `/skillify` | Codify a `/scrape` flow into a permanent browser-skill. |
+| `/setup-browser-cookies` | Import cookies from real Chromium into the headless session. |
 | `/pair-agent` | Pair a remote AI agent with your browser. |
-| `/canary` | Post-deploy monitoring — watches live app for errors and regressions. |
+| `/canary` | Post-deploy monitoring — watches the live app for errors and regressions. |
 
-## iOS Skills
+## iOS
 
-| Skill | What it does |
+| Command | What it does |
 |---|---|
-| `/ios-qa` | Live-device iOS QA — connects to real iPhone via USB, screenshots every screen. |
+| `/ios-qa` | Live-device iOS QA — connects to a real iPhone via USB, screenshots every screen. |
 | `/ios-fix` | Autonomous iOS bug fixer — finds bug, writes fix, rebuilds, verifies on device. |
 | `/ios-design-review` | Visual design audit for iOS apps on real hardware. |
-| `/ios-sync` | Regenerates iOS debug bridge against latest gstack templates. |
-| `/ios-clean` | Removes DebugBridge SPM package and #if DEBUG wiring. |
+| `/ios-sync` | Regenerates the iOS debug bridge against latest gstack templates. |
+| `/ios-clean` | Removes the DebugBridge SPM package and `#if DEBUG` wiring. |
 
-## Documentation Skills
+## Documentation
 
-| Skill | What it does |
+| Command | What it does |
 |---|---|
-| `/document-generate` | Generate missing docs from scratch. Diataxis framework. |
+| `/document-generate` | Generates missing docs from scratch (Diataxis framework). |
 | `/document-release` | Post-ship doc update — cross-references diff, updates README/CHANGELOG. |
-| `/make-pdf` | Turns markdown into publication-quality PDF. |
+| `/make-pdf` | Turns markdown into a publication-quality PDF. |
 
-## Codex & Claude Skills
+## CLI wrappers
 
-| Skill | What it does |
+| Command | What it does |
 |---|---|
 | `/codex` | OpenAI Codex CLI wrapper — Review, Challenge, Consult modes. |
 | `/claude` | Claude Code CLI wrapper — Review, Challenge, Consult modes. |
 
-## Other
+## Aggregate
 
-| Skill | What it does |
+| Command | What it does |
 |---|---|
-| `/gstack-upgrade` | Upgrades gstack to latest version. Note: this one keeps its full prefixed name — confirmed present as `gstack-upgrade` in the linked-skills list. |
-
----
+| `/gstack` | Router entry (frontmatter `name: gstack`) — orients the agent over the whole skill set. |
 
 ## Pipelines
 
-**Planning pipeline** (new projects):
+**Planning** (new projects):
 ```
 /office-hours → /plan-ceo-review → /plan-eng-review → /plan-design-review → /plan-devex-review → /plan-tune
 ```
-Or run everything: `/autoplan`
+Or run everything at once: `/autoplan`
 
-**Build & ship pipeline** (after planning locked):
+**Build & ship** (after planning locked):
 ```
 /review → /qa → /ship → /land-and-deploy
 ```
 
-**Design pipeline** (new visual identity):
+**Design** (new visual identity):
 ```
 /design-consultation → /design-shotgun → /design-html → /design-review
 ```
@@ -192,11 +182,28 @@ Or run everything: `/autoplan`
 /investigate → /review → /qa → /ship
 ```
 
-**Design workflow (confirm with user before running):**
-```
-/plan-design-review → /plan-eng-review → /design-html → /design-review
-```
-1. `/plan-design-review` — rate design dimensions 0-10, identify gaps, propose fixes
-2. `/plan-eng-review` — lock in execution plan (architecture, data flow, edge cases, test coverage)
-3. `/design-html` — generate production HTML/CSS from approved designs
-4. `/design-review` — visual QA, find inconsistencies, fix with atomic commits
+## Not real commands — do not assume these exist
+
+- **`/handoff`** — no corresponding folder anywhere in the source repo.
+- **`hackernews-frontpage`** — exists only as a sub-skill under
+  `/mnt/c/mybizz/gstack/browser-skills/hackernews-frontpage/`; its discovery
+  symlink is broken (dead target) and it is not a standalone command.
+
+## Separate, unrelated set
+
+Four `gstack-openclaw-*` folders (`ceo-review`, `investigate`,
+`office-hours`, `retro`) exist in the discovery path — installed via
+`clawhub install` for OpenClaw, which is not used in this environment.
+Not part of this catalog; deliberately not removed (an update recreates them).
+
+## Do not
+
+- Do not type the `gstack-` prefix — bare names, except `/gstack-upgrade`
+  and `/gstack`.
+- Do not assume `/handoff` exists or that `hackernews-frontpage` is a
+  standalone command.
+- Do not trust `/setup-gbrain`'s own backend description — check
+  `gbrain-config.md`.
+- Do not hand-edit any SKILL.md — regenerate from the template.
+- Do not run `/sync-gbrain --dream` against a manually-registered GBrain
+  source — source-overlap trap (see `gbrain-reference.md`).
