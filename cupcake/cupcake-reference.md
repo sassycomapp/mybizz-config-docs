@@ -3,10 +3,13 @@
 Companion to `cupcake-config.md` (current installed state, operational status)
 and `cupcake-explainer.md` (design, history, and real incidents). Agent-facing.
 
-**Status note:** Cupcake reactivation is staged as of 2026-09-08 — all fixes
-applied and live-tested 13/13; the plugin rename-back + OpenCode restart is
-the final step (see `cupcake-config.md`'s Current Operational Status). The
-procedures below remain the proven operational record.
+**Status note:** Cupcake is **ACTIVE** as of 2026-09-08 — reactivated,
+live-tested 13/13, plugin load verified exactly-once, and enforcing (the
+exec-protection builtin denied a real agent tool call minutes after
+restart). The procedures below are the proven operational record. One new
+load-bearing requirement: the engine boots only in projects that have the
+`.cupcake/policies/opencode` + `.cupcake/system` skeleton — create it
+before working in any project folder (see `cupcake-config.md`).
 
 ---
 

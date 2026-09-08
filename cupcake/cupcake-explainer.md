@@ -4,18 +4,17 @@
 status and its standing context — see `cupcake-config.md`'s Current
 Operational Status. For operational procedures, see `cupcake-reference.md`.*
 
-> **Update 2026-09-08 — the suspension is being lifted.** Every fix the
-> sections below point toward has been applied and live-tested: the bad
-> scaffold file is gone from folder and repo, fail-open mode is on (a future
-> crash degrades to log-and-continue, never total arrest), and the
-> cross-folder rule — the single biggest friction source — was redesigned to
-> a three-tier model (shared-library folders always open; project folders
-> slip-gated; reads free everywhere) and passed 13/13 real live tests. The
-> plugin rename-back is the last mechanical step, pending an OpenCode
-> restart. Sections 7F–10 are retained as the honest record of why the
-> suspension happened; their open design problem is now half-solved by
-> decision of the developer, with the protected-file rules deliberately left
-> strict for a later revisit.
+> **Update 2026-09-08 (final) — the suspension is over.** Every fix below
+> was applied, live-tested 13/13, and the checker is now active and
+> enforcing — verified by its own exec-protection builtin denying a real
+> tool call minutes after the restart. One new hard requirement was
+> discovered live the same day: the engine refuses to boot in any project
+> lacking its `.cupcake/policies/opencode` + `.cupcake/system` skeleton —
+> and the fail-open setting does not cover that failure, because it happens
+> before evaluation begins. Every project folder the agent works in needs
+> the skeleton. Sections 7F–10 are retained as the honest record of why the
+> suspension happened; its two causes — availability and cross-folder
+> friction — are both fixed by decision of the developer.
 
 ---
 

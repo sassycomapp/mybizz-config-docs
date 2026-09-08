@@ -8,30 +8,34 @@ where a decision was made and the reasoning matters, see
 
 ---
 
-## Current operational status — REACTIVATION STAGED (2026-09-08)
+## Current operational status — ACTIVE (verified 2026-09-08)
 
-**The suspension is being lifted.** Every component was restored, fixed, and
-live-tested on 2026-09-08; the only remaining step is mechanical: rename the
-plugin back and restart OpenCode (developer's terminal). Until that restart
-happens, enforcement is still off — no tool call is intercepted.
+**Cupcake is reactivated and enforcing.** Verified live 2026-09-08: the
+plugin loads exactly once per session boot (log-verified), the checker
+denies in real time (the exec-protection builtin blocked a real tool call
+minutes after reactivation), and every rule change of the day is in place.
 
-**What was done on 2026-09-08 (all live-verified):**
+**Reactivation sequence completed 2026-09-08:**
 
-| Action | State |
+| Step | State |
 |---|---|
-| Crash-suspect scaffold removed | `.cupcake/policies/opencode/example.rego` deleted from makepdlf-project-library, untracked, gitignored (commit `3abf084`) — the recorded total-crash suspect is gone from both the folder and the repo |
-| Fail-open mode applied | `.cupcake/opencode.json` with `failMode: "open"` written in makepdlf-project-library — a future evaluation crash now degrades to "log and allow", never "block all work" |
-| Cross-folder rule amended | Three-tier design (see the amended rule's row in the inventory below) — source updated in `rules-cupcake-global`, compiled via `mb-compile-rules`, `opa check` pass, placed at the global target |
-| Full live test | **13/13 pass** — developer-run real `cupcake eval`; record: `/mnt/c/mybizz/logs/cupcake-rule-test-record-2026-09-08.md` |
+| Crash-suspect scaffold removed | `.cupcake/policies/opencode/example.rego` deleted from makepdlf-project-library, untracked, gitignored (commit `3abf084`) |
+| Fail-open mode applied | `.cupcake/opencode.json` with `failMode: "open"` in makepdlf-project-library — and, after the discovery below, in `mybizz-config-docs` |
+| Cross-folder rule amended | Three-tier design — source updated, compiled via `mb-compile-rules`, `opa check` pass, placed at the global target |
+| Full live test | **13/13 pass** — record: `/mnt/c/mybizz/logs/cupcake-rule-test-record-2026-09-08.md` |
+| Plugin reactivated + restart | Developer-run rename-back + OpenCode restart; log shows exactly one `cupcake.js` load per session boot |
+| **Post-restart crash — found and fixed** | The checker hard-fails to boot in any project lacking `.cupcake/policies/opencode` + `.cupcake/system` ("Policy directory does not exist" → every tool call blocked with bare `Cupcake exited with code 1`). `mybizz-config-docs` lacked it; fixed by creating the empty skeleton. **failMode does not cover this** — it is an engine-initialization failure, not an evaluation crash |
 
-**Reactivation — the final step (developer's terminal):**
+**New known limitation (discovered 2026-09-08, load-bearing):** the engine
+requires the project-local skeleton in the current working directory's
+project — a project without `.cupcake/policies/opencode` crashes the
+checker entirely. Every project folder the agent works in needs the
+skeleton. The protected-file rules remain deliberately strict (revisit
+decision).
 
-```bash
-mv ~/.config/opencode/plugin/cupcake.js.disabled ~/.config/opencode/plugin/cupcake.js
-```
-
-…then restart OpenCode. Post-restart verification: exactly one `cupcake.js`
-"loading plugin" line in the newest session's log (see `cupcake-reference.md`).
+**Everything below this point describes the configuration as it stood while
+Cupcake was active** (as of 2026-08-29), updated 2026-09-08 where the
+cross-folder rule changed.
 
 **Standing context:** the suspension's cause was addressed at both layers —
 the availability failure (fail-open mode; the scaffold file removed) and the
@@ -174,6 +178,14 @@ Confirmed field names for `args`: `filePath`, `oldString`, `newString`
 — those are Cupcake's internal, post-normalization names, invalid as raw input.
 
 ## Known scope limitations (accepted, not defects)
+
+- **The engine requires the project-local skeleton in the current project.**
+  A project whose root lacks `.cupcake/policies/opencode` and
+  `.cupcake/system` crashes engine initialization — every tool call in a
+  session rooted there fails with bare `Cupcake exited with code 1`.
+  Discovered live 2026-09-08 (mybizz-config-docs). Fix: create the empty
+  skeleton in each project folder the agent works in. **failMode does not
+  cover this** — it is an initialization failure, not an evaluation crash.
 
 - **`cupcake_exec_protection` cannot see inside a script file's own contents.**
   Only the outer command string is inspected. A forbidden command hidden

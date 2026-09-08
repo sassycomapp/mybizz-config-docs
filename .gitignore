@@ -1,0 +1,2 @@
+# Local, machine-specific checker configuration — never commit
+.cupcake/
