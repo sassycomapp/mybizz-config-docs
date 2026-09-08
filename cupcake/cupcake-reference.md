@@ -3,9 +3,10 @@
 Companion to `cupcake-config.md` (current installed state, operational status)
 and `cupcake-explainer.md` (design, history, and real incidents). Agent-facing.
 
-**Status note:** Cupcake is currently suspended — the procedures below are the
-proven operational record and the path back, not a description of current live
-behavior (see `cupcake-config.md`'s Current Operational Status).
+**Status note:** Cupcake reactivation is staged as of 2026-09-08 — all fixes
+applied and live-tested 13/13; the plugin rename-back + OpenCode restart is
+the final step (see `cupcake-config.md`'s Current Operational Status). The
+procedures below remain the proven operational record.
 
 ---
 
@@ -189,15 +190,11 @@ every tool needed to investigate it.
 
 ## The candidate fix — fail-open mode + project-local scaffold cleanup
 
-**Status: code-verified to exist in the installed plugin; NOT applied or
-tested against the real crash.** Two facts, correctly distinguished: the
-mechanism is real (verified in the installed plugin's own source —
-`failMode` in its default config with real `"open"` handling branches, and
-`loadConfig()` reading `.cupcake/opencode.json` from the project root); and
-the problem it targets is real (the `.cupcake/policies/opencode/example.rego`
-scaffold file is confirmed present in `makepdlf-project-library`). Applying
-and testing it against the actual crash has not happened — that is the open
-item.
+**Status: APPLIED 2026-09-08.** The config was written and the scaffold file
+removed and gitignored (commit `3abf084`). The original crash was never
+reproduced, so the fix's effect on that specific crash is untested — but by
+construction, any future evaluation crash now degrades to "log and allow"
+instead of blocking all work.
 
 **The mechanism** (from Cupcake's official docs, now confirmed in code):
 `failMode` controls what happens when policy evaluation itself crashes or

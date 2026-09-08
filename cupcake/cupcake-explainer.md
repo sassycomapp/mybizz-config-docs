@@ -4,6 +4,19 @@
 status and its standing context — see `cupcake-config.md`'s Current
 Operational Status. For operational procedures, see `cupcake-reference.md`.*
 
+> **Update 2026-09-08 — the suspension is being lifted.** Every fix the
+> sections below point toward has been applied and live-tested: the bad
+> scaffold file is gone from folder and repo, fail-open mode is on (a future
+> crash degrades to log-and-continue, never total arrest), and the
+> cross-folder rule — the single biggest friction source — was redesigned to
+> a three-tier model (shared-library folders always open; project folders
+> slip-gated; reads free everywhere) and passed 13/13 real live tests. The
+> plugin rename-back is the last mechanical step, pending an OpenCode
+> restart. Sections 7F–10 are retained as the honest record of why the
+> suspension happened; their open design problem is now half-solved by
+> decision of the developer, with the protected-file rules deliberately left
+> strict for a later revisit.
+
 ---
 
 ## 1. Opening

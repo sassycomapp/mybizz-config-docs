@@ -8,60 +8,43 @@ where a decision was made and the reasoning matters, see
 
 ---
 
-## Current operational status — SUSPENDED, total (verified 2026-09-06)
+## Current operational status — REACTIVATION STAGED (2026-09-08)
 
-**Cupcake enforcement is currently OFF.** The plugin file was renamed out of
-its discoverable location:
+**The suspension is being lifted.** Every component was restored, fixed, and
+live-tested on 2026-09-08; the only remaining step is mechanical: rename the
+plugin back and restart OpenCode (developer's terminal). Until that restart
+happens, enforcement is still off — no tool call is intercepted.
 
-```
-~/.config/opencode/plugin/cupcake.js → ~/.config/opencode/plugin/cupcake.js.disabled
-```
+**What was done on 2026-09-08 (all live-verified):**
 
-OpenCode no longer loads the plugin — no tool call is intercepted or evaluated.
-**None of the protections below (the 19 custom rules, the 3 builtins, the
-Cupcake half of the task-tool denial, the cross-project grant system) are
-currently active.** Every tool call proceeds with no Cupcake check of any kind.
-
-**Verified component state (nothing deleted):**
-
-| Component | Verified state 2026-09-06 |
+| Action | State |
 |---|---|
-| Plugin | `cupcake.js.disabled` (19,601 B, modified 2026-08-31) at the plugin path; an earlier backup `cupcake.js.bak-2026-08-31T095850+0200` (11,155 B) alongside it |
-| Binaries | `cupcake` (18.4 MB) and `opa` (47.4 MB) at `~/.cupcake/bin/`; `/usr/local/bin/cupcake` symlink intact |
-| Global policy folder | Intact — 19 custom rules + `cup-grants-data.rego` + `builtins/` (3) + `system/` (aggregator) |
-| Rule sources | 19 `.md` source documents at `C:\dev\project-library-global\rules-cupcake-global\` |
-| Grant commands | `mg-grant` / `mg-revoke` present at `~/.config/cupcake/bin/` |
-| Grants data | **Empty** — `grants := {}` (verified 2026-09-06) |
-| Layer-1 `task: deny` | **Still active** — `"task": "deny"` in OpenCode config (independent of the suspended plugin) |
-| Suspected crash cause | `.cupcake/policies/opencode/example.rego` (923 B, `cupcake init` scaffold, never validated) **confirmed present** in `makepdlf-project-library`, alongside the full init scaffold |
+| Crash-suspect scaffold removed | `.cupcake/policies/opencode/example.rego` deleted from makepdlf-project-library, untracked, gitignored (commit `3abf084`) — the recorded total-crash suspect is gone from both the folder and the repo |
+| Fail-open mode applied | `.cupcake/opencode.json` with `failMode: "open"` written in makepdlf-project-library — a future evaluation crash now degrades to "log and allow", never "block all work" |
+| Cross-folder rule amended | Three-tier design (see the amended rule's row in the inventory below) — source updated in `rules-cupcake-global`, compiled via `mb-compile-rules`, `opa check` pass, placed at the global target |
+| Full live test | **13/13 pass** — developer-run real `cupcake eval`; record: `/mnt/c/mybizz/logs/cupcake-rule-test-record-2026-09-08.md` |
 
-**Re-enable is a one-line reverse of the rename:**
+**Reactivation — the final step (developer's terminal):**
 
 ```bash
 mv ~/.config/opencode/plugin/cupcake.js.disabled ~/.config/opencode/plugin/cupcake.js
 ```
 
-**A full, permanent uninstall has been prepared but NOT executed** — see
-`cupcake-reference.md`'s "Full uninstall" section, held pending an explicit
-developer decision on restore, repair, or permanent removal.
+…then restart OpenCode. Post-restart verification: exactly one `cupcake.js`
+"loading plugin" line in the newest session's log (see `cupcake-reference.md`).
 
-**Standing context (developer-stated, 2026-09-06):** the current setup proved
-too restrictive — hampering work to the point of totally arresting
-productivity; this is a real issue. The suspension is a **temporary state**
-until the setup can be optimized so that security and productivity coincide.
-As of this writing:
-
-> No reasonable solution has been found and applied yet — Cupcake remains in
-> total suspension. A candidate fix (fail-open mode + project-local scaffold
-> cleanup) has been identified and is now confirmed to exist in the installed
-> plugin's actual code, not merely claimed by vendor documentation — but it
-> has not been applied or tested against the real crash. Until it is, this
-> remains an open problem, not a resolved one.
+**Standing context:** the suspension's cause was addressed at both layers —
+the availability failure (fail-open mode; the scaffold file removed) and the
+productivity failure (the cross-folder rule redesigned so legitimate
+cross-folder work is never blocked; other-project writes use the
+permission-slip mechanism). The protected-file rules (AGENTS.md/CLAUDE.md/
+opencode.json/package.json) are deliberately left strict — a revisit
+decision, not forgotten.
 
 **Everything below this point describes the configuration as it stood while
-Cupcake was active** (as of 2026-08-29) — retained as a real record of what
-would need to be restored if re-enabled, not as a description of current live
-behavior.
+Cupcake was active** (as of 2026-08-29), updated 2026-09-08 where the
+cross-folder rule changed — retained as the record of what is restored when
+the restart completes.
 
 ---
 
@@ -121,7 +104,7 @@ behavior.
 | `cup-no_autonomous_commits_pushes_merges_releases_or_deployments.rego` | git commit/push/merge, publish, deploy-script execution |
 | `cup-no_rewriting_or_destroying_development_history.rego` | Force-push, rebase, amend, branch/tag deletion |
 | `cup-no_destructive_database_operations.rego` | DROP, unconditioned DELETE, TRUNCATE (9 object types) |
-| `cup-no_cross_project_filesystem_access_by_default.rego` | Writes outside the current project root and outside all permanent exemptions, unless an active, unexpired, non-zero-count grant exists for that folder. Reads outside the project are unrestricted |
+| `cup-no_cross_project_filesystem_access_by_default.rego` | **Amended 2026-09-08, three-tier design, live-tested 13/13:** writes outside the current project are blocked unless the target is inside an always-open shared-library folder (project-library-global, dev-root, mybizz-config-docs, mybizz-os-docs, `/mnt/c/mybizz/logs`, `/tmp`, the Cupcake/OpenCode config plane, skills-collective) or an active, non-zero-count grant exists. **Reads are never blocked by this rule.** Restricted project folders (the seven projects + `/home/dev-p/memory-governor`) are slip-gated |
 | `cup-no_access_to_secrets_unless_explicitly_required.rego` | Reading known secret-file patterns, via Read/Grep or bash |
 | `cup-outbound_network_access_is_allowlist_only.rego` | Fetch/curl/wget to a domain not on the 10-domain allowlist |
 | `cup-no_autonomous_installation_or_connection_of_tools.rego` | Registering a new MCP server, plugin, or skill |
@@ -222,7 +205,7 @@ Confirmed field names for `args`: `filePath`, `oldString`, `newString`
 
 | # | Item | Status |
 |---|---|---|
-| 1 | The standing design problem: a Cupcake configuration where security and productivity coincide. No reasonable solution has been found and applied yet — Cupcake remains in total suspension (developer-stated, 2026-09-06). | Open |
-| 2 | Candidate fix — `failMode: "open"` via `.cupcake/opencode.json` plus project-local scaffold cleanup: **code-verified to exist** in the installed plugin (`failMode` in its default config and real `"open"` handling; config path `.cupcake/opencode.json` verified in its `loadConfig`), but **not applied or tested against the real crash**. | Open |
+| 1 | The standing design problem: a Cupcake configuration where security and productivity coincide. **Half-resolved 2026-09-08:** the availability half (fail-open + scaffold removal) and the cross-folder friction half are fixed and live-tested; the protected-file rules' block-by-default friction remains deliberately unchanged — a revisit decision. | Partially open |
+| 2 | Candidate fix (fail-open + scaffold cleanup): **APPLIED 2026-09-08** — config written, scaffold removed. The original crash was never reproduced, so the fix's effect on that specific crash is untested; any future crash now degrades to log-and-continue by construction. | Applied |
 | 3 | Version `0.3.0` has no visible upstream release listing to corroborate it. | Open |
-| 4 | Full uninstall prepared, not executed — restore/repair/remove decision pending. | Open |
+| 4 | Full uninstall prepared — **superseded 2026-09-08 by the reactivation decision.** Held only as a record. | Retired |
