@@ -1,95 +1,132 @@
 # mb-submit-memory — Explainer
 
-*Companion note: for current confirmed state (location, prerequisites,
-environment, open items) see `mb-submit-memory-config.md`. For exact
-invocation syntax and the full step cycle, see `mb-submit-memory-reference.md`.*
+*Companion note: current state in `mb-submit-memory-config.md`; the full
+cycle in `mb-submit-memory-reference.md`; the skill's own `SKILL.md` is the
+authoritative procedure.*
 
----
+## 1. What this actually is
 
-## 1. Why this skill exists
+This skill is the front door of the memory system's security gate. The
+memory governor — a small, strict program on this machine — decides what
+is allowed to become *permanent* memory, and this skill is the sanctioned
+way anything reaches that decision: it reads a real file, checks the new
+content against everything already known, forms an honest judgment about
+how confident it is and whether anything contradicts, shows that judgment
+to the developer, and only submits after an explicit yes. It exists because
+the easy way to write memory — the one-command path that skips all checking
+— is real, live, and always available. A rule that says "don't use the easy
+path" is just a hope; this skill makes the correct path *available and
+habitual*, which is the only way the gate actually gets used.
 
-`gbrain remember` and `gbrain sync` both write directly into durable GBrain
-memory with no check on whether the content is actually true, non-contradictory,
-or provenance-clean — that's precisely the ungoverned-write gap
-`memory-governor` exists to close (see `memory-governor-explainer.md` §1).
-A governor with no correct, habitual way to reach it doesn't help, though —
-if raw `gbrain remember`/`sync` are still sitting right there as an easier
-path, they'll get used out of habit under time pressure. `mb-submit-memory`
-exists to be that single correct path: the *only* sanctioned way a developer
-or a PDLF step submits real content into memory, deliberately narrower and
-less convenient than calling GBrain directly, on purpose.
+## 2. The memory system in plain terms — what this skill sits inside
 
-## 2. Why it pauses instead of running fully autonomously
+The memory system has two storage layers in one brain. The first is a
+mirror of everything written down in the projects — kept current by the
+sync process, deliberately unchecked, because its authority comes from
+being a faithful mirror of real files. The second is durable memory:
+facts meant to survive and be trusted later. Only the second layer is
+gated, because only it claims to be *believed* rather than merely *stored*.
 
-The skill forms a genuine confidence score and contradiction judgment (Section
-2, Step 3) — but it does not act on that judgment unilaterally. It reports its
-findings and stops, waiting for the developer's explicit approval in the same
-run before calling the governor's API at all. This mirrors the governor's own
-design principle (see `memory-governor-config.md`'s decision engine: only
-`auto_promote` or `needs_review`, never an automatic reject/quarantine) —
-judgment forms the recommendation, but a human confirms anything with real
-consequence. The developer's correction, if given, is authoritative and
-submitted exactly as returned, not blended with the original judgment.
+Three things can write to the gated layer, with very different relationships
+to the gate:
 
-## 3. Why folders are never submitted as one unit
+- **The dream cycle** — the autonomous background process — writes through
+  its own phases and *cannot* pass through the gate: there is no hook where
+  a gate could attach. It is governed instead by a manual discipline. This
+  is a permanent, stated limit of the system, not an oversight.
+- **PDLF's step-completion process** submits through the gate under its own
+  credential, automatically, as part of its routine.
+- **Everything else — a human or an agent submitting real content — goes
+  through this skill**, under the `manual_submission` credential.
 
-Batching would mean one confidence score and one contradiction check standing
-in for content that may vary wildly file to file — exactly the kind of
-shortcut Section 0's "no placeholder value" rule is meant to prevent. Every
-file gets its own independently-formed judgment, even inside a single
-`/mb-submit-memory (folder)` run.
+The gate itself is deliberately simple where it matters: its decision
+engine is fully deterministic (no AI judgment decides a candidate's fate),
+it has only two possible automatic outcomes (promote straight through, or
+route to the developer's review list — it can never quietly reject or
+quarantine anything), and it derives *who* submitted a candidate from the
+cryptographic credential used, never from anything the request claims.
 
-## 4. The confidence-scoring method — and why it's honest about its own nature
+Two couplings make the system genuinely complex, and both have bitten:
 
-The three bands (0.85+, 0.5–0.85, below 0.5) are explicitly tagged
-`"method": "model_based"` in every submission — a deliberate acknowledgment
-that this is a real reading-comprehension judgment, not a rule the developer
-has personally verified line-by-line. This honesty matters downstream: the
-governor's high-risk-type and contradiction logic can weigh a `model_based`
-score differently than a hypothetical developer-verified one, and nothing in
-this pipeline pretends otherwise.
+- **The name coupling.** A submission names a project, and the gate's
+  background writer hands the approved memory to GBrain *by that project's
+  name*. If the name doesn't match a real GBrain source exactly, the
+  submission succeeds at the gate and then silently fails five retries
+  later — approved memory that never actually arrived. The registry of
+  projects the gate knows and GBrain's own list of sources are two separate
+  systems that drift independently.
+- **The startup coupling.** The gate reads its configuration and database
+  credentials from the environment at the moment it starts, not from files
+  it hunts for. Started carelessly, it runs but cannot reach anything —
+  every submission fails authentication. It must be started the one correct
+  way (documented in the reference).
 
-## 5. A real worked incident — the 2026-08-27 submission
+One more living reality: the quick, ungoverned path is not hypothetical —
+the tool surface that carries it is explicitly enabled and sits in every
+session next to this skill. The system's designers knew this; the gate was
+built knowing the easy path would always exist. This skill is the counterweight.
 
-The only confirmed real run to date is directly instructive, both for how the
-supersession/contradiction distinction actually plays out and for the
-operational failure modes that surfaced around it.
+## 3. Suitability
 
-**What happened:** a developer directly submitted
-`spec-postgres-ledger.md` from the PDLF docs repo. GBrain's `recall` on
-specific content phrases came back empty, but a broader hybrid query
-surfaced the *prior, pre-edit* version of the same page. The file had been
-live-verified against the real Postgres ledger that same session, so this
-was correctly judged **not a contradiction** — it was the deliberate,
-correct replacement of an already-known-outdated fact. Confidence: 0.85
-(top band — clearly stated, and the only related content found was the
-thing it was correctly superseding). Contradiction object: `detected=true`,
-`resolution=closed_by_new_fact`, `cross_project=false`. The governor
-auto-promoted it (`decision_path=auto_promote`, `risk_level=low`).
+- **Best for:** submitting developer-authored facts and decisions into
+  durable memory with real verification; PDLF step artifacts through their
+  own credential path; anything where being *believed later* is the point.
+- **Good for:** deliberate corrections that supersede known-outdated facts
+  (the gate has an atomic mechanism for exactly this); per-file review when
+  a whole folder of documents deserves individual judgment.
+- **Not good for:** bulk content that belongs in the mirror layer (that is
+  the sync process's job — a different layer, a different tool); anything
+  generated by the dream cycle (it has its own, ungated path by design);
+  forcing a submission past review (the skill refuses by design — the
+  review queue exists precisely so nothing becomes permanent unexamined);
+  use while the gate's API is down (the run blocks loudly — start the
+  governor first, per the reference).
 
-**What the same run surfaced as real operational lessons** (recorded verbatim
-in `learnings.md`, summarized here):
+## 4. Why it works the way it does
 
-- **The governor has no dotenv autoload.** Starting `uvicorn app.main:app`
-  without first sourcing `~/memory-governor/.env` leaves it unable to reach
-  its own database and with an empty credential registry — every submission
-  401s. Not a bug, a real startup-order dependency to remember.
-- **`owning_project` must match a real gbrain source ID, or the write silently
-  stalls downstream.** The async `gbrain_write` worker (see
-  `memory-governor-config.md`'s outbox mechanism) calls
-  `gbrain sources default <owning_project>` and raises
-  `SourceNotFoundError`, retrying 5× before marking the event
-  `permanently_failed`. A candidate can be `promoted` at the API level and
-  still never actually reach GBrain if this coupling is broken.
-- **Renaming a project ID is a real 3-step transaction, not a plain UPDATE**
-  — `memory_candidates.owning_project` is a non-deferrable foreign key.
-  Insert the new ID first (copying `display_name`/`dormant`/`created_at`),
-  repoint dependent rows, delete the old ID, all inside one transaction.
-- **The project registry and gbrain's own source list are two separate
-  systems that can drift independently.** A new owning project has to be
-  registered with the governor (`POST /memory/projects`) *before* anything
-  can be submitted under it — a 404 here is an expected, necessary
-  onboarding step, not an error condition.
-- **The naming drift this surfaced** — `dev-makepdlf` (gbrain source) vs.
-  `makepdlf-project-library` (folder name and governor project, already
-  renamed) — is the open item tracked in `mb-submit-memory-config.md`.
+**Why it pauses before submitting.** The skill forms a genuine judgment —
+confidence and contradiction — but never acts on it alone. The gate's own
+philosophy is that judgment forms a recommendation and a human confirms
+anything with real consequence; the skill applies the same philosophy one
+step earlier, in the conversation, where a correction costs nothing.
+
+**Why every file gets its own judgment.** One confidence score standing in
+for a folder of varied content is exactly the placeholder-shortcut the
+skill exists to prevent. The per-file cycle is slower and deliberate on
+purpose.
+
+**Why the confidence score admits what it is.** Every submission tags its
+score as `model_based` — a real reading-comprehension judgment by the
+agent, not a developer-verified fact. Downstream logic is allowed to weigh
+that honestly. Pretending the score was human-verified would poison the
+one thing the gate runs on.
+
+**Why the gate's security checks are worth their friction.** The gate
+cannot see conversational context — it only sees tool calls and
+credentials — so it enforces mechanically what a conversation cannot:
+origin, count, and review. When a rule it enforces causes a false positive
+(as the outbound-network rule did for the gate's own local traffic), the
+correction goes through the same tested pipeline as any other rule —
+proven 2026-09-08, when the rule was amended to always allow the machine's
+own internal addresses and the pipeline was re-verified live.
+
+**Why the API being down matters and how it was fixed.** The gate is a
+real program someone must start; until 2026-09-08 it had only ever been
+started by hand, and on that day it was found not running — a memory
+system whose gate is closed. It was brought up live and verified end-to-end
+(authentication gating correctly observed), and a permanent auto-start
+installation was recommended and approved so "the gate was closed" stops
+being a possible state.
+
+**Open questions.** The permanent auto-start installation is pending
+developer execution; the two copies of the skill file can drift (no sync
+mechanism); the governor's own records of past submissions' project names
+await a credentialed verification; and the gate-vs-quick-path tension is
+managed by documented discipline rather than mechanics — the honest,
+currently-accepted state.
+
+*Companion documents: `mb-submit-memory-config.md` (state),
+`mb-submit-memory-reference.md` (commands and rules), `SKILL.md`
+(authoritative procedure). The full memory-system map:
+`memory-master-explainer.md`. The gate's own suite:
+`memory-governor-config.md` + `-reference.md` + `-explainer.md`.*
