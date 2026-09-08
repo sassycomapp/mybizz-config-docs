@@ -1,61 +1,137 @@
 # Graphify Explainer
 
-## 1. Opening
+## 1. What this actually is
 
-GBrain answers "why was this built this way?" — but it has a real, permanent blind spot: it cannot reliably tell you what actually calls what in a codebase right now. No schema pack it ships with extracts a resolved code call-graph, and even where it tries, resolution is limited to symbols in the same file. That gap is exactly what Graphify exists to close.
+Graphify is a local tool that turns a folder of code — and optionally docs,
+SQL schemas, PDFs, images — into a literal knowledge graph. Nodes are things
+that exist in the corpus: functions, classes, modules, files, document
+concepts. Edges are typed relationships between them: calls, imports,
+contains, inherits. It exists to answer structural questions about a codebase
+— what calls this, what breaks if that changes, how do two things connect —
+questions that grep cannot answer (it is linear, not relational) and that
+GBrain, in this environment, deliberately does not answer (see
+`memory-master-explainer.md` for the four-mechanism division of labor).
 
-Graphify is a local, deterministic code and document knowledge-graph builder — independent of GBrain, GStack, and any other skill system in this environment. It parses real source code with Tree-sitter (the same kind of parser a syntax highlighter uses, not a language model) and builds an actual graph of definitions, calls, imports, and containment. Where GBrain gives you the *reasoning*, Graphify gives you the *structurally true, current shape* of the implementation.
+It runs entirely on this machine. Code parsing uses tree-sitter — the same
+deterministic parser technology a syntax highlighter uses, not a language
+model — so the code side of any graph is free, offline, and reproducible.
+Only document and media extraction involves an LLM, and none is configured
+here: the mb-3-cs graph is entirely code-side extraction plus ghost name
+references from templates it cannot structurally parse.
 
----
+## 2. What it can do (capability level)
 
-## 2. What Graphify Actually Is
+- **Two extraction paths.** Structural (AST, tree-sitter, deterministic,
+  free) for real code; semantic (LLM or vision, real cost) for markdown,
+  HTML-as-document, images, video. A docs-only repo still produces a real
+  graph — the tool is not code-only, though every graph here uses the code
+  path.
+- **Honest confidence labels.** Every edge is EXTRACTED (read directly from
+  syntax — as trustworthy as reading the code yourself), INFERRED (the tool's
+  educated guess — verify before leaning on it), or AMBIGUOUS (unresolved
+  conflicting signals). The current mb-3-cs graph: 96% EXTRACTED, 4%
+  INFERRED, 0% AMBIGUOUS.
+- **Structure-derived groupings.** Communities are clusters of dense
+  interconnection, not folders — they can reveal real coupling across
+  directory boundaries. God nodes are the hubs everything flows through;
+  changing one has a structurally confirmable blast radius.
+- **Four ways to ask.** Broad traversal for a question, shortest path between
+  two things, a plain-language explanation of one node, and reverse-impact
+  traversal ("what is affected by this?").
+- **A work-memory loop.** Question/answer outcomes can be saved against the
+  graph and aggregated into lessons, so the graph records how its own past
+  answers turned out.
+- **Serving.** One graph can be exposed to agents over MCP, merged into a
+  multi-repo global graph, or exported as interactive HTML, a D3 tree, or a
+  call-flow page.
 
-Graphify has two genuinely different extraction paths, not one. **AST extraction** covers real code files — deterministic, zero LLM calls, zero cost, using Tree-sitter's structural parsing. **Semantic extraction** covers markdown, HTML-as-document, and images — real LLM work with real token cost, dispatched to a subagent or a vision backend.
+## 3. Suitability
 
-This matters more than it sounds: a repository with no code files at all, only markdown and documentation, can still produce a real, substantive Graphify extraction. It isn't a code-only tool, even though the code path is the one used most heavily here.
+- **Best for:** resolved, current, cross-file structural facts about code —
+  callers, import chains, containment, structural paths, blast radius,
+  architecture orientation — on a graph whose provenance matches the
+  checkout.
+- **Good for:** orientation before touching unfamiliar code; validating that
+  an implementation still matches documented design intent (see the worked
+  example below); including tests and internal scripts in structural review.
+- **Not good for:** "why" questions — decisions, rationale, history (that is
+  GBrain's job; neither tool replaces the other); verifying runtime behavior
+  (read the source, run the tests); anything on a graph whose
+  `built_at_commit` is behind HEAD (stale graph, confident wrong answers);
+  Anvil UI templates as first-class structural nodes — plain `.html`/`.yaml`
+  form templates are document types to the detector, so they appear only as
+  ghost name references (~95 of them in the current graph), not extracted
+  structure; and treating INFERRED or AMBIGUOUS edges as settled.
 
-Every relationship Graphify extracts carries a confidence label — **EXTRACTED**, **INFERRED**, or **AMBIGUOUS**. EXTRACTED means the relationship came directly from parsing real syntax — a function call, an import statement, a containing module — and is about as trustworthy as reading the code yourself. INFERRED means Graphify made an educated guess at a relationship not literally spelled out in syntax, worth a second look before leaning on it for anything consequential. In the current graph, the overwhelming majority of edges are EXTRACTED, with a small remainder INFERRED and none AMBIGUOUS — see `graphify-config.md` for the exact current figures.
+## 4. Why it works the way it does
 
----
+**Why confidence labels exist.** The honesty model is the product: the tool
+never silently mixes what it read from syntax with what it guessed. Treating
+an INFERRED edge like an EXTRACTED one is the single easiest way to get a
+wrong answer with high apparent confidence — which is why the label is on
+every edge, not buried in a log.
 
-## 3. A Worked Example — Why the Split Actually Matters
+**Why the directed-undirected trap exists at all.** The graph is stored
+undirected — a relationship is recorded as existing between two nodes,
+because structural relations like containment are naturally described in
+both directions — while path searches default to directed traversal. A real
+relationship can therefore come back "no path found" purely because of the
+direction the search walked. This is a standing property of the tool, not a
+one-off bug: every surprising negative path result gets a second attempt in
+undirected mode before being believed.
 
-During setup, both GBrain and Graphify were asked about the same thing — the Vault's secret-encryption mechanism — as a direct test of whether the GBrain/Graphify split holds up in practice.
+**Why `graphify-out/` is gitignored here, though upstream now recommends
+committing it.** Upstream's team-setup story targets shared repositories
+where a committed map saves every teammate a rebuild. This is a
+single-developer environment; the output is a derived artifact, fully
+reproducible from committed source at zero API cost, and it mixes
+machine-specific files (absolute root marker, AST cache) with
+stale-prone derived data. Gitignoring keeps the repo clean and makes provenance
+meaningful. This is a tripwire decision, not a closed one: if the output
+ever becomes tracked, the hooks decision below must be re-examined with it.
 
-**GBrain's answer (the "why"):** the Vault is owner-only, gated behind a TOTP step-up on every open; secrets are encrypted at rest and never displayed again after saving; the encryption key lives in Anvil Secrets; this is governed by named ADRs about the payment security boundary and vault RBAC.
+**Why the git hooks and merge driver are not installed.** The hook feature
+installs three things inseparably — auto-rebuild hooks plus a union merge
+driver for a tracked `graph.json`. The driver resolves conflicts on a file
+that is never tracked here, so it is dead weight; the hooks would automate a
+refresh that is deliberately run by hand at provenance-relevant moments,
+keeping graph currency an explicit, verifiable act rather than a background
+one. Revisit only if the gitignore premise above changes.
 
-**Graphify's answer (the "where/how"):** `encrypt()` is defined at a specific line in `encryption_service.py`; it's called by `save_vault_secret()` in `vault_service.py`, and by four test methods; `vault_service.py` imports it; a docstring edge even carries the literal sentence describing the encryption method. All of these relationships were marked EXTRACTED — parsed directly from the AST, not inferred.
+**Why one shared AGENTS.md managed block.** GBrain and Graphify are the two
+mechanisms that write persistent guidance into AGENTS.md; two independent
+writers on one file is a write-conflict waiting to happen. One
+marker-delimited block (`BEGIN/END GRAPH MEMORY GUIDANCE`, owned via
+`memory-master-explainer.md`) holds a single policy for both — including the
+rule that a graph must not be queried for current-state answers when its
+provenance lags the checkout. A stale graph misanswers confidently; the
+provenance check is what makes "current shape" claims meaningful.
 
-The two answers agreed — the design intent described in GBrain's documents was faithfully realized in the code Graphify actually found. That agreement is itself the valuable signal: had they disagreed, that would mean either the documentation is stale or the implementation has drifted from what was decided, and either is worth knowing immediately.
+**Why both a CLI and an MCP server exist, and why they always agree.** They
+are two frontends to the same `graph.json` — the CLI for mid-task human/agent
+invocation, the MCP server for repeated structured tool calls from OpenCode.
+Same artifact, so no cross-checking is needed between them; pick whichever
+fits the context.
 
----
+**A worked example that shows the boundary.** Both tools were asked about the
+Vault's secret-encryption mechanism. GBrain answered the why — owner-only
+vault, TOTP step-up, encryption at rest, governing ADRs. Graphify answered
+the where/how — `encrypt()` at a specific line, called by
+`save_vault_secret()` and four tests, imported by `vault_service.py`, each
+edge EXTRACTED. The answers agreed, and each sat at the trustworthy end of
+its own tool's confidence scale — that agreement is the signal. Had either
+been low-confidence, the same agreement would have been a lead to verify
+rather than a settled answer.
 
-## 4. Real Incidents Worth Understanding
+**Open architectural questions.** Upgrade timing: the installed 0.9.40 lags
+PyPI's 0.9.56; upstream has since added PR-triage dashboards, HTTP MCP
+serving, and a team-setup model that assumes a committed graph — none
+adopted here, all requiring a deliberate re-decision against the standing
+ones above. Whether the AGENTS.md guidance block should ever travel with the
+repo versus staying machine-local is deliberately open (tracked in
+`memory-master-explainer.md`). Whether the `--exclude` flag functions in
+0.9.40 is unverified (see `graphify-config.md` open items).
 
-**Installing from the wrong directory.** Graphify's per-repo activation step writes real, repo-scoped files relative to whatever the current directory happens to be — with no warning if that directory isn't actually a real project. Running the install command from a home directory instead of a project folder writes plugin registration files directly into whatever `~/.opencode/` already contains, potentially a leftover, unrelated scaffold from months earlier. The standing practice this created: always confirm the working directory before running `graphify install`, every time, without exception.
-
-**The directed-path default producing false negatives.** `graphify path` defaults to directed traversal even when the underlying graph is stored undirected. This produces misleading "no path found" results for relationships that are real but only exist in a reverse-structural form. This was confirmed directly, not theoretically: a real cross-check on `get_vault_secret` → `encrypt` returned "no path found" under a directed search, while the identical undirected search correctly returned the true two-hop path matching the actual source code. The standing rule this created: always pass the undirected flag explicitly when checking a cross-file or non-obvious relationship.
-
----
-
-## 5. Known Limitations, Honestly Stated
-
-**Anvil UI templates are not structurally extracted.** `.html` and `.yaml` form templates are classified as document types, not code types, in Graphify's detector — there is no plain-HTML/YAML AST extractor. This produces "ghost" template-class references (empty source file) as a direct, understood consequence, not a bug. Closing this would require switching to semantic (LLM) extraction for these file types, which is a deliberate future decision, not a default.
-
-**The directed/undirected default is a real, standing trap**, covered fully in Section 4 — worth remembering every time, not just the first time.
-
-**Git hooks and the merge driver were deliberately not installed.** The union merge driver this feature would add is dead weight when the graph output directory is gitignored (the normal, recommended state) — since the file it would resolve conflicts on is never actually tracked, the driver can never fire, yet installing it still adds tracked-file and config churn for no benefit. Standing practice: refresh manually with `graphify update` when currency matters, rather than installing hooks by default.
-
----
-
-## 6. The GBrain/Graphify Boundary, In Practice
-
-No naming overlap between the two tool sets. They read from entirely separate backends — a Postgres database versus a local graph file — and never write to each other. Graphify never modifies GBrain's database; GBrain does not ingest Graphify's output.
-
-The working rule that emerged from all of the above: for "what calls/imports/contains what," always reach for Graphify — GBrain's own code-analysis commands are not a substitute for it, for the specific, permanent reason covered in `gbrain-explainer.md`.
-
----
-
-*Companion documents: `graphify-config.md` (current configuration facts), `graphify-reference.md` (command syntax and troubleshooting).*
-
-*End of document*
+*Companion documents: `graphify-config.md` (current state),
+`graphify-reference.md` (commands and rules). Cross-component reasoning:
+`mybizz-os-docs/memory-master-explainer.md`.*

@@ -1,165 +1,94 @@
-# Graphify Configuration — mb-3-cs
+# Graphify Configuration
 
-Canonical current-state configuration record. Agent-facing. Reflects the
-working state of Graphify as integrated into the `mb-3-cs` project as of the
-end of the setup/closeout sequence (2026-08-16). This document states facts,
-not history — where a decision was made and the reasoning matters, see
-`memory-explainer.md`.
+Canonical current-state configuration record. Agent-facing. States facts, not
+history or rules — reasoning in `graphify-explainer.md`, commands and rules in
+`graphify-reference.md`. All values verified live 2026-09-08 unless noted.
 
----
-
-## Identity
+## Identity (machine-wide install)
 
 | Item | Value |
 |---|---|
-| Version | `0.9.40` |
-| PyPI distribution | `graphifyy` (double-y — deliberate, distinguishes from unofficial packages) |
-| Source repo | `github.com/safishamsi/graphify` |
+| Version | `0.9.40` (CLI and package agree) |
+| Upstream latest (PyPI) | `0.9.56` — environment is behind; upgrade not performed |
+| PyPI distribution | `graphifyy` (double-y; other `graphify*` packages unaffiliated) |
+| Official repository | `github.com/Graphify-Labs/graphify` (default branch: `v8`) |
+| Former URL | `github.com/safishamsi/graphify` — now serves the same org repo (alias) |
+| Maintainer | Safi Shamsi (Graphify Labs) |
 | Executable | `/home/dev-p/.local/bin/graphify` |
 | Python module | `/home/dev-p/.local/lib/python3.12/site-packages/graphify/` (Python 3.12.3) |
+| Install method | `pip install --break-system-packages` (user site-packages) + `graphifyy[mcp]` extra (`mcp` 2.0.0) |
+| Skill (OpenCode) | `~/.config/opencode/skills/graphify/` — `SKILL.md` + `references/`, version marker `.graphify_version` |
+| Security scan | SkillsLLM: PASSED, no issues; scanned 2026-04-16 (pip-audit + npm-audit; no semgrep) |
+| Python requirement | >= 3.10 (package metadata) |
 
-## Install (two-step — both required, in order)
+## Install surface — what each step wrote
 
-1. Machine-wide (once per machine): `pip install graphifyy --break-system-packages`
-2. Per-repo activation (once per repo, **must be run from inside the target repo root**):
-   ```bash
-   cd /mnt/c/dev/dev-mb-3-cs/mb-3-cs
-   graphify install --platform opencode
-   ```
-   Running this from the wrong directory silently writes real repo-scoped
-   files relative to the current directory with no warning — always confirm
-   the working directory first.
+| Step | Wrote |
+|---|---|
+| Package install | CLI + module (paths above) |
+| `graphify install --platform opencode`, run from mb-3-cs root | Global: `~/.config/opencode/skills/graphify/` (`SKILL.md`, `references/`). Repo-local: `.opencode/plugins/graphify.js`, `.opencode/opencode.json` (plugin registration), `.opencode/node_modules/` |
+| MCP extra | `mcp` 2.0.0 into the same user site-packages |
 
-MCP extra (separate, required for the MCP server to run):
-```bash
-python3 -m pip install --user "graphifyy[mcp]" --break-system-packages
-```
+`.opencode/plugins/graphify.js` is a `tool.execute.before` hook that prepends a
+reminder string to bash commands; it writes no files of its own.
 
-### Files written by per-repo activation
+## Scope configuration — mb-3-cs
 
-| Scope | Location | Contents |
-|---|---|---|
-| Global | `~/.config/opencode/skills/graphify/` | `SKILL.md`, `references/` — shared across all repos |
-| Repo-local | `.opencode/plugins/graphify.js` | `tool.execute.before` hook; **writes no files** — only prepends a bash-command reminder string |
-| Repo-local | `.opencode/opencode.json` | plugin registration |
-| Repo-local | `.opencode/node_modules/` | required to execute the plugin locally |
+| File | Content |
+|---|---|
+| `/mnt/c/dev/dev-mb-3-cs/mb-3-cs/.graphifyignore` | `.opencode/` and `opencode.json` (exactly two lines; tracked in git) |
+| Repo `.gitignore` (graphify-relevant lines) | `graphify-out/`, `.opencode/`, `agents.md`, `opencode.json`, `tests/` |
+| `graphify-out/.graphify_build.json` | `{"gitignore": false}` — persisted from a prior `--no-gitignore` run; sticks until reset |
+| `graphify-out/.graphify_root` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs` (absolute, machine-specific) |
 
-## Scope configuration (committed to the repo)
+`.graphifyignore` does not list `agents.md` though `.gitignore` does — no
+effect (markdown is not a code-extraction target).
 
-`.graphifyignore` — exactly two lines:
-```
-.opencode/
-opencode.json
-```
-
-`.gitignore` — includes the line `graphify-out/` (added; whole output
-directory untracked). `.graphifyignore` is honored regardless of whether
-`.gitignore` itself is being honored by a given extraction run.
-
-Only `.graphifyignore` is a tracked file. Nothing under `graphify-out/` is
-committed.
-
-## Canonical build commands
-
-**Full deterministic rebuild** (code-only, no LLM, no API key — the default
-command for any full rebuild):
-```bash
-graphify extract /mnt/c/dev/dev-mb-3-cs/mb-3-cs --force --code-only
-```
-`--force` is required whenever the rebuild would shrink the node count
-(bypasses Graphify's shrink-guard). Output defaults to `<path>/graphify-out/`.
-
-**Realign an existing graph to a new HEAD** (cheaper than a full rebuild when
-the source hasn't materially changed):
-```bash
-graphify update /mnt/c/dev/dev-mb-3-cs/mb-3-cs
-```
-
-**Generate `GRAPH_REPORT.md` + `graph.html` + community labels** (does not
-change node/edge counts; required after any `extract`/`update` if these two
-files are wanted — they are not produced by `extract`/`update` alone in this
-version):
-```bash
-graphify cluster-only /mnt/c/dev/dev-mb-3-cs/mb-3-cs
-```
-LLM community-name labeling requires the `anthropic` pip package (not
-installed). Without it, this falls back cleanly to deterministic
-representative-node names at zero token cost — accepted as-is.
-
-## Current graph state (last verified)
+## Current graph state — mb-3-cs (verified live 2026-09-08)
 
 | Item | Value |
 |---|---|
-| Nodes | 574 |
-| Edges | 468 |
+| Nodes / Edges | 574 / 468 |
 | Communities | 158 |
-| Confidence | 96% EXTRACTED / 4% INFERRED / 0% AMBIGUOUS |
+| Confidence | 451 EXTRACTED (96%) / 17 INFERRED (4%) / 0 AMBIGUOUS |
 | `built_at_commit` | `5ce243e12bc2775108c9ecad6da1e6c7f8f1614c` |
+| Live HEAD at check | same commit — graph current |
 | Directed | `false` (stored undirected) |
-| Artifact path | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs/graphify-out/graph.json` |
+| Artifact | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs/graphify-out/graph.json` |
+| Ghost template nodes | 95 (empty `source_file`; Anvil UI templates — see explainer) |
+| `tests/` | In the graph; gitignored |
 
-**Provenance check:** `built_at_commit` must equal the live repo's current
-`git rev-parse HEAD` for the graph to be trusted as current. If the repo has
-advanced past this commit, run `graphify update .` before relying on the
-graph for anything current-state-dependent.
+## graphify-out/ inventory — mb-3-cs
 
-**Query note:** `graphify path`/`shortest_path` defaults to directed
-traversal even though the graph is stored undirected. Always pass
-`--undirected` explicitly when checking a cross-file or reverse relationship,
-or a real, correctly-captured relationship can appear to return "no path
-found." See `graphify-reference.md` for the confirmed example.
+| Entry | Kind |
+|---|---|
+| `graph.json`, `GRAPH_REPORT.md`, `graph.html`, `manifest.json` | Primary outputs |
+| `.graphify_analysis.json`, `.graphify_build.json`, `.graphify_labels.json`, `.graphify_labels.json.sig`, `.graphify_root` | Build-state sidecars |
+| `cache/` | Per-machine AST cache |
+| `2026-08-15/` | Manual backup of the prior graph state (537 nodes, `built_at_commit` `e29cbd1b…`); machine-local, untracked |
 
-## Known scope limitations (accepted, not defects)
-
-- **Anvil UI templates (`.html`/`.yaml` form templates) are not structurally
-  extracted.** These are DOC types, not CODE types, in Graphify's detector;
-  no plain-HTML/YAML AST extractor exists. ~95 graph nodes are "ghost"
-  template-class references (empty `source_file`) as a direct, understood
-  consequence. Including them would require switching to semantic (LLM)
-  extraction — not currently in use; not required unless a future decision
-  changes this.
-- `tests/` **is** included in the graph even though it's git-ignored — this
-  was a deliberate choice, not an oversight.
-
-## OpenCode MCP integration
+## OpenCode MCP integration — mb-3-cs
 
 | Item | Value |
 |---|---|
-| Scope | project `opencode.json` (gitignored) |
-| Entry | `mcp.graphify` |
-| Type | `local` |
+| Scope | Project `opencode.json` (gitignored) |
+| Entry | `mcp.graphify`, type `local`, enabled `true` |
 | Command | `["/usr/bin/python3", "-m", "graphify.serve", "/mnt/c/dev/dev-mb-3-cs/mb-3-cs/graphify-out/graph.json"]` |
-| Enabled | `true` |
-| API key required | none for the 7 core tools |
+| API key | None for the 7 core tools |
+| Tools (10, verified in installed `serve.py`) | `graph_stats`, `get_node`, `get_neighbors`, `get_community`, `god_nodes`, `shortest_path`, `query_graph` + 3 PR-triage (`list_prs`, `get_pr_impact`, `triage_prs`); prefixed `graphify_` in OpenCode |
+| PR-triage tools | Unused here; require a GitHub CLI/token |
 
-Exposed MCP tools (10, prefixed `graphify_*` in OpenCode): `graph_stats`,
-`get_node`, `get_neighbors`, `get_community`, `god_nodes`, `shortest_path`,
-`query_graph`, plus 3 unused PR-triage tools (`list_prs`, `get_pr_impact`,
-`triage_prs`).
+## Related integration facts
 
-**Mechanical note — MCP server startup timing:** OpenCode spawns configured
-local MCP servers once, at process bootstrap, not per chat session. If
-`mcp.graphify` is added or changed while OpenCode is already running, its
-tools will **not** appear even in a brand-new chat session — a full process
-restart (fully quit and relaunch `opencode web`) is required. This applies
-to any future MCP configuration change, not just Graphify.
+| Item | State |
+|---|---|
+| AGENTS.md (mb-3-cs) | `<!-- BEGIN GRAPH MEMORY GUIDANCE -->` … `<!-- END GRAPH MEMORY GUIDANCE -->` block, lines 102–126; encodes the graph-provenance check; single shared block for GBrain + Graphify guidance (owner: `mybizz-os-docs/memory-master-explainer.md`) |
+| Git hooks / merge driver | Not installed, not registered — deliberate (decision record: `graphify-explainer.md`) |
+| mb-3-cs project status | Paused (`opencode/opencode-config.md`) — deployment waits on PDLF completion |
+| GBrain | Never ingests `graphify-out/`; no shared backend; separate MCP servers |
+| Community labels | Deterministic representative-node names (LLM labeling package `anthropic` not installed) — accepted state |
 
-## Git hooks and merge driver
+## Open items
 
-**Deliberately not installed.** `graphify hook install` would add a
-post-commit hook, a post-checkout hook, and a `graph.json` union merge
-driver (requiring a new tracked `.gitattributes` file plus local git-config
-entries). Declined because the merge driver is dead weight — `graphify-out/
-graph.json` is fully gitignored and can never actually be merged — yet
-installing it still adds tracked-file and config-churn overhead with no
-corresponding benefit. Standing practice: refresh manually with `graphify
-update .` when currency matters. This decision was deliberate (not a
-default/oversight) and should not be silently reversed.
-
-## Do not
-
-- Do not install `.git` hooks or the merge driver without re-confirming the WP13 reasoning above no longer applies — specifically, the reasoning depends on `graphify-out/` staying gitignored; if that ever changes (the artifact becomes tracked), the hooks decision must be explicitly re-examined, not silently left as-is or silently reversed.
-- Do not run a rebuild without `--force` if it's expected to shrink the node count — it will refuse.
-- Do not assume `graphify extract`/`update` alone produces `GRAPH_REPORT.md`/`graph.html` — run `cluster-only` afterward.
-- Do not trust `graphify path` results without `--undirected` when checking cross-file relationships.
-- Do not add `mcp.graphify` (or any MCP entry) and expect it to work without a full OpenCode process restart.
+- `--exclude` flag: absent from 0.9.40 help; prior suite claimed it functional — unverified in this version.
+- Upgrade decision open: upstream `0.9.56` / repo `v8` ships features absent in 0.9.40 (`graphify prs`, HTTP MCP transport, multi-project MCP) and recommends committing `graphify-out/` for team setups — incompatible with the standing local decision (see explainer) unless re-decided.
