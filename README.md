@@ -50,8 +50,8 @@ of sync. Concretely, this shows up as:
 
 ## Kept fresh by
 
-`mb-config-manager` (proposed skill, see `master-task-list.md` Section 8) — reads
-`projects-config-register.md` and cross-checks it against the real filesystem, flagging
-missing or orphaned entries. Registering a new project's config YAML here is planned to
-become a required step in the "start a project" protocol, not something checked after the
-fact.
+`mb-docs-manager` (installed skill — register verification is defined in its SKILL.md
+Section 3.1) — reads `projects-config-register.md` and cross-checks it against the real
+filesystem, flagging missing or orphaned entries. Registering a new project's config YAML
+here is a required step in the "start a project" protocol, checked by mb-docs-manager runs
+rather than after the fact.
