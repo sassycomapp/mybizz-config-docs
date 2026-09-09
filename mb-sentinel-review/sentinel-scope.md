@@ -23,7 +23,7 @@ safe for clients and their users.
 | The security-global library — 54 documents, 7 categories; the authority on what "secure" means here | Built, verified live 2026-09-09 |
 | The skill — `mb-sentinel-review` (the 8-step review cycle: check step → match documents → read fully → reason → CLEAR/FLAG/ESCALATE → write the row → stop) | Built, installed, never run live |
 | The findings record — `triage_findings` (Windows PG15 `pdlf` DB, bridge-only access; verified live: table exists, 0 rows) | Built, verified live |
-| The reasoning methodology — `secure-software-engineering` (upstream: github.com/magnus919/agent-skills/tree/main/secure-software-engineering) | Researched; **installation pending developer execution** (supply-chain review passed) |
+| The reasoning methodology — `secure-software-engineering` (upstream: github.com/magnus919/agent-skills/tree/main/secure-software-engineering) | **Installed 2026-09-09** — `~/.config/opencode/skills/secure-software-engineering/` (SKILL.md + 11 references + 3 templates + evals; supply-chain review passed) |
 | The design genesis — `sentinel-security-system.md` (recovered 2026-09-09) | Recovered; serves as the plan document — suite citations re-point to it |
 
 **Relevant references from** `C:\dev\project-library-global\` (every file below verified on disk 2026-09-09):
@@ -142,6 +142,4 @@ QA); anything requiring GBrain or the memory system at runtime.
 
 ## Open items
 
-- The methodology installation — one command, developer execution
-  (supply-chain review passed).
 - The first real review run — expected naturally at PDLF build time.
