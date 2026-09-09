@@ -1,16 +1,17 @@
 # Sentinel Reference — Usage, Invocation, and Worked Examples
 
-Companion to `sentinel-config.md` (current installed state) and
-`sentinel-security-system-plan.md` (design and history). This document covers
-how to actually invoke and query Sentinel's components. Agent-facing.
+Companion to `sentinel-config.md` (current state) and
+`sentinel-explainer.md` (design genesis and reasoning). The skill's own
+`SKILL.md` is the authoritative procedure.
 
 ---
 
 ## Invoking `mb-sentinel-review`
 
 **From inside a retrofitted step file** (normal case): the step file's own
-numbered instruction invokes it directly — see `step-16-domain-modeling.md`
-item 7 for the real, working example. No manual invocation needed.
+numbered instruction invokes it directly — see `stepwise/
+step-16-domain-modeling.md` item 7 for the real, working example. No manual
+invocation needed.
 
 **Manual, ad-hoc invocation:**
 ```
@@ -20,55 +21,69 @@ Example:
 ```
 /mb-sentinel-review 16 "New CONTEXT.md entries: Booking, Slot, Customer"
 ```
-`step-number` must be one of the values in Section 9's table
+`step-number` must be one of the values in the intensity table
 (`sentinel-config.md`). A step number not in that table returns `CLEAR`
-immediately, with no analysis performed and no database row written — this is
-correct behavior, not a bug, per the skill's own Section 1.
+immediately, with no analysis performed and no database row written — this
+is correct behavior, not a bug, per the skill's own Section 1.
 
-## The real decision flow, step by step
+## The review cycle (8 steps — SKILL.md is authoritative)
 
-1. Step number checked against the table.
-   - Not listed → `CLEAR`, stop. No row written.
-   - Listed → continue.
-2. Matching `security-global` document(s) identified. See the mapping table
-   below.
-3. Document(s) read in full.
-4. Reasoned against, using the `secure-software-engineering` methodology.
+1. Step number checked against the intensity table. Not listed → `CLEAR`,
+   stop, no row. Listed → continue.
+2. Matching security-global document(s) identified (mapping below). No
+   clear match → ESCALATE, never an assumed CLEAR.
+3. Document(s) read in full — never reasoned from a title or category.
+4. Reasoned against, using the `secure-software-engineering` methodology
+   (installed at `~/.config/opencode/skills/secure-software-engineering/`
+   — its reference files are read at review time when the step's feature
+   touches their domain).
 5. Outcome reached: `CLEAR`, `FLAG`, or `ESCALATE`.
-6. Row written to `triage_findings` (see `sentinel-config.md` for the schema
-   and the `triage_label` mapping).
-7. `CLEAR` → row written already resolved. Done.
-   `FLAG`/`ESCALATE` → STOP. Reported to developer. No further action by the
-   skill itself.
+6. Row written to `triage_findings` (bridge procedure below).
+7. `CLEAR` → row written already resolved. Done. `FLAG`/`ESCALATE` → STOP.
+   Reported to the developer. No further action by the skill itself.
+8. Learnings recorded.
 
-## Step-to-document mapping (from `mb-sentinel-review` Section 2, Step 2)
+## The governing ADR — checked at every data-touching review
+
+`adr-dependency-based-not-multi-tenant.md` (Sealed). Cross-client isolation
+is structural — separate Anvil apps, separate databases. Consequences for
+the review:
+
+- Tenant discriminator columns (`client_id`, `tenant_id`,
+  `organisation_id`, `account_id`), tenant-filtered queries, tenant session
+  context, and cross-client access functions are **prohibited patterns** —
+  a match is a FLAG-level finding (they weaken structural isolation).
+- The only legitimate identity-based filtering is **user-role access
+  control within one client instance** (`anvil.users.get_user()` → role →
+  filter) — the `sec-broken-access-control-within-instance.md` patterns
+  apply.
+- Direct, unfiltered `app_tables` queries are the approved pattern.
+
+## Step-to-document mapping (SKILL.md Section 2)
 
 | Step | Document(s) checked |
 |---|---|
-| 17 | `requirements/sec-requirements-data-table-creation.md` + matching `threat-models/` document |
-| 34 | `requirements/sec-requirements-architecture-review.md` |
-| 35 | `requirements/sec-requirements-server-function.md` + matching `threat-models/` document |
+| 17 | `requirements/sec-requirements-data-table-creation.md` + matching `threat-models/` document + the governing ADR |
+| 34 | `requirements/sec-requirements-architecture-review.md` + the governing ADR |
+| 35 | `requirements/sec-requirements-server-function.md` + matching `threat-models/` document + the governing ADR |
 | 37 | Same document(s) as the step that introduced the code under review |
-| 38 | `testing/sec-testing-coverage-minimum.md` + matching `threat-models/` document's own Verification Requirements |
-| 45 | `requirements/sec-requirements-release-readiness.md` |
+| 38 | `testing/sec-testing-coverage-minimum.md` + the threat-model document's own Verification Requirements |
+| 45 | `requirements/sec-requirements-release-readiness.md` + `spec-observability.md` (the monitoring standard behind the release check) |
 
-If no document clearly matches: this is itself an `ESCALATE`, not an
-assumed `CLEAR`.
+If no document clearly matches: ESCALATE, not an assumed CLEAR.
 
-## Worked example — a real `FLAG` finding
+## Writing the finding — the database route
 
-Feature: a new server function `get_bookings(staff_id)` at Step 35.
+The `pdlf` ledger runs on **Windows** PostgreSQL 15. A direct WSL psql
+**silently connects to the wrong server** (WSL's own PostgreSQL 16 —
+GBrain's cluster). The documented bridge is the only correct route:
 
+```bash
+cd <the PDLF project folder> && set -a && source .env && set +a
+powershell.exe -NoProfile -Command "\$env:PGPASSWORD='$PGPASSWORD'; & 'C:\Program Files\PostgreSQL\15\bin\psql.exe' -h localhost -U pdlf_agent -d pdlf -c '<the INSERT or SELECT>'"
 ```
-/mb-sentinel-review 35 "get_bookings(staff_id) - returns bookings for given staff_id"
-```
 
-Matched document: `threat-models/sec-broken-access-control-within-instance.md`.
-Comparison: the function's own signature matches that document's Prohibited
-Pattern exactly — `staff_id` accepted from the caller, used directly to filter,
-with no check against the authenticated user's own identity.
-
-Result: `FLAG`. Row written:
+Worked FLAG (the canonical example — a real broken-access-control catch):
 
 ```sql
 INSERT INTO triage_findings (
@@ -87,11 +102,7 @@ INSERT INTO triage_findings (
 );
 ```
 
-## Worked example — a real `CLEAR` finding
-
-Feature: a new server function `get_my_bookings()` at Step 35, matching the
-Approved Pattern exactly (scope from `anvil.users.get_user()`, no client
-parameter).
+Worked CLEAR:
 
 ```sql
 INSERT INTO triage_findings (
@@ -103,7 +114,7 @@ INSERT INTO triage_findings (
 );
 ```
 
-## Querying Sentinel's own findings
+## Querying Sentinel's findings
 
 **All open Sentinel findings, any step:**
 ```sql
@@ -113,18 +124,18 @@ WHERE source_step IN ('16','17','19','20','21','34','35','37','38','39','45','46
   AND resolved_at IS NULL;
 ```
 
-**Confirm Sentinel actually ran for a given step instance** (the real check
-now built into `step-16-domain-modeling.md` item 9):
+**Gate-proof check** (built into `step-16-domain-modeling.md` item 9):
 ```sql
 SELECT 1 FROM triage_findings
 WHERE step_id = (real step_id)
   AND triage_label IN ('clear','needs-triage','needs-info')
 LIMIT 1;
 ```
-No row returned: Sentinel did not run, or ran and wrote nothing — either way,
-per item 9, the gate does not proceed.
+No row returned: Sentinel did not run — per item 9, the gate does not
+proceed.
 
-**Release-readiness check** (per `requirements/sec-requirements-release-readiness.md`):
+**Release-readiness check** (per
+`requirements/sec-requirements-release-readiness.md`):
 ```sql
 SELECT * FROM triage_findings
 WHERE severity IN ('High','Critical')
@@ -138,21 +149,22 @@ Any row returned: release should not proceed until resolved.
 ```
 /mb-compile-rules (rule-name)
 ```
-Requires a real Markdown file already present at
+Requires a real Markdown source at
 `C:\dev\project-library-global\rules-cupcake-global\cup-(rule-name).md`.
-
-**Currently non-functional in this environment** — Step 1 of the skill's own
-prerequisite check confirms `cupcake eval` is a real, runnable command before
-proceeding. It is not, until Cupcake itself is installed. Do not attempt a
-real invocation until `sentinel-config.md`'s Known Scope Limitations section
-is updated to reflect Cupcake's installation.
+**Functional** — it has built and amended 19 rules (latest 2026-09-08),
+all live-tested under active enforcement. Its own procedure:
+`mb-compile-rules/SKILL.md`.
 
 ## Do not
 
-- Do not query `triage_findings` for a Sentinel finding without filtering
-  `source_step` to Section 9's real list — other steps (36, for example) write
-  to the same table for unrelated, non-Sentinel reasons.
-- Do not treat a missing row as equivalent to a `CLEAR` result — a missing row
-  means Sentinel never ran; `clear` means it ran and found nothing.
-- Do not hand-write a `triage_label` value outside the six real allowed
-  values — the CHECK constraint will reject it.
+- Do not query `triage_findings` for Sentinel findings without filtering
+  `source_step` to the intensity table's list — other steps (36, for
+  example) write to the same table for unrelated reasons.
+- Do not treat a missing row as equivalent to a CLEAR — a missing row means
+  the review never ran; `clear` means it ran and found nothing.
+- Do not hand-write a `triage_label` outside the six real allowed values.
+- Do not connect to the `pdlf` ledger with direct WSL psql — the bridge is
+  the only route to the right server.
+- Do not use multi-tenancy vocabulary in any finding — the ADR is binding;
+  tenant patterns are findings, not idioms.
+- Do not implement a fix — flag and propose; PDLF's cycle implements.

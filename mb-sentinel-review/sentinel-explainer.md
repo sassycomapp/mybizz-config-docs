@@ -1,75 +1,292 @@
 # Sentinel — What It Is, What It Does, and Why It Matters
 
-## The Problem, Before Sentinel
+## The Objective, Stated Plainly
 
-The applications being built through PDLF will hold real client money, real client data, and, one layer further down, real personal information belonging to their clients' own customers. Every line of code in these applications is written by an AI agent, not by a developer reading and personally checking each function before it ships. That is not a hypothetical risk profile and not a weakness to apologize for — it is simply the real, structural situation this whole project is built around.
+The applications built through PDLF will hold real client money, real
+client data, and real personal information belonging to their clients' own
+customers. Every line of their code is written by an AI agent. Sentinel
+exists for one reason: **so that the applications which come out of the
+PDLF system are safe for the developer's clients and their users** — not
+hacked, identities not stolen, not robbed. It is build-time safeguarding in
+service of shipped-application safety, and it is part of PDLF itself:
+pre-built into specific steps, at the specific moments where security
+weight sits.
 
-That situation creates one specific, well-documented failure mode, and it has a name: an AI agent can produce code that looks completely correct, passes a casual read, and is subtly, dangerously wrong. Not because the agent is careless — because a security flaw rarely announces itself. It looks like ordinary, working code, missing the one check nobody happened to write. A server function that returns exactly the right data in every test, and also, quietly, someone else's. A payment amount trusted from the client instead of computed on the server. A pattern the project's own architecture explicitly and permanently forbids, written anyway, because it happens to be the far more common pattern in the rest of the world's training data.
+## The Original Concept Source
 
-This is not a new or speculative concern. It is named directly, with a citation, inside this project's own compliance research: an AI agent can fabricate or assert compliance without it being true, and can perform a harmful action that never surfaces in a way anyone would notice until much later. Sentinel exists specifically to close this one gap — not general code quality, not testing, not performance. Security, checked at the exact moments it actually matters, using real, written standards instead of a general sense of caution.
+Sentinel's reasoning methodology is borrowed, not invented — from the
+`secure-software-engineering` skill at
+`github.com/magnus919/agent-skills/tree/main/secure-software-engineering`
+(MIT; a five-phase, prevention-oriented workflow with eleven reference
+files — threat modeling, authentication and authorization, input
+validation, secrets lifecycle, dependency supply chain, logging and audit,
+multi-tenant isolation, secure code review, release evidence, incident
+learning, AI/LLM security — plus templates and evals). This is the original
+concept source: the collection was researched when Sentinel was conceived,
+and its workflow is the reasoning process Sentinel's review step applies.
+The skill was installed into this environment on 2026-09-09, after passing
+the standing supply-chain review (publisher, licence, maintenance, no
+spawn capability).
+
+The design genesis — the original research conversation where the concept
+was formed, the alternatives surveyed, and the architecture sketched — is
+preserved in this folder as `sentinel-security-system.md`.
+
+Two honesty notes about the borrow: first, the multi-tenant isolation
+reference in the collection **does not apply to this platform** — the
+governing ADR (`adr-dependency-based-not-multi-tenant.md`, Sealed)
+establishes that cross-client isolation is structural, and the review
+vocabulary is within-instance. Second, the skill is a *methodology*, not a
+ready-made enforcement mechanism — nothing in it blocks a vulnerable
+function from shipping. Its value is that it makes the reviewing agent
+better-informed at the moment of judgment.
 
 ## What Sentinel Actually Is — the Four-Layer Chain
 
-Sentinel is not a standalone security agent, and it does not run continuously. It is an orchestration layer, sitting on top of four distinct components, each with one job and no overlap with the others:
+Sentinel is not a standalone security agent, and it does not run
+continuously. It is an orchestration layer, sitting on top of four distinct
+components, each with one job and no overlap with the others:
 
-**The security standards library is the authority.** A real, written body of documents — currently 54 of them, organized into seven categories — describing, in concrete and checkable terms, what "secure" actually means for this specific project: which patterns are approved, which are prohibited, and why.
+**The security standards library is the authority.** A real, written body
+of documents — 54 of them, organized into seven categories — describing, in
+concrete and checkable terms, what "secure" actually means for this
+specific project: which patterns are approved, which are prohibited, and
+why.
 
-**GBrain is retrieval only, never authority.** This is the same rule already governing every other part of this system's memory: GBrain helps locate where relevant knowledge lives, but the real answer always comes from reading the real, current document — never from what GBrain remembers about it. Sentinel never reasons from a GBrain summary of a security rule; it opens and reads the actual file.
+**GBrain is retrieval only, never authority.** The same rule governing
+every other part of this system's memory: GBrain helps locate where
+relevant knowledge lives, but the real answer always comes from reading the
+real, current document. Sentinel never reasons from a GBrain summary of a
+security rule; it opens and reads the actual file.
 
-**Sentinel itself is the reasoning layer.** It decides *when* a security question needs asking — based on which PDLF step just occurred — and applies the library's real, specific standards to the real, specific thing being built. Sentinel does not invent security judgment from scratch; it borrows an existing, purpose-built reasoning methodology — the `secure-software-engineering` skill, from the `magnus919/agent-skills` repository — as its actual thinking process, the same way a specific tool is picked up for a specific job rather than reinvented each time.
+**Sentinel itself is the reasoning layer.** It decides *when* a security
+question needs asking — based on which PDLF step just occurred — and
+applies the library's real, specific standards to the real, specific thing
+being built, using the borrowed methodology as its thinking process.
 
-**PDLF owns enforcement.** Sentinel never fixes anything. Every real finding becomes a row in PDLF's own, already-existing findings table — the same table and the same review discipline already used for every other kind of finding this project produces. Sentinel adds a new *kind* of entry to a mechanism that already existed; it does not build a second, competing system alongside it.
+**PDLF owns enforcement.** Sentinel never fixes anything. Every real
+finding becomes a row in PDLF's own, already-existing findings table — the
+same table and the same review discipline already used for every other
+kind of finding this project produces.
 
 ## What Sentinel Deliberately Does Not Duplicate
 
-Before any of Sentinel's own components were built, a real, deliberate check was made for security capability that already existed elsewhere in this environment — and a genuine amount of it did.
+Before any of Sentinel's own components were built, a real, deliberate
+check was made for security capability that already existed — and a genuine
+amount of it did.
 
-A whole-codebase security audit tool — GStack's `/cso` (Chief Security Officer Audit) — already exists, with two real, distinct modes: a daily mode, deliberately tuned to near-zero noise so it only reports what it's genuinely confident about, and a monthly comprehensive mode that casts a much wider net and reports weaker signals honestly labeled as tentative. It covers real, broad territory — secrets scattered through git history, the full dependency supply chain, CI/CD pipeline risk, AI-specific risks like prompt injection and unbounded LLM calls, and standard frameworks like the OWASP Top 10 and STRIDE threat modeling. This tool and Sentinel are not one calling the other — they operate on entirely different rhythms. The audit tool sweeps the whole codebase periodically. Sentinel checks one specific, narrow thing, at one specific moment, triggered by one specific PDLF step. Neither replaces the other.
+GStack's `/cso` already exists, with two real, distinct modes: a daily
+mode, deliberately tuned to near-zero noise, and a monthly comprehensive
+mode that casts a much wider net. It covers broad territory — secrets in
+git history, the dependency supply chain, CI/CD risk, AI-specific risks,
+OWASP and STRIDE. Sentinel and `/cso` are not one calling the other — they
+operate on entirely different rhythms: the audit sweeps the whole codebase
+periodically; Sentinel checks one specific, narrow thing, at one specific
+moment, triggered by one specific PDLF step.
 
-A dedicated security specialist — living inside GStack's `/review`, which is what PDLF's own Step 37 code-review already invokes — sits confirmed, on inspection, to be real but under-used: invoked in principle, rarely exercised in practice. Sentinel's own arrival doesn't replace this either; if anything, it's a second, independent example of the same underlying gap Sentinel exists to close — real security capability that already existed, sitting mostly idle because nothing forced it to actually run.
+GStack's `/review` contains a security specialist that PDLF's own Step 37
+code-review invokes — confirmed real but under-used. Sentinel doesn't
+replace this either; it is a second, independent example of the same gap:
+real security capability that already existed, sitting mostly idle because
+nothing forced it to run.
 
-This distinction matters for the same reason it mattered when this whole compliance effort first began, hours earlier the same night: building something new without first checking what already existed would have meant duplicating real, working capability for no benefit — the opposite of the minimum-necessary-complexity standard this entire project holds itself to.
+And a third neighbor must not be conflated: Cupcake — the mechanical
+policy-enforcement layer — "keeps honest agents honest": the same forbidden
+action blocked identically, every single time, with no reasoning involved.
+Sentinel is for the opposite kind of question — the one that cannot be
+reduced to a fixed pattern and genuinely requires reading a real document
+and reasoning about a real, specific feature. Neither replaces the other,
+and neither was designed to.
 
-## The Security Library Itself — Read the Real Architecture First
+## The Library Itself — Found, Not Invented
 
-Here is the part of Sentinel's own story that most explainers of a tool like this would skip, and it matters more than anything else in how it actually works: Sentinel did not invent the project's security knowledge. It found most of it already sitting there, correctly written, already approved, inside the project's own existing specifications and architectural decisions — the real Vault system design, the real RBAC role table, the real five-app data-isolation model, the real payment-gateway ADRs. Confirmed directly, document by document, before a single new file was written: eight of the fourteen original library categories were already fully covered by material that already existed. Building a second, duplicate copy of any of it would have been exactly the kind of unnecessary complexity this whole system was built to avoid.
+Sentinel did not invent the project's security knowledge. It found most of
+it already sitting there, correctly written, inside the project's own
+existing specifications and architectural decisions — the real Vault system
+design, the real RBAC role table, the real five-app data-isolation model,
+the real payment-gateway ADRs. Confirmed document by document before a
+single new file was written: eight of the fourteen original library
+categories were already fully covered. Only six categories were genuinely
+empty — principles, requirements, threat-models, infrastructure, cloud, and
+testing — and only those six received new, purpose-written content: 54
+documents, every one grounded in a real fact already established in this
+project's own history.
 
-Only six categories were genuinely empty — principles, requirements, threat-models, infrastructure, cloud, and testing — and only those six received new, purpose-written content: 54 documents in total, every one of them grounded in a real fact already established somewhere else in this project's own history, not invented from a generic security checklist. A threat model describing broken access control inside a single client instance, for example, exists specifically because it needed to be distinguished from a different, already-solved problem — cross-client isolation, which this project's own five-app architecture already guarantees structurally and which this document takes care to say explicitly, so the two are never confused.
+## The Step-Intensity Table — Where and How Hard
 
-## The Step-Intensity Table — Where and How Hard Sentinel Actually Looks
+Sentinel does not review everything, everywhere, at maximum intensity —
+that would produce so much noise that nothing real would ever stand out
+against it. Instead, it works from a real, specific table pairing individual
+PDLF steps against a defined level of scrutiny and a defined question:
+domain modeling gets a light check; creating a data table gets high
+scrutiny; locking the architecture gets the highest in the whole table;
+building real code, and reviewing that code afterward, both get sustained,
+serious attention; QA asks whether the requirements can be demonstrated; a
+step not on the table at all gets no review — a deliberate, stated choice.
 
-Sentinel does not review everything, everywhere, at maximum intensity. Doing so would produce so much noise that nothing real would ever stand out against it. Instead, it works from a real, specific table pairing individual PDLF steps against a defined level of scrutiny and a defined question:
+## The Three Real Outcomes — Why "I Don't Know" Is a Required Answer
 
-Domain modeling gets a light check — is anything sensitive or security-relevant even being named. Creating a data table gets a high level of scrutiny — what data actually exists here, and who is genuinely allowed to touch it. Locking the architecture gets the highest level of scrutiny in the whole table — where, precisely, do trust boundaries actually sit. Building real code, and reviewing that code afterward, both get sustained, serious attention — does this implementation introduce a real vulnerability, and separately, can whatever controls were implemented actually be bypassed. A step not on this table at all gets no review, immediately, with no further action — a deliberate, stated choice, not an oversight.
+Sentinel reaches exactly one of three outcomes for any review it actually
+performs: **Clear** (no real concern found), **Flag** (a real, describable
+concern exists), or **Escalate** (there genuinely was not enough evidence
+or confidence to decide either way).
 
-## The Three Real Outcomes — Why "I Don't Know" Is a Required Answer, Not a Failure
+That third outcome is not a weakness in the design — it is the design. A
+system built to only ever answer "clear" or "flag" will, sooner or later,
+be forced into guessing when it genuinely does not know, and a confident
+wrong guess is a strictly worse outcome than an honest admission of
+uncertainty.
 
-Sentinel reaches exactly one of three outcomes for any review it actually performs: **Clear**, meaning no real concern was found; **Flag**, meaning a real, describable concern exists; or **Escalate**, meaning there genuinely was not enough evidence or confidence to decide either way.
+## The Flag Is a Snake in the Grass — the Three Kinds, and What Each Requires
 
-That third outcome is not a weakness in the design — it is the design. A system built to only ever answer "clear" or "flag" will, sooner or later, be forced into guessing when it genuinely does not know, and a confident wrong guess is a strictly worse outcome than an honest admission of uncertainty. This is the same principle already governing every other part of this project's compliance work: verify, or say plainly that verification wasn't possible — never assert something as fact because asserting it felt more useful than admitting doubt.
+Every flag is triaged into exactly one of three kinds, and the triage is
+where the system's own quality is tested:
+
+- **Legitimate, minimal consequence** — something real happened and does
+  not warrant work: thank the flag, set it aside, move on.
+- **Illegitimate** — raised with no real problem: **this is a defect in the
+  detection itself**, and the detection logic (the rule, the mapping, the
+  threshold) must be corrected through the rule pipeline — not just this
+  flag dismissed.
+- **Legitimate, requires attention** — the normal case: decide, and PDLF's
+  ordinary cycle implements.
+
+The same doctrine governs alarms generally: over-warning is preferred to
+silence; an alarm with a real event of minimal consequence is legitimate;
+an alarm raised with no cause is a fault in the raising system that must be
+corrected. The distinction matters because misclassified flags corrupt the
+system's trustworthiness — the snake in the grass is the misclassification,
+not the flag.
 
 ## How a Real Review Actually Happens, Start to Finish
 
-When a listed step occurs, Sentinel identifies exactly which real document in the library applies — not a category, a specific file, matched to the specific step and the specific feature involved. It reads that document in full, every single time, never reasoning from a filename or a remembered summary. It then compares the real, specific thing being built against that document's own approved and prohibited patterns, using the borrowed security-reasoning methodology described earlier, and reaches one of the three real outcomes.
+When a listed step occurs, Sentinel identifies exactly which real document
+in the library applies — not a category, a specific file, matched to the
+specific step and the specific feature involved. It reads that document in
+full, every single time. It then compares the real, specific thing being
+built against that document's own approved and prohibited patterns, using
+the borrowed methodology, and reaches one of the three real outcomes.
 
-A **Clear** result writes its own row into PDLF's findings table, resolved immediately, since there is nothing left for a human to review — a real, deliberate correction to an earlier version of Sentinel, described below. A **Flag** or an **Escalate** also writes a real row, using the exact same structured fields as every other kind of finding this project already tracks: what the concern actually is, what asset is at risk, who or what could exploit it, what evidence supports the finding, how severe it is, how confident Sentinel actually is, and what it recommends. Then it stops. Sentinel does not, under any circumstance, implement its own recommendation. The finding sits, exactly as PDLF's own existing findings already do, waiting for a real, explicit human decision before anything happens to it — and if that decision is to fix it, the fix itself goes through PDLF's own ordinary build-review-test cycle, the same path any other real change takes.
+A **Clear** result writes its own row into the findings table, resolved
+immediately — a real, deliberate correction to an earlier version of
+Sentinel. A **Flag** or an **Escalate** also writes a real row, using the
+exact same structured fields as every other kind of finding this project
+tracks: what the concern actually is, what asset is at risk, who or what
+could exploit it, what evidence supports the finding, how severe it is, how
+confident Sentinel actually is, and what it recommends. Then it stops. It
+does not, under any circumstance, implement its own recommendation.
 
 ## Two Real Mistakes, Found and Fixed After Sentinel Was Already Built
 
-Sentinel's first working version had two real, structural gaps, and both are worth telling honestly, not smoothing over, because the way they were found and closed says as much about this project's own discipline as Sentinel's design does.
+**The first gap: a Clear result left no trace of itself anywhere.** Once a
+conversation ended, there was no way to later prove a review had actually
+happened and found nothing. The fix was small and precise: the findings
+table gained one new allowed value specifically for this case, and
+Sentinel was rewritten so a Clear outcome now writes a real,
+immediately-resolved row — closing the exact gap that prompted the
+question.
 
-**The first gap: a Clear result left no trace of itself anywhere.** Once a conversation ended, there was no way to later prove a review had actually happened and found nothing — only a transcript that might no longer even exist. This was found by directly asking the plain question "is anything still missing here," rather than assuming a finished-looking system was actually finished. The fix was small and precise: the findings table gained one new allowed value specifically for this case, and Sentinel itself was rewritten so a Clear outcome now writes a real, immediately-resolved row, the same as any other outcome — closing the exact gap that prompted the question.
+**The second gap: nothing verified Sentinel had actually been invoked at
+all.** The instruction to run it lived entirely inside a step's own written
+procedure — real, but only ever a request, never a guarantee. The fix
+mirrors a pattern already proven elsewhere in this pipeline: the step
+itself now cannot proceed to its own approval gate without first confirming
+a real, verifiable row exists proving Sentinel genuinely ran. No row, no
+gate — the step stops and asks a human.
 
-**The second gap: nothing verified Sentinel had actually been invoked at all.** The instruction to run it lived entirely inside a step's own written procedure — real, but only ever a request, never a guarantee, exactly the same category of risk this project's whole compliance-architecture effort exists to eliminate everywhere else. The fix mirrors a pattern already proven elsewhere in this pipeline: the step itself now cannot proceed to its own approval gate without first confirming a real, verifiable row exists proving Sentinel genuinely ran. No row, no gate — the step stops and asks a human, rather than trusting that a written instruction was actually followed.
-
-Both fixes were applied consistently everywhere they needed to be — the skill itself, the one real step file currently using it, that step's own diagram, and its own build history — and both were verified live, against the real, running database, before being treated as closed.
+Both fixes were applied consistently everywhere they needed to be — the
+skill itself, the one real step file currently using it, and its build
+history — and both were verified live, against the real, running database,
+before being treated as closed.
 
 ## When Sentinel Actually Runs
 
-Sentinel is not something run manually, the way a document-maintenance tool might be. It is meant to be triggered automatically, from inside a PDLF step's own procedure, at the exact points already identified as carrying real security weight. As more of PDLF's own 46 steps get built, more of Sentinel's own checkpoints become real and usable — a step that doesn't exist yet has nothing for Sentinel to attach to, and its place in the table stays exactly what it is: a real, confirmed intention, not yet exercised.
+Sentinel is meant to be triggered automatically, from inside a PDLF step's
+own procedure, at the exact points already identified as carrying real
+security weight. As more of PDLF's own 46 steps get built, more of
+Sentinel's own checkpoints become real and usable — a step that doesn't
+exist yet has nothing for Sentinel to attach to, and its place in the table
+stays exactly what it is: a real, confirmed intention, not yet exercised.
+
+## The Architectural Boundary Sentinel Reviews Within — Read This First
+
+Cross-client data isolation in this platform is **structural**: each client
+is a separate Anvil application with its own database, and `app_tables`
+resolves to the calling client's own tables — confirmed by live test,
+sealed by ADR. This changes what the review looks for in two directions.
+
+First, multi-tenancy patterns are not idioms that need review — they are
+**security findings that would replace structural isolation with a
+failure-prone filter**. An agent defaulting to a tenant discriminator or a
+tenant-filtered query has produced incorrect, less-secure code, and
+Sentinel's review catches it against the project's own sealed ADR.
+
+Second, the genuine threats live *within* an instance: user-role access
+control, the Vault, input validation, server-side-only data access. The
+security library's within-instance threat models exist precisely because
+the platform's architecture already solved the cross-client problem
+structurally — and the review concentrates on what the architecture cannot
+solve: the quality of the code inside one client instance.
 
 ## A Related but Genuinely Different Mechanism
 
-A second, separate system in this environment, built on a real, independent policy-enforcement tool, exists to turn a written rule into a mechanical, always-on check — the same forbidden action blocked identically, every single time, with no reasoning involved at all. It is easy to mistake for Sentinel, and worth being precise about why it isn't the same thing.
+A second, separate system in this environment — built on an independent
+policy-enforcement tool — turns written rules into mechanical, always-on
+checks: the same forbidden action blocked identically every single time,
+with no reasoning involved at all. It is easy to mistake for Sentinel, and
+the precision matters: **that mechanism keeps honest agents honest** — it
+handles the actions that are always wrong with no exceptions and no
+judgment required. Sentinel is for the opposite kind of question — the one
+that cannot be reduced to a fixed pattern and genuinely requires reading a
+real document and reasoning about a real, specific feature before an
+honest answer is possible. Neither replaces the other, and neither was
+designed to.
 
-That mechanism is for the things that are always wrong, with no exceptions and no judgment required — a specific forbidden command, a specific forbidden pattern. Sentinel is for the opposite kind of question — the one that cannot be reduced to a fixed pattern, and genuinely requires reading a real document and reasoning about a real, specific feature before an honest answer is possible. Neither replaces the other, and neither was designed to.
+## Where Sentinel's Own Parts Live in the Layered Environment
+
+The environment has four named layers — the pre-makePDLF layer, the
+makePDLF layer, the PDLF layer, and the shipped estate (full map:
+`mybizz-os-docs/environment-explainer.md`). Sentinel spans three of them,
+and the span is deliberate:
+
+- **Pre-makePDLF (now):** the skill, the security-global library, the
+  findings database, and the installed methodology — all built, verified,
+  and usable.
+- **makePDLF:** the step-intensity wiring — built into each
+  Sentinel-covered step file as it is developed (Step 16 done as the
+  pattern; Steps 17–46 pending as built).
+- **PDLF:** the reviews fire during real step executions — testable
+  against a real feature from PDLF's first run.
+- **Shipped estate:** out of Sentinel's scope. No runtime safeguards are
+  built into the applications; that is a different scope of work, deferred
+  until the PDLF steps that scope shipping are developed. The boundary is
+  named here so it is never silently crossed.
+
+## Known Limitations, Honestly Stated
+
+**Sentinel has never been run live against a real feature.** Built,
+installed, wired into Step 16, with its database path verified live
+2026-09-09 — but the first real PDLF-run feature is the test that matters.
+
+**The reasoning is self-review by the writing agent.** The mitigations
+(the checkable patterns, the evidence-required rows, the independent
+tools) reduce the risk; the developer's triage of every flag into its
+three kinds is the standing control.
+
+**Eleven of twelve scoped steps have nothing to retrofit into** — their
+intensity numbers remain provisional until each real step file exists.
+
+**The findings table lives on the Windows-side ledger, reachable only
+through the documented PowerShell bridge** — a direct WSL database call
+silently reaches the wrong server. The bridge is the only route, always.
+
+---
+
+*Companion documents: `sentinel-config.md` (current state),
+`sentinel-reference.md` (procedures and worked examples),
+`sentinel-scope.md` (the agreed scope), `sentinel-security-system.md`
+(the design genesis). The reasoning methodology:
+`github.com/magnus919/agent-skills/tree/main/secure-software-engineering`.
+The full environment map: `mybizz-os-docs/environment-explainer.md`.*
+
+*End of document*
