@@ -1,0 +1,19 @@
+---
+project: mybizz-config-docs
+status: active
+verified: 2026-09-09
+---
+
+local_path: /mnt/c/mybizz/mybizz-config-docs
+github_remote: https://github.com/sassycomapp/mybizz-config-docs (private)
+type: document repo — canonical tool/component documentation suites
+in_scope: yes (scope scaffold, 2026-09-09)
+
+note: >
+  canonical config/reference/explainer suites for system components, one
+  folder per component; hosts projects-config-register.md (the register
+  of every project's {slug}-config.yaml); walked in scope by mb-docs-manager
+
+folders_note: >
+  one folder per component suite (archify, cupcake, gbrain, gstack, opencode,
+  postgresql, mb-* family, ...); register + README at root
