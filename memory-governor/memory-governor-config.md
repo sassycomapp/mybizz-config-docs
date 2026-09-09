@@ -1,9 +1,9 @@
 # Memory Governor Configuration
 
-Canonical current-state configuration record. Agent-facing. Reflects the working
-state of Memory Governor as of the close of its own build sequence, 2026-08-25.
-This document states facts, not history — where a decision was made and the
-reasoning matters, see `memory-governor-explainer.md`.
+Canonical current-state configuration record. Agent-facing. Reflects the
+verified live state as of 2026-09-08 (system ACTIVE, all listed defects
+resolved). States facts, not history — reasoning in
+`memory-governor-explainer.md`; procedures in `memory-governor-reference.md`.
 
 ---
 
@@ -11,21 +11,46 @@ reasoning matters, see `memory-governor-explainer.md`.
 
 | Item | Value |
 |---|---|
-| Repository | `github.com/sassycomapp/memory-governor` |
-| Application | FastAPI (Python), `app/main.py` |
-| Decision engine version | Two-outcome model (Architecture §2.2) — live since Phase 6.5, commit `c4df67d` |
-| Full test suite (final confirmed count) | 296 passed |
-| Build status | Phases 0–15 fully closed. Phase 16 (Cutover) closed for the two writers that can be governed; Steps 16.2/16.3 explicitly parked pending PDLF go-live. No remaining application code to write in this repository. |
+| Repository | `github.com/sassycomapp/memory-governor` (local clone `/home/dev-p/memory-governor`, WSL-native — do not relocate) |
+| Application | FastAPI (Python), `app/main.py`, version `0.1.0` (pyproject) |
+| Decision engine | Two-outcome model (`auto_promote` / `needs_review`) — live since Phase 6.5, commit `c4df67d` |
+| HIGH_RISK_TYPES | **RESOLVED 2026-09-08** (developer decision): `policy`, `credential`, `identity`, `architecture`, `security` — all five spec categories are now representable (`MemoryType` enum extended) and governed |
+| Test suite | **304 passed, 0 failed** (2026-09-08, post-resolution run; build record was 296) |
+| Operational status | **ACTIVE** — API + worker both running since 2026-09-08 (started on demand; permanent auto-start approved, pending developer execution — see Pending developer execution) |
+
+## Processes (two, by design)
+
+| Process | Command | State 2026-09-08 |
+|---|---|---|
+| API | `.venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8321` (from the app folder, with `.env` sourced) | Running (detached, log-verified; auth-gates unauthenticated calls — HTTP 422 observed live) |
+| Worker | `.venv/bin/python -m app.worker` (persistent LISTEN loop; NOTIFY wake + 60s poll safety net) | Running — **first persistent run in the system's history** (an entry-point defect prevented this before 2026-09-08; fixed same day) |
+
+Both must run for the system to function: the API decides, the worker
+delivers (GBrain writes + register/payload writes). Start procedure in
+`memory-governor-reference.md`. Permanent auto-start: two systemd user
+units (`memory-governor-api`, `memory-governor-worker`) — command sequence
+provided, pending developer execution.
 
 ## Database
 
 | Item | Value |
 |---|---|
-| Engine | PostgreSQL — same instance as GBrain's database |
-| Database name | Dedicated, distinct from `gbrain` |
+| Engine | PostgreSQL — same WSL instance as GBrain's database (verified up 2026-09-08) |
+| Database name | `memory_governor` — distinct from `gbrain` |
 | Role | `memory_governor_svc` — scoped; cannot connect to the `gbrain` database |
-| Tables | `projects`, `memory_candidates`, `policy_versions`, `memory_events` |
+| Tables | `projects`, `memory_candidates`, `policy_versions`, `memory_events`, `audit_log` (migrations 001–003) |
+| `memory_type` column | Plain TEXT — no enum constraint (this is why the MemoryType enum extension needed **no migration**) |
 | Concurrency mechanism | Transactional outbox (`memory_events`) + Postgres `LISTEN`/`NOTIFY`, one dedicated worker process. No external message broker. |
+
+## Resolution record — 2026-09-08 (all verified by the full test suite)
+
+| Defect resolved | Fix |
+|---|---|
+| HIGH_RISK_TYPES spec inconsistency (only `policy` was representable; four spec categories were unimplementable) | `MemoryType` enum extended with `credential`, `identity`, `architecture`, `security`; `HIGH_RISK_TYPES` now covers all five spec categories; tests added — the architectural intent is now truly implemented |
+| Project-isolation defect (every governed memory was written **world-visible** regardless of declared scope — caught by the system's own Step 12.2 isolation test) | Visibility mapping: `shared_all` → world; `project_local` / `shared_specific` → private. Project-local memories are no longer world-readable |
+| Facts carried no project identity (project-scoped recall impossible) | Every governed fact is now stamped with `entity = owning_project` — entity-scoped recall is the project-scoped read |
+| Worker had no production entry point (the documented "dedicated worker process" was unstartable outside tests) | `python -m app.worker` entry point added; worker running |
+| Two world-visible test-marker facts polluting the live brain (today's + 2026-08-25's runs) | Both expired via `forget` with full audit-trail reasons; the test now expires its own facts in its cleanup |
 
 ## Real writers (confirmed)
 
@@ -33,92 +58,105 @@ reasoning matters, see `memory-governor-explainer.md`.
 |---|---|---|
 | Manual submission, via `mb-submit-memory` | Yes | Distinct, per-writer credential |
 | PDLF step-completion | Yes | `pdlf_step_sync` — distinct from the other two |
-| GBrain dream cycle | **No — structurally impossible.** See Known Scope Limitations below. | N/A for governor API purposes |
+| GBrain dream cycle | **No — structurally impossible** (permanent; governed by the documented manual discipline: run `dream` for real, then `gbrain eval suspected-contradictions`, review) | N/A |
 
 ## Permanent exception — sources that bypass the governor entirely
 
 **`anvil-agent-references`, and any future update to it, is synced into
 GBrain the ordinary way (`gbrain sync`), never submitted through the
-governor's API.** This is official, direct-from-Anvil reference
-material — a dictionary does not need to be fact-checked against
-itself; there is no genuine confidence or contradiction question to
-ask about it. This is a permanent, standing rule for this source, not
-a one-time exception for its initial install. Ordinary syncing keeping
-this source current remains the developer's own responsibility.
+governor's API.** Official, direct-from-Anvil reference material — a
+dictionary does not need to be fact-checked against itself. Permanent,
+standing rule. Ordinary syncing of this source remains the developer's
+own responsibility.
 
-## API surface (real endpoints)
+## API surface (verified from source, 12 routes)
 
 | Method & Path | Purpose |
 |---|---|
 | `POST /memory/candidate` | Submit a candidate — inline content or a `provenance.source_ref` path |
 | `GET /memory/{memory_id}` | Fetch a candidate |
 | `GET /memory` | List candidates, filterable by project/status/type |
-| `GET /memory/review-queue` | All candidates currently `under_review` |
+| `GET /memory/review-queue` | All candidates currently `under_review`, each with its ReviewPresentation |
 | `POST /memory/{memory_id}/review` | Record a human decision: promote / quarantine / reject |
 | `POST /memory/{memory_id}/supersede` | Supersede with a new record; atomically sets `valid_until` on the old one |
 | `GET /memory/{memory_id}/provenance` | Full audit/decision history |
 | `POST /memory/quarantine` | Manual quarantine of an existing candidate |
-| `POST /memory/projects` | Register a new PDLF project |
+| `POST /memory/projects` | Register a new project |
 | `PATCH /memory/projects/{project_id}` | Toggle a project's `dormant` flag |
-| `POST /memory/policy` | Propose a new policy version — always routes through the standard `high_risk_types` pipeline |
+| `POST /memory/policy` | Propose a new policy version — routes through the standard high-risk pipeline |
 
-Contract format: OpenAPI 3.1, generated live from the running application at `/openapi.json` — never a hand-maintained spec file.
+A global guard rejects NUL bytes in any path or query parameter, on every
+route. Contract format: OpenAPI 3.1, generated live at `/openapi.json`.
 
-## Decision engine — real, current logic
+## Decision engine — real, current logic (source-verified)
 
-`decide_path()` returns exactly one of two automatic outcomes: `auto_promote` or `needs_review`. It never returns `reject` or `quarantine` as its own decision — confirmed both by source inspection and by live behavior across every trigger condition, and by permanent regression tests that assert no case returns either automatically.
+`decide_path()` evaluates, in order, and returns `auto_promote` only if
+nothing triggers:
 
-**High-risk types** (force `needs_review` unconditionally): `policy`, `credential`, `identity`, `architecture`, `security`. A `shared_with` change adding or removing a project is also automatically high-risk.
+| Order | Trigger | Classification | Recommended action |
+|---|---|---|---|
+| 1 | Provenance check fails (writer identity not server-verified) | `provenance_failure` | reject |
+| 2 | Scope invalid (`visibility`/`shared_with` inconsistent) | `scope_invalid` | quarantine |
+| 3 | Unresolved contradiction (cross-project, or no resolution, or `manual_review`) | `unresolved_contradiction` | none — never auto-decided |
+| 4 | Memory type in the five high-risk categories | `high_risk_type` | none |
+| 5 | Confidence below the review threshold (default 0.65) | `low_confidence` | none |
+| 6 | Medium risk (any sharing, or confidence < 0.5) with confidence below the auto-promote threshold (default 0.85) | `medium_risk_moderate_confidence` | none |
+| — | Nothing triggered | — | `auto_promote` |
 
-**Contradiction handling** applies to every memory type, with no exceptions. A cross-project contradiction always forces `needs_review`, regardless of confidence score.
+Thresholds are read live from the active `policy_versions` row (bootstrap
+defaults 0.65 / 0.85) — policy changes are data changes, not code changes.
+Contradiction checking runs for every candidate, every type, no exceptions.
+Risk levels: `high` = high-risk type; `medium` = any non-`project_local`
+visibility or confidence < 0.5; else `low`.
+
+## State machine (source-verified; code authoritative)
+
+`proposed → {under_review, promoted, quarantined, rejected, superseded}` ·
+`under_review → {promoted, quarantined, rejected, superseded}` ·
+`promoted → {superseded, expired, quarantined}` ·
+`quarantined → {promoted, rejected, expired}` ·
+`rejected` terminal · `superseded → {expired}` · `expired` terminal.
+Every write path goes through transition validation — creation included.
 
 ## GBrain integration
 
 | Item | Value |
 |---|---|
-| Write mechanism | `remember` (MEMORY_VERBS), not `gbrain sync` — confirmed deliberate; sync would ingest raw content regardless of governor approval |
-| Write timing | Asynchronous, via the `gbrain_write` outbox event — confirmed ~0.15s in practice, not a meaningful delay |
-| `MEMORY_VERBS` MCP surface | Enabled (`mcp_surface: verbs`) — a real, resolved prerequisite (Step 0.2) |
+| Write mechanism | `remember` (MEMORY_VERBS) — never `gbrain sync`; each fact stamped `entity = owning_project` |
+| Visibility mapping | `shared_all` → world; `project_local` / `shared_specific` → private |
+| Write timing | Asynchronous, via the `gbrain_write` outbox event — ~0.15s in practice |
+| Source switching | `gbrain sources default <owning_project>` before every write — fails loudly on an unknown source (the coupling defect guard) |
+| MEMORY_VERBS surface | Enabled (`mcp_surface: verbs`, verified 2026-09-08) |
 
 ## Backup / disaster recovery
 
 | Item | Value |
 |---|---|
-| Register location | Inside this repository, `registers/` — not a separate external location |
-| Register files | `register-memory-governor.md` (candidate index), `register-memory-governor-policy.md` (policy version index) |
-| Payload files | `registers/candidates/<memory_id>.json` — full candidate, every field |
-| Write mechanism | Asynchronous, via the same outbox/worker as GBrain writes; retries with backoff, surfaces failure after 5 consecutive attempts rather than retrying forever |
-| Recovery proven | Twice — an isolated drill (Phase 7.5) and a full-system drill including GBrain writes (Phase 15.2), both confirming exact reconstruction from the register/payload store alone |
+| Register location | Inside this repository, `registers/` — `register-memory-governor.md` (candidate index) + `registers/candidates/<memory_id>.json` (full payload per candidate) |
+| Write mechanism | Asynchronous outbox/worker; retries with backoff; surfaces failure after 5 consecutive attempts. The worker git-commits AND pushes register changes |
+| Register integrity | Index rows correspond to real payload files (verified 2026-09-08); real promoted candidates present, including a supersession pair |
+| Recovery proven | Twice — Phase 7.5 isolated drill and Phase 15.2 full-system drill |
 
-## Known scope limitations (accepted, not defects)
+## Known scope limitations (honest, structural)
 
-- **GBrain's dream cycle cannot be routed through the governor's API — a confirmed, permanent structural limit, not an oversight.** Exhaustive investigation found no interception point of any kind in GBrain's `dream` command. Governed instead by a manual, always-applied discipline: run `dream` for real, run `gbrain eval suspected-contradictions` immediately afterward (confirmed not automatic), review the findings. This is the one honestly-documented exception to "every writer routes through the same API."
-- **Phase 13, Step 13.4 (a real PDLF step running end-to-end through the governor) is explicitly parked, not completed** — requires real PDLF activity that cannot exist before PDLF's own go-live. A synthetic substitute was considered and deliberately rejected as less honest.
-- **Phase 16, Steps 16.2–16.3 (observation period and formal go-live confirmation for the dreaming discipline) are explicitly parked for the same reason** — require real, repeated dream cycles under ordinary PDLF use.
-- **A `GBrain-dreaming` credential may exist from early provisioning (Step 0.3) but is functionally unused** — since dreaming cannot call the governor's API at all, no credential for it is ever actually presented in a real request.
+- **GBrain's dream cycle cannot be routed through the governor's API** — confirmed permanent structural limit (no interception point in GBrain's `dream`; forking GBrain was considered and rejected). Governed by the documented manual discipline. This is the one honestly-documented exception to "every writer routes through the same API" — an architectural boundary of the third-party tool, reported as such per the standing no-discrepancies requirement.
+- **Phase 13.4 / 16.2 / 16.3 are explicitly parked** (a real PDLF step end-to-end; repeated real dream cycles under ordinary use) — they require real PDLF activity that cannot exist before PDLF's go-live. Deliberately parked working infrastructure, not incomplete builds. Reported separately, per the no-open-defects requirement, as scheduled-pending-external-dependency, not defects.
+- **A `GBrain-dreaming` credential may exist from early provisioning but is functionally unused** — dreaming never presents a credential.
 
 ## Do not
 
-- Do not assume GBrain dreaming's output passes through the governor's review queue — it never does, and never will under the current design; see Known Scope Limitations.
-- Do not treat `Phase 13.4`/`16.2`/`16.3` as failed or incomplete builds — they are deliberately parked, real, working infrastructure with nothing left to build, waiting only on real PDLF activity that doesn't yet exist.
-- Do not call `gbrain sync` to move governed content into GBrain — only `remember`, via the governor's own async write path, actually counts as governed.
-- Do not chain multiple shell commands together without verifying each one's real result before the next runs — see `memory-governor-reference.md`'s incident-response procedure for the real, confirmed cost of skipping this.
-- Do not assume a fixture defined in one test file (e.g. `api_client`, `real_credential_headers` in `test_api.py`) is available in another — confirmed, repeated real mistake; build the client and credential inline in any new test file outside `test_api.py`.
+- Do not assume GBrain dreaming's output passes through the governor's review queue — it never does under the current design.
+- Do not treat Phase 13.4/16.2/16.3 as failed builds — deliberately parked, real infrastructure.
+- Do not call `gbrain sync` to move governed content into GBrain — only `remember` via the governor's async path counts as governed.
+- Do not chain shell commands without verifying each result — the recorded real cost of this mistake is an accidental write into live memory.
+- Do not assume test fixtures are shared across test files — `api_client`/`real_credential_headers` exist only in `test_api.py`.
+- Do not hand-edit `registers/` or the database — the worker and API are the writers.
 
-## Local installation & infrastructure — verified 2026-09-05
+## Pending developer execution (commands provided in the run record; not defects)
 
-Confirmed directly against the live system, not from memory or prior docs — recorded
-here so this investigation never has to be repeated.
-
-| Item | Value |
-|---|---|
-| Local clone | `/home/dev-p/memory-governor` — **WSL-native**, deliberately NOT under `C:\dev\`. This is the only project source in this shape; do not relocate it and do not "correct" it to match the `C:\dev\dev-{project}\` convention used elsewhere. |
-| Git remote | Confirmed `origin` = `https://github.com/sassycomapp/memory-governor.git` — matches the Identity table above exactly. |
-| Local folder contents | Real, active dev environment: `.venv`, `.env`, `app/`, `docs/`, `migrations/`, `registers/`, `scripts/`, `tests/`, plus `.pytest_cache`/`.hypothesis`/`.schemathesis` test-tool caches. Not a stub or abandoned clone. |
-| Database, live-checked | `memory_governor` database confirmed present via `psql \l`, owned by `memory_governor_svc`. All 5 documented tables present (`projects`, `memory_candidates`, `policy_versions`, `memory_events`, `audit_log`). `memory_candidates` holds **5 real rows** as of this check — not an empty schema. |
-| Process status at check time | No `uvicorn`/`memory-governor` process running (`ps aux` clean). Not currently live, but see log evidence below that it has run successfully. |
-| `/tmp/memory-governor.log` | Shows a genuine successful run: clean Uvicorn startup on `127.0.0.1:8321`, followed by two real successful calls — `POST /memory/projects` → 201, `POST /memory/candidate` → 201. Confirms the governed-write path has actually executed end-to-end, not just been built. |
-| `mb-submit-memory` skill usage | Confirmed genuinely invoked, not just installed: real log entries at `/mnt/c/mybizz/logs/mb-submit-memory/` — `2026-08-27T060743+0200.md` and `learnings.md`, both real files with content. |
-| Canonical docs (this file + reference + explainer) | Now live at `C:\mybizz\mybizz-config-docs\memory-governor\` — part of the `mybizz-config-docs` GBrain source once that source is registered. The `Retired-memory-governor-agent/` subfolder alongside them (51 files: `Step 0` through `Step 16.1`, plus the three `memory-governor-agent-*` planning docs) is the genuinely retired step-by-step build log — historical record, correctly retired, not an open item. |
-
-**GBrain source decision: add one.** Recommended — `memory-governor-code` → `/home/dev-p/memory-governor` (WSL-native path). Rationale: this is a real, actively-built application (296 tests, weeks of work, live DB with real rows) with no GBrain source at all right now. Every comparably real project (`mb-3-cs`, `mb4ecom`, `mb5pdlf`) has a matching `-code` source alongside its docs source — this should follow the same pattern. Not yet actioned as of this writing; register when ready.
+1. Outbound-network rule + cross-folder rule formal eval tests + keep decisions (both amendments already live and one real-call-verified each).
+2. Credentialed registry/review-queue check (closes the governor-side `owning_project` verification).
+3. Commit + push of the governor repository's resolution changes.
+4. Permanent auto-start: WSL systemd migration + the two service units (the last step making the system fully restart-independent).
+5. gbrain sync of the documentation commits.
+```
