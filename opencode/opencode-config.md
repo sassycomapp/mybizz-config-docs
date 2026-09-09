@@ -1,11 +1,16 @@
 # OpenCode Configuration
 
-Canonical current-state configuration record. Agent-facing. Consolidates
-and supersedes `opencode-reference.md`, `opencode-permission-access-
-control-model.md`, and `opencode-project-session-data-integrity.md` —
-those three documents overlapped significantly and are retired in favor
-of this single record. See `opencode-explainer.md` for mechanics and
-real incidents.
+Canonical current-state configuration record. Agent-facing. Reflects the
+verified live state as of 2026-09-09. This document is part one of the
+five-part OpenCode suite; each file owns one scope:
+
+| File | Owns |
+|---|---|
+| `opencode-config.md` (this file) | Configuration state, environment position, active projects |
+| `opencode-reference.md` | Procedures: inspection, restart, verification, recovery |
+| `opencode-permission-access-control-model.md` | The permission layers and their verified behavior |
+| `opencode-project-session-data-integrity.md` | The session database and its maintenance |
+| `opencode-explainer.md` | Mechanics, real incidents, design reasoning |
 
 ---
 
@@ -13,17 +18,19 @@ real incidents.
 
 | Item | Value |
 |---|---|
+| Version | 1.15.12 (verified live 2026-09-09) |
+| Upstream | `github.com/anomalyco/opencode` |
 | Global config | `~/.config/opencode/opencode.jsonc` — the only global config file (consolidated from two, 2026-09-01) |
-| Config precedence | Per-project `opencode.json` overrides global `opencode.jsonc` for that project only. Stricter rule wins on conflict. |
-| Plugin discovery | `~/.config/opencode/plugin/` — must contain exactly one copy of any given plugin; a second discoverable path (even a symlink to the same file) causes double-loading |
-| WSL distro (real, active) | Non-default distro — any Windows-triggered command invoking `wsl.exe` must explicitly pass `-d <distro> -u dev-p` |
+| Config precedence | **Verified 2026-09-09 against the upstream documentation and empirically via `opencode debug config`**: configs are **merged, not replaced** — project config overrides global only for conflicting keys, non-conflicting settings from both are preserved, and nested permission maps merge deeply (see the permission model document for the verified test). Project config has the highest precedence among standard config files. |
+| Harness role | OpenCode is the harness spanning every environment layer (see `mybizz-os-docs/environment-explainer.md`) — the pre-makePDLF supporting systems run inside or beside it, the makePDLF layer builds the PDLF application in it, and the PDLF layer builds the shipped estate through it |
+| WSL distro (real, active) | `Ubuntu` — **not** the default (`Ubuntu-22.04`, stopped). Any Windows-triggered command invoking `wsl.exe` must explicitly pass `-d Ubuntu -u dev-p` |
 
-## Global config — real, current content (post-consolidation)
+## Global config — real, current content (verified key-by-key 2026-09-09)
 
 | Key | Value |
 |---|---|
 | `default_agent` | `plan` |
-| `instructions` | `C:/dev/project-library-global/register-global/register-global.md` (corrected 2026-09-01 — previously pointed at four deleted `INDEX.md` files) |
+| `instructions` | `C:/dev/project-library-global/register-global/register-global.md` (verified resolving; corrected 2026-09-01 — previously pointed at four deleted `INDEX.md` files) |
 | `permission.task` | `deny` — Layer 1 of the three-layer `task`-denial system, see `cupcake-config.md` |
 | `permission.edit` | `ask` by default; `**/anvil.yaml` explicitly `deny` |
 | `permission.webfetch` | `ask` |
@@ -32,22 +39,16 @@ real incidents.
 | `agent.plan.permission.edit` | `deny` — Plan agent cannot write, by design |
 | `mcp.gbrain` | Local MCP server, `gbrain serve`, real API keys passed via environment |
 
-## Active Project Standard
+## The global `AGENTS.md`
 
-| Status | Meaning | Config expectation |
-|---|---|---|
-| **Active** | Currently being built | Full, real `opencode.json` |
-| **Paused** | Real, deliberate prior work exists; correctly waiting on a known, real prerequisite before resuming | Real config retained — represents genuine prior work, not mistaken for the current active standard |
-| **Never started** | No real work has begun | Zero configuration — any config found here is presumed stale by default |
+`~/.config/opencode/AGENTS.md` (14.4 KB) — the global behavioral-rules file
+OpenCode loads for every session. Present and verified 2026-09-09.
 
-**Current real project status:**
+## Plugin state
 
-| Project | Status | Notes |
-|---|---|---|
-| `makepdlf-project-library` | Active | |
-| `mb-3-cs` / `mb-3-cs-project-library` | **Paused** | Real, deliberate — genuine prior setup exists (including a project-local Graphify MCP plugin), correctly waiting on PDLF's own completion before resuming |
-| `mb4ecom`, `mb5pdlf` | Never started | Zero configuration expected |
-| `project-template` | Template scaffold | Contains literal, unsubstituted `{SLUG}` placeholders by design — not a real project |
+| Plugin | State 2026-09-09 |
+|---|---|
+| `cupcake.js` | **Active** (reactivated 2026-09-08 from `.disabled`; exactly one discoverable copy; a non-discovered `.bak` alongside — see the permission model document for the dedup rule) |
 
 ## Skill discovery — real, confirmed methods (not uniform)
 
@@ -57,8 +58,26 @@ real incidents.
 | Anvil, Archify, most GStack skills | Symlink to a real folder elsewhere on the same drive |
 | GStack (top-level) | Hybrid — real folder containing further symlinks to individual skills |
 | Magdoub wireframe skill | Two-hop — empty intermediate folder pointing to real content in `~/.claude/skills/` |
+| `secure-software-engineering` | Plain, real folder (installed 2026-09-09 from `github.com/magnus919/agent-skills`) |
 
 Full, current skill inventory by owner: `skill-index.md`. Full GStack-specific detail: `gstack-config.md`.
+
+## Active Project Standard
+
+| Status | Meaning | Config expectation |
+|---|---|---|
+| **Active** | Currently being built | Full, real `opencode.json` |
+| **Paused** | Real, deliberate prior work exists; correctly waiting on a known, real prerequisite before resuming | Real config retained — represents genuine prior work, not mistaken for the current active standard |
+| **Never started** | No real work has begun; **scaffolding only** (e.g. `mb4ecom`, `mb5pdlf` — folders present, no plan, off OpenCode's radar) | Zero configuration — any config found here is presumed stale by default |
+
+**Current real project status:**
+
+| Project | Status | Notes |
+|---|---|---|
+| `makepdlf-project-library` | Active | |
+| `mb-3-cs` / `mb-3-cs-project-library` | **Paused** | Real, deliberate — genuine prior setup exists (including a project-local Graphify MCP entry and theme/template edit protections), correctly waiting on PDLF's own completion before resuming |
+| `mb4ecom`, `mb5pdlf` | **Scaffolding only — off OpenCode's radar** | Developer-confirmed 2026-09-09: the folders exist as scaffolding, but the projects do not exist and there is not even a plan for them. No config present (verified), and none should be created until the projects become real |
+| `project-template` | Template scaffold | Contains literal, unsubstituted `{SLUG}` placeholders by design — not a real project |
 
 ## Known scope limitations
 
@@ -80,3 +99,6 @@ Full, current skill inventory by owner: `skill-index.md`. Full GStack-specific d
   WSL distributions installed.
 - Do not treat a "Paused" project's existing configuration as stale —
   only "Never started" projects default to zero configuration.
+- Do not assume project config replaces global config — they merge;
+  conflicting keys go to the project, non-conflicting keys from both
+  survive (verified 2026-09-09).

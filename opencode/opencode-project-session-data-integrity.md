@@ -1,6 +1,6 @@
 ---
 document: OpenCode — Project & Session Data Integrity
-status: Current — describes the system as it stands
+status: Current — verified live 2026-09-09
 ---
 
 # OpenCode — Project & Session Data Integrity
@@ -37,12 +37,12 @@ in the tool itself, not a misconfiguration on this machine:
 
 ## Script 1 — `opencode-db-cleanup.sh` (manual, on demand)
 
-**Purpose:** removes `project` and `session` rows whose folder no
-longer exists on disk. **Deliberately not scheduled** — "stale" is
-judged by folder existence, which could produce a false positive if a
-drive is temporarily unmounted at the wrong moment. Always backs up the
-full database first, always shows exactly what it found, and requires a
-typed `YES` before deleting anything.
+**Purpose:** removes `project` and `session` rows whose folder no longer
+exists on disk. **Deliberately not scheduled** — "stale" is judged by
+folder existence, which could produce a false positive if a drive is
+temporarily unmounted at the wrong moment. Always backs up the full
+database first, always shows exactly what it found, and requires a typed
+`YES` before deleting anything.
 
 **Location:** `C:\mybizz\scripts\opencode-db-cleanup.sh`
 **Backups written to:** `C:\backup-wsl\opencode-db-cleanup\<timestamp>\`
@@ -55,29 +55,30 @@ See `daily-ops.md` for the exact run command.
 ## Script 2 — `opencode-session-prune.sh` (scheduled, daily)
 
 **Purpose:** deletes session history older than 60 days. Safe to run
-unattended — the criterion is purely a timestamp, no false-positive
-risk. Always backs up the full database first. Dynamically discovers
-which tables reference `session` via `PRAGMA foreign_key_list` (rather
-than hardcoding schema) and cleans dependent rows before deleting the
-session rows themselves, then runs `VACUUM` to actually reclaim disk
-space.
+unattended — the criterion is purely a timestamp, no false-positive risk.
+Always backs up the full database first. Dynamically discovers which
+tables reference `session` via `PRAGMA foreign_key_list` (rather than
+hardcoding schema) and cleans dependent rows before deleting the session
+rows themselves, then runs `VACUUM` to actually reclaim disk space.
 
 **Location:** `C:\mybizz\scripts\opencode-session-prune.sh`
 **Backups written to:** `C:\backup-wsl\opencode-session-prune\<timestamp>\`
 **Retention:** 60 days
 **Schedule:** Windows Task Scheduler task `OpenCodeSessionPrune`, daily
-at 17:05
+at 17:05 — **verified live 2026-09-09: the task exists, status Ready**.
 
 See `daily-ops.md` for the exact run/verification commands.
 
 ## Critical operational note — WSL distro selection
 
-This machine has **two WSL distros installed** (`Ubuntu-22.04` and
-`Ubuntu`). `dev-p`'s home directory and all working data live in
-`Ubuntu`, which is **not** the default distro. Any command invoked from
-Windows (Task Scheduler, PowerShell) that calls a bare `wsl.exe` will
-silently run against the wrong distro/user, producing confusing
-failures (wrong `$HOME`, or an outright `WSL_E_USER_NOT_FOUND` error).
+**Verified live 2026-09-09** (the distro list): this machine has **two
+WSL distributions installed** — `Ubuntu-22.04` (the DEFAULT, currently
+stopped) and `Ubuntu` (running). `dev-p`'s home directory and all working
+data live in `Ubuntu`, which is **not** the default distro. Any command
+invoked from Windows (Task Scheduler, PowerShell) that calls a bare
+`wsl.exe` will silently run against the wrong distro/user, producing
+confusing failures (wrong `$HOME`, or an outright `WSL_E_USER_NOT_FOUND`
+error).
 
 **Always specify both distro and user explicitly:**
 ```
