@@ -1,3 +1,10 @@
+---
+document: "GStack Configuration"
+doc-id: gstack-config
+state: Live
+date-created: 2026-09-05
+---
+
 # GStack Configuration
 
 Canonical current-state configuration record. Agent-facing. States facts,

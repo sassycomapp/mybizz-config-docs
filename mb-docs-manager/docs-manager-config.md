@@ -1,3 +1,10 @@
+---
+document: "docs-manager — Config"
+doc-id: docs-manager-config
+state: Live
+date-created: 2026-09-10
+---
+
 # docs-manager — Config
 
 State of the `mb-docs-manager` skill as of 2026-09-10. All facts verified

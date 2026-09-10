@@ -1,3 +1,10 @@
+---
+document: "GBrain Dream Cycle — Configuration"
+doc-id: gbrain-dream-cycle-config
+state: Live
+date-created: 2026-09-05
+---
+
 # GBrain Dream Cycle — Configuration
 
 Canonical current-state configuration record. Agent-facing. Reflects the

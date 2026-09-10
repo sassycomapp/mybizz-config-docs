@@ -1,3 +1,10 @@
+---
+document: "GBrain — Explainer"
+doc-id: gbrain-explainer
+state: Live
+date-created: 2026-09-05
+---
+
 # GBrain — Explainer
 
 *Companion note: for current confirmed state (version, sources, credentials,

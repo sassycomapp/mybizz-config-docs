@@ -1,3 +1,10 @@
+---
+document: "OpenCode Explainer"
+doc-id: opencode-explainer
+state: Live
+date-created: 2026-09-05
+---
+
 # OpenCode Explainer
 
 ## 1. Opening

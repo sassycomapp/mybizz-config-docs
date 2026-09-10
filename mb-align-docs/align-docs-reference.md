@@ -1,3 +1,10 @@
+---
+document: "align-docs — Reference"
+doc-id: align-docs-reference
+state: Live
+date-created: 2026-09-10
+---
+
 # align-docs — Reference
 
 Execution procedure for the `mb-align-docs` skill (V2). `SKILL.md` and

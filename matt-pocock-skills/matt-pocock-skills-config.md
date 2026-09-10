@@ -1,3 +1,10 @@
+---
+document: "Matt Pocock Skills Configuration"
+doc-id: matt-pocock-skills-config
+state: Live
+date-created: 2026-09-08
+---
+
 # Matt Pocock Skills Configuration
 
 Canonical current-state configuration record. Agent-facing. States facts,

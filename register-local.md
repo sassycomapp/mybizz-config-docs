@@ -1,0 +1,135 @@
+---
+document: Register — mybizz-config-docs
+doc-id: register-config-docs
+state: Live
+date-created: 20260910T110000+0200
+---
+
+# Register — mybizz-config-docs
+
+Append-only. Rows are never deleted. Only `state`, `date-state-changed`,
+`superseded-by`, and `notes` may be updated in place after a row is created.
+All other fields are permanent from first registration. Populated 2026-09-10
+per the register-membership policy (align-docs function scope V2 item 6):
+every authored document in the corpus is registered. This register file
+itself is catalogue — not a member of its own register. Collision-qualified
+doc-ids where basenames repeat.
+
+| doc-id | filename | folder | type | state | notes |
+|---|---|---|---|---|---|
+| projects-config-register | projects-config-register.md | . | docs-suite | Live |  |
+| README | README.md | . | docs-suite | Live |  |
+| anvil-agent-references-config | anvil-agent-references/anvil-agent-references-config.md | anvil-agent-references | docs-suite | Live |  |
+| anvil-agent-references-explainer | anvil-agent-references/anvil-agent-references-explainer.md | anvil-agent-references | docs-suite | Live |  |
+| anvil-agent-references-reference | anvil-agent-references/anvil-agent-references-reference.md | anvil-agent-references | docs-suite | Live |  |
+| archify-config | archify/archify-config.md | archify | docs-suite | Live |  |
+| archify-explainer | archify/archify-explainer.md | archify | docs-suite | Live |  |
+| archify-reference | archify/archify-reference.md | archify | docs-suite | Live |  |
+| cupcake-config | cupcake/cupcake-config.md | cupcake | docs-suite | Live |  |
+| cupcake-explainer | cupcake/cupcake-explainer.md | cupcake | docs-suite | Live |  |
+| cupcake-reference | cupcake/cupcake-reference.md | cupcake | docs-suite | Live |  |
+| gbrain-config | gbrain/gbrain-config.md | gbrain | docs-suite | Live |  |
+| gbrain-explainer | gbrain/gbrain-explainer.md | gbrain | docs-suite | Live |  |
+| gbrain-reference | gbrain/gbrain-reference.md | gbrain | docs-suite | Live |  |
+| gbrain-dream-cycle-config | gbrain-dream-cycle/gbrain-dream-cycle-config.md | gbrain-dream-cycle | docs-suite | Live |  |
+| gbrain-dream-cycle-explainer | gbrain-dream-cycle/gbrain-dream-cycle-explainer.md | gbrain-dream-cycle | docs-suite | Live |  |
+| gbrain-dream-cycle-reference | gbrain-dream-cycle/gbrain-dream-cycle-reference.md | gbrain-dream-cycle | docs-suite | Live |  |
+| graphify-config | graphify/graphify-config.md | graphify | docs-suite | Live |  |
+| graphify-explainer | graphify/graphify-explainer.md | graphify | docs-suite | Live |  |
+| graphify-reference | graphify/graphify-reference.md | graphify | docs-suite | Live |  |
+| gstack-config | gstack/gstack-config.md | gstack | docs-suite | Live |  |
+| gstack-explainer | gstack/gstack-explainer.md | gstack | docs-suite | Live |  |
+| gstack-reference | gstack/gstack-reference.md | gstack | docs-suite | Live |  |
+| gstack-skills-reference | gstack/gstack-skills-reference.md | gstack | docs-suite | Live |  |
+| magdoub-wireframe-config | magdoub-wireframe/magdoub-wireframe-config.md | magdoub-wireframe | docs-suite | Live |  |
+| magdoub-wireframe-explainer | magdoub-wireframe/magdoub-wireframe-explainer.md | magdoub-wireframe | docs-suite | Live |  |
+| magdoub-wireframe-reference | magdoub-wireframe/magdoub-wireframe-reference.md | magdoub-wireframe | docs-suite | Live |  |
+| matt-pocock-skills-config | matt-pocock-skills/matt-pocock-skills-config.md | matt-pocock-skills | docs-suite | Live |  |
+| matt-pocock-skills-explainer | matt-pocock-skills/matt-pocock-skills-explainer.md | matt-pocock-skills | docs-suite | Live |  |
+| matt-pocock-skills-reference | matt-pocock-skills/matt-pocock-skills-reference.md | matt-pocock-skills | docs-suite | Live |  |
+| align-docs-config | mb-align-docs/align-docs-config.md | mb-align-docs | docs-suite | Live |  |
+| align-docs-explainer | mb-align-docs/align-docs-explainer.md | mb-align-docs | docs-suite | Live |  |
+| align-docs-reference | mb-align-docs/align-docs-reference.md | mb-align-docs | docs-suite | Live |  |
+| mb-compile-rules-config | mb-compile-rules/mb-compile-rules-config.md | mb-compile-rules | docs-suite | Live |  |
+| mb-compile-rules-explainer | mb-compile-rules/mb-compile-rules-explainer.md | mb-compile-rules | docs-suite | Live |  |
+| mb-compile-rules-reference | mb-compile-rules/mb-compile-rules-reference.md | mb-compile-rules | docs-suite | Live |  |
+| docs-manager-config | mb-docs-manager/docs-manager-config.md | mb-docs-manager | docs-suite | Live |  |
+| docs-manager-explainer | mb-docs-manager/docs-manager-explainer.md | mb-docs-manager | docs-suite | Live |  |
+| docs-manager-reference | mb-docs-manager/docs-manager-reference.md | mb-docs-manager | docs-suite | Live |  |
+| sentinel-config | mb-sentinel-review/sentinel-config.md | mb-sentinel-review | docs-suite | Live |  |
+| sentinel-explainer | mb-sentinel-review/sentinel-explainer.md | mb-sentinel-review | docs-suite | Live |  |
+| sentinel-reference | mb-sentinel-review/sentinel-reference.md | mb-sentinel-review | docs-suite | Live |  |
+| sentinel-scope | mb-sentinel-review/sentinel-scope.md | mb-sentinel-review | docs-suite | Live |  |
+| sentinel-security-system | mb-sentinel-review/sentinel-security-system.md | mb-sentinel-review | docs-suite | Live |  |
+| mb-submit-memory-config | mb-submit-memory/mb-submit-memory-config.md | mb-submit-memory | docs-suite | Live |  |
+| mb-submit-memory-explainer | mb-submit-memory/mb-submit-memory-explainer.md | mb-submit-memory | docs-suite | Live |  |
+| mb-submit-memory-reference | mb-submit-memory/mb-submit-memory-reference.md | mb-submit-memory | docs-suite | Live |  |
+| doc-suite-specification | mb-sysdoc-creator/doc-suite-specification.md | mb-sysdoc-creator | docs-suite | Live |  |
+| sysdoc-creator-config | mb-sysdoc-creator/sysdoc-creator-config.md | mb-sysdoc-creator | docs-suite | Live |  |
+| sysdoc-creator-explainer | mb-sysdoc-creator/sysdoc-creator-explainer.md | mb-sysdoc-creator | docs-suite | Live |  |
+| sysdoc-creator-reference | mb-sysdoc-creator/sysdoc-creator-reference.md | mb-sysdoc-creator | docs-suite | Live |  |
+| wikilinks-config | mb-wikilinks/wikilinks-config.md | mb-wikilinks | docs-suite | Live |  |
+| wikilinks-explainer | mb-wikilinks/wikilinks-explainer.md | mb-wikilinks | docs-suite | Live |  |
+| wikilinks-reference | mb-wikilinks/wikilinks-reference.md | mb-wikilinks | docs-suite | Live |  |
+| memory-governor-config | memory-governor/memory-governor-config.md | memory-governor | docs-suite | Live |  |
+| memory-governor-explainer | memory-governor/memory-governor-explainer.md | memory-governor | docs-suite | Live |  |
+| memory-governor-reference | memory-governor/memory-governor-reference.md | memory-governor | docs-suite | Live |  |
+| 1-plan | memory-governor/Retired- Memory-upgrade-work-done/1-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 10.0-task-report | memory-governor/Retired- Memory-upgrade-work-done/10.0-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 10.1-task-report | memory-governor/Retired- Memory-upgrade-work-done/10.1-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 10.2-task-report | memory-governor/Retired- Memory-upgrade-work-done/10.2-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 11.0-plan | memory-governor/Retired- Memory-upgrade-work-done/11.0-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 11.1-task-report | memory-governor/Retired- Memory-upgrade-work-done/11.1-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 12-plan | memory-governor/Retired- Memory-upgrade-work-done/12-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 13-plan | memory-governor/Retired- Memory-upgrade-work-done/13-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 14.0-plan | memory-governor/Retired- Memory-upgrade-work-done/14.0-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 14.1-task-report | memory-governor/Retired- Memory-upgrade-work-done/14.1-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 15-task-report | memory-governor/Retired- Memory-upgrade-work-done/15-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 16.0-task-report | memory-governor/Retired- Memory-upgrade-work-done/16.0-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 16.1-report-with-errors | memory-governor/Retired- Memory-upgrade-work-done/16.1-report-with-errors.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 16.2-plan | memory-governor/Retired- Memory-upgrade-work-done/16.2-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 16.3-task-report | memory-governor/Retired- Memory-upgrade-work-done/16.3-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 16.4-plan | memory-governor/Retired- Memory-upgrade-work-done/16.4-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 16.5.0-task-report | memory-governor/Retired- Memory-upgrade-work-done/16.5.0-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 16.5.1-task-report | memory-governor/Retired- Memory-upgrade-work-done/16.5.1-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 17-task-report | memory-governor/Retired- Memory-upgrade-work-done/17-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 18-task-report | memory-governor/Retired- Memory-upgrade-work-done/18-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 19-task-report | memory-governor/Retired- Memory-upgrade-work-done/19-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 2.0-plan | memory-governor/Retired- Memory-upgrade-work-done/2.0-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 2.1-task-report | memory-governor/Retired- Memory-upgrade-work-done/2.1-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 20.0-plan | memory-governor/Retired- Memory-upgrade-work-done/20.0-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 20.1-task-report | memory-governor/Retired- Memory-upgrade-work-done/20.1-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 21-task-report | memory-governor/Retired- Memory-upgrade-work-done/21-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 22.0-plan | memory-governor/Retired- Memory-upgrade-work-done/22.0-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 22.1-plan | memory-governor/Retired- Memory-upgrade-work-done/22.1-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 22.2-task-report | memory-governor/Retired- Memory-upgrade-work-done/22.2-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 22.3-task-report | memory-governor/Retired- Memory-upgrade-work-done/22.3-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 22.4-plan | memory-governor/Retired- Memory-upgrade-work-done/22.4-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 22.4-task-report | memory-governor/Retired- Memory-upgrade-work-done/22.4-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 23-plan | memory-governor/Retired- Memory-upgrade-work-done/23-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 3-plan | memory-governor/Retired- Memory-upgrade-work-done/3-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 4.0-plan | memory-governor/Retired- Memory-upgrade-work-done/4.0-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 4.1-task-report | memory-governor/Retired- Memory-upgrade-work-done/4.1-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 5-task-report | memory-governor/Retired- Memory-upgrade-work-done/5-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 6-plan | memory-governor/Retired- Memory-upgrade-work-done/6-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 7-task-report | memory-governor/Retired- Memory-upgrade-work-done/7-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 8-task-report | memory-governor/Retired- Memory-upgrade-work-done/8-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 8.1-task-report | memory-governor/Retired- Memory-upgrade-work-done/8.1-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 9.0-plan | memory-governor/Retired- Memory-upgrade-work-done/9.0-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 9.1-task-report | memory-governor/Retired- Memory-upgrade-work-done/9.1-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| 9.2-task-report | memory-governor/Retired- Memory-upgrade-work-done/9.2-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| Gbrain & Graphifyy implementation remediation | memory-governor/Retired- Memory-upgrade-work-done/Gbrain & Graphifyy implementation remediation.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| GBrain & Graphifyy remediation workflow | memory-governor/Retired- Memory-upgrade-work-done/GBrain & Graphifyy remediation workflow.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| gbrain-dream-cycle-investigation-report | memory-governor/Retired- Memory-upgrade-work-done/gbrain-dream-cycle-investigation-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| package23.1-task-report | memory-governor/Retired- Memory-upgrade-work-done/package23.1-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
+| memory-governor-agent-architecture-and-specification | memory-governor/Retired-memory-governor-agent/memory-governor-agent-architecture-and-specification.md | memory-governor/Retired-memory-governor-agent | docs-suite | Live |  |
+| memory-governor-agent-implementation-workflow | memory-governor/Retired-memory-governor-agent/memory-governor-agent-implementation-workflow.md | memory-governor/Retired-memory-governor-agent | docs-suite | Live |  |
+| memory-governor-agent-scope | memory-governor/Retired-memory-governor-agent/memory-governor-agent-scope.md | memory-governor/Retired-memory-governor-agent | docs-suite | Live |  |
+| opencode-config | opencode/opencode-config.md | opencode | docs-suite | Live |  |
+| opencode-explainer | opencode/opencode-explainer.md | opencode | docs-suite | Live |  |
+| opencode-permission-access-control-model | opencode/opencode-permission-access-control-model.md | opencode | docs-suite | Live |  |
+| opencode-project-session-data-integrity | opencode/opencode-project-session-data-integrity.md | opencode | docs-suite | Live |  |
+| opencode-reference | opencode/opencode-reference.md | opencode | docs-suite | Live |  |
+| postgresql-config | postgresql/postgresql-config.md | postgresql | docs-suite | Live |  |
+| postgresql-explainer | postgresql/postgresql-explainer.md | postgresql | docs-suite | Live |  |
+| postgresql-reference | postgresql/postgresql-reference.md | postgresql | docs-suite | Live |  |

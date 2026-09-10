@@ -1,3 +1,10 @@
+---
+document: "wikilinks — Explainer"
+doc-id: wikilinks-explainer
+state: Live
+date-created: 2026-09-10
+---
+
 # wikilinks — Explainer
 
 ## 1. What this actually is

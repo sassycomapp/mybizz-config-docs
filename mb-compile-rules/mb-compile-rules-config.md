@@ -1,3 +1,10 @@
+---
+document: "mb-compile-rules Configuration"
+doc-id: mb-compile-rules-config
+state: Live
+date-created: 2026-09-08
+---
+
 # mb-compile-rules Configuration
 
 Canonical current-state configuration record. Agent-facing. States facts,

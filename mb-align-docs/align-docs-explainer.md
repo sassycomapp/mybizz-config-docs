@@ -1,3 +1,10 @@
+---
+document: "align-docs — Explainer"
+doc-id: align-docs-explainer
+state: Live
+date-created: 2026-09-10
+---
+
 # align-docs — Explainer
 
 ## 1. What this actually is

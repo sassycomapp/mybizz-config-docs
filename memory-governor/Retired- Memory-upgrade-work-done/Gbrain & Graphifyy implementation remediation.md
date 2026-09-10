@@ -1,3 +1,10 @@
+---
+document: "Gbrain & Graphifyy implementation remediation"
+doc-id: Gbrain & Graphifyy implementation remediation
+state: Live
+date-created: 2026-09-05
+---
+
 Compliance Remediation Strategy — GBrain and Graphify
 Purpose
 This plan integrates Graphify with the existing PostgreSQL-backed GBrain installation used by OpenCode.

@@ -1,3 +1,10 @@
+---
+document: "GStack Skills Reference"
+doc-id: gstack-skills-reference
+state: Live
+date-created: 2026-09-05
+---
+
 # GStack Skills Reference
 
 Catalog of invocable GStack commands, verified live 2026-09-08 against the

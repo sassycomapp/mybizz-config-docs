@@ -1,3 +1,10 @@
+---
+document: "docs-manager — Reference"
+doc-id: docs-manager-reference
+state: Live
+date-created: 2026-09-10
+---
+
 # docs-manager — Reference
 
 Execution procedure for the `mb-docs-manager` skill (V11). `SKILL.md` in the

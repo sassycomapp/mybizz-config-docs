@@ -1,3 +1,10 @@
+---
+document: "PostgreSQL — Reference: Commands, Procedures, and Troubleshooting"
+doc-id: postgresql-reference
+state: Live
+date-created: 2026-09-05
+---
+
 # PostgreSQL — Reference: Commands, Procedures, and Troubleshooting
 
 Companion to `postgresql-config.md` (every setting, path, and value) and

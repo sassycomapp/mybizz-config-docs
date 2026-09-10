@@ -1,3 +1,10 @@
+---
+document: "Matt Pocock Skills Explainer"
+doc-id: matt-pocock-skills-explainer
+state: Live
+date-created: 2026-09-08
+---
+
 # Matt Pocock Skills Explainer
 
 ## 1. What this actually is

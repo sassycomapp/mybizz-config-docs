@@ -1,3 +1,10 @@
+---
+document: "mb-compile-rules Reference"
+doc-id: mb-compile-rules-reference
+state: Live
+date-created: 2026-09-08
+---
+
 # mb-compile-rules Reference
 
 Execution reference for `/mb-compile-rules`. **The authoritative procedure

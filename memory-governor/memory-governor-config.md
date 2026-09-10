@@ -1,3 +1,10 @@
+---
+document: "Memory Governor Configuration"
+doc-id: memory-governor-config
+state: Live
+date-created: 2026-09-05
+---
+
 # Memory Governor Configuration
 
 Canonical current-state configuration record. Agent-facing. Reflects the

@@ -1,3 +1,10 @@
+---
+document: "anvil-agent-references — Configuration"
+doc-id: anvil-agent-references-config
+state: Live
+date-created: 2026-09-06
+---
+
 # anvil-agent-references — Configuration
 
 Canonical current-state configuration record. Agent-facing. Reflects the

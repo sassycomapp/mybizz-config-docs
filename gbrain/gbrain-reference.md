@@ -1,3 +1,10 @@
+---
+document: "GBrain — Reference: Commands, Mechanics, Incidents, Troubleshooting"
+doc-id: gbrain-reference
+state: Live
+date-created: 2026-09-05
+---
+
 # GBrain — Reference: Commands, Mechanics, Incidents, Troubleshooting
 
 Companion to `gbrain-config.md` (current state) and `gbrain-explainer.md`

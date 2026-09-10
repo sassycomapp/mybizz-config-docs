@@ -1,3 +1,10 @@
+---
+document: "PostgreSQL — Explainer"
+doc-id: postgresql-explainer
+state: Live
+date-created: 2026-09-05
+---
+
 # PostgreSQL — Explainer
 
 Companion to `postgresql-config.md` (every setting and value) and

@@ -1,3 +1,10 @@
+---
+document: "align-docs — Config"
+doc-id: align-docs-config
+state: Live
+date-created: 2026-09-10
+---
+
 # align-docs — Config
 
 State of the `mb-align-docs` skill as of 2026-09-10. All facts verified

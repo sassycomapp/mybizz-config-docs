@@ -1,3 +1,10 @@
+---
+document: "Sentinel Reference — Usage, Invocation, and Worked Examples"
+doc-id: sentinel-reference
+state: Live
+date-created: 2026-09-05
+---
+
 # Sentinel Reference — Usage, Invocation, and Worked Examples
 
 Companion to `sentinel-config.md` (current state) and

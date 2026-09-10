@@ -1,3 +1,10 @@
+---
+document: "C:\mybizz\config — README"
+doc-id: README
+state: Live
+date-created: 2026-09-05
+---
+
 # C:\mybizz\config — README
 
 Tool-by-tool configuration reference documents — one folder per tool, each holding a single,

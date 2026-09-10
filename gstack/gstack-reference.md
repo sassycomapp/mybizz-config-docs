@@ -1,3 +1,10 @@
+---
+document: "GStack Reference"
+doc-id: gstack-reference
+state: Live
+date-created: 2026-09-05
+---
+
 # GStack Reference
 
 Execution reference for the installed GStack (`1.58.1.0`). What GStack is

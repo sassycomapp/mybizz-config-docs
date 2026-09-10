@@ -1,3 +1,10 @@
+---
+document: "Cupcake Reference — Usage, Invocation, and Worked Examples"
+doc-id: cupcake-reference
+state: Live
+date-created: 2026-09-05
+---
+
 # Cupcake Reference — Usage, Invocation, and Worked Examples
 
 Companion to `cupcake-config.md` (current installed state, operational status)

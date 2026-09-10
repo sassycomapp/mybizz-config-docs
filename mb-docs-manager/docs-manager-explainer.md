@@ -1,3 +1,10 @@
+---
+document: "docs-manager — Explainer"
+doc-id: docs-manager-explainer
+state: Live
+date-created: 2026-09-10
+---
+
 # docs-manager — Explainer
 
 ## 1. What this actually is

@@ -1,3 +1,10 @@
+---
+document: "Graphify Configuration"
+doc-id: graphify-config
+state: Live
+date-created: 2026-09-05
+---
+
 # Graphify Configuration
 
 Canonical current-state configuration record. Agent-facing. States facts, not

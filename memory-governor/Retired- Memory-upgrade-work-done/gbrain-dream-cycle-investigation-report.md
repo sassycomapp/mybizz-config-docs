@@ -1,3 +1,10 @@
+---
+document: "Investigation Report — The Custom Six-Skill Pipeline and the GBrain Dream Cycle"
+doc-id: gbrain-dream-cycle-investigation-report
+state: Live
+date-created: 2026-09-05
+---
+
 # Investigation Report — The Custom Six-Skill Pipeline and the GBrain Dream Cycle
 *Prepared to support planning a "learning → self-healing → refining" loop. Combines what I
 have on record from earlier work in this system with what I've now verified directly from

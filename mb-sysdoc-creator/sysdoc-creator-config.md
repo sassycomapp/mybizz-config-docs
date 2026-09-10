@@ -1,3 +1,10 @@
+---
+document: "sysdoc-creator — Config"
+doc-id: sysdoc-creator-config
+state: Live
+date-created: 2026-09-09
+---
+
 # sysdoc-creator — Config
 
 State of the `mb-sysdoc-creator` skill as of 2026-09-09. All facts

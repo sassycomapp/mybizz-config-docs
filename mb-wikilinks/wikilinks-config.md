@@ -1,3 +1,10 @@
+---
+document: "wikilinks — Config"
+doc-id: wikilinks-config
+state: Live
+date-created: 2026-09-10
+---
+
 # wikilinks — Config
 
 State of the `mb-wikilinks` skill as of 2026-09-10. All facts verified live

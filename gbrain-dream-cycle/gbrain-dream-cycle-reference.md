@@ -1,3 +1,10 @@
+---
+document: "GBrain Dream Cycle — Reference: Invocation, Verification, Diagnostics"
+doc-id: gbrain-dream-cycle-reference
+state: Live
+date-created: 2026-09-05
+---
+
 # GBrain Dream Cycle — Reference: Invocation, Verification, Diagnostics
 
 Companion to `gbrain-dream-cycle-config.md` (current state, acceptance-test

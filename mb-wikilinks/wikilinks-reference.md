@@ -1,3 +1,10 @@
+---
+document: "wikilinks — Reference"
+doc-id: wikilinks-reference
+state: Live
+date-created: 2026-09-10
+---
+
 # wikilinks — Reference
 
 Execution procedure for the `mb-wikilinks` skill. `SKILL.md` in the installed
