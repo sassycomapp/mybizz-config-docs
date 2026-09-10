@@ -45,8 +45,8 @@ of sync. Concretely, this shows up as:
   to it** — never a copy. GStack, Matt Pocock's skills, Anvil's skills, and the Magdoub
   wireframe skill all follow this pattern. `skills-collective/` (`C:\mybizz\`) is the
   browsable hub of these symlinks, not a second copy of anything.
-- **Each project's configuration lives in exactly one file** — its own `{slug}-config.yaml} —
-  not restated in `project-inventory.md` (now retired), not duplicated in `docmap.md`, not
+- **Each project's configuration lives in exactly one file** — its own `{slug}-config.yaml`,
+  registered in `projects-config-register.md` — not duplicated in `docmap.md`, not
   scattered across skill definitions.
 - **Reference documents point at each other instead of repeating content.** `gbrain-reference.md`
   defers to `postgresql-reference.md` for database operational detail rather than duplicating
