@@ -117,4 +117,4 @@ Retired: `scaffold-system.html`; `project-inventory.md` (replaced by the registe
 2. `docs-manager-scan.md` reference regex retains `projects-reference` deliberately (dead-path references classify BROKEN, not unclassified).
 3. Two `:Zone.Identifier` artifacts documented, not deleted (standing pattern).
 4. Trio documents (daily-ops.md, master-task-list.md, mybizz-todo.md) at `C:\_data-mybizz-mgt\_desktop\` genuinely stale — refreshed by the planned wide-mode run.
-5. Big-run sequencing (corrected 2026-09-10 per wikilinks' own design): **mb-docs-manager → mb-wikilinks → mb-align-docs**.
+5. Big-run sequencing (final ruling 2026-09-10, product-then-packaging): **mb-docs-manager → mb-align-docs → mb-wikilinks** — align-docs validates and heals references in their existing form first; wikilinks then converts the healed corpus.
