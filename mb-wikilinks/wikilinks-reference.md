@@ -68,10 +68,15 @@ this way: `wikilinks-explainer.md`.
 3. **Detect** (read-only) — find every candidate cross-reference in the three known patterns:
    backtick-wrapped bare references (`` `document-slug` ``), Related Documents table rows
    (`| ``path/to/file.md`` | relationship |`), inline prose references
-   (`see \`document-slug\` ADR`). Resolve each against the real file listing and classify:
-   `MATCH` (exactly one real file), `NO_MATCH` (no file — likely a code identifier, config
-   key, or table name), `AMBIGUOUS` (collision-exception basename, multiple files, or
-   outside this source — flag, don't guess). Nothing converted in this step.
+   (`see \`document-slug\` ADR`). Resolve each against the CORPUS-WIDE file listing (all
+   registered sources — the resolver is global, so the lookup must be too) and classify:
+   `MATCH` (exactly one real file anywhere in the corpus — cross-source matches convert,
+   that is normal in one corpus spanning many folders), `AMBIGUOUS` (collision-exception
+   basename or multiple matches anywhere — flagged, never auto-converted), and
+   `MISSING-DOCUMENT` (matches nothing anywhere but reads as a document reference — a
+   serious align-docs finding per the hard-won rule: investigate, never dismiss; no
+   conversion). Code identifiers, config keys, column names, branch names, and URLs are
+   not candidates at all. Nothing converted in this step.
 4. **Report** — inline, in this exact structure: one heading per file (its path); under it,
    per candidate in line-number order, exactly four parts: (1) line number; (2) the anomaly,
    quoted exactly as it appears; (3) the proposed exact fix — `[[slug|Display Text]]` for

@@ -90,12 +90,21 @@ this date unless noted.
 | Cupcake | No component-specific rule. Cross-project writes → the shared grant-handover pattern (one copy-pasteable `mg-grant` block, developer-issued). Enforcement status of Cupcake is not fixed — live status: `cupcake-config.md` Current Operational Status |
 | Memory Governor | None found |
 | security-global | None found |
-| Related skills | mb-align-docs (**depends on this skill's completion** — it validates references against the final wikilink convention and must not start before the retrofit is done); mb-docs-manager (structure first); mb-sysdoc-creator (produced this suite) |
+| Related skills | mb-align-docs (**runs FIRST** — it validates and heals every reference in its existing written form; this skill then converts the healed, correct references — product-then-packaging, final ruling 2026-09-10); mb-docs-manager (structure first); mb-sysdoc-creator (produced this suite) |
+
+## Resolution universe (corrected 2026-09-10)
+
+The skill's collision check and target lookup run against the **whole corpus** — every
+registered source — matching the global basename resolver the skill itself enables. A name
+matching exactly one document anywhere converts; a name matching several anywhere is
+ambiguous (never auto-converted); a name matching nowhere is a **missing-document finding**
+for align-docs (the hard-won rule: every corpus document was researched and built
+deliberately — investigate, never dismiss), reported as such and never buried as noise.
 | GBrain | The skill's entire purpose — converts prose conventions into GBrain-parseable links; end-of-run verification reads GBrain's own counters (`link_resolution_opportunity`, `graph_signals_coverage`), not just error-free status |
 
 ## Open items
 
-1. **Run order (corrected 2026-09-10):** mb-docs-manager → **mb-wikilinks** → mb-align-docs — wikilinks must complete before align-docs' first run, per align-docs' own design note.
+1. **Run order (final ruling 2026-09-10):** mb-docs-manager → mb-align-docs (validate and heal first) → **mb-wikilinks** (convert the healed corpus).
 2. `templates-global` frontmatter status (5 files without any block) — excluded from retrofit regardless; the underlying status question is align-docs/frontmatter territory, not this skill's.
 3. Retroactive run logs: the earlier manual retrofit work has no run-log records; history is reconstructable only from git commits (`mb-wikilinks:`-prefixed messages).
 4. `INDEX.md` collision exception: 3-way in project-library-global — permanent, recorded in the skill text.

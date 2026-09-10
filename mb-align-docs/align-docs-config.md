@@ -94,7 +94,8 @@ wide mode + Anvil denial, 2026-09-10; function scope locked V2).
 ## Open items
 
 1. **Never run yet** — first real run is the planned wide-mode run (after all three suites exist); expect first-run findings at volume; the two-tier approval exists for exactly that.
-2. **Run order (corrected 2026-09-10):** mb-docs-manager → mb-wikilinks → mb-align-docs — align-docs must validate the final reference convention, per wikilinks' own design note.
+2. **Run order (final ruling 2026-09-10, product-then-packaging):** mb-docs-manager → **mb-align-docs** → mb-wikilinks. align-docs validates and heals every reference in its existing written form first; wikilinks converts the healed, correct references afterward.
+3. **The hard-won rule:** every corpus document was researched and built deliberately — an apparently missing document is a serious finding requiring investigation (whole-corpus search, git history, supersession chain, backups, archive) before any disposition, and "Retire" is proposed only when the document is genuinely unfindable with no successor. The developer decides.
 3. Old skill-folder explainer: obsolete-move to archive pending (same pattern as docs-manager).
 4. Front-matter growth (e.g. PDLF step-linkage): deliberately deferred — identity-only stays small; additions would arrive via a broad-sweep insertion decision when PDLF actually needs them.
 5. Anvil-hosted documentation (`theme\assets\docs`): standing research task (Anvil's formatting expectations; whether wikilinks can ever resolve there) — feeds a future decision; does not block anything since code repos are denied.

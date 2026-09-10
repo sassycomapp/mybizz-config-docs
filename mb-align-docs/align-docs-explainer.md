@@ -100,10 +100,10 @@ of a dozen groups; the high-risk tier keeps the dangerous work — the changes t
 impossible to approve casually. The grouping is presentation; consent stays per item where
 it matters.
 
-**Where it sits.** Last in the documentation-skill sequence by design: mb-docs-manager
-(structure) → mb-wikilinks (reference form) → mb-align-docs (content agreement). Validating
-agreement before wikilinks land would mean validating a convention about to be replaced. It
-is also mb-docs-manager's deliberate mirror: that skill owns the map's accuracy, this one
+**Where it sits.** It runs BEFORE mb-wikilinks, by the product-then-packaging principle:
+align-docs creates the correct product (every reference pointing where it should), and
+wikilinks then packages that validated product in the link format. It is also
+mb-docs-manager's deliberate mirror: that skill owns the map's accuracy, this one
 owns the map's internal consistency — they share the safety framework (verified backup,
 checkpointing, resume, least-privilege writers, append-only logging) but never share inputs,
 outputs, or responsibilities.

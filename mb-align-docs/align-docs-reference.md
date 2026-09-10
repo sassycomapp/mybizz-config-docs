@@ -27,6 +27,8 @@ shaped this way: `align-docs-explainer.md`.
 
 ## Phase procedure
 
+**Run order:** align-docs runs BEFORE mb-wikilinks — it validates and heals references in their existing written form; wikilinks then packages them. See the hard-won rule below.
+
 1. **Phase −2 — Resume check.** Check `C:\mybizz\logs\mb-align-docs\in-progress\` for an
    unfinished run against the target. Found → offer resume (pick up exactly where it left
    off, including decisions made) or discard (move to `abandoned-runs\`, never delete).
@@ -107,6 +109,16 @@ shaped this way: `align-docs-explainer.md`.
 - Grant handover for cross-project writes — one copy-pasteable block, never self-invoked.
 - **Anvil code repos denied entirely** — including `theme\assets\docs`.
 - A lost session never loses work — resume picks up exactly where it left off.
+
+## Missing documents — the hard-won rule
+
+Every corpus document was researched and built deliberately. When Detect encounters a
+reference or register row whose target is not on disk, it investigates before proposing
+anything: whole-corpus search for moved/renamed copies; the register's supersession chain;
+git history (`git log --follow`) for a deletion commit and its message; the backup folders
+(`C:\backup-mb-align-docs\`, `C:\backup-general\`) and the archive. A Retire proposal is
+made only when the document is genuinely unfindable with no successor, with the
+investigation documented — and the developer decides.
 
 ## The two operations (never share a remediation path)
 

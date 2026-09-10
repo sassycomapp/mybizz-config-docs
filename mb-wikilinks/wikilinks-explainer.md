@@ -88,12 +88,11 @@ report and small enough that a mistake is contained; larger units invite skimmin
 mode preserves this by sequencing full per-folder cycles — scale comes from repetition of
 the safe unit, never from enlarging the unit.
 
-**Where it sits.** Middle of the documentation-skill sequence, and a dependency of the last
-one: mb-docs-manager → **mb-wikilinks** → mb-align-docs. Alignment explicitly waits for this
-retrofit to finish, because validating the old reference style and then re-validating the
-new one would double the work. Its measure of success is external: not "the skill reported
-clean," but GBrain's own link-coverage numbers moving — the corpus's connections becoming
-real.
+**Where it sits.** After mb-align-docs, by the product-then-packaging principle: align-docs
+first ensures every reference points where it should (the product), and this skill then
+converts the validated references into the link format (the packaging). Its measure of
+success is external: not "the skill reported clean," but GBrain's own link-coverage numbers
+moving — the corpus's connections becoming real.
 
 **Open items.** The earlier manual retrofit predates the run-logging discipline, so its
 history lives only in git commits; the first properly logged runs are the planned wide-mode
