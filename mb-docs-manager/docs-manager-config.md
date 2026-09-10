@@ -1,8 +1,8 @@
 # docs-manager — Config
 
 State of the `mb-docs-manager` skill as of 2026-09-10. All facts verified
-live this date unless noted. Skill version: **V10** (scaffold-driven scope
-model, 2026-09-09).
+live this date unless noted. Skill version: **V11** (invocation grammar +
+wide-sweep support, 2026-09-10; scope model V10, 2026-09-09).
 
 ## Identity
 
@@ -10,8 +10,8 @@ model, 2026-09-09).
 |---|---|
 | Component | `mb-docs-manager` — first-party OpenCode skill (developer-built) |
 | Role | System document inventory curator — keeps navigational documents synchronized with the filesystem |
-| Invocation | `/mb-docs-manager` (full run), `/mb-docs-manager <scope>` — explicit invocation only, never auto-trigger |
-| Version | 10, frontmatter `version: 10`, `updated: 2026-09-09` |
+| Invocation | `/mb-docs-manager (all)` — full scaffold sweep; `/mb-docs-manager (name)` — one target; `(division-maps)`, `(quick)`, `(references)` — named partial sweeps; trailing `no-push` modifier. Empty/omitted target → the skill ASKS, never assumes |
+| Version | 11, frontmatter `version: 11`, `updated: 2026-09-10` |
 | Language | Natural-language procedure + 5 sub-agent definition files; no executable code |
 
 ## File inventory
@@ -19,21 +19,32 @@ model, 2026-09-09).
 | Location | Files |
 |---|---|
 | This folder (canonical suite) | `docs-manager-config.md`, `docs-manager-reference.md`, `docs-manager-explainer.md` |
-| Installed skill — `~/.config/opencode/skills/mb-docs-manager/` | `SKILL.md` (V10), `docs-manager-README.md`, `docs-manager-backup.md`, `docs-manager-scan.md`, `docs-manager-apply.md`, `docs-manager-filesystem.md`, `docs-manager-commit.md` |
-| Artifacts documented, not deleted | `docs-manager-README.md:Zone.Identifier`, (former) `mb-docs-manager-explainer.md:Zone.Identifier` — obsolete-moved with its file to `C:\mybizz\archive\` |
-| Repo mirror | none — the former `mybizz-config-docs\mb-docs-manager\SKILL.md` reference copy was removed 2026-09-09 (obsolete; superseded by this suite) |
+| Installed skill — `~/.config/opencode/skills/mb-docs-manager/` | `SKILL.md` (V11, 1,252 ln), `docs-manager-README.md`, `docs-manager-backup.md`, `docs-manager-scan.md`, `docs-manager-apply.md`, `docs-manager-filesystem.md`, `docs-manager-commit.md` |
+| Artifacts documented, not deleted | `docs-manager-README.md:Zone.Identifier` |
+| Repo mirror | none — removed 2026-09-09 (obsolete; this suite is the indexed artifact) |
 
-## Scope model (V10 — scaffold-driven)
+## Scope model (V10, unchanged in V11)
 
 | Element | Value |
 |---|---|
 | Scope source of truth | `C:\_data-mybizz-mgt\_desktop\mybizz-scope-list.md` — pinned managed document, read at Phase 0 of every run; wins over SKILL.md on scope |
 | In-scope roots (everything walked) | `C:\_data-mybizz-mgt`, `C:\dev`, `C:\mybizz\mybizz-config-docs`, `C:\mybizz\mybizz-os-docs`, `C:\mybizz\memory-audit-reports` |
 | Exceptions | `C:\mybizz\{gbrain, gstack, logs, matt-pocock-skills-source, anvil-agent-references, archify, archive, scripts}` |
-| Out of scope (recorded) | `C:\dev\dev-mb5pdlf`, `C:\dev\dev-mb4ecom`, `C:\dev\project-template`, `C:\dev\obsolete`, `C:\pdlf`, `C:\_data-not mybizz`, `C:\_data-mybizz-exempt` (as listed in scaffold), `C:\backup-*` folders, system paths |
-| Hygiene carve-out (never walked, inside roots) | `.git`, `.opencode`, `node_modules`, `.venv`, `venv`, `__pycache__`, `site-packages`, `vendor`, `.cache` |
-| Code-repo content-exclusion | retained — code repo contents never opened; top-level paths existence-checked. In-scope code repo: `C:\dev\dev-mb-3-cs\mb-3-cs`. `C:\dev\dev-makepdlf\makepdlf` = declared placeholder, never flagged; no `anvil.yaml` will ever be proposed (standing rule) |
+| Out of scope (recorded) | `C:\dev\dev-mb5pdlf`, `C:\dev\dev-mb4ecom`, `C:\dev\project-template`, `C:\dev\obsolete`, `C:\pdlf`, `C:\_data-not mybizz`, `C:\_data-mybizz-exempt` (as listed in scaffold), `C:\backup-mb-*` folders, system paths |
+| Hygiene carve-out | `.git`, `.opencode`, dependency dirs (`node_modules`, `.venv`, `venv`, `__pycache__`, `site-packages`, `vendor`, `.cache`) |
+| Code repos | **Denied entirely (V11)** — never opened/read/edited in any mode, including `theme\assets\docs` inside them (Anvil app assets; Anvil owns their interpretation). Top-level paths existence-checked on reference; repo-checked in pre-flight. `dev-makepdlf\makepdlf` = declared placeholder, never flagged; no `anvil.yaml` will ever be proposed (standing rule) |
 | Active Repositories (pre-flight) | the 12-repo GitHub list in `projects-config-register.md` (mirrors the scaffold) — checked even when folders are outside walk scope |
+
+## Target grammar (V11)
+
+| Invocation | Meaning |
+|---|---|
+| `(all)` | Every in-scope root walked in one run — the deliberate wide mode |
+| `(name)` | One folder or document |
+| `(division-maps)` / `(quick)` / `(references)` | Named partial sweeps |
+| `(all) no-push` | Wide sweep, Phase 6 skipped (offer at Phase 9) |
+| empty / omitted | **The skill asks for a target — never a default** (reverses the pre-V11 "no keyword = full run" rule) |
+| code repo named | Denied — skill states it and asks for a planning-corpus target |
 
 ## Managed document types (backed up + scanned)
 
@@ -46,51 +57,57 @@ model, 2026-09-09).
 | `AGENTS.md` (discovered) | Section 3.5 + per-file naming approval gate |
 | `INDEX.md` (discovered) | Section 3.3 |
 
-Retired: `scaffold-system.html` (historical only); `project-inventory.md` (deleted 2026-08-13, replaced by the register); `workspace-docmap.md` (obsolete-moved to archive 2026-09-10 — duplicate docmap).
+Retired: `scaffold-system.html`; `project-inventory.md` (replaced by the register); `workspace-docmap.md` (obsolete-moved to archive 2026-09-10).
 
-## Register state (post-remediation)
+## Register state
 
 | Item | Value |
 |---|---|
-| Register rows | 11 (9 original + `mybizz-config-docs-config`, `mybizz-os-docs-config` — document repos registered per developer decision 2026-09-09) |
-| Config YAMLs created | `mybizz-config-docs-config.yaml`, `mybizz-os-docs-config.yaml` |
+| Register rows | 11 (9 original + the two document repos registered 2026-09-09) |
+| Config YAMLs | `mybizz-config-docs-config.yaml`, `mybizz-os-docs-config.yaml` |
 | GitHub repositories section | 12 repos with visibility + local paths (verbatim from scaffold) |
-| `mybizz-config.yaml` | rewritten 2026-09-10 — six dead folders removed, scaffold-driven scope documented |
+| `mybizz-config.yaml` | rewritten 2026-09-10 — scaffold-driven scope documented |
 
-## Procedure structure (SKILL.md V10)
+## Procedure structure (SKILL.md V11)
 
 | Section | Contents |
 |---|---|
-| Hard constraints | 3 — write-only-in-4a/4b (+4 infrastructure exemptions); Phase 0 mandatory pre-flight+verified backup; never runs GBrain state-changing commands |
-| Phases | −2 resume → −1 learnings → 0 pre-flight/backup → 1 scan → 2 report → 3 approval (+push decision, + AGENTS.md naming gate) → 3a grant handover → 4a text edits → 4b file ops (never deletes; second confirmation) → 5 verify → 6 commit/push → 7 log → 8 learnings → 9 completion gate |
+| Hard constraints | 3 — write-only-in-4a/4b (+4 create-only exemptions); Phase 0 mandatory pre-flight + count-verified backup; never runs GBrain state-changing commands |
+| Phases | −2 resume → −1 learnings → 0 pre-flight/backup → 1 scan → 2 report → 2a two-tier presentation → 3 approval (push decision + AGENTS.md naming gate) → 3a grant handover → 4a text edits → 4b file ops (never deletes; second confirmation) → 5 verify → 6 commit/push (Step 0 batched commit plan) → 7 log → 8 learnings → 9 completion gate |
 | Anomaly classes | 13 — REPOS_DIRTY, BACKUP_FAILED, BROKEN, MISMATCHED, AMBIGUOUS, CODE_REPO_AMBIGUOUS, GRANT_REQUIRED, STALE DATE, MISSING, UNDOCUMENTED, COUNT MISMATCH, NO_REPO, PUSH_FAILED |
-| Scope keywords | full (default), `<document-path>`, `division-maps`, `quick`, `references`, `no-push` |
 | Run state | continuous checkpointing to `in-progress\` from Phase −2; resume always asked, never automatic |
 
-## Log and backup infrastructure (live state 2026-09-10)
+## Log and backup infrastructure (live state 2026-09-10, post-rename)
 
 | Path | State |
 |---|---|
-| `C:\mybizz\logs\docs-manager\` | 4 permanent run logs (2026-07-23 ×2, 2026-07-30, 2026-09-10) |
-| `...\Learnings\` | 17 files (14 historical + 3 from this remediation) |
-| `...\in-progress\` / `...\abandoned-runs\` | empty |
-| `...\last-completed-run\` | `2026-09-10T00-04-50.md` (the remediation/smoke run) |
-| `C:\backup-docs-manager\` | 2 snapshots (2026-07-28T12-45-45; 2026-09-09 smoke — 45/45 verified) |
+| `C:\mybizz\logs\mb-docs-manager\` | 4 permanent run logs (2026-07-23 ×2, 2026-07-30, 2026-09-10); Learnings: 17 files; in-progress/abandoned-runs: empty; last-completed-run: `2026-09-10T00-04-50.md` |
+| `C:\backup-mb-docs-manager\` | 2 snapshots (2026-07-28; 2026-09-09 smoke — 45/45 verified) — renamed from `C:\backup-docs-manager` per the 2026-09-10 naming standard |
 | `C:\mybizz\logs\github-logs\` | 3 commit-push + 3 git-status files |
 | `C:\mybizz\logs\gbrain-logs\` | sync logs (written by the sync script, not this skill) |
+
+## Approval and permission model (V11)
+
+| Mechanism | Rule |
+|---|---|
+| Two-tier report | Standard tier: text edits grouped by folder×type, one yes/no per group, every item listed; rejectable per group. High-risk tier: own section, grouped + labelled by risk type (`HIGH RISK — renames/moves (N)`), approved individually, never batch |
+| Grant handover | Approved edits outside the shared-library list → the ENTIRE request set tabled as ONE copy-pasteable block (`mg-grant --path <folder> --count N`, one line per folder); developer pastes once; skill never invokes `mg-grant` itself; verifies `cup-grants-data.rego`; slips ~30 min, decrement per use; any policy denial stops the run — never worked around |
+| Commit plan | Phase 6 Step 0: one table (repo, folders touched, file count), one batch approval, one commit per repo |
+| Push | Phase 3 push approval is a separate recorded decision; Phase 9 offers it again if skipped |
 
 ## Cross-cutting integration
 
 | System | Finding |
 |---|---|
-| Cupcake | No component-specific rule. Three block classes were analyzed and designed-for: cross-project writes → Phase 3a prefilled grant handover (the designed `mg-grant` mechanism, ~30-min ephemeral slips — no rule exceptions); git commit/push → Phase 3 push-approval gate (explicit, recorded, precedes execution); AGENTS.md edits → per-file naming approval gate. Enforcement status of Cupcake itself is not fixed — live status: `cupcake-config.md` Current Operational Status |
-| Memory Governor | None found — not a memory writer; GBrain is read-only by Hard Constraint 3; sync is the external script at Phase 9 Step 3 |
+| Cupcake | No component-specific rule. Three block classes designed-for: cross-project writes → Phase 3a grant handover; git commit/push → Phase 3/6 push-approval gates; AGENTS.md edits → per-file naming gate. Enforcement status of Cupcake itself is not fixed — live status: `cupcake-config.md` Current Operational Status |
+| Memory Governor | None found — not a memory writer; GBrain read-only (Hard Constraint 3); sync is the external script at Phase 9 Step 3 |
 | security-global | None found |
-| Related skills | mb-align-docs (Phase 9 Step 3a reminder after 4b structural changes — complementary content-vs-structure division); mb-wikilinks (cross-reference form); mb-sysdoc-creator (produced this suite; declares the same modus operandi) |
+| Related skills | mb-align-docs (Phase 9 Step 3a reminder after 4b structural changes), mb-wikilinks, mb-sysdoc-creator (produced this suite). All three documentation skills now share: target grammar `(all)`/`(name)`/empty-asks, two-tier approval, grant-block handover, per-repo commits, Anvil code-repo denial |
 
 ## Open items
 
-1. **docmap.md full redraw — deferred work order.** The smoke-run scan found it badly stale (dead `config\` tree pointers, 8 undocumented folders, wrong paths). Per developer sequencing: redraw happens in the dedicated run after the three doc suites exist and all three skills (mb-docs-manager, mb-align-docs, mb-wikilinks) have run.
-2. `docs-manager-scan.md` reference-extraction regex retains `projects-reference` as a normalization pattern (deliberate — dead-path references classify BROKEN correctly); not a live scope reference.
-3. The two `:Zone.Identifier` artifacts: documented, not deleted (standing pattern).
-4. Trio documents (daily-ops.md, master-task-list.md, mybizz-todo.md) at `C:\_data-mybizz-mgt\_desktop\` are genuinely stale — updated later by the three-skills run (developer sequencing).
+1. **docmap.md full redraw — deferred work order.** Executes in the dedicated wide-mode run after all three suites exist (planned: this suite's post-remodel run).
+2. `docs-manager-scan.md` reference regex retains `projects-reference` deliberately (dead-path references classify BROKEN, not unclassified).
+3. Two `:Zone.Identifier` artifacts documented, not deleted (standing pattern).
+4. Trio documents (daily-ops.md, master-task-list.md, mybizz-todo.md) at `C:\_data-mybizz-mgt\_desktop\` genuinely stale — refreshed by the planned wide-mode run.
+5. Big-run sequencing (corrected 2026-09-10 per wikilinks' own design): **mb-docs-manager → mb-wikilinks → mb-align-docs**.

@@ -3,104 +3,121 @@
 ## 1. What this actually is
 
 `mb-docs-manager` is the skill that keeps a system's navigational documents honest against
-the real filesystem. Every project ecosystem accumulates a layer of documents whose job is
-not to describe the product but to map the territory — the division docmap, the projects
-config register, the scope scaffold, and every README, AGENTS.md, and INDEX.md scattered
-through the folders. Agents treat those documents as ground truth and navigate by them, so
-when the real structure changes and the map doesn't, every agent that reads the map
-afterwards confidently acts on a falsehood. Docs Manager walks the actual territory, compares
-it street-by-street against what the maps claim, and proposes exact corrections — never
+the real filesystem. Every project ecosystem accumulates documents whose job is not to
+describe the product but to map the territory — the division docmap, the projects config
+register, the scope scaffold, and every README, AGENTS.md, and INDEX.md scattered through
+the folders. Agents treat those documents as ground truth and navigate by them, so when the
+real structure changes and the map doesn't, every agent that reads the map afterwards
+confidently acts on a falsehood. Docs Manager walks the actual territory, compares it
+street-by-street against what the maps claim, and proposes exact corrections — never
 touching the territory itself. The city dictates the map; the map never dictates the city.
 
-Its scope is not defined inside the skill at all. A separate document — the scope scaffold —
-declares which roots are walked, which paths are excepted, and which GitHub repositories
-exist. The skill reads that scaffold at the start of every run. When the system's shape
-changes, the developer edits the scaffold; the skill follows. That design exists because the
-skill's own internal scope copy went stale twice, and each time the staleness was invisible
-until a run tripped over reality.
+Two design decisions define its character. First, its scope is not defined inside the skill
+at all: a separate developer-owned document — the scope scaffold — declares which roots are
+walked, which paths are excepted, and which repositories exist, and the skill reads it at
+the start of every run. When the system's shape changes, the developer edits the scaffold;
+the skill follows, and never guesses. Second, it now speaks a target grammar shared by all
+three documentation skills — you name a single target, or say `(all)` to sweep everything in
+scope, or leave it empty and the skill simply asks. After a vast refactoring, `(all)` is the
+right answer; the skill was built to make that sweep survivable rather than a flood.
 
 ## 2. Feature summary
 
-- Scaffold-driven scoping: five in-scope roots walked in full, exceptions and out-of-scope
-  paths honored, all sourced from the scope scaffold each run — never from a copy.
+- Scaffold-driven scoping, read fresh every run — five in-scope roots walked in full,
+  exceptions honored, code repos denied outright, nothing assumed.
 - A mandatory, verified pre-flight: every listed repository must be git-clean and the backup
-  of all managed documents must be count-verified before any scanning happens; either
-  failing aborts the entire run.
-- Structural drift detection: folders and files claimed by maps are checked for existence,
-  real folders are checked for representation, counts and dates are verified, and internal
-  cross-references between documents are resolved one level deep.
-- Classified anomalies with a concrete recommendation attached to every finding — never a
-  bare problem, never a guess.
-- A two-stage, least-privilege application model: text corrections and file moves are
-  applied by separate agents with separate permissions and separate approval gates; file
-  moves get a second explicit confirmation and structurally cannot delete anything.
-- Institutional memory: judgment calls the developer makes are captured as learnings that
-  steer future runs, bounded so they can never authorize a write, skip a backup, or bypass
-  approval.
+  of all managed documents must be count-verified before any scanning; either failing aborts
+  the entire run.
+- Structural drift detection: claimed folders checked for existence, real folders checked
+  for representation, counts and dates verified, internal cross-references resolved one
+  level deep.
+- A two-tier findings report that scales with sweep size: everyday corrections batched by
+  folder and type into single approve/reject decisions; anything dangerous isolated in a
+  labelled high-risk section where each item is decided individually.
+- Permission-aware applying: when a correction must write into another project's folder, the
+  skill hands the developer one complete, copy-pasteable block of permission commands
+  instead of negotiating access per file.
+- A least-privilege application model: text corrections and file moves are applied by
+  separate agents with separate permissions and separate gates; file moves cannot delete —
+  structurally, not by promise.
+- Institutional memory: judgment calls become learnings that steer future runs, bounded so
+  they can never authorize a write or skip a gate.
 - Interrupt-proof state: continuous checkpointing, an asked-always resume/discard decision,
-  and a permanent structured log per run.
+  a permanent structured log, and a batched commit plan (one approval, one commit per
+  repository).
 
 ## 3. Suitability
 
 **Best for:** closing the loop after structural changes — a folder created, renamed, moved,
-or retired; a repo added or retired; scope reshaped in the scaffold. Running it is what
-makes such a change "finished," and its `division-maps` scope is the right quick pass after
-editing the docmap, register, or scaffold themselves.
+or retired; a repo added or retired; scope reshaped in the scaffold. `(division-maps)` is
+the right quick pass after editing the docmap, register, or scaffold; `(all)` is the right
+tool after a big refactoring has left the maps badly stale — the deliberate wide sweep.
 
-**Good for:** periodic staleness sweeps (`quick`, `references`), verifying a document's
-pointers after a manual edit (single-document scope), and post-run audits via its
+**Good for:** periodic staleness sweeps (`(quick)`, `(references)`), verifying pointers
+after a manual edit (`(single document)`), and post-run audits via the
 `last-completed-run` record and backup snapshots.
 
 **Not good for:** checking whether documents *agree with each other* on content — that is
-mb-align-docs' job (structure vs content, deliberately separate skills); converting
-cross-references into wikilink form — mb-wikilinks; creating canonical documentation —
-mb-sysdoc-creator; submitting content into governed memory — mb-submit-memory. Also wrong
-for creating documents: it will flag a missing docmap or README but will never write one —
-document creation is deliberately outside what any automated write in this system is
-trusted to do unsupervised.
+mb-align-docs' job; converting cross-references into wikilink form — mb-wikilinks; creating
+canonical documentation — mb-sysdoc-creator; submitting content into governed memory —
+mb-submit-memory. Also categorically wrong for: anything inside an Anvil code repo —
+including documentation files stored under `theme\assets\docs`. Those are app assets in
+Anvil's territory; these skills never open them. And it will never create a document: a
+missing docmap or README is flagged, not written.
 
 ## 4. Design reasoning
 
-**Why the scaffold wins.** Scope is the highest-stakes input the skill has: walk the wrong
-folders and the run generates noise or, worse, touches something it shouldn't. Encoding
-scope in SKILL.md made every skill edit a scope edit — the exact drift class this
-remediation fixed twice. Moving scope to a developer-owned scaffold that the skill reads
-but never edits makes scope changes deliberate, versioned in the developer's hands, and
-impossible for the skill to guess. The scaffold is itself a managed document, so the skill
-verifies its paths against disk every run — a stale scaffold is caught, not silently obeyed.
+**Why the scaffold wins.** Scope is the highest-stakes input the skill has; encoding it in
+SKILL.md made every skill edit a scope edit, and the drift was invisible until a run tripped
+over reality — twice. Moving scope to a developer-owned scaffold the skill reads but never
+edits makes scope changes deliberate and impossible to guess. The scaffold is itself a
+managed document, so its paths are verified against disk every run — a stale scaffold is
+caught, not silently obeyed.
+
+**Why the empty target now asks.** The original rule — no target means full run — made the
+widest, most consequential mode the *accidental* one. The grammar now makes wide mode the
+explicit choice (`(all)`) and silence a question. A rule whose default is "do the big thing"
+inverts under fatigue; a rule whose default is "ask" cannot.
 
 **Why nothing is deleted.** The V7 incident: a run performed a real delete. The fix is
-structural, not behavioral — the file-operations agent's own instructions define "delete"
-as "move to `obsolete\`", so there is no delete action to perform regardless of how a
-request is phrased. Anything removed by mistake is sitting in `obsolete`, not gone.
+structural — the file-operations agent's own instructions define "delete" as "move to
+`obsolete\`", so there is no delete action to perform regardless of phrasing.
 
-**Why text edits and file moves are separate agents.** A wrong one-line edit is visible in
-a diff; a wrong move can lose a file. Different blast radius, different tool access (edit
-without bash; bash without edit), different gates — Phase 3 approval covers both, and file
-operations add a second explicit confirmation immediately before execution.
+**Why text edits and file moves are separate agents.** A wrong one-line edit is visible in a
+diff; a wrong move can lose a file. Different blast radius, different tool access, different
+gates — approval covers both, and file operations add a second explicit confirmation
+immediately before execution.
 
-**Why the pre-flight is unconditional.** A dirty repository makes it impossible to reason
-about what a run changed versus what was already pending; an unverified backup makes
-recovery theoretical. Both are abort conditions, not warnings — the run either starts from
-a known-clean, recoverable state or doesn't start.
+**Why the two-tier report.** A post-refactoring sweep can surface hundreds of findings;
+one-decision-per-item approval would exhaust the very person it protects. Batching the
+everyday corrections by folder and type turns the flood into a dozen decisions, while the
+high-risk tier keeps every dangerous action — renames, register actions, anything
+structural — visible, labelled, and individually approved. Grouping is a convenience for
+review, never a shortcut for consent.
 
-**Why the grant handover instead of a rule exception.** The cross-project write rule
-protects project boundaries; the skill legitimately needs to edit managed documents inside
-other projects' folders. Rather than accumulating exceptions in policy (which become
-unmanageable), the skill constructs the exact permission-slip commands the designed grant
-mechanism expects and hands them to the developer — ephemeral, counted, ~30-minute slips
-issued by a human at the moment of need. The same philosophy governs the push gate
-(explicit approval precedes any commit/push) and the AGENTS.md naming gate (governance
-files change only when the developer names the exact file).
+**Why the grant handover instead of rule exceptions.** The cross-project write rule protects
+project boundaries, and the skill legitimately needs to edit managed documents across them.
+Rather than accumulating standing exceptions in policy, the skill constructs the exact
+permission commands the designed grant mechanism expects and hands them over as one block —
+ephemeral, counted, ~30-minute slips issued by a human at the moment of need. The same
+philosophy governs the push gate and the AGENTS.md naming gate: consequential actions stay
+under explicit developer control.
 
-**Where it sits.** It is the structural member of the documentation-skill family:
-mb-docs-manager owns whether maps match the territory, mb-align-docs owns whether
-documents agree with each other, mb-wikilinks owns cross-reference form, and
-mb-sysdoc-creator owns whether content was true when written. The intended cycle after
-this suite: create the remaining suites, run all three siblings, and the deferred work
-order — the full docmap redraw to include everything in scope — executes then.
+**Why Anvil code repos are denied outright.** Anvil owns everything inside its code repos,
+including how files under `assets` are interpreted. A documentation skill "helpfully"
+reformatting something there would detonate at the worst possible moment — when the app is
+next opened in the Anvil editor. The denial is absolute and covers the documentation files
+inside code repos too; if those files ever need to be searchable in GBrain or linked
+differently, that is a separate, researched decision — not a side effect of document
+maintenance.
 
-**Open items.** The docmap redraw is deferred by developer sequencing (this suite's config
-document carries the work order). The scan sub-agent's reference-normalization regex
-retains retired path names deliberately, so old dead references classify as BROKEN rather
-than vanishing unclassified.
+**Where it sits.** It is the structural member of the documentation-skill family, and the
+first run in the fixed sequence: mb-docs-manager makes the structure truthful, mb-wikilinks
+then fixes reference form against a stable structure, and mb-align-docs last validates
+content agreement against the final `[[wikilink]]` convention. Each sweeps a corpus the
+previous one just cleaned.
+
+**Open items.** The docmap full redraw is the wide-mode run's standing work order; the trio
+of desktop reference documents gets refreshed by that same run; the scan sub-agent's
+reference-normalization regex deliberately retains retired path names so old dead references
+classify as BROKEN rather than vanishing unclassified.
