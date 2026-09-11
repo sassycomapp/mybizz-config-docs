@@ -21,7 +21,7 @@ going forward, as a required step in the "start a project" protocol.
 | mb-3-cs-config | mb-3-cs-config.yaml | C:\dev\dev-mb-3-cs\ | config | Live | 2026-08-13 | 2026-08-13 | | |
 | mb4ecom-config | mb4ecom-config.yaml | C:\dev\dev-mb4ecom\ | config | Live | 2026-08-13 | 2026-08-13 | | |
 | mb5pdlf-config | mb5pdlf-config.yaml | C:\dev\dev-mb5pdlf\ | config | Live | 2026-08-13 | 2026-08-13 | | |
-| pdlf-config | pdlf-config.yaml | C:\pdlf\ | config | Live | 2026-08-13 | 2026-08-13 | | placeholder project, not live — see the file itself |
+| pdlf-config | pdlf-config.yaml | C:\pdlf\ | config | Live | 2026-08-13 | 2026-09-11 | | scaffolded live 2026-09-11 — pdlf-library + app-factory + output; GitHub repo re-established (recreated after the 2026-09-05 removal); see the file itself |
 | dev-root-hub-config | dev-root-hub-config.yaml | C:\dev\dev-root\ | config | Live | 2026-08-13 | 2026-08-13 | | |
 | project-library-global-config | project-library-global-config.yaml | C:\dev\project-library-global\ | config | Live | 2026-08-13 | 2026-08-13 | | |
 | project-template-config | project-template-config.yaml | C:\dev\project-template\ | config | Live | 2026-08-13 | 2026-08-13 | | |
@@ -49,6 +49,7 @@ outside the walk scope.
 | memory-governor | private | /home/dev-p/memory-governor |
 | mybizz-config-docs | private | /mnt/c/mybizz/mybizz-config-docs |
 | mybizz-os-docs | private | /mnt/c/mybizz/mybizz-os-docs |
+| pdlf | private | /mnt/c/pdlf |
 
 ## Field definitions
 
