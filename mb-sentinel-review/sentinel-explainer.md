@@ -253,7 +253,7 @@ designed to.
 
 The environment has four named layers — the pre-makePDLF layer, the
 makePDLF layer, the PDLF layer, and the shipped estate (full map:
-`mybizz-os-docs/environment-explainer.md`). Sentinel spans three of them,
+`C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md`). Sentinel spans three of them,
 and the span is deliberate:
 
 - **Pre-makePDLF (now):** the skill, the security-global library, the
@@ -294,6 +294,6 @@ silently reaches the wrong server. The bridge is the only route, always.
 `sentinel-scope.md` (the agreed scope), `sentinel-security-system.md`
 (the design genesis). The reasoning methodology:
 `github.com/magnus919/agent-skills/tree/main/secure-software-engineering`.
-The full environment map: `mybizz-os-docs/environment-explainer.md`.*
+The full environment map: `C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md`.*
 
 *End of document*

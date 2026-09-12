@@ -99,7 +99,7 @@ technical detail, see `anvil-agent-references-reference.md`.
 
 | Item | Value |
 |---|---|
-| PDLF | Supplies platform-specific ground truth "underneath every single one of these steps" (`pdlf-explainer.md`); one of five skill families' supporting sources |
+| PDLF | Supplies platform-specific ground truth "underneath every single one of these steps" (`pdlf-system-explainer.md`); one of five skill families' supporting sources |
 | Environment standards | Anvil.works working methods + Material 3 theme + M3 dependency + MUI overlay are prescribed standards (global AGENTS.md); this skill set is the agent-facing reference for them |
 | Governing ADRs (project-library-global) | `anvil-extras-exclusion` (M3-only components), `htmltemplate-use` (HTMLTemplate banned), `material-3-theme-component-scope`, `anvil-platform-constraints` |
 | Cupcake rules bearing on this component | `cup-block-anvil-yaml-writes.rego` (AI writes to `anvil.yaml`); `cup-protected_ai_governance_files_may_not_be_modified.rego` (AI writes to `AGENTS.md`/`CLAUDE.md`); `cup-no_cross_project_filesystem_access_by_default.rego` (AI writes outside the project root). Standing policy regardless; mechanically enforced only when Cupcake enforcement is active — status: `cupcake-config.md` Current Operational Status |

@@ -26,7 +26,7 @@ scope is `sentinel-scope.md` (this folder), and the reasoning matters in
 | Scope | `sentinel-scope.md` (this folder) — the agreed three-layer scope |
 | Reasoning methodology | `secure-software-engineering` — **installed 2026-09-09** at `~/.config/opencode/skills/secure-software-engineering/` (SKILL.md + 11 references + 3 templates + evals); upstream `github.com/magnus919/agent-skills/tree/main/secure-software-engineering` (MIT) |
 
-## Environment position (per `mybizz-os-docs/environment-explainer.md`)
+## Environment position (per `C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md`)
 
 | Layer | Sentinel's presence |
 |---|---|

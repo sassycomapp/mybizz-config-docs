@@ -15,7 +15,7 @@ procedures, see `postgresql-reference.md`. Last fully verified live: 2026-09-09.
 **Two entirely separate instances exist. Do not confuse them.** The layer
 placement: Instance B hosts the pre-makePDLF layer's memory; Instance A
 hosts the PDLF layer's ledger (see
-`mybizz-os-docs/environment-explainer.md` for the layer map).
+`C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md` for the layer map).
 
 ---
 

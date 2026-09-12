@@ -27,7 +27,7 @@ real, in-use components of your system** (`gbrain`, `memory_governor`,
 databases, not part of your system at all.
 
 **Where each server sits in the environment's layers** (per
-`mybizz-os-docs/environment-explainer.md`): Instance B (WSL, PostgreSQL 16)
+`C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md`): Instance B (WSL, PostgreSQL 16)
 hosts the **pre-makePDLF layer's** memory — GBrain and the memory governor
 are supporting systems built before and beneath PDLF. Instance A (Windows,
 PostgreSQL 15) hosts the **PDLF layer's own ledger** — the record the PDLF
@@ -273,7 +273,7 @@ were run under exactly those rules.
 
 ## 9. The layer placement — where each database sits in the environment
 
-Per `mybizz-os-docs/environment-explainer.md` (the pre-makePDLF, makePDLF,
+Per `C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md` (the pre-makePDLF, makePDLF,
 PDLF, and shipped layers):
 
 - **Instance B (WSL PostgreSQL 16) is pre-makePDLF-layer infrastructure.**
@@ -311,7 +311,7 @@ create remain a mystery.
 
 *Companion documents: `postgresql-config.md` (current state),
 `postgresql-reference.md` (commands and procedures). The layer map:
-`mybizz-os-docs/environment-explainer.md`. The memory system:
+`C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md`. The memory system:
 `memory-governor-config.md`, `mb-submit-memory` (its own suites). The
 ledger contract: `spec-postgres-ledger.md` (makepdlf-project-library).*
 

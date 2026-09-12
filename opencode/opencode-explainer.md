@@ -19,7 +19,7 @@ OpenCode's own real behavior, including its genuine rough edges, matters
 more than any single tool built on top of it.
 
 **OpenCode spans every layer of the environment** (see
-`mybizz-os-docs/environment-explainer.md` for the layer map): the
+`C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md` for the layer map): the
 pre-makePDLF supporting systems run inside or beside it, the makePDLF
 project builds the PDLF application in it, the PDLF layer builds the
 shipped estate through it — and nothing in it travels to the shipped
@@ -183,6 +183,6 @@ real skill inventory, active-project standard),
 `opencode-permission-access-control-model.md` (the permission layers),
 `opencode-project-session-data-integrity.md` (the session database),
 `opencode-reference.md` (procedures). The environment layer map:
-`mybizz-os-docs/environment-explainer.md`.*
+`C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md`.*
 
 *End of document*
