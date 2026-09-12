@@ -8,54 +8,30 @@ date-created: 2026-09-05
 # Cupcake Configuration
 
 Canonical current-state configuration record. Agent-facing. Reflects the
-live-verified state as of 2026-09-06. This document states facts, not history —
+live-verified state as of 2026-09-12. This document states facts, not history —
 where a decision was made and the reasoning matters, see
 `cupcake-explainer.md`; for operational commands and procedures, see
 `cupcake-reference.md`.
 
 ---
 
-## Current operational status — ACTIVE (verified 2026-09-08)
+## Current operational status — ACTIVE (verified 2026-09-12)
 
-**Cupcake is reactivated and enforcing.** Verified live 2026-09-08: the
-plugin loads exactly once per session boot (log-verified), the checker
-denies in real time (the exec-protection builtin blocked a real tool call
-minutes after reactivation), and every rule change of the day is in place.
+**Cupcake is active and enforcing.** Verified live 2026-09-12: exec-protection
+blocked a real agent tool call immediately after session restart; every policy
+file compiles cleanly; the full hook chain fires correctly on every tool call.
 
-**Reactivation sequence completed 2026-09-08:**
+**Operational history — key events:**
 
-| Step | State |
+| Date | Event |
 |---|---|
-| Crash-suspect scaffold removed | `.cupcake/policies/opencode/example.rego` deleted from makepdlf-project-library, untracked, gitignored (commit `3abf084`) |
-| Fail-open mode applied | `.cupcake/opencode.json` with `failMode: "open"` in makepdlf-project-library — and, after the discovery below, in `mybizz-config-docs` |
-| Cross-folder rule amended | Three-tier design — source updated, compiled via `mb-compile-rules`, `opa check` pass, placed at the global target |
-| Full live test | **13/13 pass** — record: `/mnt/c/mybizz/logs/cupcake-rule-test-record-2026-09-08.md` |
-| Plugin reactivated + restart | Developer-run rename-back + OpenCode restart; log shows exactly one `cupcake.js` load per session boot |
-| **Post-restart crash — found and fixed** | The checker hard-fails to boot in any project lacking `.cupcake/policies/opencode` + `.cupcake/system` ("Policy directory does not exist" → every tool call blocked with bare `Cupcake exited with code 1`). `mybizz-config-docs` lacked it; fixed by creating the empty skeleton. **failMode does not cover this** — it is an engine-initialization failure, not an evaluation crash |
+| 2026-08-29 | 19 custom rules built, tested, and deployed in a single session |
+| 2026-09-06 | Total evaluation crash during ordinary work — every tool call failed. Root cause: an unvalidated scaffold file in the project-local policy folder. Fail-open mode applied; scaffold removed. See `cupcake-explainer.md` §7F for the full account. |
+| 2026-09-08 | Cross-folder rule amended (three-tier design); full 13/13 live test passed — record: `/mnt/c/mybizz/logs/cupcake-rule-test-record-2026-09-08.md` |
+| 2026-09-12 | Root cause of silent fail-open found and fixed: the plugin was spawning the checker without a working directory, so the checker looked for its rules in OpenCode's launch folder (not the project). One-line plugin fix (`cwd: event.cwd` in Bun.spawn). Live block confirmed immediately after restart. |
 
-**New known limitation (discovered 2026-09-08, load-bearing):** the engine
-requires the project-local skeleton in the current working directory's
-project — a project without `.cupcake/policies/opencode` crashes the
-checker entirely. Every project folder the agent works in needs the
-skeleton. The protected-file rules remain deliberately strict (revisit
-decision).
-
-**Everything below this point describes the configuration as it stood while
-Cupcake was active** (as of 2026-08-29), updated 2026-09-08 where the
-cross-folder rule changed.
-
-**Standing context:** the suspension's cause was addressed at both layers —
-the availability failure (fail-open mode; the scaffold file removed) and the
-productivity failure (the cross-folder rule redesigned so legitimate
-cross-folder work is never blocked; other-project writes use the
-permission-slip mechanism). The protected-file rules (AGENTS.md/CLAUDE.md/
-opencode.json/package.json) are deliberately left strict — a revisit
-decision, not forgotten.
-
-**Everything below this point describes the configuration as it stood while
-Cupcake was active** (as of 2026-08-29), updated 2026-09-08 where the
-cross-folder rule changed — retained as the record of what is restored when
-the restart completes.
+The protected-file rules (AGENTS.md/CLAUDE.md/opencode.json/package.json)
+are deliberately left strict — a revisit decision, not forgotten.
 
 ---
 
@@ -66,9 +42,9 @@ the restart completes.
 | Version | `0.3.0` — recorded from the original build record; no upstream release listing is visible to corroborate it (binary installed 2026-08-27) |
 | Upstream | `github.com/eqtylab/cupcake` — "A native policy enforcement layer for AI coding agents. Built on OPA/Rego."; Apache-2.0; Trail of Bits credited for agentic safety research support; OpenCode fully supported among multi-harness integrations (all verified upstream 2026-09-06) |
 | Binary path | `/home/dev-p/.cupcake/bin/cupcake`, symlinked to `/usr/local/bin/cupcake` |
-| Underlying engine | OPA (Open Policy Agent), via `opa` binary at `/usr/local/bin/opa` |
+| Underlying engine | OPA (Open Policy Agent). Canonical binary: `/usr/local/bin/opa` (v1.19.1, real file). `/home/dev-p/.cupcake/bin/opa` is a symlink to it — both resolve to the same binary. |
 | Harness | `opencode` |
-| Global plugin | `~/.config/opencode/plugin/cupcake.js` — **currently renamed `.disabled`** (see status above) |
+| Global plugin | `~/.config/opencode/plugin/cupcake.js` — **active**. Backup at `.bak-20260912` in the same folder. |
 | Global policy folder | `~/.config/cupcake/policies/opencode/` |
 | Project-init status | `makepdlf-project-library` only. `mb-3-cs`, `mb4ecom`, `mb5pdlf` deliberately not yet initialized — each gets its own real Step 11 when that project actually starts |
 | Rules-authoring skill | `mb-compile-rules`, corrected 2026-08-28 after live testing |
@@ -137,7 +113,7 @@ the restart completes.
 | Layer | Mechanism | Coverage | Status 2026-09-06 |
 |---|---|---|---|
 | 1 | OpenCode config: `"task": "deny"` | Exact tool name `task` | **ACTIVE** (verified in config) |
-| 2 | `cup-block-task-tool.rego`, checked against `spawn-tools-denylist.json` | Maintained list of known spawn-tool names | **INACTIVE** while Cupcake is suspended |
+| 2 | `cup-block-task-tool.rego`, checked against `spawn-tools-denylist.json` | Maintained list of known spawn-tool names | **ACTIVE** |
 | 3 | Standing skill-review habit, `AGENTS.md` Global safety rules | New/unrecognized spawn-capable tools, human-reviewed before trust | **STANDING** |
 
 `spawn-tools-denylist.json` currently lists: `task`, `delegate`, `call_omo_agent`, `agent_session_create`.
@@ -186,13 +162,14 @@ Confirmed field names for `args`: `filePath`, `oldString`, `newString`
 
 ## Known scope limitations (accepted, not defects)
 
-- **The engine requires the project-local skeleton in the current project.**
-  A project whose root lacks `.cupcake/policies/opencode` and
-  `.cupcake/system` crashes engine initialization — every tool call in a
-  session rooted there fails with bare `Cupcake exited with code 1`.
-  Discovered live 2026-09-08 (mybizz-config-docs). Fix: create the empty
-  skeleton in each project folder the agent works in. **failMode does not
-  cover this** — it is an initialization failure, not an evaluation crash.
+- **The checker requires a project skeleton in the folder it is launched from.**
+  The plugin spawns the checker with `cwd: event.cwd` (the session's project
+  directory) — fixed 2026-09-12. Before the fix, the checker used OpenCode's
+  launch directory instead, which lacked the skeleton and crashed every call.
+  Every project folder an agent session runs in still needs the
+  `.cupcake/policies/opencode` + `.cupcake/system` skeleton — create it before
+  working in any new project. **failMode does not cover an init failure** —
+  it only covers evaluation crashes that happen after the engine boots.
 
 - **`cupcake_exec_protection` cannot see inside a script file's own contents.**
   Only the outer command string is inspected. A forbidden command hidden
@@ -224,7 +201,7 @@ Confirmed field names for `args`: `filePath`, `oldString`, `newString`
 
 | # | Item | Status |
 |---|---|---|
-| 1 | The standing design problem: a Cupcake configuration where security and productivity coincide. **Half-resolved 2026-09-08:** the availability half (fail-open + scaffold removal) and the cross-folder friction half are fixed and live-tested; the protected-file rules' block-by-default friction remains deliberately unchanged — a revisit decision. | Partially open |
-| 2 | Candidate fix (fail-open + scaffold cleanup): **APPLIED 2026-09-08** — config written, scaffold removed. The original crash was never reproduced, so the fix's effect on that specific crash is untested; any future crash now degrades to log-and-continue by construction. | Applied |
+| 1 | Protected-file rules (AGENTS.md/CLAUDE.md/opencode.json/package.json) block by default — including developer-approved edits made in the same chat turn. Friction accepted as a deliberate revisit decision. | Partially open |
+| 2 | Plugin silent-fail root cause found and fixed 2026-09-12: checker was spawned without a working directory. Fix: `cwd: event.cwd` in Bun.spawn. Live block confirmed. | Resolved |
 | 3 | Version `0.3.0` has no visible upstream release listing to corroborate it. | Open |
-| 4 | Full uninstall prepared — **superseded 2026-09-08 by the reactivation decision.** Held only as a record. | Retired |
+| 4 | Full uninstall prepared — superseded by the reactivation decision. Held as a record only. | Retired |

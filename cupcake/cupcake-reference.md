@@ -71,12 +71,11 @@ Confirmed working `args` fields (camelCase): `filePath`, `oldString`,
 `newString` (edit/write), `content` (write), `command` (bash), `url` (webfetch).
 
 **The agent does not run this itself — standing rule regardless of enforcement
-status.** When active, `cupcake_exec_protection` blocks direct execution of
-the `cupcake` binary from the agent's own tool context, including `cupcake
-eval`, `--help`, `--version`, and `verify`. Cupcake is currently suspended, so
-the block is inert today — the discipline stands anyway, and re-enabling
-restores it mechanically. Every real test in this environment's entire
-rule-build history was run by the developer, in their own terminal.
+status.** `cupcake_exec_protection` blocks direct execution of the `cupcake`
+binary from the agent's own tool context, including `cupcake eval`, `--help`,
+`--version`, and `verify`. This block is mechanically active and confirmed live.
+Every real test in this environment's entire rule-build history was run by the
+developer, in their own terminal.
 
 ## `mg-grant` / `mg-revoke` — cross-project access
 
@@ -115,7 +114,10 @@ grep -ia 'loading plugin' ~/.local/share/opencode/log/*.log | tail -5
 ```
 
 Exactly one `cupcake.js` line, from the global path only, in the most recent
-session's timestamp block, is correct. (While suspended: zero lines.)
+session's timestamp block, is correct. Note: OpenCode's two-process architecture
+(server + TUI) may produce two load lines in the same log file — this is a
+logging artefact, not a double-registration. Confirmed 2026-09-12: one plugin
+initialization per session, hooks fire once per tool call.
 
 ## Worked example — a real, live-verified rule build
 
@@ -273,16 +275,19 @@ mv ~/.config/opencode/plugin/cupcake.js.disabled ~/.config/opencode/plugin/cupca
 
 ## Full uninstall — permanent, NOT reversible
 
-**Prepared and held ready as of 2026-09-06, not executed.** Only run after an
-explicit, deliberate decision to permanently remove Cupcake:
+Only run after an explicit, deliberate decision to permanently remove Cupcake:
 
 ```bash
-rm ~/.config/opencode/plugin/cupcake.js.disabled
+rm ~/.config/opencode/plugin/cupcake.js
 rm -rf ~/.config/cupcake
-rm /usr/local/bin/cupcake /usr/local/bin/opa
+rm /usr/local/bin/cupcake
 rm -rf ~/.cupcake
 rm ~/.config/cupcake/bin/mg-grant ~/.config/cupcake/bin/mg-revoke 2>/dev/null
 ```
+
+Note: `/usr/local/bin/opa` is a standalone OPA binary used independently of
+Cupcake — do not remove it as part of a Cupcake uninstall unless you are
+certain nothing else depends on it.
 
 No backup is taken. The rule source documents at
 `C:\dev\project-library-global\rules-cupcake-global\` are untouched and would
@@ -300,4 +305,4 @@ remain the only way to rebuild the rule set.
 - Do not use `time.*` or `opa.runtime().env` in any rule — both fail silently live.
 - Do not test the grant decrement with a raw `cupcake eval` pipe — the decrement hook never fires without a real tool execution.
 - Do not hand-edit `cup-grants-data.rego` — always `mg-grant`/`mg-revoke`.
-- Do not treat the failMode candidate fix as applied or proven — it is code-verified to exist, not tested against the real crash.
+- Do not launch OpenCode from a folder that lacks the `.cupcake/policies/opencode` + `.cupcake/system` skeleton — the checker uses the session's project directory (via `cwd: event.cwd` in the plugin, fixed 2026-09-12), so the project must have the skeleton.

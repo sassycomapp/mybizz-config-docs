@@ -7,21 +7,14 @@ date-created: 2026-09-05
 
 # Cupcake — Mechanical Policy Enforcement for AI Coding Agents
 
-*Companion note: for current confirmed state — including the total-suspension
-status and its standing context — see `cupcake-config.md`'s Current
+*Companion note: for current confirmed state see `cupcake-config.md`'s Current
 Operational Status. For operational procedures, see `cupcake-reference.md`.*
 
-> **Update 2026-09-08 (final) — the suspension is over.** Every fix below
-> was applied, live-tested 13/13, and the checker is now active and
-> enforcing — verified by its own exec-protection builtin denying a real
-> tool call minutes after the restart. One new hard requirement was
-> discovered live the same day: the engine refuses to boot in any project
-> lacking its `.cupcake/policies/opencode` + `.cupcake/system` skeleton —
-> and the fail-open setting does not cover that failure, because it happens
-> before evaluation begins. Every project folder the agent works in needs
-> the skeleton. Sections 7F–10 are retained as the honest record of why the
-> suspension happened; its two causes — availability and cross-folder
-> friction — are both fixed by decision of the developer.
+> **Status as of 2026-09-12 — active and enforcing.** The checker fires on
+> every agent tool call; exec-protection blocked a real call immediately after
+> the most recent restart. Sections 7F–8 are retained as the honest record of
+> the 2026-09-06 crash and the 2026-09-12 root-cause fix. They describe history,
+> not current state.
 
 ---
 
@@ -112,13 +105,8 @@ rather than a standing reminder.
 structurally cannot see — "the developer approved this edit in this chat
 turn" is mechanically invisible, so approval-gated rules can only ever be
 block-by-default; as a substitute for live testing a rule — its own incident
-history repeatedly proved offline passes are evidence, not proof; rules that
-depend on the Rego builtins confirmed to fail silently in its engine; and —
-the real caveat right now — **anything at all, today.** Cupcake is in total
-suspension, and its real-world suitability at this moment is limited by its
-own unresolved availability problem — a failure mode that arrested all
-productivity — not merely by its designed scope. Suitability in practice
-returns only when a configuration is proven against the real crash.
+history repeatedly proved offline passes are evidence, not proof; and rules that
+depend on the Rego builtins confirmed to fail silently in its engine.
 
 ## 5. The Three-Layer `task` Denial
 
@@ -127,12 +115,11 @@ protection was denying the AI's ability to spawn a sub-agent session at all —
 a sub-agent could act with the primary agent's authority, potentially outside
 the primary conversation's own oversight. Three deliberately redundant layers:
 
-1. **Native OpenCode config.** `"task": "deny"` globally. **Still active
-   today** — it is OpenCode's own config, independent of the suspended plugin.
+1. **Native OpenCode config.** `"task": "deny"` globally. **Active.**
 2. **A Cupcake policy hook.** `cup-block-task-tool.rego`, checking the `task`
    tool by name plus a maintained list of known spawn-tool names
    (`spawn-tools-denylist.json`) so a renamed equivalent doesn't slip through.
-   **Inactive while Cupcake is suspended.**
+   **Active.**
 3. **A standing skill-review habit**, in `AGENTS.md`'s Global safety rules:
    any new skill or plugin is checked for spawn-tool capability before being
    trusted, and confirmed spawn-capable names join the denylist. **Standing.**
@@ -140,9 +127,7 @@ the primary conversation's own oversight. Three deliberately redundant layers:
 Three layers because any single one, alone, has a gap: layer 1 covers only the
 exact name `task`; layer 2 only the maintained list; layer 3 is the only one
 that catches a brand-new tool before it's ever used, but depends on a human
-doing the review. The current suspension turns this from a three-layer design
-into a one-layer-plus-habit posture — a real, stated reduction in coverage,
-not a theoretical one.
+doing the review. All three layers are currently active.
 
 ## 6. The Rules Pipeline — From Plain Language to Live Enforcement
 
@@ -288,47 +273,40 @@ everything on an evaluation crash, exactly the incident's behavior — with real
 `"open"` handling that allows the action, logs it, and continues, changing
 nothing about any rule's normal-operation behavior; the plugin verifiably
 reads this from `.cupcake/opencode.json` in the project root. Combined with
-clearing the project-local scaffold file now confirmed present, it is a
-structurally sound candidate: the failure was never "the rules are too
-strict," it was "a broken bundle has no safe failure mode." But — in this
-environment's own standing words on the matter:
+clearing the project-local scaffold file now confirmed present, it was a
+structurally sound fix: the failure was never "the rules are too strict," it
+was "a broken bundle has no safe failure mode."
 
-> No reasonable solution has been found and applied yet — Cupcake remains in
-> total suspension. A candidate fix (fail-open mode + project-local scaffold
-> cleanup) has been identified and is now confirmed to exist in the installed
-> plugin's actual code, not merely claimed by vendor documentation — but it
-> has not been applied or tested against the real crash. Until it is, this
-> remains an open problem, not a resolved one.
+**Applied 2026-09-08.** Fail-open mode written to `.cupcake/opencode.json`;
+scaffold file removed. A further silent failure (checker spawned without a
+working directory) was subsequently found and fixed 2026-09-12 — see §8.
 
-## 8. The Suspension Posture — What Still Protects This Environment, and What Doesn't
+## 8. The 2026-09-06 Crash — Root Cause and Resolution
 
-Cupcake's suspension is not a neutral pause; it changes the environment's real
-enforcement posture, and stating that honestly is part of this suite's job.
+This section is a historical record. The period described ended 2026-09-12
+when the true root cause was found and fixed. See `cupcake-config.md` for
+current state.
 
-**Still active:** OpenCode's own `task: deny` (layer 1 of the sub-agent
-denial — verified in config); the standing skill-review habit for new tools
-(layer 3); the rule *sources* and compiled rules, intact and ready; the full
-documented operational record. Also every non-Cupcake control in this
-environment: the Anvil/Hard-Rule set in `AGENTS.md`, the review-before-trust
-standard, and the doc-suite gates themselves.
+**What was happening:** after the 2026-09-06 crash was stabilised with
+fail-open mode, a further silent failure persisted: the checker exited with
+code 1 on every agent tool call, so fail-open silently allowed everything.
+No enforcement was active, and nothing surfaced this to the developer.
 
-**Not active — currently enforcing nothing:** all nineteen custom rules (test
-tampering, verification tampering, secret access, destructive database
-operations, autonomous commits/deploys, history destruction, cross-project
-writes, governance-file protection, and the rest), all three builtins, the
-Cupcake half of the task denial, and the cross-project grant system. An
-AGENTS.md rule remains what it always was — a request the agent might not
-follow — and right now there is no mechanical layer behind it.
+**Root cause, found 2026-09-12:** the plugin's `executeCupcake` function
+spawned the checker via `Bun.spawn` without a `cwd` option. The checker
+therefore ran in OpenCode's own launch directory (typically the user's home
+folder), which lacks the `.cupcake/policies/opencode` skeleton. Engine
+initialisation failed on every call with "Policy directory does not exist."
+The fail-open setting converted each failure to a silent allow.
 
-**The open design problem this posture exists to force:** the goal is a
-Cupcake configuration where security and productivity coincide — enforcement
-strong enough to matter, with failure modes and friction that never again make
-total arrest the rational response. No reasonable solution has been found and
-applied yet. The candidate fix addresses the availability half (a crash must
-degrade to "logged and allowed," never "everything stops"); the friction half
-— rules that block-by-default where the developer's approval cannot be
-mechanically seen, whole-file protections that fire on unrelated edits —
-remains an open design question for whenever the repair happens.
+**Fix, applied 2026-09-12:** one line added to the plugin's spawn call —
+`cwd: event.cwd` — makes the checker run in the session's project directory,
+where the skeleton exists. Live block confirmed immediately after restart.
+
+**The open design question that remains:** rules that block by default where
+conversational approval is invisible (AGENTS.md/CLAUDE.md/opencode.json
+protections) cause real friction. This is accepted as a deliberate revisit
+decision, not an unresolved urgency.
 
 ## 9. Known Limitations, Honestly Stated
 
@@ -361,26 +339,21 @@ one real file, at exactly one discoverable path, is the only correct state.
 **An unvalidated `.rego` entering the live policy folder by any path other
 than `mb-compile-rules` can crash evaluation entirely.** §7F. Distinct from
 every other limitation here: those are scoped gaps in what specific rules
-catch — this one was a total availability failure. The `failMode: "open"`
-candidate converts a future crash from "total block" into "logged and
-allowed, fix at leisure" — code-verified to exist, not yet applied or tested.
+catch — this one is a total availability failure. `failMode: "open"` (applied
+2026-09-08) converts a future crash from "total block" into "logged and
+allowed, fix at leisure."
 
 ## 10. Closing
 
 Cupcake's actual job is narrow: turn a written rule into something that cannot
 simply be reasoned around. Every incident in this record — the two live
 crashes, the rules that passed offline and failed live, the bug found in
-someone else's builtin, the demonstrated bypass, and the total crash that led
-to suspension — came from the same discipline repeating itself: never trust
-that a rule works because it was written carefully or tested once; trust it
-because it was proven, for real, against the live system it has to hold up
-against.
+someone else's builtin, the demonstrated bypass, the total crash, and the
+silent fail-open period — came from the same discipline repeating itself:
+never trust that a rule works because it was written carefully or tested once;
+trust it because it was proven, for real, against the live system it has to
+hold up against.
 
-As of 2026-09-06, that standard is not being enforced by anything mechanical
-in this environment — Cupcake is suspended, and every protection described
-here is inactive. The nineteen rules and the discipline that built them remain
-on disk, intact, as both a record and a ready foundation. What stands between
-here and re-enabling is not more evidence that the tool can enforce rules —
-it is the unsolved design problem this suspension exists to force: a
-configuration where security and productivity coincide, proven against the
-real crash, not assumed against a clean-room test.
+As of 2026-09-12, that standard is being enforced mechanically. Every rule is
+active, the checker fires on every tool call, and the incident record exists
+as a reference, not a current-state description.
