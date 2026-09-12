@@ -10,13 +10,18 @@ date-created: 2026-09-05
 Companion to `cupcake-config.md` (current installed state, operational status)
 and `cupcake-explainer.md` (design, history, and real incidents). Agent-facing.
 
-**Status note:** Cupcake is **ACTIVE** as of 2026-09-08 — reactivated,
-live-tested 13/13, plugin load verified exactly-once, and enforcing (the
-exec-protection builtin denied a real agent tool call minutes after
-restart). The procedures below are the proven operational record. One new
-load-bearing requirement: the engine boots only in projects that have the
-`.cupcake/policies/opencode` + `.cupcake/system` skeleton — create it
-before working in any project folder (see `cupcake-config.md`).
+**Status note:** Cupcake is **ACTIVE** as of 2026-09-12 — enforcement verified
+end-to-end (plugin → engine → rules) after the plugin `cwd` fix, the
+Bash-governance amendment live-tested 35/35, and the system-protection bash
+matcher corrected (its `/dev/` substring had halted every `/mnt/c/dev/` path
+and `/dev/null` redirect). Full record:
+`/mnt/c/mybizz/logs/cupcake-rule-test-record-2026-09-12.md`. The procedures
+below are the proven operational record. One load-bearing requirement: the
+engine boots only when the folder it runs in has the
+`.cupcake/policies/opencode` + `.cupcake/system` skeleton — the plugin now
+passes the session's project directory (`cwd: event.cwd`), so create the
+skeleton in every project folder before working there (see
+`cupcake-config.md`).
 
 ---
 

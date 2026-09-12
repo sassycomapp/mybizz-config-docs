@@ -29,6 +29,8 @@ file compiles cleanly; the full hook chain fires correctly on every tool call.
 | 2026-09-06 | Total evaluation crash during ordinary work — every tool call failed. Root cause: an unvalidated scaffold file in the project-local policy folder. Fail-open mode applied; scaffold removed. See `cupcake-explainer.md` §7F for the full account. |
 | 2026-09-08 | Cross-folder rule amended (three-tier design); full 13/13 live test passed — record: `/mnt/c/mybizz/logs/cupcake-rule-test-record-2026-09-08.md` |
 | 2026-09-12 | Root cause of silent fail-open found and fixed: the plugin was spawning the checker without a working directory, so the checker looked for its rules in OpenCode's launch folder (not the project). One-line plugin fix (`cwd: event.cwd` in Bun.spawn). Live block confirmed immediately after restart. |
+| 2026-09-12 | **Bash-governance rule placed and live-verified** — the shell write channel (python/perl heredoc and -c/-e write execution, `sed -i`, `>`/`>>` redirects, `tee`, `cp`/`mv`/`ln` destination, `rm`/`touch`/`truncate` operands, `dd of=`) now feeds the same outside-project boundary, exempt list, grant slips, and first-instance deny. Final live run 35/35 — record: `/mnt/c/mybizz/logs/cupcake-rule-test-record-2026-09-12.md` |
+| 2026-09-12 | `system_protection` builtin bash matcher corrected — its substring match on `/dev/` halted every command referencing the `/mnt/c/dev/` project tree, `/dev/null` redirects, and cross-project reads (6 false blocks proven by the same test sheet). Indicators now anchored to real path starts; `/dev/null` stream family exempted; sudo/doas and true system prefixes unchanged. Offline 27/27. |
 
 The protected-file rules (AGENTS.md/CLAUDE.md/opencode.json/package.json)
 are deliberately left strict — a revisit decision, not forgotten.
@@ -91,7 +93,7 @@ are deliberately left strict — a revisit decision, not forgotten.
 | `cup-no_autonomous_commits_pushes_merges_releases_or_deployments.rego` | git commit/push/merge, publish, deploy-script execution |
 | `cup-no_rewriting_or_destroying_development_history.rego` | Force-push, rebase, amend, branch/tag deletion |
 | `cup-no_destructive_database_operations.rego` | DROP, unconditioned DELETE, TRUNCATE (9 object types) |
-| `cup-no_cross_project_filesystem_access_by_default.rego` | **Amended 2026-09-08, three-tier design, live-tested 13/13:** writes outside the current project are blocked unless the target is inside an always-open shared-library folder (project-library-global, dev-root, mybizz-config-docs, mybizz-os-docs, `/mnt/c/mybizz/logs`, `/tmp`, the Cupcake/OpenCode config plane, skills-collective) or an active, non-zero-count grant exists. **Reads are never blocked by this rule.** Restricted project folders (the seven projects + `/home/dev-p/memory-governor`) are slip-gated |
+| `cup-no_cross_project_filesystem_access_by_default.rego` | **Amended 2026-09-08, three-tier design, live-tested 13/13:** writes outside the current project are blocked unless the target is inside an always-open shared-library folder (project-library-global, dev-root, mybizz-config-docs, mybizz-os-docs, `/mnt/c/mybizz/logs`, `/tmp`, the Cupcake/OpenCode config plane, skills-collective) or an active, non-zero-count grant exists. **Reads are never blocked by this rule.** Restricted project folders (the seven projects + `/home/dev-p/memory-governor`) are slip-gated. **Amended again 2026-09-12:** Bash-mediated write-shapes appended to the same file/package (python/perl heredoc and -c/-e write execution, `sed -i`, `>`/`>>` redirects, `tee`, `cp`/`mv`/`ln` destination, `rm`/`touch`/`truncate` operands, `dd of=`) — same boundary, same grants, own rule id, first-instance deny. Live-tested 35/35 over three runs |
 | `cup-no_access_to_secrets_unless_explicitly_required.rego` | Reading known secret-file patterns, via Read/Grep or bash |
 | `cup-outbound_network_access_is_allowlist_only.rego` | Fetch/curl/wget to a domain not on the 10-domain allowlist |
 | `cup-no_autonomous_installation_or_connection_of_tools.rego` | Registering a new MCP server, plugin, or skill |
@@ -104,7 +106,7 @@ are deliberately left strict — a revisit decision, not forgotten.
 
 | File | Purpose | Status |
 |---|---|---|
-| `system_protection.rego` | Blocks access to critical system paths | Default, unmodified |
+| `system_protection.rego` | Blocks access to critical system paths | **Bash matcher corrected 2026-09-12** — indicators anchored to real path starts; `/dev/null` stream family exempted; the file-tool path check is unchanged. Backup `.bak-20260912` |
 | `sensitive_data_protection.rego` | Blocks access to credential/secret-shaped files | **Corrected 2026-08-29** — SSH-key matching changed from substring to exact-basename, closing a real false positive on `*.pub` public keys |
 | `cupcake_exec_protection.rego` | Blocks the agent from directly executing the `cupcake` binary | **Corrected 2026-08-29** — added relative-execution and shell-function-wrapper matching. See Known scope limitations for what remains open |
 
