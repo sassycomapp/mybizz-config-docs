@@ -7,9 +7,14 @@ date-created: 2026-09-05
 
 # Memory Governor Reference — Usage, Invocation, and Incident Response
 
-Companion to `memory-governor-config.md` (current state — ACTIVE, all
-defects resolved 2026-09-08) and `memory-governor-explainer.md` (design,
-mechanics, and real incidents). Agent-facing.
+Companion to `memory-governor-config.md` (the spec — current state — ACTIVE, all
+defects resolved 2026-09-08) and `memory-governor-explainer.md` (the
+authoritative whole-system narrative — design, mechanics, and real incidents).
+Exam companions: `memory-governor-exam-plan.md` (next run's job-spec),
+`memory-governor-exam-report.md` (current verified state),
+`memory-governor-log.md` (notable events), `memory-governor-learnings.md`
+(transient exam knowledge). The architecture standard:
+`mb-config-manager/config-manager-explainer.md`. Agent-facing.
 
 ---
 

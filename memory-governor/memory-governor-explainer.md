@@ -253,7 +253,55 @@ propose a policy change, but may never apply one to itself** — policy
 changes are high-risk content, so any self-generated candidate is
 guaranteed to require human review.
 
-## 14. Closing
+## 14. Config maintenance — how this system is examined and kept healthy
+
+This suite participates in the config-management system (`mb-config-manager`).
+The roles of the seven suite files, and the exam cycle that runs them, are the
+architecture described in `config-manager-explainer.md` — emulated from the
+PostgreSQL pilot. The short local version:
+
+- `memory-governor-config.md` is the **spec** — the ideal state every exam
+  checks against.
+- Before each exam run, the config-manager synthesizes `memory-governor-exam-plan.md`:
+  a fresh job-spec built from this spec, the last report, the log, and the
+  learnings. The plan is transient (the file is live; contents rewritten each
+  cycle).
+- The exam runs the installed skill (`mb-config-memory-governor`) with the plan
+  in hand — detection fully autonomous; healing gated. **This module has no
+  agent-healable items**: the worker and API are the only writers to
+  `registers/` and the database; every repair is developer-run or proposed.
+- **Scope boundary with the postgres module:** database conformance (tables,
+  ownership) and the estate backup convention belong to `mb-config-postgresql`
+  (this exam cross-references; quick row counts permitted).
+- Several checks are permanently **developer-run**: credentialed registry
+  checks, the full test suite, the auto-start execution, recovery drills.
+- The run rewrites `memory-governor-exam-report.md` (current state, no
+  history), appends one row to `memory-governor-log.md`, files new learnings,
+  and prunes absorbed entries.
+
+## 15. S.W.O.T.
+
+**Strengths.** Mechanical two-outcome gating of everything entering permanent
+memory; the decision engine is source-verified with all five high-risk types
+governed; the register is a git-committed second write (disaster recovery
+proven twice); the event backbone needs no message broker; 304-test suite
+green at last full run.
+
+**Weaknesses.** System is restart-dependent (systemd units pending developer
+execution — a WSL restart relies on the boot script); several checks are
+permanently developer-run (credentialed checks, full test suite); row counts
+are live and drift continuously (point-in-time assertions only).
+
+**Opportunities.** The config-management exam adds standing liveness + auth-gate
+verification that never existed for the governor; the register/DB dual-write
+gives the exam a second consistency surface to check (index ↔ payload).
+
+**Threats.** An accidental write into live memory is the recorded real incident
+class (recovery procedure exists and is proven); the auth-gate silently opening
+would be a silent failure (exam M0-4 asserts the 422 exactly); FK/dupe-key
+errors from dev-testing have appeared in logs before (rate-watch, not alarm).
+
+## 16. Closing
 
 The governor's entire job is narrow: decide what's allowed to become
 permanent, trusted memory, using rules a human can audit, never a judgment
@@ -269,10 +317,14 @@ remaining dependency named.
 
 ---
 
-*Companion documents: `memory-governor-config.md` (current state),
-`memory-governor-reference.md` (procedures and incident response).
-The full memory-system map: `memory-master-explainer.md`. The front end:
-`mb-submit-memory` (its own suite). System health procedure:
-`memory-functionality-audit.md` (mybizz-os-docs).*
+*Companion documents: `memory-governor-config.md` (the spec),
+`memory-governor-reference.md` (procedures and incident response),
+`memory-governor-exam-plan.md` / `memory-governor-exam-report.md` /
+`memory-governor-log.md` / `memory-governor-learnings.md` (config-management
+set), `memory-governor-skill.md` (exam skill canonical source). Architecture:
+`mb-config-manager/config-manager-explainer.md`. The full memory-system map:
+`memory-master-explainer.md`. The front end: `mb-submit-memory` (its own
+suite). System health procedure: `memory-functionality-audit.md`
+(mybizz-os-docs).*
 
 *End of document*

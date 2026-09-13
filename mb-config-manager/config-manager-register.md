@@ -13,30 +13,36 @@ the system first becomes examinable (a config doc exists); `state` updates in pl
 here; superseded states simply change.
 
 **States:** `Installed` (installed at the runtime location — the authoritative
-runnable state) · `Registered` (examinable, module pending) · `Placeholder`
+runnable state) · `WIP` (emulation in progress — suite being built to the
+7-file standard) · `Deferred` (registered, deliberately postponed — developer
+decision) · `Registered` (examinable, module pending) · `Placeholder`
 (folder reserved, no config doc yet) · `Retired` (no longer managed).
+
+**Emulation queue (developer-set order, 2026-09-13):** gbrain-dream-cycle →
+graphify → gstack → opencode → anvil-agent-references → matt-pocock-skills →
+magdoub-wireframe. Completed pilots: postgresql, cupcake, gbrain.
 
 | system | exam skill | spec doc | state | sha256 (source) | install date | notes |
 |---|---|---|---|---|---|---|
 | postgresql | mb-config-postgresql | postgresql/postgresql-config.md | Installed | b41a3e117dee1809 | 2026-09-12 | pilot — verified live 2026-09-12; source `postgresql/postgresql-skill.md`; installed `~/.config/opencode/skills/mb-config-postgresql/SKILL.md` |
 | cupcake | mb-config-cupcake | cupcake/cupcake-config.md | Installed | f5e8489cf60a8abc | 2026-09-12 | verified live 2026-09-12; source `cupcake/cupcake-skill.md` (backfill developer-run 2026-09-12, hash-verified); installed `~/.config/opencode/skills/mb-config-cupcake/SKILL.md` (developer-run install) |
 | gbrain | mb-config-gbrain | gbrain/gbrain-config.md | Installed | 58dc0b52cbc86d72 | 2026-09-12 | verified live 2026-09-12; source `gbrain/gbrain-skill.md`; installed `~/.config/opencode/skills/mb-config-gbrain/SKILL.md` |
-| gstack | mb-config-gstack | gstack/gstack-config.md | Registered | module pending |
-| opencode | mb-config-opencode | opencode/opencode-config.md | Registered | module pending |
-| memory-governor | mb-config-memory-governor | memory-governor/memory-governor-config.md | Registered | module pending |
+| gstack | mb-config-gstack | gstack/gstack-config.md | WIP | emulation queued |
+| opencode | mb-config-opencode | opencode/opencode-config.md | WIP | emulation queued |
+| memory-governor | mb-config-memory-governor | memory-governor/memory-governor-config.md | Installed | 4f5df4779a6d4597 | 2026-09-13 | run #1 formal: HEALTHY+FLAGS; verified live 2026-09-13; source `memory-governor/memory-governor-skill.md`; installed `~/.config/opencode/skills/mb-config-memory-governor/SKILL.md` |
 | archify | mb-config-archify | archify/archify-config.md | Registered | module pending |
-| graphify | mb-config-graphify | graphify/graphify-config.md | Registered | module pending |
-| magdoub-wireframe | mb-config-magdoub-wireframe | magdoub-wireframe/magdoub-wireframe-config.md | Registered | module pending |
-| matt-pocock-skills | mb-config-matt-pocock-skills | matt-pocock-skills/matt-pocock-skills-config.md | Registered | module pending |
-| gbrain-dream-cycle | mb-config-gbrain-dream-cycle | gbrain-dream-cycle/gbrain-dream-cycle-config.md | Registered | module pending |
-| anvil-agent-references | mb-config-anvil-agent-references | anvil-agent-references/anvil-agent-references-config.md | Registered | module pending |
-| mb-align-docs | mb-config-mb-align-docs | mb-align-docs/align-docs-config.md | Registered | module pending |
-| mb-compile-rules | mb-config-mb-compile-rules | mb-compile-rules/mb-compile-rules-config.md | Registered | module pending |
-| mb-docs-manager | mb-config-mb-docs-manager | mb-docs-manager/docs-manager-config.md | Registered | module pending |
-| mb-sentinel-review | mb-config-mb-sentinel-review | mb-sentinel-review/sentinel-config.md | Registered | module pending |
-| mb-submit-memory | mb-config-mb-submit-memory | mb-submit-memory/mb-submit-memory-config.md | Registered | module pending |
-| mb-sysdoc-creator | mb-config-mb-sysdoc-creator | mb-sysdoc-creator/sysdoc-creator-config.md | Registered | module pending |
-| mb-wikilinks | mb-config-mb-wikilinks | mb-wikilinks/wikilinks-config.md | Registered | module pending |
+| graphify | mb-config-graphify | graphify/graphify-config.md | WIP | emulation queued |
+| magdoub-wireframe | mb-config-magdoub-wireframe | magdoub-wireframe/magdoub-wireframe-config.md | WIP | emulation queued |
+| matt-pocock-skills | mb-config-matt-pocock-skills | matt-pocock-skills/matt-pocock-skills-config.md | WIP | emulation queued |
+| gbrain-dream-cycle | mb-config-gbrain-dream-cycle | gbrain-dream-cycle/gbrain-dream-cycle-config.md | WIP | emulation queued |
+| anvil-agent-references | mb-config-anvil-agent-references | anvil-agent-references/anvil-agent-references-config.md | WIP | emulation queued |
+| mb-align-docs | mb-config-mb-align-docs | mb-align-docs/align-docs-config.md | Deferred | deliberately postponed (developer decision 2026-09-13) |
+| mb-compile-rules | mb-config-mb-compile-rules | mb-compile-rules/mb-compile-rules-config.md | Deferred | deliberately postponed (developer decision 2026-09-13) |
+| mb-docs-manager | mb-config-mb-docs-manager | mb-docs-manager/docs-manager-config.md | Deferred | deliberately postponed (developer decision 2026-09-13) |
+| mb-sentinel-review | mb-config-mb-sentinel-review | mb-sentinel-review/sentinel-config.md | Deferred | deliberately postponed (developer decision 2026-09-13) |
+| mb-submit-memory | mb-config-mb-submit-memory | mb-submit-memory/mb-submit-memory-config.md | Deferred | deliberately postponed (developer decision 2026-09-13) |
+| mb-sysdoc-creator | mb-config-mb-sysdoc-creator | mb-sysdoc-creator/sysdoc-creator-config.md | Deferred | deliberately postponed (developer decision 2026-09-13) |
+| mb-wikilinks | mb-config-mb-wikilinks | mb-wikilinks/wikilinks-config.md | Deferred | deliberately postponed (developer decision 2026-09-13) |
 | cloudflare | — | — | Placeholder | no config doc yet |
 | namecheap | — | — | Placeholder | no config doc yet |
 
