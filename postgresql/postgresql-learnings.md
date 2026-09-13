@@ -16,6 +16,5 @@ overwrites it. Entries never accumulate. Cross-cutting learnings (guard classes,
 graduation rules) live in the orchestrator's own
 `mb-config-manager/config-manager-learnings.md`, not here.
 
-| # | learning | right action | destination |
-|---|---|---|---|
-| 1 | `facts` table never autovacuumed — low-write, not pathological; hot-table vacuum recency is the real signal | Flag only if a hot table stops vacuuming | config.md refresh (docs governance — pending approval) |
+<!-- empty — both current learnings graduated 2026-09-13 (facts-autovacuum →
+     config.md; SET-ROLE method → skill) -->

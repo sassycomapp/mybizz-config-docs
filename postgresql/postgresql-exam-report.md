@@ -2,80 +2,115 @@
 document: "PostgreSQL — Exam Report"
 doc-id: postgresql-exam-report
 state: Live
-date-created: 2026-09-12
+date-created: 2026-09-13
 ---
 
 # PostgreSQL — Exam Report
 
-First verification run of the `mb-config-postgresql` pilot (2026-09-12).
-Detection only — Tier 0–2, both instances. Tier 3 not unlocked. Spec:
-`postgresql-config.md` (last verified live 2026-09-09).
+Run #2 — **first formal plan-driven run** (2026-09-13). Plan:
+`postgresql-exam-plan.md` (step-0 self-validation: PASS). Detection only —
+Tiers 0–2 agent-runnable checks executed; Tier 3 locked. Instance A operational
+probes: developer-run request issued (secrets guard on bridge `.env` — per plan).
 
-## Verdict: SYSTEM HEALTHY — no DOWN, no UNHEALTHY. Two doc-drift findings.
+## Verdict: SYSTEM HEALTHY — Instance B fully green; Instance A liveness proven, operational probes with developer
 
-## Tier 0 — Liveness: PASS (both instances)
+## Tier 0 — Liveness: PASS
 
-| Check | Expected (spec) | Actual | Result |
-|---|---|---|---|
-| A: `postgresql-x64-15` | Running, Automatic | Running, Automatic | PASS |
-| A: dead duplicate `PostgreSQL` | Stopped, not started | Stopped, Automatic | PASS |
-| A: bridge query `pdlf` | connects, responds | 15.14 returned | PASS |
-| B: cluster `16/main` | online | online | PASS |
-| B: psql ping `gbrain` | 1 | 1 | PASS |
-| B: port 8321 + worker | listening + alive | LISTEN; PIDs 315, 3101 | PASS |
+| ID | Check | Expected | Actual | Result |
+|---|---|---|---|---|
+| P0-1 | A: services | x64-15 Running/Auto; dup Stopped | exact match | PASS |
+| P0-2 | A: bridge version | connects; 15.14 | **agent attempt denied (secrets guard)** → developer-verified: 15.14, VC++ 1944, 64-bit | PASS (D) |
+| P0-3 | B: cluster | 16/main online | online | PASS |
+| P0-4 | B: gbrain ping | 1 | 1 | PASS |
+| P0-5 | B: memory chain | 8321 + worker | LISTEN; PIDs 315, 18597, 18607 | PASS |
 
-## Tier 1 — Health: PASS
+## Tier 1 — Health: PASS (B complete; A = developer-run)
 
-| Check | Result |
+| ID | Result |
 |---|---|
-| B: waiting locks | 0 |
-| B: connections | 7 — sane |
-| B: embedding coverage | 5,529 / 5,529 — **100%** |
-| B: disk | 2% used on data-disk volume |
-| B: `gbrain` size | 164 MB (spec: 148 MB — see finding 1) |
-| B: `memory_governor` | 5 tables present, sane |
-| B: autovacuum (completed same-day follow-up) | `on`; last_autovacuum recent on `content_chunks` (2026-09-11) and `pages` (2026-09-12); `facts` never (low-write table — not pathological) | PASS |
-| B: idle-in-transaction | 0 | PASS |
+| P1-1 | 7 connections — sane |
+| P1-2 | 0 waiting locks |
+| P1-3 | autovacuum on; `content_chunks` 2026-09-11, `pages` 2026-09-13 (fresh); `facts` never = normal (low-write, per learning) |
+| P1-4 | disk 2% used |
+| P1-5 | gbrain 164 MB; governor 8,167 kB — stable vs last run |
+| P1-6 | 5,529 / 5,529 embedded — **100%**, dims 1536 |
+| P1-7 | governor rows: projects 3, candidates 5, events 7, audit 5, policy 0 — sane, growing |
+| P1-8 | B log scan — **developer-verified 2026-09-13**: 409 ERROR/FATAL/PANIC lines total; latest 20 reviewed — all historical (≤ 2026-09-13), all explained: governor dev-testing FK/dupe errors (09-09), removed-role attempts (09-05, 09-09), this exam's own psql syntax probes (09-12/13). **No ERROR/FATAL since 2026-09-13 10:25; no recurring pattern; no stale-pid-file** | PASS (D) |
+| P1-9/10 | A log scan — **developer-verified 2026-09-13**: newest log file `postgresql-2025-10-07_074724.log` (last write 2025-10-08); latest errors all from **October 2025** (transaction-aborted noise, a `CREATE/DROP DATABASE in transaction block` pair, a burst of `effective_io_concurrency` invalid-value attempts — Windows requires 0). **Zero log entries in ~11 months** — the instance is dormant-but-healthy (pdlf holds 0 rows, no traffic). No FATAL/PANIC ever; PASS. A ops (P1-10) developer-verified same day: waiting 0, autovacuum on | PASS (D) |
 
-## Tier 2 — State conformance: PASS with drift
+## Tier 2 — State conformance: PASS (B complete; A = developer-run)
 
-| Check | Expected (spec) | Actual | Result |
+| ID | Expected | Actual | Result |
 |---|---|---|---|
-| A version | 15.14, VC++ 1944 | 15.14, VC++ 1944 | PASS |
-| A databases | pdlf, postgres | pdlf, postgres | PASS |
-| A `pdlf` tables | 7 exact | bft_records, deviations, gates, isc, projects, steps, triage_findings | PASS |
-| B databases | gbrain, memory_governor, postgres (+templates) | exact match | PASS |
-| B `compliance_ledger` | absent | absent | PASS |
-| B login roles | postgres, memory_governor_svc, ledger_writer, ledger_approver | exact match | PASS |
-| B gbrain tables / RLS | 62 / 62 | 62 / 62 | PASS |
-| B extensions | plpgsql, vector 0.6.0, pg_trgm 1.6, pgcrypto 1.3 | exact match | PASS |
-| B governor tables | 5, owned by memory_governor_svc | audit_log, memory_candidates, memory_events, policy_versions, projects | PASS |
-| B pages | 1,759 (spec) | 1,824 live | DRIFT |
-| B chunks | 5,443 (spec) | 5,529 live | DRIFT |
-| B boot config | wsl.conf [boot] intact | not checked — see finding 2 | DEFERRED |
-| B log scan | no ERROR/FATAL/PANIC | not run — see finding 2 | DEFERRED |
+| P2-8 | 16.14 | 16.14 (Ubuntu 24.04 pkg) | PASS |
+| P2-9 | gbrain, memory_governor, postgres (+templates) | exact | PASS |
+| P2-9b | `compliance_ledger` absent | count 0 | PASS |
+| P2-10 | 62 tables / 62 RLS / owner postgres / schema v128 / embedding 3-large 1536d | 62/62, model + dims + schema_version=128 from `config` table | PASS |
+| P2-11 | plpgsql, vector 0.6.0, pg_trgm 1.6, pgcrypto 1.3 | exact | PASS |
+| P2-12 | governor: 5 tables, all owned by svc | 5 tables, owner `memory_governor_svc` only | PASS |
+| P2-13 | svc cannot connect gbrain; roles exact | `has_database_privilege(svc→gbrain)=false`; svc→govdb=true; writer→gbrain=false; role set exact | PASS |
+| P2-1..7 | A version/dbs/tables/schema/ext/admin/roles | **developer-verified 2026-09-13 (complete)**: 15.14 exact; dbs `pdlf,postgres` exact; 7 tables exact; **P2-4 schema PASS** — `triage_findings` full column set incl. `resolution_note`/`resolved_at`, CHECK constraints, FK to `steps`, matches spec; **P2-5 PASS** — `plpgsql` only; **P2-7 PASS** — roles `postgres,pdlf_agent` exact. **P2-6 NOT RUN** — agent command error (ran `-d pdlf`, returning pdlf's own 7 tables, not admin-DB); corrected command issued | 4 PASS, 1 pending corrected command |
+| P2-14 | boot config | **developer-verified**: `/etc/wsl.conf` `[boot]` command exact per spec | PASS (D) |
+| P2-15 | `.env` integrity | **developer-verified**: `bash -n` syntax OK; all 3 variables present (count only, values never displayed) | PASS (D) |
 
 ## Findings
 
-1. **DRIFT — spec counts stale.** Live `pages` 1,824 vs spec 1,759; `chunks` 5,529 vs
-   5,443; `gbrain` 164 MB vs 148 MB. Direction = growth, not regression; coverage
-   still 100%. Recommended repair: refresh counts + verification date in
-   `postgresql-config.md` → **docs governance** (flagged, not applied here).
-2. **Agent execution boundary confirmed.** Log scan and `/etc/wsl.conf` reads are
-   policy-blocked for agent execution (critical-path policy — the denial is the
-   guard working). Skill updated same-day: these two checks are developer-run
-   items. Not a system fault.
+1. **DRIFT — RESOLVED 2026-09-13.** The `postgresql-config.md` refresh was
+   **approved by the developer in-session and applied**: counts refreshed
+   (1,824 pages / 5,529 chunks / 164 MB), verification date → 2026-09-13,
+   facts-autovacuum nuance + role-isolation test method added. Finding closed.
+   Both run-#2 learnings graduated (config.md + skill) and deleted from the
+   learnings file; skill source re-synced + register hash updated
+   (`9f61f34c9634b419`).
+2. **Check-method nuance (new learning).** `SET ROLE` from superuser always
+   succeeds (impersonation ≠ privilege) — role isolation must be tested via
+   `has_database_privilege`, not `SET ROLE`. Initial probe was misleading;
+   corrected in-run. → learnings file, destination: skill (future graduation).
+3. **CF-5 verified:** the graduated skill inventory (36 checks) executed correctly
+   — every agent-runnable ID ran, expected sources held, no drift between plan
+   references and skill rows. Graduation confirmed sound.
+4. **B log scan: 409 ERROR/FATAL/PANIC lines — examined, no active fault.**
+   Developer-verified scan reviewed line-by-line: all entries ≤ 2026-09-13 and
+   attributable (governor dev-testing on 09-09, removed-role auth attempts,
+   this exam's own probe errors). Nothing since 2026-09-13 10:25 (which was this
+   exam's own probe). However the volume (409 over the log's lifetime) suggests
+   the standing check should watch the *rate*, not just presence — noted for the
+   skill's next revision (compare new-error count vs prior run).
+5. **Developer-run remainder (partial).** P2-4/5/6/7 (A table schema vs spec,
+   extensions, admin-DB tables, full role list) not captured in the returned
+   bridge output — a follow-up command list was issued. P1-9 (A log scan) pending
+   PowerShell rerun.
+
+## Developer-run request (bundled, one pass)
+
+1. **Instance A ops** (P0-2, P1-9, P1-10, P2-1..P2-7): the bridge command from
+   `postgresql-reference.md` §Instance A — version, `\l` db set, `pdlf` table
+   inventory + schema vs spec, extensions, `postgres` admin tables, role list,
+   locks/autovacuum/idle-in-txn, C: disk
+2. **Instance A log scan** (P1-9) — `data\log\` recent entries
+3. **Instance B log scan** (P1-8) — `/var/log/postgresql/postgresql-16-main.log`,
+   last 7 days
+4. **Boot config** (P2-14) — `/etc/wsl.conf` `[boot]` intact
+5. **`.env` integrity** (P2-15) — sources cleanly; variables present by name
+
+**Status 2026-09-13:** blocks 1, 2, 3, 4, 5 returned and recorded
+`developer-verified` above (A log scan: zero errors since Oct 2025 — instance
+dormant-quiet, PASS). **Only P2-4/5/6/7 detail remains open** (returned output
+covered version/dbs/tables/locks/autovacuum only) — follow-up commands:
 
 ## Guard layers
 
-Cupcake blocked a bundled probe command mid-exam (critical-path policy) — expected
-behavior, recorded as verified for the guard-layers-armed invariant.
+One denial this run (P0-2 bridge, secrets guard) — honored per plan, rerouted to
+developer request. Guard armed and behaving exactly as the execution-boundary
+learning predicts.
 
 ## Not run this cycle
 
-Tier 3 (not unlocked). Instance A operational probes (locks, autovacuum,
-idle-in-txn, disk, log scan): **developer-run** — the bridge `.env` sourcing is now
-guard-blocked for agent execution (secrets rule); hand the developer:
-`pg_locks WHERE NOT granted` count, `SHOW autovacuum`, idle-in-txn count, C: free
-space, log scan. `.env` re-verification beyond the earlier same-day bridge run
-(which succeeded and sourced cleanly — implicit pass at that time).
+**P2-6 corrected command** (admin-DB table count — the one open evidence item):
+
+```bash
+cd /mnt/c/dev/dev-makepdlf/makepdlf-project-library && set -a && source .env && set +a && powershell.exe -NoProfile -Command "\$env:PGPASSWORD='$PGPASSWORD'; & 'C:\Program Files\PostgreSQL\15\bin\psql.exe' -h localhost -U pdlf_agent -d postgres -tAc \"SELECT 'admin_tables='||count(*) FROM pg_tables WHERE schemaname='public';\"" 2>&1
+```
+
+Tier 3: P3-1/2/3 deferred-documented (superuser + restart-test — see Tier 3
+section); P3-4/5/6 executed this run.

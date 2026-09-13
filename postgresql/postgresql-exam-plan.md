@@ -23,8 +23,10 @@ edition is the first hand-written plan and the format template.
 
 | Item | Value |
 |---|---|
-| Plan for run | #2 (first formal plan-driven run) |
-| Prior report | `postgresql-exam-report.md` (2026-09-12, detection-only) |
+| Plan for run | #2 — **first formal plan-driven run** |
+| Run date | 2026-09-13 |
+| Prior report | `postgresql-exam-report.md` (2026-09-12, detection-only pilot) |
+| Step-0 result | PASS (3/3 hash pairs match; suite files present; spec doc exists; no open run) |
 | Tier 3 unlock state | **Locked** — Tier 3 rows execute only if the developer unlocks this run |
 | Developer-run requests this run (bundled into ONE request) | (a) Instance A log scan; (b) Instance A operational probes via bridge (`.env` sourcing is agent-forbidden); (c) Instance B log scan (system path — agent-forbidden); (d) boot-config check `/etc/wsl.conf` (system path — agent-forbidden); (e) `.env` integrity check (secrets guard); (f) `pg_hba` posture checks — only if Tier 3 unlocked |
 | Expected-value source of truth | `postgresql-config.md` — read fresh at run start; never rely on remembered values |

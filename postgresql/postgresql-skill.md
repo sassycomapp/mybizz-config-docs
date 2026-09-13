@@ -81,7 +81,7 @@ developer request; never source `.env` as agent; never construct a workaround.
 | P2-10 | A | `gbrain` conformance | owner `postgres`; 62 tables; all RLS; schema v128; embedding `openai:text-embedding-3-large` (1536d) |
 | P2-11 | A | `gbrain` extensions | plpgsql, vector 0.6.0, pg_trgm 1.6, pgcrypto 1.3 |
 | P2-12 | A | `memory_governor` conformance | owner `memory_governor_svc`; 5 tables, all owned by it |
-| P2-13 | A | B role set | exactly `postgres`, `memory_governor_svc`, `ledger_writer`, `ledger_approver`; svc cannot connect to `gbrain` |
+| P2-13 | A | B role set | exactly `postgres`, `memory_governor_svc`, `ledger_writer`, `ledger_approver`; svc cannot connect to `gbrain` — **tested via `has_database_privilege(role, db, 'CONNECT')`, never via `SET ROLE`** (superuser impersonation always succeeds and proves nothing) |
 | P2-14 | D | Boot config | `/etc/wsl.conf` `[boot]` command intact |
 | P2-15 | D | `.env` integrity | sources cleanly; `PGPASSWORD`, `PGADMIN_USER`, `PGADMIN_PASSWORD` present by name |
 
