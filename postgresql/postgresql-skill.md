@@ -61,6 +61,7 @@ developer request; never source `.env` as agent; never construct a workaround.
 | P1-5 | A | B: `gbrain` + `memory_governor` sizes vs spec | Sane vs baseline; growth explainable |
 | P1-6 | A | B: embedding coverage — independent count | 100% of `content_chunks` (never trust `gbrain doctor` alone) |
 | P1-7 | A | B: governor table row-count sanity | 5 tables; counts sane; `audit_log` growing not exploding |
+| P1-11 | A | **DB backup freshness — estate-wide** (developer default 2026-09-13: all 5 data-bearing DBs across both instances, weekly cycle, exam-enforced): newest `<db>-db-backup-*.dump` per database in `/home/dev-p/backup-gbrain/` covers `pdlf`, `postgres-a`, `gbrain`, `memory_governor`, `postgres-b`, dated ≤ 7 days; matching copies exist in `/mnt/c/backup-gbrain/` (hash pairs verified). Older than 7 days = finding that forces a fresh cycle (Instance-B dumps agent-runnable; Instance-A dumps via bridge = developer-run) | All 5 fresh ≤7 days; 5/5 hash pairs match |
 | P1-8 | D | B: log scan, last 7 days (`/var/log/postgresql/`) | No ERROR/FATAL/PANIC; no recurring stale-pid-file |
 | P1-9 | D | A: log scan (`data\log\`) | No ERROR/FATAL/PANIC beyond documented noise |
 | P1-10 | D | A: locks / autovacuum / idle-in-txn / C: disk | 0 waiting; autovacuum on; no stale idle-in-txn; disk adequate |

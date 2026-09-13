@@ -9,11 +9,11 @@ date-created: 2026-09-05
 
 Canonical current-state configuration record for GBrain as a division-wide
 system component. Agent-facing. Reflects the live-verified state as of
-2026-09-06. States facts, not history — where the reasoning matters, see
+2026-09-13. States facts, not history — where the reasoning matters, see
 `gbrain-explainer.md` and `memory-master-explainer.md`; for commands and
 procedures, see `gbrain-reference.md`.
 
-**System context (developer-stated, 2026-09-06):** GBrain is one of six
+**System context (developer-stated, 2026-09-06; architecture context unchanged):** GBrain is one of six
 closely-related components — GBrain, gbrain-dream-cycle, gstack,
 memory-governor, PostgreSQL, and the installed `mb-submit-memory` skill — that
 are assessed together, not in isolation. Cross-component reasoning lives in
@@ -26,17 +26,28 @@ together layer; this suite owns GBrain-specific state, commands, and incidents.
 
 | Item | Value |
 |---|---|
-| Version | `0.46.1.0` — CLI and live install agree (`/home/dev-p/gbrain/VERSION`) |
-| Version drift | **`0.48.2.0` available** (update banner + upstream `VERSION` verified identical). Standing policy: upgrade only on check failure — never re-affirmed as ongoing (open item) |
+| Version | `0.46.1.0` — CLI and live install agree (`/home/dev-p/gbrain/VERSION`, re-verified 2026-09-13) |
+| Version drift | **`0.50.0.0` available** (update banner, verified 2026-09-13). Standing policy: upgrade only on check failure — never on version-newness (open item) |
 | Upstream | `github.com/garrytan/gbrain` — MIT; by Garry Tan; 29.6k stars / 1,061 commits (verified 2026-09-06). **Not distributed on npm** — the npm `gbrain` package is unrelated and shadows the binary (upstream warning; see `gbrain-reference.md` Do-not) |
 | Engine | PostgreSQL 16.14, self-hosted, WSL-native; pgvector 0.6.0 |
 | Connection | `postgresql://postgres:***@localhost:5432/gbrain` |
 | Boot behavior | Auto-starts on WSL boot (`service postgresql start` in `/etc/wsl.conf`) |
 | Executable | `/home/dev-p/.bun/bin/gbrain` (bun-link → `/home/dev-p/gbrain/src/cli.ts`) |
-| Two checkouts | **Live install:** `/home/dev-p/gbrain` (0.46.1.0 — authoritative for diagnosis). **Source clone:** `/mnt/c/mybizz/gbrain` at v0.25.0 — far behind, not the running code (open item: refresh or retire) |
+| Install | **Live install:** `/home/dev-p/gbrain` (0.46.1.0 — authoritative for diagnosis; bun-global install, `~/.bun/bin/gbrain` → `src/cli.ts`). **The `/mnt/c/mybizz/gbrain` source clone (v0.25.0) was deleted 2026-09-13** per developer decision — not the running code, referenced nowhere; upstream public, re-clonable |
 | Config file | `~/.gbrain/config.json` |
-| Self-upgrade mode | `notify` (does not auto-apply) |
-| Legacy artifact | `~/.gbrain/brain.pglite` — stale, unused; live engine is Postgres |
+| Self-upgrade mode | **key absent from `config.json`** (developer-verified 2026-09-13, masked jq) — the documented `notify` behavior is the upstream default, not a verified key |
+| Legacy artifact | `~/.gbrain/brain.pglite` — **removed** (confirmed absent 2026-09-12; live engine is Postgres; artifact no longer exists) |
+
+## Backups
+
+The **estate-wide backup convention** (all databases, both instances, both
+locations, weekly exam-enforced cycle) is authoritative in
+`postgresql-config.md` §Backups — this database estate is one system. GBrain
+facts within it: the `gbrain` database (51 MB dump, 62 tables verified) and the
+`memory_governor` database (26 KB dump, 5 tables) are both covered in every
+cycle, delivered to `/home/dev-p/backup-gbrain/` (default) and
+`/mnt/c/backup-gbrain/` (security net); pairs hash-verified (current cycle
+2026-09-13: `6a6d60d57df162a4` / `e20b5694af64cdb7`).
 
 ## Schema pack
 
@@ -60,30 +71,35 @@ is the correct tool — full account in `gbrain-reference.md` and
 | Embedding | `openai:text-embedding-3-large` (1536 dims) |
 | Chat / expansion | `openai:gpt-5.2` |
 
-## Live database statistics (verified 2026-09-06)
+## Live database statistics (verified 2026-09-13 — point-in-time; grows with every sync)
 
-- 1,666 pages / 5,437 chunks / 5,437 embedded (100%) / 656 links / 9 tags
+- 1,880 pages / 5,581 chunks / 5,581 embedded (100%) / 692 links / 9 tags
 - By type: concept 972, code 307, note 194, atom 164, extract_receipt 20, email 5, media 4
 
-## Registered sources (13 — verified 2026-09-06)
+## Registered sources (14 — verified 2026-09-13)
 
 | Source ID | Path | Pages | Federated |
 |---|---|---|---|
-| `default` | `/mnt/c/dev/project-library-global` | 281 | **yes** |
+| `default` | `/mnt/c/dev/project-library-global` | 694 | **yes** |
 | `dev-root-hub` | `/mnt/c/dev/dev-root` | 12 | **yes** |
-| `mybizz-config-docs` | `/mnt/c/mybizz/mybizz-config-docs` | 425 | **yes** |
-| `mybizz-os-docs` | `/mnt/c/mybizz/mybizz-os-docs` | 8 | **yes** |
+| `mybizz-config-docs` | `/mnt/c/mybizz/mybizz-config-docs` | 172 | **yes** |
+| `mybizz-os-docs` | `/mnt/c/mybizz/mybizz-os-docs` | 7 | **yes** |
+| `pdlf` | `/mnt/c/pdlf` | 59 | **yes** |
 | `anvil-agent-references-code` | `/mnt/c/mybizz/anvil-agent-references` | 34 | no |
 | `makepdlf-project-library` | `/mnt/c/dev/dev-makepdlf/makepdlf-project-library` | 128 | no |
 | `mb-3-cs-code` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs` | 263 | no |
-| `mb-3-cs-project-library` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library` | 435 | no |
+| `mb-3-cs-project-library` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library` | 437 | no |
 | `mb4ecom-code` | `/mnt/c/dev/dev-mb4ecom/mb4ecom` | 5 | no |
 | `mb4ecom-project-library` | `/mnt/c/dev/dev-mb4ecom/mb4ecom-project-library` | 5 | no |
 | `mb5pdlf-code` | `/mnt/c/dev/dev-mb5pdlf/mb5pdlf` | 5 | no |
 | `mb5pdlf-project-library` | `/mnt/c/dev/dev-mb5pdlf/mb5pdlf-project-library` | 12 | no |
-| `memory-governor-code` | `/home/dev-p/memory-governor` | 53 | no |
+| `memory-governor-code` | `/home/dev-p/memory-governor` | 47 | no |
 
-All sources synced 2026-09-05 or 2026-09-06. The prior suite's
+Counts are per-source as-of each source's last sync (point-in-time — they lag
+the live identity total mid-cycle; reconcile via per-source DB query). Sum
+reconciles exactly to the identity total (1,880) as of 2026-09-13.
+
+All sources synced 2026-09-05 → 2026-09-13. **The `pdlf` source was registered 2026-09-11** ("PDLF System", federated, 59 pages) — the 14th source, consistent with the pdlf project going live (see `projects-config-register.md`). The prior suite's
 "deferred sources" framing is obsolete — every registered source currently
 holds real, recently-synced content. Inactive-project sources stay registered
 rather than removed (advisory memory retains value); only a content-free
@@ -98,7 +114,7 @@ user-chosen name; do not rename.
 
 | Path | Mechanism | GBrain layer written | Carries | Real usage |
 |---|---|---|---|---|
-| **Sync path** | Standing script (`sync-gbrain.sh`: `gbrain sync` + `embed --stale`) + per-source `gbrain sync --source <id>`; daily-ops.md documents per-repo sync as the standing after-work workflow | **Pages/corpus** | Whole repos: vendor bypass sources (anvil-agent-references, magdoub-wireframe — permanent governor bypasses), developer doc repos, project code+library sources | 18 logged runs (2026-07-28 → 2026-09-06); all 13 sources; the dominant path by volume |
+| **Sync path** | Standing script (`sync-gbrain.sh`: `gbrain sync` + `embed --stale`) + per-source `gbrain sync --source <id>`; daily-ops.md documents per-repo sync as the standing after-work workflow | **Pages/corpus** | Whole repos: vendor bypass sources (anvil-agent-references, magdoub-wireframe — permanent governor bypasses), developer doc repos, project code+library sources | 18+ logged runs (2026-07-28 → 2026-09-13); all 14 sources; the dominant path by volume |
 | **Governed path** | Developer or PDLF step → `mb-submit-memory` → governor API → promote → async `gbrain_write` → `remember` (MEMORY_VERBS) | **Facts layer** (hot memory) | Individual judgment-bearing content meant to be checked before becoming durable | Exactly one real run (2026-08-27, promoted; its `gbrain_write` initially queued pending the dev-makepdlf source rename, since resolved); `pdlf_step_sync` writer parked pending PDLF go-live |
 
 **The boundary (by design, from `memory-governor-config.md`):** sync must
@@ -156,10 +172,9 @@ here precisely; masked per the standing decision above.
 
 | Item | Value |
 |---|---|
-| Bundle | tracks CLI (0.46.1.0), 61 skills |
-| Scaffolded | 60 of 61 — `skillify` excluded (name collision with a GStack skill) |
+| Bundle | tracks CLI (0.46.1.0); **65 entries inventoried 2026-09-13** — 60 skill directories + 4 underscore metadata files (`_AGENT_README.md`-class); `skillify` absent (regenerated bundle dropped it) |
 | Destination | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs/.opencode/skills/` (project-local, gitignored) |
-| Confirmed post-restart | exactly 60 GBrain skills + exactly one `skillify` |
+| Note | the bundle regenerates with the CLI — entry counts/shapes change per regeneration; exams compare against the last recorded state, not older snapshots |
 
 ## Master explainer maintenance rule (settled, 2026-09-06)
 
@@ -173,7 +188,7 @@ re-decided per run.
 
 | # | Item | Status |
 |---|---|---|
-| 1 | Upgrade policy: `0.46.1.0` in use while `0.48.2.0` is available (upstream `VERSION` verified); the "upgrade only on check failure" policy was never explicitly re-affirmed as ongoing. Do not upgrade on version-newness alone. | Open |
-| 2 | MEMORY_VERBS premise reconciled: `memory-governor-config.md` records `mcp_surface: verbs` enabled as its Step 0.2 build prerequisite, while current `~/.gbrain/config.json` carries no `mcp_surface` key and the current version's default MCP surface includes the memory verbs (observed 2026-09-06). Both records stated with provenance; the verbs-only surface (`gbrain config set mcp_surface verbs`) remains available as a config choice. | Open |
-| 3 | Source clone at `/mnt/c/mybizz/gbrain` is v0.25.0 vs the 0.46.1.0 live install — refresh or retire it (diagnosis uses the live install). | Open |
+| 1 | Upgrade policy: `0.46.1.0` in use while `0.50.0.0` is available (banner + releases verified 2026-09-13). Upgrade is **non-trivial**: coordinated queue cutover (pause → drain → stop → backup → install → review legacy jobs), old/new workers must not coexist, schema migrations apply. Prerequisites check: Bun 1.3.14 ≥ 1.3.11 minimum ✓; fresh DB backup now exists (2026-09-13, both locations — see Backups section). Policy: upgrade only on check failure or by developer decision. | Open |
+| 2 | MEMORY_VERBS premise reconciled: `memory-governor-config.md` records `mcp_surface: verbs` enabled as its Step 0.2 build prerequisite, while current `~/.gbrain/config.json` carries no `mcp_surface` key (re-verified 2026-09-13, masked jq) and the current version's default MCP surface includes the memory verbs (observed 2026-09-06). Both records stated with provenance; the verbs-only surface (`gbrain config set mcp_surface verbs`) remains available as a config choice. | Open |
+| 3 | Source clone at `/mnt/c/mybizz/gbrain` (v0.25.0) **deleted 2026-09-13** per developer decision — verified not implemented (running code is the bun-global install; zero references in any config/script) and not pristine (local debris only: auto-managed `.gitignore` lines + a stray `pnpm-lock.yaml`; nothing unique — upstream public, re-clonable). | Resolved |
 | 4 | Project `agents.md` managed-block decisions: whether to fold the Access Model bullets into the Graph Memory Guidance block, and whether the block should ever be committed — raised, never decided; do not act without explicit direction. | Open |

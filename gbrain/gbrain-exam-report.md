@@ -2,79 +2,87 @@
 document: "GBrain — Exam Report"
 doc-id: gbrain-exam-report
 state: Live
-date-created: 2026-09-12
+date-created: 2026-09-13
 ---
 
 # GBrain — Exam Report
 
-First verification run of the `mb-config-gbrain` module (2026-09-12).
-Detection only — Tiers 0–2. Tier 3 not unlocked. Spec: `gbrain-config.md`
-(verified live 2026-09-06).
+Run #1 — **first formal plan-driven run** (2026-09-13). Plan:
+`gbrain-exam-plan.md` (step-0 self-validation: PASS — 8 suite files, hash pair
+MATCH 4a2e10d8a69752f7, spec present, no open run). Detection only — Tiers 0–2
+agent-runnable checks executed; Tier 3 locked. Scope boundary honored: DB-level
+facts cross-referenced from the postgres module's run-#2 report, not re-probed.
 
-## Verdict: SYSTEM HEALTHY — spec doc stale in five places (docs governance)
+## Verdict: SYSTEM HEALTHY — all agent-runnable checks green; 273-page accounting question RESOLVED; 4 spec-drift flags re-confirmed pending governance
 
 ## Tier 0 — Liveness: PASS
 
-| Check | Expected | Actual | Result |
-|---|---|---|---|
-| Binary + VERSION | `/home/dev-p/.bun/bin/gbrain`, 0.46.1.0 | both agree | PASS |
-| Engine responds | identity returns | 0.46.1.0, postgres engine, counters returned | PASS |
-| DB ping | reachable | reachable (postgres module Tier 0 green) | PASS |
+| ID | Check | Expected | Actual | Result |
+|---|---|---|---|---|
+| G0-1 | Binary + VERSION | present, 0.46.1.0 | exact | PASS |
+| G0-2 | Engine responds (identity call) | version + counters, no error | 0.46.1.0, postgres engine, 1,880 pages / 5,581 chunks | PASS |
+| G0-3 | DB ping | 1 | 1 | PASS |
 
 ## Tier 1 — Health: PASS
 
-| Check | Result |
-|---|---|
-| Sources | 14 live, all paths on disk, all with real page counts |
-| Sync machinery | `sync-failures.jsonl` = 0 bytes — zero sync failures |
-| Embedding coverage | 100% per current postgres-module exam report (cross-referenced, not re-probed) |
-| Scheduled jobs | none in crontab — design state holds |
-| Identity counters | 1,824 pages / 5,529 chunks — cross-match postgres exam exactly |
+| ID | Check | Result |
+|---|---|---|
+| G1-1 | 14 registered sources, **14/14 paths exist on disk**, page counts sane (growth-at-sync explained) | PASS |
+| G1-2 | Sync machinery: `sync-failures.jsonl` 0 bytes; **zero** crontab gbrain entries | PASS |
+| G1-3 | Embedding coverage: postgres module run-#2 report = 100%; this run's quick count 5,581/5,581 after two syncs | PASS (100% held through syncs) |
+| G1-4 | `brain.pglite` absent — expected (CF-3 documented state) | PASS w/ flag |
+| G1-5 | `~/.gbrain/` structure intact; `config.json` present with restrictive permissions (`-rw-------`) | PASS |
 
-## Tier 2 — State conformance: PASS with drift flags
+## Tier 2 — State conformance: PASS with carried spec-drift flags
 
-| Check | Expected (spec) | Actual | Result |
+| ID | Expected | Actual | Result |
 |---|---|---|---|
-| Version | 0.46.1.0 live; upgrade only on check failure | 0.46.1.0; upstream now 0.50.0.0 (spec recorded 0.48.2.0) | PASS (policy holds) |
-| Schema pack | gbrain-everything@1.0.0+7021205a, 30/12 | exact match | PASS |
-| MCP entry | local, `[..., "serve"]`, enabled | exact match | PASS |
-| Registered sources | 13 | **14** — see finding 1 | DRIFT |
-| Legacy `brain.pglite` | present (stale) | **absent** — see finding 3 | DRIFT |
-| Skills bundle | 60 skills + skillify | 65 entries, no skillify, 4 underscore metadata files — see finding 4 | DRIFT |
-| config.json content | self_upgrade notify; no keys inside | not checked — guard-blocked, developer-run | DEFERRED |
-| Source clone version (follow-up) | v0.25.0, far behind | **v0.25.0 confirmed** — spec record accurate | PASS |
-| MCP env names (follow-up) | OPENAI_API_KEY, ZEROENTROPY_API_KEY by name | exact match (names only; values untouched) | PASS |
+| G2-1 | 0.46.1.0 live; upgrade only on check failure | 0.46.1.0; upstream latest 0.50.0.0 (banner) | PASS (policy holds) |
+| G2-2 | `gbrain-everything@1.0.0+7021205a`, 30/12 | exact match (MCP) | PASS |
+| G2-3 | MCP entry exact | **guard-denied this run** → developer bundle | DEFERRED |
+| G2-4 | embedding 3-large 1536d | `config` table: model + dims + chunk_strategy=semantic | PASS |
+| G2-5 | bundle per spec | 65 entries + 4 underscore metadata files (matches evolved state; spec stale — CF-4) | DRIFT (carried) |
+| G2-6 | Page accounting reconciles | **RESOLVED: per-source DB attribution sums to exactly 1,880 = identity; zero unattributed pages** — see finding 2 | PASS |
+| G2-7 | All source paths exist | 14/14 | PASS |
+| G2-8 (config.json content) | self_upgrade notify; no keys inside | developer-run (guard) | DEFERRED |
 
 ## Findings
 
-1. **DRIFT — new source.** `pdlf` ("PDLF System", `/mnt/c/pdlf`, federated, 59 pages,
-   synced 2026-09-11) registered after the spec's 2026-09-06 verification. Consistent
-   with the pdlf project going live 2026-09-11 (see projects-config-register).
-   → docs governance: add source row, refresh verification date.
-2. **DRIFT — page-count table stale.** default 694 vs 281; mybizz-config-docs 116 vs
-   425 (a large drop — needs explanation on the doc-refresh pass); memory-governor 47
-   vs 53; mybizz-os-docs 7 vs 8; mb-3-cs-project-library 437 vs 435. Also: source sum
-   = 1,551 vs identity total 1,824 (273 unaccounted — spec's sums reconciled exactly;
-   the accounting question needs one focused follow-up next run). → docs governance
-   refresh of the statistics + sources tables.
-3. **DRIFT — legacy artifact gone.** `~/.gbrain/brain.pglite` no longer exists.
-   Functionally fine (it was documented stale/unused; Postgres is the engine).
-   Spec lists it as present → docs governance.
-4. **DRIFT — skills bundle evolved.** 65 entries: no `skillify`, 4 underscore
-   metadata files (`_AGENT_README.md`, `_brain-filing-rules.json/.md`,
-   `_output-rules.md`) vs spec's "60 + skillify = 61". Project-local and gitignored —
-   bundle regenerates with CLI; spec refresh → docs governance.
-5. **Agent execution boundary (new, structural).** The sensitive-data guard blocks
-   agent reads of `~/.gbrain/config.json` outright — config-content conformance
-   (self_upgrade_mode, models, keys-absent) is **developer-run**. Skill amended
-   same-run. Not a fault: the guard is doing exactly what the credential rule wants.
+1. **Spec-drift flags re-confirmed (CF-1..4, pending governance).** The
+   `gbrain-config.md` refresh has **not** been approved/applied: spec lists 13
+   sources (live: 14 incl. `pdlf`); counts/dates stale; `brain.pglite` still
+   listed present (absent since before the pilot); bundle row stale (65 entries,
+   no `skillify`, 4 underscore metadata files). All re-flagged for one batched
+   governance approval.
+2. **273-page accounting question RESOLVED (CF-2).** Per-source DB attribution
+   (`GROUP BY source_id`) sums to **exactly 1,880 = identity total**, zero
+   unattributed pages. The pilot's gap was **snapshot lag**: the MCP sources
+   list reports per-source counts as-of each source's last sync, which lag the
+   live DB mid-cycle. The durable check is the per-source DB query, not
+   cross-snapshot sums. → learning graduated into the plan/skill method.
+3. **Guard reclassification (G2-3).** `opencode.jsonc` jq reads were denied this
+   run (previously passed) — the MCP-entry check moves to the developer bundle;
+   the nondeterminism documented in `config-manager-learnings.md` revalidated.
+4. **Learning confirmed (LE-1):** count drift at sync is by design — coverage %
+   held at 100% through two syncs today; config.md's point-in-time note is the
+   correct doctrine.
 
 ## Guard layers
 
-Sensitive-data guard blocked the config.json read probe mid-exam — honored, no
-workaround; checks rerouted to developer-run. Guard verified armed.
+Sensitive-data guard denied config.json and opencode.jsonc reads — honored,
+rerouted developer-run. Guard armed and behaving per the execution-boundary
+learnings.
+
+## Developer-run request (bundled — Tier 3 + guard-denied items)
+
+1. **G3-1 `config.json` content** (masked output, never print the DB URL):
+   `jq '{self_upgrade_mode, models, mcp_surface: has("mcp_surface"), keys: (keys | length)}' ~/.gbrain/config.json` — report values except anything secret-shaped
+2. **G2-3 MCP entry** — `jq '.mcp.gbrain | {type, command, enabled}' ~/.config/opencode/opencode.jsonc`
+3. **G3-2 sync sample** (unlock-dependent, writes): `gbrain sync --source mybizz-os-docs`
+4. **G3-3 restart behavior** (unlock-dependent, disruptive): full `wsl --shutdown` test
+5. **G3-4 upgrade decision** (policy question — your call, never agent-initiated)
 
 ## Not run this cycle
 
-Tier 3 (sync sample, restart behavior, upgrade decision); config.json content
-checks; MCP restart behavior; the 273-page accounting question (finding 2 follow-up).
+Tier 3 items above (locked); the gbrain upgrade decision; the source-clone
+refresh/retire question (spec open item 3 — never resolve unilaterally).

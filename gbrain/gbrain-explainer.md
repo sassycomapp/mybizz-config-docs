@@ -10,7 +10,11 @@ date-created: 2026-09-05
 *Companion note: for current confirmed state (version, sources, credentials,
 open items) see `gbrain-config.md`. For commands, incidents, and
 troubleshooting, see `gbrain-reference.md`. For how the memory components fit
-together, see `memory-master-explainer.md`.*
+together, see `memory-master-explainer.md`. Exam companions:
+`gbrain-exam-plan.md` (next run's job-spec), `gbrain-exam-report.md` (current
+verified state), `gbrain-log.md` (notable events), `gbrain-learnings.md`
+(transient exam knowledge). The architecture standard:
+`mb-config-manager/config-manager-explainer.md`.*
 
 ---
 
@@ -210,8 +214,64 @@ ended, not that every phase did meaningful work. See
 **The brain's mirror can lag its sources** — sync is commit-based; content is
 current only as of the last synced commit. The file wins.
 
+## 12. Config maintenance — how this system is examined and kept healthy
+
+This suite participates in the config-management system (`mb-config-manager`).
+The roles of the seven suite files, and the exam cycle that runs them, are the
+architecture described in `config-manager-explainer.md` — emulated from the
+PostgreSQL pilot. The short local version:
+
+- `gbrain-config.md` is the **spec** — the ideal state every exam checks against.
+- Before each exam run, the config-manager synthesizes `gbrain-exam-plan.md`:
+  a fresh job-spec built from this spec, the last report, the log, and the
+  learnings — carrying forward what was deferred, addressing what erred,
+  deriving probes from new log events, and folding in lessons not yet graduated.
+  The plan is transient (the file is live; contents rewritten each cycle).
+- The exam runs the installed skill (`mb-config-gbrain`) with the plan in hand —
+  detection fully autonomous; healing gated. **No live-system heals are defined
+  for gbrain**: sync, schema changes, upgrades, source registration are all
+  state changes to a memory system governed elsewhere — diagnosis and proposal
+  only, every change through the developer gate.
+- **Scope boundary with the postgres module:** database-level facts (tables,
+  RLS, roles, extensions, embedding coverage) belong to `mb-config-postgresql`'s
+  exam; this exam cross-references its current report instead of re-probing.
+- Several checks are permanently **developer-run**: config.json content (the
+  sensitive-data guard blocks agent reads — proven), full sync samples
+  (content-changing), MCP restart behavior, and any upgrade decision.
+- The run rewrites `gbrain-exam-report.md` (current state, no history), appends
+  one row to `gbrain-log.md`, files new learnings, and prunes absorbed entries.
+
+## 13. S.W.O.T.
+
+**Strengths.** Division-wide memory proven at scale (1,800+ pages, 100%
+embedding coverage verified independently); multi-source federation across every
+project repo; a proven sync path with zero recorded sync failures; the
+schema-pack system pins structure (30/12) and is verified via cheap MCP calls.
+
+**Weaknesses.** The two-checkout situation (live install vs stale source clone)
+persists as an open item; page-accounting between sources and identity totals
+was unexplained at pilot (273 pages); several checks are permanently
+developer-run (config.json content, sync samples); version lags upstream
+(0.46.1.0 vs 0.50.0.0) by deliberate policy.
+
+**Opportunities.** The config-management exam makes silent memory degradation —
+coverage decay, source drift, sync failure — detectable on demand; the
+plan-driven cycle means every incident (e.g. the pdlf source appearing) becomes
+a spec-refresh loop rather than undocumented drift.
+
+**Threats.** Unsynced mirrors silently diverge from their sources (sync is
+commit-based); a failed upgrade would be self-inflicted (policy guards against
+newness-driven upgrades); the stale source clone could mislead diagnosis if
+mistaken for the live install (spec documents the distinction; never resolve
+unilaterally).
+
 ---
 
-*Companion documents: `gbrain-config.md` (state), `gbrain-reference.md`
-(commands, incidents), `gbrain-dream-cycle-explainer.md` (the autonomous
-mechanism), `memory-master-explainer.md` (the cross-component system).*
+*Suite: `gbrain-config.md` (spec), `gbrain-reference.md` (commands, incidents),
+`gbrain-exam-plan.md` / `gbrain-exam-report.md` / `gbrain-log.md` /
+`gbrain-learnings.md` (config-management set), `gbrain-skill.md` (exam skill
+canonical source). Architecture: `mb-config-manager/config-manager-explainer.md`.
+Related: `gbrain-dream-cycle-explainer.md` (the autonomous mechanism),
+`memory-master-explainer.md` (the cross-component system).*
+
+*End of document*

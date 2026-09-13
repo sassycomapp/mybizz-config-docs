@@ -147,6 +147,20 @@ of one exists.
 | The `.env` line-16 sourcing failure | Fixed 2026-09-09 (the value quoted); the file sources cleanly. |
 | The boot-durability fix | Extended 2026-09-09: the boot command now also starts the memory-system processes; the whole chain proven across a real WSL restart. |
 
+## Backups (estate-wide — established 2026-09-13)
+
+| Location | Role | Notes |
+|---|---|---|
+| `/home/dev-p/backup-gbrain/` | **Default** | WSL-native, same host as Instance B — fastest to produce and restore (name is historical) |
+| `/mnt/c/backup-gbrain/` (`C:\backup-gbrain`) | **Security net** | Windows-drive copy — survives a full WSL distro reinstall or loss; also the direct dump target for Instance A (Windows `pg_dump.exe` writes there natively) |
+
+- **Coverage: every data-bearing database on both instances, always** (developer default, 2026-09-13): Instance A `pdlf` + `postgres` (admin); Instance B `gbrain` + `memory_governor` + `postgres` (admin). **Templates excluded** — standard system objects, rebuildable from the install itself; `template0` is not connectable and cannot be dumped normally.
+- Format: `pg_dump -Fc` (custom, compressed); one file per database (pg_dump is per-database by design). Naming: `<db>-db-backup-YYYY-MM-DD.dump`, admin DBs disambiguated `-a-` / `-b-` by instance.
+- **Cadence default: weekly (7 days), exam-enforced** — every config-management exam checks dump age; older than 7 days = finding that forces a fresh cycle. No cron/scheduler (respects the standing "nothing gbrain-related is scheduled" design decision). Event-triggered extras: always before upgrades, schema changes, or destructive operations.
+- **Live-database lesson (2026-09-13):** a live database changes between a dump and its copy — **never re-dump one side of the pair**; dump once, copy to both locations immediately, then hash-verify the pair (`cmp`/sha256). A mismatched pair means re-dump + re-copy both, never copy one way twice.
+- Current cycle (2026-09-13): `pdlf` 21,720 B (7 tables verified) · `postgres-a` 5,179 B (0 user tables — expected) · `gbrain` 51,429,231 B (62 tables verified) · `memory_governor` 26,032 B (5 tables verified) · `postgres-b` 1,093 B (0 user tables — expected). All five pairs hash-verified identical.
+- Instance-A dumps are produced via the PowerShell bridge (developer-run — the bridge `.env` sourcing is agent-forbidden); Instance-B dumps are agent-runnable.
+
 ## Known undocumented items (deliberately retained, each documented)
 
 - The dead duplicate `PostgreSQL` Windows service — cosmetic only, left in

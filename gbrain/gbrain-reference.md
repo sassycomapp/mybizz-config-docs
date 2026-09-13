@@ -7,9 +7,12 @@ date-created: 2026-09-05
 
 # GBrain — Reference: Commands, Mechanics, Incidents, Troubleshooting
 
-Companion to `gbrain-config.md` (current state) and `gbrain-explainer.md`
-(what it is and why). Agent-facing. Division-scoped — applies across all
-projects.
+Companion to `gbrain-config.md` (the spec — current state) and
+`gbrain-explainer.md` (what it is and why — the authoritative whole-system
+narrative). Exam companions: `gbrain-exam-plan.md` (next run's job-spec),
+`gbrain-exam-report.md` (current verified state), `gbrain-log.md` (notable
+events), `gbrain-learnings.md` (transient exam knowledge). Agent-facing.
+Division-scoped — applies across all projects.
 
 ---
 
