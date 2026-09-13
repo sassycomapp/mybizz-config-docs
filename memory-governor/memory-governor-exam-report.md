@@ -56,16 +56,16 @@ conformance cross-referenced from postgres run #2).
    lines — the fate of failed events cannot be determined from the log alone.
    → learning filed; destination: skill Tier 1 note + a developer-decision item
    (add timestamps to worker logging — a code change, gated).
-3. **Unresolved worker write failures (the run's most important finding).**
-   Events 3802–3806 failed attempt 1/5: `git add registers/` and `git commit`
-   (exit 128 — stale git lock, since cleared: tree is clean now) and
-   `FileNotFoundError: 'gbrain'` (the worker's PATH could not see the binary).
-   **Zero retries were ever logged.** The current worker (PID 315,
-   boot-spawned via `su dev-p`) may still lack `~/.bun/bin` in its PATH —
-   meaning governed gbrain-writes could be silently failing. The `/proc`
-   environ read is guard-blocked for agents, so this needs **developer
-   verification**: check the worker's PATH and the fate of events 3802–3806.
-   Class: UNHEALTHY-leaning verification gap.
+3. **Unresolved worker write failures — RESOLVED during the run (2026-09-13).**
+   Events 3802–3806 failed attempt 1/5 (git ops exit 128 via a stale lock, since
+   cleared; `FileNotFoundError: 'gbrain'` — worker PATH). Investigation: the
+   outbox now holds **zero unprocessed events** and **no rows with IDs ≥ 3802**
+   — the outbox deletes on delivery, so those events were ultimately
+   **delivered and purged**, not lost. The stale-lock condition is gone (clean
+   tree). Remaining uncertainty: whether the boot-spawned worker's PATH includes
+   `~/.bun/bin` for **future** gbrain writes — `/proc` environ read is
+   guard-blocked for agents → developer PATH check (bundle item 1).
+   Class downgraded: UNHEALTHY-leaning → resolved-with-follow-up.
 4. **M0-4 doctrine validated:** the 422 probe (auth-gate closed + API alive)
    worked exactly as designed — one request, two facts.
 
@@ -77,11 +77,12 @@ honored, rerouted to the developer bundle.
 ## Developer-run request (bundled)
 
 1. **Worker PATH check:** `cat /proc/<worker-pid>/environ | tr '\0' '\n' | grep PATH` — does it include `/home/dev-p/.bun/bin`?
-2. **Events 3802–3806 fate:** `psql ... -c "SELECT event_id, status, attempts FROM memory_events WHERE event_id IN (3802,3803,3804,3805,3806);"` (status column name per schema)
+2. **M3-1 + M2-7 full test suite** (requires the env the 2026-09-08 run had):
+   `cd /home/dev-p/memory-governor && set -a && source .env && set +a && .venv/bin/python -m pytest -q` — expect 304 passed, 0 failed; also covers the credentialed registry check
 3. **Timestamps decision:** should worker logging gain timestamps? (code change, gated)
-4. **M2-7 credentialed registry check** (spec pending item 2)
 
 ## Not run this cycle
 
-Tier 3 (locked): full test suite (304/0 expected), auto-start execution, recovery
-drill, repo commit+push (spec pending items 3–4).
+Tier 3 (locked): M3-1 suite (→ developer, above), M3-2 auto-start execution,
+M3-3 recovery drill. M3-4 repo push state: **already satisfied** — `main` in
+sync with `origin/main` (HEAD d31642f).

@@ -29,7 +29,7 @@ magdoub-wireframe. Completed pilots: postgresql, cupcake, gbrain.
 | gbrain | mb-config-gbrain | gbrain/gbrain-config.md | Installed | 58dc0b52cbc86d72 | 2026-09-12 | verified live 2026-09-12; source `gbrain/gbrain-skill.md`; installed `~/.config/opencode/skills/mb-config-gbrain/SKILL.md` |
 | gstack | mb-config-gstack | gstack/gstack-config.md | WIP | emulation queued |
 | opencode | mb-config-opencode | opencode/opencode-config.md | WIP | emulation queued |
-| memory-governor | mb-config-memory-governor | memory-governor/memory-governor-config.md | Installed | 4f5df4779a6d4597 | 2026-09-13 | run #1 formal: HEALTHY+FLAGS; verified live 2026-09-13; source `memory-governor/memory-governor-skill.md`; installed `~/.config/opencode/skills/mb-config-memory-governor/SKILL.md` |
+| memory-governor | mb-config-memory-governor | memory-governor/memory-governor-config.md | Installed | c40df342d523aa59 | 2026-09-13 | run #1 formal: HEALTHY+FLAGS; verified live 2026-09-13; source `memory-governor/memory-governor-skill.md`; installed `~/.config/opencode/skills/mb-config-memory-governor/SKILL.md` |
 | archify | mb-config-archify | archify/archify-config.md | Registered | module pending |
 | graphify | mb-config-graphify | graphify/graphify-config.md | WIP | emulation queued |
 | magdoub-wireframe | mb-config-magdoub-wireframe | magdoub-wireframe/magdoub-wireframe-config.md | WIP | emulation queued |

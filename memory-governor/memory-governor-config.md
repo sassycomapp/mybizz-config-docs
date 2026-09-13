@@ -45,7 +45,7 @@ provided, pending developer execution.
 | Engine | PostgreSQL — same WSL instance as GBrain's database (verified up 2026-09-08) |
 | Database name | `memory_governor` — distinct from `gbrain` |
 | Role | `memory_governor_svc` — scoped; cannot connect to the `gbrain` database |
-| Tables | `projects`, `memory_candidates`, `policy_versions`, `memory_events`, `audit_log` (migrations 001–003) |
+| Tables | `projects`, `memory_candidates`, `policy_versions`, `memory_events`, `audit_log` (migrations 001–003). Row counts are **live and drift continuously** (worker/API write continuously) — point-in-time at verification: projects 3, candidates 5, events 7, audit 5, policy 0 (2026-09-13); exams compare growth explainability, never exact equality |
 | `memory_type` column | Plain TEXT — no enum constraint (this is why the MemoryType enum extension needed **no migration**) |
 | Concurrency mechanism | Transactional outbox (`memory_events`) + Postgres `LISTEN`/`NOTIFY`, one dedicated worker process. No external message broker. |
 
@@ -76,7 +76,7 @@ dictionary does not need to be fact-checked against itself. Permanent,
 standing rule. Ordinary syncing of this source remains the developer's
 own responsibility.
 
-## API surface (verified from source, 12 routes)
+## API surface (verified from source, **11 routes** — header corrected 2026-09-13: the previous "12" was a spec-internal error; the table and live source both count 11)
 
 | Method & Path | Purpose |
 |---|---|
