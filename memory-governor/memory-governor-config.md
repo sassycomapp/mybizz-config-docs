@@ -164,6 +164,6 @@ Every write path goes through transition validation — creation included.
 1. Outbound-network rule + cross-folder rule formal eval tests + keep decisions (both amendments already live and one real-call-verified each).
 2. Credentialed registry/review-queue check (closes the governor-side `owning_project` verification).
 3. Commit + push of the governor repository's resolution changes.
-4. Permanent auto-start: WSL systemd migration + the two service units (the last step making the system fully restart-independent).
+4. Permanent auto-start: WSL systemd migration + the two service units (the last step making the system fully restart-independent). **PREPARED 2026-09-13: both unit files authored and placed** at `~/.config/systemd/user/memory-governor-{api,worker}.service` (via sanctioned mg-grant); full migration procedure in `memory-governor-reference.md`. **Remaining: developer-run only** — edit `/etc/wsl.conf` (`systemd=true` under `[boot]`), run `wsl --shutdown`, then `systemctl --user daemon-reload && systemctl --user enable --now memory-governor-api.service memory-governor-worker.service` (the restart terminates any agent session — run last, after all work is committed).
 5. gbrain sync of the documentation commits.
 ```

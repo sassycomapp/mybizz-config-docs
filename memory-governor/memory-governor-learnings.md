@@ -16,6 +16,7 @@ overwrites it. Entries never accumulate. Cross-cutting learnings (guard classes,
 graduation rules) live in the orchestrator's own
 `mb-config-manager/config-manager-learnings.md`, not here.
 
-<!-- empty — all three run-#1 learnings graduated 2026-09-13 (auth-gate probe →
-     skill; row-count point-in-time → config.md; worker-log observability →
-     skill Tier 1) -->
+<!-- empty — run-#1 learnings graduated 2026-09-13 (auth-gate probe → skill;
+     row-count point-in-time → config.md; worker-log observability → skill Tier 1;
+     suite-vs-live-worker race → FIXED: scripts/run-tests-deterministic.sh +
+     reference procedure) -->

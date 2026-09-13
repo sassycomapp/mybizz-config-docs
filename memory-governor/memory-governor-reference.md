@@ -18,6 +18,16 @@ Exam companions: `memory-governor-exam-plan.md` (next run's job-spec),
 
 ---
 
+## Running the test suite — deterministically (use this, not bare pytest)
+
+**Never run bare `pytest` while the worker is live** — the suite inserts events into the live outbox and the worker (NOTIFY wake + 60s poll) races the tests, producing timing-dependent failures (observed 2026-09-13: 2 failures, both traced to the worker consuming test events mid-assertion). Use the deterministic runner:
+
+```bash
+/home/dev-p/memory-governor/scripts/run-tests-deterministic.sh
+```
+
+It gracefully pauses the worker (kill by PID — the documented safe method), runs the full suite with the environment loaded, and **always** restarts the worker afterwards (trap, even on failure). Extra pytest arguments pass through (e.g. `... -k test_name`). Bare `pytest` is acceptable only when the worker is not running.
+
 ## Starting and stopping the system (two processes, both required)
 
 Start (from the app folder, `.env` sourced first — no dotenv autoload):
@@ -150,6 +160,76 @@ exception path, regardless of confidence or type. The review presentation
 carries `classification: unresolved_contradiction` and no automatic
 `recommended_action`: the governor never decides which of two conflicting
 cross-project claims is correct.
+
+## Permanent auto-start migration (M3-2) — prepared 2026-09-13, awaiting developer execution
+
+**What it is:** migrating the two processes from the boot-script start to
+native systemd user units. The current `[boot]` command already auto-starts
+everything at WSL boot (proven), so this migration adds robustness (native
+service management, restart=on-failure), not a missing capability.
+
+**Impact warning:** enabling `systemd=true` changes the init model for the
+entire WSL environment and **requires a full `wsl --shutdown`** (which
+terminates any running agent session). The `[boot]` command still executes
+under systemd; the start script is idempotent, so double-starts are prevented.
+Post-restart verification must confirm PostgreSQL still auto-starts.
+
+**Step 1 — author the two unit files (agent-runnable, already placed):**
+`~/.config/systemd/user/memory-governor-api.service` and
+`~/.config/systemd/user/memory-governor-worker.service` (definitions below).
+
+**Step 2 — developer: enable systemd** (edit `/etc/wsl.conf`, add to the
+`[boot]` section): `systemd=true` — then run `wsl --shutdown` from PowerShell
+and reopen a terminal.
+
+**Step 3 — developer: enable + start the units:**
+```bash
+systemctl --user daemon-reload
+systemctl --user enable --now memory-governor-api.service memory-governor-worker.service
+systemctl --user status memory-governor-api memory-governor-worker --no-pager
+```
+
+**Step 4 — verify (agent-runnable):** re-run this skill's Tier 0 — plus
+confirm PostgreSQL auto-started, both processes healthy, auth-gate 422, and
+the start script found both already running (idempotency proof).
+
+### Unit file definitions
+
+`~/.config/systemd/user/memory-governor-api.service`:
+```ini
+[Unit]
+Description=Memory Governor API (FastAPI/uvicorn)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/dev-p/memory-governor
+EnvironmentFile=/home/dev-p/memory-governor/.env
+ExecStart=/home/dev-p/memory-governor/.venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8321
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
+```
+
+`~/.config/systemd/user/memory-governor-worker.service`:
+```ini
+[Unit]
+Description=Memory Governor Worker (outbox LISTEN/NOTIFY)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/dev-p/memory-governor
+EnvironmentFile=/home/dev-p/memory-governor/.env
+ExecStart=/home/dev-p/memory-governor/.venv/bin/python -m app.worker
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
+```
 
 ## Recovering from an accidental GBrain write — real, confirmed procedure
 
