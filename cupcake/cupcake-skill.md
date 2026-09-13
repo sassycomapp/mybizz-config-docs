@@ -10,9 +10,17 @@ the **procedure** only — expected values live in the spec doc and are read fre
 the start of every run.
 
 - Spec: `cupcake/cupcake-config.md` — read it first, every run
+- **Exam plan: `cupcake/cupcake-exam-plan.md` — read second, every run.** The
+  plan-driven cycle: the config-manager synthesizes this plan fresh before each run
+  (from spec + last report + log + learnings) and this skill executes it in hand.
+  The plan carries run-specifics and deltas; the **standing check inventory lives
+  in this skill** (below) — permanent occurrences graduate here, never into plans
 - Reference (health check, recovery, pitfalls): `cupcake/cupcake-reference.md`
 - Report: `cupcake/cupcake-exam-report.md` — one file, overwritten each run
-- Learnings: `cupcake/cupcake-learnings.md`
+- Log: `cupcake/cupcake-log.md` — append one run row (date, verdict, findings,
+  disposition) after every run; free rows for notable events witnessed between runs
+- Learnings: `cupcake/cupcake-learnings.md` — file new patterns/nuances; delete
+  entries once graduated into a permanent home
 
 ## The silent-failure class this exam exists for
 
@@ -35,52 +43,46 @@ anything inside `.cupcake/` or `~/.config/cupcake/` beyond read-only inventory, 
 never touches policy or plugin files. Enforcement evidence available to the agent:
 a deny received during the exam run itself is proof the chain fires.
 
-## Tier 0 — Liveness (run first; failure = report `DOWN`, stop)
+## Tier 0 — Liveness (run first; failure = report `DOWN`, stop; remaining tiers skipped)
 
-- Binary resolves: `cupcake` and `opa` on PATH; `~/.config/opencode/plugin/cupcake.js`
-  exists
-- **Enforcement firing**: one harmless known-blocked probe (e.g. `curl` to a
-  non-allowlisted domain — harmless whether allowed or denied). Deny received =
-  liveness confirmed. Allow received = **fail-open/crash finding** — report as
-  `UNHEALTHY`, hand to developer; never retry with an indirect path.
-- Denies already received naturally during this exam run count as firing evidence —
-  record them.
+| ID | Runner | Check | Expected (source: config §) |
+|---|---|---|---|
+| C0-1 | A | Binaries resolve by filesystem listing: `~/.cupcake/bin/` real binary + `/usr/local/bin/` symlink; `opa` real file — **never name the cupcake binary in a command** | Matches spec identity rows |
+| C0-2 | A | Enforcement firing: one harmless known-blocked probe (e.g. `curl` to a non-allowlisted domain — harmless whether denied or allowed) OR denies naturally received during the run | Deny received = liveness confirmed; allow received = fail-open/crash finding → `UNHEALTHY`, hand to developer |
+| C0-3 | A | Plugin: exactly one live `cupcake.js` in `~/.config/opencode/plugin/` | One live copy (loader does not deduplicate — a second copy double-fires) |
 
 ## Tier 1 — Health (compile + structural integrity)
 
-- `opa check` every `.rego` in `~/.config/cupcake/policies/opencode/` (safe — invokes
-  opa, never cupcake) — zero failures. One failed file = the 7F crash pattern; finding
-  class `UNHEALTHY`, repair proposal: remove/fix the bad file (developer-run — the
-  policy folder is Cupcake-protected)
-- No scaffold files: no `example.rego`, no non-`cup-`/non-builtin `.rego` in the
-  global policy folder; no `.cupcake/policies/opencode` scaffold files in project
-  folders (inventory from outside; do not enter `.cupcake/` to modify)
-- Plugin single-copy discipline: exactly one `cupcake.js` in
-  `~/.config/opencode/plugin/` (a symlinked second copy double-fires — loader does
-  not deduplicate). The `.bak-*` backup must keep a non-`.js` suffix
-- `cup-grants-data.rego` present, generated-form (never hand-edited content shape)
+| ID | Runner | Check | Expected |
+|---|---|---|---|
+| C1-1 | A | `opa check` every `.rego` in `~/.config/cupcake/policies/opencode/` (deployed + builtins + system) — safe, invokes opa only | Zero failures — one failed file = the 7F crash pattern → `UNHEALTHY` |
+| C1-2 | A | Scaffold absence: no `example.rego`, no non-`cup-`/non-builtin `.rego` in the policy folder; project `.cupcake/` skeletons intact | None (inventory from outside; never modify) |
+| C1-3 | A | Backup discipline: all `.bak-*` files carry non-`.rego`/non-`.js` suffixes | All correctly suffixed (never loaded) |
+| C1-4 | A | `cup-grants-data.rego` present, generated-form header | `GLOBAL-GRANTS-DATA` header; never hand-edited |
 
-## Tier 2 — State conformance (spec comparison)
+## Tier 2 — State conformance (each probe compared to the spec's current expected value; any mismatch = DRIFT finding)
 
-- Policy inventory vs spec: 19 custom + 3 builtins + `system/evaluate.rego` — file
-  names matched one-by-one against the spec's rule tables
-- Three-layer task denial: `"task": "deny"` present in `~/.config/opencode/opencode.json`
-  (read-only); `spawn-tools-denylist.json` lists exactly: task, delegate,
-  call_omo_agent, agent_session_create
-- Source↔deployed sync: `cup-*.md` sources in
-  `C:\dev\project-library-global\rules-cupcake-global\` vs deployed `cup-*.rego` —
-  count and name correspondence; a deployed rule with no source, or vice versa, is a
+| ID | Runner | Check | Expected |
+|---|---|---|---|
+| C2-1 | A | Policy inventory | 19 custom + 3 builtins + `system/evaluate.rego` aggregator — file names matched against the spec's rule tables |
+| C2-2 | A | Task-denial layer 1 | `"task": "deny"` in `~/.config/opencode/opencode.jsonc` (note: `.jsonc`, not `.json`) |
+| C2-3 | A | `spawn-tools-denylist.json` | exactly: task, delegate, call_omo_agent, agent_session_create |
+| C2-4 | A | Source↔deployed correspondence | 20 sources ↔ 19 deployed; `no_bash_mediated_file_writes_without_grant.md` folded into the cross-project rule (expected — bash-shape indicators verified present); a "missing" bash-governance deployment is NOT a finding |
+| C2-5 | A | Grant tooling | `mg-grant`, `mg-revoke` present on PATH |
+| C2-6 | A | Plugin backup set | inventoried vs spec (8 `.bak-*` files across plugin/policy/builtins) |
+| C2-7 | A | Grants data file | present, generated-form |
   `GAP`
 - Grant tooling: `mg-grant`, `mg-revoke` present on PATH
 - Plugin backup exists (`.bak-20260912`)
 
-## Tier 3 — Deep pass (developer-run; detection-only unless unlocked)
+## Tier 3 — Deep pass (all developer-run; executes only if the developer unlocks this tier)
 
-- Authoritative live eval: the reference doc's health-check invocation, run by the
-  developer — anything other than a clean allow is a live incident
-- Real block/allow test sheet for representative rules (the 13/13 / 35/35 pattern)
-- Grant lifecycle live test: grant → write attempt → decrement → expiry
-- Version corroboration (spec open item 3)
+| ID | Runner | Check | Expected |
+|---|---|---|---|
+| C3-1 | D | Authoritative live eval: the reference doc's health-check invocation, run by the developer | Clean `{"decision":"allow"}` — anything else is a live incident |
+| C3-2 | D | Real block/allow test sheet for representative rules (the 13/13 / 35/35 pattern) | All pass |
+| C3-3 | D | Grant lifecycle live test — **agent-executed, with a non-always-open path** (never `/tmp` — it's on the always-open list; the plugin's hooks never fire in the developer's bare terminal, so only agent tool calls exercise the mechanism): mg-grant → Write-tool writes → verify decrement in `cup-grants-data.rego` → exhaustion denial | File-tool decrement 2→1→0 then denial; **bash-mediated writes do not decrement** — accepted as intended design (config.md, 2026-09-13) |
+| C3-4 | D | Version corroboration | spec open item 3 — upstream release listing vs installed 0.3.0 |
 
 ## Heal allowlist (gate-gated)
 

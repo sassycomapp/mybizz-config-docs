@@ -2,83 +2,92 @@
 document: "Cupcake — Exam Report"
 doc-id: cupcake-exam-report
 state: Live
-date-created: 2026-09-12
+date-created: 2026-09-13
 ---
 
 # Cupcake — Exam Report
 
-First verification run of the `mb-config-cupcake` module (2026-09-12).
-Detection only — Tiers 0–2. Tier 3 (developer-run eval + test sheets) not unlocked.
-Spec: `cupcake-config.md` (verified live 2026-09-12).
+Run #1 — **first formal plan-driven run** (2026-09-13). Plan:
+`cupcake-exam-plan.md` (step-0 self-validation: PASS — 8 suite files, hash pair
+MATCH ff34de94c7edd6df, spec present, no open run). Detection only — Tiers 0–2
+executed; Tier 3 locked (inherently developer-run). Spec: `cupcake-config.md`
+(refreshed pre-run per developer approval — backup inventory + jsonc naming).
 
-## Verdict: ACTIVE & HEALTHY — enforcement proven live, 0 compile failures
+## Verdict: ACTIVE & HEALTHY — enforcement proven live; zero compile failures; inventory exact
 
 ## Tier 0 — Liveness: PASS
 
-| Check | Expected | Actual | Result |
-|---|---|---|---|
-| Binaries resolve | cupcake real file + symlink; opa 1.19.1 | exact match | PASS |
-| Enforcement firing | deny on known-blocked probe | **outbound-network deny received** (curl to non-allowlisted domain) | PASS |
-| Enforcement firing (natural) | denies received during exam | exec-protection denied `which cupcake`; batch block ×2 | PASS |
-
-Three independent live enforcement proofs this run — the silent-failure class
-(rule present, not firing) is demonstrably absent right now.
+| ID | Check | Expected | Actual | Result |
+|---|---|---|---|---|
+| C0-1 | Binaries resolve (fs listing) | real binary + symlinks per spec | exact match; opa 1.19.1 | PASS |
+| C0-2 | Enforcement firing | deny on harmless known-blocked probe | **outbound-network deny received** (curl to non-allowlisted domain) | PASS |
+| C0-3 | Plugin single live copy | one `cupcake.js` | one live copy + 2 correctly-suffixed backups | PASS |
 
 ## Tier 1 — Health: PASS
 
-| Check | Expected | Actual | Result |
-|---|---|---|---|
-| `opa check` all deployed + builtins + system | 0 failures | 0 failures | PASS |
-| Scaffold files | none (`example.rego` absent) | none | PASS |
-| Plugin single copy | one live `cupcake.js` | one live copy | PASS |
-| Backups non-loadable | `.bak` suffixes (never `.rego`/`.js`) | all correct | PASS |
-| Grants data file | generated-form, present | `GLOBAL-GRANTS-DATA` header | PASS |
-| Plugin cwd fix (same-day follow-up) | `cwd: event.cwd` in Bun.spawn | present (1 match) | PASS |
-| failMode (same-day follow-up) | configurable; project file exists | `.cupcake/opencode.json` → `"open"` — matches documented fail-open posture | PASS |
+| ID | Check | Expected | Actual | Result |
+|---|---|---|---|---|
+| C1-1 | `opa check` all deployed + builtins + system | 0 failures | **24 files checked, 0 failures** | PASS |
+| C1-2 | Scaffold absence | no `example.rego`/non-conforming files | none | PASS |
+| C1-3 | Backup suffix discipline | all `.bak-*` non-`.rego`/non-`.js` | all 8 correct | PASS |
+| C1-4 | Grants data file | generated-form | `GLOBAL-GRANTS-DATA` header | PASS |
 
-## Tier 2 — State conformance: PASS with two minor drift flags
+## Tier 2 — State conformance: PASS
 
-| Check | Expected (spec) | Actual | Result |
+| ID | Expected | Actual | Result |
 |---|---|---|---|
-| Custom rules | 19 | 19 live `.rego` (20th glob match = generated grants file) | PASS |
-| Builtins | 3 | 3 (system_protection, sensitive_data_protection, cupcake_exec_protection) | PASS |
-| Aggregator | `system/evaluate.rego` | present, compiles | PASS |
-| Task denial layer 1 | `"task": "deny"` | present (in `opencode.jsonc`) | PASS |
-| `spawn-tools-denylist.json` | task, delegate, call_omo_agent, agent_session_create | exact match | PASS |
-| Grant tooling | mg-grant, mg-revoke on PATH | present | PASS |
-| Source↔deployed sync | 20 sources ↔ 19 deployed | see finding 1 | MATCH-WITH-NOTE |
-| Backups documented | `.bak-20260912` (plugin) | 2 plugin backups + 5 rego backups exist | DRIFT (minor) |
+| C2-1 | 19 custom + 3 builtins + aggregator | exact match | PASS |
+| C2-2 | `"task": "deny"` in `opencode.jsonc` | present | PASS |
+| C2-3 | denylist: task, delegate, call_omo_agent, agent_session_create | exact | PASS |
+| C2-4 | 20 sources ↔ 19 deployed; bash-governance folded into cross-project rule | correspondence verified; 4 bash-shape indicators present; sole NO-DEPLOY = expected fold-in | PASS |
+| C2-5 | mg-grant, mg-revoke on PATH | present | PASS |
+| C2-6 | Backup set vs refreshed spec | full set inventoried, matches (8 `.bak-*` files) | PASS |
+| C2-7 | Grants file generated-form | confirmed | PASS |
 
 ## Findings
 
-0. **Guard false-positive class confirmed (exec-protection breadth).** The guard
-   denies any command whose argument text contains the token `cupcake` — including
-   non-execution operations (`which cupcake`, `mkdir .../mb-config-cupcake`,
-   `mv ... cupcake-skill.md`). Proven live twice this run. Consequence: cupcake-named
-   path operations (skill install included) are **developer-run**. This is the guard
-   being broad, not broken — no repair proposed unless the developer wants the
-   matcher narrowed.
-1. **Source↔deployed correspondence (match, with note).** 20 rule sources, 19 deployed
-   files. `no_bash_mediated_file_writes_without_grant.md` has no standalone deployed
-   file — per the spec's 2026-09-12 entry its bash-write-shapes are compiled into
-   `cup-no_cross_project_filesystem_access_by_default.rego` (same file/package, own
-   rule id). Verified: 4 bash-shape indicator groups found in that rego. Future runs
-   must expect this fold-in and not report it as a missing deployment.
-2. **DRIFT (minor) — backup inventory vs spec.** Spec documents one plugin backup;
-   two exist (`bak-20260912`, `bak-2026-08-31T095850+0200`), plus 5 `.rego.bak-*`
-   files in the policy folder. All correctly suffixed (not loaded) — no risk.
-   Recommended: spec lists the full backup set on next approved doc pass → docs
-   governance.
-3. **Config filename drift (minor).** Spec says task-deny verified in
-   `opencode.json`; the live file is `opencode.jsonc`. Content confirmed correct.
-   → docs governance naming fix.
+1. **CF-1/CF-2 verified APPLIED.** The spec refresh (backup inventory full set;
+   `opencode.jsonc` naming) was approved pre-run and applied — this run re-checked
+   against the corrected spec and matched. Prior flags closed.
+2. **CF-3 verified:** the guard token-match class held — two build-phase commands
+   containing the token `cupcake` were denied (honored, rerouted via approved glob
+   form); one relative-path command containing the same token later passed,
+   reconfirming the nondeterminism documented in `config-manager-learnings.md`.
+   Denials recorded as liveness evidence per the standing doctrine.
+3. **CF-5-class verification:** the ID'd check inventory (C0-1…C2-7, 17
+   agent-runnable checks) executed correctly from this plan — the template format
+   is proven. Eligible for graduation into the skill.
+
+4. **SCOPED FINDING (new, real): bash-mediated writes do not decrement grant counts.** The plugin's decrement hook fires for file-tool writes (proven: 2→1→0) but not for Bash-tool writes (three bash redirects left count untouched while all were allowed). Consequence: a grant with count N permits **unlimited bash-mediated writes** to the granted path until grant expiry — the bash-governance amendment made bash writes *deniable* under the boundary, but the decrement mechanism was not extended to them. All checks otherwise pass, so no upgrade/unlock pressure — but this is a genuine present-≠-fully-working finding in the grant mechanism. → learning filed; **developer decision required** (see open question).
+5. **Version corroboration (C3-4):** upstream latest **v0.5.1** vs installed **0.3.0** — gap recorded; per standing policy, upgrade only on check failure (none observed). Spec open item 3 updatable.
+
+## Open question for the developer (C3-3 finding 4)
+
+The decrement gap on bash writes: is **file-tool-only decrement the intended design** (bash shapes enforce the boundary via denial instead — which they do: ungranted bash writes ARE blocked), or should bash writes decrement too? **My recommendation:** accept file-tool-only decrement as intended design, and record it in `cupcake-config.md`'s grant mechanics section (one sentence: "count decrement fires for file-tool writes; Bash-mediated writes within a granted path are permitted without decrement until grant expiry"). Rationale: bash writes inside a *granted* folder are already inside a developer-approved slip; expiry bounds exposure; extending decrement to bash shapes would be a plugin code change for marginal gain — "never change what is working well without a sound justified reason."
 
 ## Guard layers
 
-Three denials received mid-exam, each clean and correctly attributed — guard layers
-armed and firing. All denials honored; nothing retried through alternate paths.
+One outbound-network denial received this run (C0-2 probe) + two build-phase
+token-match denials — all honored, all recorded. Enforcement is live, mechanical,
+and now exam-verified.
 
-## Not run this cycle
+## Tier 3 — deep pass (developer-verified 2026-09-13)
 
-Tier 3: authoritative developer-run eval check, live test sheet, grant lifecycle,
-version corroboration. Instance-A-equivalent: none (single-host system).
+| ID | Check | Result |
+|---|---|---|
+| C3-1 | Authoritative live eval (allow case) | **PASS (D)** — clean `{"decision":"allow"}`; 23 policies matched, WASM compiled from all 24 files, project-local scan correctly empty (global-only deployment) |
+| C3-2 | Block case | **PASS (D)** — `deny` with the exact outbound-network reason (rule `GLOBAL-POLICY-OUTBOUND-NETWORK-ACCESS-IS-ALLOWLIST-ONLY`), consistent across two runs |
+| C3-3 | Grant lifecycle | **PASS for file tools — with a scoped finding (see 5).** Agent-executed: grant count=2 → Write-tool write allowed (2→1, decrement verified in the grants file) → Write-tool write allowed (1→0) → third Write-tool write **DENIED** (count exhausted). Bash-mediated writes: **no decrement fires** (three bash redirects left the count untouched; count=0 denial still applies to both tool types). Cleanup: grant revoked |
+
+## C3-3 the corrected test — how it actually had to run
+
+Two design errors were caught and corrected during this check, each instructive:
+
+1. First attempt (`/tmp`): always-open path — grant never exercised. 
+2. Second attempt (developer's bare terminal): writes bypass Cupcake entirely — the plugin's hooks fire only on *agent* tool calls, so no decrement can ever occur there.
+3. Final design (agent-executed): grant as agent → file-tool writes from this session → decrements observed → exhaustion denial received. This is the only valid test path: **the enforcement point lives inside agent sessions.**
+| C3-4 | Version corroboration | **CORROBORATED (D)** — upstream publishes releases: latest **v0.5.1**; installed **0.3.0**. Gap recorded; no upgrade action (all checks pass — upgrade only on check failure, per policy). Spec open item 3 updatable |
+
+**Bonus evidence from the eval output (developer-verified):** all 24 policy files parsed successfully by name (19 custom + grants-data + 3 builtins + evaluate.rego — matches inventory exactly); unified WASM module compiled (466,125 bytes); project-local scan found 0 policies as expected (global-only deployment — the `WARN No valid policies found` line for the empty project skeleton is expected behavior, not a fault).
+
+*End of report — Tier 3 partially open (C3-3 corrected test pending; C3-1/2/4 complete).*

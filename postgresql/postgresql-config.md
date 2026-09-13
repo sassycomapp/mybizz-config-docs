@@ -112,7 +112,7 @@ proves nothing about the role's own privileges). Verified: `memory_governor_svc`
 
 | Database | Owner | Size | Notes |
 |---|---|---|---|
-| `gbrain` | `postgres` | 164 MB | GBrain's memory/vector store. **1,824 pages, 5,529 chunks, 5,529 embedded (100%)** — verified live 2026-09-13. 62 tables, all with RLS enabled, all owned by `postgres`. Schema v128, embedding `openai:text-embedding-3-large` (1536d). Extensions: `plpgsql` 1.0, `vector` 0.6.0, `pg_trgm` 1.6, `pgcrypto` 1.3 |
+| `gbrain` | `postgres` | 164 MB | GBrain's memory/vector store. **1,824 pages, 5,529 chunks, 5,529 embedded (100%)** — verified live 2026-09-13 (point-in-time at exam; grows with every sync — exams check coverage % + growth explainability, never exact equality). 62 tables, all with RLS enabled, all owned by `postgres`. Schema v128, embedding `openai:text-embedding-3-large` (1536d). Extensions: `plpgsql` 1.0, `vector` 0.6.0, `pg_trgm` 1.6, `pgcrypto` 1.3 |
 | `memory_governor` | `memory_governor_svc` | 8,167 kB | 5 tables (all owned by `memory_governor_svc`): `projects`, `memory_candidates` (5 real rows), `policy_versions`, `memory_events`, `audit_log`. See `memory-governor-config.md`. |
 | `postgres` (admin) | `postgres` | 7,503 kB | Standard, unremarkable. |
 | `template0` / `template1` | `postgres` | ~7.3–7.6 MB each | Standard, unmodified. |

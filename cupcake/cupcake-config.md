@@ -8,7 +8,7 @@ date-created: 2026-09-05
 # Cupcake Configuration
 
 Canonical current-state configuration record. Agent-facing. Reflects the
-live-verified state as of 2026-09-12. This document states facts, not history —
+live-verified state as of 2026-09-13. This document states facts, not history —
 where a decision was made and the reasoning matters, see
 `cupcake-explainer.md`; for operational commands and procedures, see
 `cupcake-reference.md`.
@@ -46,7 +46,7 @@ are deliberately left strict — a revisit decision, not forgotten.
 | Binary path | `/home/dev-p/.cupcake/bin/cupcake`, symlinked to `/usr/local/bin/cupcake` |
 | Underlying engine | OPA (Open Policy Agent). Canonical binary: `/usr/local/bin/opa` (v1.19.1, real file). `/home/dev-p/.cupcake/bin/opa` is a symlink to it — both resolve to the same binary. |
 | Harness | `opencode` |
-| Global plugin | `~/.config/opencode/plugin/cupcake.js` — **active**. Backup at `.bak-20260912` in the same folder. |
+| Global plugin | `~/.config/opencode/plugin/cupcake.js` — **active**. Backup set (all correctly non-`.js`-suffixed, never loaded): plugin `.bak-20260912` + `.bak-2026-08-31T095850+0200` (same folder); policy-folder `.bak-*` rego backups: cross-project ×4 (`.bak-2026-08-31T095850+0200`, `.bak-20260908`, `.bak-20260908-2`, `.bak-20260912`), outbound-network ×1 (`.bak-20260908`); builtins `system_protection.rego.bak-20260912` ×1. Inventoried live 2026-09-13 |
 | Global policy folder | `~/.config/cupcake/policies/opencode/` |
 | Project-init status | `makepdlf-project-library` only. `mb-3-cs`, `mb4ecom`, `mb5pdlf` deliberately not yet initialized — each gets its own real Step 11 when that project actually starts |
 | Rules-authoring skill | `mb-compile-rules`, corrected 2026-08-28 after live testing |
@@ -63,7 +63,7 @@ are deliberately left strict — a revisit decision, not forgotten.
 | File prefix | `cup-` |
 | Deployment target (all current rules) | Global — `cupcake.global.policies.(name)` package namespace |
 
-## Live policy inventory — `~/.config/cupcake/policies/opencode/` (counts verified 2026-09-06)
+## Live policy inventory — `~/.config/cupcake/policies/opencode/` (counts inventoried 2026-09-13)
 
 | Item | Count |
 |---|---|
@@ -114,7 +114,7 @@ are deliberately left strict — a revisit decision, not forgotten.
 
 | Layer | Mechanism | Coverage | Status 2026-09-06 |
 |---|---|---|---|
-| 1 | OpenCode config: `"task": "deny"` | Exact tool name `task` | **ACTIVE** (verified in config) |
+| 1 | OpenCode config (`~/.config/opencode/opencode.jsonc` — note `.jsonc`): `"task": "deny"` | Exact tool name `task` | **ACTIVE** (verified in config) |
 | 2 | `cup-block-task-tool.rego`, checked against `spawn-tools-denylist.json` | Maintained list of known spawn-tool names | **ACTIVE** |
 | 3 | Standing skill-review habit, `AGENTS.md` Global safety rules | New/unrecognized spawn-capable tools, human-reviewed before trust | **STANDING** |
 
@@ -145,7 +145,13 @@ grants := {
   `mg-grant`/`mg-revoke`) if anything expired.
 - **Count decrement happens in the plugin's `tool.execute.after` hook**, for
   write-type tools only, after successful execution — never on a read, never
-  outside any grant.
+  outside any grant. **Scope clarified 2026-09-13, developer-accepted as intended
+  design:** decrement fires for **file-tool writes** (proven live: count 2→1→0,
+  then denial at exhaustion); **Bash-mediated writes within a granted path are
+  permitted WITHOUT decrement until grant expiry** — the bash-governance rule
+  still enforces the boundary via denial for ungranted paths, and grant expiry
+  bounds exposure. Verified live 2026-09-13 (three bash redirects left count
+  untouched; file-tool writes decremented correctly).
 
 **Safety discipline, applied identically everywhere a grant file is written:**
 write to a `.rego`-suffixed temp file, run `opa check` on it, only then move

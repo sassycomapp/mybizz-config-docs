@@ -7,8 +7,12 @@ date-created: 2026-09-05
 
 # Cupcake — Mechanical Policy Enforcement for AI Coding Agents
 
-*Companion note: for current confirmed state see `cupcake-config.md`'s Current
-Operational Status. For operational procedures, see `cupcake-reference.md`.*
+*Companion note: for current confirmed state see `cupcake-config.md` (the spec).
+For operational procedures, see `cupcake-reference.md`. Exam companions:
+`cupcake-exam-plan.md` (next run's job-spec), `cupcake-exam-report.md` (current
+verified state), `cupcake-log.md` (notable events), `cupcake-learnings.md`
+(transient exam knowledge). The architecture standard:
+`mb-config-manager/config-manager-explainer.md`.*
 
 > **Status as of 2026-09-12 — active and enforcing.** The checker fires on
 > every agent tool call; exec-protection blocked a real call immediately after
@@ -343,7 +347,58 @@ catch — this one is a total availability failure. `failMode: "open"` (applied
 2026-09-08) converts a future crash from "total block" into "logged and
 allowed, fix at leisure."
 
-## 10. Closing
+## 10. Config maintenance — how this system is examined and kept healthy
+
+This suite participates in the config-management system (`mb-config-manager`).
+The roles of the seven suite files, and the exam cycle that runs them, are the
+architecture described in `config-manager-explainer.md` — emulated from the
+PostgreSQL pilot. The short local version:
+
+- `cupcake-config.md` is the **spec** — the ideal state every exam checks against.
+- Before each exam run, the config-manager synthesizes `cupcake-exam-plan.md`:
+  a fresh job-spec built from this spec, the last report, the log, and the
+  learnings — carrying forward what was deferred, addressing what erred,
+  deriving probes from new log events, and folding in lessons not yet graduated.
+  The plan is transient (the file is live; contents rewritten each cycle).
+- The exam runs the installed skill (`mb-config-cupcake`) with the plan in hand —
+  detection fully autonomous; healing gated. This module is special: **it has no
+  agent-healable items at all.** Cupcake is the governance layer itself — the
+  agent never edits its policies, plugin, or grants file. Every repair is
+  developer-run or proposed through the report.
+- Several checks are permanently **developer-run**: the authoritative live eval
+  (the exec-protection guard forbids agents from executing the cupcake binary),
+  plus any check whose command text the guards deny (the token-match class).
+  Denials received during a run double as liveness evidence.
+- The run rewrites `cupcake-exam-report.md` (current state, no history),
+  appends one row to `cupcake-log.md`, files new learnings, and prunes absorbed
+  entries.
+
+## 11. S.W.O.T.
+
+**Strengths.** Mechanical enforcement that cannot be reasoned around; the
+silent-failure class is deeply documented and now actively examined for; compile
+integrity (`opa check`) catches the crash class at file level; fail-open mode
+bounds the blast radius of any future engine crash; the rule pipeline
+(`mb-compile-rules`) is proven and repeatable.
+
+**Weaknesses.** The engine's offline/live divergence (builtins that pass
+offline but fail live) means only live testing is authoritative; every project
+folder needs a `.cupcake` skeleton or the checker crashes there; the guard's
+broad token-matching creates false-positive friction (documented, developer-run
+routing as mitigation); several checks are permanently developer-run.
+
+**Opportunities.** The config-management exam gives Cupcake what it gives every
+system: standing verification that enforcement is live, not just installed;
+graduation flow means each incident permanently improves the exam; the
+fail-open/log discipline makes silent degradation detectable.
+
+**Threats.** Any unvalidated `.rego` reaching the policy folder by any path
+other than the proven pipeline can crash evaluation entirely (§7F — the
+highest-severity historical failure); policy-folder drift between rule sources
+and deployed files; a future guard-rule change could reclassify agent-runnable
+checks (mitigated: denials always honored and reclassified immediately).
+
+## 12. Closing
 
 Cupcake's actual job is narrow: turn a written rule into something that cannot
 simply be reasoned around. Every incident in this record — the two live
@@ -357,3 +412,14 @@ hold up against.
 As of 2026-09-12, that standard is being enforced mechanically. Every rule is
 active, the checker fires on every tool call, and the incident record exists
 as a reference, not a current-state description.
+
+---
+
+*Suite: `cupcake-config.md` (spec), `cupcake-reference.md` (procedures),
+`cupcake-exam-plan.md` / `cupcake-exam-report.md` / `cupcake-log.md` /
+`cupcake-learnings.md` (config-management set), `cupcake-skill.md` (exam skill
+canonical source). Architecture: `mb-config-manager/config-manager-explainer.md`.
+Rule sources: `C:\dev\project-library-global\rules-cupcake-global\`. Test
+records: `/mnt/c/mybizz/logs/cupcake-rule-test-record-*.md`.*
+
+*End of document*

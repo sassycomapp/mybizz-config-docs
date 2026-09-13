@@ -19,7 +19,7 @@ runnable state) · `Registered` (examinable, module pending) · `Placeholder`
 | system | exam skill | spec doc | state | sha256 (source) | install date | notes |
 |---|---|---|---|---|---|---|
 | postgresql | mb-config-postgresql | postgresql/postgresql-config.md | Installed | 9f61f34c9634b419 | 2026-09-12 | pilot — verified live 2026-09-12; source `postgresql/postgresql-skill.md`; installed `~/.config/opencode/skills/mb-config-postgresql/SKILL.md` |
-| cupcake | mb-config-cupcake | cupcake/cupcake-config.md | Installed | d5fc964cd006f283 | 2026-09-12 | verified live 2026-09-12; source `cupcake/cupcake-skill.md` (backfill developer-run 2026-09-12, hash-verified); installed `~/.config/opencode/skills/mb-config-cupcake/SKILL.md` (developer-run install) |
+| cupcake | mb-config-cupcake | cupcake/cupcake-config.md | Installed | f5e8489cf60a8abc | 2026-09-12 | verified live 2026-09-12; source `cupcake/cupcake-skill.md` (backfill developer-run 2026-09-12, hash-verified); installed `~/.config/opencode/skills/mb-config-cupcake/SKILL.md` (developer-run install) |
 | gbrain | mb-config-gbrain | gbrain/gbrain-config.md | Installed | bb269e9944b03418 | 2026-09-12 | verified live 2026-09-12; source `gbrain/gbrain-skill.md`; installed `~/.config/opencode/skills/mb-config-gbrain/SKILL.md` |
 | gstack | mb-config-gstack | gstack/gstack-config.md | Registered | module pending |
 | opencode | mb-config-opencode | opencode/opencode-config.md | Registered | module pending |

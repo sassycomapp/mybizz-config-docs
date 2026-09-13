@@ -7,8 +7,12 @@ date-created: 2026-09-05
 
 # Cupcake Reference — Usage, Invocation, and Worked Examples
 
-Companion to `cupcake-config.md` (current installed state, operational status)
-and `cupcake-explainer.md` (design, history, and real incidents). Agent-facing.
+Companion to `cupcake-config.md` (the spec — current installed state, operational
+status) and `cupcake-explainer.md` (design, history, and real incidents — the
+authoritative whole-system narrative). Exam companions: `cupcake-exam-plan.md`
+(next run's job-spec), `cupcake-exam-report.md` (current verified state),
+`cupcake-log.md` (notable events), `cupcake-learnings.md` (transient exam
+knowledge). Agent-facing.
 
 **Status note:** Cupcake is **ACTIVE** as of 2026-09-12 — enforcement verified
 end-to-end (plugin → engine → rules) after the plugin `cwd` fix, the
