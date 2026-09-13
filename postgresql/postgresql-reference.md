@@ -7,9 +7,12 @@ date-created: 2026-09-05
 
 # PostgreSQL — Reference: Commands, Procedures, and Troubleshooting
 
-Companion to `postgresql-config.md` (every setting, path, and value) and
-`postgresql-explainer.md` (what this system is and why, for a human reader).
-This document is agent-facing — how to actually connect to, query, and
+Companion to `postgresql-config.md` (the spec — every setting, path, and value) and
+`postgresql-explainer.md` (the authoritative whole-system narrative — what this
+system is and why, for every reader). Exam companions: `postgresql-exam-plan.md`
+(next run's job-spec), `postgresql-exam-report.md` (current verified state),
+`postgresql-log.md` (notable events), `postgresql-learnings.md` (transient exam
+knowledge). This document is agent-facing — how to actually connect to, query, and
 troubleshoot each instance safely.
 
 **Two entirely separate instances exist — every procedure below is scoped

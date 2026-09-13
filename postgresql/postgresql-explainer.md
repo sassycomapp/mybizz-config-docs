@@ -7,12 +7,16 @@ date-created: 2026-09-05
 
 # PostgreSQL — Explainer
 
-Companion to `postgresql-config.md` (every setting and value) and
-`postgresql-reference.md` (commands and procedures for agents). This
-document is for a human reader: what PostgreSQL is doing across this whole
-system, database by database — what each one is, what component of Mybizz
-actually uses it, and why it exists at all. All counts and states verified
-live 2026-09-09.
+Companion to `postgresql-config.md` (every setting and value — the spec),
+`postgresql-reference.md` (commands and procedures for agents),
+`postgresql-exam-plan.md` (next exam's job-spec), `postgresql-exam-report.md`
+(current verified state), `postgresql-log.md` (notable events),
+`postgresql-learnings.md` (transient exam knowledge). This document is for any
+reader — human developer, visiting technical consultant, or agent: what
+PostgreSQL is doing across this whole system, database by database — what each
+one is, what component of Mybizz actually uses it, and why it exists at all.
+Counts verified live 2026-09-12 (a partial refresh of the 2026-09-09 figures;
+the config spec's own refresh is pending docs-governance approval).
 
 ---
 
@@ -70,11 +74,11 @@ documentation and code. When you run `gbrain sync`, this is where the
 content ends up. When an agent runs `gbrain search` or `gbrain think`, this
 is what's being queried.
 
-**What's inside (verified live 2026-09-09):** 1,759 pages from every
-registered source — chunked into 5,443 pieces, every single one carrying a
+**What's inside (verified live 2026-09-12):** 1,824 pages from every
+registered source — chunked into 5,529 pieces, every single one carrying a
 1,536-dimension vector embedding (100% embedding coverage, verified
 independently of GBrain's own doctor report). Sixty-two tables, all with
-row-level security enabled. The database is 148 MB and growing as sources
+row-level security enabled. The database is 164 MB and growing as sources
 are added — it has grown steadily all week as the documentation suites
 were built.
 
@@ -295,7 +299,54 @@ boundary without the bridge silently lands in the wrong one.
 
 ---
 
-## 10. Closing
+## 10. Config maintenance — how this system is examined and kept healthy
+
+This suite participates in the config-management system (`mb-config-manager`).
+The roles of the seven suite files, and the exam cycle that runs them, are the
+architecture described in `config-manager-explainer.md` — tuned on this suite
+first. The short local version:
+
+- `postgresql-config.md` is the **spec** — the ideal state every exam checks against.
+- Before each exam run, the config-manager synthesizes `postgresql-exam-plan.md`:
+  a fresh job-spec built from this spec, the last report, the log, and the
+  learnings — carrying forward what was deferred, deriving probes from new log
+  events, and folding in lessons not yet graduated. The plan is transient.
+- The exam runs the installed skill (`mb-config-postgresql`) with the plan in
+  hand — detection fully autonomous; healing only through the developer gate.
+  Some checks are permanently **developer-run** (log scans, `.env`-dependent
+  probes, superuser checks) — agent tooling is guard-blocked on them by design.
+- The run rewrites `postgresql-exam-report.md` (current state, no history),
+  appends one row to `postgresql-log.md`, files new learnings, and prunes
+  absorbed log/learning entries.
+- What may be healed is allowlisted in the plan; spec-doc corrections are
+  flagged to docs governance, never applied by the exam itself.
+
+## 11. S.W.O.T.
+
+**Strengths.** Physical isolation of high-stakes from high-churn data (two
+servers, layered placement); verified 100% embedding coverage; strict role
+scoping per instance (`pdlf_agent`, `memory_governor_svc` cannot cross); proven
+boot durability; two independent guard layers against destructive SQL.
+
+**Weaknesses.** The silent cross-connection trap (same port both sides of the
+WSL boundary) is permanent and relies on discipline + bridge rules; several
+checks are permanently developer-run (guard-forbidden to agents), so full
+examination coverage requires developer participation; the dead duplicate
+Windows service remains registered (cosmetic, but a permanent confusion risk).
+
+**Opportunities.** The plan-driven exam cycle is new — tuning it here then
+emulating across every system gives the whole estate one exam discipline;
+Tier-3 automation (backups existence, third-instance sweep) can become routine;
+the spec-count refresh (pending governance) establishes the doc-refresh loop.
+
+**Threats.** A WSL unclean shutdown can leave a stale pid file (documented,
+self-resolving); unvalidated policy/scaffold content elsewhere in the system
+has historically crashed whole subsystems (the Cupcake 7F lesson) — the same
+class of risk applies to any future extension or role added carelessly;
+spec-doc drift between runs would silently weaken the exam (mitigated: the
+exam flags spec drift itself).
+
+## 12. Closing
 
 PostgreSQL's job across this environment is narrow: hold the records that
 must survive — GBrain's memory, the governor's bookkeeping, PDLF's build
@@ -309,10 +360,13 @@ create remain a mystery.
 
 ---
 
-*Companion documents: `postgresql-config.md` (current state),
-`postgresql-reference.md` (commands and procedures). The layer map:
-`C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md`. The memory system:
-`memory-governor-config.md`, `mb-submit-memory` (its own suites). The
-ledger contract: `spec-postgres-ledger.md` (makepdlf-project-library).*
+*Companion documents: `postgresql-config.md` (spec),
+`postgresql-reference.md` (commands), `postgresql-exam-plan.md` (next run),
+`postgresql-exam-report.md` (current state), `postgresql-log.md` (events),
+`postgresql-learnings.md` (transient knowledge). The architecture standard:
+`mb-config-manager/config-manager-explainer.md`. The layer map:
+`C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md`. The
+memory system: `memory-governor-config.md`, `mb-submit-memory` (its own suites).
+The ledger contract: `spec-postgres-ledger.md` (makepdlf-project-library).*
 
 *End of document*
