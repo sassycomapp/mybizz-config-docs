@@ -186,7 +186,8 @@ the entry. Never accumulate.
 
 ## Build status
 
-Built: `mb-config-postgresql` (pilot, Installed), `mb-config-cupcake` (Installed),
-`mb-config-gbrain` (Installed). The enhanced plan-driven cycle above is tuned on
+Built (Installed, formal exam runs verified): `mb-config-postgresql` (pilot),
+`mb-config-cupcake`, `mb-config-gbrain`, `mb-config-memory-governor`,
+`mb-config-gbrain-dream-cycle` (2026-09-14). The enhanced plan-driven cycle above is tuned on
 PostgreSQL first, then emulates across systems. `config-manager-register.md` is
 the authority for what runs.

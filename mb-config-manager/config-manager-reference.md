@@ -162,7 +162,5 @@ recorded as a learning if new.
 
 ## Build status
 
-- Installed modules: `mb-config-postgresql` (pilot — architecture tuned here),
-  `mb-config-cupcake`, `mb-config-gbrain`.
-- Current stage: architecture refinement and stabilization (PostgreSQL as the
-  learning ground). No emulation, no exam runs, until this stage completes.
+- Installed modules (all with formal plan-driven exam runs): `mb-config-postgresql` (pilot — architecture tuned here), `mb-config-cupcake`, `mb-config-gbrain`, `mb-config-memory-governor`, `mb-config-gbrain-dream-cycle` (verified live 2026-09-14, incl. a developer-unlocked full DC3-1 cycle).
+- Current stage: emulation of the proven architecture across the remaining WIP queue (register is the authority). Architecture stable — the plan-driven cycle is proven across five systems.

@@ -10,9 +10,12 @@ date-created: 2026-09-05
 *Companion note: for current confirmed state (invocation model, provider
 dependency, acceptance-test record, open items) see
 `gbrain-dream-cycle-config.md`. For commands and the mandatory post-run
-verification procedure, see `gbrain-dream-cycle-reference.md`. For the full
-23-phase sequence and the cross-component framing, see
-`memory-master-explainer.md` §4.*
+verification procedure, see `gbrain-dream-cycle-reference.md`. For how this
+system is examined and kept healthy by the config-management apparatus, see
+§8 below and the suite's exam set (`gbrain-dream-cycle-exam-plan.md` /
+`-exam-report.md` / `-log.md` / `-learnings.md`). For the full 23-phase
+sequence and the cross-component framing, see `memory-master-explainer.md`
+§4.*
 
 ---
 
@@ -178,3 +181,69 @@ verified at all, which is why there are none.
 **The orphan backlog is real.** 1,177 of 1,755 pages have no inbound links
 (verified 2026-09-06) — the deepening passes create content faster than
 linking covers it. Recorded as an open item, not a failure of the mechanism.
+
+## 8. Config maintenance — how this system is examined and kept healthy
+
+This suite participates in the config-management system (`mb-config-manager`).
+The roles of the seven suite files, and the exam cycle that runs them, are the
+architecture described in `config-manager-explainer.md` — emulated from the
+PostgreSQL pilot. The short local version:
+
+- `gbrain-dream-cycle-config.md` is the **spec** — the ideal state every exam
+  checks against. The dream cycle is working well; the exam verifies that and
+  changes nothing.
+- Before each exam run, the config-manager synthesizes
+  `gbrain-dream-cycle-exam-plan.md`: a fresh job-spec built from this spec,
+  the last report, the log, and the learnings. The plan is transient (the file
+  is live; contents rewritten each cycle).
+- The exam runs the installed skill (`mb-config-gbrain-dream-cycle`) with the
+  plan in hand — detection fully autonomous; healing gated. **This module has
+  no agent-healable items**: the Dream Cycle is part of GBrain (a memory
+  system governed elsewhere), and every repair is developer-run or proposed.
+- **Scope boundary with the parent gbrain module:** binary, version, config,
+  schema-pack inventory, sources, models, MCP integration, and sync machinery
+  belong to `mb-config-gbrain` (this exam cross-references; a version echo is
+  the one permitted overlap). Database conformance and the estate backup
+  convention belong to `mb-config-postgresql`. Resolved code call-graph work
+  belongs to Graphify.
+- Several checks are permanently **developer-run**: `config.json` content
+  (sensitive-data guard — proven class), the Anthropic key-validity curl if a
+  guard denies the agent attempt, and everything in Tier 3 (a full dream cycle
+  is expensive and content-changing; the upgrade decision is the developer's).
+- The run rewrites `gbrain-dream-cycle-exam-report.md` (current state, no
+  history), appends one row to `gbrain-dream-cycle-log.md`, files new
+  learnings, and prunes absorbed entries.
+
+## 9. S.W.O.T.
+
+**Strengths.** The mandatory post-run verification procedure (proven live —
+"completed" is never accepted as "worked"); the deliberate on-demand design
+with the inert-autopilot incident as its justification; every failure mode and
+known limitation documented with its root cause, not just its symptom.
+
+**Weaknesses.** Full verification of a real run is expensive (minutes, LLM
+spend, +N pages) and stays developer-gated; several checks are permanently
+developer-run (config content, credential validity); the orphan backlog grows
+with every deepening pass (content-hygiene debt, by design unmanaged by the
+cycle itself).
+
+**Opportunities.** The config-management exam adds standing verification that
+never existed between runs: the scheduling-absence check, the trigger-surface
+inventory, the schema-pack coupling, and a cheap functional probe — catching
+the silent-failure class (the historical `extract_atoms` outage ran
+undetected for a long stretch) before it compounds.
+
+**Threats.** Failures can be silent (a bare count hiding the real error); the
+`extract_atoms` credential is a single point of failure with a confirmed
+outage history; an unattended or scheduled dream run would compound exactly
+the silent-failure risk the incident history documents — hence the deliberate
+on-demand design, whose violation the exam watches for.
+
+---
+
+*Companion documents: `gbrain-dream-cycle-config.md` (the spec),
+`gbrain-dream-cycle-reference.md` (procedures and post-run verification),
+`gbrain-dream-cycle-exam-plan.md` / `-exam-report.md` / `-log.md` /
+`-learnings.md` (config-management set), `gbrain-dream-cycle-skill.md` (exam
+skill canonical source). Architecture: `mb-config-manager/config-manager-explainer.md`.
+Cross-component framing: `memory-master-explainer.md` §4.*

@@ -34,7 +34,7 @@ magdoub-wireframe. Completed pilots: postgresql, cupcake, gbrain.
 | graphify | mb-config-graphify | graphify/graphify-config.md | WIP | emulation queued |
 | magdoub-wireframe | mb-config-magdoub-wireframe | magdoub-wireframe/magdoub-wireframe-config.md | WIP | emulation queued |
 | matt-pocock-skills | mb-config-matt-pocock-skills | matt-pocock-skills/matt-pocock-skills-config.md | WIP | emulation queued |
-| gbrain-dream-cycle | mb-config-gbrain-dream-cycle | gbrain-dream-cycle/gbrain-dream-cycle-config.md | WIP | emulation queued |
+| gbrain-dream-cycle | mb-config-gbrain-dream-cycle | gbrain-dream-cycle/gbrain-dream-cycle-config.md | Installed | a4872e9d61f1c32f | 2026-09-14 | run #1 formal + DC3-1 full cycle: HEALTHY, all PASS end-to-end (detection + functional probes + live deepening pass); verified live 2026-09-14; F-1 hardening graduated (re-hash a4872e9d61f1c32f); F-2 export lane approved (C:\backup-dream-cycle); DC3-2 policy: stay 0.46.1.0 (no check failed) |
 | anvil-agent-references | mb-config-anvil-agent-references | anvil-agent-references/anvil-agent-references-config.md | WIP | emulation queued |
 | mb-align-docs | mb-config-mb-align-docs | mb-align-docs/align-docs-config.md | Deferred | deliberately postponed (developer decision 2026-09-13) |
 | mb-compile-rules | mb-config-mb-compile-rules | mb-compile-rules/mb-compile-rules-config.md | Deferred | deliberately postponed (developer decision 2026-09-13) |

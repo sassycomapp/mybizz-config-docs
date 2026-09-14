@@ -52,6 +52,4 @@ suite is subject to it.
 
 ## Verification
 
-Verified live through three exam runs (2026-09-12): `mb-config-postgresql` (pilot),
-`mb-config-cupcake`, `mb-config-gbrain` — each Installed and green (see each
-system's exam report). The plan-driven cycle is tuned on PostgreSQL.
+Verified live through formal plan-driven exam runs: `mb-config-postgresql` (pilot), `mb-config-cupcake`, `mb-config-gbrain`, `mb-config-memory-governor`, and `mb-config-gbrain-dream-cycle` (2026-09-14 — including a developer-unlocked full DC3-1 dream cycle, all green). Each Installed and verified (see each system's exam report). The plan-driven cycle is proven across five systems; emulation continues across the WIP queue per the register.

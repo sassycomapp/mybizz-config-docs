@@ -9,7 +9,10 @@ date-created: 2026-09-05
 
 Companion to `gbrain-dream-cycle-config.md` (current state, acceptance-test
 record) and `gbrain-dream-cycle-explainer.md` (reasoning, incident).
-Agent-facing.
+Config-management set: `gbrain-dream-cycle-exam-plan.md` (transient job-spec —
+read second, every run), `gbrain-dream-cycle-exam-report.md` (last verified
+state), `gbrain-dream-cycle-log.md` (chronological events),
+`gbrain-dream-cycle-learnings.md` (transient knowledge). Agent-facing.
 
 **Invocation model:** manual, on-demand only — the scheduled autopilot was
 found inert and deliberately removed (2026-09-06). Nothing runs unless you

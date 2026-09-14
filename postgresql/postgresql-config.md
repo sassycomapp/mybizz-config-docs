@@ -160,6 +160,7 @@ of one exists.
 - **Live-database lesson (2026-09-13):** a live database changes between a dump and its copy — **never re-dump one side of the pair**; dump once, copy to both locations immediately, then hash-verify the pair (`cmp`/sha256). A mismatched pair means re-dump + re-copy both, never copy one way twice.
 - Current cycle (2026-09-13): `pdlf` 21,720 B (7 tables verified) · `postgres-a` 5,179 B (0 user tables — expected) · `gbrain` 51,429,231 B (62 tables verified) · `memory_governor` 26,032 B (5 tables verified) · `postgres-b` 1,093 B (0 user tables — expected). All five pairs hash-verified identical.
 - Instance-A dumps are produced via the PowerShell bridge (developer-run — the bridge `.env` sourcing is agent-forbidden); Instance-B dumps are agent-runnable.
+- **Second lane — markdown export (established 2026-09-14, dream-cycle run #1 gate):** dream-synthesized concept pages are DB-only (no backing file); their second line of defense is `gbrain export --dir /mnt/c/backup-dream-cycle/` (`C:\backup-dream-cycle`) — developer-run, weekly, alongside the DB dumps. The PostgreSQL dump remains line one; the export adds file-lane-visible, human-readable recovery for DB-only content.
 
 ## Known undocumented items (deliberately retained, each documented)
 
