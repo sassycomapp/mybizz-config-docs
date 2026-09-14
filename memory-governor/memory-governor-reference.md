@@ -35,9 +35,13 @@ Start (from the app folder, `.env` sourced first — no dotenv autoload):
 ```bash
 cd /home/dev-p/memory-governor && set -a && source .env && set +a
 setsid .venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8321 >> /tmp/memory-governor.log 2>&1 < /dev/null &
-setsid .venv/bin/python -m app.worker >> /tmp/memory-governor-worker.log 2>&1 < /dev/null &
+PATH="$HOME/.bun/bin:$PATH" setsid .venv/bin/python -m app.worker >> /tmp/memory-governor-worker.log 2>&1 < /dev/null &
 ```
 
+- **The worker's PATH prefix (`~/.bun/bin`) is mandatory** (proven 2026-09-14):
+  without it the worker cannot invoke `gbrain` and every delivery fails
+  permanently (`FileNotFoundError: 'gbrain'` after 5 attempts — event 4259).
+  The API does not need the prefix (it never shells out to gbrain).
 - `setsid` + full redirection is required: a plain `nohup &` child dies
   when the launching shell's process group is terminated (confirmed live).
 - **Both processes are required.** The API decides; the worker delivers
