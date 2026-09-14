@@ -139,6 +139,64 @@ repo versus staying machine-local is deliberately open (tracked in
 `memory-master-explainer.md`). Whether the `--exclude` flag functions in
 0.9.40 is unverified (see `graphify-config.md` open items).
 
-*Companion documents: `graphify-config.md` (current state),
-`graphify-reference.md` (commands and rules). Cross-component reasoning:
+## 5. Config maintenance
+
+Graphify has been under standing configuration management since 2026-09-14 via
+the `mb-config-graphify` exam skill (canonical source `graphify-skill.md` in
+this folder; the installed copy at
+`~/.config/opencode/skills/mb-config-graphify/SKILL.md` is the only executing
+one, per the mb-config-manager copy-never-move install discipline). The exam is
+detection and verification only — it verifies the installed toolchain identity
+(CLI, package, skill surface), the mb-3-cs scope configuration, the graph
+artifact's provenance and shape, the OpenCode integration surfaces (MCP entry,
+AGENTS.md block markers, plugin files), and functional liveness of the read-only
+query surfaces. Graphify is working well; the exam repairs nothing — findings
+route to a developer gate per the mb-config-manager architecture
+(`mb-config-manager/config-manager-explainer.md`), and spec-doc corrections are
+flagged to docs governance, never applied by the exam. Graphify is a member of
+the memory family (developer-stated 2026-09-14): at the close-out of each of
+its runs, `mybizz-os-docs/memory-master-explainer.md` is updated to current
+verified state — standing rule, committed as its own commit. Exams run on
+demand, never scheduled.
+
+## 6. S.W.O.T.
+
+**Strengths.** Deterministic code-side extraction — free, offline, reproducible;
+an honest three-label confidence model carried on every edge; a checkable
+provenance discipline (`built_at_commit` vs HEAD) that makes graph currency a
+verifiable fact rather than an assumption; one shared artifact behind the CLI
+and MCP frontends, so the two surfaces cannot disagree; gitignored derived
+output keeps the repo clean and provenance meaningful.
+
+**Weaknesses.** Single-project scope — the one real graph serves mb-3-cs,
+which is paused, so the tool currently has no active project to serve; the
+undirected-storage vs directed-traversal default trap recurs on every path
+query; Anvil UI templates appear only as ghost name references, never
+extracted structure; community labels are deterministic representative-node
+names (no LLM labeling installed); the installed version deliberately lags
+upstream with no auto-update path.
+
+**Opportunities.** The 0.9.56 upgrade would add PR-triage dashboards, HTTP MCP
+transport, and multi-project serving — each requiring a deliberate re-decision
+against the standing ones; other projects' repos become graphable as they
+activate; the `--postgres` extraction path is unused and could graph database
+schemas when PDLF work resumes.
+
+**Threats.** Stale-provenance misanswers — a graph behind HEAD describes code
+that no longer exists (mitigated: the provenance check is a standing exam check
+and an AGENTS.md block rule); version drift between the installed CLI and the
+skill's references (mitigated: the `.graphify_version` marker plus exam Tier 0);
+upstream recommendations conflicting with standing decisions could erode them if
+re-decided casually (mitigated: this explainer records the reasoning; the
+gitignore premise is a tripwire, not a default); guard-rule changes could
+reclassify which checks are agent-runnable (mitigated: denials are always
+honored and reclassified developer-run immediately).
+
+*Companion documents: `graphify-config.md` (current state — the spec the exam
+runs against), `graphify-reference.md` (commands and rules),
+`graphify-exam-plan.md` (next run's job-spec — transient contents),
+`graphify-exam-report.md` (current verified state, no history),
+`graphify-log.md` (chronological notable events), `graphify-learnings.md`
+(transient exam knowledge), `graphify-skill.md` (exam skill — canonical source;
+the installed copy is the only executing one). Cross-component reasoning:
 `mybizz-os-docs/memory-master-explainer.md`.*

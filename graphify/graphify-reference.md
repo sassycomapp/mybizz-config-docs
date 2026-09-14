@@ -10,6 +10,12 @@ date-created: 2026-09-05
 Execution reference for the installed Graphify CLI (0.9.40), verified against
 `graphify --help` and live state on 2026-09-08. Current state values:
 `graphify-config.md`. Why each rule exists: `graphify-explainer.md`.
+Standing configuration management (2026-09-14): exam plan
+`graphify-exam-plan.md`, current verified state `graphify-exam-report.md`,
+notable events `graphify-log.md`, transient exam knowledge
+`graphify-learnings.md`, exam skill source `graphify-skill.md` (the installed
+copy at `~/.config/opencode/skills/mb-config-graphify/SKILL.md` is the only
+executing one — copy, never move).
 
 ## Install
 
@@ -99,6 +105,10 @@ graphify reflect [--out FILE] [--graph PATH] [--half-life-days N] [--min-corrobo
 graphify check-update <path>    # cron-safe needs_update check
 ```
 
+`check-update` (0.9.40) is silent on success — the verdict comes from the
+exit code, never stdout; its silence is not a currency claim. Graph-currency
+truth stays with `built_at_commit` vs `git rev-parse HEAD`.
+
 ## Graph management
 
 ```bash
@@ -167,6 +177,12 @@ Full deterministic rebuild (code-only):
 2. `graphify extract <repo-root> --force --code-only`
 3. `graphify cluster-only <repo-root>` (when report/HTML/labels are wanted)
 4. Confirm `jq -r '.built_at_commit' <repo>/graphify-out/graph.json` equals HEAD.
+
+**Run steps 2–3 from inside the target repo root — always.** `graphify
+extract` stamps `built_at_commit` from the invoking working directory's git
+repo, not the scanned path (proven live 2026-09-14: a rebuild run from
+another repo stamped that repo's HEAD onto this graph; caught by step 4).
+Step 4 is mandatory, never optional.
 
 Realign after new commits: `graphify update <repo-root>` (then `cluster-only`
 if the report is wanted). Rebuild only if the source changed materially.

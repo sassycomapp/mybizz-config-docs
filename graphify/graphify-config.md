@@ -9,14 +9,15 @@ date-created: 2026-09-05
 
 Canonical current-state configuration record. Agent-facing. States facts, not
 history or rules — reasoning in `graphify-explainer.md`, commands and rules in
-`graphify-reference.md`. All values verified live 2026-09-08 unless noted.
+`graphify-reference.md`. All values verified live 2026-09-14 (config-management
+run #1; earlier full verification 2026-09-08) unless noted.
 
 ## Identity (machine-wide install)
 
 | Item | Value |
 |---|---|
 | Version | `0.9.40` (CLI and package agree) |
-| Upstream latest (PyPI) | `0.9.56` — environment is behind; upgrade not performed |
+| Upstream latest (PyPI) | `0.9.61` (verified live 2026-09-14) — environment is behind; upgrade not performed |
 | PyPI distribution | `graphifyy` (double-y; other `graphify*` packages unaffiliated) |
 | Official repository | `github.com/Graphify-Labs/graphify` (default branch: `v8`) |
 | Former URL | `github.com/safishamsi/graphify` — now serves the same org repo (alias) |
@@ -55,11 +56,11 @@ effect (markdown is not a code-extraction target).
 
 | Item | Value |
 |---|---|
-| Nodes / Edges | 574 / 468 |
-| Communities | 158 |
-| Confidence | 451 EXTRACTED (96%) / 17 INFERRED (4%) / 0 AMBIGUOUS |
-| `built_at_commit` | `5ce243e12bc2775108c9ecad6da1e6c7f8f1614c` |
-| Live HEAD at check | same commit — graph current |
+| Nodes / Edges | 537 / 434 |
+| Communities | 155 |
+| Confidence | 417 EXTRACTED (96%) / 17 INFERRED (4%) / 0 AMBIGUOUS |
+| `built_at_commit` | `59175d9e504808ab278336e70b189066a2eae7e2` |
+| Live HEAD at check | same commit — graph current (rebuilt 2026-09-14 via the documented full code-only rebuild: `extract --force --code-only` + `cluster-only`, run from the repo root — see the cwd note under §Open items) |
 | Directed | `false` (stored undirected) |
 | Artifact | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs/graphify-out/graph.json` |
 | Ghost template nodes | 95 (empty `source_file`; Anvil UI templates — see explainer) |
@@ -73,6 +74,7 @@ effect (markdown is not a code-extraction target).
 | `.graphify_analysis.json`, `.graphify_build.json`, `.graphify_labels.json`, `.graphify_labels.json.sig`, `.graphify_root` | Build-state sidecars |
 | `cache/` | Per-machine AST cache |
 | `2026-08-15/` | Manual backup of the prior graph state (537 nodes, `built_at_commit` `e29cbd1b…`); machine-local, untracked |
+| `2026-09-14/` | Auto-backup refreshed during the 2026-09-14 Tier 3 run (surviving snapshot: the post-realign, pre-rebuild state — 562 nodes; the earlier 574-node pre-realign state was overwritten by the same-day backups); machine-local, untracked |
 
 ## OpenCode MCP integration — mb-3-cs
 
@@ -97,5 +99,6 @@ effect (markdown is not a code-extraction target).
 
 ## Open items
 
-- `--exclude` flag: absent from 0.9.40 help; prior suite claimed it functional — unverified in this version.
-- Upgrade decision open: upstream `0.9.56` / repo `v8` ships features absent in 0.9.40 (`graphify prs`, HTTP MCP transport, multi-project MCP) and recommends committing `graphify-out/` for team setups — incompatible with the standing local decision (see explainer) unless re-decided.
+- `--exclude` flag: absent from 0.9.40 help (re-confirmed 2026-09-14); prior suite claimed it functional — unverified in this version.
+- **`built_at_commit` cwd quirk (found by the 2026-09-14 full rebuild):** `graphify extract` stamps the commit from the invoking working directory's git repo, not the scanned path — a rebuild run from another repo stamped that repo's HEAD onto this graph (caught by the procedure's provenance-confirmation step, fixed by re-running from the repo root). Rebuilds here always run from the target repo root.
+- Upgrade decision open: upstream `0.9.61` / repo `v8` ships features absent in 0.9.40 (`graphify prs`, HTTP MCP transport, multi-project MCP) and recommends committing `graphify-out/` for team setups — incompatible with the standing local decision (see explainer) unless re-decided. Exam GF3-2 outcome 2026-09-14: stay on 0.9.40 (no check failed).
