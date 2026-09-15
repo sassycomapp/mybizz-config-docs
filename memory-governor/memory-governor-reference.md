@@ -227,6 +227,7 @@ After=network.target
 Type=simple
 WorkingDirectory=/home/dev-p/memory-governor
 EnvironmentFile=/home/dev-p/memory-governor/.env
+Environment="PATH=/home/dev-p/.bun/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 ExecStart=/home/dev-p/memory-governor/.venv/bin/python -m app.worker
 Restart=on-failure
 RestartSec=5
@@ -234,6 +235,13 @@ RestartSec=5
 [Install]
 WantedBy=default.target
 ```
+
+The worker unit **must** carry the `Environment="PATH=…"` line — the worker
+shells out to `gbrain`, and without the `~/.bun/bin` prefix every delivery
+fails (`FileNotFoundError: 'gbrain'`; proven live twice: the 2026-09-14
+hand-started worker, and the 2026-09-15 systemd worker whose unit initially
+lacked the line — fixed the same hour, four reset events delivered as facts
+#60–63). The API unit needs no prefix (it never shells out to gbrain).
 
 ## Recovering from an accidental GBrain write — real, confirmed procedure
 
