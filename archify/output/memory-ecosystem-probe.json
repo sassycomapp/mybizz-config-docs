@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "The Memory Ecosystem — Memory Flows",
+    "output": "/mnt/c/mybizz/mybizz-config-docs/archify/output/memory-ecosystem-render.html",
+    "viewBox": [1240, 820],
+    "quality_profile": "showcase",
+    "views": [
+      { "id": "write-paths", "label": "Write paths", "focus": ["real-files", "sync-task", "submit-memory", "dream-cycle", "governor-api", "delivery-worker", "gbrain-store"], "note": "The five ways content enters the ecosystem, and which layer each reaches." },
+      { "id": "governed-spine", "label": "Governed spine", "focus": ["submit-memory", "governor-api", "delivery-worker", "gbrain-store"], "note": "The only path that confers governed status: judgment, approval, deterministic decide, verified write." },
+      { "id": "read-paths", "label": "Read paths", "focus": ["developer", "gbrain-store", "graphify-parser", "real-files"], "note": "Two independent mechanisms, each answer at the top of its own trust scale." }
+    ]
+  },
+  "components": [
+    { "id": "real-files", "type": "external", "label": "Real Files", "sublabel": "projects · docs · code", "pos": [50, 300], "size": [135, 62] },
+    { "id": "sync-task", "type": "backend", "label": "Sync", "sublabel": "mirror refresh", "pos": [260, 160], "size": [150, 62], "tag": "path 1" },
+    { "id": "submit-memory", "type": "backend", "label": "mb-submit-memory", "sublabel": "front door · judgment", "pos": [260, 420], "size": [165, 62], "tag": "path 2" },
+    { "id": "dream-cycle", "type": "backend", "label": "Dream Cycle", "sublabel": "deepening phases", "pos": [260, 650], "size": [150, 62], "tag": "path 4" },
+    { "id": "governor-api", "type": "security", "label": "Memory Governor API", "sublabel": "auth · deterministic decide", "pos": [520, 300], "size": [175, 62] },
+    { "id": "delivery-worker", "type": "backend", "label": "Delivery Worker", "sublabel": "transactional outbox", "pos": [520, 502], "size": [170, 62] },
+    { "id": "gbrain-store", "type": "database", "label": "GBrain", "sublabel": "mirror layer · durable layer", "pos": [790, 300], "size": [180, 72], "tag": "both layers" },
+    { "id": "graphify-parser", "type": "backend", "label": "Graphify", "sublabel": "parse · EXTRACTED / INFERRED", "pos": [1040, 160], "size": [175, 64] },
+    { "id": "developer", "type": "frontend", "label": "Developer / Agent", "sublabel": "questions · decisions", "pos": [1040, 420], "size": [170, 62] }
+  ],
+  "boundaries": [
+    { "kind": "security-group", "label": "durable gate", "wraps": ["governor-api", "delivery-worker"] }
+  ],
+  "connections": [],
+  "cards": []
+}

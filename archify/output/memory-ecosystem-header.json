@@ -1,0 +1,50 @@
+{
+  "subject": "memory-ecosystem",
+  "intent": "The Memory Master Explainer describes a single memory system in which content enters through five distinct write paths into two storage layers (a mirror layer written by sync, ungated, and a durable layer written only through the Memory Governor's gate), and questions are answered through two independent read mechanisms (GBrain's hybrid search and Graphify's deterministic parsing). The load-bearing claim the drawing must make a reader trust: the mirror is written un-gated because its authority is fidelity to existing files, while the durable layer is gated because it alone claims to be believed - and the governed spine (submit -> gate -> verify -> write) is the one path that confers durable status.",
+  "type": "architecture",
+  "type_reason": "Component ecosystem with five write flows and two read flows; architecture forgives many edges and supports trust boundaries, where dataflow's strict grid punished dense crossing flows.",
+  "quality_profile": "showcase",
+  "nodes": ["real-files", "submit-memory", "governor-api", "delivery-worker", "gbrain-store", "sync-task", "dream-cycle", "graphify-parser", "developer"],
+  "node_roles": {
+    "real-files": "ultimate source; authority tier 1",
+    "submit-memory": "front door of the gate (Path 2)",
+    "governor-api": "durability gate: auth + decide",
+    "delivery-worker": "gate delivery: outbox + register",
+    "gbrain-store": "one store, two badges: mirror layer / durable layer",
+    "sync-task": "mirror refresh (Path 1)",
+    "dream-cycle": "deepening, unreviewed exception (Path 4)",
+    "graphify-parser": "deterministic read mechanism",
+    "developer": "consumer of both read paths"
+  },
+  "main_path": ["real-files", "submit-memory", "governor-api", "delivery-worker", "gbrain-store"],
+  "deferred_to_cards": [
+    "PDLF step-completion writer (Path 3): same gate, own credential, parked",
+    "Quick path (Path 5): raw remember writes, always present; discipline documented not mechanical",
+    "PostgreSQL substrate: two instances, one port trap, RLS; every check names its instance",
+    "Cupcake: mechanical enforcement on every tool call; loopback allowed by design",
+    "Transactional outbox + register commit; supersession not erasure; contradiction is a flag not a verdict"
+  ],
+  "stages_or_lanes": ["top lane: mirror write", "middle lane: governed spine", "bottom lane: dream exception", "right: read/consume"],
+  "expected_corridors": [
+    ["real-files", "sync-task", "top lane"],
+    ["sync-task", "gbrain-store", "top lane"],
+    ["real-files", "submit-memory", "middle lane"],
+    ["submit-memory", "governor-api", "middle lane"],
+    ["governor-api", "delivery-worker", "middle lane (inside gate boundary)"],
+    ["delivery-worker", "gbrain-store", "middle lane"],
+    ["submit-memory", "gbrain-store", "below spine (dashed judgment input)"],
+    ["dream-cycle", "gbrain-store", "bottom lane (dashed exception)"],
+    ["real-files", "graphify-parser", "read lane"],
+    ["graphify-parser", "developer", "right read side"],
+    ["developer", "gbrain-store", "right read side"],
+    ["gbrain-store", "developer", "right read side"]
+  ],
+  "layout_budget_read": "<none; architecture uses free pos per examples/web-app.architecture.json>",
+  "quality_gate": "showcase accepted only at 9 artifact checks, 0 composition errors, 0 warnings",
+  "abort_conditions": [
+    "probe shows overlapping components",
+    "viewBox cannot fit the 5-column spine at desktop widths",
+    "probe fails: return to Phase 5 row reshaping, never proceed"
+  ],
+  "status": "approved"
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "The Memory Ecosystem — Memory Flows",
+    "output": "/mnt/c/mybizz/mybizz-config-docs/archify/output/memory-ecosystem-render.html",
+    "viewBox": [1240, 742],
+    "quality_profile": "showcase",
+    "views": [
+      { "id": "write-paths", "label": "Write paths", "focus": ["real-files", "sync-task", "submit-memory", "dream-cycle", "governor-api", "delivery-worker", "gbrain-store"], "note": "The five ways content enters the ecosystem, and which layer each reaches." },
+      { "id": "governed-spine", "label": "Governed spine", "focus": ["submit-memory", "governor-api", "delivery-worker", "gbrain-store"], "note": "The only path that confers governed status: judgment, approval, deterministic decide, verified write." },
+      { "id": "read-paths", "label": "Read paths", "focus": ["developer", "gbrain-store", "graphify-parser", "real-files"], "note": "Two independent mechanisms, each answer at the top of its own trust scale." }
+    ]
+  },
+  "components": [
+    { "id": "real-files", "type": "external", "label": "Real Files", "sublabel": "projects · docs · code", "pos": [50, 300], "size": [135, 62] },
+    { "id": "sync-task", "type": "backend", "label": "Sync", "sublabel": "mirror refresh", "pos": [260, 160], "size": [150, 62], "tag": "path 1" },
+    { "id": "submit-memory", "type": "backend", "label": "mb-submit-memory", "sublabel": "front door · judgment", "pos": [260, 420], "size": [165, 62], "tag": "path 2" },
+    { "id": "dream-cycle", "type": "backend", "label": "Dream Cycle", "sublabel": "deepening phases", "pos": [260, 650], "size": [150, 62], "tag": "path 4" },
+    { "id": "governor-api", "type": "security", "label": "Memory Governor API", "sublabel": "auth · deterministic decide", "pos": [520, 300], "size": [175, 62] },
+    { "id": "delivery-worker", "type": "backend", "label": "Delivery Worker", "sublabel": "transactional outbox", "pos": [520, 502], "size": [170, 62] },
+    { "id": "gbrain-store", "type": "database", "label": "GBrain", "sublabel": "mirror layer · durable layer", "pos": [790, 300], "size": [180, 72], "tag": "both layers" },
+    { "id": "graphify-parser", "type": "backend", "label": "Graphify", "sublabel": "parse · EXTRACTED / INFERRED", "pos": [1040, 160], "size": [175, 64] },
+    { "id": "developer", "type": "frontend", "label": "Developer / Agent", "sublabel": "questions · decisions", "pos": [1040, 520], "size": [170, 62] }
+  ],
+  "boundaries": [
+    { "kind": "security-group", "label": "durable gate", "wraps": ["governor-api", "delivery-worker"] }
+  ],
+  "connections": [
+    { "id": "sync-request", "from": "real-files", "to": "sync-task", "label": "bulk content", "variant": "default" },
+    { "id": "mirror-write", "from": "sync-task", "to": "gbrain-store", "label": "chunk · embed", "variant": "default", "fromSide": "right", "toSide": "top", "via": [[880, 191]] },
+    { "id": "read-file", "from": "real-files", "to": "submit-memory", "label": "read real file", "variant": "default" },
+    { "id": "submit-candidate", "from": "submit-memory", "to": "governor-api", "label": "submit candidate", "variant": "emphasis" },
+    { "id": "promote", "from": "governor-api", "to": "delivery-worker", "label": "promote", "variant": "emphasis", "fromSide": "bottom", "toSide": "top" },
+    { "id": "durable-write", "from": "delivery-worker", "to": "gbrain-store", "label": "durable write · stamp", "variant": "emphasis", "fromSide": "right", "toSide": "bottom", "via": [[880, 533]], "labelAt": [770, 506] },
+    { "id": "related-query", "from": "submit-memory", "to": "gbrain-store", "label": "query related", "variant": "dashed", "fromSide": "top", "toSide": "left", "via": [[342.5, 275], [760, 275], [760, 336]] },
+    { "id": "deepen", "from": "dream-cycle", "to": "gbrain-store", "label": "deepen · unreviewed", "variant": "dashed", "fromSide": "right", "toSide": "bottom", "via": [[880, 681]], "labelAt": [650, 672] },
+    { "id": "parse-code", "from": "real-files", "to": "graphify-parser", "label": "parse structure", "variant": "default", "fromSide": "top", "toSide": "top", "via": [[117.5, 120], [1127.5, 120]] },
+    { "id": "struct-answer", "from": "graphify-parser", "to": "developer", "label": "structural answer", "variant": "default", "fromSide": "bottom", "toSide": "top" },
+    { "id": "ask-gbrain", "from": "developer", "to": "gbrain-store", "label": "question", "variant": "default", "fromSide": "top", "toSide": "top", "via": [[1125, 285], [880, 285]] },
+    { "id": "answer-gbrain", "from": "gbrain-store", "to": "developer", "label": "advisory answer", "variant": "default", "fromSide": "bottom", "toSide": "left", "via": [[880, 551], [940, 551]], "labelAt": [950, 532] }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "One ecosystem, two layers",
+      "items": [
+        "Mirror layer — written by sync, ungated: its authority comes from faithfully reflecting real files",
+        "Durable layer — reaches storage only through the gate, with provenance and a recorded confidence",
+        "Only the durable layer claims to be believed; the mirror is stored, never judged"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "The governed spine",
+      "items": [
+        "mb-submit-memory queries GBrain for related material, forms a genuine judgment (tagged model_based), then pauses for an explicit yes",
+        "The API derives identity from the writer's credential, never from the request — contradiction checking runs for every candidate",
+        "Decision is deterministic: promote, or route to review — no automatic rejection or quarantine; a review item blocks until a developer decides",
+        "PDLF's step-completion writer (Path 3) submits through the same gate under its own credential, parked until real steps run"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Exceptions that are real",
+      "items": [
+        "Dream Cycle has no interception point — output reaches durable memory unreviewed; post-run contradiction review is always applied",
+        "The quick path (Path 5, raw remember writes) is always present by design; the discipline that routes durable work through the gate is documented, not mechanical",
+        "Sync-into-governance is prohibited by design — corpus indexing is never the governed layer's job"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Delivery and authority",
+      "items": [
+        "Transactional outbox replaces a broker; retries with backoff, the index row plus the full payload are committed to the register",
+        "Answers are advisory: current files > Graphify EXTRACTED > sourced pages > the gate; both mechanisms point back to the real source",
+        "PostgreSQL: two instances, one port — every check names its instance; Cupcake mechanically polices every agent tool call"
+      ]
+    }
+  ]
+}
