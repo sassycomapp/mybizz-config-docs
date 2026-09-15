@@ -53,11 +53,13 @@ Models section).
 
 ## MEMORY_VERBS surface
 
-Reconciled 2026-09-06 (see `gbrain-config.md` open item 2):
+Reconciled 2026-09-06 (see `gbrain-config.md` open item 2);
 `memory-governor-config.md` records `mcp_surface: verbs` enabled as its build
-prerequisite; the current version's default MCP surface includes the memory
-verbs with no `mcp_surface` key set (observed live). The verbs-only surface
-remains available as a config choice.
+prerequisite. At the 2026-09-06 reconciliation the default MCP surface
+included the memory verbs with no `mcp_surface` key set; since then the key
+was set explicitly: `gbrain config get mcp_surface` → `verbs` (observed live
+2026-09-15, mb-submit-memory exam run #1). The verbs-only surface remains
+available as a config choice.
 
 ## Known limitation (active, not historical)
 

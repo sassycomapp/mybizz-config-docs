@@ -57,9 +57,9 @@ Stop: `pkill -f "uvicorn app.main:app"` and `pkill -f "app.worker"` —
 matching context, or the shell will kill itself** (confirmed live). Safest:
 kill by PID from `ps aux` output.
 
-Permanent auto-start (approved, pending execution): WSL systemd migration
+Permanent auto-start (**installed and verified 2026-09-15, session 005**): WSL systemd
 + two user units (`memory-governor-api`, `memory-governor-worker`) —
-sequence in the 2026-09-08 run record.
+enabled and active; the migration procedure below is retained as the record of how it was done.
 
 ## Submitting a candidate — the real, correct paths
 
@@ -165,7 +165,7 @@ carries `classification: unresolved_contradiction` and no automatic
 `recommended_action`: the governor never decides which of two conflicting
 cross-project claims is correct.
 
-## Permanent auto-start migration (M3-2) — prepared 2026-09-13, awaiting developer execution
+## Permanent auto-start migration (M3-2) — executed + verified 2026-09-15 (procedure retained as the record)
 
 **What it is:** migrating the two processes from the boot-script start to
 native systemd user units. The current `[boot]` command already auto-starts

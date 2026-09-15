@@ -8,8 +8,11 @@ date-created: 2026-09-05
 # mb-submit-memory — Explainer
 
 *Companion note: current state in `mb-submit-memory-config.md`; the full
-cycle in `mb-submit-memory-reference.md`; the skill's own `SKILL.md` is the
-authoritative procedure.*
+cycle in `mb-submit-memory-reference.md`; the subject skill's own `SKILL.md`
+is the authoritative procedure. For how this system is examined and kept
+healthy by the config-management apparatus, see §5 below and the suite's
+exam set (`mb-submit-memory-exam-plan.md` / `-exam-report.md` /
+`mb-submit-memory-log.md` / `submit-memory-learnings.md`).*
 
 ## 1. What this actually is
 
@@ -132,8 +135,73 @@ await a credentialed verification; and the gate-vs-quick-path tension is
 managed by documented discipline rather than mechanics — the honest,
 currently-accepted state.
 
-*Companion documents: `mb-submit-memory-config.md` (state),
-`mb-submit-memory-reference.md` (commands and rules), `SKILL.md`
-(authoritative procedure). The full memory-system map:
-`memory-master-explainer.md`. The gate's own suite:
-`memory-governor-config.md` + `-reference.md` + `-explainer.md`.*
+## 5. Config maintenance — how this system is examined and kept healthy
+
+This suite participates in the config-management system (`mb-config-manager`).
+The roles of the suite files, and the exam cycle that runs them, are the
+architecture described in `config-manager-explainer.md` — emulated from the
+PostgreSQL pilot. The short local version:
+
+- `mb-submit-memory-config.md` is the **spec** — the ideal state every exam
+  checks against. The submission skill is working well; the exam verifies that
+  and changes nothing.
+- Before each exam run, the config-manager synthesizes
+  `mb-submit-memory-exam-plan.md`: a fresh job-spec built from this spec, the
+  last report, the log, and the learnings. The plan is transient (the file is
+  live; contents rewritten each cycle).
+- The exam runs the installed skill (`mb-config-mb-submit-memory`) with the
+  plan in hand — detection fully autonomous; healing gated. **Agent-healable
+  items are suite-folder file repairs only**; every repair to the system
+  itself is developer-run or proposed.
+- **Scope boundary with the parent modules:** governor internals (binary,
+  database, worker, registration, start/stop) belong to
+  `mb-config-memory-governor`; Cupcake conformance belongs to
+  `mb-config-cupcake`; gbrain surface mechanics belong to `mb-config-gbrain`.
+  This module cross-references their reports and never re-probes them; it owns
+  the skill's configuration state, the governance-chain expectations recorded
+  in the spec, and the discipline doctrine.
+- Several checks are permanently **developer-run**: anything credentialed
+  (agent-side `.env` sourcing is a proven permanent denial class — the
+  bundle-handoff pattern applies), the governor start/stop, and everything in
+  Tier 3 (the auto-start installation and the restricted-folder deletion).
+- The run rewrites `mb-submit-memory-exam-report.md` (current state, no
+  history), appends one row to `mb-submit-memory-log.md`, files new learnings
+  to `submit-memory-learnings.md`, and prunes absorbed entries.
+
+## 6. S.W.O.T.
+
+**Strengths.** The governed path is one continuous, self-pausing run with a
+real judgment (confidence + contradiction) formed before any submission; the
+gate's deterministic engine and credential-derived provenance; the skill's
+doctrine survived its first live denials intact (2026-09-14: `under_review`
+left to the developer, the credential denial honored absolutely).
+
+**Weaknesses.** The governor is started on demand and was found down once
+(2026-09-08) — the permanent auto-start installation is approved but still
+pending; several checks are permanently developer-run (anything credentialed);
+the subject skill has no repo-side source copy since the mirror slot was
+repurposed (2026-09-15) — the spec's recorded fingerprint is its only anchor.
+
+**Opportunities.** The config-management exam adds standing verification that
+never existed between runs: the auth-gate probe, the detect-surface probe, the
+governance-chain conformance checks, and the logs-lane check — catching the
+"gate quietly closed" class (the 2026-09-08 find) before it bites a real
+submission.
+
+**Threats.** The ungoverned quick path is real, enabled, and sits in every
+session next to this skill — the counterweight is documented discipline, not
+mechanics; the startup coupling means a carelessly started governor 401s every
+submission; project-registry and gbrain-source naming drift silently kills
+flushes (operational learning #2) — the credentialed Tier 3 check is the only
+close watch on it.
+
+---
+
+*Companion documents: `mb-submit-memory-config.md` (the spec),
+`mb-submit-memory-reference.md` (procedures and rules), the subject skill's
+`SKILL.md` (authoritative procedure), `mb-submit-memory-exam-plan.md` /
+`-exam-report.md` / `mb-submit-memory-log.md` / `submit-memory-learnings.md`
+(config-management set), `submit-memory-skill.md` (exam skill canonical
+source). Architecture: `mb-config-manager/config-manager-explainer.md`.
+The full memory-system map: `memory-master-explainer.md`. The gate's own
+suite: `memory-governor-config.md` + `-reference.md` + `-explainer.md`.*
