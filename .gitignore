@@ -1,2 +1,5 @@
 # Local, machine-specific checker configuration — never commit
 .cupcake/
+
+# GBrain-generated local source state (regenerates on sync/dream) — never commit
+.sources/
