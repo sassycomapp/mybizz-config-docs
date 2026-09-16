@@ -10,7 +10,11 @@ date-created: 2026-09-06
 *Companion note: for current confirmed state (paths, versions, inventory,
 policies, open items) see `anvil-agent-references-config.md`. For exact
 commands, per-skill rules, and technical detail, see
-`anvil-agent-references-reference.md`.*
+`anvil-agent-references-reference.md`. Config-management set:
+`anvil-agent-references-exam-plan.md` (transient job-spec — read second, every
+run), `anvil-agent-references-exam-report.md` (last verified state),
+`anvil-agent-references-log.md` (chronological events),
+`anvil-agent-learnings.md` (transient knowledge).*
 
 ---
 
@@ -253,3 +257,74 @@ below being resolved. What does depend on the open items:
 - **No confirmed run record exists** for any of the five skills here; like the
   wireframe skill's first run, the first real invocation in an app project is a
   verification event, not a routine use.
+
+## 10. Config maintenance — how this system is examined and kept healthy
+
+This suite participates in the config-management system (`mb-config-manager`).
+The roles of the seven suite files, and the exam cycle that runs them, are the
+architecture described in `config-manager-explainer.md` — emulated from the
+PostgreSQL pilot and the matt-pocock-skills (same system family) precedent. The
+short local version:
+
+- `anvil-agent-references-config.md` is the **spec** — the ideal state every
+  exam checks against.
+- Before each exam run, the config-manager synthesizes
+  `anvil-agent-references-exam-plan.md`: a fresh job-spec built from this spec,
+  the last report, the log, and the learnings. The plan is transient (the file
+  is live; contents rewritten each cycle).
+- The exam runs the installed skill (`mb-config-anvil-agent-references`) with
+  the plan in hand — detection fully autonomous; healing gated. **This module
+  has no agent-healable items**: the installation is a vendor-generated
+  checkout, symlink-installed and developer-maintained; every repair/decision
+  (update, per-project setup, license closure) is developer-run or proposed.
+- **Scope boundary:** the 35 Matt Pocock symlinks sharing `~/.agents/skills/`
+  belong to `mb-config-matt-pocock-skills` (coexistence presence/count only in
+  this exam); GStack's install locations and inventory belong to
+  `mb-config-gstack`; `anvil-docs/` is adjacency only; `spawn-tools-denylist`
+  and Cupcake policy belong to the cupcake/opencode modules.
+- The run rewrites `anvil-agent-references-exam-report.md` (current state, no
+  history), appends one row to `anvil-agent-references-log.md`, files new
+  learnings, and prunes absorbed entries.
+
+## 11. S.W.O.T.
+
+**Strengths.** Official Anvil-maintained vendor source — the skills, stubs, and
+references are the platform's own, not a third party's interpretation; the
+symlink-only install (nothing copied) lets the vendor republish and the install
+follows automatically; the five-skill split maps editing discipline to blast
+radius (tightest on the manifest, loosest on plain client code); shared-root
+coexistence with the Matt Pocock set is proven stable since 2026-08-12.
+
+**Weaknesses.** Re-publishes automatically from Anvil's source, so drift recurs
+by design — the clone is behind upstream unless the developer habitually pulls,
+and the update is deliberately developer-run only; no license is published,
+leaving the supply-chain license axis formally unmet; OpenCode is not a
+documented vendor runtimes, so this environment relies on the generic manual
+install path (proven working, but not vendor-blessed); three app roots remain
+without per-project setup, so agents there have the skills but not the resource
+paths the skills assume.
+
+**Opportunities.** The config-management exam adds standing liveness (frontmatter
+sweep) and topology verification that never existed for the install; GBrain
+indexing of the checkout (source `anvil-agent-references-code`) puts the
+vendor reference material in the semantic-memory path once synced; a closed
+adoption-review record would make the trust decision auditable like every other
+adoption in this environment.
+
+**Threats.** A silent `git pull` by someone else's automation would move the
+HEAD without a deliberate decision — the exam's HEAD check catches and classifies
+it; a shared-root accident could delete or rename a matt entry while managing
+this set — designated different-owner, coexistence-presence only; the M3
+partial-beta coverage could mislead agents into proposing unsupported
+components — the suite's ADR linkage (M3-only, HTMLTemplate ban) is the guard;
+guard-rule changes could reclassify which checks are agent-runnable (denials
+honored, reclassified developer-run immediately).
+
+---
+
+*Companion documents: `anvil-agent-references-config.md` (state),
+`anvil-agent-references-reference.md` (commands and rules),
+`anvil-agent-references-exam-plan.md` / `anvil-agent-references-exam-report.md` /
+`anvil-agent-references-log.md` / `anvil-agent-learnings.md` (config-management
+set), `anvil-agent-skill.md` (exam skill canonical source). Architecture:
+`config-manager-explainer.md`.*

@@ -10,6 +10,11 @@ date-created: 2026-09-05
 Companion to `anvil-agent-references-config.md` (state, inventory, open items)
 and `anvil-agent-references-explainer.md` (what this is and why). Agent-facing —
 exact commands, exact per-skill rules, real technical constraints.
+Config-management set: `anvil-agent-references-exam-plan.md` (transient
+job-spec — read second, every run), `anvil-agent-references-exam-report.md`
+(last verified state), `anvil-agent-references-log.md` (chronological events),
+`anvil-agent-learnings.md` (transient knowledge), `anvil-agent-skill.md` (exam
+skill canonical source). Architecture: `config-manager-explainer.md`.
 
 ---
 
