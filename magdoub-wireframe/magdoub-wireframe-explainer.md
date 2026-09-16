@@ -9,7 +9,12 @@ date-created: 2026-09-06
 
 *Companion note: for current confirmed state (paths, versions, integration,
 open items) see `magdoub-wireframe-config.md`. For invocation, operation,
-update, and the do-not list, see `magdoub-wireframe-reference.md`.*
+update, and the do-not list, see `magdoub-wireframe-reference.md`. For the
+config-management set: `magdoub-wireframe-exam-plan.md` (transient job-spec),
+`magdoub-wireframe-exam-report.md` (last verified state),
+`magdoub-wireframe-log.md` (chronological events),
+`magdoub-wireframe-learnings.md` (transient knowledge), and
+`magdoub-wireframe-skill.md` (exam skill canonical source).*
 
 ---
 
@@ -112,3 +117,66 @@ changed in recent upstream history.
 2. **The first real run is a verification event, not a routine use.** Everything in the config doc except run behavior is verified; the skill's actual behavior here — first-run flows against Anvil projects, interplay with the ADR's mandatory reading — is untested. Treating the first run as routine would let unverified assumptions harden into practice.
 3. **ADR reconciliation.** If PDLF projects need ADR-conforming wireframes, either the skill's output needs a conformance pass after generation, or the ADR needs a documented carve-out for exploratory comparison artifacts. Deciding before the first governed run avoids producing non-compliant deliverables at scale.
 4. **Retiring the old in-folder reference doc.** It predates this suite, carries two stale claims, and lives where a clone reset won't touch it but a reinstall would. Keeping two reference documents for one component recreates the drift problem the doc-suite pattern exists to prevent.
+
+## 5. Config maintenance — how this system is examined and kept healthy
+
+This suite participates in the config-management system (`mb-config-manager`).
+The roles of the seven suite files, and the exam cycle that runs them, are the
+architecture described in `config-manager-explainer.md` — emulated from the
+PostgreSQL pilot. The short local version:
+
+- `magdoub-wireframe-config.md` is the **spec** — the ideal state every exam
+  checks against.
+- Before each exam run, the config-manager synthesizes
+  `magdoub-wireframe-exam-plan.md`: a fresh job-spec built from this spec, the
+  last report, the log, and the learnings. The plan is transient (the file is
+  live; contents rewritten each cycle).
+- The exam runs the installed skill (`mb-config-magdoub-wireframe`) with the
+  plan in hand — detection fully autonomous; healing gated. **This module has
+  no agent-healable items**: the clone is developer-owned (update command
+  developer-run only, settled policy), and every open item resolves by developer
+  decision or docs governance.
+- **Scope boundary:** PDLF's step 22/26 usage and `design-rules` ADR interplay
+  belong to the PDLF / project-library-global docs domain; the `task`-tool guard
+  layer and spawn-tools policy belong to the cupcake/opencode modules; gbrain's
+  sync state belongs to the gbrain module. This exam touches none of them.
+- The run rewrites `magdoub-wireframe-exam-report.md` (current state, no
+  history), appends one row to `magdoub-wireframe-log.md`, files new learnings,
+  and prunes absorbed entries.
+
+## 6. S.W.O.T.
+
+**Strengths.** A genuinely clean install topology — one real git clone, one
+discovery symlink, no copies, no second paths, easily verified exhaustively (a
+HEAD pin and a symlink resolution are hard, cheap checks); the template-based
+output design confines drift to the one layer that pays; a settled, recorded
+policy on the two touchpoints that could hurt (updates and memory syncing)
+makes the exam's job mostly verification.
+
+**Weaknesses.** No confirmed real run anywhere — everything except run behavior
+is verified, so the first governed use is itself a verification event; Phase 2
+(the color pass) is written for a sub-agent environment this one denies, and its
+replacement mechanism is undecided; the skill is unmaintained upstream (last
+commit 2026-03-01), so no drift pressure exists but no improvement pressure
+either.
+
+**Opportunities.** A standing liveness exam gives the first health record the
+install has ever had; the supply-chain review owed at adoption (open item 3) can
+be discharged properly once the exam surfaces it; retiring the old single-file
+reference (open item 5) would restore the one-canonical-home principle.
+
+**Threats.** A silent `git pull` or `reset --hard` by any automation would
+move the pinned HEAD without a decision — the exam's HEAD check catches it; an
+accidental second discovery path would double-load the skill — the single-path
+check catches it; the `task`-tool guard layer changing state could reclassify
+which Phase-2 checks are even reachable — denials are honored and reclassified
+developer-run immediately.
+
+---
+
+*Companion documents: `magdoub-wireframe-config.md` (state),
+`magdoub-wireframe-reference.md` (commands and rules),
+`magdoub-wireframe-exam-plan.md` / `magdoub-wireframe-exam-report.md` /
+`magdoub-wireframe-log.md` / `magdoub-wireframe-learnings.md`
+(config-management set), `magdoub-wireframe-skill.md` (exam skill canonical
+source). Architecture: `config-manager-explainer.md`.*

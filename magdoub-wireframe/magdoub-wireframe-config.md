@@ -95,12 +95,28 @@ Folder naming is DDMM — day-then-month, zero-padded, per SKILL.md (see known s
 | Old in-folder reference doc | Browsable symlink at `C:\mybizz\skills-collective\magdoub-claude-wireframe-skill` | No magdoub entry exists in `skills-collective\` |
 | Old in-folder reference doc | Reference doc located at `C:\mybizz\config\magdoub-wireframe\` | That folder does not exist; the file sits inside the skill folder |
 
+## Security supply-chain review (recorded 2026-09-16, gate-approved)
+
+Discharged at run #1's gate (applied to this spec with explicit developer approval,
+the established precedent). Axes per `sec-review-before-trust` /
+`sec-dependency-skill-supply-chain`:
+
+| Axis | Finding | Verdict |
+|---|---|---|
+| Publisher | Magdoub — individual developer | Acceptable (single-maintainer vendor; same class as other community skills in the estate) |
+| License | MIT (LICENSE file present in clone) | Clear |
+| Maintenance | 71 stars / 5 forks / 32 commits; last upstream commit 2026-03-01 (dormant ~6 months at review) | Acceptable — dormant but stable; no drift pressure and no supply-pressure; deliberate-decision gate covers any future update |
+| Spawn-capability | Skill instructions reference launching parallel Task agents (Phase 2); the executing environment denies the Task/spawn tool family natively | Benign in this environment — the instruction cannot execute here (open item 1); content itself is plain HTML/CSS generation |
+
+Overall: benign on every axis. Recorded here with the review date; open item 3
+closed.
+
 ## Open items
 
 | # | Item | Status |
 |---|---|---|
-| 1 | Phase 2 execution mechanism: SKILL.md instructs launching 5 parallel foreground Task agents; sub-agent creation is prohibited as standing policy in this environment, enforced when active at three independent layers (native OpenCode config deny — tool removed from the visible set; `cup-block-task-tool.rego` checked against `spawn-tools-denylist.json`; standing skill-review habit). As of research (2026-09-06) the `task` tool was absent from the tool set. How Phase 2 actually executes here is unresolved. | Open |
-| 2 | No confirmed real run of the skill anywhere in this environment. | Open |
-| 3 | No record of a security supply-chain review at adoption (2026-07-02), per `sec-dependency-skill-supply-chain` / `sec-review-before-trust`. Skill profile at verification: publisher Magdoub (individual), MIT, 71 stars / 5 forks / 32 commits, last upstream commit 2026-03-01. | Open |
-| 4 | `design-rules` ADR (project-library-global; binding on every agent creating wireframe HTML documents; mandates a three-section instructive structure and pre-wireframe reading) vs. the skill's own fixed output format — reconciliation undocumented. | Open |
-| 5 | Whether the old in-folder single-file reference doc is retired or retained now that this suite exists. | Open |
+| 1 | Phase 2 execution mechanism: SKILL.md instructs launching 5 parallel foreground Task agents; sub-agent creation is prohibited as standing policy in this environment, enforced when active at three independent layers (native OpenCode config deny — tool removed from the visible set; `cup-block-task-tool.rego` checked against `spawn-tools-denylist.json`; standing skill-review habit). As of research (2026-09-06) the `task` tool was absent from the tool set. How Phase 2 actually executes here is unresolved. | Open — deferred 2026-09-16 to a deliberate session (gate decision); candidates recorded: main-agent sequential fallback (loses parallelism, keeps output contract) vs Phase-1-only in this environment |
+| 2 | No confirmed real run of the skill anywhere in this environment. | Open (recorded state, confirmed run #1) |
+| 3 | ~~No record of a security supply-chain review at adoption (2026-07-02)~~ — **reviewed and recorded 2026-09-16** (see Security supply-chain review above); benign on all axes | **Closed** |
+| 4 | `design-rules` ADR (project-library-global; binding on every agent creating wireframe HTML documents; mandates a three-section instructive structure and pre-wireframe reading) vs. the skill's own fixed output format — reconciliation undocumented. | Open — flagged to docs governance 2026-09-16 (gate decision); reconciliation is a cross-document decision for docs governance, not an exam repair |
+| 5 | Whether the old in-folder single-file reference doc is retired or retained now that this suite exists. | Open — **retained for now** (gate decision 2026-09-16); sits alongside a 25 B Zone.Identifier artifact; retirement to ride with future suite maintenance |

@@ -13,6 +13,12 @@ Agent-facing. The full generation procedure lives in the skill's own `SKILL.md`
 (auto-loaded on invocation); this doc carries what is needed to invoke, run,
 constrain, update, and remove the skill on this machine.
 
+Config-management set: `magdoub-wireframe-exam-plan.md` (transient job-spec — read
+second, every run), `magdoub-wireframe-exam-report.md` (last verified state),
+`magdoub-wireframe-log.md` (chronological events),
+`magdoub-wireframe-learnings.md` (transient knowledge). The exam skill's canonical
+source is `magdoub-wireframe-skill.md` (installed as `mb-config-magdoub-wireframe`).
+
 ---
 
 ## Invocation
