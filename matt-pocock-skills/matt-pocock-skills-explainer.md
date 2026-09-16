@@ -109,5 +109,62 @@ current upstream drift; its verified content — install architecture,
 setup gate, catalog — is merged here, and the old file is retired so the
 canonical state lives in exactly one place.
 
+## 5. Config maintenance — how this system is examined and kept healthy
+
+This suite participates in the config-management system (`mb-config-manager`).
+The roles of the seven suite files, and the exam cycle that runs them, are the
+architecture described in `config-manager-explainer.md` — emulated from the
+PostgreSQL pilot. The short local version:
+
+- `matt-pocock-skills-config.md` is the **spec** — the ideal state every exam
+  checks against.
+- Before each exam run, the config-manager synthesizes
+  `matt-pocock-skills-exam-plan.md`: a fresh job-spec built from this spec, the
+  last report, the log, and the learnings. The plan is transient (the file is
+  live; contents rewritten each cycle).
+- The exam runs the installed skill (`mb-config-matt-pocock-skills`) with the
+  plan in hand — detection fully autonomous; healing gated. **This module has
+  no agent-healable items**: the installation is deliberate-manual by standing
+  rule; every repair/decision (upgrade, artifact cleanup, link repair) is
+  developer-run or proposed.
+- **Scope boundary:** the 5 Anvil skills sharing `~/.agents/skills/` belong to
+  `anvil-agent-references` (coexistence presence only); GStack's install
+  locations and inventory belong to `mb-config-gstack`; `spawn-tools-denylist`
+  and Cupcake policy belong to the cupcake/opencode modules.
+- The run rewrites `matt-pocock-skills-exam-report.md` (current state, no
+  history), appends one row to `matt-pocock-skills-log.md`, files new
+  learnings, and prunes absorbed entries.
+
+## 6. S.W.O.T.
+
+**Strengths.** Install-by-symlink from one pinned clone: 35 live skills, zero
+copies, zero drift between them, and zero automatic updates (the deliberate-only
+rule is mechanical); symlink topology is cheap to verify exhaustively (0 broken
+links is a real, checkable claim); per-project setup gate gives a hard, visible
+contract for the planning skills.
+
+**Weaknesses.** Deliberate only-update means the set steadily falls behind
+upstream (already ~1 month at last record) by design; several skills are written
+for a sub-agent environment this one denies (inline-execution table is the cost
+of the denial); the set's health depends on the source clone staying put — a
+relocated or rewritten clone would sever all 35 symlinks at once.
+
+**Opportunities.** The config-management exam adds standing liveness (frontmatter
+sweep) and topology verification that never existed for the install; an inventory
+re-count each run keeps the 35-member catalog honest against the source clone.
+
+**Threats.** A silent `git pull` (someone else's automation) would re-pin the set
+without the deliberate decision — the exam's HEAD check catches it; a shared-root
+accident could delete or rename an Anvil entry while managing this set —
+designated different-owner, coexistence-presence only; guard-rule changes could
+reclassify which checks are agent-runnable (denials honored, reclassified
+developer-run immediately).
+
+---
+
 *Companion documents: `matt-pocock-skills-config.md` (state),
-`matt-pocock-skills-reference.md` (commands and rules).*
+`matt-pocock-skills-reference.md` (commands and rules),
+`matt-pocock-skills-exam-plan.md` / `matt-pocock-skills-exam-report.md` /
+`matt-pocock-skills-log.md` / `matt-pocock-skills-learnings.md`
+(config-management set), `matt-pocock-skills-skill.md` (exam skill canonical
+source). Architecture: `config-manager-explainer.md`.*

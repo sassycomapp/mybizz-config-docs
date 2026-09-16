@@ -9,7 +9,11 @@ date-created: 2026-09-08
 
 Execution reference for the 35 installed Matt Pocock skills. Current state
 values: `matt-pocock-skills-config.md`. Why the set is built this way:
-`matt-pocock-skills-explainer.md`.
+`matt-pocock-skills-explainer.md`. Config-management set:
+`matt-pocock-skills-exam-plan.md` (transient job-spec — read second, every
+run), `matt-pocock-skills-exam-report.md` (last verified state),
+`matt-pocock-skills-log.md` (chronological events),
+`matt-pocock-skills-learnings.md` (transient knowledge). Agent-facing.
 
 ## Standing rules
 

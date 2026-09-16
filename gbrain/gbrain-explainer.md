@@ -172,13 +172,12 @@ that makes the governed path the only governed one. GStack supplies both the
 integration skills and the model for the sync discipline.
 
 **The memory master explainer's framing** (`mybizz-os-docs/memory-master-
-explainer.md`): four memory mechanisms — GBrain (semantic memory), Graphify
-(deterministic code structure), the Dream Cycle (autonomous deepening), Memory
-Governor (the durability gate) — with the authority model that orders them all
-under the repository file. Both framings are recorded with provenance and
-deliberately not merged: this document uses the six-component view for
-operational coupling; the master explainer retains the four-mechanism view for
-how memory work fits together, and owns that reasoning.
+explainer.md`): the full memory family — GBrain, the dream cycle,
+memory-governor (with its API), mb-submit-memory, and Graphify, with PostgreSQL
+and Cupcake indirectly related — integrated as one ecosystem, with the
+authority model that orders them all under the repository file. This document
+uses the six-component view for operational coupling; the master explainer owns
+the whole-ecosystem integration view.
 
 **Maintenance obligation (settled, 2026-09-06):** the master explainer is
 passed to every memory-component run and updated by each such session,
