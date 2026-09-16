@@ -7,6 +7,13 @@ date-created: 2026-09-08
 
 # GStack Explainer
 
+## 0. Config-management coverage
+
+This suite is part of the config-management system (`mb-config-manager`): the
+spec is `gstack-config.md`, the exam procedure is `gstack-skill.md`, and the
+per-run job-spec is `gstack-exam-plan.md` / `gstack-exam-report.md` /
+`gstack-log.md` / `gstack-learnings.md`. See §7 (Config maintenance) below.
+
 ## 1. What this actually is
 
 GStack is a virtual engineering team implemented as markdown slash commands.
@@ -133,3 +140,71 @@ depends on it).
 *Companion documents: `gstack-config.md` (state), `gstack-reference.md`
 (workflows and commands), `gstack-skills-reference.md` (catalog).
 Cross-component reasoning: `mybizz-os-docs/memory-master-explainer.md`.*
+
+## 7. Config maintenance — how this system is examined and kept healthy
+
+This suite participates in the config-management system (`mb-config-manager`).
+The roles of the seven suite files, and the exam cycle that runs them, are the
+architecture described in `config-manager-explainer.md` — emulated from the
+PostgreSQL pilot and the gbrain-dream-cycle precedent. The short local version:
+
+- `gstack-config.md` is the **spec** — the ideal state every exam checks
+  against. GStack is working well; the exam verifies that and changes nothing.
+- Before each exam run, the config-manager synthesizes `gstack-exam-plan.md`:
+  a fresh job-spec built from this spec, the last report, the log, and the
+  learnings. The plan is transient (the file is live; contents rewritten each
+  cycle).
+- The exam runs the installed skill (`mb-config-gstack`) with the plan in hand —
+  detection fully autonomous; healing gated. **This module has no standing
+  agent-healable items**: GStack is working well, and every repair is
+  developer-run or proposed through the gate.
+- **Scope boundary:** GBrain server conformance belongs to `mb-config-gbrain`
+  (this exam reads `~/.gstack/*.json` records only); the dream cycle belongs to
+  `mb-config-gbrain-dream-cycle` (`/sync-gbrain` is a knowledge check only);
+  OpenCode structure rows belong to `mb-config-opencode`; cross-tool skill
+  enumeration belongs to `skill-index.md` (docs-managed). This exam owns the
+  discovery **mechanics** — that the documented clone, links, binaries, and
+  config files resolve and are consistent.
+- Several checks are permanently **developer-run**: `~/.gstack` credential-
+  bearing content reads (sensitive-data guard — proven class), the `.env.example`
+  content claim, and everything in Tier 3 (a real skill lifecycle is expensive
+  and writes artifacts; the upgrade decision is the developer's).
+- The run rewrites `gstack-exam-report.md` (current state, no history), appends
+  one row to `gstack-log.md`, files new learnings, and prunes absorbed entries.
+
+## 8. S.W.O.T.
+
+**Strengths.** The installed-and-pinned model with every file links into one real
+clone removes the multi-copy drift class entirely; the frontmatter `name:` field
+(not folder names) resolves command ambiguity across two installer generations;
+every known quirk — the broken discovery entries, the stale update-check, the
+source-overlap trap — is documented with its correct handling rather than left a
+surprise.
+
+**Weaknesses.** The environment sits 23 minor versions behind upstream
+(`1.58.1.0` vs `1.81.0.0`), and the upgrade decision is a genuine re-design that
+cannot be rushed; several checks are permanently developer-run (guard-denied file
+content); the bare-name discovery links' setup provenance is unidentified
+(cosmetic only).
+
+**Opportunities.** The config-management exam adds standing verification that
+never existed: clone/version conformance, topology resolution (both link
+generations + aggregate + legacy path), config-file conformance, a deterministic
+bin invocation, and the generation-discipline probe — so the silent-failure class
+(a symlink web that looks right but resolves dead) is caught before it compounds.
+
+**Threats.** The symlink web can drift silently (a dead link, a double-load from a
+manually-added path, an aggregate entry that stops resolving); an upstream change
+minor-released into this pinned environment could quietly contradict the doc set;
+a future setup run could re-generate the tree into a shape the doc no longer
+describes (mitigated: GS0-GS2 topology checks every run).
+
+---
+
+*Companion documents: `gstack-config.md` (the spec),
+`gstack-reference.md` (procedures and commands),
+`gstack-skills-reference.md` (catalog), `gstack-exam-plan.md` /
+`-exam-report.md` / `-log.md` / `-learnings.md` (config-management set),
+`gstack-skill.md` (exam skill canonical source). Architecture:
+`mb-config-manager/config-manager-explainer.md`. Cross-component framing:
+`memory-master-explainer.md`.*

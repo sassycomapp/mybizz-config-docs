@@ -10,6 +10,10 @@ date-created: 2026-09-05
 Execution reference for the installed GStack (`1.58.1.0`). What GStack is
 and why it is built this way: `gstack-explainer.md`. Current state values:
 `gstack-config.md`. The invocable command catalog: `gstack-skills-reference.md`.
+Config-management set: `gstack-exam-plan.md` (transient job-spec — read
+second, every run), `gstack-exam-report.md` (last verified state),
+`gstack-log.md` (chronological events), `gstack-learnings.md` (transient
+knowledge). Agent-facing.
 
 ## What GStack is (one line)
 
@@ -121,7 +125,7 @@ context.
 | Reference install (other hosts) | `/mnt/c/mybizz/gstack/.agents/skills/` |
 | GStack home | `~/.gstack/` |
 | Brain worktree | `~/.gstack-brain-worktree/` (git-backed; no remote configured) |
-| GStack outputs | `gstack-outputs/` (per project) |
+| GStack outputs | `gstack-outputs/` (per project) — **convention only, does not exist on this system** (verified 2026-09-16); the live artifact home is `~/.gstack/projects/$SLUG/` |
 
 Open GStack folders in Windows Explorer (always via `wslpath -w` from WSL —
 a raw Linux path opens the wrong location):
@@ -144,17 +148,69 @@ configured — sync is local-only today.
 
 ## Artifact locations
 
-GStack skills save to `~/.gstack/projects/$SLUG/` internally; per AGENTS.md,
-copies go to `gstack-outputs/` in the project.
+**FACT (recorded 2026-09-16, verified live).** Every GStack skill saves its
+output to a per-project directory on disk, and downstream skills locate prior
+output through that same directory.
 
-| Skill | Internal save | Copy to |
+**Where skills save:**
+
+- **Internal save (primary, per project, LIVE):** `~/.gstack/projects/$SLUG/`
+  where `$SLUG` is the deterministic per-repo project slug produced by
+  `gstack-slug` (e.g. `sassycomapp-mybizz-config-docs` for this repo). Every
+  skill writes here first — that is the single machine-wide home for GStack
+  artifacts. Verified live 2026-09-16 across the populated project trees.
+- **Repo-visible copy (convention, NOT realized):** per AGENTS.md, the
+  artifact should also be copied to `gstack-outputs/` in the active project
+  repo. **This convention is not live on this system** — verified 2026-09-16:
+  no `gstack-outputs/` folder exists in any project root (the only match
+  anywhere is inside a backup folder, which is out of scope). Treat
+  `~/.gstack/projects/$SLUG/` as the sole authoritative artifact location;
+  do not rely on a repo-side copy existing.
+
+**Sub-directory layout inside `~/.gstack/projects/$SLUG/` (per skill; LIVE):**
+
+| Skill | Internal save | Repo copy (convention) |
 |---|---|---|
 | `/office-hours` | `~/.gstack/projects/$SLUG/` | `gstack-outputs/` |
 | `/plan-ceo-review` | `~/.gstack/projects/$SLUG/ceo-plans/` | `gstack-outputs/` |
 | `/plan-eng-review` | `~/.gstack/projects/$SLUG/` | `gstack-outputs/` |
+| `/plan-design-review`, `/plan-devex-review` | `~/.gstack/projects/$SLUG/` | `gstack-outputs/` |
 | `/design-consultation` | `~/.gstack/projects/$SLUG/designs/` | `gstack-outputs/` + `DESIGN.md` → `docs/` |
-| `/context-save` | `~/.gstack/projects/$SLUG/.context/` | — |
 | `/retro` | `~/.gstack/projects/$SLUG/retros/` | `gstack-outputs/` |
+| `/context-save` | `~/.gstack/projects/$SLUG/.context/` | — |
+| `/qa`, `/qa-only` | `~/.gstack/projects/$SLUG/qa-reports/` (observed live) | `gstack-outputs/` |
+| `/health` | `~/.gstack/projects/$SLUG/health/` (observed live) | — |
+| `/cso` | `~/.gstack/projects/$SLUG/security-audits/` (observed live) | `gstack-outputs/` |
+| `/spec` | `~/.gstack/projects/$SLUG/specs/` (observed live) | — |
+
+(Sub-directories observed live in the populated project trees under
+`~/.gstack/projects/`. Where a skill is not listed, assume the bare
+`~/.gstack/projects/$SLUG/` root. The "Repo copy" column records the AGENTS.md
+convention only — none of those copy locations currently exist on this system.)
+
+**How subsequent skills find prior output:**
+
+1. Compute the same slug: `eval "$($GSTACK_BIN/gstack-slug)"` →
+   `$SLUG` (deterministic per repo — a later skill in the same project
+   resolves to the same directory).
+2. Read the skill's known sub-directory (table above) for the prior run's
+   artifact.
+3. Cross-session handoff: `/context-save` writes `.context/`; `/context-restore`
+   reads it — the standing handoff pair for a fresh session to resume without
+   reconstructing context.
+4. Learnings compound across sessions via
+   `~/.gstack/projects/$SLUG/learnings.jsonl` (loaded at every skill preamble
+   once it exists).
+5. Timelines (`timeline.jsonl`), analytics (`~/.gstack/analytics/`) and
+   decisions (`decisions.active.json`) are also project-keyed at
+   `~/.gstack/projects/$SLUG/` and readable by later skills. These files
+   appear on first use (verified: absent until the first event writes them).
+6. The `gstack-outputs/` copy lane does **not** exist on this system (verified
+   2026-09-16) — it is an un-realized AGENTS.md convention. Never rely on it as
+   a fallback; find prior output only under `~/.gstack/projects/$SLUG/`.
+
+Deterministic slug example (this repo, verified live 2026-09-16): `gstack-slug`
+→ `sassycomapp-mybizz-config-docs`.
 
 ## Role map
 
