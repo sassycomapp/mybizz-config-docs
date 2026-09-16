@@ -122,5 +122,5 @@ Then remove the now-broken symlink `~/.config/opencode/skills/wireframe/SKILL.md
 - Do not use any color or dotted/dashed borders in the Wireframe sub-tab — the palette is strictly the seven listed values.
 - Do not follow the upstream README's MMDD folder label — DDMM per SKILL.md.
 - Do not edit files inside the real clone expecting changes to survive an update — `reset --hard` discards them.
-- Do not generate wireframes in a project governed by the `design-rules` ADR without completing that ADR's mandatory pre-wireframe reading — its authority is independent of this skill's own flow.
+- Do not treat Magdoub output as an ADR-conforming wireframe. Per `design-rules` ADR Section A (2026-09-16): the ADR governs wireframes *not* created by this skill; this skill's exploratory comparison artifact is exempt as a genre, but the exemption is not an escape hatch — producing an ADR-conforming deliverable still requires either a conformance pass over this skill's output or a hand-authored ADR-conforming document, with that ADR's mandatory pre-wireframe reading completed.
 - Do not treat skill-index "working" as run evidence — no confirmed real run exists in this environment.

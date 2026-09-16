@@ -22,7 +22,9 @@ for the `magdoub-wireframe` system (Magdoub Claude Wireframe Skill) per
 zero live defects), Tier 3 executed at the gate (all items approved), committed
 as `7977eb4` (developer-executed after the autonomous-commits guard denial) and
 pushed; gbrain sync completed and verified. Governance flag W-4 left open for
-docs-governance pickup.
+docs-governance pickup — **then resolved the same day by direct developer
+decision**: `adr-design-rules.md` gained §A (Magdoub-skill exemption), suite
+reconciled, skill re-installed (re-hash `c570e38d0b490808`).
 
 ## What was done (with evidence)
 
@@ -142,10 +144,19 @@ docs-governance pickup.
 - Commit `7977eb4` pushed to `main`.
 - GBrain sync verified 2026-09-16T15-15-25.
 
-## Open / next
+## Open / next (updated 2026-09-16 with the W-4 resolution)
 
-- **Governance flag W-4** — `design-rules` ADR vs skill output reconciliation is
-  open for docs-governance pickup (open item 4).
+- **Governance flag W-4 — RESOLVED same-day.** The developer decided the
+  `design-rules` ADR reconciliation directly (not left to docs-governance
+  pickup): `project-library-global/adr-global/adr-design-rules.md` gained
+  **Section A — Applicability (Magdoub Wireframe Skill exemption)**: the ADR
+  applies only to wireframes NOT created by the Magdoub skill; Magdoub output is
+  an exploratory comparison artifact (different genre, exempt as an artifact);
+  wireframes by any other skill or by hand are fully governed; Magdoub output is
+  not an escape hatch — an ADR-conforming deliverable still needs a conformance
+  pass (A3). Suite reconciled (config open item 4 closed, explainer, reference,
+  exam-report, exam-plan); skill source re-edited and re-installed (re-hash
+  `c570e38d0b490808`); register hash + notes updated.
 - **Open item 1** — Phase-2 mechanism decision (deferred to a deliberate
   session; candidates recorded in the spec).
 - **Open items 2/5** — no-confirmed-run state (recorded); old reference doc

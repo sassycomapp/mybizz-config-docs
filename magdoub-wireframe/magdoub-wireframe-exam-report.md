@@ -81,8 +81,10 @@ confirmed exhaustively; the Tier 1/2 sampling is validated at full breadth.
   benign on all four axes (publisher individual/acceptable · MIT clear ·
   maintenance dormant-but-stable acceptable · spawn-capability benign in this
   environment). Open item 3 **closed**.
-- **W-4 `design-rules` ADR reconciliation — FLAGGED TO DOCS GOVERNANCE**
-  (cross-document decision; open item 4 stays open pending governance).
+- **W-4 `design-rules` ADR reconciliation — FLAGGED TO DOCS GOVERNANCE at the
+  gate, then RESOLVED BY DIRECT DEVELOPER DECISION 2026-09-16** (ADR Section A
+  added — Magdoub-skill exemption; open item 4 closed post-run; see suite log
+  row).
 - **W-5 old single-file reference — RETAINED FOR NOW** (retirement rides with
   future suite maintenance; open item 5 stays open).
 - **W-1 Phase-2 mechanism — DEFERRED to a deliberate session** (candidates
@@ -99,8 +101,9 @@ no fetch/reset attempted; no lifecycle change.
 ## Findings
 
 None. All watch items (config §Open items) now carry dispositions: W-1 deferred,
-W-2 recorded state, W-3 closed (reviewed), W-4 flagged to governance, W-5
-retained. No open findings remain from this run.
+W-2 recorded state, W-3 closed (reviewed), W-4 **closed post-run (resolved
+2026-09-16 — ADR §A exemption applied by developer decision)**, W-5 retained. No
+open findings remain from this run.
 
 ## Deferred (runner attribution)
 

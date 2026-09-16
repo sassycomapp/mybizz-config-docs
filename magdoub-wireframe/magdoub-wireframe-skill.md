@@ -33,8 +33,10 @@ is working well; this exam verifies that and repairs nothing.
   symlink in `~/.config/opencode/skills/wireframe/`, the bundled file set, the
   runtime output structure, and the settled sync/update policy.
 - **PDLF's step 22/26 usage** of the skill and the `design-rules` ADR interplay
-  belong to the PDLF / project-library-global docs domain (config open item 4)
-  — referenced, never verified here, never treated as this module's findings.
+  belong to the PDLF / project-library-global docs domain (config open item 4 —
+  **resolved 2026-09-16**: ADR §A exempts Magdoub-created wireframes; other
+  wireframes fully governed — referenced, never verified here, never treated as
+  this module's findings)
 - **The `task`-tool guard layer and spawn-tools policy** belong to the
   cupcake/opencode modules — referenced as the standing constraint on Phase 2
   (open item 1), never re-enforced or re-verified here.
