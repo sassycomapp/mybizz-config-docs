@@ -234,29 +234,41 @@ the Rail; nested admin-style navigation genuinely wants the Drawer.
   the ADRs decide what this system *allows*.
 - **One trust caveat:** the repo publishes no license. The publisher is the
   platform vendor itself and the checkout is generated read-only reference
-  material, so the practical risk is low — but a supply-chain review formally
-  requires the license axis, and it's unmet on record.
+  material, so the practical risk is low — but the supply-chain license axis is
+  formally unmet on record. **Resolution 2026-09-16:** the adoption-time review
+  was performed and recorded in `anvil-agent-references-config.md` (four axes:
+  publisher pass, maintenance pass, spawn-capability pass, license not met). The
+  license gap is now a documented **accepted risk** with a dated disposition, not
+  an open governance item — if it must be *materially* met later, the action is an
+  upstream adoption decision (formal request through Anvil), not a config-manager
+  fix.
 
 ## 9. What's genuinely still open, and why
 
 The skills' editing discipline — validate before trusting, never guess an API,
 inspect before editing — is fully documented and doesn't depend on anything
-below being resolved. What does depend on the open items:
+below being resolved. All five former spec open items were **closed 2026-09-16**
+with recorded dispositions (config.md open-items table + adoption review). What
+remains is operational, not open-item, state:
 
-- **The pending upstream update** determines whether this suite describes the
-  current checkout or a slightly older one; the repo republishes
-  automatically from Anvil's source, so drift recurs by design and the update
-  cadence is an operational habit, not a one-time fix.
-- **The three app roots without per-project setup** are the gap between
-  "installed" and "usable with full resource-path awareness" — until closed,
-  agents working in those projects have the skills but not the resource paths
-  the skills assume.
-- **The license and adoption-review record** is a governance loose end, not a
-  functional one — closing it makes the trust decision auditable like every
-  other adoption in this environment.
-- **No confirmed run record exists** for any of the five skills here; like the
-  wireframe skill's first run, the first real invocation in an app project is a
-  verification event, not a routine use.
+- **Upstream drift recurs by design** (config.md §Identity, closed item 1): the
+  clone was updated to `7c9b0a7`; a fresh one-commit drift (`afe281d`) has since
+  landed. The repo republishes automatically from Anvil's source, so the update
+  cadence is an operational habit — the next `git pull` is developer-run whenever
+  the developer chooses.
+- **The three app roots without per-project setup** are deliberately not
+  initialized (cupcake-config.md project-init status); their Anvil per-project
+  setup is developer-run and tied to each project's own initialization (closed
+  item 3). Until a project initializes, agents there have the skills but not the
+  resource paths the skills assume — a project-start trigger, not a dangling item.
+- **The license adoption review is now on record** (closed item 2): four axes
+  reviewed 2026-09-16, license axis documented as an accepted risk. The trust
+  decision is auditable; materially meeting the license axis would be an upstream
+  adoption decision, not a config fix.
+- **A confirmed verification record now exists** for all five skills (closed item
+  4): the config exam's Tier-2 reachability + valid frontmatter sweep and Tier-3
+  byte-identity audit (5/5 SHA-256 equal to vendor). The first real *in-app task*
+  invocation remains a future verification event, not a routine use.
 
 ## 10. Config maintenance — how this system is examined and kept healthy
 

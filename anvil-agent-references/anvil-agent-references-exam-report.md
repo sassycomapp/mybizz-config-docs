@@ -20,14 +20,15 @@ blocks (bootstrap). One guard denial at step-0 (literal sibling token in command
 text — recorded exec-protection class) — honored, derived-glob form used.
 Detection only — Tiers 0–2; Tier 3 **unlocked at gate** (developer decision
 2026-09-16) and executed — AR3-1 full audit PASS, AR3-2 stay-current, AR3-3
-developer-run pending. Gate dispositions recorded: W-1 and W-5 **flagged to docs
-governance** (spec refresh + open items 1/5 closures; spec edits left to docs
-governance — no live mismatch). Scope boundary honored (35 matt shared-root =
+developer-run pending. Gate dispositions recorded; **all five former open items
+(W-1–W-5) closed 2026-09-16 by direct spec correction + recorded adoption review
+(developer-approved resolution, not governance flags)** — see Findings below.
+Scope boundary honored (35 matt shared-root =
 matt-pocock-skills domain, presence/count only; GStack and `anvil-docs/` never
 probed; the 5 vendor Anvil skills are this module's subject, never conflated with
 the matt set).
 
-## Verdict: HEALTHY — all checks PASS (Tiers 0–3), zero live defects; two spec-staleness observations flagged to docs governance at the gate
+## Verdict: HEALTHY — all checks PASS (Tiers 0–3), zero live defects; all five former open items (W-1–W-5) closed 2026-09-16
 
 The installation is working exactly as recorded in its spec: clone at upstream
 HEAD `7c9b0a7` on `master`, 40-symlink shared root intact (5 vendor Anvil skills +
@@ -65,26 +66,36 @@ and the three stale references confirmed absent.
 ## Findings
 
 None (no DOWN / UNHEALTHY / DRIFT live-state mismatch, no GAP). Two
-**spec-staleness observations** — flagged to docs governance at the gate
-(approved 2026-09-16), spec edits left to docs governance, no live mismatch:
+**spec-staleness observations** were identified at detection and **resolved by
+direct spec correction on 2026-09-16** (developer-approved; the gbrain/opencode
+precedent for applied spec corrections), not left as governance flags:
 
-- **W-1 — clone updated since spec written.** Spec §Identity records installed
+- **W-1 — clone updated since spec written.** Spec §Identity recorded installed
   HEAD `3593c16` with update pending (open item 1); live HEAD is `7c9b0a7` — the
-  previously-recorded *upstream* HEAD — so the developer-run `git pull` has
+  previously-recorded *upstream* HEAD — so the developer-run `git pull` had
   evidently executed. Consistent with this, the server stub count is now 32 (total
-  63) vs recorded 31/62. **Class: DRIFT (spec vs live).** Disposition: **flagged
-  to docs governance** — refresh spec §Identity + §Repository-structure, close
-  open item 1. Evidence: `git rev-parse HEAD`; stub `find`.
+  63) vs a recorded 31/62, and the skill inventory line counts moved
+  (anvil-yaml 62→68, client-forms 151→154). **Class: DRIFT (spec vs live).**
+  **Resolution:** §Identity + §Repository-structure + §Skills inventory corrected
+  to verified live values (HEAD `7c9b0a7`, stubs 63, refreshed line counts); a
+  fresh one-commit upstream drift (`afe281d`, origin 2026-09-16) recaptured in
+  §Identity. Open item 1 closed. Evidence: `git rev-parse HEAD`; `git ls-remote`;
+  stub `find`; `wc -l` per SKILL.md.
 - **W-5 — GBrain index state advanced.** Spec §GBrain registration + open item 5
-  record "0 pages, never synced"; live shows 34 pages, last sync 2026-09-06 — the
-  first sync has evidently run. **Class: DRIFT (spec vs live).** Disposition:
-  **flagged to docs governance** — refresh spec's index-state claim, close open
-  item 5. Note: last sync predates the clone update — the re-sync after the update
-  is a developer-run decision (regular `gbrain sync` path, Memory Governor
-  bypassed).
-- **W-2 / W-3 / W-4** (open items 2/3/4) confirmed unchanged: no LICENSE (license
-  axis still formally unmet); 3 app roots still Not-done; no confirmed run record
-  of any vendor Anvil skill yet — each remains a recorded open item, no action.
+  recorded "0 pages, never synced"; live shows 34 pages, last sync 2026-09-06 —
+  the first sync had evidently run. **Class: DRIFT (spec vs live).**
+  **Resolution:** §GBrain registration index-state corrected to the live value and
+  open item 5 closed. Note: last sync predates the clone update — a re-sync after
+  the next update is the developer's call (regular `gbrain sync` path, Memory
+  Governor bypassed).
+- **W-2 / W-3 / W-4** (former open items 2/3/4) resolved rather than flagged:
+  the license adoption-time review was **performed and recorded** (four-axis
+  table, license axis documented as accepted risk — open item 2 closed); per-project
+  setup for the 3 uninitialized app roots recorded as a deliberate, trigger-bound
+  deferral tied to project init (`cupcake-config.md` project-init status), not a
+  dangling item (open item 3 closed); the Tier-2/3 verification record now stands
+  as the confirmed on-record evidence that all five vendor Anvil skills resolve
+  and load as published (open item 4 closed).
 
 ## Tier 3 — Deep pass: EXECUTED (developer unlocked at gate, 2026-09-16)
 

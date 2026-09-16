@@ -36,16 +36,17 @@ run-specifics + references only.
 
 ## 2. Carried-forward items
 
-None hoped — bootstrap (no prior exam exists). The spec's **open items** are carried
-as watch rows (observations, not findings):
+None — bootstrap (no prior exam exists). The spec's former **open items** were
+**all closed 2026-09-16** (config.md open-items table + adoption review). They
+remain as watch rows for this run (observations, not findings):
 
-| # | Watch item (config open items) | This run's action |
+| # | Watch item (formerly config open items) | This run's action |
 |---|---|---|
-| W-1 | Open item 1 — upstream update pending (recorded: installed `3593c16`, upstream `7c9b0a7`, drift = behind). **Build-out orientation observed the clone now AT `7c9b0a7`** (log row 2026-09-16) — the update has evidently executed | Re-probe HEAD live; classify the delta (spec-written 2026-09-06 vs live now) as DRIFT/GAP at the gate — not silently accepted |
-| W-2 | Open item 2 — license: none found (no LICENSE, GitHub API 404). Supply-chain license axis formally unmet | Confirm LICENSE absence live; leave as recorded open item, no action unless the developer decides otherwise (AR3-2 at the gate) |
-| W-3 | Open items 3 — per-project setup not done in `mb-3-cs`, `mb4ecom`, `mb5pdlf` app roots (developer-run step either way; AI writes to project `AGENTS.md` prohibited) | Verify the recorded Done/Not-done matrix live (AR1-4); status flips flagged to docs governance, never self-updated |
-| W-4 | Open item 4 — no confirmed run record of any of the five skills (no run logs found in GBrain) | No live probe; a verification event, not a defect. Note in report |
-| W-5 | Open item 5 — first `gbrain sync` pending (registered 2026-09-06, 0 pages). **Build-out orientation observed 34 pages, last sync 2026-09-06** | Confirm source registration + page count live (AR1-6); classify the delta at the gate |
+| W-1 | Clone was updated to `7c9b0a7`; a fresh one-commit upstream drift (`afe281d`, origin 2026-09-16) has since landed. Spec §Identity recaptured the delta and closed open item 1 | Re-probe HEAD live; if the clone has not been pulled again, state matches the recorded drift — record as observation, next update is developer-run |
+| W-2 | License: none found; adoption review recorded 2026-09-16 (four axes, license axis = documented accepted risk). Open item 2 closed | Confirm LICENSE absence live; the record stands unless the developer pursues the upstream adoption route |
+| W-3 | Per-project setup in `mb-3-cs`, `mb4ecom`, `mb5pdlf` app roots = deliberate trigger-bound deferral tied to project init (cupcake-config project-init status). Open item 3 closed | Verify the recorded Done/Not-done matrix live (AR1-4); a project initializing is progress — flag the spec for refresh, never self-update |
+| W-4 | Tier-2/3 verification record stands as the confirmed on-record skill verification (open item 4 closed) | No live probe; an in-app first invocation is a future verification event, not a defect. Note in report |
+| W-5 | gbrain source index-state corrected (34 pages, last sync 2026-09-06; open item 5 closed) | Confirm source registration + page count live (AR1-6); a re-sync after any future clone update is the developer's call |
 
 ## 3. Erred last run
 
@@ -71,7 +72,7 @@ Every check: id, runner (A=agent, D=developer), probe, expected source, pass
 rule — full tables in `anvil-agent-skill.md` (Tiers 0–3). Summary:
 
 - **Tier 0 (A) — invocability:** AR0-1 source clone present + HEAD reachable · AR0-2 discovery root `~/.agents/skills/` returns the anvil set (5 symlinks → clone's `skills/`). Failure = DOWN, stop.
-- **Tier 1 (A) — state conformance:** AR1-1 link graph (5 anvil symlinks; 0 broken; total link count = 40 shared-root with the matt set, presence-only) · AR1-2 OpenCode discovery (no second discovery path, no `~/.claude/skills/` anvil entries) · AR1-3 repository structure (skills/ 5, stubs 62 recorded, reference/types 3, docs/m3 layout, plugin metadata) · AR1-4 per-project setup state (1 Done / 1 Done / 3 Not-done per the recorded matrix) · AR1-5 suite completeness (7 files) · AR1-6 GBrain source registration (`anvil-agent-references-code`, non-federated) · AR1-7 stale external references absent (`/mnt/c/mybizz/config`, `skills-collective`, `docs/material-3`)
+- **Tier 1 (A) — state conformance:** AR1-1 link graph (5 anvil symlinks; 0 broken; total link count = 40 shared-root with the matt set, presence-only) · AR1-2 OpenCode discovery (no second discovery path, no `~/.claude/skills/` anvil entries) · AR1-3 repository structure (skills/ 5, stubs 63 = 31 client + 32 server per config §Repository structure — read fresh, reference/types 3, docs/m3 layout, plugin metadata) · AR1-4 per-project setup state (2 Done / 3 Not-done — Not-done = deliberate, project-init-tied; per the recorded matrix) · AR1-5 suite completeness (7 files) · AR1-6 GBrain source registration (`anvil-agent-references-code`, non-federated) · AR1-7 stale external references absent (`/mnt/c/mybizz/config`, `skills-collective`, `docs/material-3`)
 - **Tier 2 (A) — functional, present ≠ working:** AR2-1 reachability/frontmatter sweep (5 skills via symlink, real `name:`/`description:` frontmatter) · AR2-2 discipline probe — the 5 roles in the clone's `AGENTS.md` Shared-Resources block present (the per-project copy source)
 - **Tier 3 (D, locked):** AR3-1 full mechanical integrity audit (5 links + stub/type/doc counts + 5 SKILL.md byte-identity with vendor) · AR3-2 deliberate update + license decision (standing rule: stay current; upstream drift noted; license axis formally unmet) · AR3-3 per-project setup closure decision (the 3 Not-done roots)
 
