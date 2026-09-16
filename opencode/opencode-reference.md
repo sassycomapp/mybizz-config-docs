@@ -11,7 +11,10 @@ Companion to `opencode-config.md` (current state),
 `opencode-permission-access-control-model.md` (the permission layers),
 `opencode-project-session-data-integrity.md` (session database
 maintenance), and `opencode-explainer.md` (mechanics and real incidents).
-Agent-facing.
+Config-management set: `opencode-exam-plan.md` (transient job-spec — read
+second, every run), `opencode-exam-report.md` (last verified state),
+`opencode-log.md` (chronological events), `opencode-learnings.md`
+(transient knowledge). Agent-facing.
 
 ---
 

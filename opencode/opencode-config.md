@@ -32,7 +32,7 @@ five-part OpenCode suite; each file owns one scope:
 | Harness role | OpenCode is the harness spanning every environment layer (see `C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md`) — the pre-makePDLF supporting systems run inside or beside it, the makePDLF layer builds the PDLF application in it, and the PDLF layer builds the shipped estate through it |
 | WSL distro (real, active) | `Ubuntu` — **not** the default (`Ubuntu-22.04`, stopped). Any Windows-triggered command invoking `wsl.exe` must explicitly pass `-d Ubuntu -u dev-p` |
 
-## Global config — real, current content (verified key-by-key 2026-09-09)
+## Global config — real, current content (verified key-by-key 2026-09-09; re-verified via run #1 developer bundle 2026-09-15)
 
 | Key | Value |
 |---|---|
@@ -41,15 +41,18 @@ five-part OpenCode suite; each file owns one scope:
 | `permission.task` | `deny` — Layer 1 of the three-layer `task`-denial system, see `cupcake-config.md` |
 | `permission.edit` | `ask` by default; `**/anvil.yaml` explicitly `deny` |
 | `permission.webfetch` | `ask` |
-| `permission.bash` | `ask` by default; explicit `deny` on destructive git operations, `DROP`/`TRUNCATE` SQL patterns, and `curl`/`wget` piped directly to a shell |
-| `permission.external_directory` | `allow` for `C:\mybizz\**`, `C:\dev\**`, `C:\pdlf\**` |
+| `permission.bash` | `ask` by default; explicit `deny` on destructive git operations, `DROP`/`TRUNCATE` SQL patterns, and `curl`/`wget` piped directly to a shell (13 patterns in the live map — verified 2026-09-15) |
+| `permission.external_directory` | `allow` for `C:\mybizz\**`, `C:\dev\**`, `C:\pdlf\**`, `C:\data-mybizz-mgt\**` (4th root added to spec 2026-09-15 — developer-approved F-4 correction) |
 | `agent.plan.permission.edit` | `deny` — Plan agent cannot write, by design |
-| `mcp.gbrain` | Local MCP server, `gbrain serve`, real API keys passed via environment |
+| `agent.docs-manager` | Read-only subagent (mode `subagent`, model `openrouter/qwen/qwen3.6-plus`): `permission.edit` deny, `permission.bash` deny — the docs-manager Phase-1 scan role. Added to spec 2026-09-15 — developer-approved F-5 correction |
+| `mcp.gbrain` | Local MCP server, `gbrain serve`, real API keys passed via environment (`{env:...}` placeholders — no literals in config, verified 2026-09-15) |
 
 ## The global `AGENTS.md`
 
-`~/.config/opencode/AGENTS.md` (14.4 KB) — the global behavioral-rules file
-OpenCode loads for every session. Present and verified 2026-09-09.
+`~/.config/opencode/AGENTS.md` (~16.2 KB, measured 2026-09-15; the 14.4 KB figure of
+2026-09-09 grew with the session-close routine and fact-save guidance) — the
+global behavioral-rules file OpenCode loads for every session. Present and
+verified 2026-09-09; re-verified 2026-09-15.
 
 ## Plugin state
 

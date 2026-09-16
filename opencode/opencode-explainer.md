@@ -7,6 +7,16 @@ date-created: 2026-09-05
 
 # OpenCode Explainer
 
+*Companion note: for current confirmed state (identity, global-config content,
+plugin state, skill discovery, Active Project Standard) see `opencode-config.md`.
+For commands and the restart/verification procedures, see `opencode-reference.md`.
+For the permission layers and the verified merge, see
+`opencode-permission-access-control-model.md`. For how this system is examined and
+kept healthy by the config-management apparatus, see §8 below and the suite's exam
+set (`opencode-exam-plan.md` / `-exam-report.md` / `-log.md` / `-learnings.md`).*
+
+---
+
 ## 1. Opening
 
 OpenCode is the actual harness this entire environment runs inside — the
@@ -178,11 +188,82 @@ must ensure that plugin is discoverable from exactly one path.
 
 ---
 
-*Companion documents: `opencode-config.md` (current configuration,
-real skill inventory, active-project standard),
+## 8. Config maintenance — how this system is examined and kept healthy
+
+This suite participates in the config-management system (`mb-config-manager`).
+The roles of the seven suite files, and the exam cycle that runs them, are the
+architecture described in `config-manager-explainer.md` — emulated from the
+PostgreSQL pilot. The short local version:
+
+- `opencode-config.md` is the **spec** — the ideal state every exam checks
+  against. OpenCode is working well; the exam verifies that and changes nothing.
+- Before each exam run, the config-manager synthesizes `opencode-exam-plan.md`:
+  a fresh job-spec built from this spec, the last report, the log, and the
+  learnings. The plan is transient (the file is live; contents rewritten each
+  cycle).
+- The exam runs the installed skill (`mb-config-opencode`) with the plan in hand —
+  detection fully autonomous; healing gated. **This module has no agent-healable
+  items**: the harness's own config, plugin tree, and process are beyond agent
+  repair by design — every repair is developer-run or proposed.
+- **The self-referential trap, named:** the config-manager itself lives **inside**
+  this harness (`~/.config/opencode/skills/`, plugin, skills). The exam therefore
+  never touches the plugin tree, never restarts the running process (it would
+  interrupt the very session running the exam), and never edits its own
+  config file. Self-health of the config-manager is step-0 of every exam cycle
+  (register ↔ installed skill ↔ source hash), never a finding of this module.
+- **Scope boundary with sibling modules:** cupcake **enforcement** (rules compile +
+  firing) belongs to `mb-config-cupcake` — this exam owns the plugin's
+  **discoverability/dedup mechanics** (exactly one discoverable path). GBrain
+  **server** liveness belongs to `mb-config-gbrain` — this exam owns the
+  `mcp.gbrain` **config entry**. The **session database** and its cleanup belong
+  to `opencode-project-session-data-integrity.md` (agent content reads
+  guard-denied — the exam checks presence only, via directory listing). Full skill
+  **inventory** belongs to `skill-index.md` (docs-managed) — this exam checks
+  discovery **mechanics**, never re-audits the inventory.
+- Several checks are permanently **developer-run**: `opencode.jsonc` content
+  (sensitive-data guard class), the session-data doc content (proven denial), and
+  everything in Tier 3 (full restart; WSL default-distro check via `wsl.exe`;
+  the upgrade decision).
+- The run rewrites `opencode-exam-report.md` (current state, no history), appends
+  one row to `opencode-log.md`, files new learnings, and prunes absorbed entries.
+
+## 9. S.W.O.T.
+
+**Strengths.** Three independently-verified hard facts underpin every other
+system's exam: configs **merge** (project overrides global only on conflict;
+nested maps merge deeply — verified 2026-09-09); plugins load **once** at process
+start (verified twice); deny patterns match command **text** (verified live). The
+suite's probe set is deliberately small because the mechanics are proven.
+
+**Weaknesses.** The deepest checks are developer-run by natural law (full restart
+kills the session that asks; `wsl.exe` is Windows-side; config content is
+sensitive-guarded). Version/behavior drift between spec and reality is only as
+visible as the exams' spot-probes make it — a deep merge re-verification is not
+performed each run.
+
+**Opportunities.** Every other config-manager module inherits OpenCode's verified
+truths (merge, load-once, text-matching) — the harness is the foundation layer
+the whole estate builds on; one healthy exam here pays forward across all
+modules. The plugin/skill inventory stays a docs-side concern, so the exam stays
+small and fast.
+
+**Threats.** A future OpenCode upgrade could silently change merge, load, or
+deny-matching behavior (mitigated: OC1/OC2 re-verify, never assume); a second
+discoverable plugin path could revive the double-load class of bug (mitigated:
+OC1-5 watches exactly-one-path); a "Paused" project's config could be mistaken
+for stale and removed (mitigated: the Active-Project Standard is checked, and the
+spec explicitly forbids treating Paused configs as stale).
+
+---
+
+*Companion documents: `opencode-config.md` (current configuration, real skill
+inventory, active-project standard),
 `opencode-permission-access-control-model.md` (the permission layers),
 `opencode-project-session-data-integrity.md` (the session database),
-`opencode-reference.md` (procedures). The environment layer map:
+`opencode-reference.md` (procedures). Config-management set:
+`opencode-exam-plan.md` / `-exam-report.md` / `-log.md` / `-learnings.md`.
+Exam skill canonical source: `opencode-skill.md`. Architecture:
+`mb-config-manager/config-manager-explainer.md`. The environment layer map:
 `C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md`.*
 
 *End of document*
