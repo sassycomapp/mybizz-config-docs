@@ -9,12 +9,21 @@ date-created: 2026-09-06
 
 Invocation, commands, authoring procedure, and failure rules. Mid-task lookup.
 For what Archify is and why it works this way: `archify-explainer.md`.
+Config-management exam set: `archify-exam-plan.md` (run job-spec),
+`archify-exam-report.md` (current verified state), `archify-log.md` (events),
+`archify-learnings.md` (transient lessons). Scoping: `archify-scope-skill.md`
+(the scoping skill's canonical spec).
 
 ---
 
 ## Invocation
 
 `/archify`
+
+**Front-of-pipe:** any drawing request routes through `/mb-archify-scope` first
+(canonical spec `archify-scope-skill.md`) — it produces the approved Scope Card +
+machine header that the Archify run consumes. Invoke `/mb-archify-scope` **before**
+`/archify`, never instead of it.
 
 All `node bin/archify.mjs ...` commands run from the skill package root
 (`/mnt/c/mybizz/archify/archify`); absolute paths work equally.
@@ -67,11 +76,23 @@ Read the Mermaid for topology and meaning; author fresh Archify JSON. Never mech
    ```
 
    Measures first-screen containment at 1440×900, 1600×1000, 1920×1080, and 2048×1320; the machine receipt remains `visualReview: "pending"`. Chrome absence reports `skipped`, never a false pass.
-7. **Keep the three claims separate** and report each independently: `deliver` proves deterministic artifact checks; `visual-check` proves bounded behavior in a real browser; perceptual polish requires a human or image-capable reviewer.
+   **Calibration note (verified live 2026-09-15):** Showcase desktop containment
+   (`scrollHeight <= innerHeight`) is not satisfiable for card-bearing artifacts in
+   the current viewer build — the shipped reference example fails the identical
+   overflow check at all four viewports, and a 9/9-validated artifact overflowed
+   1414–1534. Report `browser_evidence: failed` truthfully with the reference-artifact
+   calibration; treat overflow as viewer-inherent when the reference fails identically;
+   still compact redundant viewBox height.
+7. **Keep the three claims separate** and report each independently: `deliver` proves deterministic artifact checks; `visual-check` proves bounded behavior in a real browser; perceptual polish requires a human or image-capable reviewer (an agent model that cannot read the PNG sidecars never claims `visual_review: passed` — record it only from an actual inspection; always write the four PNG sidecars for the developer's review).
 
 ### Correction rounds
 
 Apply only each `diagnostics[]` subject's `supportedFixes`; change only the diagnosed subject, verify its evidence. Continue while the objective error count reaches a new minimum. If two consecutive rounds do not improve that best count, stop and report the unresolved diagnostics truthfully.
+**Override order (verified live 2026-09-15):** crossing → endpoint direction → label.
+After crossings and endpoint-direction are clean, the remaining diagnostics are
+label-route-clearance only; two focused repair rounds took a full candidate from
+17 → 0 diagnostics. Keep single-diagnostic repairs until the count reaches a new
+minimum, then stop.
 
 ## Full command list
 
@@ -92,6 +113,33 @@ Apply only each `diagnostics[]` subject's `supportedFixes`; change only the diag
 
 ## Authoring invariants (imperatives)
 
+- **Type choice is the highest-leverage scoping decision.** Run
+  `node bin/archify.mjs guide "<scenario>" --json` at scope time; record type+why.
+  `dataflow` is a strict stage/row grid (stage centers `x=100+stage×215`, band 168,
+  header `y=46`; row tops `y=128,242,356,470,584`) that punishes dense crossing flows;
+  `architecture` uses free `pos` and forgives edge count. Choose the forgiving type
+  unless the subject genuinely demands grid semantics (verified live 2026-09-15:
+  keyword-driven `dataflow` failed repeatedly; guide-consistent `architecture`
+  validated clean in two repair rounds).
+- **Probe before connecting.** A components+boundary-only stub `validate` runs in
+  seconds and surfaces the composition/desktop-readability failure class before any
+  flow/label work. Abort-and-reshape on probe failure — never author past a failed
+  probe.
+- **Desktop readability is a viewBox-width constraint.** At 1440px desktop the viewer
+  scales the whole SVG down; a 1360-wide viewBox dropped an 8.4px sublabel to 5.7px
+  (`composition/desktop-readability`). Size the viewBox for ≤~1240 usable width and
+  widen long-label nodes instead of shrinking copy (verified live 2026-09-15).
+- **Explicit `via`/`fromSide` must hit exact side-midpoint anchors.** With explicit
+  geometry the renderer pins ports at node side midpoints; a `via` not sharing the
+  port coordinate makes a diagonal final segment and fails `endpoint-side-direction`.
+  Automatic Port Spread is skipped for explicit routes. Derive `via` coordinates from
+  computed port midpoints, or leave the side automatic — never mix one hardcoded port
+  with several automatic ones on the same side (verified live 2026-09-15).
+- **The shared-corridor read pair needs physical separation.** Bidirectional flows
+  between two adjacent nodes collide on a shared ~70px channel; labels cannot coexist
+  there. Route one over the top, one along the bottom, each on its own orthogonal
+  channel with its own label band. In the corridor plan, name a separate lane for
+  each anti-parallel pair (verified live 2026-09-15, developer ⇄ GBrain).
 - One obvious main path; side branches leave the nearest main-path node. Remove low-value edges before adding routing controls.
 - Omit `meta.visual_preset` by default so every diagram opens in `classic`; set `signal-flow`, `blueprint`, or `editorial` only on explicit request. Color mode and visual preset are independent — switching Light/Dark must preserve the current preset.
 - Omit `meta.subtitle` by default. Never invent a subtitle that restates the title, nodes, or cards.

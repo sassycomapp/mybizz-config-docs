@@ -9,6 +9,9 @@ date-created: 2026-09-06
 
 What Archify is, when to use it, and why it is built the way it is.
 Current state: `archify-config.md`. Mid-task commands and rules: `archify-reference.md`.
+Configuration-management exam set: `archify-exam-plan.md` (run job-spec),
+`archify-exam-report.md` (current verified state), `archify-log.md` (events),
+`archify-learnings.md` (transient lessons), `archify-skill.md` (the exam skill).
 
 ---
 
@@ -58,6 +61,87 @@ The person it serves is the developer or reviewer who needs to read a system —
 **Where this sits relative to other parts of the system.** Graphify answers structural questions about code (what actually calls what); Archify answers communication questions about systems (how should this be presented so a human understands it). Neither depends on the other, and conflating them would degrade both. GStack's design-HTML skill occupies a different domain entirely (page/UI design). Governance tooling treats Archify no differently from any other local tool: it is not a memory writer and has no dedicated policy — with one standing caveat: Cupcake's enforcement status is not fixed and should not be assumed current at any given time (check `cupcake-config.md`'s Current Operational Status); it was disabled environment-wide at research time (2026-09-06), so any "no rule applies" conclusion is provisional and must be re-verified whenever enforcement state changes.
 
 **Why the update check is the only network surface.** A version reminder needs to know a latest version exists; everything else — rendering, validation, export — is deliberately local. The check is notification-only, transmits nothing about the project, and can be disabled. The design keeps the tool trustworthy as infrastructure while leaving the update decision entirely with the user.
+
+## Why scoping comes first (`mb-archify-scope`)
+
+Archify makes a promise: *the picture is only as viable as its scope.* That
+promise is enforced by a permanent front-of-pipe skill, `mb-archify-scope`
+(canonical spec `archify-scope-skill.md`; installed at
+`~/.config/opencode/skills/mb-archify-scope/SKILL.md`). It runs before `/archify`,
+never instead of it, and it changes the authoring pipeline into two stages:
+
+1. **Scope** — restate the intent in one paragraph, run a bounded interview, name
+   the diagram type and why, cap the Node Inventory at ≤12 primary nodes, fix
+   exactly one main path, write an explicit Deferred List, and plan the corridors.
+   Nothing is drawn here; the output is an approved Scope Card (`output/{slug}-scope.md`)
+   and its machine header (`output/{slug}-header.json`).
+2. **Draw** — Archify consumes the approved header as its input contract. A failed
+   feasibility probe returns work to scoping for reshaping, never proceeds past it.
+
+Verified live on the memory-ecosystem subject (2026-09-15): the scoping skill's
+type decision upgraded a keyword-driven `dataflow` choice (which had produced
+repeated corridor-wall failures) to `architecture` — the guide-consistent type —
+and the same subject then validated clean in two repair rounds. The scoping skill
+exists because a dense, card-bearing subject cannot be authored well without
+deciding, in advance, what the eye must follow.
+
+## Config maintenance — how this system is examined and kept healthy
+
+This suite participates in `mb-config-manager`: the estate's configuration-management
+system exams each live system against its `{system}-config.md` spec. For Archify:
+
+- **Exam set:** `archify-exam-plan.md` (run job-spec), `archify-exam-report.md`
+  (verified current state, no history), `archify-log.md` (events), `archify-learnings.md`
+  (transient), `archify-skill.md` (the standing check inventory and procedure).
+- **Spec doc:** `archify-config.md` — the single source of expected values; read
+  fresh at every run start.
+- **Scope of the exam:** the discovery symlink, the clone/package identity, the
+  schemas/references/renderers inventory, the update-notice contract, the installed
+  scope-skill copy (kept byte-identical to `archify-scope-skill.md`), and the runtime
+  output convention (one folder per project slug under `output/<slug>/`).
+- **Philosophy:** the tool is working well — detection and verification only;
+  the exam catches silent failures (present ≠ working) and repairs nothing without
+  a developer gate decision.
+
+## S.W.O.T.
+
+**Strengths:** deterministic, schema-validated output with atomic delivery — a failed
+candidate never destroys the last good artifact. Trustworthy as *communication*: every
+node and edge traces to authored facts. Five distinct diagram semantics with strict
+validation, one self-contained HTML artifact, portable export (PNG/SVG/WebM/Share Cards),
+Mermaid intake, and a Before/Delta/After proof surface.
+
+**Weaknesses:** authoring demands a schema discipline most humans won't adopt — the JSON
+is the source of truth and there is no WYSIWYG editor. Desktop first-screen containment
+is a hard gate that card-bearing artifacts can struggle to satisfy in the current viewer
+build (see the reference's visual-review calibration note). No code-level analysis: reachability
+says what the author wrote, never true blast radius.
+
+**Opportunities:** the scoping skill already converts the tool's main adoption friction
+(type choice, density, corridors) into a repeatable front-of-pipe discipline; further
+graduations of run learnings into the reference keep the geometry rules current. Unique
+fit for review artifacts and long-shelf-life system maps.
+
+**Threats:** a wrong type choice at scope time is the highest-leverage failure — the
+guide (`archify guide "<scenario>" --json`) exists precisely to de-risk it. Cupcake's
+enforcement status is not fixed and should not be assumed current at any given time
+(check `cupcake-config.md`'s Current Operational Status); any "no rule applies"
+conclusion is provisional. The update-check manifest URL is deliberately not fetched
+or verified — a standing, documented out-of-scope item.
+
+## Companion documents
+
+| Document | Purpose |
+|---|---|
+| `archify-config.md` | Canonical current-state configuration — the spec the exam runs against |
+| `archify-reference.md` | Invocation, commands, authoring procedure, failure rules |
+| `archify-scope-skill.md` | The scoping skill's canonical specification (installed as `mb-archify-scope`) |
+| `archify-skill.md` | The config-management exam skill (standing check inventory) |
+| `archify-exam-plan.md` | Transient job-spec for the latest exam run |
+| `archify-exam-report.md` | Verified current state after each exam run |
+| `archify-log.md` | Chronological record of events and exam runs |
+| `archify-learnings.md` | Transient lessons; entries graduate into a permanent home then delete |
+| `archify/output/` | Runtime output — one folder per project slug |
 
 ## Open questions
 

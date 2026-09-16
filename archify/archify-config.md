@@ -41,6 +41,21 @@ and why, `archify-reference.md` for commands and procedures.
 | Update check | Notification-only; never downloads, installs, or executes an update |
 | Update-check disable | `ARCHIFY_UPDATE_CHECK_DISABLED=1` (disables networking and reminder-state writes) |
 
+## Scoping skill component (`mb-archify-scope`)
+
+A permanent front-of-pipe component of this suite — not transient tooling. It
+turns a drawing request into an agreed Scope Card before any Archify authoring
+begins; it scopes, it never draws.
+
+| Item | Value |
+|---|---|
+| Spec (canonical) | `archify/archify-scope-skill.md` (this repo, git-versioned) |
+| Installed copy | `~/.config/opencode/skills/mb-archify-scope/SKILL.md` (kept byte-identical to the spec — same install pattern as the exam skills) |
+| Trigger | Model-invoked — a drawing request routes through scoping first; also fires on recovery after dense-route/corridor failures |
+| Invocation order | `/mb-archify-scope` **before** `/archify`, never instead of it |
+| Output convention | approved Scope Card → `output/{subject}-scope.md` + machine header `output/{subject}-header.json`; run outputs live under the project's `output/{slug}/` folder |
+| Relationship to this exam | The scope-skill is examinable state: its installed copy must match the spec (AR2-3); it is documented in `archify-explainer.md` and `archify-reference.md`, and it produces the run learnings this suite absorbs |
+
 ## Package structure (`archify/archify/`)
 
 | Path | Contents |
@@ -57,9 +72,10 @@ and why, `archify-reference.md` for commands and procedures.
 | System | Relationship |
 |---|---|
 | OpenCode | Skill discovered via symlink in the global skills folder; invoked as `/archify` |
+| Scoping skill | `mb-archify-scope` is the documented front-of-pipe component — see the "Scoping skill component" section above; invoked before `/archify`, never instead of it |
 | GBrain | No dedicated GBrain knowledge page exists for archify (all searches return unrelated content); install facts live in `skill-index.md` and `opencode-config.md` |
 | Memory Governor | No treatment — archify produces HTML artifacts, not memory submissions; not a governed writer |
-| Cupcake | No archify-specific rule in the global policy folder. Cupcake's enforcement status is not fixed and should not be assumed current — it was disabled environment-wide at research time (2026-09-06, plugin renamed `.disabled`); live status: `cupcake-config.md` Current Operational Status. This "no rule" finding needs re-verification whenever enforcement state changes |
+| Cupcake | No archify-specific rule in the global policy folder (re-verified 2026-09-16 — the only archify mention is the mg-grant access entry for `mb-config-archify`, an access grant, not an enforcement rule). Cupcake is **ACTIVE and enforcing** per `cupcake-config.md` §Current operational status (verified live 2026-09-12). Enforcement status is not fixed and should not be assumed current — re-check `cupcake-config.md` whenever enforcement state changes |
 | security-global | No principle bears directly; the only network surface is the optional update check (IP + timestamp to one fixed manifest URL, nothing else transmitted, disableable) |
 | Related skills | Graphify (knowledge graphs) and GStack `/design-html` (UI page HTML) are complementary / different-domain; no dependency in either direction |
 
