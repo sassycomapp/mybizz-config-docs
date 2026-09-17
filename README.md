@@ -1,16 +1,16 @@
 ---
-document: "C:\mybizz\config — README"
+document: "mybizz-config-docs — README"
 doc-id: README
 state: Live
 date-created: 2026-09-05
 ---
 
-# C:\mybizz\config — README
+# mybizz-config-docs — README
 
 Tool-by-tool configuration reference documents — one folder per tool, each holding a single,
 purely functional reference: what's installed, where, how it's configured, and how to verify
-it's working. Not historical narrative, not task-completion reports — those live in
-`config-changelog.md` (`C:\mybizz\WIP\`) instead.
+it's working. Not historical narrative, not task-completion reports — this suite is
+steady-state functional reference only.
 
 ## Structure
 
@@ -20,8 +20,8 @@ it's working. Not historical narrative, not task-completion reports — those li
 | `gstack/` | `gstack-reference.md`, `gstack-skills-reference.md` |
 | `gbrain/` | `gbrain-reference.md` |
 | `postgresql/` | `postgresql-reference.md` |
-| `matt-skills/` | `matt-pocock-skills-reference.md` |
-| `anvil-skills/` | `anvil-skills-reference.md` |
+| `matt-pocock-skills/` | `matt-pocock-skills-reference.md` |
+| `anvil-agent-references/` | `anvil-agent-references-reference.md` |
 | `magdoub-wireframe/` | `magdoub-claude-wireframe-skill-reference.md` |
 | `graphify/` | `graphify-reference.md` |
 
@@ -43,8 +43,8 @@ of sync. Concretely, this shows up as:
 
 - **Tools are installed once, as a real source clone, and every access point is a symlink back
   to it** — never a copy. GStack, Matt Pocock's skills, Anvil's skills, and the Magdoub
-  wireframe skill all follow this pattern. `skills-collective/` (`C:\mybizz\`) is the
-  browsable hub of these symlinks, not a second copy of anything.
+  wireframe skill all follow this pattern. `~/.config/opencode/skills/` (WSL) is the
+  browsable runtime surface of these symlinks, not a second copy of anything.
 - **Each project's configuration lives in exactly one file** — its own `{slug}-config.yaml`,
   registered in `projects-config-register.md` — not duplicated in `docmap.md`, not
   scattered across skill definitions.

@@ -31,7 +31,7 @@ going forward, as a required step in the "start a project" protocol.
 
 ## GitHub repositories
 
-Maintained by the developer; mirrors the scope scaffold (`C:\_data-mybizz-mgt\_desktop\mybizz-scope-list.md`).
+Maintained by the developer; mirrors the scope scaffold (`C:\mybizz\mybizz-os-docs\os-reference-docs\mybizz-scope-list.md`).
 The mb-docs-manager pre-flight runs `git status` on each — including repos whose folders are
 outside the walk scope.
 
@@ -49,6 +49,7 @@ outside the walk scope.
 | memory-governor | private | /home/dev-p/memory-governor |
 | mybizz-config-docs | private | /mnt/c/mybizz/mybizz-config-docs |
 | mybizz-os-docs | private | /mnt/c/mybizz/mybizz-os-docs |
+| data-mybizz-mgt | private | /mnt/c/data-mybizz-mgt |
 | pdlf | private | /mnt/c/pdlf |
 
 ## Field definitions
