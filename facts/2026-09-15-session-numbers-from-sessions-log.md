@@ -8,7 +8,7 @@ date-created: 2026-09-15
 # Fact — session numbers come from the sessions log
 
 Session numbers are defined by the developer's sessions log
-(`C:\data-mybizz-mgt\_desktop\sessions-log.md`) — never inferred from dates,
+(`C:\mybizz\logs\sessions-log\sessions-log.md`) — never inferred from dates,
 commit messages, or the GBrain page-name convention. Recording a session
 under the wrong number marks the log incorrectly (developer instruction,
 2026-09-15, session 005).

@@ -123,10 +123,11 @@ governor approval; `remember` never creates corpus pages. Neither path
 supersedes the other — they write to different layers and cannot substitute
 for each other. The script syncs **only the repo source** — a newly
 registered source needs its own `gbrain sync --source <id>` (proven today).
-`daily-ops.md` (located at `C:\_data-mybizz-mgt\WIP\_desktop\`, not the
-docmap's `C:\mybizz\WIP\desktop\`) documents the sync path as the standing
-after-work workflow and predates the governed path — its repo table is stale
-against the current source list.
+`daily-ops.md` (located at
+`C:\mybizz\mybizz-os-docs\operating-procedures\daily-ops.md`) documents the
+sync path as the standing after-work workflow and predates the governed
+path — its repo table was reconciled against the current source list
+2026-09-18 (align-docs).
 
 **GStack integration flow** (`/setup-gbrain`, 3-stage `/sync-gbrain`):
 installed skills per upstream `USING_GBRAIN_WITH_GSTACK.md` — not this

@@ -24,7 +24,7 @@ Workflows and authority: `gstack-reference.md`.
   all commands as `/gstack-<name>` — it is unset (default bare) here.
 - If a known skill is missing or broken in OpenCode, re-run the installer:
   `cd /mnt/c/mybizz/gstack && ./setup --host opencode` — see
-  `C:\_data-mybizz-mgt\WIP\_desktop\daily-ops.md`, "FIX: GSTACK SKILLS
+  `C:\mybizz\mybizz-os-docs\operating-procedures\daily-ops.md`, "FIX: GSTACK SKILLS
   MISSING, OUTDATED, OR ONLY PARTIALLY WORKING IN OPENCODE".
 - SKILL.md files are auto-generated — never edit one directly (see
   `gstack-config.md` for regeneration).
@@ -117,7 +117,7 @@ live 2026-09-08; supersedes all earlier counts of 52).
 
 Browser skills run on GStack's bundled headless Chromium (Playwright) at
 `1.58.1.0`. If they fail or hang, see
-`C:\_data-mybizz-mgt\WIP\_desktop\daily-ops.md`, "FIX: GSTACK BROWSER SKILLS
+`C:\mybizz\mybizz-os-docs\operating-procedures\daily-ops.md`, "FIX: GSTACK BROWSER SKILLS
 WON'T LAUNCH".
 
 | Command | What it does |

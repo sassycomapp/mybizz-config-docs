@@ -34,7 +34,7 @@ wide-sweep support, 2026-09-10; scope model V10, 2026-09-09).
 
 | Element | Value |
 |---|---|
-| Scope source of truth | `C:\_data-mybizz-mgt\_desktop\mybizz-scope-list.md` — pinned managed document, read at Phase 0 of every run; wins over SKILL.md on scope |
+| Scope source of truth | `C:\mybizz\mybizz-os-docs\os-reference-docs\mybizz-scope-list.md` — pinned managed document, read at Phase 0 of every run; wins over SKILL.md on scope |
 | In-scope roots (everything walked) | `C:\_data-mybizz-mgt`, `C:\dev`, `C:\mybizz\mybizz-config-docs`, `C:\mybizz\mybizz-os-docs`, `C:\mybizz\memory-audit-reports` |
 | Exceptions | `C:\mybizz\{gbrain, gstack, logs, matt-pocock-skills-source, anvil-agent-references, archify, archive, scripts}` |
 | Out of scope (recorded) | `C:\dev\dev-mb5pdlf`, `C:\dev\dev-mb4ecom`, `C:\dev\project-template`, `C:\dev\obsolete`, `C:\pdlf`, `C:\_data-not mybizz`, `C:\_data-mybizz-exempt` (as listed in scaffold), `C:\backup-mb-*` folders, system paths |
@@ -116,5 +116,5 @@ Retired: `scaffold-system.html`; `project-inventory.md` (replaced by the registe
 1. **docmap.md full redraw — deferred work order.** Executes in the dedicated wide-mode run after all three suites exist (planned: this suite's post-remodel run).
 2. `docs-manager-scan.md` reference regex retains `projects-reference` deliberately (dead-path references classify BROKEN, not unclassified).
 3. Two `:Zone.Identifier` artifacts documented, not deleted (standing pattern).
-4. Trio documents (daily-ops.md, master-task-list.md, mybizz-todo.md) at `C:\_data-mybizz-mgt\_desktop\` genuinely stale — refreshed by the planned wide-mode run.
+4. Trio documents (daily-ops.md, master-task-list.md, mybizz-todo.md) — refreshed by the 2026-09-17 wide-mode run: daily-ops and master-task-list Live at `C:\data-mybizz-mgt\desktop\`; mybizz-todo retired 2026-09-17 (not found on disk).
 5. Big-run sequencing (final ruling 2026-09-10, product-then-packaging): **mb-docs-manager → mb-align-docs → mb-wikilinks** — align-docs validates and heals references in their existing form first; wikilinks then converts the healed corpus.

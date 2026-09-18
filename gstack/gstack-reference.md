@@ -243,7 +243,7 @@ GBrain-facing skills:
 
 At `1.58.1.0`, browser skills (`/browse`, `/qa`, `/scrape`, `/canary`) run on
 the bundled headless Chromium (Playwright). Launch failures:
-`C:\_data-mybizz-mgt\WIP\_desktop\daily-ops.md`, "FIX: GSTACK BROWSER SKILLS
+`C:\mybizz\mybizz-os-docs\operating-procedures\daily-ops.md`, "FIX: GSTACK BROWSER SKILLS
 WON'T LAUNCH". Upstream `1.81.0.0` replaces this with an Aside-first model —
 an open upgrade decision, not current behavior (`gstack-config.md` open items).
 

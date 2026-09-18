@@ -289,7 +289,7 @@ developer-run items immediately); circular self-exam (designed out, Section 9).
 
 ## 13. Source links
 
-- Governing philosophy and standing principles: `C:\_data-mybizz-mgt\_desktop\session-start-checklist-and-behavioral-principles.md`
+- Governing philosophy and standing principles: `C:\mybizz\mybizz-os-docs\operating-procedures\standing-instruction.md` (supersedes the retired session-start-checklist document, 2026-09-17)
 - Global behavior rules: `~/.config/opencode/AGENTS.md`
 - Cupcake (the guard layer that shapes developer-run classes): `cupcake/cupcake-config.md`, `cupcake/cupcake-explainer.md`
 - Grant mechanism: `mg-grant` / `mg-revoke` (cupcake-config.md §Cross-project access grants)
