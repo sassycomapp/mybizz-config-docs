@@ -1,4 +1,7 @@
 ---
+doc-id: 17-task-report
+document: "Work Package 17 — Credentials, Runtime Dependencies, and OpenCode Inheritance"
+date-created: 2026-08-16
 title: Work Package 17 — Credentials, Runtime Dependencies, and OpenCode Inheritance
 report: package17-task-report
 date: 2026-08-16

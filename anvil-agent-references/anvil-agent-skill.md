@@ -44,7 +44,7 @@ well; this exam verifies that and repairs nothing.
 - **GStack's install locations and skill inventory** belong to `mb-config-gstack`
   — no shared entries with the anvil set are expected; GStack's own state is
   never probed here.
-- **`anvil-docs/`** (`C:\mybizz\mybizz-config-docs\anvil-docs\`) is a separate
+- **`anvil-docs/`** (`C:\dev\project-library-global\anvil-docs\`) is a separate
   vendor-docs mirror — adjacency only, out of exam scope.
 - **`spawn-tools-denylist.json` and Cupcake guard policy** belong to the
   cupcake/opencode modules — referenced as standing rules, never re-verified.

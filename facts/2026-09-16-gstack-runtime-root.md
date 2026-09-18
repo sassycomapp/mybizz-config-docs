@@ -1,6 +1,6 @@
 ---
 document: "Fact — GStack runtime root and mixed-interpreter bin tree on the OpenCode host"
-doc-id: fact-gstack-runtime-root
+doc-id: 2026-09-16-gstack-runtime-root
 state: Live
 date-created: 2026-09-16
 ---

@@ -22,7 +22,7 @@ steady-state functional reference only.
 | `postgresql/` | `postgresql-reference.md` |
 | `matt-pocock-skills/` | `matt-pocock-skills-reference.md` |
 | `anvil-agent-references/` | `anvil-agent-references-reference.md` |
-| `magdoub-wireframe/` | `magdoub-claude-wireframe-skill-reference.md` |
+| `magdoub-wireframe/` | `magdoub-wireframe-reference.md` |
 | `graphify/` | `graphify-reference.md` |
 
 Plus, directly in this folder: `projects-config-register.md` — the register of every

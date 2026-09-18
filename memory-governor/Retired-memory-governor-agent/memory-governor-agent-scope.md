@@ -1,4 +1,8 @@
 ---
+doc-id: memory-governor-agent-scope
+document: "Memory Governor Agent — Scope Document"
+state: Live
+date-created: 2026-08-20
 title: Memory Governor Agent — Scope Document
 version: 2.2
 status: Approved foundation — supersedes all v1 sketch files and v2.0/2.1

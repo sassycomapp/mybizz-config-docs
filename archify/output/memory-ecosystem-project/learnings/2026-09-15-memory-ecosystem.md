@@ -1,6 +1,6 @@
 ---
 document: "Archify — Run Learnings (memory-ecosystem 2026-09-15)"
-doc-id: archify-run-learnings-2026-09-15
+doc-id: 2026-09-15-memory-ecosystem
 state: Live
 date-created: 2026-09-15
 ---

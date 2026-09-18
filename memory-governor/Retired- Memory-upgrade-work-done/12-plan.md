@@ -1,4 +1,7 @@
 ---
+doc-id: 12-plan
+document: "Work Package 12 — Graph Artifact and Git Suitability Review"
+date-created: 2026-08-14
 title: Work Package 12 — Graph Artifact and Git Suitability Review
 plan: package-12-plan
 date: 2026-08-14

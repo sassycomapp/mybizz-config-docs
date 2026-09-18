@@ -1,4 +1,7 @@
 ---
+doc-id: 1-plan
+document: "Work Package 1 — Read-only Baseline Inspection"
+date-created: 2026-08-14
 title: Work Package 1 — Read-only Baseline Inspection
 report: package-1-plan
 date: 2026-08-14

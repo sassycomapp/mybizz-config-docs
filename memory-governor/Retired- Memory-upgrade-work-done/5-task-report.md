@@ -1,4 +1,7 @@
 ---
+doc-id: 5-task-report
+document: "Work Package 5 — Cluster & Report Generation"
+date-created: 2026-08-14
 title: Work Package 5 — Cluster & Report Generation
 report: package-5-task-report
 date: 2026-08-14

@@ -1,6 +1,9 @@
 ---
+doc-id: opencode-permission-access-control-model
+state: Live
+date-created: 2026-09-05
 document: OpenCode — Permission & Access Control Model
-status: Current — verified live 2026-09-09
+status: Current — verified live 2026-09-17
 ---
 
 # OpenCode — Permission & Access Control Model
@@ -79,7 +82,7 @@ act in a config file, not a silent merge behavior, and it would be a
 security review finding if found. No project config in this ecosystem does
 this (verified 2026-09-09).
 
-## Current per-project configuration — verified live 2026-09-09
+## Current per-project configuration — verified live 2026-09-17
 
 | Project | Status | `opencode.json` | What it carries |
 |---|---|---|---|
@@ -92,7 +95,7 @@ three code repos carry the full deny-list" — false as of this
 verification: `mb4ecom` and `mb5pdlf` have no config at all (correct per
 the Active Project Standard; the deny-list applies when they start).
 
-## Global configuration — verified live 2026-09-09
+## Global configuration — verified live 2026-09-17
 
 Full path: `~/.config/opencode/opencode.jsonc` (WSL path). Verified
 key-by-key against `opencode-config.md`'s table — exact match. The

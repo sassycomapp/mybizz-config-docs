@@ -1,4 +1,6 @@
 ---
+doc-id: 2026-09-16-011-magdoub-wireframe-config-mgmt
+document: "Session 2026-09-16-011 — magdoub-wireframe config-management suite built, installed, run"
 type: session
 title: >-
   Session 2026-09-16-011 — magdoub-wireframe config-management suite built,

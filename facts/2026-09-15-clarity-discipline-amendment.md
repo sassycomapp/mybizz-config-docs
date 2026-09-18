@@ -1,6 +1,6 @@
 ---
 document: "Fact — clarity-discipline amendment (config-setup-prompt.md)"
-doc-id: fact-clarity-discipline-amendment
+doc-id: 2026-09-15-clarity-discipline-amendment
 state: Live
 date-created: 2026-09-15
 ---

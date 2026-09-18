@@ -1,4 +1,8 @@
 ---
+doc-id: 2026-09-16-009-matt-pocock-skills-config-mgmt
+document: "Session 009 — matt-pocock-skills configuration-management suite: built, installed, run #1 HEALTHY"
+state: Live
+date-created: 2026-09-16
 type: note
 title: >-
   Session 009 — matt-pocock-skills configuration-management suite: built,

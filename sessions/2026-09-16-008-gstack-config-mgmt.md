@@ -1,4 +1,8 @@
 ---
+doc-id: 2026-09-16-008-gstack-config-mgmt
+document: "Session 008 — gstack configuration-management suite: run #1 HEALTHY"
+state: Live
+date-created: 2026-09-16
 type: session-summary
 title: 'Session 008 — gstack configuration-management suite: run #1 HEALTHY'
 date: '2026-09-16T00:00:00.000Z'

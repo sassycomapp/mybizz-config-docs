@@ -1,4 +1,8 @@
 ---
+doc-id: memory-governor-agent-implementation-workflow
+document: "Memory Governor Agent — Stepwise Implementation Workflow"
+state: Live
+date-created: 2026-08-25
 title: Memory Governor Agent — Stepwise Implementation Workflow
 version: 1.5
 status: Approved foundation

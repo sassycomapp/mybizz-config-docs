@@ -1,6 +1,6 @@
 ---
 document: "Fact — GStack is not a memory-family member"
-doc-id: fact-gstack-not-memory-family
+doc-id: 2026-09-16-gstack-not-memory-family
 state: Live
 date-created: 2026-09-16
 ---

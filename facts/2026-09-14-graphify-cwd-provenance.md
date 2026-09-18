@@ -1,6 +1,6 @@
 ---
 document: "Durable fact — Graphify rebuild provenance stamping (cwd)"
-doc-id: fact-graphify-cwd-provenance
+doc-id: 2026-09-14-graphify-cwd-provenance
 state: Live
 date-created: 2026-09-14
 ---

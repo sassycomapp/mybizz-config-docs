@@ -1,4 +1,7 @@
 ---
+doc-id: 13-plan
+document: "Work Package 13 — Graphify Git Hook Evaluation"
+date-created: 2026-08-14
 title: Work Package 13 — Graphify Git Hook Evaluation
 plan: package-13-plan
 date: 2026-08-14

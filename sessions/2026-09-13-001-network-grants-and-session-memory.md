@@ -1,4 +1,8 @@
 ---
+doc-id: 2026-09-13-001-network-grants-and-session-memory
+document: "Session 001 — 13 September 2026 — Network Grants and the Session Close-Out Design"
+state: Live
+date-created: 2026-09-13
 type: session-log
 title: >-
   Session 001 — 13 September 2026 — Network Grants and the Session Close-Out

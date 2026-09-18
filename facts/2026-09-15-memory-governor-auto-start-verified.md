@@ -1,6 +1,6 @@
 ---
 document: "Fact — memory governor auto-start installed and verified"
-doc-id: fact-memory-governor-auto-start
+doc-id: 2026-09-15-memory-governor-auto-start-verified
 state: Live
 date-created: 2026-09-15
 ---

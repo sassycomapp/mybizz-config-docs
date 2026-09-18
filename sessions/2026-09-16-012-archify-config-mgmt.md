@@ -2,7 +2,7 @@
 type: concept
 title: 'Session 012 — Archify configuration-management suite (run #1 formal)'
 state: Live
-doc-id: session-2026-09-16-012
+doc-id: 2026-09-16-012-archify-config-mgmt
 document: 'Session 012 — Archify configuration-management suite (run #1 formal)'
 date-created: '2026-09-16T00:00:00.000Z'
 ingested_via: 'mcp:put_page'

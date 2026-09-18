@@ -1,6 +1,6 @@
 ---
 document: "Fact — session numbers come from the sessions log"
-doc-id: fact-session-numbers-from-log
+doc-id: 2026-09-15-session-numbers-from-sessions-log
 state: Live
 date-created: 2026-09-15
 ---

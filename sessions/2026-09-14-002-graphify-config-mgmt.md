@@ -1,4 +1,7 @@
 ---
+doc-id: 2026-09-14-002-graphify-config-mgmt
+state: Live
+date-created: 2026-09-14
 type: session-summary
 title: 'Session 2026-09-14 — Configuration Management: graphify'
 date: '2026-09-14T00:00:00.000Z'

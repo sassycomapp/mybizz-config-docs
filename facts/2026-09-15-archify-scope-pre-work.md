@@ -1,6 +1,6 @@
 ---
 document: "Durable fact — Archify scoping skill pre-work"
-doc-id: fact-archify-scope-pre-work
+doc-id: 2026-09-15-archify-scope-pre-work
 state: Live
 date-created: 2026-09-15
 ---

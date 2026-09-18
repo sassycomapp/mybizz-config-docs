@@ -1,6 +1,6 @@
 ---
 document: "Fact — data-mybizz-mgt folder rename (underscore dropped)"
-doc-id: fact-data-mybizz-mgt-folder-rename
+doc-id: 2026-09-15-data-mybizz-mgt-folder-rename
 state: Live
 date-created: 2026-09-15
 ---

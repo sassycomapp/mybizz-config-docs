@@ -1,4 +1,8 @@
 ---
+doc-id: 2026-09-16-010-anvil-agent-references-config-mgmt
+document: "Session 2026-09-16-010 — anvil-agent-references config-management suite"
+state: Live
+date-created: 2026-09-16
 type: session
 title: Session 2026-09-16-010 — anvil-agent-references config-management suite
 date: '2026-09-16T00:00:00.000Z'

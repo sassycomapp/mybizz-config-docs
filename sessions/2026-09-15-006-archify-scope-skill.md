@@ -1,4 +1,8 @@
 ---
+doc-id: 2026-09-15-006-archify-scope-skill
+document: "Session 006 — the mb-archify-scope scoping skill designed, installed, and proven on the memory-ecosystem diagram"
+state: Live
+date-created: 2026-09-15
 type: session
 title: >-
   Session 006 — the mb-archify-scope scoping skill designed, installed, and

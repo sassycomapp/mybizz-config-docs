@@ -1,6 +1,6 @@
 ---
 document: "Durable fact — Archify explicit geometry anchors and repair order"
-doc-id: fact-archify-geometry-anchors
+doc-id: 2026-09-15-archify-geometry-anchors
 state: Live
 date-created: 2026-09-15
 ---

@@ -1,4 +1,7 @@
 ---
+doc-id: 19-task-report
+document: "Work Package 19 — GBrain–Graphify–OpenCode Complementary Integration"
+date-created: 2026-08-16
 title: Work Package 19 — GBrain–Graphify–OpenCode Complementary Integration
 report: package19-task-report
 date: 2026-08-16

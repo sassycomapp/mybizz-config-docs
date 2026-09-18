@@ -1,4 +1,8 @@
 ---
+doc-id: 2026-09-15-007-opencode-config-suite
+document: "Session 007 — mb-config-opencode config-management suite built, installed, run #1 HEALTHY"
+state: Live
+date-created: 2026-09-15
 type: session
 title: >-
   Session 007 — mb-config-opencode config-management suite built, installed, run

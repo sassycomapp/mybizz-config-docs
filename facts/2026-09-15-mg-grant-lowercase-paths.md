@@ -1,6 +1,6 @@
 ---
 document: "Fact — mg-grant lowercases the granted path"
-doc-id: fact-mg-grant-lowercase-paths
+doc-id: 2026-09-15-mg-grant-lowercase-paths
 state: Live
 date-created: 2026-09-15
 ---

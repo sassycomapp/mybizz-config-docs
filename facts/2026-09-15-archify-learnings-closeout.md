@@ -1,6 +1,6 @@
 ---
 document: "Durable fact — Archify learnings close-out trigger"
-doc-id: fact-archify-learnings-closeout
+doc-id: 2026-09-15-archify-learnings-closeout
 state: Live
 date-created: 2026-09-15
 ---

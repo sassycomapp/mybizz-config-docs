@@ -103,7 +103,7 @@ technical detail, see `anvil-agent-references-reference.md`.
 | Environment standards | Anvil.works working methods + Material 3 theme + M3 dependency + MUI overlay are prescribed standards (global AGENTS.md); this skill set is the agent-facing reference for them |
 | Governing ADRs (project-library-global) | `anvil-extras-exclusion` (M3-only components), `htmltemplate-use` (HTMLTemplate banned), `material-3-theme-component-scope`, `anvil-platform-constraints` |
 | Cupcake rules bearing on this component | `cup-block-anvil-yaml-writes.rego` (AI writes to `anvil.yaml`); `cup-protected_ai_governance_files_may_not_be_modified.rego` (AI writes to `AGENTS.md`/`CLAUDE.md`); `cup-no_cross_project_filesystem_access_by_default.rego` (AI writes outside the project root). Standing policy regardless; mechanically enforced only when Cupcake enforcement is active — status: `cupcake-config.md` Current Operational Status |
-| Sibling corpus | `mybizz-config-docs/anvil-docs/` — separate vendor-docs mirror, adjacency only |
+| Sibling corpus | `C:\dev\project-library-global\anvil-docs\` — vendor-docs corpus, moved out 2026-09-08 (formerly `mybizz-config-docs/anvil-docs/`) |
 
 ## Settled policies (developer decisions on record)
 

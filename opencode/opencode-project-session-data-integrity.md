@@ -1,6 +1,9 @@
 ---
+doc-id: opencode-project-session-data-integrity
+state: Live
+date-created: 2026-09-05
 document: OpenCode — Project & Session Data Integrity
-status: Current — verified live 2026-09-09
+status: Current — verified live 2026-09-17
 ---
 
 # OpenCode — Project & Session Data Integrity

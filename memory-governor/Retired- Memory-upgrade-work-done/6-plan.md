@@ -1,4 +1,7 @@
 ---
+doc-id: 6-plan
+document: "Work Package 6 — Read-only Review of the Completed Graphify Graph"
+date-created: 2026-08-14
 title: Work Package 6 — Read-only Review of the Completed Graphify Graph
 report: package-6-plan
 date: 2026-08-14

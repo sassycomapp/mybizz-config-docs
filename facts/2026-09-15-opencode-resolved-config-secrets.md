@@ -1,6 +1,6 @@
 ---
 document: "Fact — OpenCode resolved-config stdout is secret-bearing"
-doc-id: fact-opencode-resolved-config-secrets
+doc-id: 2026-09-15-opencode-resolved-config-secrets
 state: Live
 date-created: 2026-09-15
 ---

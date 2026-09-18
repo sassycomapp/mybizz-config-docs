@@ -1,4 +1,7 @@
 ---
+doc-id: 3-plan
+document: "Work Package 3 — Cross-file Graphify Adequacy Test"
+date-created: 2026-08-14
 title: Work Package 3 — Cross-file Graphify Adequacy Test
 report: package-3-plan
 date: 2026-08-14

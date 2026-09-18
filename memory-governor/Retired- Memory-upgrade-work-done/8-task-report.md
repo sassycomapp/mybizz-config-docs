@@ -1,4 +1,7 @@
 ---
+doc-id: 8-task-report
+document: "Work Package 8 — Commit Graphify Scope Configuration"
+date-created: 2026-08-14
 title: Work Package 8 — Commit Graphify Scope Configuration
 report: package-8-task-report
 date: 2026-08-14

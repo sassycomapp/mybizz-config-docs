@@ -1,4 +1,8 @@
 ---
+doc-id: memory-governor-agent-architecture-and-specification
+document: "Memory Governor Agent — Architecture & Specification"
+state: Live
+date-created: 2026-08-20
 title: Memory Governor Agent — Architecture & Specification
 version: 2.2
 status: Approved foundation — supersedes all v1 sketch files and v2.0/2.1

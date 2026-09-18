@@ -1,6 +1,6 @@
 ---
 document: "Durable fact — The memory family (developer-stated 2026-09-14)"
-doc-id: fact-memory-family
+doc-id: 2026-09-14-memory-family
 state: Live
 date-created: 2026-09-14
 ---

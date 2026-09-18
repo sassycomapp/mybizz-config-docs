@@ -1,4 +1,7 @@
 ---
+doc-id: package23.1-task-report
+document: "Work Package 23.1 — Commit Final Optional Documentation and Template Fixes"
+date-created: 2026-08-16
 title: Work Package 23.1 — Commit Final Optional Documentation and Template Fixes
 report: package23.1-task-report
 date: 2026-08-16

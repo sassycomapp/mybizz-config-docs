@@ -1,3 +1,9 @@
+---
+document: "Scope Card — memory-ecosystem"
+doc-id: memory-ecosystem-scope
+state: Live
+date-created: 2026-09-15
+---
 # Scope Card — memory-ecosystem
 
 ## Intent

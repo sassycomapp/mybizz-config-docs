@@ -1,6 +1,6 @@
 ---
 document: "Durable fact — Developer standard: an honoured denial never substitutes for a formal execution"
-doc-id: fact-denial-re-execution-standard
+doc-id: 2026-09-14-denial-re-execution-standard
 state: Live
 date-created: 2026-09-14
 ---

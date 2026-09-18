@@ -1,3 +1,9 @@
+---
+document: "disable-enable-cupcake"
+doc-id: disable-enable-cupcake
+state: Live
+date-created: 2026-09-17
+---
 documented in `cupcake-reference.md:275` (Disabling Cupcake — immediate, fully reversible):
 
 ```

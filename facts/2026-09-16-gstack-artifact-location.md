@@ -1,6 +1,6 @@
 ---
 document: "Fact — GStack artifact location and the missing gstack-outputs lane"
-doc-id: fact-gstack-artifact-location
+doc-id: 2026-09-16-gstack-artifact-location
 state: Live
 date-created: 2026-09-16
 ---

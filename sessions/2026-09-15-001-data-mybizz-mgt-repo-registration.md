@@ -2,7 +2,7 @@
 type: concept
 title: Session 2026-09-15 — data-mybizz-mgt repo + GBrain + opencode registration
 state: Live
-doc-id: session-2026-09-15-001-data-mybizz-mgt-repo-registration
+doc-id: 2026-09-15-001-data-mybizz-mgt-repo-registration
 document: Session 2026-09-15 — data-mybizz-mgt repo + GBrain + opencode registration
 date-created: '2026-09-15T00:00:00.000Z'
 ingested_via: 'mcp:put_page'

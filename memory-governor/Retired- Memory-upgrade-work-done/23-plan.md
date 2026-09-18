@@ -1,4 +1,7 @@
 ---
+doc-id: 23-plan
+document: "Work Package 23 — Resolve Remaining Open Items (Plan)"
+date-created: 2026-08-16
 title: Work Package 23 — Resolve Remaining Open Items (Plan)
 report: package23-plan
 date: 2026-08-16

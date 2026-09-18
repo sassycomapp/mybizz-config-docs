@@ -1,6 +1,6 @@
 ---
 document: "Durable fact — Archify dataflow grid budget and the corridor wall"
-doc-id: fact-archify-layout-grid
+doc-id: 2026-09-15-archify-layout-grid
 state: Live
 date-created: 2026-09-15
 ---

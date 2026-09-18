@@ -1,4 +1,8 @@
 ---
+doc-id: 2026-09-15-005-mb-submit-memory-config-mgmt
+document: "Session 005 — 15 September 2026 — mb-submit-memory Config Management, Run #1, and the Auto-Start Migration"
+state: Live
+date-created: 2026-09-15
 type: concept
 title: >-
   Session 005 — 15 September 2026 — mb-submit-memory Config Management, Run #1,

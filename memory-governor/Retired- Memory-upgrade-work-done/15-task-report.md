@@ -1,4 +1,7 @@
 ---
+doc-id: 15-task-report
+document: "Work Package 15 — Authoritative Environment Inventory"
+date-created: 2026-08-14
 title: Work Package 15 — Authoritative Environment Inventory
 report: package15-task-report
 date: 2026-08-14

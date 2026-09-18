@@ -1,6 +1,6 @@
 ---
 document: "Fact — grant discipline: request, never self-grant"
-doc-id: fact-grant-discipline
+doc-id: 2026-09-15-grant-discipline-request-never-self-grant
 state: Live
 date-created: 2026-09-15
 ---

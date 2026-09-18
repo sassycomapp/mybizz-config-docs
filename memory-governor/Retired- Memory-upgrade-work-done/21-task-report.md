@@ -1,4 +1,7 @@
 ---
+doc-id: 21-task-report
+document: "Work Package 21 — Final GBrain–Graphify–OpenCode Acceptance"
+date-created: 2026-08-16
 title: Work Package 21 — Final GBrain–Graphify–OpenCode Acceptance
 report: package21-task-report
 date: 2026-08-16
