@@ -141,7 +141,7 @@ doc-ids where basenames repeat.
 | memory-ecosystem-scope | archify/output/memory-ecosystem-project/memory-ecosystem-scope.md | archify/output/memory-ecosystem-project | docs-suite | Live | registered by align-docs 2026-09-17 |
 | cupcake-exam-plan | cupcake/cupcake-exam-plan.md | cupcake | docs-suite | Live | registered by align-docs 2026-09-17 |
 | cupcake-exam-report | cupcake/cupcake-exam-report.md | cupcake | docs-suite | Live | registered by align-docs 2026-09-17 |
-| disable-enable-cupcake | cupcake/disable-enable-cupcake.md | cupcake | docs-suite | Live | registered by align-docs 2026-09-17 |
+| disable-enable-cupcake | cupcake/disable-enable-cupcake.md | cupcake | docs-suite | Retired | relocated to C:\mybizz\mybizz-os-docs\operating-procedures\ 2026-09-19 per developer instruction |
 | 2026-09-14-denial-re-execution-standard | facts/2026-09-14-denial-re-execution-standard.md | facts | docs-suite | Live | registered by align-docs 2026-09-17 |
 | 2026-09-14-graphify-cwd-provenance | facts/2026-09-14-graphify-cwd-provenance.md | facts | docs-suite | Live | registered by align-docs 2026-09-17 |
 | 2026-09-14-memory-family | facts/2026-09-14-memory-family.md | facts | docs-suite | Live | registered by align-docs 2026-09-17 |
