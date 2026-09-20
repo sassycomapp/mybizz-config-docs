@@ -7,6 +7,11 @@ date-created: 2026-09-10
 
 # align-docs — Explainer
 
+Updated 2026-09-20 to reflect the refactored skill (`SKILL.md` V2.1,
+2026-09-19): scope from the single authority list, shared run frame in
+`doc-skills-run-discipline.md`, roles as permission disciplines rather than
+sub-agents, and es.exe-first file search.
+
 ## 1. What this actually is
 
 `mb-align-docs` is the skill that keeps a project's *documents agreeing with each other*.
@@ -38,20 +43,29 @@ diffed against it on every run, and in any mismatch, **the register wins**.
   is copied into Quarantine with recorded provenance instead of linked.
 - Two separated remediation paths: small reference repairs (frequent, local) and identifier
   changes (rare, but global in effect — triggering an immediate, visible, corpus-wide sweep)
-  are executed by different agents with different permissions, never mixed.
+  are executed by different permission classes, never mixed.
 - A two-tier approval presentation that scales: everyday findings batched by target and type
   into single decisions; high-risk findings (identifier changes, register actions,
   quarantines) grouped by risk type, labelled, and decided individually with a second
   confirmation before anything structural executes.
-- Permission-aware applying, interruption-proof checkpointing, per-target commits, and
-  append-only logging of every decision — approvals, rejections, and skips alike.
+- Scope from a single authority: the scoping list (`mybizz-scope-list.md`) governs every
+  documentation skill — the skill never carries its own scope list, and transient state
+  (a project under development) schedules the work, never removes scope.
+- A shared run frame defined once (`doc-skills-run-discipline.md`): resume check, learnings
+  load, git-clean precondition, verified stop-cold backup, decision-point checkpointing,
+  run-record lifecycle (working record → `last-completed-run\` + one row in
+  `run-index.md`), approvals in chat, es.exe-first file search, per-source GBrain sync at
+  close. The write classes are permission disciplines enacted by the orchestrating agent —
+  never spawned as sub-agents.
 
 ## 3. Suitability
 
 **Best for:** the content-hygiene pass of the documentation cycle — after structure is true
-(mb-docs-manager) and reference form is final (mb-wikilinks), this skill is what makes a
-corpus internally consistent: one terminology, one identity system, no dead or contradictory
-references. Running it per project (`(slug)`) is the routine form; `(all)` is the
+(mb-docs-manager) and BEFORE mb-wikilinks, this skill makes a corpus internally consistent:
+one terminology, one identity system, no dead or contradictory references. align-docs runs
+first by the product-then-packaging principle: it heals every reference in its existing
+written form, and only then does wikilinks package the validated product into
+`[[wikilink]]` links. Running it per project (`(slug)`) is the routine form; `(all)` is the
 post-refactoring wide sweep.
 
 **Good for:** onboarding a newly imported or heavily reworked project library (the register
@@ -61,10 +75,11 @@ Quarantine mechanism.
 
 **Not good for:** folder/file structure and current-state indexing — mb-docs-manager's
 territory, deliberately separate (the two skills do not interoperate or lean on each other's
-outputs); converting cross-reference *style* — mb-wikilinks runs first for that; anything
-inside an Anvil code repo — categorically denied, including documentation under
-`theme\assets\docs`; creating documents — it validates and repairs, never authors; managing
-UI build artefacts — HTML/PNG outputs under `ui\` are permanently out of scope by nature.
+outputs); converting cross-reference *style* — mb-wikilinks runs after this skill, packaging
+what align-docs healed; anything inside an Anvil code repo — categorically denied, including
+documentation under `theme\assets\docs`; creating documents — it validates and repairs,
+never authors; managing UI build artefacts — HTML/PNG outputs under `ui\` are permanently
+out of front-matter scope by nature.
 
 ## 4. Design reasoning
 
@@ -83,7 +98,7 @@ corpus-wide event, not a folder-level convenience.
 **Why two operations never share a remediation path.** "This pointer is wrong" and "this
 thing is being renamed" look similar in a report but have completely different blast
 radii — the second silently re-breaks every other reference in the corpus if treated
-locally. Separate agents, separate permissions, and a mandatory immediate corpus-wide sweep
+locally. Separate permission classes, and a mandatory immediate corpus-wide sweep
 for identifier changes exist because that distinction must be structural, not judgment
 exercised under time pressure.
 
@@ -100,18 +115,29 @@ of a dozen groups; the high-risk tier keeps the dangerous work — the changes t
 impossible to approve casually. The grouping is presentation; consent stays per item where
 it matters.
 
+**Why a shared run frame.** Before the 2026-09-19 refactor, each documentation skill
+carried its own copy of the safety procedure, and the copies drifted — different backup
+schemes, different search tools, different record lifecycles. The frame now lives once
+(`doc-skills-run-discipline.md`) and each skill adds only its own specifics, so a lesson
+learned in one skill (es.exe's swallowed result limits, backup verification, the resume
+contract) applies identically in all of them and cannot be fixed in one copy while staying
+broken in another.
+
 **Where it sits.** It runs BEFORE mb-wikilinks, by the product-then-packaging principle:
 align-docs creates the correct product (every reference pointing where it should), and
 wikilinks then packages that validated product in the link format. It is also
 mb-docs-manager's deliberate mirror: that skill owns the map's accuracy, this one
 owns the map's internal consistency — they share the safety framework (verified backup,
-checkpointing, resume, least-privilege writers, append-only logging) but never share inputs,
-outputs, or responsibilities.
+checkpointing, resume, least-privilege write classes, append-only logging) but never share
+inputs, outputs, or responsibilities.
 
-**Open items.** The skill has never completed a run — its first real exercise is the planned
-wide-mode run, where the two-tier approval faces its first volume test. Front matter stays
-identity-only and small; if PDLF ever needs more (step-linkage, for instance), the growth
-path is a deliberate broad-sweep addition, not silent accretion. And the Anvil-hosted
-documentation question (what formatting Anvil accepts, whether wikilinks can ever resolve
-there) is standing research feeding a future decision — safely moot for now, since code
-repos are denied outright.
+**Open items.** The skill has completed real runs: the 2026-09-18 passes healed front
+matter and cross-references (including one approved identifier change with its corpus-wide
+sweep), and the 2026-09-19 V2.1 run returned relocated explainers, applied front matter to
+eight documents, and updated the register — all committed. The two-tier approval has faced
+volume; the next scale test is the pending post-refactor `mb-wikilinks` wide sweep, which
+consumes align-docs' healed output. Front matter stays identity-only and small; if PDLF
+ever needs more (step-linkage, for instance), the growth path is a deliberate broad-sweep
+addition, not silent accretion. And the Anvil-hosted documentation question (what
+formatting Anvil accepts, whether wikilinks can ever resolve there) is standing research
+feeding a future decision — safely moot for now, since code repos are denied outright.
