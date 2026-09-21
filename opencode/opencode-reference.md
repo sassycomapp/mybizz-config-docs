@@ -7,13 +7,13 @@ date-created: 2026-09-05
 
 # OpenCode Reference — Commands, Verification, Troubleshooting
 
-Companion to `opencode-config.md` (current state),
-`opencode-permission-access-control-model.md` (the permission layers),
-`opencode-project-session-data-integrity.md` (session database
-maintenance), and `opencode-explainer.md` (mechanics and real incidents).
-Config-management set: `opencode-exam-plan.md` (transient job-spec — read
-second, every run), `opencode-exam-report.md` (last verified state),
-`opencode-log.md` (chronological events), `opencode-learnings.md`
+Companion to [[opencode-config|OpenCode Configuration]] (current state),
+[[opencode-permission-access-control-model|Permission & Access Control Model]] (the permission layers),
+[[opencode-project-session-data-integrity|Project & Session Data Integrity]] (session database
+maintenance), and [[opencode-explainer|OpenCode Explainer]] (mechanics and real incidents).
+Config-management set: [[opencode-exam-plan|Exam Plan]] (transient job-spec — read
+second, every run), [[opencode-exam-report|Exam Report]] (last verified state),
+[[opencode-log|Log]] (chronological events), [[opencode-learnings|Learnings]]
 (transient knowledge). Agent-facing.
 
 ---
@@ -47,7 +47,7 @@ opencode web --hostname 0.0.0.0
 ```
 
 Plugin and global config changes are only read at process start — see
-`opencode-explainer.md` §2. There is no reload mechanism; a full restart
+[[opencode-explainer|OpenCode Explainer]] §2. There is no reload mechanism; a full restart
 is the only way to pick up a change. Verified live 2026-09-08 (the Cupcake
 reactivation) and 2026-09-09 (the plugin re-rename).
 
@@ -84,7 +84,7 @@ work around a deny by rephrasing.
 ## Creating a correct, Windows-visible symlink
 
 **Never** create it from WSL pointing at a Windows-drive target — see
-`opencode-explainer.md` §4. From the Windows side instead (Developer Mode
+[[opencode-explainer|OpenCode Explainer]] §4. From the Windows side instead (Developer Mode
 must be enabled):
 
 ```bash

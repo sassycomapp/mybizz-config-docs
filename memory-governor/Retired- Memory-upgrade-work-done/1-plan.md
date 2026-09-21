@@ -111,7 +111,7 @@ hooks, configs, packages, or agent instructions were modified.
 4. **Pending backfill:** `mb4ecom-code` source has 1 queued backfill job.
 5. **AGENTS.md cross-reference unverified:** the `master-task-list.md Task 3.7`
    reference for Graphify's role was not inspected (out of scope for this gate).
-6. **Missing timestamp-standard ADR:** the `timezone-utc-storage-display-conversion`
+6. **Missing timestamp-standard ADR:** the [[adr-timezone-utc-storage-display-conversion|Client Timezone: IANA String, UTC Storage, Display-Time Conversion]]
    ADR referenced by both AGENTS.md files is not present on disk under
    `mb-3-cs-project-library`. The timestamp header on this report uses a plain
    UTC+2 (SAST) ISO-8601 value as a fallback because the authoritative

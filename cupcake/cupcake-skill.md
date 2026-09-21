@@ -9,17 +9,17 @@ Exams the live Cupcake policy-enforcement system against its spec. This skill ho
 the **procedure** only — expected values live in the spec doc and are read fresh at
 the start of every run.
 
-- Spec: `cupcake/cupcake-config.md` — read it first, every run
-- **Exam plan: `cupcake/cupcake-exam-plan.md` — read second, every run.** The
+- Spec: [[cupcake-config|Cupcake Configuration]] — read it first, every run
+- **Exam plan: [[cupcake-exam-plan|Exam Plan]] — read second, every run.** The
   plan-driven cycle: the config-manager synthesizes this plan fresh before each run
   (from spec + last report + log + learnings) and this skill executes it in hand.
   The plan carries run-specifics and deltas; the **standing check inventory lives
   in this skill** (below) — permanent occurrences graduate here, never into plans
-- Reference (health check, recovery, pitfalls): `cupcake/cupcake-reference.md`
-- Report: `cupcake/cupcake-exam-report.md` — one file, overwritten each run
-- Log: `cupcake/cupcake-log.md` — append one run row (date, verdict, findings,
+- Reference (health check, recovery, pitfalls): [[cupcake-reference|Usage, Invocation, and Worked Examples]]
+- Report: [[cupcake-exam-report|Exam Report]] — one file, overwritten each run
+- Log: [[cupcake-log|Log]] — append one run row (date, verdict, findings,
   disposition) after every run; free rows for notable events witnessed between runs
-- Learnings: `cupcake/cupcake-learnings.md` — file new patterns/nuances; delete
+- Learnings: [[cupcake-learnings|Learnings]] — file new patterns/nuances; delete
   entries once graduated into a permanent home
 
 ## The silent-failure class this exam exists for
@@ -67,7 +67,7 @@ a deny received during the exam run itself is proof the chain fires.
 | C2-1 | A | Policy inventory | 19 custom + 3 builtins + `system/evaluate.rego` aggregator — file names matched against the spec's rule tables |
 | C2-2 | A | Task-denial layer 1 | `"task": "deny"` in `~/.config/opencode/opencode.jsonc` (note: `.jsonc`, not `.json`) |
 | C2-3 | A | `spawn-tools-denylist.json` | exactly: task, delegate, call_omo_agent, agent_session_create |
-| C2-4 | A | Source↔deployed correspondence | 20 sources ↔ 19 deployed; `no_bash_mediated_file_writes_without_grant.md` folded into the cross-project rule (expected — bash-shape indicators verified present); a "missing" bash-governance deployment is NOT a finding |
+| C2-4 | A | Source↔deployed correspondence | 20 sources ↔ 19 deployed; [[no_bash_mediated_file_writes_without_grant|Rule: No Bash-Mediated File Writes Without Grant]] folded into the cross-project rule (expected — bash-shape indicators verified present); a "missing" bash-governance deployment is NOT a finding |
 | C2-5 | A | Grant tooling | `mg-grant`, `mg-revoke` present on PATH |
 | C2-6 | A | Plugin backup set | inventoried vs spec (8 `.bak-*` files across plugin/policy/builtins) |
 | C2-7 | A | Grants data file | present, generated-form |
@@ -101,6 +101,6 @@ command is never worked around — the denial is the system working.
 
 ## Report
 
-Write `cupcake-exam-report.md`: tier results, findings with class + evidence +
+Write [[cupcake-exam-report|Exam Report]]: tier results, findings with class + evidence +
 recommended repair, inventory deltas, liveness evidence (which deny proved firing).
 Overwritten every run.

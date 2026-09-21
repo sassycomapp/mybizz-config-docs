@@ -9,7 +9,7 @@ date-created: 2026-09-13
 
 Chronological record of notable events for this system: exam runs and outcomes,
 crashes, failure incidents, upgrades, error reports, significant guard denials.
-Events, not lessons — lessons live in `cupcake-learnings.md`. Pruned under the
+Events, not lessons — lessons live in [[cupcake-learnings|Learnings]]. Pruned under the
 absorption rule. (Seeded with development-period events so the system has working
 data.)
 

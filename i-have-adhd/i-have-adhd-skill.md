@@ -10,22 +10,22 @@ This skill holds the **procedure** only — expected values live in the spec doc
 are read fresh at the start of every run. The skill under exam is working well;
 this exam verifies that and repairs nothing.
 
-- Spec: `i-have-adhd/i-have-adhd-config.md` — read it first, every run
-- **Exam plan: `i-have-adhd/i-have-adhd-exam-plan.md` — read second, every run.**
+- Spec: [[i-have-adhd-config|Configuration]] — read it first, every run
+- **Exam plan: [[i-have-adhd-exam-plan|Exam Plan]] — read second, every run.**
   The plan-driven cycle: the config-manager synthesizes this plan fresh before
   each run (from spec + last report + log + learnings) and this skill executes it
   in hand. The plan carries run-specifics and deltas; the **standing check
   inventory lives in this skill** (below) — permanent occurrences graduate here,
   never into plans
-- Reference: `i-have-adhd/i-have-adhd-reference.md` — invocation, operation,
+- Reference: [[i-have-adhd-reference|Reference: Invocation, Operation, Update]] — invocation, operation,
   update, uninstall, the do-not list
-- Report: `i-have-adhd/i-have-adhd-exam-report.md` — one file, overwritten each
+- Report: [[i-have-adhd-exam-report|Exam Report]] — one file, overwritten each
   run (write-then-replace)
-- Log: `i-have-adhd/i-have-adhd-log.md` — one run row per exam; free rows for
+- Log: [[i-have-adhd-log|Log]] — one run row per exam; free rows for
   notable events witnessed between runs
-- Learnings: `i-have-adhd/i-have-adhd-learnings.md` — file new patterns/nuances;
+- Learnings: [[i-have-adhd-learnings|Learnings]] — file new patterns/nuances;
   delete entries once graduated into a permanent home
-- Provenance: `i-have-adhd/i-have-adhd-intro.md` — research notes from
+- Provenance: [[i-have-adhd-intro|I Have Adhd Intro]] — research notes from
   third-party sources; **never treated as verified state**
 
 ## Scope boundary (anti-duplication)
@@ -74,7 +74,7 @@ learnings.
   decision records upstream as deliberately unverified.
 - Never assume `stop adhd mode` survives a session — the marker re-applies the
   ruleset at every new session start; the phrase is mid-session only.
-- Never treat `i-have-adhd-intro.md` as verified state — research provenance.
+- Never treat [[i-have-adhd-intro|I Have Adhd Intro]] as verified state — research provenance.
 - Never claim a standing version pin — the recorded drift-guards are the
   byte-identity checks (IA1-1/IA1-4) and the upstream verification of record
   (spec §Identity, 2026-09-20: bundle byte-identical to upstream main, HEAD
@@ -99,7 +99,7 @@ learnings.
 | IA1-3 | A | Global skills symlink: `~/.config/skills` resolves to `~/.config/opencode/skills` | Exact target (config §Install surface) |
 | IA1-4 | A | Dual-path bundle identity: the npx CLI's primary install (`~/.agents/skills/i-have-adhd/`) and its CLI-derived OpenCode copy (`~/.config/opencode/skills/i-have-adhd/`) are byte-identical (sha256 first-16 per file, spec §Bundle contents); exactly one slash-command file; no manually created third copy | Both copies byte-identical (spec §Install surface — installer dual-write, registry primary). Divergence = DRIFT (dedup becomes path-dependent); a manually created additional copy = DRIFT (config Do-not: no second activation path) |
 | IA1-5 | A | No i-have-adhd wiring in `~/.config/opencode/opencode.json` | No entry (config §Install surface — "Nothing"). Search for the skill's name only; opencode.json conformance itself is `mb-config-opencode`'s domain |
-| IA1-6 | A | Suite completeness: 8 files in `mybizz-config-docs/i-have-adhd/` (config, exam-plan, exam-report, log, learnings, explainer, reference, skill source) + `i-have-adhd-intro.md` (provenance) | All present (missing file = GAP) |
+| IA1-6 | A | Suite completeness: 8 files in `mybizz-config-docs/i-have-adhd/` (config, exam-plan, exam-report, log, learnings, explainer, reference, skill source) + [[i-have-adhd-intro|I Have Adhd Intro]] (provenance) | All present (missing file = GAP) |
 | IA1-7 | D | Upstream live state: GitHub repo check (activity, stars, publisher identity, HEAD vs installed bundle content) | Recorded into spec open items 1–2 (watch W-1/W-2). Developer-run — outbound network; feeds the run's developer bundle |
 
 ## Tier 2 — Functional proof (present ≠ working; read-only — no content changed by any probe)
@@ -119,13 +119,13 @@ learnings.
 
 ## Report
 
-Write `i-have-adhd-exam-report.md`: verdict line; per-tier tables (check ID,
+Write [[i-have-adhd-exam-report|Exam Report]]: verdict line; per-tier tables (check ID,
 expected, actual, result); findings with class + evidence + recommended repair +
 risk; runner attribution for every deferred item (guard-forbidden vs
 unlock-gated); overwritten in full each run (write-then-replace: failed runs
 never touch the prior report; written before any pruning). Then: one run row
-appended to `i-have-adhd-log.md` (run-row format per
-`config-manager-reference.md`); new learnings filed.
+appended to [[i-have-adhd-log|Log]] (run-row format per
+[[config-manager-reference|Reference: Commands, Procedures]]); new learnings filed.
 
 ## Gate protocol
 

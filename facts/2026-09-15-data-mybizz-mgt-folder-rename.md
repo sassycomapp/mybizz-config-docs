@@ -18,8 +18,8 @@ Consequences that must be trusted without re-checking:
 - The old path `C:\_data-mybizz-mgt` (WSL `/mnt/c/_data-mybizz-mgt`) is
   **dead**. Any reference to it — in docs, configs, skills, or procedures —
   is stale until the document-management skills sweep it.
-- Canonical homes for the new state: `_desktop/repo-organization.md`
-  (repo/source/path correlation table), `_desktop/mybizz-scope-list.md`
+- Canonical homes for the new state: [[repo-organization|Repo organization]]
+  (repo/source/path correlation table), [[mybizz-scope-list|Mybizz Scope List]]
   (in-scope root + GitHub repo list), and the folder `README.md` naming note.
 
 Context: session 2026-09-15-001

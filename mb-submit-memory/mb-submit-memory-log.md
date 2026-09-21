@@ -11,20 +11,20 @@ Chronological record of notable events for this system: exam runs and outcomes,
 crashes, failure incidents, upgrades, error reports, significant guard denials.
 Events, not lessons — lessons live in the system's operational learnings
 (`/mnt/c/mybizz/logs/mb-submit-memory/learnings.md`) and the suite's transient
-`submit-memory-learnings.md`. Pruned under the absorption rule. (Seeded with
+[[submit-memory-learnings|Learnings]]. Pruned under the absorption rule. (Seeded with
 development-period events so the system has working data; content beyond
 eventness is not the point.)
 
 | date | event | outcome / disposition |
 |---|---|---|
 | 2026-08-25 | Skill created and installed as a real file at `~/.config/opencode/skills/mb-submit-memory/SKILL.md` (13,502 B single-file skill) | Installed; in continuous use since |
-| 2026-08-27 | First real submission run (`makepdlf-project-library/specifications-local/spec-postgres-ledger.md`, credential `manual_submission`): HTTP 201 → **promoted** (auto_promote, low risk), `memory_id 22e49b30-e023-4979-904a-2c1a27ec7513`, event 3497 | Promoted cleanly; downstream `gbrain_write` flush deferred by a pending gbrain source rename (resolved at the 2026-09-08 sync pass — naming drift closed source-side per spec §Naming drift) |
+| 2026-08-27 | First real submission run ([[spec-postgres-ledger|Spec Postgres Ledger]], credential `manual_submission`): HTTP 201 → **promoted** (auto_promote, low risk), `memory_id 22e49b30-e023-4979-904a-2c1a27ec7513`, event 3497 | Promoted cleanly; downstream `gbrain_write` flush deferred by a pending gbrain source rename (resolved at the 2026-09-08 sync pass — naming drift closed source-side per spec §Naming drift) |
 | 2026-09-05 | Suite documents authored in `mybizz-config-docs/mb-submit-memory/` (config, explainer, reference); config records a byte-identical mirror of the skill in the folder (13,502 B, 2026-09-05) | Docs live; mirror recorded (claim since superseded — see 2026-09-12 and 2026-09-15 rows) |
 | 2026-09-08 | Governor found **not running** (to that date only ever hand-started) → started per the documented `.env`-first procedure, detached, log-verified; auth-gating observed live (422 credential-required); end-to-end verified | API ACTIVE; startup coupling confirmed and documented; permanent auto-start (systemd) recommended and approved — pending developer execution (open item) |
 | 2026-09-08 | Cupcake outbound-network rule **amended**: loopback destinations (`127.0.0.1`, `localhost`, `::1`) always allowed — the skill's API path permitted under ACTIVE enforcement; one real loopback call passed live; formal eval tests pending developer run | Exemption live and load-bearing; do-not-remove rule recorded in reference §Prerequisites |
 | 2026-09-08 | 25-byte `Zone.Identifier` sidecar removed from the installed skill directory | Clean install dir |
 | 2026-09-08 | Naming drift (`dev-makepdlf` vs `makepdlf-project-library`) resolved on the source side: `gbrain sources list` shows `makepdlf-project-library` (128 pages, synced) | Source-side closed; governor-side `owning_project` rows still await a credentialed API check (open item → Tier 3) |
-| 2026-09-12 | Suite placeholder files `submit-memory-skill.md` + `submit-memory-learnings.md` created (both empty, 0 B) | Slots reserved; skill slot confirmed 2026-09-15 (developer instruction) as the future exam-skill source |
+| 2026-09-12 | Suite placeholder files [[submit-memory-skill|Submit Memory Skill]] + [[submit-memory-learnings|Learnings]] created (both empty, 0 B) | Slots reserved; skill slot confirmed 2026-09-15 (developer instruction) as the future exam-skill source |
 | 2026-09-13 | System registered in the config-manager register as **Deferred** — deliberately postponed (developer decision) | Deferred (six sibling mb-* rows same day) |
 | 2026-09-14 | Second submission run (session 2026-09-14-002 close-out): three fact files **promoted** (GBrain facts #52–54, world visibility); three world-visibility correction submissions → **under_review** (needs_review, medium) — left to the developer's review-queue resolution per doctrine; agent-side `.env` sourcing for the credential **honored-denied** (sensitive-data guard) → exact command bundle developer-executed, results returned verbatim | Proven permanent denial class; under_review doctrine held (no agent-side resolution or resubmission) |
 | 2026-09-15 | Deferral lifted by developer instruction (session 003): register row → **WIP**; suite build-out begins per `config-setup-prompt.md` | WIP; log, exam-plan, exam-report, learnings preamble, exam skill authored this pass |

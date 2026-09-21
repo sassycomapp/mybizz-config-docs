@@ -10,23 +10,23 @@ skill holds the **procedure** only — expected values live in the spec doc and 
 read fresh at the start of every run. The installation is working well; this exam
 verifies that and repairs nothing.
 
-- Spec: `archify/archify-config.md` — read it first, every run
-- **Exam plan: `archify/archify-exam-plan.md` — read second, every run.** The
+- Spec: [[archify-config|Configuration]] — read it first, every run
+- **Exam plan: [[archify-exam-plan|Exam Plan]] — read second, every run.** The
   plan-driven cycle: the config-manager synthesizes this plan fresh before each run
   (from spec + last report + log + learnings) and this skill executes it in hand.
   The plan carries run-specifics and deltas; the **standing check inventory lives in
   this skill** (below) — permanent occurrences graduate here, never into plans
-- Reference: `archify/archify-reference.md` — invocation, authoring procedure,
+- Reference: [[archify-reference|Reference]] — invocation, authoring procedure,
   authoring invariants, do-not list
-- Explainer: `archify/archify-explainer.md` — what Archify is, why scoping comes
+- Explainer: [[archify-explainer|Explainer]] — what Archify is, why scoping comes
   first, config-maintenance model, S.W.O.T.
-- Scoping component: `archify/archify-scope-skill.md` — the front-of-pipe spec
+- Scoping component: [[archify-scope-skill|Scoping Skill Specification]] — the front-of-pipe spec
   whose installed copy this exam verifies (AR2-3)
-- Report: `archify/archify-exam-report.md` — one file, overwritten each run
+- Report: [[archify-exam-report|Exam Report]] — one file, overwritten each run
   (write-then-replace)
-- Log: `archify/archify-log.md` — one run row per exam; free rows for notable
+- Log: [[archify-log|Log]] — one run row per exam; free rows for notable
   events witnessed between runs
-- Learnings: `archify/archify-learnings.md` — file new patterns/nuances; delete
+- Learnings: [[archify-learnings|Learnings]] — file new patterns/nuances; delete
   entries once graduated into a permanent home
 
 ## Scope boundary (anti-duplication)
@@ -62,7 +62,7 @@ into reports, outputs, or learnings.
   downloads/installs/executes anything. A version drift is a finding to report,
   never a reason to mutate the clone.
 - **Never modify `~/.config/opencode/skills/mb-archify-scope/SKILL.md`** — if it
-  drifts from `archify-scope-skill.md`, report the gap; re-sync is a developer/gated
+  drifts from [[archify-scope-skill|Scoping Skill Specification]], report the gap; re-sync is a developer/gated
   action with the spec as source of truth. Never create a second discovery path for
   the scope skill or the tool (double-load).
 - **Never submit skill content through the Memory Governor** — ordinary `gbrain
@@ -87,10 +87,10 @@ into reports, outputs, or learnings.
 |---|---|---|---|
 | AR1-1 | A | Version identity: `node -p "require('./archify/package.json').version"` in `/mnt/c/mybizz/archify` + `head -5 archify/SKILL.md` | package.json `2.16.0`; SKILL.md frontmatter `version: "2.16"` (config §Identity — Version). Divergence = DRIFT |
 | AR1-2 | A | Install architecture: symlink topology — `ls -la ~/.config/opencode/skills/archify` one entry (the tool package via symlink); discovery path resolves to the clone | Exactly one discovery entry; path `~/.config/opencode/skills/archify` → `/mnt/c/mybizz/archify/archify` (config §Install on this machine). Duplicate/broken = DRIFT/UNHEALTHY |
-| AR1-3 | A | Package structure live-counted (config §Package structure): `schemas/` = 6 `.schema.json` (`common`, `architecture`, `workflow`, `sequence`, `dataflow`, `lifecycle`) + `README.md`; `references/` = 4 files (`authoring-contract`, `brand-marks`, `delivery-contract`, `viewer-runtime`); `renderers/` per-type + `shared/`; `bin/archify.mjs` present | Counts and paths match config §Package structure. Missing/moved/changed = DRIFT |
+| AR1-3 | A | Package structure live-counted (config §Package structure): `schemas/` = 6 `.schema.json` (`common`, [[architecture|Architecture]], `workflow`, `sequence`, `dataflow`, `lifecycle`) + `README.md`; `references/` = 4 files (`authoring-contract`, `brand-marks`, `delivery-contract`, `viewer-runtime`); `renderers/` per-type + `shared/`; `bin/archify.mjs` present | Counts and paths match config §Package structure. Missing/moved/changed = DRIFT |
 | AR1-4 | A | Suite completeness: the eight regular files in `archify/` (config, exam-plan, exam-report, log, learnings, explainer, reference, skill) + the scope-skill spec | All present (missing file = GAP) |
 | AR1-5 | A | Update-notice contract: `grep -c "ARCHIFY_UPDATE_CHECK_DISABLED\|notification" archify/SKILL.md` + env check `echo "${ARCHIFY_UPDATE_CHECK_DISABLED:-unset}"` | Config §Install on this machine — update check is notification-only, never downloads/installs/executes; `ARCHIFY_UPDATE_CHECK_DISABLED=1` is the documented disable. Env present-or-unset recorded; contract text present = pass. Manifest URL NOT fetched (out of scope, W-3) |
-| AR1-6 | A | Integration facts (config §Integration with other system parts): OpenCode `/archify` invocation recorded; GBrain "no dedicated page" finding still plausible (does not require a search — recorded fact); Memory Governor "no treatment — not a governed writer" recorded; Cupcake "no archify-specific rule" — provisional, re-qualified against `cupcake-config.md`'s Current Operational Status at run time | Recorded facts unchanged; Cupcake provisional wording honored (no assumption of current enforcement) |
+| AR1-6 | A | Integration facts (config §Integration with other system parts): OpenCode `/archify` invocation recorded; GBrain "no dedicated page" finding still plausible (does not require a search — recorded fact); Memory Governor "no treatment — not a governed writer" recorded; Cupcake "no archify-specific rule" — provisional, re-qualified against [[cupcake-config|Cupcake Configuration]]'s Current Operational Status at run time | Recorded facts unchanged; Cupcake provisional wording honored (no assumption of current enforcement) |
 
 ## Tier 2 — Functional proof (present ≠ working; read-only — no changes to the installation from detection)
 
@@ -107,17 +107,17 @@ into reports, outputs, or learnings.
 | AR3-1 | D | Full mechanical integrity audit: `sha256sum` of package.json, `bin/archify.mjs`, `SKILL.md`, and the 10 package-structure files (6 schemas + README, 4 references); byte counts exact; working tree clean (`git -C /mnt/c/mybizz/archify status --short`) | Every hash/count stable vs the package's recorded state; tree clean or only known untracked sidecar files (visual-check PNGs, examples). Cost: ~12 hashes, 0 writes |
 | AR3-2 | D | Functional-ability acceptance: live bounded render proof — `doctor` (re-run) + `validate` of a representative example at showcase quality (e.g. `examples/web-app.architecture.json`) | doctor 15/15; validate returns the showcase receipt (9 artifact checks, 0 composition errors, 0 warnings) with `meta.quality_profile` honored. This is the acceptance record — the tool demonstrably renders; no deep re-authoring of a full subject is required |
 | AR3-3 | D | Open-item dispositions (config §Open items): (a) symlink creation method (WSL-side vs Windows `mklink /D`) — recorded verdict or deliberate deferral; (b) Windows Explorer visibility through the symlink — unverifiable from WSL, deliberate disposition recorded; (c) update-check manifest URL — recorded as deliberately out of scope | Dispositions recorded; spec edits (if any follow) only via docs governance |
-| AR3-4 | D | Supply-chain / adoption review (config §Identity — License MIT, Author tt-a1i, Based on Cocoon-AI/architecture-diagram-generator MIT v1.0): perform + record the adoption review on the established axes (publisher, license, maintenance, spawn-capability per `sec-review-before-trust` / `sec-dependency-skill-supply-chain`), or record a deliberate deferral | Review performed and recorded (or deferral recorded with reason) |
+| AR3-4 | D | Supply-chain / adoption review (config §Identity — License MIT, Author tt-a1i, Based on Cocoon-AI/architecture-diagram-generator MIT v1.0): perform + record the adoption review on the established axes (publisher, license, maintenance, spawn-capability per [[sec-review-before-trust|Review Before Trust]] / [[sec-dependency-skill-supply-chain|Dependency and Skill Supply Chain]]), or record a deliberate deferral | Review performed and recorded (or deferral recorded with reason) |
 | AR3-5 | D | Update-notice + integration discipline re-confirmation: the tool's only network surface is the notification-only checker; update decisions stay developer-owned; scope-skill copy stays in sync; ordinary `gbrain sync` only for content | Policy intact, restated. No action unless the developer deliberately decides otherwise |
 
 ## Report
 
-Write `archify-exam-report.md`: verdict line; per-tier tables (check ID, expected,
+Write [[archify-exam-report|Exam Report]]: verdict line; per-tier tables (check ID, expected,
 actual, result); findings with class + evidence + recommended repair + risk; runner
 attribution for every deferred item (guard-forbidden vs unlock-gated); overwritten
 in full each run (write-then-replace: failed runs never touch the prior report;
-written before any pruning). Then: one run row appended to `archify-log.md`
-(run-row format per `config-manager-reference.md`); new learnings filed.
+written before any pruning). Then: one run row appended to [[archify-log|Log]]
+(run-row format per [[config-manager-reference|Reference: Commands, Procedures]]); new learnings filed.
 
 ## Gate protocol
 

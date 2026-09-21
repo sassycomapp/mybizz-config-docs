@@ -9,9 +9,9 @@ date-created: 2026-09-05
 
 Canonical current-state configuration record. Agent-facing. Reflects the
 verified live state as of 2026-09-09. States facts, not history — the
-design genesis is `sentinel-security-system.md` (recovered), the agreed
-scope is `sentinel-scope.md` (this folder), and the reasoning matters in
-`sentinel-explainer.md`.
+design genesis is [[sentinel-security-system|SSS - sentinel Security System]] (recovered), the agreed
+scope is [[sentinel-scope|Scope]] (this folder), and the reasoning matters in
+[[sentinel-explainer|What It Is, What It Does, and Why It Matters]].
 
 ---
 
@@ -22,11 +22,11 @@ scope is `sentinel-scope.md` (this folder), and the reasoning matters in
 | Skill 1 | `mb-sentinel-review` — installed (`~/.config/opencode/skills/mb-sentinel-review/`, byte-identical mirror in this folder) |
 | Skill 2 | `mb-compile-rules` — installed; functional (built and amended 19 rules; latest amendments 2026-09-08) |
 | Purpose | Step-triggered security review for PDLF steps, in service of shipped-application safety for clients and their users |
-| Design genesis | `sentinel-security-system.md` (this folder, 2026-08-23, 2,204 lines — the original research conversation; recovered 2026-09-09 and serving as the plan document) |
-| Scope | `sentinel-scope.md` (this folder) — the agreed three-layer scope |
+| Design genesis | [[sentinel-security-system|SSS - sentinel Security System]] (this folder, 2026-08-23, 2,204 lines — the original research conversation; recovered 2026-09-09 and serving as the plan document) |
+| Scope | [[sentinel-scope|Scope]] (this folder) — the agreed three-layer scope |
 | Reasoning methodology | `secure-software-engineering` — **installed 2026-09-09** at `~/.config/opencode/skills/secure-software-engineering/` (SKILL.md + 11 references + 3 templates + evals); upstream `github.com/magnus919/agent-skills/tree/main/secure-software-engineering` (MIT) |
 
-## Environment position (per `C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md`)
+## Environment position (per [[pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]])
 
 | Layer | Sentinel's presence |
 |---|---|
@@ -45,7 +45,7 @@ scope is `sentinel-scope.md` (this folder), and the reasoning matters in
 
 ## Governing architecture document
 
-`adr-global/adr-dependency-based-not-multi-tenant.md` (Sealed) — cross-client
+[[adr-dependency-based-not-multi-tenant|Mybizz CS is a Dependency-Based Architecture, Not a Multi-Tenant Architecture]] (Sealed) — cross-client
 data isolation is **structural** (one Anvil app per client, one database per
 client, `app_tables` resolves to the calling client's own tables —
 live-tested 2026-06-13). Consequences for Sentinel: multi-tenancy patterns
@@ -53,25 +53,25 @@ live-tested 2026-06-13). Consequences for Sentinel: multi-tenancy patterns
 sessions) are **security findings**, not style issues — they would replace
 structural isolation with a failure-prone filter. The review vocabulary is
 within-instance: user-role access control, the Vault, server-side-only data
-access. Related ADRs: `adr-client-instance-architecture.md`,
-`adr-client-instance-readme-five-app-system.md`,
-`adr-dependency-update-model.md`.
+access. Related ADRs: [[adr-client-instance-architecture|Client Instance Architecture]],
+[[adr-client-instance-readme-five-app-system|Mandatory README in Every Client Instance Documenting the Five-App System]],
+[[adr-dependency-update-model|Dependency Update Model]].
 
 ## Database — `triage_findings` (verified live 2026-09-09)
 
 | Item | Value |
 |---|---|
 | Server | **Windows** PostgreSQL 15, `pdlf` database, role `pdlf_agent` — a DIFFERENT cluster from WSL's PostgreSQL 16 (GBrain + memory governor) despite the same port |
-| Access route | The PowerShell bridge ONLY — direct WSL psql silently connects to the wrong server (`spec-postgres-ledger.md`, binding) |
+| Access route | The PowerShell bridge ONLY — direct WSL psql silently connects to the wrong server ([[spec-postgres-ledger|Spec Postgres Ledger]], binding) |
 | Verified state | Table exists; **0 rows** (Sentinel has never run live) |
 | Sentinel-relevant columns | `source_step` (CHECK: 16,17,19,20,21,34,35,36,37,38,39,45,46), `triage_label` (CHECK: needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix, clear), `concern`, `asset`, `threat`, `evidence`, `severity` (Low/Medium/High/Critical), `confidence` (Low/Medium/High), `recommended_control`, `verification`, `finding_id` (free-standing text, no companion table) |
 | Label mapping | FLAG → `needs-triage` · ESCALATE → `needs-info` · CLEAR (reviewed) → `clear` · a step not in the intensity table produces no row at all — not the same as `clear` |
 
-## Step-intensity table (per `sentinel-security-system.md`; numbers provisional until each step file is built)
+## Step-intensity table (per [[sentinel-security-system|SSS - sentinel Security System]]; numbers provisional until each step file is built)
 
 | Step | Scrutiny | Built as a real PDLF step file? |
 |---|---|---|
-| 16 — Domain model | Low/Medium | Yes — `stepwise/step-16-domain-modeling.md` (invocation at item 7, gate-proof at item 9 — verified live 2026-09-09) |
+| 16 — Domain model | Low/Medium | Yes — [[step-16-domain-modeling|Step 16 Domain Modeling]] (invocation at item 7, gate-proof at item 9 — verified live 2026-09-09) |
 | 17 — Data tables | High | No |
 | 19 — Tickets | Medium | No |
 | 20 — Design | Medium/High | No |
@@ -90,7 +90,7 @@ Steps not in this table: no material security scrutiny by default.
 
 | Step file | `mb-sentinel-review` invoked at | Gate-proof check at |
 |---|---|---|
-| `stepwise/step-16-domain-modeling.md` | item 7 | item 9 |
+| [[step-16-domain-modeling|Step 16 Domain Modeling]] | item 7 | item 9 |
 
 ## Related, non-duplicated tools (cross-reference only — not part of Sentinel)
 

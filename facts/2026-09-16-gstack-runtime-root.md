@@ -25,4 +25,4 @@ shebang — running `bash <name>` on a Bun script yields confusing multi-line
 errors. `gstack-brain-sync` is still bash (reference's `bash ...` invocation
 correct).
 
-Recorded in `gstack-reference.md` (§bin-tree notes via docs governance).
+Recorded in [[gstack-reference|GStack Reference]] (§bin-tree notes via docs governance).

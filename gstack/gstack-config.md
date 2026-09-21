@@ -8,9 +8,9 @@ date-created: 2026-09-05
 # GStack Configuration
 
 Canonical current-state configuration record. Agent-facing. States facts,
-not history or rules — reasoning in `gstack-explainer.md`, commands and
-workflows in `gstack-reference.md`, the invocable-skill catalog in
-`gstack-skills-reference.md`. All values verified live 2026-09-08 unless noted.
+not history or rules — reasoning in [[gstack-explainer|GStack Explainer]], commands and
+workflows in [[gstack-reference|GStack Reference]], the invocable-skill catalog in
+[[gstack-skills-reference|GStack Skills Reference]]. All values verified live 2026-09-08 unless noted.
 
 ## Identity
 
@@ -63,11 +63,11 @@ hand-edit a generated file. Regenerate with `bun run gen:skill-docs`.
 
 | Item | State |
 |---|---|
-| Cross-tool skill enumeration | `mybizz-os-docs/skill-index.md` — the authoritative on-disk inventory across all skill owners; consistent with the live state above |
-| OpenCode structure rows | `opencode/opencode-config.md` (symlink + hybrid rows) |
-| Outputs convention | Skills save internally to `~/.gstack/projects/$SLUG/` (verified live 2026-09-16). The AGENTS.md copy lane (`gstack-outputs/` in the active project) is a **convention, not live state** — the folder does not exist on this system outside backups (verified 2026-09-16; the earlier "confirmed live in `mb5pdlf-project-library`" claim was falsified — folder absent there). Full fact — where every skill saves and the non-existence of the copy lane — in `gstack-reference.md` §Artifact locations (2026-09-16) |
-| GBrain relationship | gstack's GBrain skills operate on the existing self-hosted PostgreSQL GBrain — `/setup-gbrain`'s own PGLite/Supabase description does not describe this environment (authority: `gbrain-config.md`) |
-| Memory-ecosystem grouping | GStack is **not** a memory-system component. It is related to the memory ecosystem only through its close relation to GBrain (workflow-layer adjacency — GBrain is memory; GStack is workflow). Developer correction 2026-09-16: supersedes the earlier "one of the six closely-related memory-system components" claim, which was a stale cross-reference (the master explainer never listed GStack as a member). `memory-master-explainer.md` remains a cross-component reference, not a membership statement |
+| Cross-tool skill enumeration | [[skill-index|Skill Index]] — the authoritative on-disk inventory across all skill owners; consistent with the live state above |
+| OpenCode structure rows | [[opencode-config|OpenCode Configuration]] (symlink + hybrid rows) |
+| Outputs convention | Skills save internally to `~/.gstack/projects/$SLUG/` (verified live 2026-09-16). The AGENTS.md copy lane (`gstack-outputs/` in the active project) is a **convention, not live state** — the folder does not exist on this system outside backups (verified 2026-09-16; the earlier "confirmed live in `mb5pdlf-project-library`" claim was falsified — folder absent there). Full fact — where every skill saves and the non-existence of the copy lane — in [[gstack-reference|GStack Reference]] §Artifact locations (2026-09-16) |
+| GBrain relationship | gstack's GBrain skills operate on the existing self-hosted PostgreSQL GBrain — `/setup-gbrain`'s own PGLite/Supabase description does not describe this environment (authority: [[gbrain-config|Configuration]]) |
+| Memory-ecosystem grouping | GStack is **not** a memory-system component. It is related to the memory ecosystem only through its close relation to GBrain (workflow-layer adjacency — GBrain is memory; GStack is workflow). Developer correction 2026-09-16: supersedes the earlier "one of the six closely-related memory-system components" claim, which was a stale cross-reference (the master explainer never listed GStack as a member). [[memory-master-explainer|Master Explainer]] remains a cross-component reference, not a membership statement |
 
 ## Open items
 

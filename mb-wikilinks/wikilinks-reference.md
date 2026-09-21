@@ -12,7 +12,7 @@ folder (`~/.config/opencode/skills/mb-wikilinks/`) is the authoritative
 definition; this document is the operational form. Updated 2026-09-20 to
 reflect the refactored skill (2026-09-19: scope from the single authority
 list, shared run frame, corpus-wide collision census, run-level backup).
-Why the rules are shaped this way: `wikilinks-explainer.md`.
+Why the rules are shaped this way: [[wikilinks-explainer|Explainer]].
 
 ## Run-state discipline — mandatory, end to end
 
@@ -21,7 +21,7 @@ verified stop-cold backup, decision-point checkpointing, run-record lifecycle,
 approvals in chat, permission discipline, verification, commit plan and
 per-source GBrain sync, es.exe-first search, Anvil code repos denied) is
 defined once in
-`C:\mybizz\mybizz-os-docs\os-reference-docs\doc-skills-run-discipline.md`
+[[doc-skills-run-discipline|Shared Run Discipline]]
 and is mandatory for every run. One working record per run lives in
 `C:\mybizz\logs\mb-wikilinks\in-progress\` (run timestamp, Filename-Safe ISO
 8601 UTC+2), is appended at every decision point, moves to
@@ -44,7 +44,7 @@ the permanent audit trail.
 ## Scope
 
 Scope comes from the scoping list
-(`C:\mybizz\mybizz-os-docs\os-reference-docs\mybizz-scope-list.md`) — the single scope
+([[mybizz-scope-list|Mybizz Scope List]]) — the single scope
 authority for every documentation skill, read at Phase 0 of every run. The skill never
 carries its own scope list. In-scope roots: `C:\data-mybizz-mgt`, `C:\dev`, `C:\mybizz`,
 `C:\pdlf`; exceptions only as listed there. If asked to extend scope to an excepted

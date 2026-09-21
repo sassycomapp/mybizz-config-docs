@@ -31,7 +31,7 @@ Verified live 2026-09-15 (mb-config-opencode run #1): the developer's returned
 
 ## Source
 
-- `opencode/opencode-exam-report.md` — run #1, finding F-6 (2026-09-15)
-- `opencode/opencode-skill.md` — credential discipline + graduated lesson:
+- [[opencode-exam-report|Exam Report]] — run #1, finding F-6 (2026-09-15)
+- [[opencode-skill|Opencode Skill]] — credential discipline + graduated lesson:
   config-content field checks are runner D (developer-run)
 - Session page: `sessions/2026-09-15-007-opencode-config-suite`

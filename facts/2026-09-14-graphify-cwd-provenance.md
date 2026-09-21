@@ -20,6 +20,6 @@ from the mybizz-config-docs working directory, stamped that repo's HEAD
 commit (`1194ea9…`) onto the mb-3-cs graph; the verification step caught
 the mis-stamp, and the corrected rebuild from the mb-3-cs root stamped
 provenance correctly (`59175d9e…` == HEAD). The `graphify update` path
-stamps from the scanned path. Permanent homes: `graphify-config.md`
-§Open items; `graphify-reference.md` §Graph build procedures;
+stamps from the scanned path. Permanent homes: [[graphify-config|Graphify Configuration]]
+§Open items; [[graphify-reference|Graphify Reference]] §Graph build procedures;
 the `mb-config-graphify` skill's hard behavioral rules.

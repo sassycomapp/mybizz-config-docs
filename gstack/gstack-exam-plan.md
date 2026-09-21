@@ -8,15 +8,15 @@ date-created: 2026-09-16
 # GStack — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before
-each run from: `gstack-config.md` (spec), the last
-`gstack-exam-report.md`, `gstack-log.md` (events since last
-run), `gstack-learnings.md`. Consumed by the skill at run time;
+each run from: [[gstack-config|GStack Configuration]] (spec), the last
+[[gstack-exam-report|Exam Report]], [[gstack-log|Log]] (events since last
+run), [[gstack-learnings|GStack Learnings]]. Consumed by the skill at run time;
 rewritten at the start of the following cycle. The file is live; its contents are
 transient.
 
 **This first plan is hand-written** (emulation of the proven gbrain-dream-cycle
 architecture): it also serves as the format template. The **standing check
-inventory lives in the skill** (`gstack-skill.md`, born-with-inventory); this
+inventory lives in the skill** ([[gstack-skill|Gstack Skill]], born-with-inventory); this
 plan carries run-specifics and references. Once verified by a run, future plans
 carry run-specifics + references only.
 
@@ -32,8 +32,8 @@ carry run-specifics + references only.
 | Step-0 result | recorded at execution |
 | Tier 3 unlock state | **Locked** — Tier 3 rows execute only if the developer unlocks this run |
 | Developer-run requests this run (bundled into ONE request) | (a) `~/.gstack` file-content reads if any guard denies them (sensitive-data guards — proven classes); (b) any check whose command text the guards deny; (c) `.env.example` content verification (the one template line claim) |
-| Expected-value source of truth | `gstack-config.md` — read fresh at run start; never rely on remembered values |
-| Scope boundary | This module exams GStack itself: clone version/HEAD, discovery topology, config files, binary tree, integration facts. Sibling modules own: GBrain server/schema/conformance (`mb-config-gbrain`), dream-cycle pipeline (`mb-config-gbrain-dream-cycle`), OpenCode structure rows and Active Project Standard (`mb-config-opencode`), cross-tool skill enumeration (`skill-index.md`, docs-managed). Skill-inventory re-audit is NOT performed here (docs governance owns `skill-index.md`). |
+| Expected-value source of truth | [[gstack-config|GStack Configuration]] — read fresh at run start; never rely on remembered values |
+| Scope boundary | This module exams GStack itself: clone version/HEAD, discovery topology, config files, binary tree, integration facts. Sibling modules own: GBrain server/schema/conformance (`mb-config-gbrain`), dream-cycle pipeline (`mb-config-gbrain-dream-cycle`), OpenCode structure rows and Active Project Standard (`mb-config-opencode`), cross-tool skill enumeration ([[skill-index|Skill Index]], docs-managed). Skill-inventory re-audit is NOT performed here (docs governance owns [[skill-index|Skill Index]]). |
 ## 2. Carried-forward items
 
 None — bootstrap (no prior exam exists). Recorded spec states kept under watch
@@ -67,7 +67,7 @@ None — no prior exam exists (first formal run; bootstrap).
 ## 6. Standing checks — summary (the complete enumeration lives in the skill)
 
 Every check: id, runner (A=agent, D=developer), probe, expected source, pass
-rule — full tables in `gstack-skill.md` (Tiers 0–3). Summary:
+rule — full tables in [[gstack-skill|Gstack Skill]] (Tiers 0–3). Summary:
 
 - **Tier 0 (A) — invocability:** GS0-1 clone version `1.58.1.0` / HEAD `c7ae632` · GS0-2 discovery symlink tree exists at both link generations · GS0-3 aggregate `/gstack` entry + `GSTACK_BIN` resolve
 - **Tier 1 (A/D) — state conformance:** GS1-1 per-host tree count 54 · GS1-2 74 binaries in `bin/` · GS1-3 3 broken entries dead/inert · GS1-4 `~/.gstack/config.yaml` live values · GS1-5 gbrain-detection.json + repo-policy.json agree with spec · GS1-6 GBrain worktree present, remote absent · GS1-7 `last-update-check` stale string · GS1-8 `.env` absent in clone (D on content) · GS1-9 slop-scan config + SKILL.md.tmpl generation source present · GS1-10 suite completeness (7 files + skill source)
@@ -76,12 +76,12 @@ rule — full tables in `gstack-skill.md` (Tiers 0–3). Summary:
 
 ## 7. Report requirements
 
-The run writes `gstack-exam-report.md`: verdict line; per-tier tables
+The run writes [[gstack-exam-report|Exam Report]]: verdict line; per-tier tables
 (check ID, expected, actual, result); findings with class + evidence + recommended
 repair + risk; runner attribution for every deferred item (guard-forbidden vs
 unlock-gated); overwritten in full each run (write-then-replace; failed runs never
 touch the prior report; written before any pruning). Then: one run row appended to
-`gstack-log.md` (run-row format per `config-manager-reference.md`);
+[[gstack-log|Log]] (run-row format per [[config-manager-reference|Reference: Commands, Procedures]]);
 new learnings filed.
 
 ## 8. Gate protocol

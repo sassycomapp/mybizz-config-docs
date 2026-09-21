@@ -12,8 +12,8 @@ installed on this machine. Agent-facing. Reflects the live-verified state as
 of 2026-09-20 (on-disk facts verified directly; upstream verified live the
 same day — run #1 Tier 3, gate-approved). This document states facts, not
 history — where a decision was made and the reasoning matters, see
-`i-have-adhd-explainer.md`; for operational commands and rules, see
-`i-have-adhd-reference.md`.
+[[i-have-adhd-explainer|Explainer]]; for operational commands and rules, see
+[[i-have-adhd-reference|Reference: Invocation, Operation, Update]].
 
 ---
 
@@ -83,12 +83,12 @@ hashes apply to both).
 | Item | State |
 |---|---|
 | OpenCode skill discovery | Global skills dir `/home/dev-p/.config/opencode/skills/`; the `~/.config/skills` symlink aliases it for the npx skills CLI's conventional path |
-| AGENTS.md | No managed block, no second writer — the always-on ruleset lands in the session system prompt, not in any AGENTS.md file (see `i-have-adhd-explainer.md` §4) |
+| AGENTS.md | No managed block, no second writer — the always-on ruleset lands in the session system prompt, not in any AGENTS.md file (see [[i-have-adhd-explainer|Explainer]] §4) |
 | GBrain | Skills dir is not a registered source; this suite's source is `mybizz-config-docs` (`/mnt/c/mybizz/mybizz-config-docs`, federated) |
 | PDLF | Not registered as a PDLF stage — cross-cutting output shaping, outside the skill families; PDLF gates and steps are unaffected (SKILL.md break-rule 6 defers to the harness) |
 | Cupcake | No interaction — the skill creates no sub-agents, runs no commands, writes no files |
 | Memory Governor | Bypass class: vendor-published material installed by a CLI, not developer-authored — same standing class as `anvil-agent-references` / `magdoub-wireframe`; ordinary `gbrain sync` only |
-| Exam module | `mb-config-i-have-adhd` — copy-installed 2026-09-20 at `~/.config/opencode/skills/mb-config-i-have-adhd/SKILL.md` (source `i-have-adhd-skill.md` in this folder; hash pair `1669db5ef2192a0d` after the run #1 IA1-4 amendment); born-with-inventory; no agent-healable items |
+| Exam module | `mb-config-i-have-adhd` — copy-installed 2026-09-20 at `~/.config/opencode/skills/mb-config-i-have-adhd/SKILL.md` (source [[i-have-adhd-skill|I Have Adhd Skill]] in this folder; hash pair `1669db5ef2192a0d` after the run #1 IA1-4 amendment); born-with-inventory; no agent-healable items |
 
 ## Settled policy
 
@@ -98,7 +98,7 @@ hashes apply to both).
 | Content sync into GBrain | Ordinary `gbrain sync` — permanent bypass of Memory Governor's review pipeline (vendor material via CLI install; no developer-authored confidence/contradiction judgment to make) |
 | In-place skill edits | Not permitted — the installed `SKILL.md` is vendor material; changes arrive via upstream and reinstall |
 
-## Known unverified or stale claims in `i-have-adhd-intro.md`
+## Known unverified or stale claims in [[i-have-adhd-intro|I Have Adhd Intro]]
 
 | Intro claim | Live reality on this machine |
 |---|---|

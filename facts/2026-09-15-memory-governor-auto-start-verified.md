@@ -24,6 +24,6 @@ worker (no worker log written) — the exact flakiness class the migration
 eliminates; the worker now self-heals under its unit. The start script's
 idempotent skip (finding both services already running) proves itself at the
 next natural restart — standing-check territory, not an open item. Unit
-definitions: `memory-governor-reference.md` §Permanent auto-start migration
+definitions: [[memory-governor-reference|Usage, Invocation, and Incident Response]] §Permanent auto-start migration
 (executed + verified 2026-09-15). Previously approved 2026-09-08; units
 placed 2026-09-13.

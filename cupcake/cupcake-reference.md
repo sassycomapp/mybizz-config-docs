@@ -7,11 +7,11 @@ date-created: 2026-09-05
 
 # Cupcake Reference — Usage, Invocation, and Worked Examples
 
-Companion to `cupcake-config.md` (the spec — current installed state, operational
-status) and `cupcake-explainer.md` (design, history, and real incidents — the
-authoritative whole-system narrative). Exam companions: `cupcake-exam-plan.md`
-(next run's job-spec), `cupcake-exam-report.md` (current verified state),
-`cupcake-log.md` (notable events), `cupcake-learnings.md` (transient exam
+Companion to [[cupcake-config|Cupcake Configuration]] (the spec — current installed state, operational
+status) and [[cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]] (design, history, and real incidents — the
+authoritative whole-system narrative). Exam companions: [[cupcake-exam-plan|Exam Plan]]
+(next run's job-spec), [[cupcake-exam-report|Exam Report]] (current verified state),
+[[cupcake-log|Log]] (notable events), [[cupcake-learnings|Learnings]] (transient exam
 knowledge). Agent-facing.
 
 **Status note:** Cupcake is **ACTIVE** as of 2026-09-12 — enforcement verified
@@ -25,7 +25,7 @@ engine boots only when the folder it runs in has the
 `.cupcake/policies/opencode` + `.cupcake/system` skeleton — the plugin now
 passes the session's project directory (`cwd: event.cwd`), so create the
 skeleton in every project folder before working there (see
-`cupcake-config.md`).
+[[cupcake-config|Cupcake Configuration]]).
 
 ---
 
@@ -114,7 +114,7 @@ mg-revoke --path /mnt/c/tmp/target
 **Important: a raw `cupcake eval` pipe does not exercise the decrement.** It
 only asks the policy engine for a decision — it never executes a real tool
 call, so the plugin's `tool.execute.after` hook never fires. Only a genuine
-tool execution moves the count (see `cupcake-explainer.md` §7E).
+tool execution moves the count (see [[cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]] §7E).
 
 ## Confirming the plugin is loaded exactly once
 
@@ -148,7 +148,7 @@ cause: `regex.replace` fails silently in the real compiled engine
 
 The grant logic's first design used `time.now_ns()` inside Rego. An isolated
 live probe confirmed the same silent-failure signature. The fix moved all time
-computation out of Rego entirely — see `cupcake-config.md`'s grants mechanics.
+computation out of Rego entirely — see [[cupcake-config|Cupcake Configuration]]'s grants mechanics.
 
 ## Confirming a rule is genuinely live and correctly scoped
 
@@ -197,7 +197,7 @@ every tool needed to investigate it.
    `example.rego` in a project-local policy folder; if it entered git history
    via a broad `git add -A` rather than the `mb-compile-rules` pipeline, it is
    a strong suspect for breaking the whole scanned folder (confirmed present
-   as of 2026-09-06 — see `cupcake-config.md`):
+   as of 2026-09-06 — see [[cupcake-config|Cupcake Configuration]]):
    ```bash
    cat .cupcake/policies/opencode/example.rego
    opa check .cupcake/policies/opencode/example.rego
@@ -270,7 +270,7 @@ add `.cupcake/policies/opencode/example.rego` to the project's `.gitignore`.
 If step 5 doesn't produce a clean result, `failMode: "open"` means work isn't
 blocked while diagnosis continues. **Until this sequence is actually run and
 the crash reproduced-and-resolved, the fix remains a candidate, not a
-solution** — see `cupcake-config.md`'s standing context.
+solution** — see [[cupcake-config|Cupcake Configuration]]'s standing context.
 
 ## Disabling Cupcake — immediate, fully reversible
 

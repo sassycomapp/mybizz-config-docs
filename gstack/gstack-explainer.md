@@ -10,9 +10,9 @@ date-created: 2026-09-08
 ## 0. Config-management coverage
 
 This suite is part of the config-management system (`mb-config-manager`): the
-spec is `gstack-config.md`, the exam procedure is `gstack-skill.md`, and the
-per-run job-spec is `gstack-exam-plan.md` / `gstack-exam-report.md` /
-`gstack-log.md` / `gstack-learnings.md`. See §7 (Config maintenance) below.
+spec is [[gstack-config|GStack Configuration]], the exam procedure is [[gstack-skill|Gstack Skill]], and the
+per-run job-spec is [[gstack-exam-plan|Exam Plan]] / [[gstack-exam-report|Exam Report]] /
+[[gstack-log|Log]] / [[gstack-learnings|GStack Learnings]]. See §7 (Config maintenance) below.
 
 ## 1. What this actually is
 
@@ -137,20 +137,20 @@ brain-sync remote (artifact sync is currently local-only). Which setup
 version produced the July bare-name links (provenance only, no rule
 depends on it).
 
-*Companion documents: `gstack-config.md` (state), `gstack-reference.md`
-(workflows and commands), `gstack-skills-reference.md` (catalog).
-Cross-component reasoning: `mybizz-os-docs/memory-master-explainer.md`.*
+*Companion documents: [[gstack-config|GStack Configuration]] (state), [[gstack-reference|GStack Reference]]
+(workflows and commands), [[gstack-skills-reference|GStack Skills Reference]] (catalog).
+Cross-component reasoning: [[memory-master-explainer|Master Explainer]].*
 
 ## 7. Config maintenance — how this system is examined and kept healthy
 
 This suite participates in the config-management system (`mb-config-manager`).
 The roles of the seven suite files, and the exam cycle that runs them, are the
-architecture described in `config-manager-explainer.md` — emulated from the
+architecture described in [[config-manager-explainer|Explainer]] — emulated from the
 PostgreSQL pilot and the gbrain-dream-cycle precedent. The short local version:
 
-- `gstack-config.md` is the **spec** — the ideal state every exam checks
+- [[gstack-config|GStack Configuration]] is the **spec** — the ideal state every exam checks
   against. GStack is working well; the exam verifies that and changes nothing.
-- Before each exam run, the config-manager synthesizes `gstack-exam-plan.md`:
+- Before each exam run, the config-manager synthesizes [[gstack-exam-plan|Exam Plan]]:
   a fresh job-spec built from this spec, the last report, the log, and the
   learnings. The plan is transient (the file is live; contents rewritten each
   cycle).
@@ -162,15 +162,15 @@ PostgreSQL pilot and the gbrain-dream-cycle precedent. The short local version:
   (this exam reads `~/.gstack/*.json` records only); the dream cycle belongs to
   `mb-config-gbrain-dream-cycle` (`/sync-gbrain` is a knowledge check only);
   OpenCode structure rows belong to `mb-config-opencode`; cross-tool skill
-  enumeration belongs to `skill-index.md` (docs-managed). This exam owns the
+  enumeration belongs to [[skill-index|Skill Index]] (docs-managed). This exam owns the
   discovery **mechanics** — that the documented clone, links, binaries, and
   config files resolve and are consistent.
 - Several checks are permanently **developer-run**: `~/.gstack` credential-
   bearing content reads (sensitive-data guard — proven class), the `.env.example`
   content claim, and everything in Tier 3 (a real skill lifecycle is expensive
   and writes artifacts; the upgrade decision is the developer's).
-- The run rewrites `gstack-exam-report.md` (current state, no history), appends
-  one row to `gstack-log.md`, files new learnings, and prunes absorbed entries.
+- The run rewrites [[gstack-exam-report|Exam Report]] (current state, no history), appends
+  one row to [[gstack-log|Log]], files new learnings, and prunes absorbed entries.
 
 ## 8. S.W.O.T.
 
@@ -201,10 +201,10 @@ describes (mitigated: GS0-GS2 topology checks every run).
 
 ---
 
-*Companion documents: `gstack-config.md` (the spec),
-`gstack-reference.md` (procedures and commands),
-`gstack-skills-reference.md` (catalog), `gstack-exam-plan.md` /
+*Companion documents: [[gstack-config|GStack Configuration]] (the spec),
+[[gstack-reference|GStack Reference]] (procedures and commands),
+[[gstack-skills-reference|GStack Skills Reference]] (catalog), [[gstack-exam-plan|Exam Plan]] /
 `-exam-report.md` / `-log.md` / `-learnings.md` (config-management set),
-`gstack-skill.md` (exam skill canonical source). Architecture:
-`mb-config-manager/config-manager-explainer.md`. Cross-component framing:
-`memory-master-explainer.md`.*
+[[gstack-skill|Gstack Skill]] (exam skill canonical source). Architecture:
+[[config-manager-explainer|Explainer]]. Cross-component framing:
+[[memory-master-explainer|Master Explainer]].*

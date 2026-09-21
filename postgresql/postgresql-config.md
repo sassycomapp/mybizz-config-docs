@@ -9,14 +9,14 @@ date-created: 2026-09-05
 
 Canonical, current-state configuration record for every PostgreSQL instance on
 this machine. Pure facts and settings — no narrative, no history, no design
-rationale. For the "why," see `postgresql-explainer.md`. For commands and
-procedures, see `postgresql-reference.md`. Last fully verified live: 2026-09-13
+rationale. For the "why," see [[postgresql-explainer|Explainer]]. For commands and
+procedures, see [[postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]. Last fully verified live: 2026-09-13
 (run #2, first formal plan-driven exam).
 
 **Two entirely separate instances exist. Do not confuse them.** The layer
 placement: Instance B hosts the pre-makePDLF layer's memory; Instance A
 hosts the PDLF layer's ledger (see
-`C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md` for the layer map).
+[[pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]] for the layer map).
 
 ---
 
@@ -29,7 +29,7 @@ hosts the PDLF layer's ledger (see
 | Data directory | `C:\Program Files\PostgreSQL\15\data` |
 | Port | `5432` |
 | Host (from Windows) | `127.0.0.1` or `localhost` (equivalent — verified 2026-08-26) |
-| Reached from WSL via | PowerShell bridge only — see `postgresql-reference.md`. Direct WSL `psql` to `localhost:5432` connects to Instance B instead, silently. |
+| Reached from WSL via | PowerShell bridge only — see [[postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]. Direct WSL `psql` to `localhost:5432` connects to Instance B instead, silently. |
 | Auth method | `scram-sha-256` for all users/addresses, including `0.0.0.0/0` and `::/0`. No trust paths. (Verified 2026-09-05 with superuser access; `pg_hba.conf` itself is readable only by superuser — re-verification as `pdlf_agent` is refused by design.) |
 | Service (real, running) | `postgresql-x64-15` — Status: Running, StartType: Automatic (verified live 2026-09-13) |
 | Service (dead duplicate) | `PostgreSQL` — Status: Stopped, StartType: Automatic. Same data directory as above. Harmless; cannot conflict since only one process can bind the port. Do not start it. (Verified live 2026-09-09.) |
@@ -41,7 +41,7 @@ hosts the PDLF layer's ledger (see
 |---|---|
 | `postgres` | Superuser. Credential: `PGADMIN_USER`/`PGADMIN_PASSWORD` in `C:\dev\dev-makepdlf\makepdlf-project-library\.env` (referenced by variable name only — never printed) |
 | `pdlf_agent` | Owns the `pdlf` database. Password stored as `PGPASSWORD` in the same `.env` |
-| ~~`pgvector_user`~~ / ~~`pgvector_readonly`~~ | **REMOVED 2026-09-09** — dormant leftovers from the pre-GBrain mem0/vector experiments (login-capable + a no-login group; EXECUTE grants on the pgvector extension functions in the `postgres` database; zero table grants; zero owned objects). Revoked via `DROP OWNED` in `postgres`, then dropped; verified gone cluster-wide 2026-09-09. See `postgresql-explainer.md` for the full investigation. |
+| ~~`pgvector_user`~~ / ~~`pgvector_readonly`~~ | **REMOVED 2026-09-09** — dormant leftovers from the pre-GBrain mem0/vector experiments (login-capable + a no-login group; EXECUTE grants on the pgvector extension functions in the `postgres` database; zero table grants; zero owned objects). Revoked via `DROP OWNED` in `postgres`, then dropped; verified gone cluster-wide 2026-09-09. See [[postgresql-explainer|Explainer]] for the full investigation. |
 
 ### Databases (verified live 2026-09-13)
 
@@ -61,7 +61,7 @@ seven currently hold 0 rows (verified live 2026-09-13).
 2026-09-05 (6 of 7 tables) was corrected in the spec the same day — commit
 `fae811c` ("docs(spec): correct postgres ledger spec — PowerShell
 connection pattern + triage_findings live schema",
-`specifications-local/spec-postgres-ledger.md`). The spec now documents the
+[[spec-postgres-ledger|Spec Postgres Ledger]]). The spec now documents the
 live schema, including `resolution_note`/`resolved_at` on
 `triage_findings`. The spec file is authoritative.
 
@@ -106,14 +106,14 @@ proves nothing about the role's own privileges). Verified: `memory_governor_svc`
 |---|---|
 | `postgres` | Owns `gbrain`. Password: `gbrain_local` (in the connection string above) |
 | `memory_governor_svc` | Owns `memory_governor` (all 5 tables). Scoped — cannot connect to `gbrain`. Password in `memory_governor`'s own `.env` (`MEMORY_GOVERNOR_DATABASE_URL`). |
-| `ledger_writer` / `ledger_approver` | Login-capable test roles from the memory governor's own RLS live-testing — cited as the verified precedent in `security-global/infrastructure/sec-database-access-control.md` ("live-tested, correctly blocked the `ledger_writer` role from inserting override-type events it wasn't scoped for"). Own nothing (`gbrain`'s 62 tables are all owned by `postgres`). Documented here 2026-09-09 — the existing suite never mentioned them. |
+| `ledger_writer` / `ledger_approver` | Login-capable test roles from the memory governor's own RLS live-testing — cited as the verified precedent in [[sec-database-access-control|Database Access Control]] ("live-tested, correctly blocked the `ledger_writer` role from inserting override-type events it wasn't scoped for"). Own nothing (`gbrain`'s 62 tables are all owned by `postgres`). Documented here 2026-09-09 — the existing suite never mentioned them. |
 
 ### Databases (verified live 2026-09-13)
 
 | Database | Owner | Size | Notes |
 |---|---|---|---|
 | `gbrain` | `postgres` | 164 MB | GBrain's memory/vector store. **1,824 pages, 5,529 chunks, 5,529 embedded (100%)** — verified live 2026-09-13 (point-in-time at exam; grows with every sync — exams check coverage % + growth explainability, never exact equality). 62 tables, all with RLS enabled, all owned by `postgres`. Schema v128, embedding `openai:text-embedding-3-large` (1536d). Extensions: `plpgsql` 1.0, `vector` 0.6.0, `pg_trgm` 1.6, `pgcrypto` 1.3 |
-| `memory_governor` | `memory_governor_svc` | 8,167 kB | 5 tables (all owned by `memory_governor_svc`): `projects`, `memory_candidates` (5 real rows), `policy_versions`, `memory_events`, `audit_log`. See `memory-governor-config.md`. |
+| `memory_governor` | `memory_governor_svc` | 8,167 kB | 5 tables (all owned by `memory_governor_svc`): `projects`, `memory_candidates` (5 real rows), `policy_versions`, `memory_events`, `audit_log`. See [[memory-governor-config|Memory Governor Configuration]]. |
 | `postgres` (admin) | `postgres` | 7,503 kB | Standard, unremarkable. |
 | `template0` / `template1` | `postgres` | ~7.3–7.6 MB each | Standard, unmodified. |
 

@@ -14,7 +14,7 @@ OpenCode's permission system, the second enforcement layer above it
 (Cupcake), and the verified per-project configuration across every project
 in this ecosystem. This is the access-control layer only. It does not
 cover session/database data integrity — see
-`opencode-project-session-data-integrity.md` for that.
+[[opencode-project-session-data-integrity|Project & Session Data Integrity]] for that.
 
 ## The two permission layers — both active, verified 2026-09-09
 
@@ -29,7 +29,7 @@ command matching a deny pattern (`rm -rf *`) was refused before execution.
 
 **Layer B — Cupcake.** The policy-enforcement plugin, evaluating every
 tool call against the 19 compiled rules — reactivated 2026-09-08 (see
-`cupcake-config.md` for the enforcement history and status).
+[[cupcake-config|Cupcake Configuration]] for the enforcement history and status).
 
 **The division of labor, stated plainly:** OpenCode's permission system is
 the interaction gate — it asks the developer or blocks by pattern.
@@ -98,7 +98,7 @@ the Active Project Standard; the deny-list applies when they start).
 ## Global configuration — verified live 2026-09-17
 
 Full path: `~/.config/opencode/opencode.jsonc` (WSL path). Verified
-key-by-key against `opencode-config.md`'s table — exact match. The
+key-by-key against [[opencode-config|OpenCode Configuration]]'s table — exact match. The
 `instructions` array points at
 `C:/dev/project-library-global/register-global/register-global.md`
 (resolves; corrected 2026-09-01 from four deleted index files).

@@ -9,7 +9,7 @@ date-created: 2026-09-10
 
 Updated 2026-09-20 to reflect the refactored skill (`SKILL.md` V2.1,
 2026-09-19): scope from the single authority list, shared run frame in
-`doc-skills-run-discipline.md`, roles as permission disciplines rather than
+[[doc-skills-run-discipline|Shared Run Discipline]], roles as permission disciplines rather than
 sub-agents, and es.exe-first file search.
 
 ## 1. What this actually is
@@ -48,10 +48,10 @@ diffed against it on every run, and in any mismatch, **the register wins**.
   into single decisions; high-risk findings (identifier changes, register actions,
   quarantines) grouped by risk type, labelled, and decided individually with a second
   confirmation before anything structural executes.
-- Scope from a single authority: the scoping list (`mybizz-scope-list.md`) governs every
+- Scope from a single authority: the scoping list ([[mybizz-scope-list|Mybizz Scope List]]) governs every
   documentation skill — the skill never carries its own scope list, and transient state
   (a project under development) schedules the work, never removes scope.
-- A shared run frame defined once (`doc-skills-run-discipline.md`): resume check, learnings
+- A shared run frame defined once ([[doc-skills-run-discipline|Shared Run Discipline]]): resume check, learnings
   load, git-clean precondition, verified stop-cold backup, decision-point checkpointing,
   run-record lifecycle (working record → `last-completed-run\` + one row in
   `run-index.md`), approvals in chat, es.exe-first file search, per-source GBrain sync at
@@ -118,7 +118,7 @@ it matters.
 **Why a shared run frame.** Before the 2026-09-19 refactor, each documentation skill
 carried its own copy of the safety procedure, and the copies drifted — different backup
 schemes, different search tools, different record lifecycles. The frame now lives once
-(`doc-skills-run-discipline.md`) and each skill adds only its own specifics, so a lesson
+([[doc-skills-run-discipline|Shared Run Discipline]]) and each skill adds only its own specifics, so a lesson
 learned in one skill (es.exe's swallowed result limits, backup verification, the resume
 contract) applies identically in all of them and cannot be fixed in one copy while staying
 broken in another.

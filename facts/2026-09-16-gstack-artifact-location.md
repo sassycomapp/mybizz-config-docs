@@ -27,4 +27,4 @@ project root; the earlier config claim "confirmed live in
 repo-side copy; `~/.gstack/projects/$SLUG/` is the sole authoritative artifact
 location.
 
-Full annotated record: `gstack-reference.md` §Artifact locations.
+Full annotated record: [[gstack-reference|GStack Reference]] §Artifact locations.

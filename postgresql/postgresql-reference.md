@@ -7,11 +7,11 @@ date-created: 2026-09-05
 
 # PostgreSQL — Reference: Commands, Procedures, and Troubleshooting
 
-Companion to `postgresql-config.md` (the spec — every setting, path, and value) and
-`postgresql-explainer.md` (the authoritative whole-system narrative — what this
-system is and why, for every reader). Exam companions: `postgresql-exam-plan.md`
-(next run's job-spec), `postgresql-exam-report.md` (current verified state),
-`postgresql-log.md` (notable events), `postgresql-learnings.md` (transient exam
+Companion to [[postgresql-config|Configuration]] (the spec — every setting, path, and value) and
+[[postgresql-explainer|Explainer]] (the authoritative whole-system narrative — what this
+system is and why, for every reader). Exam companions: [[postgresql-exam-plan|Exam Plan]]
+(next run's job-spec), [[postgresql-exam-report|Exam Report]] (current verified state),
+[[postgresql-log|Log]] (notable events), [[postgresql-learnings|Learnings]] (transient exam
 knowledge). This document is agent-facing — how to actually connect to, query, and
 troubleshoot each instance safely.
 
@@ -108,7 +108,7 @@ $env:PGPASSWORD = ($pgLine -split "=", 2)[1]
 ```powershell
 Get-Service -Name "*postgresql*" | Format-Table Name, Status, StartType
 ```
-Only `postgresql-x64-15` should ever be Running. A second registration, plain `PostgreSQL`, exists pointing at the same data directory — leave it Stopped; do not start it (see `postgresql-config.md`).
+Only `postgresql-x64-15` should ever be Running. A second registration, plain `PostgreSQL`, exists pointing at the same data directory — leave it Stopped; do not start it (see [[postgresql-config|Configuration]]).
 
 ---
 
@@ -200,7 +200,7 @@ primary interface and should be preferred for anything it already reports
 on. Direct `psql` access is appropriate specifically when:
 - Cross-checking a CLI-reported fact independently (confirming a fact two
   ways, not trusting one report alone)
-- The CLI doesn't expose a needed field (e.g. a source's raw `config`
+- The CLI doesn't expose a needed field (e.g. a source's raw [[config|Config]]
   JSON — no dedicated subcommand for arbitrary key inspection)
 - Diagnosing something the CLI's own error messages don't surface clearly
   enough
@@ -211,7 +211,7 @@ on. Direct `psql` access is appropriate specifically when:
 
 - **Never assume `localhost:5432` means the same thing on both sides.** From WSL it's Instance B (`gbrain`, `memory_governor`). From Windows it's Instance A (`pdlf`). They share a port number and nothing else — genuinely independent servers.
 - **A raw WSL `psql` call intended for `pdlf` will not fail — it will silently connect to `gbrain`'s cluster instead**, since both listen on `localhost:5432` from their own side. This is more dangerous than an outright connection failure; always use the PowerShell bridge for `pdlf`.
-- **`compliance_ledger` no longer exists** (removed 2026-09-05, backed up first — see `postgresql-config.md`). It was never the real ledger — that's `pdlf` on Instance A — noted here in case an older reference to it is still found anywhere.
+- **`compliance_ledger` no longer exists** (removed 2026-09-05, backed up first — see [[postgresql-config|Configuration]]). It was never the real ledger — that's `pdlf` on Instance A — noted here in case an older reference to it is still found anywhere.
 - **Destructive SQL from an agent is blocked by two layers** — the OpenCode permission deny patterns (`*DROP TABLE*`, `*DROP DATABASE*`, `*TRUNCATE*` in the global config) and Cupcake's own destructive-SQL rule. A denied database command should never be worked around; the denial is the system working.
 
 ## Do not

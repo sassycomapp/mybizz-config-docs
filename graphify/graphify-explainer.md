@@ -17,7 +17,7 @@ contains, inherits. It exists to answer structural questions about a codebase
 — what calls this, what breaks if that changes, how do two things connect —
 questions that grep cannot answer (it is linear, not relational) and that
 GBrain, in this environment, deliberately does not answer (see
-`memory-master-explainer.md` for the four-mechanism division of labor).
+[[memory-master-explainer|Master Explainer]] for the four-mechanism division of labor).
 
 It runs entirely on this machine. Code parsing uses tree-sitter — the same
 deterministic parser technology a syntax highlighter uses, not a language
@@ -109,7 +109,7 @@ one. Revisit only if the gitignore premise above changes.
 mechanisms that write persistent guidance into AGENTS.md; two independent
 writers on one file is a write-conflict waiting to happen. One
 marker-delimited block (`BEGIN/END GRAPH MEMORY GUIDANCE`, owned via
-`memory-master-explainer.md`) holds a single policy for both — including the
+[[memory-master-explainer|Master Explainer]]) holds a single policy for both — including the
 rule that a graph must not be queried for current-state answers when its
 provenance lags the checkout. A stale graph misanswers confidently; the
 provenance check is what makes "current shape" claims meaningful.
@@ -136,13 +136,13 @@ serving, and a team-setup model that assumes a committed graph — none
 adopted here, all requiring a deliberate re-decision against the standing
 ones above. Whether the AGENTS.md guidance block should ever travel with the
 repo versus staying machine-local is deliberately open (tracked in
-`memory-master-explainer.md`). Whether the `--exclude` flag functions in
-0.9.40 is unverified (see `graphify-config.md` open items).
+[[memory-master-explainer|Master Explainer]]). Whether the `--exclude` flag functions in
+0.9.40 is unverified (see [[graphify-config|Graphify Configuration]] open items).
 
 ## 5. Config maintenance
 
 Graphify has been under standing configuration management since 2026-09-14 via
-the `mb-config-graphify` exam skill (canonical source `graphify-skill.md` in
+the `mb-config-graphify` exam skill (canonical source [[graphify-skill|Graphify Skill]] in
 this folder; the installed copy at
 `~/.config/opencode/skills/mb-config-graphify/SKILL.md` is the only executing
 one, per the mb-config-manager copy-never-move install discipline). The exam is
@@ -152,10 +152,10 @@ artifact's provenance and shape, the OpenCode integration surfaces (MCP entry,
 AGENTS.md block markers, plugin files), and functional liveness of the read-only
 query surfaces. Graphify is working well; the exam repairs nothing — findings
 route to a developer gate per the mb-config-manager architecture
-(`mb-config-manager/config-manager-explainer.md`), and spec-doc corrections are
+([[config-manager-explainer|Explainer]]), and spec-doc corrections are
 flagged to docs governance, never applied by the exam. Graphify is a member of
 the memory family (developer-stated 2026-09-14): at the close-out of each of
-its runs, `mybizz-os-docs/memory-master-explainer.md` is updated to current
+its runs, [[memory-master-explainer|Master Explainer]] is updated to current
 verified state — standing rule, committed as its own commit. Exams run on
 demand, never scheduled.
 
@@ -192,11 +192,11 @@ gitignore premise is a tripwire, not a default); guard-rule changes could
 reclassify which checks are agent-runnable (mitigated: denials are always
 honored and reclassified developer-run immediately).
 
-*Companion documents: `graphify-config.md` (current state — the spec the exam
-runs against), `graphify-reference.md` (commands and rules),
-`graphify-exam-plan.md` (next run's job-spec — transient contents),
-`graphify-exam-report.md` (current verified state, no history),
-`graphify-log.md` (chronological notable events), `graphify-learnings.md`
-(transient exam knowledge), `graphify-skill.md` (exam skill — canonical source;
+*Companion documents: [[graphify-config|Graphify Configuration]] (current state — the spec the exam
+runs against), [[graphify-reference|Graphify Reference]] (commands and rules),
+[[graphify-exam-plan|Exam Plan]] (next run's job-spec — transient contents),
+[[graphify-exam-report|Exam Report]] (current verified state, no history),
+[[graphify-log|Log]] (chronological notable events), [[graphify-learnings|Learnings]]
+(transient exam knowledge), [[graphify-skill|Graphify Skill]] (exam skill — canonical source;
 the installed copy is the only executing one). Cross-component reasoning:
-`mybizz-os-docs/memory-master-explainer.md`.*
+[[memory-master-explainer|Master Explainer]].*

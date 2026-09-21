@@ -7,8 +7,8 @@ date-created: 2026-09-05
 
 # Sentinel Reference — Usage, Invocation, and Worked Examples
 
-Companion to `sentinel-config.md` (current state) and
-`sentinel-explainer.md` (design genesis and reasoning). The skill's own
+Companion to [[sentinel-config|dev-makepdlf]] (current state) and
+[[sentinel-explainer|What It Is, What It Does, and Why It Matters]] (design genesis and reasoning). The skill's own
 `SKILL.md` is the authoritative procedure.
 
 ---
@@ -29,7 +29,7 @@ Example:
 /mb-sentinel-review 16 "New CONTEXT.md entries: Booking, Slot, Customer"
 ```
 `step-number` must be one of the values in the intensity table
-(`sentinel-config.md`). A step number not in that table returns `CLEAR`
+([[sentinel-config|dev-makepdlf]]). A step number not in that table returns `CLEAR`
 immediately, with no analysis performed and no database row written — this
 is correct behavior, not a bug, per the skill's own Section 1.
 
@@ -52,7 +52,7 @@ is correct behavior, not a bug, per the skill's own Section 1.
 
 ## The governing ADR — checked at every data-touching review
 
-`adr-dependency-based-not-multi-tenant.md` (Sealed). Cross-client isolation
+[[adr-dependency-based-not-multi-tenant|Mybizz CS is a Dependency-Based Architecture, Not a Multi-Tenant Architecture]] (Sealed). Cross-client isolation
 is structural — separate Anvil apps, separate databases. Consequences for
 the review:
 
@@ -62,7 +62,7 @@ the review:
   a match is a FLAG-level finding (they weaken structural isolation).
 - The only legitimate identity-based filtering is **user-role access
   control within one client instance** (`anvil.users.get_user()` → role →
-  filter) — the `sec-broken-access-control-within-instance.md` patterns
+  filter) — the [[sec-broken-access-control-within-instance|Broken Access Control Within a Client Instance]] patterns
   apply.
 - Direct, unfiltered `app_tables` queries are the approved pattern.
 
@@ -70,12 +70,12 @@ the review:
 
 | Step | Document(s) checked |
 |---|---|
-| 17 | `requirements/sec-requirements-data-table-creation.md` + matching `threat-models/` document + the governing ADR |
-| 34 | `requirements/sec-requirements-architecture-review.md` + the governing ADR |
-| 35 | `requirements/sec-requirements-server-function.md` + matching `threat-models/` document + the governing ADR |
+| 17 | [[sec-requirements-data-table-creation|New Data Table Creation]] + matching `threat-models/` document + the governing ADR |
+| 34 | [[sec-requirements-architecture-review|Architecture Review]] + the governing ADR |
+| 35 | [[sec-requirements-server-function|New Server Function]] + matching `threat-models/` document + the governing ADR |
 | 37 | Same document(s) as the step that introduced the code under review |
-| 38 | `testing/sec-testing-coverage-minimum.md` + the threat-model document's own Verification Requirements |
-| 45 | `requirements/sec-requirements-release-readiness.md` + `spec-observability.md` (the monitoring standard behind the release check) |
+| 38 | [[sec-testing-coverage-minimum|Security Test Coverage Minimum]] + the threat-model document's own Verification Requirements |
+| 45 | [[sec-requirements-release-readiness|Release Readiness]] + [[spec-observability|Observability Requirements]] (the monitoring standard behind the release check) |
 
 If no document clearly matches: ESCALATE, not an assumed CLEAR.
 
@@ -131,7 +131,7 @@ WHERE source_step IN ('16','17','19','20','21','34','35','37','38','39','45','46
   AND resolved_at IS NULL;
 ```
 
-**Gate-proof check** (built into `step-16-domain-modeling.md` item 9):
+**Gate-proof check** (built into [[step-16-domain-modeling|Step 16 Domain Modeling]] item 9):
 ```sql
 SELECT 1 FROM triage_findings
 WHERE step_id = (real step_id)
@@ -142,7 +142,7 @@ No row returned: Sentinel did not run — per item 9, the gate does not
 proceed.
 
 **Release-readiness check** (per
-`requirements/sec-requirements-release-readiness.md`):
+[[sec-requirements-release-readiness|Release Readiness]]):
 ```sql
 SELECT * FROM triage_findings
 WHERE severity IN ('High','Critical')

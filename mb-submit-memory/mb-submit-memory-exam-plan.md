@@ -8,14 +8,14 @@ date-created: 2026-09-15
 # mb-submit-memory — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before
-each run from: `mb-submit-memory-config.md` (spec), the last
-`mb-submit-memory-exam-report.md`, `mb-submit-memory-log.md` (events since last
-run), `submit-memory-learnings.md`. Consumed by the skill at run time; rewritten
+each run from: [[mb-submit-memory-config|Configuration]] (spec), the last
+[[mb-submit-memory-exam-report|Exam Report]], [[mb-submit-memory-log|Log]] (events since last
+run), [[submit-memory-learnings|Learnings]]. Consumed by the skill at run time; rewritten
 at the start of the following cycle. The file is live; its contents are transient.
 
 **This first plan is hand-written** (emulation of the PostgreSQL architecture): it
 also serves as the format template. The **standing check inventory lives in the
-skill** (`submit-memory-skill.md`, born-with-inventory); this plan carries
+skill** ([[submit-memory-skill|Submit Memory Skill]], born-with-inventory); this plan carries
 run-specifics and references. Once verified by a run, future plans carry
 run-specifics + references only.
 
@@ -31,7 +31,7 @@ run-specifics + references only.
 | Step-0 result | recorded at execution |
 | Tier 3 unlock state | **Locked** — Tier 3 rows execute only if the developer unlocks this run |
 | Developer-run requests this run (bundled into ONE request) | (a) any check whose command text the guards deny — proven permanent classes for this system: agent-side `.env` sourcing for the submission credential; credentialed API calls; (b) if Tier 3 unlocked: SM3-1 / SM3-2 / SM3-3 |
-| Expected-value source of truth | `mb-submit-memory-config.md` — read fresh at run start; never rely on remembered values |
+| Expected-value source of truth | [[mb-submit-memory-config|Configuration]] — read fresh at run start; never rely on remembered values |
 | Scope boundary | Parent `mb-config-memory-governor` owns the governor's internals (binary/version, database, worker, project registration) — cross-reference its current report, never re-probe; `mb-config-cupcake` owns Cupcake conformance — cross-reference, never re-probe; `mb-config-gbrain` owns gbrain surface mechanics — cross-reference. **This module owns:** the subject skill's configuration state, the governance-chain expectations recorded in its spec, the suite's own files, and the submission-discipline doctrine |
 
 ## 2. Carried-forward items
@@ -66,12 +66,12 @@ None — no prior exam exists (first formal run; bootstrap).
 None yet — bootstrap (suite learnings empty at build time; the system's eight
 operational learnings are distilled into the skill's hard behavioral rules, not
 re-listed here). Cross-cutting learnings (guard classes, graduation rules) live in
-the orchestrator's own `config-manager-learnings.md`, not here.
+the orchestrator's own [[config-manager-learnings|Learnings]], not here.
 
 ## 6. Standing checks — summary (the complete enumeration lives in the skill)
 
 Every check: id, runner (A=agent, D=developer), probe, expected source, pass
-rule — full tables in `submit-memory-skill.md` (Tiers 0–3). Summary:
+rule — full tables in [[submit-memory-skill|Submit Memory Skill]] (Tiers 0–3). Summary:
 
 - **Tier 0 (A) — invocability:** SM0-1 installed skill present, frontmatter name `mb-submit-memory` · SM0-2 file size vs spec §Identity recorded fingerprint (13,502 B at spec date)
 - **Tier 1 (A/D) — state conformance:** SM1-1 suite completeness (8 files) · SM1-2 MEMORY_VERBS surface (spec: `verbs`; W-6 cross-spec watch) · SM1-3 governor API listening on `127.0.0.1:8321` · SM1-4 run-logs directory per spec §Logs (W-4) · SM1-5 mirror claim vs reality (W-5)
@@ -80,12 +80,12 @@ rule — full tables in `submit-memory-skill.md` (Tiers 0–3). Summary:
 
 ## 7. Report requirements
 
-The run writes `mb-submit-memory-exam-report.md`: verdict line; per-tier tables
+The run writes [[mb-submit-memory-exam-report|Exam Report]]: verdict line; per-tier tables
 (check ID, expected, actual, result); findings with class + evidence + recommended
 repair + risk; runner attribution for every deferred item (guard-forbidden vs
 unlock-gated); overwritten in full each run (write-then-replace; failed runs never
 touch the prior report; written before any pruning). Then: one run row appended to
-`mb-submit-memory-log.md` (run-row format per `config-manager-reference.md`);
+[[mb-submit-memory-log|Log]] (run-row format per [[config-manager-reference|Reference: Commands, Procedures]]);
 new learnings filed.
 
 ## 8. Gate protocol

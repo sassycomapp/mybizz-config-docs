@@ -7,14 +7,14 @@ date-created: 2026-09-05
 
 # Memory Governor Reference — Usage, Invocation, and Incident Response
 
-Companion to `memory-governor-config.md` (the spec — current state — ACTIVE, all
-defects resolved 2026-09-08) and `memory-governor-explainer.md` (the
+Companion to [[memory-governor-config|Memory Governor Configuration]] (the spec — current state — ACTIVE, all
+defects resolved 2026-09-08) and [[memory-governor-explainer|Explainer]] (the
 authoritative whole-system narrative — design, mechanics, and real incidents).
-Exam companions: `memory-governor-exam-plan.md` (next run's job-spec),
-`memory-governor-exam-report.md` (current verified state),
-`memory-governor-log.md` (notable events), `memory-governor-learnings.md`
+Exam companions: [[memory-governor-exam-plan|Exam Plan]] (next run's job-spec),
+[[memory-governor-exam-report|Exam Report]] (current verified state),
+[[memory-governor-log|Log]] (notable events), [[memory-governor-learnings|Learnings]]
 (transient exam knowledge). The architecture standard:
-`mb-config-manager/config-manager-explainer.md`. Agent-facing.
+[[config-manager-explainer|Explainer]]. Agent-facing.
 
 ---
 
@@ -92,7 +92,7 @@ Evaluated in order; `auto_promote` only if nothing triggers:
 3. `unresolved_contradiction` — cross-project, unresolved, or
    `manual_review` (recommended action: none — never auto-decided)
 4. `high_risk_type` — memory type is one of the five spec categories:
-   `policy`, `credential`, `identity`, `architecture`, `security`
+   `policy`, `credential`, `identity`, [[architecture|Architecture]], [[security|Security Check]]
 5. `low_confidence` — confidence below the review threshold (default 0.65)
 6. `medium_risk_moderate_confidence` — any sharing, or confidence < 0.5,
    with confidence below the auto-promote threshold (default 0.85)

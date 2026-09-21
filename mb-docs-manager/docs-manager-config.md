@@ -25,7 +25,7 @@ wide-sweep support, 2026-09-10; scope model V10, 2026-09-09).
 
 | Location | Files |
 |---|---|
-| This folder (canonical suite) | `docs-manager-config.md`, `docs-manager-reference.md`, `docs-manager-explainer.md` |
+| This folder (canonical suite) | `docs-manager-config.md`, [[docs-manager-reference|Reference]], [[docs-manager-explainer|Explainer]] |
 | Installed skill — `~/.config/opencode/skills/mb-docs-manager/` | `SKILL.md` (V11, 1,252 ln), `docs-manager-README.md`, `docs-manager-backup.md`, `docs-manager-scan.md`, `docs-manager-apply.md`, `docs-manager-filesystem.md`, `docs-manager-commit.md` |
 | Artifacts documented, not deleted | `docs-manager-README.md:Zone.Identifier` |
 | Repo mirror | none — removed 2026-09-09 (obsolete; this suite is the indexed artifact) |
@@ -34,7 +34,7 @@ wide-sweep support, 2026-09-10; scope model V10, 2026-09-09).
 
 | Element | Value |
 |---|---|
-| Scope source of truth | `C:\mybizz\mybizz-os-docs\os-reference-docs\mybizz-scope-list.md` — pinned managed document, read at Phase 0 of every run; wins over SKILL.md on scope |
+| Scope source of truth | [[mybizz-scope-list|Mybizz Scope List]] — pinned managed document, read at Phase 0 of every run; wins over SKILL.md on scope |
 | In-scope roots (everything walked) | `C:\_data-mybizz-mgt`, `C:\dev`, `C:\mybizz\mybizz-config-docs`, `C:\mybizz\mybizz-os-docs`, `C:\mybizz\memory-audit-reports` |
 | Exceptions | `C:\mybizz\{gbrain, gstack, logs, matt-pocock-skills-source, anvil-agent-references, archify, archive, scripts}` |
 | Out of scope (recorded) | `C:\dev\dev-mb5pdlf`, `C:\dev\dev-mb4ecom`, `C:\dev\project-template`, `C:\dev\obsolete`, `C:\pdlf`, `C:\_data-not mybizz`, `C:\_data-mybizz-exempt` (as listed in scaffold), `C:\backup-mb-*` folders, system paths |
@@ -57,7 +57,7 @@ wide-sweep support, 2026-09-10; scope model V10, 2026-09-09).
 
 | Type | Ruleset |
 |---|---|
-| `mybizz-scope-list.md` (scope scaffold) | Section 1.3 — verified against disk every run; never edited by the skill |
+| [[mybizz-scope-list|Mybizz Scope List]] (scope scaffold) | Section 1.3 — verified against disk every run; never edited by the skill |
 | `docmap.md` (root, `C:\dev\dev-root\`) | Section 3.1 |
 | `projects-config-register.md` | Section 3.1 — append-only register rules |
 | `README.md` (discovered) | Section 3.5 |
@@ -106,7 +106,7 @@ Retired: `scaffold-system.html`; `project-inventory.md` (replaced by the registe
 
 | System | Finding |
 |---|---|
-| Cupcake | No component-specific rule. Three block classes designed-for: cross-project writes → Phase 3a grant handover; git commit/push → Phase 3/6 push-approval gates; AGENTS.md edits → per-file naming gate. Enforcement status of Cupcake itself is not fixed — live status: `cupcake-config.md` Current Operational Status |
+| Cupcake | No component-specific rule. Three block classes designed-for: cross-project writes → Phase 3a grant handover; git commit/push → Phase 3/6 push-approval gates; AGENTS.md edits → per-file naming gate. Enforcement status of Cupcake itself is not fixed — live status: [[cupcake-config|Cupcake Configuration]] Current Operational Status |
 | Memory Governor | None found — not a memory writer; GBrain read-only (Hard Constraint 3); sync is the external script at Phase 9 Step 3 |
 | security-global | None found |
 | Related skills | mb-align-docs (Phase 9 Step 3a reminder after 4b structural changes), mb-wikilinks, mb-sysdoc-creator (produced this suite). All three documentation skills now share: target grammar `(all)`/`(name)`/empty-asks, two-tier approval, grant-block handover, per-repo commits, Anvil code-repo denial |

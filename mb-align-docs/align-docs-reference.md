@@ -13,12 +13,12 @@ Execution procedure for the `mb-align-docs` skill (V2.1). `SKILL.md` and
 definitions; this document is the operational form. Updated 2026-09-20 to
 reflect `SKILL.md` V2.1 (2026-09-19: scope from the single authority list,
 shared run frame, roles as permission disciplines, es.exe-first search).
-Why the rules are shaped this way: `align-docs-explainer.md`.
+Why the rules are shaped this way: [[align-docs-explainer|Explainer]].
 
 ## Invocation
 
 - `/mb-align-docs (all)` — wide sweep: every in-scope corpus (per the scoping list
-  `mybizz-scope-list.md`) plus `project-library-global`, processed sequentially, one
+  [[mybizz-scope-list|Mybizz Scope List]]) plus `project-library-global`, processed sequentially, one
   target in flight at a time.
 - `/mb-align-docs (slug)` — one named in-scope corpus — e.g. `pdlf`,
   `makepdlf-project-library`, `mb-3-cs-project-library`, `mybizz-os-docs`,
@@ -33,7 +33,7 @@ Why the rules are shaped this way: `align-docs-explainer.md`.
 ## Scope rule
 
 Scope comes from the scoping list
-(`C:\mybizz\mybizz-os-docs\os-reference-docs\mybizz-scope-list.md`) — the single scope
+([[mybizz-scope-list|Mybizz Scope List]]) — the single scope
 authority for every documentation skill, read at Phase 0 of every run. The skill never
 carries its own scope list. In-scope roots: `C:\data-mybizz-mgt`, `C:\dev`, `C:\mybizz`,
 `C:\pdlf`; exceptions only as listed there. The list's criterion governs: an exception is
@@ -52,7 +52,7 @@ The shared run frame (resume check, learnings load, git-clean precondition, veri
 stop-cold backup, decision-point checkpointing, run-record lifecycle, approvals in chat,
 permission discipline, verification, commit plan and per-source GBrain sync, es.exe-first
 search, Anvil code repos denied) is defined once in
-`C:\mybizz\mybizz-os-docs\os-reference-docs\doc-skills-run-discipline.md` and is
+[[doc-skills-run-discipline|Shared Run Discipline]] and is
 mandatory for every run. This skill adds its own specifics:
 
 - The working record lives at
@@ -82,7 +82,7 @@ their existing written form; wikilinks then packages them. Product-then-packagin
    run's targets from it. `git status` must be clean on the target project and on
    `project-library-global` — either dirty stops the run immediately. Then take a
    count-verified backup to `C:\backup-mb-align-docs\<timestamp>\` (`<timestamp>` =
-   `YYYY-MM-DDTHHMMSS+0200`, per `adr-timezone-utc-storage-display-conversion.md`).
+   `YYYY-MM-DDTHHMMSS+0200`, per [[adr-timezone-utc-storage-display-conversion|Client Timezone: IANA String, UTC Storage, Display-Time Conversion]]).
    Backup verification failure stops the run cold — no exceptions.
 4. **Phase 1 — Detect** (read-only role): scan the declared target folder (or, in wide
    mode, each in-scope target in turn); run the register enforcement diff (live folders

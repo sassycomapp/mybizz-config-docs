@@ -8,11 +8,11 @@ date-created: 2026-09-05
 # GStack Reference
 
 Execution reference for the installed GStack (`1.58.1.0`). What GStack is
-and why it is built this way: `gstack-explainer.md`. Current state values:
-`gstack-config.md`. The invocable command catalog: `gstack-skills-reference.md`.
-Config-management set: `gstack-exam-plan.md` (transient job-spec — read
-second, every run), `gstack-exam-report.md` (last verified state),
-`gstack-log.md` (chronological events), `gstack-learnings.md` (transient
+and why it is built this way: [[gstack-explainer|GStack Explainer]]. Current state values:
+[[gstack-config|GStack Configuration]]. The invocable command catalog: [[gstack-skills-reference|GStack Skills Reference]].
+Config-management set: [[gstack-exam-plan|Exam Plan]] (transient job-spec — read
+second, every run), [[gstack-exam-report|Exam Report]] (last verified state),
+[[gstack-log|Log]] (chronological events), [[gstack-learnings|GStack Learnings]] (transient
 knowledge). Agent-facing.
 
 ## What GStack is (one line)
@@ -35,7 +35,7 @@ rules, or user instruction — the stricter layer wins.
 ## Workflows
 
 Three core workflow families, named against whichever project is currently
-active (see `opencode/opencode-reference.md`, Active Project Standard).
+active (see [[opencode-reference|Commands, Verification, Troubleshooting]], Active Project Standard).
 
 ### docs-plan (active project's `-project-library` repo)
 
@@ -44,7 +44,7 @@ active (see `opencode/opencode-reference.md`, Active Project Standard).
 **Skills:** `/office-hours`, `/plan-ceo-review`, `/plan-eng-review`, `/plan-design-review`
 
 **Mandatory initial steps:**
-1. Consult `wip/todo.md` — incorporate relevant items, mark completed as `[DONE]`
+1. Consult [[dev-makepdlf-todo|Active PDLF To-Do List]] — incorporate relevant items, mark completed as `[DONE]`
 2. Consult ADR folder — treat as authoritative, create new ADRs for new decisions
 
 **Exit condition:** planning objective complete, OR build-ready handoff prepared, OR canonical tracking updated.
@@ -57,7 +57,7 @@ active (see `opencode/opencode-reference.md`, Active Project Standard).
 
 **Mandatory initial steps:**
 1. Confirm repo path
-2. Consult `wip/todo.md` for relevant items
+2. Consult [[dev-makepdlf-todo|Active PDLF To-Do List]] for relevant items
 3. Consult ADRs for architectural baseline
 
 **Mandatory checks before edits:** repo path confirmed, protected files checked, backup rule applied, timestamp rule applied, write scope checked.
@@ -175,7 +175,7 @@ output through that same directory.
 | `/plan-ceo-review` | `~/.gstack/projects/$SLUG/ceo-plans/` | `gstack-outputs/` |
 | `/plan-eng-review` | `~/.gstack/projects/$SLUG/` | `gstack-outputs/` |
 | `/plan-design-review`, `/plan-devex-review` | `~/.gstack/projects/$SLUG/` | `gstack-outputs/` |
-| `/design-consultation` | `~/.gstack/projects/$SLUG/designs/` | `gstack-outputs/` + `DESIGN.md` → `docs/` |
+| `/design-consultation` | `~/.gstack/projects/$SLUG/designs/` | `gstack-outputs/` + [[DESIGN|DESIGN]] → `docs/` |
 | `/retro` | `~/.gstack/projects/$SLUG/retros/` | `gstack-outputs/` |
 | `/context-save` | `~/.gstack/projects/$SLUG/.context/` | — |
 | `/qa`, `/qa-only` | `~/.gstack/projects/$SLUG/qa-reports/` (observed live) | `gstack-outputs/` |
@@ -228,16 +228,16 @@ Deterministic slug example (this repo, verified live 2026-09-16): `gstack-slug`
 GStack is exposed via skills (slash commands), not a separate CLI. No
 `.opencode/gstack` config exists — deliberate, to keep authority with
 OpenCode. Command naming follows frontmatter `name:` fields — full rules in
-`gstack-skills-reference.md`.
+[[gstack-skills-reference|GStack Skills Reference]].
 
 GBrain-facing skills:
 
 | Command | Description |
 |---|---|
 | `/sync-gbrain` | Incremental sync (default) |
-| `/sync-gbrain --dream` | Build call graph — **source-overlap trap against manually-registered sources; the least-destructive bypass is `gbrain dream --source <id>` directly (full account: `gbrain-reference.md`)** |
+| `/sync-gbrain --dream` | Build call graph — **source-overlap trap against manually-registered sources; the least-destructive bypass is `gbrain dream --source <id>` directly (full account: [[gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]])** |
 | `/sync-gbrain --code-only` | Only run the code stage |
-| `/setup-gbrain` | One-time setup — its own backend description does not match this environment (`gbrain-config.md` is authoritative) |
+| `/setup-gbrain` | One-time setup — its own backend description does not match this environment ([[gbrain-config|Configuration]] is authoritative) |
 
 ## Browser note
 
@@ -245,7 +245,7 @@ At `1.58.1.0`, browser skills (`/browse`, `/qa`, `/scrape`, `/canary`) run on
 the bundled headless Chromium (Playwright). Launch failures:
 `C:\mybizz\mybizz-os-docs\operating-procedures\daily-ops.md`, "FIX: GSTACK BROWSER SKILLS
 WON'T LAUNCH". Upstream `1.81.0.0` replaces this with an Aside-first model —
-an open upgrade decision, not current behavior (`gstack-config.md` open items).
+an open upgrade decision, not current behavior ([[gstack-config|GStack Configuration]] open items).
 
 ## Do not
 

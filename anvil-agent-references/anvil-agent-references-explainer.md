@@ -8,13 +8,13 @@ date-created: 2026-09-06
 # anvil-agent-references — Explainer
 
 *Companion note: for current confirmed state (paths, versions, inventory,
-policies, open items) see `anvil-agent-references-config.md`. For exact
+policies, open items) see [[anvil-agent-references-config|Configuration]]. For exact
 commands, per-skill rules, and technical detail, see
-`anvil-agent-references-reference.md`. Config-management set:
-`anvil-agent-references-exam-plan.md` (transient job-spec — read second, every
-run), `anvil-agent-references-exam-report.md` (last verified state),
-`anvil-agent-references-log.md` (chronological events),
-`anvil-agent-learnings.md` (transient knowledge).*
+[[anvil-agent-references-reference|Reference: Install, Skills, and Technical Detail]]. Config-management set:
+[[anvil-agent-references-exam-plan|Exam Plan]] (transient job-spec — read second, every
+run), [[anvil-agent-references-exam-report|Exam Report]] (last verified state),
+[[anvil-agent-references-log|Log]] (chronological events),
+[[anvil-agent-learnings|Learnings]] (transient knowledge).*
 
 ---
 
@@ -214,7 +214,7 @@ the Rail; nested admin-style navigation genuinely wants the Drawer.
   enforcement what the skills express as discipline. One standing caveat governs
   everything Cupcake-related in this suite: Cupcake's enforcement status is not
   fixed and should not be assumed current at any given time — check
-  `cupcake-config.md`'s Current Operational Status before relying on any
+  [[cupcake-config|Cupcake Configuration]]'s Current Operational Status before relying on any
   Cupcake-based statement here as active, mechanical enforcement. What follows
   describes standing policy and what enforcement blocks when active, not a
   guarantee that it is running now. The anvil.yaml write block, when active,
@@ -236,7 +236,7 @@ the Rail; nested admin-style navigation genuinely wants the Drawer.
   platform vendor itself and the checkout is generated read-only reference
   material, so the practical risk is low — but the supply-chain license axis is
   formally unmet on record. **Resolution 2026-09-16:** the adoption-time review
-  was performed and recorded in `anvil-agent-references-config.md` (four axes:
+  was performed and recorded in [[anvil-agent-references-config|Configuration]] (four axes:
   publisher pass, maintenance pass, spawn-capability pass, license not met). The
   license gap is now a documented **accepted risk** with a dated disposition, not
   an open governance item — if it must be *materially* met later, the action is an
@@ -274,14 +274,14 @@ remains is operational, not open-item, state:
 
 This suite participates in the config-management system (`mb-config-manager`).
 The roles of the seven suite files, and the exam cycle that runs them, are the
-architecture described in `config-manager-explainer.md` — emulated from the
+architecture described in [[config-manager-explainer|Explainer]] — emulated from the
 PostgreSQL pilot and the matt-pocock-skills (same system family) precedent. The
 short local version:
 
-- `anvil-agent-references-config.md` is the **spec** — the ideal state every
+- [[anvil-agent-references-config|Configuration]] is the **spec** — the ideal state every
   exam checks against.
 - Before each exam run, the config-manager synthesizes
-  `anvil-agent-references-exam-plan.md`: a fresh job-spec built from this spec,
+  [[anvil-agent-references-exam-plan|Exam Plan]]: a fresh job-spec built from this spec,
   the last report, the log, and the learnings. The plan is transient (the file
   is live; contents rewritten each cycle).
 - The exam runs the installed skill (`mb-config-anvil-agent-references`) with
@@ -294,8 +294,8 @@ short local version:
   this exam); GStack's install locations and inventory belong to
   `mb-config-gstack`; `anvil-docs/` is adjacency only; `spawn-tools-denylist`
   and Cupcake policy belong to the cupcake/opencode modules.
-- The run rewrites `anvil-agent-references-exam-report.md` (current state, no
-  history), appends one row to `anvil-agent-references-log.md`, files new
+- The run rewrites [[anvil-agent-references-exam-report|Exam Report]] (current state, no
+  history), appends one row to [[anvil-agent-references-log|Log]], files new
   learnings, and prunes absorbed entries.
 
 ## 11. S.W.O.T.
@@ -334,9 +334,9 @@ honored, reclassified developer-run immediately).
 
 ---
 
-*Companion documents: `anvil-agent-references-config.md` (state),
-`anvil-agent-references-reference.md` (commands and rules),
-`anvil-agent-references-exam-plan.md` / `anvil-agent-references-exam-report.md` /
-`anvil-agent-references-log.md` / `anvil-agent-learnings.md` (config-management
-set), `anvil-agent-skill.md` (exam skill canonical source). Architecture:
-`config-manager-explainer.md`.*
+*Companion documents: [[anvil-agent-references-config|Configuration]] (state),
+[[anvil-agent-references-reference|Reference: Install, Skills, and Technical Detail]] (commands and rules),
+[[anvil-agent-references-exam-plan|Exam Plan]] / [[anvil-agent-references-exam-report|Exam Report]] /
+[[anvil-agent-references-log|Log]] / [[anvil-agent-learnings|Learnings]] (config-management
+set), [[anvil-agent-skill|Anvil Agent Skill]] (exam skill canonical source). Architecture:
+[[config-manager-explainer|Explainer]].*

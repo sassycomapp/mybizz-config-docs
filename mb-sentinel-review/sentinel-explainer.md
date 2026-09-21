@@ -37,11 +37,11 @@ spawn capability).
 
 The design genesis — the original research conversation where the concept
 was formed, the alternatives surveyed, and the architecture sketched — is
-preserved in this folder as `sentinel-security-system.md`.
+preserved in this folder as [[sentinel-security-system|SSS - sentinel Security System]].
 
 Two honesty notes about the borrow: first, the multi-tenant isolation
 reference in the collection **does not apply to this platform** — the
-governing ADR (`adr-dependency-based-not-multi-tenant.md`, Sealed)
+governing ADR ([[adr-dependency-based-not-multi-tenant|Mybizz CS is a Dependency-Based Architecture, Not a Multi-Tenant Architecture]], Sealed)
 establishes that cross-client isolation is structural, and the review
 vocabulary is within-instance. Second, the skill is a *methodology*, not a
 ready-made enforcement mechanism — nothing in it blocks a vulnerable
@@ -253,7 +253,7 @@ designed to.
 
 The environment has four named layers — the pre-makePDLF layer, the
 makePDLF layer, the PDLF layer, and the shipped estate (full map:
-`C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md`). Sentinel spans three of them,
+[[pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]). Sentinel spans three of them,
 and the span is deliberate:
 
 - **Pre-makePDLF (now):** the skill, the security-global library, the
@@ -289,11 +289,11 @@ silently reaches the wrong server. The bridge is the only route, always.
 
 ---
 
-*Companion documents: `sentinel-config.md` (current state),
-`sentinel-reference.md` (procedures and worked examples),
-`sentinel-scope.md` (the agreed scope), `sentinel-security-system.md`
+*Companion documents: [[sentinel-config|dev-makepdlf]] (current state),
+[[sentinel-reference|Usage, Invocation, and Worked Examples]] (procedures and worked examples),
+[[sentinel-scope|Scope]] (the agreed scope), [[sentinel-security-system|SSS - sentinel Security System]]
 (the design genesis). The reasoning methodology:
 `github.com/magnus919/agent-skills/tree/main/secure-software-engineering`.
-The full environment map: `C:\pdlf\pdlf-library\pdlf-explainer-docs\pdlf-environment-explainer.md`.*
+The full environment map: [[pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]].*
 
 *End of document*

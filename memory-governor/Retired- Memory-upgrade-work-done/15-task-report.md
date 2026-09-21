@@ -25,7 +25,7 @@ read-only command.
 **Green.** All core components of the GBrain–Graphify–OpenCode stack are
 installed, configured, and healthy. No blocking failures. Two non-blocking
 repair items (graph stale vs HEAD; GBrain update available) and one
-informational item (project-library has a pre-existing uncommitted `agents.md`
+informational item (project-library has a pre-existing uncommitted [[agents|mb-3-cs]]
 change unrelated to this package).
 
 ## Authoritative path map
@@ -155,15 +155,15 @@ Present (values never printed):
 
 | File | Owner / state |
 |---|---|
-| root `agents.md` (== `AGENTS.md`, gitignored, local-only) | Contains GBrain + Graphify "Access Model" and the managed `GRAPH MEMORY GUIDANCE` block (WP11) |
+| root [[agents|mb-3-cs]] (== `AGENTS.md`, gitignored, local-only) | Contains GBrain + Graphify "Access Model" and the managed `GRAPH MEMORY GUIDANCE` block (WP11) |
 | root `opencode.json` (gitignored) | `mcp.graphify`, graphify plugin, permissions |
 | `.opencode/plugins/graphify.js` | bash-reminder plugin (no file writes) |
 | `.graphifyignore` | `.opencode/`, `opencode.json` |
-| `.gitignore` | ignores `graphify-out/`, `agents.md`, `opencode.json`, `.opencode/`, `tests/`, `__pycache__`, etc. |
+| `.gitignore` | ignores `graphify-out/`, [[agents|mb-3-cs]], `opencode.json`, `.opencode/`, `tests/`, `__pycache__`, etc. |
 | Global `~/.config/opencode/opencode.jsonc` + `AGENTS.md` | `mcp.gbrain`, global instructions |
 | Git hooks | none active (only `.sample` files) |
 
-**Conflicts:** none blocking. Note `agents.md`/`opencode.json`/`graphify-out/`
+**Conflicts:** none blocking. Note [[agents|mb-3-cs]]/`opencode.json`/`graphify-out/`
 are all local-only (gitignored), so Graphify config travels with neither repo;
 this is intentional per WP11/WP12/WP13.
 

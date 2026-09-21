@@ -37,13 +37,13 @@ source_kind: 'mcp:put_page'
    (edit tool, granted). Verified in resolved config via `opencode debug
    config`. Takes effect on next opencode restart.
 5. **Excel replaced by Markdown**: `Repo organization.xlsx` (deleted by the
-   developer) → `_desktop/repo-organization.md`, built from the developer's
+   developer) → [[repo-organization|Repo organization]], built from the developer's
    image of the sheet; the new repo row appended (13 rows total).
 6. **Root files created** in data-mybizz-mgt: `README.md` (structure, key
    documents, naming note) and `register-local.md` (append-only; _desktop
    docs registered provisionally; Budget/Models/prompts membership left open
    for mb-align-docs).
-7. **Scope scaffold updated** (`_desktop/mybizz-scope-list.md`): in-scope root
+7. **Scope scaffold updated** ([[mybizz-scope-list|Mybizz Scope List]]): in-scope root
    entry and GitHub repo list row updated to the new name. Developer later
    asked to "update" it, then aborted on seeing it was already done.
 8. **mb-docs-manager skill files fixed** (4 files, agent-editable under
@@ -54,7 +54,7 @@ source_kind: 'mcp:put_page'
    's/_data-mybizz-mgt/data-mybizz-mgt/g'` after the
    protected-AI-governance-files policy refused the agent edit (even with a
    developer-issued grant on the file path).
-10. **YAML repair**: `_desktop/master-task-list.md` frontmatter `status:` value
+10. **YAML repair**: [[master-task-list|mybizz-OS]] frontmatter `status:` value
     contained an unquoted colon → gbrain sync blocked with a parse failure.
     Fixed by quoting the value; committed and pushed by the developer
     (`f38b285`).
@@ -81,7 +81,7 @@ source_kind: 'mcp:put_page'
 
 - **mg-grant lowercases paths** (`to_wsl()`): granting
   `/home/dev-p/.config/opencode/AGENTS.md` recorded the grant as
-  `.../agents.md` — on a case-sensitive FS a file-level grant for an uppercase
+  [[agents|mb-3-cs]] — on a case-sensitive FS a file-level grant for an uppercase
   filename may not match. Prefer folder-level grants for uppercase paths.
   (Moot here: the protected-files policy blocks agent edits regardless.)
 - **Permission-denied rename** on DrvFs was an OS-level handle, not a grants
@@ -97,7 +97,7 @@ source_kind: 'mcp:put_page'
 - GitHub: `sassycomapp/data-mybizz-mgt` (private, master, 2 commits)
 - GBrain source: `data-mybizz-mgt` (federated), 23 pages, synced to `f38b285`
 - `opencode.jsonc` external_directory entry (restart pending)
-- `repo-organization.md`, `README.md`, `register-local.md`
+- [[repo-organization|Repo organization]], `README.md`, `register-local.md`
 - Fixed: scope scaffold, 4 mb-docs-manager skill files, global AGENTS.md
   (developer-run), master-task-list.md frontmatter
 
@@ -105,15 +105,15 @@ source_kind: 'mcp:put_page'
 
 - **Docs corpus sweep (assigned to the docs skills, not done here)**: old-path
   references remain in `dev-root/docmap.md`, `mybizz-config-docs` (
-  `projects-config-register.md`, `gbrain-config.md`, gstack references,
-  `config-manager-explainer.md`, `docs-manager-config.md`, one sessions page),
-  `mybizz-os-docs` (`fact-save-and-recall.md`, `opening-and-closing.md`), and
+  `projects-config-register.md`, [[gbrain-config|Configuration]], gstack references,
+  [[config-manager-explainer|Explainer]], [[docs-manager-config|Config]], one sessions page),
+  `mybizz-os-docs` ([[fact-save-and-recall|Operating Procedure]], [[opening-and-closing|Operating Procedure]]), and
   pdlf docs (2 files).
 - **Restart opencode** — `external_directory` + AGENTS.md + skill files load
   at process start.
 - **Grants active, left un-revoked** per developer instruction: the obsolete
   `/mnt/c/_data-mybizz-mgt` grant (dead path), `/mnt/c/data-mybizz-mgt`,
-  `opencode.jsonc`, `agents.md` (lowercased), `skills/mb-docs-manager`.
+  `opencode.jsonc`, [[agents|mb-3-cs]] (lowercased), `skills/mb-docs-manager`.
 - **Flagged in mybizz-config-docs working tree** (Phase F, not handled): tracked
   file deleted — `sessions/2026-09-14-001-dream-cycle-config-mgmt.md` (` D`);
   untracked artifact dir `.sources/`. Developer decides; nothing committed.

@@ -13,7 +13,7 @@ status: Current — verified live 2026-09-17
 A confirmed, upstream limitation in OpenCode's own project/session
 database (`opencode.db`), and the two maintenance scripts that exist to
 manage it. This does not cover permission/access control — see
-`opencode-permission-access-control-model.md` for that.
+[[opencode-permission-access-control-model|Permission & Access Control Model]] for that.
 
 ## The underlying problem
 

@@ -45,7 +45,7 @@ No conflicts found.
   `docs-local/platform-architecture`, `docs-local/build-plan` (Stage 1.5 "The
   Vault"), `docs-local/positioning-strategy`, `docs-standard-local/observability-requirements`.
 - `gbrain_query(…, source_id=default)` returned global ADR index +
-  `payment-gateway-configuration-is-a-settings-function-and-is-rbac-governed`. ✓
+  [[adr-payment-gateway-configuration-is-a-settings-function-and-is-rbac-governed|Payment Gateway Configuration Is a Settings Function and Is RBAC-Governed]]. ✓
 
 **Graphify** (`graph_stats`): 574 nodes / 468 edges / 158 communities. ✓
 - `get_node("encrypt()")` → `server_code/server_shared/encryption_service.py:13`.
@@ -64,7 +64,7 @@ Selected component: the Vault / `encrypt()`.
    `vault_service.py` provides Vault CRUD, `vault_totp_service.py` provides TOTP
    step-up; `VaultForm` is owner-only with a TOTP gate; payment config reads
    secrets from the Vault with `'***'` masking; governed by global ADRs
-   (`payment-security-boundary-vault`, payment-gateway RBAC).
+   ([[adr-payment-security-boundary-vault|Payment Security Boundary: Secret Keys Deferred to the Vault]], payment-gateway RBAC).
 2. **Graphify — current implementation structure (where/how):** `encrypt()` is
    defined at `encryption_service.py:13` (degree 8); it is called by
    `save_vault_secret()` (`vault_service.py:82`) and four tests, imported by

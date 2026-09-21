@@ -34,9 +34,9 @@ entries (codex/connect-chrome/hackernews-frontpage → retired folder),
 `last-update-check`, `.env` absent, bin count 74, slop-scan config,
 `SKILL.md.tmpl` + `gen:skill-docs`.
 
-**Phase 1 — suite build-out.** Wrote `gstack-skill.md` (born-with-inventory,
-Tiers 0–3), `gstack-exam-plan.md` (bootstrap), `gstack-log.md` (seeded),
-`gstack-learnings.md` (preamble), `gstack-exam-report.md` (placeholder);
+**Phase 1 — suite build-out.** Wrote [[gstack-skill|Gstack Skill]] (born-with-inventory,
+Tiers 0–3), [[gstack-exam-plan|Exam Plan]] (bootstrap), [[gstack-log|Log]] (seeded),
+[[gstack-learnings|GStack Learnings]] (preamble), [[gstack-exam-report|Exam Report]] (placeholder);
 localized explainer (§Config maintenance, S.W.O.T., companion footer) and
 reference (exam-set pointers). Suite at the 8-file standard.
 
@@ -57,13 +57,13 @@ newness.
 
 **Phase 5 / post-gate corrections (developer instructions):**
 - **GStack is NOT a memory-family member** — related to the memory ecosystem
-  only through its close relation to GBrain. Corrected `gstack-config.md`
+  only through its close relation to GBrain. Corrected [[gstack-config|GStack Configuration]]
   §Integration facts, skill scope boundary, log, register. No master-explainer
   edit (fact-54 never listed GStack; consistent).
 - **`gstack-outputs/` copy lane does not exist on this system** outside backups
   (out of scope) — convention only, not live state. `~/.gstack/projects/$SLUG/`
   recorded as the sole authoritative artifact location (fact in
-  `gstack-reference.md` §Artifact locations, verified live).
+  [[gstack-reference|GStack Reference]] §Artifact locations, verified live).
 
 ## Graduations and records
 
@@ -71,11 +71,11 @@ newness.
 - Learnings LE-1 (bin tree mixed-interpreter — `gstack-gbrain-detect` is
   Bun/TypeScript) and LE-2 (generated preambles hardcode OpenClaw/Claude host
   roots; OpenCode runtime root is `~/.config/opencode/skills/gstack/bin`) filed
-  toward `gstack-reference.md`; LE-3 (output-location fact) resolved — permanent
+  toward [[gstack-reference|GStack Reference]]; LE-3 (output-location fact) resolved — permanent
   home exists.
 - Skill re-installed by copy twice after corrections; final hash pair
   `6a3afc08a93cee02`; register updated.
-- Output-location fact: `gstack-reference.md` §Artifact locations — skill save
+- Output-location fact: [[gstack-reference|GStack Reference]] §Artifact locations — skill save
   home `~/.gstack/projects/$SLUG/`, deterministic slug via `gstack-slug` (this
   repo: `sassycomapp-mybizz-config-docs`), discovery via same slug + known
   sub-dir + `/context-restore` + project-keyed learnings/timeline; repo-visible
@@ -88,7 +88,7 @@ newness.
 - **N-1** (cosmetic): gbrain-detection.json renders version `"gbrain0.46.1.0"`
   (no space) vs spec `gbrain 0.46.1.0` — flagged to docs governance.
 - **N-3** resolved: stale "one of six memory components" claim in
-  `gstack-config.md` §Integration facts — developer correction applied.
+  [[gstack-config|GStack Configuration]] §Integration facts — developer correction applied.
 - **OpenClaw conclusion:** the 4 `gstack-openclaw-*` folders exist only in the
   clone (`/mnt/c/mybizz/gstack/openclaw/skills/`, `clawhub install`-placed);
   absent from OpenCode's discovery path and the `.opencode` per-host tree

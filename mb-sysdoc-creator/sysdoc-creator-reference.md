@@ -9,7 +9,7 @@ date-created: 2026-09-09
 
 Execution procedure for the `mb-sysdoc-creator` skill. `skill.md` in this
 folder is the authoritative definition; this document is the operational
-form. Why the rules are shaped this way: `sysdoc-creator-explainer.md`.
+form. Why the rules are shaped this way: [[sysdoc-creator-explainer|Explainer]].
 
 ## Invocation
 
@@ -38,8 +38,8 @@ form. Why the rules are shaped this way: `sysdoc-creator-explainer.md`.
 3. Read `learnings.md`. Apply anything already-settled; do not re-derive.
 
 ### Phase 2 — Intake and destination check
-4. Confirm `doc-suite-specification.md` exists at
-   `C:\mybizz\mybizz-config-docs\mb-sysdoc-creator\doc-suite-specification.md`.
+4. Confirm [[doc-suite-specification|config / reference / explainer]] exists at
+   [[doc-suite-specification|config / reference / explainer]].
    Missing → STOP and report; never draft from memory of the spec.
 5. Read every supplied file in full; fetch every provided URL.
 6. No destination path given → STOP here and ask.
@@ -68,7 +68,7 @@ form. Why the rules are shaped this way: `sysdoc-creator-explainer.md`.
     Phase 3 with the named gap). Never draft without this approval.
 
 ### Phase 6 — Draft
-13. Draft all three documents bound by `doc-suite-specification.md`:
+13. Draft all three documents bound by [[doc-suite-specification|config / reference / explainer]]:
     `-config.md` = state only; `-reference.md` = execution only;
     `-explainer.md` = orientation, suitability, reasoning, in that order.
 14. Self-check each draft against its stray-line test; move misplaced

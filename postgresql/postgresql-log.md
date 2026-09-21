@@ -9,7 +9,7 @@ date-created: 2026-09-12
 
 Chronological record of notable events for this system: exam runs and outcomes,
 crashes, failure incidents, upgrades, error reports, significant guard denials.
-Events, not lessons — lessons live in `postgresql-learnings.md`. Pruned under the
+Events, not lessons — lessons live in [[postgresql-learnings|Learnings]]. Pruned under the
 absorption rule: an entry goes once absorbed into a learning, skill row, plan item,
 or governance flag, and resolved.
 

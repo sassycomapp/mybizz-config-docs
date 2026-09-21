@@ -25,14 +25,14 @@ zero live defects), Tier 3 executed at the gate (all items approved), committed
 as `7977eb4` (developer-executed after the autonomous-commits guard denial) and
 pushed; gbrain sync completed and verified. Governance flag W-4 left open for
 docs-governance pickup — **then resolved the same day by direct developer
-decision**: `adr-design-rules.md` gained §A (Magdoub-skill exemption), suite
+decision**: [[adr-design-rules|Wireframe Design Rules]] gained §A (Magdoub-skill exemption), suite
 reconciled, skill re-installed (re-hash `c570e38d0b490808`).
 
 ## What was done (with evidence)
 
 1. **Orientation (Phase 0)** — read `config-setup-prompt.md` (the generic method),
    the config-manager explainer/reference/register, the target's three existing
-   docs (`magdoub-wireframe-config.md`, `-reference.md`, `-explainer.md`, all Live
+   docs ([[magdoub-wireframe-config|Configuration]], `-reference.md`, `-explainer.md`, all Live
    2026-09-06), and the fresh `matt-pocock-skills/` suite as format template
    (the freshest completed suite — the prompt's own pointer to `gbrain-dream-cycle/`
    was noted as superseded by three newer suites). Register row existed at `WIP`:
@@ -53,7 +53,7 @@ reconciled, skill re-installed (re-hash `c570e38d0b490808`).
 3. **Install (Phase 2)** — grant `mg-grant --path
    ~/.config/opencode/skills/mb-config-magdoub-wireframe --count 3`
    (developer-executed); **copy-install** (never move) of
-   `magdoub-wireframe-skill.md` → installed `SKILL.md`; hash pair verified
+   [[magdoub-wireframe-skill|Magdoub Wireframe Skill]] → installed `SKILL.md`; hash pair verified
    `703b7f340e4cf302`; register flipped `WIP → Installed`.
 
 4. **Formal run #1 (Phase 3)** — step-0 self-validation **PASS**: 12/12 hash
@@ -87,7 +87,7 @@ reconciled, skill re-installed (re-hash `c570e38d0b490808`).
        71★/5 fork/32 commits, last commit 2026-03-01 · spawn-capability benign in
        this environment); open item 3 **closed** via spec application
        (gate-approved, the established precedent).
-     - W-4 `design-rules` ADR reconciliation **flagged to docs governance**
+     - W-4 [[adr-design-rules|Wireframe Design Rules]] ADR reconciliation **flagged to docs governance**
        (open item 4 stays open pending governance pickup).
      - W-5 old single-file reference **retained for now** (open item 5 stays
        open; retirement rides with future suite maintenance).
@@ -149,8 +149,8 @@ reconciled, skill re-installed (re-hash `c570e38d0b490808`).
 ## Open / next (updated 2026-09-16 with the W-4 resolution)
 
 - **Governance flag W-4 — RESOLVED same-day.** The developer decided the
-  `design-rules` ADR reconciliation directly (not left to docs-governance
-  pickup): `project-library-global/adr-global/adr-design-rules.md` gained
+  [[adr-design-rules|Wireframe Design Rules]] ADR reconciliation directly (not left to docs-governance
+  pickup): [[adr-design-rules|Wireframe Design Rules]] gained
   **Section A — Applicability (Magdoub Wireframe Skill exemption)**: the ADR
   applies only to wireframes NOT created by the Magdoub skill; Magdoub output is
   an exploratory comparison artifact (different genre, exempt as an artifact);

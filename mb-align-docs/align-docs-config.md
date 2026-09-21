@@ -25,7 +25,7 @@ wide mode + Anvil denial, 2026-09-10; function scope locked V2).
 
 | Location | Files |
 |---|---|
-| This folder (canonical suite) | `align-docs-config.md`, `align-docs-reference.md`, `align-docs-explainer.md` |
+| This folder (canonical suite) | `align-docs-config.md`, [[align-docs-reference|Reference]], [[align-docs-explainer|Explainer]] |
 | Installed skill — `~/.config/opencode/skills/mb-align-docs/` | `SKILL.md` (V2, 301 ln), `mb-align-docs-function-scope.md` (locked V2), `mb-align-docs-detector.md`, `mb-align-docs-writer-text.md`, `mb-align-docs-writer-structural.md`, `mb-align-docs-logger.md`, `front-matter-schema.md`, `register-template.md`, `quarantine-provenance-template.md`, `alignment-log-template.md`, `finding-report-format.md`, `mb-align-docs-README.md` |
 | Artifacts documented, not deleted | 2 `:Zone.Identifier` files (README, former explainer) |
 | Former in-folder explainer | `mb-align-docs-explainer.md` (27 KB) — superseded by this suite; pending obsolete-move to `C:\mybizz\archive\` |
@@ -48,7 +48,7 @@ wide mode + Anvil denial, 2026-09-10; function scope locked V2).
 | Element | Value |
 |---|---|
 | Grammar | `(all)` / `(slug)` / empty-asks — shared across all three documentation skills |
-| Wide mode | Every in-scope project library (per scaffold `mybizz-scope-list.md`) + `project-library-global`, processed sequentially; one target in flight at a time; per-target checkpointing; per-target commit (batch-approved commit plan) |
+| Wide mode | Every in-scope project library (per scaffold [[mybizz-scope-list|Mybizz Scope List]]) + `project-library-global`, processed sequentially; one target in flight at a time; per-target checkpointing; per-target commit (batch-approved commit plan) |
 | Scope rule (unchanged) | Named project's `{slug}-project-library` **plus** `project-library-global` unconditionally — directionality checks need both sides |
 | Anvil code repos | **Denied entirely (V2)** — never opened/read/backed-up/edited, including `theme\assets\docs` inside them (Anvil app assets); top-level paths existence-checked on reference only |
 | Front-matter exclusions | `templates-global`/`templates-local` (categorical); `devlog-index.md`/`judgement-trail.md` (historical logs); UI build artefacts (`*.html`, `*.png` under `ui\{package}\{form}\`) |
@@ -63,7 +63,7 @@ wide mode + Anvil denial, 2026-09-10; function scope locked V2).
 | Front matter | Identity only — never carries references; set once, never edited; state ∈ `Live`/`Retired`/`Quarantine`; required fields: document, doc-id, state, date-created |
 | Versioning | One Live version at a time; supersession = new document + new front matter, old flips `Retired`; no live reference to a non-Live target, ever |
 | Register enforcement | Register always wins; new global file → appended on approval; renamed/diverged global file → exactly two options: rename-to-match-register or retire (Phase 4b gated); no bypass except run abort |
-| Timestamps | `YYYY-MM-DDTHHMMSS+0200` (Filename-Safe ISO 8601, UTC+2) per `adr-timezone-utc-storage-display-conversion.md` |
+| Timestamps | `YYYY-MM-DDTHHMMSS+0200` (Filename-Safe ISO 8601, UTC+2) per [[adr-timezone-utc-storage-display-conversion|Client Timezone: IANA String, UTC Storage, Display-Time Conversion]] |
 
 ## Phases
 
@@ -86,7 +86,7 @@ wide mode + Anvil denial, 2026-09-10; function scope locked V2).
 
 | System | Finding |
 |---|---|
-| Cupcake | No component-specific rule. Cross-project writes → grant-handover block (one copy-pasteable `mg-grant` set); git commit/push → batched commit plan under approval. Enforcement status of Cupcake is not fixed — live status: `cupcake-config.md` Current Operational Status |
+| Cupcake | No component-specific rule. Cross-project writes → grant-handover block (one copy-pasteable `mg-grant` set); git commit/push → batched commit plan under approval. Enforcement status of Cupcake is not fixed — live status: [[cupcake-config|Cupcake Configuration]] Current Operational Status |
 | Memory Governor | None found |
 | security-global | None found |
 | Related skills | mb-docs-manager (deliberately NON-interoperating companion — structure vs content; its Phase 9 reminder points here after structural changes); mb-wikilinks (must run BEFORE align-docs so references validate against the final `[[wikilink]]` convention); mb-sysdoc-creator (produced this suite) |

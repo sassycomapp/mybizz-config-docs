@@ -8,7 +8,7 @@ date-created: 2026-09-16
 # Matt Pocock Skills — Exam Report
 
 Run #1 — **first formal plan-driven exam** (2026-09-16). Plan:
-`matt-pocock-skills-exam-plan.md` (bootstrap — no prior report). Step-0: **PASS**
+[[matt-pocock-skills-exam-plan|Exam Plan]] (bootstrap — no prior report). Step-0: **PASS**
 — 10/10 hash pairs match via the approved glob form (postgresql `b41a3e117dee1809`
 · cupcake `f5e8489cf60a8abc` · gbrain `58dc0b52cbc86d72` · memory-governor
 `c40df342d523aa59` · gbrain-dream-cycle `a4872e9d61f1c32f` · graphify

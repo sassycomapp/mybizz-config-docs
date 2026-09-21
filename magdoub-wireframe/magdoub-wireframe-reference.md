@@ -7,17 +7,17 @@ date-created: 2026-09-06
 
 # magdoub-wireframe — Reference: Invocation, Operation, Update
 
-Companion to `magdoub-wireframe-config.md` (current installed state, open items)
-and `magdoub-wireframe-explainer.md` (design reasoning, system relationships).
+Companion to [[magdoub-wireframe-config|Configuration]] (current installed state, open items)
+and [[magdoub-wireframe-explainer|Explainer]] (design reasoning, system relationships).
 Agent-facing. The full generation procedure lives in the skill's own `SKILL.md`
 (auto-loaded on invocation); this doc carries what is needed to invoke, run,
 constrain, update, and remove the skill on this machine.
 
-Config-management set: `magdoub-wireframe-exam-plan.md` (transient job-spec — read
-second, every run), `magdoub-wireframe-exam-report.md` (last verified state),
-`magdoub-wireframe-log.md` (chronological events),
-`magdoub-wireframe-learnings.md` (transient knowledge). The exam skill's canonical
-source is `magdoub-wireframe-skill.md` (installed as `mb-config-magdoub-wireframe`).
+Config-management set: [[magdoub-wireframe-exam-plan|Exam Plan]] (transient job-spec — read
+second, every run), [[magdoub-wireframe-exam-report|Exam Report]] (last verified state),
+[[magdoub-wireframe-log|Log]] (chronological events),
+[[magdoub-wireframe-learnings|Learnings]] (transient knowledge). The exam skill's canonical
+source is [[magdoub-wireframe-skill|Magdoub Wireframe Skill]] (installed as `mb-config-magdoub-wireframe`).
 
 ---
 
@@ -66,7 +66,7 @@ used as the optimization lens — no question asked when present.
 
 **Environment constraint first.** *Cupcake qualifier: Cupcake's enforcement
 status is not fixed and should not be assumed current at any given time — check
-`cupcake-config.md`'s Current Operational Status before treating any
+[[cupcake-config|Cupcake Configuration]]'s Current Operational Status before treating any
 enforcement statement below as active, mechanical enforcement. What follows is
 standing policy and what enforcement does when active; the behavioral rule
 holds regardless of enforcement status.*
@@ -78,7 +78,7 @@ the visible set; `cup-block-task-tool.rego` + `spawn-tools-denylist.json`;
 standing skill-review habit). As of this suite's research date (2026-09-06) the
 `task` tool did not appear in the tool set. Do not invoke that instruction as
 written. The replacement mechanism on this machine is unresolved —
-`magdoub-wireframe-config.md` open item 1. What Phase 2 must produce, per
+[[magdoub-wireframe-config|Configuration]] open item 1. What Phase 2 must produce, per
 option N, by whatever mechanism runs it:
 
 1. Read `index.html`, the option's own `styles-optN.css`, `design-taste.md`, `design-context.md`.
@@ -102,7 +102,7 @@ git -C ~/.claude/skills/wireframe fetch origin && git -C ~/.claude/skills/wirefr
 
 - Developer-run only, from a terminal — never AI-invoked (cross-project-write rule; `reset --hard` also discards any local changes).
 - The OpenCode symlink needs no action after an update — it points at the same path regardless of content.
-- Content reaches GBrain by ordinary `gbrain sync` only — never through Memory Governor's API (permanent vendor-material bypass; see `magdoub-wireframe-config.md`).
+- Content reaches GBrain by ordinary `gbrain sync` only — never through Memory Governor's API (permanent vendor-material bypass; see [[magdoub-wireframe-config|Configuration]]).
 - After any update, re-check bundled template paths referenced in Phase 1 — upstream commit 44a5814 moved these to "this skill's bundled" locations.
 
 ## Uninstall
@@ -122,5 +122,5 @@ Then remove the now-broken symlink `~/.config/opencode/skills/wireframe/SKILL.md
 - Do not use any color or dotted/dashed borders in the Wireframe sub-tab — the palette is strictly the seven listed values.
 - Do not follow the upstream README's MMDD folder label — DDMM per SKILL.md.
 - Do not edit files inside the real clone expecting changes to survive an update — `reset --hard` discards them.
-- Do not treat Magdoub output as an ADR-conforming wireframe. Per `design-rules` ADR Section A (2026-09-16): the ADR governs wireframes *not* created by this skill; this skill's exploratory comparison artifact is exempt as a genre, but the exemption is not an escape hatch — producing an ADR-conforming deliverable still requires either a conformance pass over this skill's output or a hand-authored ADR-conforming document, with that ADR's mandatory pre-wireframe reading completed.
+- Do not treat Magdoub output as an ADR-conforming wireframe. Per [[adr-design-rules|Wireframe Design Rules]] ADR Section A (2026-09-16): the ADR governs wireframes *not* created by this skill; this skill's exploratory comparison artifact is exempt as a genre, but the exemption is not an escape hatch — producing an ADR-conforming deliverable still requires either a conformance pass over this skill's output or a hand-authored ADR-conforming document, with that ADR's mandatory pre-wireframe reading completed.
 - Do not treat skill-index "working" as run evidence — no confirmed real run exists in this environment.

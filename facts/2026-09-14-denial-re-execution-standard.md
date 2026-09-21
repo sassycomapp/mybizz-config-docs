@@ -21,6 +21,6 @@ substitutes for a same-run execution.
 Stated by the developer 2026-09-14 during the graphify configuration-
 management run #1, and applied live there: every denied check was
 re-executed formally and passed. Permanent home:
-`config-manager-learnings.md` entry #4; destination
-`config-manager-reference.md` (Guard denials / Developer-returned results
+[[config-manager-learnings|Learnings]] entry #4; destination
+[[config-manager-reference|Reference: Commands, Procedures]] (Guard denials / Developer-returned results
 sections).

@@ -8,8 +8,8 @@ date-created: 2026-09-12
 # mb-config-manager — Reference
 
 Agent-facing procedures for running the config-management system. Architecture and
-file model: `config-manager-explainer.md`. Routing table:
-`config-manager-register.md`.
+file model: [[config-manager-explainer|Explainer]]. Routing table:
+[[config-manager-register|Register: Managed Systems]].
 
 ## Invocation
 

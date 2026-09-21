@@ -7,13 +7,13 @@ date-created: 2026-09-05
 
 # mb-submit-memory — Reference: Usage, Invocation, and the Full Cycle
 
-Companion to `mb-submit-memory-config.md` (current state) and
-`mb-submit-memory-explainer.md` (the memory-system map and design
+Companion to [[mb-submit-memory-config|Configuration]] (current state) and
+[[mb-submit-memory-explainer|Explainer]] (the memory-system map and design
 reasoning). **The subject skill's own `SKILL.md` is the authoritative
-procedure.** Config-management set: `mb-submit-memory-exam-plan.md`
-(transient job-spec — read second, every run), `mb-submit-memory-exam-report.md`
-(last verified state), `mb-submit-memory-log.md` (chronological events),
-`submit-memory-learnings.md` (transient knowledge). Agent-facing.
+procedure.** Config-management set: [[mb-submit-memory-exam-plan|Exam Plan]]
+(transient job-spec — read second, every run), [[mb-submit-memory-exam-report|Exam Report]]
+(last verified state), [[mb-submit-memory-log|Log]] (chronological events),
+[[submit-memory-learnings|Learnings]] (transient knowledge). Agent-facing.
 
 ## Invocation
 

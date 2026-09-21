@@ -32,7 +32,7 @@ printed — only keyword presence, SET/ABSENT, and safe metadata.
 
 ---
 
-## Part B — `mb-3-cs-project-library/agents.md` (12-line diff)
+## Part B — [[agents|mb-3-cs]] (12-line diff)
 
 - **Exact content:** a new `## Anvil Agent References (skills available via ~/.agents/skills/)`
   section listing the five Anvil skills (`server-code`, `client-forms`, `client-modules`,
@@ -72,18 +72,18 @@ printed — only keyword presence, SET/ABSENT, and safe metadata.
 
 ---
 
-## Part E — `mb-3-cs/agents.md` (Access Model + GRAPH MEMORY GUIDANCE)
+## Part E — [[agents|mb-3-cs]] (Access Model + GRAPH MEMORY GUIDANCE)
 
 - **Overlap:** `## Access Model` (GBrain semantic search available; Graphify installed, "Task
   3.7" ref) and the `GRAPH MEMORY GUIDANCE` managed block (Graphify = code structure, GBrain =
   decisions/history, 5-point authority order) both describe the two tools.
 - **Contradictions:** **none** — consistent and complementary.
-- **Access Model:** **retain as-is.** Minor optional note: its `master-task-list.md` Task 3.7
+- **Access Model:** **retain as-is.** Minor optional note: its [[master-task-list|mybizz-OS]] Task 3.7
   cross-reference could drift; not worth editing now.
 - **Managed block:** **remain local-only and managed** — `<!-- BEGIN/END GRAPH MEMORY GUIDANCE
   -->` delimiters mark a sync-gbrain-owned block; do not hand-edit.
 - **Exact proposed edit:** **none required.**
-- **Gitignored:** **yes** — `agents.md` (lowercase) is listed in `.gitignore` line 6.
+- **Gitignored:** **yes** — [[agents|mb-3-cs]] (lowercase) is listed in `.gitignore` line 6.
 
 ---
 
@@ -115,7 +115,7 @@ printed — only keyword presence, SET/ABSENT, and safe metadata.
 
 | Group | Repo | Files | Message |
 |---|---|---|---|
-| 1 (optional) | `mb-3-cs-project-library` | `agents.md` | `docs(agents): document Anvil Agent References skill paths` |
+| 1 (optional) | `mb-3-cs-project-library` | [[agents|mb-3-cs]] | `docs(agents): document Anvil Agent References skill paths` |
 | 2 (optional) | `project-template/dev-(SLUG)/(slug)-project-library` | `opencode.json` (exclude `.backup`) | `fix(template): generalize external-directory path to {SLUG}` |
 
 ## Items closed as "not required"
@@ -127,7 +127,7 @@ HEAD).
 
 ## Items requiring user confirmation
 
-1. Commit `mb-3-cs-project-library/agents.md` separately? (Part B)
+1. Commit [[agents|mb-3-cs]] separately? (Part B)
 2. Commit the `project-template/opencode.json` template fix (+ delete the `.backup`)? (Part C)
 3. Deferred `AGENTS.md`/`opencode.json` deletions — leave as-is pending, or schedule cleanup
    when those repos re-enter scope? (Part F)
@@ -137,7 +137,7 @@ HEAD).
 **Optional only.** No repair is required — the environment is fully closed. If either/both
 optional commits are approved, a single small Build package can execute them (exact-file commit
 + push; no GBrain sync for `project-template`, and a `--no-pull` sync only for
-`mb-3-cs-project-library` if the `agents.md` change is committed).
+`mb-3-cs-project-library` if the [[agents|mb-3-cs]] change is committed).
 
 ## Final recommended policy
 
@@ -145,7 +145,7 @@ optional commits are approved, a single small Build package can execute them (ex
   decision, never reactively.
 - **Graphify hooks:** remain disabled; on-demand rebuild with `built_at_commit == HEAD`
   verification.
-- **Local-only integration:** `.opencode/skills/`, `graphify-out/`, and lowercase `agents.md`
+- **Local-only integration:** `.opencode/skills/`, `graphify-out/`, and lowercase [[agents|mb-3-cs]]
   stay gitignored/local; the two managed blocks (`GRAPH MEMORY GUIDANCE`, gbrain search
   guidance) remain managed by their owning tools.
 - **Deferred sources:** `mb4ecom-*`, `mb5pdlf-*`, `pdlf` remain registered and untouched; their

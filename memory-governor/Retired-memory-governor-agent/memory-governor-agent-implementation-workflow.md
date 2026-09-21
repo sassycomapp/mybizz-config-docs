@@ -312,7 +312,7 @@ referenced sections.
 
 **Step 7.1 — `registers.py`**
 - Action: implement the writer that, given a promoted candidate, produces
-  both the register row (`register-memory-governor.md`) and the full JSON
+  both the register row ([[register-memory-governor|Register Memory Governor]]) and the full JSON
   payload (`registers/candidates/<memory_id>.json`), and commits both
   together in the app repo (Architecture §8.1, §8.2).
 
@@ -460,7 +460,7 @@ cutover is Phase 16.
 
 **Step 13.2 — Build the governed step-completion sequence**
 - Action: implement the final step of the five-point due diligence
-  sequence (`system-description.md`, "The five-point due diligence
+  sequence ([[system-description|System Description]], "The five-point due diligence
   process") — for each real artifact a finished PDLF step produced, the
   OpenCode agent queries GBrain for related content, reads it, forms a
   genuine confidence/contradiction assessment (Scope Doc §11A), and

@@ -8,13 +8,13 @@ date-created: 2026-09-05
 # GBrain — Explainer
 
 *Companion note: for current confirmed state (version, sources, credentials,
-open items) see `gbrain-config.md`. For commands, incidents, and
-troubleshooting, see `gbrain-reference.md`. For how the memory components fit
-together, see `memory-master-explainer.md`. Exam companions:
-`gbrain-exam-plan.md` (next run's job-spec), `gbrain-exam-report.md` (current
-verified state), `gbrain-log.md` (notable events), `gbrain-learnings.md`
+open items) see [[gbrain-config|Configuration]]. For commands, incidents, and
+troubleshooting, see [[gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]]. For how the memory components fit
+together, see [[memory-master-explainer|Master Explainer]]. Exam companions:
+[[gbrain-exam-plan|Exam Plan]] (next run's job-spec), [[gbrain-exam-report|Exam Report]] (current
+verified state), [[gbrain-log|Log]] (notable events), [[gbrain-learnings|Learnings]]
 (transient exam knowledge). The architecture standard:
-`mb-config-manager/config-manager-explainer.md`.*
+[[config-manager-explainer|Explainer]].*
 
 ---
 
@@ -208,7 +208,7 @@ error, when changed mid-process.
 **Dream Cycle failures can be silent** — provider-dependent phases can fail
 while GBrain remains healthy, and "completed successfully" means the sequence
 ended, not that every phase did meaningful work. See
-`gbrain-dream-cycle-explainer.md`.
+[[gbrain-dream-cycle-explainer|Explainer]].
 
 **The brain's mirror can lag its sources** — sync is commit-based; content is
 current only as of the last synced commit. The file wins.
@@ -217,11 +217,11 @@ current only as of the last synced commit. The file wins.
 
 This suite participates in the config-management system (`mb-config-manager`).
 The roles of the seven suite files, and the exam cycle that runs them, are the
-architecture described in `config-manager-explainer.md` — emulated from the
+architecture described in [[config-manager-explainer|Explainer]] — emulated from the
 PostgreSQL pilot. The short local version:
 
-- `gbrain-config.md` is the **spec** — the ideal state every exam checks against.
-- Before each exam run, the config-manager synthesizes `gbrain-exam-plan.md`:
+- [[gbrain-config|Configuration]] is the **spec** — the ideal state every exam checks against.
+- Before each exam run, the config-manager synthesizes [[gbrain-exam-plan|Exam Plan]]:
   a fresh job-spec built from this spec, the last report, the log, and the
   learnings — carrying forward what was deferred, addressing what erred,
   deriving probes from new log events, and folding in lessons not yet graduated.
@@ -237,8 +237,8 @@ PostgreSQL pilot. The short local version:
 - Several checks are permanently **developer-run**: config.json content (the
   sensitive-data guard blocks agent reads — proven), full sync samples
   (content-changing), MCP restart behavior, and any upgrade decision.
-- The run rewrites `gbrain-exam-report.md` (current state, no history), appends
-  one row to `gbrain-log.md`, files new learnings, and prunes absorbed entries.
+- The run rewrites [[gbrain-exam-report|Exam Report]] (current state, no history), appends
+  one row to [[gbrain-log|Log]], files new learnings, and prunes absorbed entries.
 
 ## 13. S.W.O.T.
 
@@ -266,11 +266,11 @@ unilaterally).
 
 ---
 
-*Suite: `gbrain-config.md` (spec), `gbrain-reference.md` (commands, incidents),
-`gbrain-exam-plan.md` / `gbrain-exam-report.md` / `gbrain-log.md` /
-`gbrain-learnings.md` (config-management set), `gbrain-skill.md` (exam skill
-canonical source). Architecture: `mb-config-manager/config-manager-explainer.md`.
-Related: `gbrain-dream-cycle-explainer.md` (the autonomous mechanism),
-`memory-master-explainer.md` (the cross-component system).*
+*Suite: [[gbrain-config|Configuration]] (spec), [[gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]] (commands, incidents),
+[[gbrain-exam-plan|Exam Plan]] / [[gbrain-exam-report|Exam Report]] / [[gbrain-log|Log]] /
+[[gbrain-learnings|Learnings]] (config-management set), [[gbrain-skill|Gbrain Skill]] (exam skill
+canonical source). Architecture: [[config-manager-explainer|Explainer]].
+Related: [[gbrain-dream-cycle-explainer|Explainer]] (the autonomous mechanism),
+[[memory-master-explainer|Master Explainer]] (the cross-component system).*
 
 *End of document*

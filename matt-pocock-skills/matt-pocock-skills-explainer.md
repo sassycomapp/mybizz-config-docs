@@ -29,7 +29,7 @@ engineering judgment get applied, step by step, inside this session."
 - **Alignment before building.** A reusable interview primitive
   ("grilling") plus four packaged forms of it, on the evidence that the
   most common failure mode is the agent building the wrong thing well.
-- **A shared language.** Domain modeling that maintains `CONTEXT.md` and
+- **A shared language.** Domain modeling that maintains [[CONTEXT|mb-3-cs (Mybizz Consulting Services)]] and
   ADRs, so project jargon becomes concise, consistent, and cheap for an
   agent to use — naming, navigation, and fewer thinking tokens.
 - **Feedback loops.** A red-green-refactor TDD skill and a gated
@@ -113,13 +113,13 @@ canonical state lives in exactly one place.
 
 This suite participates in the config-management system (`mb-config-manager`).
 The roles of the seven suite files, and the exam cycle that runs them, are the
-architecture described in `config-manager-explainer.md` — emulated from the
+architecture described in [[config-manager-explainer|Explainer]] — emulated from the
 PostgreSQL pilot. The short local version:
 
-- `matt-pocock-skills-config.md` is the **spec** — the ideal state every exam
+- [[matt-pocock-skills-config|Matt Pocock Skills Configuration]] is the **spec** — the ideal state every exam
   checks against.
 - Before each exam run, the config-manager synthesizes
-  `matt-pocock-skills-exam-plan.md`: a fresh job-spec built from this spec, the
+  [[matt-pocock-skills-exam-plan|Exam Plan]]: a fresh job-spec built from this spec, the
   last report, the log, and the learnings. The plan is transient (the file is
   live; contents rewritten each cycle).
 - The exam runs the installed skill (`mb-config-matt-pocock-skills`) with the
@@ -131,8 +131,8 @@ PostgreSQL pilot. The short local version:
   `anvil-agent-references` (coexistence presence only); GStack's install
   locations and inventory belong to `mb-config-gstack`; `spawn-tools-denylist`
   and Cupcake policy belong to the cupcake/opencode modules.
-- The run rewrites `matt-pocock-skills-exam-report.md` (current state, no
-  history), appends one row to `matt-pocock-skills-log.md`, files new
+- The run rewrites [[matt-pocock-skills-exam-report|Exam Report]] (current state, no
+  history), appends one row to [[matt-pocock-skills-log|Log]], files new
   learnings, and prunes absorbed entries.
 
 ## 6. S.W.O.T.
@@ -162,9 +162,9 @@ developer-run immediately).
 
 ---
 
-*Companion documents: `matt-pocock-skills-config.md` (state),
-`matt-pocock-skills-reference.md` (commands and rules),
-`matt-pocock-skills-exam-plan.md` / `matt-pocock-skills-exam-report.md` /
-`matt-pocock-skills-log.md` / `matt-pocock-skills-learnings.md`
-(config-management set), `matt-pocock-skills-skill.md` (exam skill canonical
-source). Architecture: `config-manager-explainer.md`.*
+*Companion documents: [[matt-pocock-skills-config|Matt Pocock Skills Configuration]] (state),
+[[matt-pocock-skills-reference|Matt Pocock Skills Reference]] (commands and rules),
+[[matt-pocock-skills-exam-plan|Exam Plan]] / [[matt-pocock-skills-exam-report|Exam Report]] /
+[[matt-pocock-skills-log|Log]] / [[matt-pocock-skills-learnings|Learnings]]
+(config-management set), [[matt-pocock-skills-skill|Matt Pocock Skills Skill]] (exam skill canonical
+source). Architecture: [[config-manager-explainer|Explainer]].*

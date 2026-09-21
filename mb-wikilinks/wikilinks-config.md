@@ -24,7 +24,7 @@ this date unless noted.
 
 | Location | Files |
 |---|---|
-| This folder (canonical suite) | `wikilinks-config.md`, `wikilinks-reference.md`, `wikilinks-explainer.md` |
+| This folder (canonical suite) | `wikilinks-config.md`, [[wikilinks-reference|Reference]], [[wikilinks-explainer|Explainer]] |
 | Installed skill — `~/.config/opencode/skills/mb-wikilinks/` | `SKILL.md` (347 ln, post-V2-amendments) |
 | Repo mirror | none — this suite is the indexed artifact |
 
@@ -33,7 +33,7 @@ this date unless noted.
 | Element | Value |
 |---|---|
 | Locked sources (in order) | 1. `project-library-global` (`/mnt/c/dev/project-library-global`) 2. `dev-root` (`/mnt/c/dev/dev-root`) 3. `dev-makepdlf` — content ONLY in `makepdlf-project-library`; the `makepdlf` sibling is a ceremonial placeholder, never scanned |
-| Scope ∩ scaffold | Locked scope intersected with the scope scaffold (`mybizz-scope-list.md`) — out-of-scope paths stay out in every mode |
+| Scope ∩ scaffold | Locked scope intersected with the scope scaffold ([[mybizz-scope-list|Mybizz Scope List]]) — out-of-scope paths stay out in every mode |
 | Explicitly excluded sources | `mb-3-cs` (code + project-library), `mb4ecom` (placeholder), `mb5pdlf` (disposable test project), `project-template` (wikilinks belong to real projects at init), `C:\pdlf` (outside path boundary) |
 | Anvil code repos | **Denied entirely** — never opened/read/backed-up/edited, including `theme\assets\docs` inside them (Anvil app assets; Anvil owns their interpretation) |
 | Blanket folder exclusions | `obsolete`, `archive`, `*backup*`, `templates-global`, `quarantine`/`Quarantine`, `register-global`/`register-local` (align-docs territory), `pdlf-temp`, `workspace`, `.gstack`/`.opencode`/`.scratch`/`.out-of-scope`, `Frontmatter-prompts` |
@@ -87,7 +87,7 @@ this date unless noted.
 
 | System | Finding |
 |---|---|
-| Cupcake | No component-specific rule. Cross-project writes → the shared grant-handover pattern (one copy-pasteable `mg-grant` block, developer-issued). Enforcement status of Cupcake is not fixed — live status: `cupcake-config.md` Current Operational Status |
+| Cupcake | No component-specific rule. Cross-project writes → the shared grant-handover pattern (one copy-pasteable `mg-grant` block, developer-issued). Enforcement status of Cupcake is not fixed — live status: [[cupcake-config|Cupcake Configuration]] Current Operational Status |
 | Memory Governor | None found |
 | security-global | None found |
 | Related skills | mb-align-docs (**runs FIRST** — it validates and heals every reference in its existing written form; this skill then converts the healed, correct references — product-then-packaging, final ruling 2026-09-10); mb-docs-manager (structure first); mb-sysdoc-creator (produced this suite) |

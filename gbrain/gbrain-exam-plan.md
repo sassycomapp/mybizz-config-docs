@@ -8,8 +8,8 @@ date-created: 2026-09-13
 # GBrain — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before
-each run from: `gbrain-config.md` (spec), the last `gbrain-exam-report.md`,
-`gbrain-log.md` (events since last run), `gbrain-learnings.md`. Consumed by the
+each run from: [[gbrain-config|Configuration]] (spec), the last [[gbrain-exam-report|Exam Report]],
+[[gbrain-log|Log]] (events since last run), [[gbrain-learnings|Learnings]]. Consumed by the
 skill at run time; rewritten at the start of the following cycle. The file is
 live; its contents are transient.
 
@@ -27,11 +27,11 @@ run-specifics + references instead.
 |---|---|
 | Plan for run | #1 — first formal plan-driven run (pilot 2026-09-12 was detection-only, pre-architecture) |
 | Run date | set at execution |
-| Prior report | `gbrain-exam-report.md` (2026-09-12, pilot) |
+| Prior report | [[gbrain-exam-report|Exam Report]] (2026-09-12, pilot) |
 | Step-0 result | recorded at execution |
 | Tier 3 unlock state | **Locked** — Tier 3 rows execute only if the developer unlocks this run |
 | Developer-run requests this run (bundled into ONE request) | (a) `~/.gbrain/config.json` content checks (sensitive-data guard blocks agent reads — proven 2026-09-12); (b) any check whose command text the guards deny |
-| Expected-value source of truth | `gbrain-config.md` — read fresh at run start; never rely on remembered values |
+| Expected-value source of truth | [[gbrain-config|Configuration]] — read fresh at run start; never rely on remembered values |
 | Scope boundary | DB-level checks (tables/RLS/roles/extensions/coverage) belong to `mb-config-postgresql` — this exam cross-references its current report, never re-probes |
 
 ## 2. Carried-forward items (from pilot report, 2026-09-12)
@@ -95,7 +95,7 @@ run-specific deltas only.
 | G2-1 | A | Version | live 0.46.1.0; upstream gap recorded, **never upgraded on newness** (upgrade only on check failure) |
 | G2-2 | A | Schema pack (MCP) | `gbrain-everything@1.0.0+7021205a`, 30 page types / 12 link types |
 | G2-3 | A | MCP integration entry | `opencode.jsonc` → `mcp.gbrain`: local, `["/home/dev-p/.bun/bin/gbrain", "serve"]`, enabled true, env names OPENAI_API_KEY + ZEROENTROPY_API_KEY |
-| G2-4 | A | Models (via DB `config` table — agent-safe, unlike `config.json`) | embedding `openai:text-embedding-3-large`, dims 1536 |
+| G2-4 | A | Models (via DB [[config|Config]] table — agent-safe, unlike `config.json`) | embedding `openai:text-embedding-3-large`, dims 1536 |
 | G2-5 | A | Skills bundle at `/mnt/c/dev/dev-mb-3-cs/mb-3-cs/.opencode/skills/` | re-inventory vs spec (bundle-evolved drift class — flag until spec refreshed) |
 | G2-6 | A | Page accounting — identity total vs sources-list sum | sums reconcile or the gap is explained (the 273 question, CF-2) |
 | G2-7 | A | Registered source paths all exist | 14/14 present on disk |
@@ -111,11 +111,11 @@ run-specific deltas only.
 
 ## 7. Report requirements
 
-The run writes `gbrain-exam-report.md`: verdict line; per-tier tables (check ID,
+The run writes [[gbrain-exam-report|Exam Report]]: verdict line; per-tier tables (check ID,
 expected, actual, result); findings with class + evidence + recommended repair;
 runner attribution for every deferred item (guard-forbidden vs unlock-gated);
 overwritten in full each run (write-then-replace). Then: one run row appended to
-`gbrain-log.md` (run-row format per `config-manager-reference.md`); new learnings
+[[gbrain-log|Log]] (run-row format per [[config-manager-reference|Reference: Commands, Procedures]]); new learnings
 filed.
 
 ## 8. Gate protocol

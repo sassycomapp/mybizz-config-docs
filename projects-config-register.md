@@ -12,7 +12,7 @@ Append-only. Rows are never deleted. Only `state`, `date-state-changed`, `supers
 first registration.
 
 Tracks every `{slug}-config.yaml` — the single source of truth for that project or folder's
-configuration. Kept fresh by `mb-config-manager` (see `master-task-list.md` Section 8) and,
+configuration. Kept fresh by `mb-config-manager` (see [[master-task-list|mybizz-OS]] Section 8) and,
 going forward, as a required step in the "start a project" protocol.
 
 | doc-id | filename | folder | type | state | date-registered | date-state-changed | superseded-by | notes |
@@ -31,7 +31,7 @@ going forward, as a required step in the "start a project" protocol.
 
 ## GitHub repositories
 
-Maintained by the developer; mirrors the scope scaffold (`C:\mybizz\mybizz-os-docs\os-reference-docs\mybizz-scope-list.md`).
+Maintained by the developer; mirrors the scope scaffold ([[mybizz-scope-list|Mybizz Scope List]]).
 The mb-docs-manager pre-flight runs `git status` on each — including repos whose folders are
 outside the walk scope.
 
@@ -59,7 +59,7 @@ outside the walk scope.
 - **filename** — current registered name of the document.
 - **folder** — the project/folder root this config belongs to (not the YAML's own file
   location, which is always directly inside that root).
-- **type** — always `config` in this register.
+- **type** — always [[config|Config]] in this register.
 - **state** — one of: `Live`, `Retired`.
 - **date-registered** — date this row was first appended. Never changes.
 - **date-state-changed** — date `state` last changed. Updated whenever state flips.

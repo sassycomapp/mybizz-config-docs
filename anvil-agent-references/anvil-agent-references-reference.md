@@ -7,14 +7,14 @@ date-created: 2026-09-05
 
 # anvil-agent-references — Reference: Install, Skills, and Technical Detail
 
-Companion to `anvil-agent-references-config.md` (state, inventory, open items)
-and `anvil-agent-references-explainer.md` (what this is and why). Agent-facing —
+Companion to [[anvil-agent-references-config|Configuration]] (state, inventory, open items)
+and [[anvil-agent-references-explainer|Explainer]] (what this is and why). Agent-facing —
 exact commands, exact per-skill rules, real technical constraints.
-Config-management set: `anvil-agent-references-exam-plan.md` (transient
-job-spec — read second, every run), `anvil-agent-references-exam-report.md`
-(last verified state), `anvil-agent-references-log.md` (chronological events),
-`anvil-agent-learnings.md` (transient knowledge), `anvil-agent-skill.md` (exam
-skill canonical source). Architecture: `config-manager-explainer.md`.
+Config-management set: [[anvil-agent-references-exam-plan|Exam Plan]] (transient
+job-spec — read second, every run), [[anvil-agent-references-exam-report|Exam Report]]
+(last verified state), [[anvil-agent-references-log|Log]] (chronological events),
+[[anvil-agent-learnings|Learnings]] (transient knowledge), [[anvil-agent-skill|Anvil Agent Skill]] (exam
+skill canonical source). Architecture: [[config-manager-explainer|Explainer]].
 
 ---
 
@@ -80,7 +80,7 @@ Works against `anvil.yaml`, HTML/YAML form templates under `client_code/`, and P
 ## Universal editing boundaries
 
 **Cupcake qualifier:** Cupcake's enforcement status is not fixed and should not
-be assumed current at any given time — check `cupcake-config.md`'s Current
+be assumed current at any given time — check [[cupcake-config|Cupcake Configuration]]'s Current
 Operational Status before relying on any Cupcake-based statement below as
 active, mechanical enforcement. The rules described here are standing policy
 and what enforcement blocks when active; whether that enforcement is currently
@@ -92,7 +92,7 @@ discipline regardless of enforcement status.
 - Never edit `.anvil/` dependency material inside an app checkout.
 - Inspect `.anvil/deps/<package>/anvil.yaml` and dependency docs before guessing dependency APIs.
 - Never guess unfamiliar `anvil.*` symbols, component properties, roles, or CSS hooks — confirm from stubs, dependency docs/files, or working examples.
-- **Never AI-write `anvil.yaml`** — standing policy regardless of enforcement status; `cup-block-anvil-yaml-writes.rego` enforces it mechanically when Cupcake is active (status: qualifier above and `cupcake-config.md`). Stop and hand the change to the developer either way. The `anvil-yaml` skill's type reference and validation knowledge still apply for *reading, planning, and validating* manifest changes.
+- **Never AI-write `anvil.yaml`** — standing policy regardless of enforcement status; `cup-block-anvil-yaml-writes.rego` enforces it mechanically when Cupcake is active (status: qualifier above and [[cupcake-config|Cupcake Configuration]]). Stop and hand the change to the developer either way. The `anvil-yaml` skill's type reference and validation knowledge still apply for *reading, planning, and validating* manifest changes.
 
 ---
 
@@ -112,7 +112,7 @@ discipline regardless of enforcement status.
 - New `/runtime/services/tables.yml` entries should set `client_config.enable_v2: true`.
 - Preserve an existing table's `client_config` unless the user explicitly asks to migrate.
 - Default new tables to `client: none`. Use `search` only for intentional direct client searches; `full` only when the user explicitly requests unrestricted client table writes.
-- Preserve non-empty `db_schema.*.indexes`; don't add new indexes unless explicitly asked and the plan supports them. New tables: omit `indexes` or use `indexes: []`.
+- Preserve non-empty `db_schema.*.indexes`; don't add new indexes unless explicitly asked and the plan supports them. New tables: omit [[indexes|Indexes]] or use `indexes: []`.
 
 **Users table specifics:**
 - Adding the Users service requires a matching `db_schema` Users table if `server_config.user_table` is set to a string key.
@@ -161,21 +161,21 @@ Before behavior changes, inspect enough of `anvil.yaml` to identify `startup_for
 
 | Task trigger | Load |
 |---|---|
-| New or simple container Form | `examples/basic-container-form.md` |
-| Existing button/input handler edit | stay in the skill file; load `examples/dom-event-vs-component-event.md` only if event source is unclear |
-| No root `<anvil-form>` / implicit `HtmlComponent` container | `references/template-shapes.md`, then `examples/htmlcomponent-container.md` |
-| Form using a layout with `<anvil-block>` | `references/template-shapes.md`, then `examples/layout-using-form.md` |
-| Form defining slots with `<anvil-slot>` | `examples/layout-defining-html-form.md`, plus `references/html-frontmatter.md` if custom properties/events are involved |
-| Root shape, attribute prefixes, bindings, blocks, slots, dropzones, or event signature lookup | `references/cheat-sheet.md` |
-| `anvil:name`, `anvil:dom-node`, native DOM events, direct DOM access, runtime class/style helpers on plain HTML | `references/html-dom.md`; use `examples/dom-event-vs-component-event.md` for a concrete recipe |
-| RepeatingPanel item templates, `writeback:`, or item refresh behavior | `examples/repeating-panel-item-template.md` |
-| Reusable component Form | `examples/custom-component.md`; also `references/html-frontmatter.md` for custom API metadata |
-| Custom component container or `<anvil-dropzone>` | `examples/custom-component-container.md` and `references/html-frontmatter.md` |
-| Legacy YAML template or converted `HtmlTemplate` | `references/yaml-template.md`, `references/template-shapes.md`, then `examples/yaml-htmltemplate-conversion.md` |
-| M3 or dependency component specs | inspect `anvil.yaml` and dependency docs/files first, then `examples/dependency-component.md` |
-| Form Python class shape, handler signatures, lifecycle, client runtime caveats, dynamic updates | `references/python.md` |
-| `anvil.js`, `anvil.js.window`, browser APIs, JS proxies, Promises | the `javascript-interop` reference (below) |
-| Roles, theme CSS, generated component DOM, dependency styling internals | `references/styling.md`, `references/styling-examples.md`, `references/component-dom.md` |
+| New or simple container Form | [[basic-container-form|Basic Container Form]] |
+| Existing button/input handler edit | stay in the skill file; load [[dom-event-vs-component-event|Dom Event Vs Component Event]] only if event source is unclear |
+| No root `<anvil-form>` / implicit `HtmlComponent` container | [[template-shapes|Template Shapes]], then [[htmlcomponent-container|Htmlcomponent Container]] |
+| Form using a layout with `<anvil-block>` | [[template-shapes|Template Shapes]], then [[layout-using-form|Layout Using Form]] |
+| Form defining slots with `<anvil-slot>` | [[layout-defining-html-form|Layout Defining Html Form]], plus [[html-frontmatter|Html Frontmatter]] if custom properties/events are involved |
+| Root shape, attribute prefixes, bindings, blocks, slots, dropzones, or event signature lookup | [[cheat-sheet|Cheat Sheet]] |
+| `anvil:name`, `anvil:dom-node`, native DOM events, direct DOM access, runtime class/style helpers on plain HTML | [[html-dom|Html Dom]]; use [[dom-event-vs-component-event|Dom Event Vs Component Event]] for a concrete recipe |
+| RepeatingPanel item templates, `writeback:`, or item refresh behavior | [[repeating-panel-item-template|Repeating Panel Item Template]] |
+| Reusable component Form | [[custom-component|Custom Component]]; also [[html-frontmatter|Html Frontmatter]] for custom API metadata |
+| Custom component container or `<anvil-dropzone>` | [[custom-component-container|Custom Component Container]] and [[html-frontmatter|Html Frontmatter]] |
+| Legacy YAML template or converted `HtmlTemplate` | [[yaml-template|Yaml Template]], [[template-shapes|Template Shapes]], then [[yaml-htmltemplate-conversion|Yaml Htmltemplate Conversion]] |
+| M3 or dependency component specs | inspect `anvil.yaml` and dependency docs/files first, then [[dependency-component|Dependency Component]] |
+| Form Python class shape, handler signatures, lifecycle, client runtime caveats, dynamic updates | [[python|Python]] |
+| `anvil.js`, `anvil.js.window`, browser APIs, JS proxies, Promises | the [[javascript-interop|Javascript Interop]] reference (below) |
+| Roles, theme CSS, generated component DOM, dependency styling internals | [[styling|Styling]], [[styling-examples|Styling Examples]], [[component-dom|Component Dom]] |
 
 **Simple event edits stay on the normal path** — adding/changing simple event wiring, matching handlers, fixed button/input behavior, or item-template bindings doesn't need the table, unless the task expands into layout restructuring, new Forms, YAML conversion, frontmatter, custom components, styling, data modeling, dependency APIs, reusable Forms, or raw DOM work. For newly added component events, prefer `@handle(...)`; use `on:<event>` only when preserving/extending existing markup-wired events.
 
@@ -193,7 +193,7 @@ Decorator gotcha: use `@handle(...)` when the module has `from anvil import *`; 
 
 **Styling, by what's being styled:**
 - Raw HTML elements: stable domain-specific classes in the template + selectors in `theme/assets/theme.css`.
-- Dynamic raw HTML state: read `references/html-dom.md` before using plain-HTML runtime style/class helpers.
+- Dynamic raw HTML state: read [[html-dom|Html Dom]] before using plain-HTML runtime style/class helpers.
 - Anvil components: component properties, roles, documented dependency APIs, `.anvil-role-<role-name>` CSS selectors.
 - M3 or dependency components: inspect docs/dependency files before guessing properties, layout behavior, or CSS hooks.
 
@@ -224,7 +224,7 @@ Validate one changed file at a time, or a shared parent when changes span multip
 - Never create `client_code/__init__.py` — `client_code/` is an Anvil code root, not a Python package.
 - Prefer relative imports for app-local references.
 - Check the Skulpt client runtime reference (below) before adding stdlib or external imports.
-- Use `javascript-interop` reference before touching `anvil.js`/`anvil.js.window`/browser APIs.
+- Use [[javascript-interop|Javascript Interop]] reference before touching `anvil.js`/`anvil.js.window`/browser APIs.
 
 **Validate:** `anvil --json validate client_code/<Module>.py` (or the package's `__init__.py`).
 
@@ -307,7 +307,7 @@ No general automated server test path exists in this template — suggest testin
 
 Client-side Python (`client_code/`) runs on **Skulpt in the browser, not full CPython.** Confirmed supported top-level stdlib imports:
 
-`array`, `builtins`, `calendar`, `collections`, `datetime`, `fractions`, `functools`, `itertools`, `json`, `keyword`, `math`, `operator`, `platform`, `random`, `re`, `signal`, `string`, `sys`, `time`, `turtle`, `types`, `typing`, `urllib`, `uuid`.
+`array`, `builtins`, `calendar`, `collections`, `datetime`, `fractions`, `functools`, `itertools`, `json`, `keyword`, `math`, `operator`, `platform`, `random`, `re`, `signal`, `string`, `sys`, `time`, `turtle`, [[types|1 represents the data is cached, 0 otherwise]], `typing`, `urllib`, `uuid`.
 
 **Top-level availability doesn't guarantee submodule parity** — `collections` is available, `collections.abc` is not. External packages generally aren't available client-side unless the app or a dependency ships browser-compatible code. When client code needs unsupported behavior: move it to `server_code/` behind `@anvil.server.callable`, use Anvil/browser APIs via `anvil.js`, or use an already-present app-local/dependency client module.
 
@@ -332,7 +332,7 @@ Never use `.then()`, `await_promise()`, or Python `async`/`await` for these. Use
 
 ## Material 3 theme reference (`docs/m3/`)
 
-Not a skill — a component/theme reference inside `docs/m3/`: `api.md` (generated API/attribute reference for the `m3` module), `components/` (`_index.md`, `components.md`, `layouts.md`, `colour-schemes.md`, `img/`), and `layouts.md`. Relevant whenever a task touches M3 components or layouts (see the `client-forms` Load-By-Task entry).
+Not a skill — a component/theme reference inside `docs/m3/`: [[api|Api]] (generated API/attribute reference for the `m3` module), `components/` (`_index.md`, `components.md`, `layouts.md`, `colour-schemes.md`, `img/`), and `layouts.md`. Relevant whenever a task touches M3 components or layouts (see the `client-forms` Load-By-Task entry).
 
 **What it is:** an open-source Anvil theme (`github.com/anvil-works/material-3-theme`) implementing Google's Material 3 design system. Currently in beta — not every M3 component is supported yet; components without a direct M3 counterpart are styled to match the M3 spec as closely as possible. Add via **Settings → Dependencies → Third Party**, dependency ID `4UK6WHQ6UX7AKELK`. Caution: an app with an existing theme may have CSS that conflicts with M3's — if styling looks wrong, try a blank M3 app to isolate the cause.
 
@@ -358,9 +358,9 @@ def m3_button_click(self, **event_args):
     self.layout.show_sidesheet = True
 ```
 
-Full property/event references: `docs/m3/api.md` in this checkout, plus Anvil's own docs. **`colour-schemes.md` is currently an empty draft stub** (`draft: true`, verified 2026-09-06) — nothing to document until Anvil publishes real content.
+Full property/event references: [[api|Api]] in this checkout, plus Anvil's own docs. **`colour-schemes.md` is currently an empty draft stub** (`draft: true`, verified 2026-09-06) — nothing to document until Anvil publishes real content.
 
-**Standing constraints in this environment:** `adr-anvil-extras-exclusion.md` excludes Anvil Extras (M3 conflict) and limits UI to M3-dependency components; `adr-htmltemplate-use.md` bans `HTMLTemplate` — prefer the two native M3 Layouts.
+**Standing constraints in this environment:** [[adr-anvil-extras-exclusion|Anvil Extras Exclusion]] excludes Anvil Extras (M3 conflict) and limits UI to M3-dependency components; [[adr-htmltemplate-use|HTMLTemplate Use]] bans `HTMLTemplate` — prefer the two native M3 Layouts.
 
 ---
 
@@ -370,7 +370,7 @@ Full property/event references: `docs/m3/api.md` in this checkout, plus Anvil's 
 git -C /mnt/c/mybizz/anvil-agent-references pull
 ```
 
-- Developer-run only, from a terminal — never AI-invoked (the clone sits outside every project root; an AI-run write there is a cross-project write, which Cupcake's cross-project-write rule blocks when active — enforcement status per the qualifier in Universal editing boundaries and `cupcake-config.md`'s Current Operational Status).
+- Developer-run only, from a terminal — never AI-invoked (the clone sits outside every project root; an AI-run write there is a cross-project write, which Cupcake's cross-project-write rule blocks when active — enforcement status per the qualifier in Universal editing boundaries and [[cupcake-config|Cupcake Configuration]]'s Current Operational Status).
 - Symlinked skills update automatically — nothing to re-link for existing skills.
 - After an update, check for new/renamed skills (content is generated; names could change between releases):
 ```bash

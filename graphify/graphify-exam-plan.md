@@ -8,14 +8,14 @@ date-created: 2026-09-14
 # Graphify — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before
-each run from: `graphify-config.md` (spec), the last `graphify-exam-report.md`,
-`graphify-log.md` (events since last run), `graphify-learnings.md`. Consumed by the
+each run from: [[graphify-config|Graphify Configuration]] (spec), the last [[graphify-exam-report|Exam Report]],
+[[graphify-log|Log]] (events since last run), [[graphify-learnings|Learnings]]. Consumed by the
 skill at run time; rewritten at the start of the following cycle. The file is live;
 its contents are transient.
 
 **This first plan is hand-written** (emulation of the gbrain-dream-cycle
 architecture): it also serves as the format template. The **standing check
-inventory lives in the skill** (`graphify-skill.md`, born-with-inventory); this
+inventory lives in the skill** ([[graphify-skill|Graphify Skill]], born-with-inventory); this
 plan carries run-specifics and references. Once verified by a run, future plans
 carry run-specifics + references only.
 
@@ -31,8 +31,8 @@ carry run-specifics + references only.
 | Step-0 result | recorded at execution |
 | Tier 3 unlock state | **Locked** — Tier 3 rows execute only if the developer unlocks this run |
 | Developer-run requests this run (bundled into ONE request) | (a) upstream version check via PyPI (`pip index versions graphifyy`) if the outbound-network guard denies the agent attempt (proven class); (b) any check whose command text or target file the guards deny (config-file reads are proven agent-readable for this suite as of 2026-09-14, but a denial is always honored) |
-| Expected-value source of truth | `graphify-config.md` — read fresh at run start; never rely on remembered values |
-| Scope boundary | GBrain-side conformance belongs to `mb-config-gbrain`; the shared AGENTS.md block's **content** is owned by `mybizz-os-docs/memory-master-explainer.md` (this exam verifies marker presence only); OpenCode global configuration belongs to `mb-config-opencode` (when built); PostgreSQL-level checks belong to `mb-config-postgresql` (the `--postgres` extraction path is unused here); **mb-3-cs project health is nobody's exam here** — only graphify's footprint in that repo (scope files, graph artifact, plugin files, MCP entry, block markers) is examinable |
+| Expected-value source of truth | [[graphify-config|Graphify Configuration]] — read fresh at run start; never rely on remembered values |
+| Scope boundary | GBrain-side conformance belongs to `mb-config-gbrain`; the shared AGENTS.md block's **content** is owned by [[memory-master-explainer|Master Explainer]] (this exam verifies marker presence only); OpenCode global configuration belongs to `mb-config-opencode` (when built); PostgreSQL-level checks belong to `mb-config-postgresql` (the `--postgres` extraction path is unused here); **mb-3-cs project health is nobody's exam here** — only graphify's footprint in that repo (scope files, graph artifact, plugin files, MCP entry, block markers) is examinable |
 
 ## 2. Carried-forward items
 
@@ -67,7 +67,7 @@ None — no prior exam exists (first formal run; bootstrap).
 ## 6. Standing checks — summary (the complete enumeration lives in the skill)
 
 Every check: id, runner (A=agent, D=developer), probe, expected source, pass
-rule — full tables in `graphify-skill.md` (Tiers 0–3). Summary:
+rule — full tables in [[graphify-skill|Graphify Skill]] (Tiers 0–3). Summary:
 
 - **Tier 0 (A) — invocability:** GF0-1 CLI version 0.9.40 · GF0-2 package `graphifyy` 0.9.40 (CLI and package agree) · GF0-3 executable + module paths · GF0-4 OpenCode skill surface + `.graphify_version` marker
 - **Tier 1 (A/D) — state conformance:** GF1-1 upstream lag state (agent-attempted → developer bundle on denial) · GF1-2 scope config (`.graphifyignore`, `.graphify_build.json`, `.graphify_root`) · GF1-3 repo `.gitignore` lines · GF1-4 graph provenance + shape vs spec · GF1-5 MCP entry (project-root `opencode.json`) · GF1-6 AGENTS.md block markers · GF1-7 plugin surface · GF1-8 suite completeness (8 files) · GF1-9 labeling state (`anthropic` absent)
@@ -76,12 +76,12 @@ rule — full tables in `graphify-skill.md` (Tiers 0–3). Summary:
 
 ## 7. Report requirements
 
-The run writes `graphify-exam-report.md`: verdict line; per-tier tables (check
+The run writes [[graphify-exam-report|Exam Report]]: verdict line; per-tier tables (check
 ID, expected, actual, result); findings with class + evidence + recommended
 repair + risk; runner attribution for every deferred item (guard-forbidden vs
 unlock-gated); overwritten in full each run (write-then-replace; failed runs
 never touch the prior report; written before any pruning). Then: one run row
-appended to `graphify-log.md` (run-row format per `config-manager-reference.md`);
+appended to [[graphify-log|Log]] (run-row format per [[config-manager-reference|Reference: Commands, Procedures]]);
 new learnings filed.
 
 ## 8. Gate protocol
@@ -94,7 +94,7 @@ new learnings filed.
   (`extract`, `update`, `watch`, `install`, `uninstall`, `hook install`,
   `global add/remove`) without developer unlock · the mb-3-cs repo itself (no
   file writes of any kind) · the AGENTS.md block **content** (markers verified,
-  content owned by `memory-master-explainer.md`) · any `mcp.*` entry (never
+  content owned by [[memory-master-explainer|Master Explainer]]) · any `mcp.*` entry (never
   added or changed by the exam; a full OpenCode process restart is required for
   any legitimate change, developer-run) · the tracking status of `graphify-out/`
   (standing decision: gitignored — a change re-opens the hooks tripwire) ·

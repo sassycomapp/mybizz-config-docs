@@ -9,16 +9,16 @@ date-created: 2026-09-14
 
 Chronological record of notable events for this system: exam runs and outcomes,
 crashes, failure incidents, upgrades, error reports, significant guard denials.
-Events, not lessons — lessons live in `graphify-learnings.md`. Pruned under the
+Events, not lessons — lessons live in [[graphify-learnings|Learnings]]. Pruned under the
 absorption rule. (Seeded with development-period events so the system has
 working data; content beyond eventness is not the point.)
 
 | date | event | outcome / disposition |
 |---|---|---|
-| 2026-04-16 | Security scan (SkillsLLM): PASSED, no issues — pip-audit + npm-audit; no semgrep (`graphify-config.md` §Identity) | Recorded baseline posture; rescan is due on material change (any upgrade, or any change to the `graphify-out/` tracking decision) |
+| 2026-04-16 | Security scan (SkillsLLM): PASSED, no issues — pip-audit + npm-audit; no semgrep ([[graphify-config|Graphify Configuration]] §Identity) | Recorded baseline posture; rescan is due on material change (any upgrade, or any change to the `graphify-out/` tracking decision) |
 | 2026-08-15 | Prior graph state backed up manually to `graphify-out/2026-08-15/` (537 nodes, `built_at_commit` `e29cbd1b…`) ahead of a rebuild | Machine-local, untracked backup; superseded by the current graph (574 nodes, `5ce243e1…`) |
-| 2026-09-05 | Suite documents created: `graphify-config.md` (the spec), `graphify-explainer.md`, `graphify-reference.md` | System became examinable; register row exists (state WIP) |
-| 2026-09-08 | Full live verification of all spec values; graph current — `built_at_commit` `5ce243e1…` equals live HEAD at check (`graphify-config.md` §Current graph state) | Baseline for exam expected values; all graph counters are point-in-time from this date |
+| 2026-09-05 | Suite documents created: [[graphify-config|Graphify Configuration]] (the spec), [[graphify-explainer|Graphify Explainer]], [[graphify-reference|Graphify Reference]] | System became examinable; register row exists (state WIP) |
+| 2026-09-08 | Full live verification of all spec values; graph current — `built_at_commit` `5ce243e1…` equals live HEAD at check ([[graphify-config|Graphify Configuration]] §Current graph state) | Baseline for exam expected values; all graph counters are point-in-time from this date |
 | 2026-09-14 | mb-3-cs HEAD observed at `59175d9e…` — ahead of the graph's `built_at_commit` (`5ce243e1…`, last verified current 2026-09-08); graph provenance now lags the checkout | Observed during suite build-out orientation (read-only); expected shape for a paused project that has received commits; the DRIFT-class decision routes to the run #1 gate |
 | 2026-09-14 | Suite build-out: exam-plan, log (this file), learnings preamble, exam-report placeholder created; explainer localized (Config maintenance §5, S.W.O.T. §6, companions extended); reference header extended; skill written born-with-inventory (Tiers 0–3, GF0-1…GF3-2) | Suite at the 8-file standard; formal run #1 pending |
 | 2026-09-14 | Run #1 guard denials (2): formal-run composite re-probes of the Tier-0 bundle (cross-project-write heuristic) and of the GF1-4/GF1-5 bundle (sensitive-data heuristic) — the identical read-only probes had run permitted during Phase-0 orientation earlier the same session (config-manager learning #2 instance: same-day pass-then-block) | Both honored absolutely, no alternate-path retries; results recorded from the permitted Phase-0 executions and marked [P0]; optional developer re-verification bundle (report F-3) |

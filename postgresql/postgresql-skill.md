@@ -9,18 +9,18 @@ Exams the live PostgreSQL system against its spec. This skill holds the **proced
 only — expected values live in the spec doc and are read fresh at the start of every
 run. Never rely on remembered values.
 
-- Spec: `postgresql/postgresql-config.md` — read it first, every run
-- **Exam plan: `postgresql/postgresql-exam-plan.md` — read second, every run.** The
+- Spec: [[postgresql-config|Configuration]] — read it first, every run
+- **Exam plan: [[postgresql-exam-plan|Exam Plan]] — read second, every run.** The
   plan-driven cycle: the config-manager synthesizes this plan fresh before each run
   (from spec + last report + log + learnings) and this skill executes it in hand.
   The plan carries run-specifics and deltas; the **standing check inventory lives
   in this skill** (below) — permanent occurrences graduate here, never into plans
-- Reference (connection patterns, pitfalls): `postgresql/postgresql-reference.md`
-- Report: `postgresql/postgresql-exam-report.md` — one file, overwritten each run
-- Log: `postgresql/postgresql-log.md` — append one run row (date, verdict,
+- Reference (connection patterns, pitfalls): [[postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]
+- Report: [[postgresql-exam-report|Exam Report]] — one file, overwritten each run
+- Log: [[postgresql-log|Log]] — append one run row (date, verdict,
   findings, disposition) after every run; free rows for notable events witnessed
   between runs
-- Learnings: `postgresql/postgresql-learnings.md` — file new patterns/nuances;
+- Learnings: [[postgresql-learnings|Learnings]] — file new patterns/nuances;
   delete entries once graduated into a permanent home
 
 ## Instance map — never confuse them
@@ -115,6 +115,6 @@ mutation. Credentials by variable name only, never printed.
 
 ## Report
 
-Write `postgresql-exam-report.md`: tier results (pass/fail per check), findings with
+Write [[postgresql-exam-report|Exam Report]]: tier results (pass/fail per check), findings with
 class + evidence + recommended repair + rollback plan, expected-value source (spec
 doc section). Overwritten every run.

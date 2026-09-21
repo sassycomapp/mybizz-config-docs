@@ -23,7 +23,7 @@ confers durable status.
 
 ## Decisions (developer-approved verbatim)
 
-- **Type:** `architecture` (guide agrees; low confidence, subject-justified)
+- **Type:** [[architecture|Architecture]] (guide agrees; low confidence, subject-justified)
 - **Quality profile:** `showcase`
 - **One store, two badges:** GBrain is one node with "mirror layer · durable layer"
 - **Read paths are primary nodes** (GBrain hybrid search + Graphify)
@@ -31,9 +31,9 @@ confers durable status.
 ## Type reason
 
 The subject is a component ecosystem with five write flows and two read flows.
-`architecture` forgives many edges and supports trust boundaries; `dataflow`
+[[architecture|Architecture]] forgives many edges and supports trust boundaries; `dataflow`
 (the keyword-driven choice that failed previously) is a strict grid that
-punishes dense crossing flows. Guide call returned `architecture`.
+punishes dense crossing flows. Guide call returned [[architecture|Architecture]].
 
 ## Node Inventory (9 primary)
 

@@ -10,20 +10,20 @@ the **procedure** only — expected values live in the spec doc and are read fre
 at the start of every run. The Dream Cycle is working well; this exam verifies
 that and repairs nothing.
 
-- Spec: `gbrain-dream-cycle/gbrain-dream-cycle-config.md` — read it first, every run
-- **Exam plan: `gbrain-dream-cycle/gbrain-dream-cycle-exam-plan.md` — read
+- Spec: [[gbrain-dream-cycle-config|Configuration]] — read it first, every run
+- **Exam plan: [[gbrain-dream-cycle-exam-plan|Exam Plan]] — read
   second, every run.** The plan-driven cycle: the config-manager synthesizes
   this plan fresh before each run (from spec + last report + log + learnings)
   and this skill executes it in hand. The plan carries run-specifics and
   deltas; the **standing check inventory lives in this skill** (below) —
   permanent occurrences graduate here, never into plans
-- Reference: `gbrain-dream-cycle/gbrain-dream-cycle-reference.md` — invocation,
+- Reference: [[gbrain-dream-cycle-reference|Reference: Invocation, Verification, Diagnostics]] — invocation,
   post-run verification procedure, diagnostics
-- Report: `gbrain-dream-cycle/gbrain-dream-cycle-exam-report.md` — one file,
+- Report: [[gbrain-dream-cycle-exam-report|Exam Report]] — one file,
   overwritten each run (write-then-replace)
-- Log: `gbrain-dream-cycle/gbrain-dream-cycle-log.md` — one run row per exam;
+- Log: [[gbrain-dream-cycle-log|Log]] — one run row per exam;
   free rows for notable events witnessed between runs
-- Learnings: `gbrain-dream-cycle/gbrain-dream-cycle-learnings.md` — file new
+- Learnings: [[gbrain-dream-cycle-learnings|Learnings]] — file new
   patterns/nuances; delete entries once graduated into a permanent home
 
 ## Scope boundary (anti-duplication)
@@ -85,7 +85,7 @@ absolutely, never retried through an alternate path.
   the weekly backup routine — destination per developer decision:
   `C:\backup-dream-cycle` (`/mnt/c/backup-dream-cycle`), alongside the weekly
   PostgreSQL dump. Estate convention update flagged to
-  `postgresql-config.md` §Backups via governance (approved at run #1 gate).
+  [[postgresql-config|Configuration]] §Backups via governance (approved at run #1 gate).
 
 ## Tier 0 — Invocability (run first; failure = report `DOWN`, stop; remaining tiers skipped)
 
@@ -121,13 +121,13 @@ absolutely, never retried through an alternate path.
 
 ## Report
 
-Write `gbrain-dream-cycle-exam-report.md`: verdict line; per-tier tables (check
+Write [[gbrain-dream-cycle-exam-report|Exam Report]]: verdict line; per-tier tables (check
 ID, expected, actual, result); findings with class + evidence + recommended
 repair + risk; runner attribution for every deferred item (guard-forbidden vs
 unlock-gated); overwritten in full each run (write-then-replace: failed runs
 never touch the prior report; written before any pruning). Then: one run row
-appended to `gbrain-dream-cycle-log.md` (run-row format per
-`config-manager-reference.md`); new learnings filed.
+appended to [[gbrain-dream-cycle-log|Log]] (run-row format per
+[[config-manager-reference|Reference: Commands, Procedures]]); new learnings filed.
 
 ## Gate protocol
 

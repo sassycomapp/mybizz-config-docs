@@ -9,12 +9,12 @@ date-created: 2026-09-05
 
 *Companion note: for current confirmed state (invocation model, provider
 dependency, acceptance-test record, open items) see
-`gbrain-dream-cycle-config.md`. For commands and the mandatory post-run
-verification procedure, see `gbrain-dream-cycle-reference.md`. For how this
+[[gbrain-dream-cycle-config|Configuration]]. For commands and the mandatory post-run
+verification procedure, see [[gbrain-dream-cycle-reference|Reference: Invocation, Verification, Diagnostics]]. For how this
 system is examined and kept healthy by the config-management apparatus, see
-§8 below and the suite's exam set (`gbrain-dream-cycle-exam-plan.md` /
+§8 below and the suite's exam set ([[gbrain-dream-cycle-exam-plan|Exam Plan]] /
 `-exam-report.md` / `-log.md` / `-learnings.md`). For the full 23-phase
-sequence and the cross-component framing, see `memory-master-explainer.md`
+sequence and the cross-component framing, see [[memory-master-explainer|Master Explainer]]
 §4.*
 
 ---
@@ -56,7 +56,7 @@ removed. On-demand invocation is the intended design, not a gap.
 - **Fact extraction** (`extract_facts`, `extract_atoms`) — pull discrete, structured facts out of stored documents; `extract_atoms` makes its own Anthropic calls and is the phase most exposed to credential failure.
 - **Code-symbol relationship resolution** (`resolve_symbol_edges`) — GBrain's own attempt at the call graph, permanently partial (see Limitations).
 - **Contradiction surface** — the cycle's output feeds the suspected-contradictions evaluation that follows every run.
-- **Concept synthesis and pattern-finding** (`patterns`, `synthesize_concepts`, `consolidate`) — higher-level concept pages summarizing many individual facts; near-duplicate consolidation. The verified acceptance run produced +89 synthesized concept pages.
+- **Concept synthesis and pattern-finding** ([[patterns|Best Practices]], `synthesize_concepts`, `consolidate`) — higher-level concept pages summarizing many individual facts; near-duplicate consolidation. The verified acceptance run produced +89 synthesized concept pages.
 - **Self-judgment and calibration** (`propose_takes`, `grade_takes`, `calibration_profile`, `drift`) — the system proposing interpretive conclusions, grading its own confidence, and tracking drift.
 - **Maintenance and closure** (`enrich_thin`, `embed`, `orphans`, `schema-suggest`, `purge`) — filling thin pages, embedding new content, disconnecting orphans, suggesting schema improvements, removing what is genuinely no longer needed.
 
@@ -140,7 +140,7 @@ current form: a completed run is not proof of real work.
 ## 6. Where It Sits — The Six-Component System
 
 Within the six-component memory system (developer-stated framing; see
-`gbrain-config.md`), the Dream Cycle is the autonomous-deepening layer of
+[[gbrain-config|Configuration]]), the Dream Cycle is the autonomous-deepening layer of
 GBrain itself — the third component in the grouping. Its relationships:
 **GBrain** owns it (it deepens GBrain's own stored content); **Memory
 Governor** cannot see it (the structural non-interception limit; the manual
@@ -186,14 +186,14 @@ linking covers it. Recorded as an open item, not a failure of the mechanism.
 
 This suite participates in the config-management system (`mb-config-manager`).
 The roles of the seven suite files, and the exam cycle that runs them, are the
-architecture described in `config-manager-explainer.md` — emulated from the
+architecture described in [[config-manager-explainer|Explainer]] — emulated from the
 PostgreSQL pilot. The short local version:
 
-- `gbrain-dream-cycle-config.md` is the **spec** — the ideal state every exam
+- [[gbrain-dream-cycle-config|Configuration]] is the **spec** — the ideal state every exam
   checks against. The dream cycle is working well; the exam verifies that and
   changes nothing.
 - Before each exam run, the config-manager synthesizes
-  `gbrain-dream-cycle-exam-plan.md`: a fresh job-spec built from this spec,
+  [[gbrain-dream-cycle-exam-plan|Exam Plan]]: a fresh job-spec built from this spec,
   the last report, the log, and the learnings. The plan is transient (the file
   is live; contents rewritten each cycle).
 - The exam runs the installed skill (`mb-config-gbrain-dream-cycle`) with the
@@ -210,8 +210,8 @@ PostgreSQL pilot. The short local version:
   (sensitive-data guard — proven class), the Anthropic key-validity curl if a
   guard denies the agent attempt, and everything in Tier 3 (a full dream cycle
   is expensive and content-changing; the upgrade decision is the developer's).
-- The run rewrites `gbrain-dream-cycle-exam-report.md` (current state, no
-  history), appends one row to `gbrain-dream-cycle-log.md`, files new
+- The run rewrites [[gbrain-dream-cycle-exam-report|Exam Report]] (current state, no
+  history), appends one row to [[gbrain-dream-cycle-log|Log]], files new
   learnings, and prunes absorbed entries.
 
 ## 9. S.W.O.T.
@@ -241,9 +241,9 @@ on-demand design, whose violation the exam watches for.
 
 ---
 
-*Companion documents: `gbrain-dream-cycle-config.md` (the spec),
-`gbrain-dream-cycle-reference.md` (procedures and post-run verification),
-`gbrain-dream-cycle-exam-plan.md` / `-exam-report.md` / `-log.md` /
-`-learnings.md` (config-management set), `gbrain-dream-cycle-skill.md` (exam
-skill canonical source). Architecture: `mb-config-manager/config-manager-explainer.md`.
-Cross-component framing: `memory-master-explainer.md` §4.*
+*Companion documents: [[gbrain-dream-cycle-config|Configuration]] (the spec),
+[[gbrain-dream-cycle-reference|Reference: Invocation, Verification, Diagnostics]] (procedures and post-run verification),
+[[gbrain-dream-cycle-exam-plan|Exam Plan]] / `-exam-report.md` / `-log.md` /
+`-learnings.md` (config-management set), [[gbrain-dream-cycle-skill|Gbrain Dream Cycle Skill]] (exam
+skill canonical source). Architecture: [[config-manager-explainer|Explainer]].
+Cross-component framing: [[memory-master-explainer|Master Explainer]] §4.*

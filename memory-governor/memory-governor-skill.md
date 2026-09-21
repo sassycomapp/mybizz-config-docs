@@ -9,11 +9,11 @@ Exams the live memory-governor system against its spec. This skill holds the
 **procedure** only — expected values live in the spec doc and are read fresh at
 the start of every run.
 
-- Spec: `memory-governor/memory-governor-config.md` — read it first, every run
-- Reference: `memory-governor/memory-governor-reference.md`
-- Report: `memory-governor/memory-governor-exam-report.md` — one file, overwritten each run
-- Log: `memory-governor/memory-governor-log.md` — one run row per exam; event rows between runs
-- Learnings: `memory-governor/memory-governor-learnings.md` — transient; delete on graduation
+- Spec: [[memory-governor-config|Memory Governor Configuration]] — read it first, every run
+- Reference: [[memory-governor-reference|Usage, Invocation, and Incident Response]]
+- Report: [[memory-governor-exam-report|Exam Report]] — one file, overwritten each run
+- Log: [[memory-governor-log|Log]] — one run row per exam; event rows between runs
+- Learnings: [[memory-governor-learnings|Learnings]] — transient; delete on graduation
 
 ## Scope boundary (anti-duplication)
 
@@ -23,7 +23,7 @@ the start of every run.
   `mb-config-postgresql` — cross-reference its current report; a quick row-count
   sanity check is permitted here, full DB conformance is not.
 - **The backup convention** for the governor database lives in
-  `postgresql-config.md` §Backups (estate-wide) — freshness checked there (P1-11).
+  [[postgresql-config|Configuration]] §Backups (estate-wide) — freshness checked there (P1-11).
 
 ## Hard behavioral rules (from the spec's own Do-not list)
 
@@ -51,7 +51,7 @@ the start of every run.
 | M1-1 | A | Repo integrity at `/home/dev-p/memory-governor`: `git status --short` | Only expected dirt: `registers/` changes (worker auto-commits+pushes) — anything else uncommitted = finding |
 | M1-2 | A | Venv present: `.venv/bin/python` | Exists, executable |
 | M1-3 | A | DB quick sanity (single count query via the postgres module's established connection pattern) | 5 tables; row counts sane vs last recorded (projects 3, candidates 5, events 7, audit 5, policy 0 at 2026-09-13) |
-| M1-4 | A | Register integrity: index rows in `registers/register-memory-governor.md` ↔ payload files in `registers/candidates/*.json` | 1:1 correspondence (read-only) |
+| M1-4 | A | Register integrity: index rows in [[register-memory-governor|Register Memory Governor]] ↔ payload files in `registers/candidates/*.json` | 1:1 correspondence (read-only) |
 | M1-5 | A | Log/error scan: application logs at `/tmp/memory-governor.log` + `/tmp/memory-governor-worker.log` — **the worker log carries no timestamps and retry warnings show only "attempt 1/5" with no resolution lines** (run #1 finding): failed-event fate requires developer verification via DB event status + worker PATH check. **Outbox semantics (run #1):** events absent from `memory_events` + `unprocessed=0` = delivered-and-purged (the outbox deletes on delivery) — absence is NOT loss; per-source attribution of old IDs requires comparing against the sequence | No unexpected errors; governor dev-testing errors (2026-09-09) are historical |
 
 ## Tier 2 — State conformance (each probe compared to the spec's current expected value; any mismatch = DRIFT finding)
@@ -77,11 +77,11 @@ the start of every run.
 
 ## Report
 
-Write `memory-governor-exam-report.md`: verdict line; per-tier tables (check ID,
+Write [[memory-governor-exam-report|Exam Report]]: verdict line; per-tier tables (check ID,
 expected, actual, result); findings with class + evidence + recommended repair;
 runner attribution for every deferred item (guard-forbidden vs unlock-gated vs
 pending-developer-execution); overwritten in full each run (write-then-replace).
-Then: one run row appended to `memory-governor-log.md`; new learnings filed.
+Then: one run row appended to [[memory-governor-log|Log]]; new learnings filed.
 
 ## Gate protocol
 

@@ -7,11 +7,11 @@ date-created: 2026-09-05
 
 # GBrain — Reference: Commands, Mechanics, Incidents, Troubleshooting
 
-Companion to `gbrain-config.md` (the spec — current state) and
-`gbrain-explainer.md` (what it is and why — the authoritative whole-system
-narrative). Exam companions: `gbrain-exam-plan.md` (next run's job-spec),
-`gbrain-exam-report.md` (current verified state), `gbrain-log.md` (notable
-events), `gbrain-learnings.md` (transient exam knowledge). Agent-facing.
+Companion to [[gbrain-config|Configuration]] (the spec — current state) and
+[[gbrain-explainer|Explainer]] (what it is and why — the authoritative whole-system
+narrative). Exam companions: [[gbrain-exam-plan|Exam Plan]] (next run's job-spec),
+[[gbrain-exam-report|Exam Report]] (current verified state), [[gbrain-log|Log]] (notable
+events), [[gbrain-learnings|Learnings]] (transient exam knowledge). Agent-facing.
 Division-scoped — applies across all projects.
 
 ---
@@ -26,9 +26,9 @@ ADRs, or OpenCode rules — files are always authoritative.
 (upgrade available: 0.48.2.0) | **Schema:** v128 | **Pack:** gbrain-everything
 **Connection:** `postgresql://postgres:***@localhost:5432/gbrain`
 
-Current sources, credentials, and MCP entry: `gbrain-config.md`. Cross-
+Current sources, credentials, and MCP entry: [[gbrain-config|Configuration]]. Cross-
 component reasoning (Graphify, Dream Cycle, Memory Governor, the authority
-model): `memory-master-explainer.md`.
+model): [[memory-master-explainer|Master Explainer]].
 
 ---
 
@@ -109,13 +109,13 @@ source needs `gbrain sync --source <id>` for its first import.
 **Two content paths, two layers (do not mix):** sync writes the pages/corpus
 layer; it must never be used to move governed content into GBrain — only the
 governor's own async `remember` path counts as governed
-(`memory-governor-config.md`, GBrain integration). Symmetrically, the
-governed path writes facts, never corpus pages. See `gbrain-config.md`'s
+([[memory-governor-config|Memory Governor Configuration]], GBrain integration). Symmetrically, the
+governed path writes facts, never corpus pages. See [[gbrain-config|Configuration]]'s
 "Content paths into GBrain."
 
 ### Dream Cycle
 
-Invocation, phase order, and diagnostics: `gbrain-dream-cycle-reference.md`.
+Invocation, phase order, and diagnostics: [[gbrain-dream-cycle-reference|Reference: Invocation, Verification, Diagnostics]].
 Fact that affects source management: dream phases (including
 `resolve_symbol_edges`) only populate the call graph if the source was synced
 with `--strategy code`.
@@ -213,7 +213,7 @@ mv ~/.gbrain/upgrade-errors.jsonl ~/.gbrain/upgrade-errors.jsonl.resolved-<date>
 
 ### Embedding/chat calls fail with "API key is invalid"
 
-Dream Cycle `extract_atoms`-phase issue — see `gbrain-dream-cycle-reference.md`.
+Dream Cycle `extract_atoms`-phase issue — see [[gbrain-dream-cycle-reference|Reference: Invocation, Verification, Diagnostics]].
 
 ### A sync gets BLOCKED on invalid frontmatter, and doesn't advance
 
@@ -246,7 +246,7 @@ never print, copy, or archive the values.
 
 When GBrain recall conflicts with current files, the files win. Cross-tool
 authority ordering (including Graphify confidence tiers): see
-`memory-master-explainer.md` §7.
+[[memory-master-explainer|Master Explainer]] §7.
 
 ---
 
@@ -311,8 +311,8 @@ opencode web --hostname 0.0.0.0
 - Do not switch or install a different schema pack expecting it to fix the call-graph limitation — confirmed impossible with any bundled pack.
 - Do not run `gbrain sync --skip-failed` as a default remedy — fix the offending frontmatter and re-sync cleanly.
 - Do not rely on `strategy` being stored per source — pass `--strategy code` explicitly on every sync that needs code files.
-- Do not call `gbrain sync` to move governed content into GBrain — only the governor's async `remember` path counts as governed (`memory-governor-config.md`). Sync is for the pages layer; the governed path is for the facts layer.
+- Do not call `gbrain sync` to move governed content into GBrain — only the governor's async `remember` path counts as governed ([[memory-governor-config|Memory Governor Configuration]]). Sync is for the pages layer; the governed path is for the facts layer.
 - Do not treat an offline test pass as live verification for anything GBrain-adjacent — the same evidence-not-proof standard as everywhere else.
 - Do not upgrade GBrain on version-newness alone — the standing policy is upgrade-only-on-check-failure and is an open item (config.md).
 - Do not assume the standing sync script covers newly registered sources — run `gbrain sync --source <id>` for a new source's first import.
-- Do not re-enable the `gbrain autopilot` schedule or put the dream cycle on a scheduler — on-demand invocation is the deliberate design; the autopilot was found inert and removed 2026-09-06 (see `gbrain-dream-cycle-config.md`).
+- Do not re-enable the `gbrain autopilot` schedule or put the dream cycle on a scheduler — on-demand invocation is the deliberate design; the autopilot was found inert and removed 2026-09-06 (see [[gbrain-dream-cycle-config|Configuration]]).

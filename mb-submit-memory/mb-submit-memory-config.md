@@ -8,8 +8,8 @@ date-created: 2026-09-05
 # mb-submit-memory — Configuration
 
 Canonical current-state configuration record. Agent-facing. States facts,
-not history — decisions and reasoning in `mb-submit-memory-explainer.md`;
-the full cycle in `mb-submit-memory-reference.md`; the skill's own
+not history — decisions and reasoning in [[mb-submit-memory-explainer|Explainer]];
+the full cycle in [[mb-submit-memory-reference|Reference: Usage, Invocation, and the Full Cycle]]; the skill's own
 `SKILL.md` is the authoritative procedure. All values verified live
 2026-09-08 unless noted.
 
@@ -38,7 +38,7 @@ path. Never calls `gbrain remember` or `gbrain sync` directly.
 | API | `http://127.0.0.1:8321` — **ACTIVE as of 2026-09-08** (started detached, log-verified, survives shell exit); auth-gates unauthenticated calls correctly (HTTP 422 credential-required, observed live) |
 | Start procedure (on demand) | `cd /home/dev-p/memory-governor && set -a && source .env && set +a && setsid nohup .venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8321 >> /tmp/memory-governor.log 2>&1 < /dev/null &` — `.env` must be sourced first (no dotenv autoload) |
 | Permanent auto-start | **Installed and verified 2026-09-15 (session 005):** systemd enabled in WSL; the governor runs as two auto-start, auto-restart user services (`memory-governor-api`, `memory-governor-worker`) |
-| Database | `memory_governor` on WSL-native PostgreSQL 16 (server verified up today). DB-level state (5 tables, 5 real candidate rows, owner `memory_governor_svc`) verified 2026-09-05 by `memory-governor-config.md`; re-check requires the service credential (not accessed) |
+| Database | `memory_governor` on WSL-native PostgreSQL 16 (server verified up today). DB-level state (5 tables, 5 real candidate rows, owner `memory_governor_svc`) verified 2026-09-05 by [[memory-governor-config|Memory Governor Configuration]]; re-check requires the service credential (not accessed) |
 | Its own GBrain source | `memory-governor-code` — registered (53 pages); the 2026-09-05 recommendation was actioned |
 | Past-run evidence | `/tmp/memory-governor.log` — clean startup + `POST /memory/projects` 201 + `POST /memory/candidate` 201; `registers/candidates/` holds the real candidate records |
 

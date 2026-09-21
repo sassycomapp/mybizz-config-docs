@@ -7,12 +7,12 @@ date-created: 2026-09-05
 
 # GBrain Dream Cycle — Reference: Invocation, Verification, Diagnostics
 
-Companion to `gbrain-dream-cycle-config.md` (current state, acceptance-test
-record) and `gbrain-dream-cycle-explainer.md` (reasoning, incident).
-Config-management set: `gbrain-dream-cycle-exam-plan.md` (transient job-spec —
-read second, every run), `gbrain-dream-cycle-exam-report.md` (last verified
-state), `gbrain-dream-cycle-log.md` (chronological events),
-`gbrain-dream-cycle-learnings.md` (transient knowledge). Agent-facing.
+Companion to [[gbrain-dream-cycle-config|Configuration]] (current state, acceptance-test
+record) and [[gbrain-dream-cycle-explainer|Explainer]] (reasoning, incident).
+Config-management set: [[gbrain-dream-cycle-exam-plan|Exam Plan]] (transient job-spec —
+read second, every run), [[gbrain-dream-cycle-exam-report|Exam Report]] (last verified
+state), [[gbrain-dream-cycle-log|Log]] (chronological events),
+[[gbrain-dream-cycle-learnings|Learnings]] (transient knowledge). Agent-facing.
 
 **Invocation model:** manual, on-demand only — the scheduled autopilot was
 found inert and deliberately removed (2026-09-06). Nothing runs unless you
@@ -38,7 +38,7 @@ recompute_emotional_weight, consolidate, propose_takes, grade_takes,
 calibration_profile, drift, conversation_facts_backfill, enrich_thin,
 skillopt, embed, orphans, schema-suggest, purge`. Phase taxonomy (verified
 via doctor): 12 source-scoped, 9 brain-global, 2 mixed — full classification
-in `gbrain-config.md`'s doctor notes and `memory-master-explainer.md` §4.
+in [[gbrain-config|Configuration]]'s doctor notes and [[memory-master-explainer|Master Explainer]] §4.
 
 ## Post-run verification procedure — after EVERY dream invocation
 
@@ -146,4 +146,4 @@ orchestrator's code stage — `gbrain dream --source <existing-id>` directly.
   isolate with `--phase`.
 - Do not re-enable the autopilot schedule or put the dream cycle on a
   scheduler — on-demand invocation is the deliberate design (autopilot found
-  inert and removed 2026-09-06; see `gbrain-dream-cycle-config.md`).
+  inert and removed 2026-09-06; see [[gbrain-dream-cycle-config|Configuration]]).

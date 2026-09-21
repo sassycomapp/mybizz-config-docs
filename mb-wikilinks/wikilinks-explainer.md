@@ -9,7 +9,7 @@ date-created: 2026-09-10
 
 Updated 2026-09-20 to reflect the refactored skill (`SKILL.md`, 2026-09-19):
 scope from the single authority list, shared run frame in
-`doc-skills-run-discipline.md`, corpus-wide collision census, run-level
+[[doc-skills-run-discipline|Shared Run Discipline]], corpus-wide collision census, run-level
 backups, and the locked align-docs-first order.
 
 ## 1. What this actually is
@@ -58,7 +58,7 @@ packaging follows product.
 - A wide mode that scales without losing rigor: `(all)` sweeps every in-scope source in the
   locked order, leaf folder by leaf folder, each with its own complete cycle — the safety
   discipline is per-folder, so the wide run is many small safe runs, not one big risky one.
-- A shared run frame defined once (`doc-skills-run-discipline.md`) and carried by every
+- A shared run frame defined once ([[doc-skills-run-discipline|Shared Run Discipline]]) and carried by every
   documentation skill: resume check, learnings load, git-clean precondition, verified
   stop-cold backup, decision-point checkpointing, run-record lifecycle with one index row
   in `run-log.md`, es.exe-first file search, and per-source GBrain sync at close.

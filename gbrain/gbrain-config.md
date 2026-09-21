@@ -10,14 +10,14 @@ date-created: 2026-09-05
 Canonical current-state configuration record for GBrain as a division-wide
 system component. Agent-facing. Reflects the live-verified state as of
 2026-09-13. States facts, not history — where the reasoning matters, see
-`gbrain-explainer.md` and `memory-master-explainer.md`; for commands and
-procedures, see `gbrain-reference.md`.
+[[gbrain-explainer|Explainer]] and [[memory-master-explainer|Master Explainer]]; for commands and
+procedures, see [[gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]].
 
 **System context (developer-stated, 2026-09-06; architecture context unchanged):** GBrain is one of six
 closely-related components — GBrain, gbrain-dream-cycle, gstack,
 memory-governor, PostgreSQL, and the installed `mb-submit-memory` skill — that
 are assessed together, not in isolation. Cross-component reasoning lives in
-`memory-master-explainer.md` (`mybizz-os-docs`), which owns the how-they-fit-
+[[memory-master-explainer|Master Explainer]] (`mybizz-os-docs`), which owns the how-they-fit-
 together layer; this suite owns GBrain-specific state, commands, and incidents.
 
 ---
@@ -28,7 +28,7 @@ together layer; this suite owns GBrain-specific state, commands, and incidents.
 |---|---|
 | Version | `0.46.1.0` — CLI and live install agree (`/home/dev-p/gbrain/VERSION`, re-verified 2026-09-13) |
 | Version drift | **`0.50.0.0` available** (update banner, verified 2026-09-13). Standing policy: upgrade only on check failure — never on version-newness (open item) |
-| Upstream | `github.com/garrytan/gbrain` — MIT; by Garry Tan; 29.6k stars / 1,061 commits (verified 2026-09-06). **Not distributed on npm** — the npm `gbrain` package is unrelated and shadows the binary (upstream warning; see `gbrain-reference.md` Do-not) |
+| Upstream | `github.com/garrytan/gbrain` — MIT; by Garry Tan; 29.6k stars / 1,061 commits (verified 2026-09-06). **Not distributed on npm** — the npm `gbrain` package is unrelated and shadows the binary (upstream warning; see [[gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]] Do-not) |
 | Engine | PostgreSQL 16.14, self-hosted, WSL-native; pgvector 0.6.0 |
 | Connection | `postgresql://postgres:***@localhost:5432/gbrain` |
 | Boot behavior | Auto-starts on WSL boot (`service postgresql start` in `/etc/wsl.conf`) |
@@ -42,7 +42,7 @@ together layer; this suite owns GBrain-specific state, commands, and incidents.
 
 The **estate-wide backup convention** (all databases, both instances, both
 locations, weekly exam-enforced cycle) is authoritative in
-`postgresql-config.md` §Backups — this database estate is one system. GBrain
+[[postgresql-config|Configuration]] §Backups — this database estate is one system. GBrain
 facts within it: the `gbrain` database (51 MB dump, 62 tables verified) and the
 `memory_governor` database (26 KB dump, 5 tables) are both covered in every
 cycle, delivered to `/home/dev-p/backup-gbrain/` (default) and
@@ -61,8 +61,8 @@ cycle, delivered to `/home/dev-p/backup-gbrain/` (default) and
 Known permanent limitation: no bundled pack extracts code-symbol call-graph
 edges (`code` type is `extractable: false` in every pack); `code-callers`/
 `code-callees` cannot resolve to defining chunks. Graphify's `get_neighbors`
-is the correct tool — full account in `gbrain-reference.md` and
-`gbrain-explainer.md`.
+is the correct tool — full account in [[gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]] and
+[[gbrain-explainer|Explainer]].
 
 ## Models
 
@@ -117,7 +117,7 @@ user-chosen name; do not rename.
 | **Sync path** | Standing script (`sync-gbrain.sh`: `gbrain sync` + `embed --stale`) + per-source `gbrain sync --source <id>`; daily-ops.md documents per-repo sync as the standing after-work workflow | **Pages/corpus** | Whole repos: vendor bypass sources (anvil-agent-references, magdoub-wireframe — permanent governor bypasses), developer doc repos, project code+library sources | 18+ logged runs (2026-07-28 → 2026-09-13); all 14 sources; the dominant path by volume |
 | **Governed path** | Developer or PDLF step → `mb-submit-memory` → governor API → promote → async `gbrain_write` → `remember` (MEMORY_VERBS) | **Facts layer** (hot memory) | Individual judgment-bearing content meant to be checked before becoming durable | Exactly one real run (2026-08-27, promoted; its `gbrain_write` initially queued pending the dev-makepdlf source rename, since resolved); `pdlf_step_sync` writer parked pending PDLF go-live |
 
-**The boundary (by design, from `memory-governor-config.md`):** sync must
+**The boundary (by design, from [[memory-governor-config|Memory Governor Configuration]]):** sync must
 never carry governed content — it would ingest raw content regardless of
 governor approval; `remember` never creates corpus pages. Neither path
 supersedes the other — they write to different layers and cannot substitute
@@ -139,7 +139,7 @@ environment's operational path; the custom script is (verified against
 | Item | Verified state |
 |---|---|
 | Crontab | A `gbrain autopilot` entry (every 5 minutes, targeting `--repo '/mnt/c/projects'`) was found **doubly inert** — cron daemon not running, target path from the pre-`C:\dev` layout no longer existing, log file never created — and was **deliberately removed 2026-09-06** |
-| Design consequence | The Dream Cycle runs on-demand only; nothing GBrain-related is scheduled (see `gbrain-dream-cycle-config.md`) |
+| Design consequence | The Dream Cycle runs on-demand only; nothing GBrain-related is scheduled (see [[gbrain-dream-cycle-config|Configuration]]) |
 
 ## OpenCode MCP integration
 
@@ -179,7 +179,7 @@ here precisely; masked per the standing decision above.
 
 ## Master explainer maintenance rule (settled, 2026-09-06)
 
-`mybizz-os-docs/memory-master-explainer.md` is passed to every
+[[memory-master-explainer|Master Explainer]] is passed to every
 memory-component run and must be updated by each such session to reflect
 current verified state. At that run's close-out, the update is committed and
 pushed to `mybizz-os-docs` as its own commit — standing authorization, not
@@ -190,6 +190,6 @@ re-decided per run.
 | # | Item | Status |
 |---|---|---|
 | 1 | Upgrade policy: `0.46.1.0` in use while `0.50.0.0` is available (banner + releases verified 2026-09-13). Upgrade is **non-trivial**: coordinated queue cutover (pause → drain → stop → backup → install → review legacy jobs), old/new workers must not coexist, schema migrations apply. Prerequisites check: Bun 1.3.14 ≥ 1.3.11 minimum ✓; fresh DB backup now exists (2026-09-13, both locations — see Backups section). Policy: upgrade only on check failure or by developer decision. | Open |
-| 2 | MEMORY_VERBS premise reconciled: `memory-governor-config.md` records `mcp_surface: verbs` enabled as its Step 0.2 build prerequisite, while current `~/.gbrain/config.json` carries no `mcp_surface` key (re-verified 2026-09-13, masked jq) and the current version's default MCP surface includes the memory verbs (observed 2026-09-06). Both records stated with provenance; the verbs-only surface (`gbrain config set mcp_surface verbs`) remains available as a config choice. | Open |
+| 2 | MEMORY_VERBS premise reconciled: [[memory-governor-config|Memory Governor Configuration]] records `mcp_surface: verbs` enabled as its Step 0.2 build prerequisite, while current `~/.gbrain/config.json` carries no `mcp_surface` key (re-verified 2026-09-13, masked jq) and the current version's default MCP surface includes the memory verbs (observed 2026-09-06). Both records stated with provenance; the verbs-only surface (`gbrain config set mcp_surface verbs`) remains available as a config choice. | Open |
 | 3 | Source clone at `/mnt/c/mybizz/gbrain` (v0.25.0) **deleted 2026-09-13** per developer decision — verified not implemented (running code is the bun-global install; zero references in any config/script) and not pristine (local debris only: auto-managed `.gitignore` lines + a stray `pnpm-lock.yaml`; nothing unique — upstream public, re-clonable). | Resolved |
-| 4 | Project `agents.md` managed-block decisions: whether to fold the Access Model bullets into the Graph Memory Guidance block, and whether the block should ever be committed — raised, never decided; do not act without explicit direction. | Open |
+| 4 | Project [[agents|mb-3-cs]] managed-block decisions: whether to fold the Access Model bullets into the Graph Memory Guidance block, and whether the block should ever be committed — raised, never decided; do not act without explicit direction. | Open |

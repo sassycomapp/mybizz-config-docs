@@ -13,7 +13,7 @@ default node 112×58, minimum node spacing 10px, minimum flow length 34px,
 showcase rhythm ≥8px per segment and ≥16px interior. A flow crossing a
 stage/lane band must pass through a **row band that is empty of nodes** —
 stacked nodes in a column act as a wall that automatic routing cannot clear
-and that explicit routing struggles to thread. Prefer `architecture` (free
+and that explicit routing struggles to thread. Prefer [[architecture|Architecture]] (free
 `pos`, edge-tolerant, guides for a component map) unless the subject genuinely
 demands grid semantics.
 

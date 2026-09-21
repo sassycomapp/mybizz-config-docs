@@ -8,7 +8,7 @@ date-created: 2026-09-16
 # anvil-agent-references — Exam Report
 
 Run #1 — **first formal plan-driven exam** (2026-09-16). Plan:
-`anvil-agent-references-exam-plan.md` (bootstrap — no prior report). Step-0: **PASS**
+[[anvil-agent-references-exam-plan|Exam Plan]] (bootstrap — no prior report). Step-0: **PASS**
 — 11/11 hash pairs match via the approved glob form (postgresql `b41a3e117dee1809`
 · cupcake `f5e8489cf60a8abc` · gbrain `58dc0b52cbc86d72` · memory-governor
 `c40df342d523aa59` · gbrain-dream-cycle `a4872e9d61f1c32f` · graphify
@@ -50,9 +50,9 @@ and the three stale references confirmed absent.
 |---|---|---|---|---|
 | AR1-1 | Link graph | 40 symlinks (5 anvil + 35 matt); 0 broken; only non-symlink = matt Zone.Identifier | 40 links (5 anvil-targeted + 35 matt), 0 broken, exactly 1 regular file (matt `Zone.Identifier` — matt's domain, presence-only) | PASS |
 | AR1-2 | Discovery discipline | No anvil entries in `~/.claude/skills/`; no project-local anvil copies | `~/.claude/skills/` holds gstack + wireframe only; 0 anvil entries; no project-local copies | PASS |
-| AR1-3 | Repository structure | skills/ 5 named; stubs 62 = 31 client + 31 server (config §Repository structure); reference/types 3 `.d.ts`; docs/m3 layout; plugin name `anvil`/version `1.0.0` | skills/ 5 exact; **server stubs 32 (total 63)** — delta vs recorded 31 (flagged, W-1); client 31; reference/types 3; docs/m3 per spec; codex plugin `anvil`/`1.0.0` | PASS (stub-count delta noted) |
+| AR1-3 | Repository structure | skills/ 5 named; stubs 62 = 31 client + 31 server (config §Repository structure); reference/types 3 `.d.ts`; docs/m3 layout; plugin name [[anvil|anvil]]/version `1.0.0` | skills/ 5 exact; **server stubs 32 (total 63)** — delta vs recorded 31 (flagged, W-1); client 31; reference/types 3; docs/m3 per spec; codex plugin [[anvil|anvil]]/`1.0.0` | PASS (stub-count delta noted) |
 | AR1-4 | Per-project setup gate | makepdlf-project-library Done, mb-3-cs-project-library Done, mb-3-cs / mb4ecom / mb5pdlf Not done | makepdlf-project-library marker=1 · mb-3-cs-project-library marker=1 · mb-3-cs marker=0 · mb4ecom no AGENTS.md · mb5pdlf no AGENTS.md | PASS |
-| AR1-5 | Suite completeness | 7 files in `anvil-agent-references/` | 8 files (7-file standard + skill source `anvil-agent-skill.md`) | PASS |
+| AR1-5 | Suite completeness | 7 files in `anvil-agent-references/` | 8 files (7-file standard + skill source [[anvil-agent-skill|Anvil Agent Skill]]) | PASS |
 | AR1-6 | GBrain source registration | Source id `anvil-agent-references-code`, path `/mnt/c/mybizz/anvil-agent-references`, non-federated | Registered, id + path exact, federated `unset`; **34 pages, last sync 2026-09-06** — spec records "0 pages, never synced" (flagged, W-5) | PASS (index-state delta noted) |
 | AR1-7 | Stale external references absent | `/mnt/c/mybizz/config`, `/mnt/c/mybizz/skills-collective`, `docs/material-3` all absent | All three absent | PASS |
 
@@ -92,7 +92,7 @@ precedent for applied spec corrections), not left as governance flags:
   the license adoption-time review was **performed and recorded** (four-axis
   table, license axis documented as accepted risk — open item 2 closed); per-project
   setup for the 3 uninitialized app roots recorded as a deliberate, trigger-bound
-  deferral tied to project init (`cupcake-config.md` project-init status), not a
+  deferral tied to project init ([[cupcake-config|Cupcake Configuration]] project-init status), not a
   dangling item (open item 3 closed); the Tier-2/3 verification record now stands
   as the confirmed on-record evidence that all five vendor Anvil skills resolve
   and load as published (open item 4 closed).
@@ -109,7 +109,7 @@ precedent for applied spec corrections), not left as governance flags:
 | Stub counts | 31 client + 31 server (config §Repository structure) | 31 client + **32 server** (total 63 — delta, flag W-1) |
 | reference/types | 3 `.d.ts` | 3 |
 | docs/m3 | per config | 49 files, layout per spec |
-| Plugin metadata | codex + claude: name `anvil`, version `1.0.0`, recorded descriptions | Both verified from disk — name `anvil`, version `1.0.0`, descriptions match config §Plugin metadata |
+| Plugin metadata | codex + claude: name [[anvil|anvil]], version `1.0.0`, recorded descriptions | Both verified from disk — name [[anvil|anvil]], version `1.0.0`, descriptions match config §Plugin metadata |
 
 Exhaustive sweep complete — every link resolves to its intended vendor target,
 every SKILL.md byte-identical, structure conforms (server stub delta carried as

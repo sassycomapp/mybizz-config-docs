@@ -8,7 +8,7 @@ date-created: 2026-09-13
 # Memory Governor — Exam Report
 
 Run #1 — **first formal plan-driven exam** (2026-09-13). Plan:
-`memory-governor-exam-plan.md` (bootstrap run — no prior report; step-0: 7 suite
+[[memory-governor-exam-plan|Exam Plan]] (bootstrap run — no prior report; step-0: 7 suite
 files present, skill installed+hash-matched `4f5df4779a6d4597`, spec present).
 Detection only — Tiers 0–2; Tier 3 locked. Scope boundary honored (DB
 conformance cross-referenced from postgres run #2).

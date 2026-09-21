@@ -8,9 +8,9 @@ date-created: 2026-09-13
 # Cupcake — Exam Report
 
 Run #1 — **first formal plan-driven run** (2026-09-13). Plan:
-`cupcake-exam-plan.md` (step-0 self-validation: PASS — 8 suite files, hash pair
+[[cupcake-exam-plan|Exam Plan]] (step-0 self-validation: PASS — 8 suite files, hash pair
 MATCH ff34de94c7edd6df, spec present, no open run). Detection only — Tiers 0–2
-executed; Tier 3 locked (inherently developer-run). Spec: `cupcake-config.md`
+executed; Tier 3 locked (inherently developer-run). Spec: [[cupcake-config|Cupcake Configuration]]
 (refreshed pre-run per developer approval — backup inventory + jsonc naming).
 
 ## Verdict: ACTIVE & HEALTHY — enforcement proven live; zero compile failures; inventory exact
@@ -52,7 +52,7 @@ executed; Tier 3 locked (inherently developer-run). Spec: `cupcake-config.md`
 2. **CF-3 verified:** the guard token-match class held — two build-phase commands
    containing the token `cupcake` were denied (honored, rerouted via approved glob
    form); one relative-path command containing the same token later passed,
-   reconfirming the nondeterminism documented in `config-manager-learnings.md`.
+   reconfirming the nondeterminism documented in [[config-manager-learnings|Learnings]].
    Denials recorded as liveness evidence per the standing doctrine.
 3. **CF-5-class verification:** the ID'd check inventory (C0-1…C2-7, 17
    agent-runnable checks) executed correctly from this plan — the template format
@@ -63,7 +63,7 @@ executed; Tier 3 locked (inherently developer-run). Spec: `cupcake-config.md`
 
 ## Open question for the developer (C3-3 finding 4)
 
-The decrement gap on bash writes: is **file-tool-only decrement the intended design** (bash shapes enforce the boundary via denial instead — which they do: ungranted bash writes ARE blocked), or should bash writes decrement too? **My recommendation:** accept file-tool-only decrement as intended design, and record it in `cupcake-config.md`'s grant mechanics section (one sentence: "count decrement fires for file-tool writes; Bash-mediated writes within a granted path are permitted without decrement until grant expiry"). Rationale: bash writes inside a *granted* folder are already inside a developer-approved slip; expiry bounds exposure; extending decrement to bash shapes would be a plugin code change for marginal gain — "never change what is working well without a sound justified reason."
+The decrement gap on bash writes: is **file-tool-only decrement the intended design** (bash shapes enforce the boundary via denial instead — which they do: ungranted bash writes ARE blocked), or should bash writes decrement too? **My recommendation:** accept file-tool-only decrement as intended design, and record it in [[cupcake-config|Cupcake Configuration]]'s grant mechanics section (one sentence: "count decrement fires for file-tool writes; Bash-mediated writes within a granted path are permitted without decrement until grant expiry"). Rationale: bash writes inside a *granted* folder are already inside a developer-approved slip; expiry bounds exposure; extending decrement to bash shapes would be a plugin code change for marginal gain — "never change what is working well without a sound justified reason."
 
 ## Guard layers
 

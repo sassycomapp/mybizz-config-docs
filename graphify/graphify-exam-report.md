@@ -9,7 +9,7 @@ date-created: 2026-09-14
 
 **Final verdict: HEALTHY** — all tiers 0–3 formally executed including the full Tier 3 realistic run (complete documented rebuild), every check PASS, one genuine tool defect found and fixed in-run (F-4, cwd provenance stamping), zero open findings.
 
-Run #1 — first formal plan-driven run (bootstrap). Plan: `graphify-exam-plan.md` (hand-written bootstrap). Step-0: PASS (6/6 hash pairs via the approved glob form, suite completeness 6/6 at 8/8 files, register spec-doc paths 19/19 — recorded in `config-manager-log.md`).
+Run #1 — first formal plan-driven run (bootstrap). Plan: [[graphify-exam-plan|Exam Plan]] (hand-written bootstrap). Step-0: PASS (6/6 hash pairs via the approved glob form, suite completeness 6/6 at 8/8 files, register spec-doc paths 19/19 — recorded in [[config-manager-log|Log]]).
 
 **Execution standard applied (developer directive):** an honoured guard denial never substitutes for a formal execution — every denied check was re-executed as a clean single-purpose command in this run (write grants requested via mg-grant where required). Tier 3 ran **in full** (developer direction: "tier 3 has got to be run in full — the big run, the realistic run").
 
@@ -28,7 +28,7 @@ Run #1 — first formal plan-driven run (bootstrap). Plan: `graphify-exam-plan.m
 |---|---|---|---|
 | GF1-1 | Installed behind latest; spec records upstream `0.9.56` @2026-09-08 | Upstream latest `0.9.61` (live PyPI); installed `0.9.40` — lag state holds; spec row was stale → corrected (D-2) | PASS |
 | GF1-2 | `.graphifyignore` exactly 2 lines; `.graphify_build.json` `{"gitignore": false}`; `.graphify_root` exact | All exact | PASS |
-| GF1-3 | `.gitignore` carries `graphify-out/`, `.opencode/`, `agents.md`, `opencode.json`, `tests/` | 5/5 present | PASS |
+| GF1-3 | `.gitignore` carries `graphify-out/`, `.opencode/`, [[agents|mb-3-cs]], `opencode.json`, `tests/` | 5/5 present | PASS |
 | GF1-4 | `built_at_commit` == live HEAD; counts point-in-time; `directed` false | Pre-heal: `5ce243e1…` vs HEAD `59175d9e…` → **DRIFT (F-1)**. Healed by GF3-1; final state after the full rebuild: `built_at_commit` == HEAD; 537 nodes / 434 edges / 155 communities; 417 EXTRACTED + 17 INFERRED + 0 AMBIGUOUS; 95 ghosts; `directed: false` | PASS (post-rebuild) |
 | GF1-5 | `mcp.graphify` type `local`, enabled `true`, command exact, no API-key field (project-root `opencode.json`) | Keys exactly `command`/`enabled`/`type` (no credential field); type `local`, enabled `true`, command exact | PASS |
 | GF1-6 | AGENTS.md block markers present | `BEGIN` line 102, `END` line 126 | PASS |
@@ -74,7 +74,7 @@ Run #1 — first formal plan-driven run (bootstrap). Plan: `graphify-exam-plan.m
 
 - **Skill** (agent-applied): cwd-provenance hard rule + "Run #1 lessons graduated" section (F-4 confirmation discipline, check-update semantics, count-delta discipline). Re-installed by copy; re-hash `1ca73897a2023741`; register updated.
 - **Reference** (developer-approved under the finalize directive): §Graph build procedures — mandatory from-repo-root discipline + step-4 confirmation; §Work memory — check-update silence semantics.
-- `graphify-learnings.md` is empty again — nothing transient remains.
+- [[graphify-learnings|Learnings]] is empty again — nothing transient remains.
 
 ## Watch-state at close
 

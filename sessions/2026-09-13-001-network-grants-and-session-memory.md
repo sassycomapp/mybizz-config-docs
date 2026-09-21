@@ -52,7 +52,7 @@ a short list of important facts worth believing later, checks them against
 existing memory for contradictions, shows the list once for a single
 approval, sends the important facts through the Memory Governor, and saves
 the full session summary as a page like this one. It then adds one row to
-the sessions log at `C:\_data-mybizz-mgt\_desktop\sessions-log.md`,
+the sessions log at [[2026-09-15-session-numbers-from-sessions-log|session numbers come from the sessions log]],
 recording the number, date, topic, subject, title, and exact page name. A
 second log at the same folder, `Facts-log.md`, indexes every durable fact
 saved, with its GBrain fact number. At the start of a new session, the AI

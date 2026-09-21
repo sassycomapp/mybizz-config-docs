@@ -8,8 +8,8 @@ date-created: 2026-09-05
 # Graphify Configuration
 
 Canonical current-state configuration record. Agent-facing. States facts, not
-history or rules — reasoning in `graphify-explainer.md`, commands and rules in
-`graphify-reference.md`. All values verified live 2026-09-14 (config-management
+history or rules — reasoning in [[graphify-explainer|Graphify Explainer]], commands and rules in
+[[graphify-reference|Graphify Reference]]. All values verified live 2026-09-14 (config-management
 run #1; earlier full verification 2026-09-08) unless noted.
 
 ## Identity (machine-wide install)
@@ -45,11 +45,11 @@ reminder string to bash commands; it writes no files of its own.
 | File | Content |
 |---|---|
 | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs/.graphifyignore` | `.opencode/` and `opencode.json` (exactly two lines; tracked in git) |
-| Repo `.gitignore` (graphify-relevant lines) | `graphify-out/`, `.opencode/`, `agents.md`, `opencode.json`, `tests/` |
+| Repo `.gitignore` (graphify-relevant lines) | `graphify-out/`, `.opencode/`, [[agents|mb-3-cs]], `opencode.json`, `tests/` |
 | `graphify-out/.graphify_build.json` | `{"gitignore": false}` — persisted from a prior `--no-gitignore` run; sticks until reset |
 | `graphify-out/.graphify_root` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs` (absolute, machine-specific) |
 
-`.graphifyignore` does not list `agents.md` though `.gitignore` does — no
+`.graphifyignore` does not list [[agents|mb-3-cs]] though `.gitignore` does — no
 effect (markdown is not a code-extraction target).
 
 ## Current graph state — mb-3-cs (verified live 2026-09-08)
@@ -91,9 +91,9 @@ effect (markdown is not a code-extraction target).
 
 | Item | State |
 |---|---|
-| AGENTS.md (mb-3-cs) | `<!-- BEGIN GRAPH MEMORY GUIDANCE -->` … `<!-- END GRAPH MEMORY GUIDANCE -->` block, lines 102–126; encodes the graph-provenance check; single shared block for GBrain + Graphify guidance (owner: `mybizz-os-docs/memory-master-explainer.md`) |
-| Git hooks / merge driver | Not installed, not registered — deliberate (decision record: `graphify-explainer.md`) |
-| mb-3-cs project status | Paused (`opencode/opencode-config.md`) — deployment waits on PDLF completion |
+| AGENTS.md (mb-3-cs) | `<!-- BEGIN GRAPH MEMORY GUIDANCE -->` … `<!-- END GRAPH MEMORY GUIDANCE -->` block, lines 102–126; encodes the graph-provenance check; single shared block for GBrain + Graphify guidance (owner: [[memory-master-explainer|Master Explainer]]) |
+| Git hooks / merge driver | Not installed, not registered — deliberate (decision record: [[graphify-explainer|Graphify Explainer]]) |
+| mb-3-cs project status | Paused ([[opencode-config|OpenCode Configuration]]) — deployment waits on PDLF completion |
 | GBrain | Never ingests `graphify-out/`; no shared backend; separate MCP servers |
 | Community labels | Deterministic representative-node names (LLM labeling package `anthropic` not installed) — accepted state |
 

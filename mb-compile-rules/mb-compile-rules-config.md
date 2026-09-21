@@ -9,8 +9,8 @@ date-created: 2026-09-08
 
 Canonical current-state configuration record. Agent-facing. States facts,
 not history or rules — the procedure itself lives in the skill's own
-`SKILL.md` (same folder); commands in `mb-compile-rules-reference.md`;
-reasoning in `mb-compile-rules-explainer.md`. All values verified live
+`SKILL.md` (same folder); commands in [[mb-compile-rules-reference|mb-compile-rules Reference]];
+reasoning in [[mb-compile-rules-explainer|mb-compile-rules Explainer]]. All values verified live
 2026-09-08 unless noted.
 
 ## Identity
@@ -39,16 +39,16 @@ reasoning in `mb-compile-rules-explainer.md`. All values verified live
 | Deployment target | All rules global (`cupcake.global.policies.*` package namespace) |
 | Rule-change method (developer-stated) | A similar rules file is created/edited in `rules-cupcake-global`; this skill compiles it; every change is thoroughly tested on implementation |
 | Binaries | `cupcake` (18.4 MB) and `opa` (47.4 MB) at `~/.cupcake/bin/`; `/usr/local/bin/cupcake` symlink. **The agent never executes `cupcake` directly — standing rule** (see reference) |
-| Downstream system | Cupcake — **ACTIVE** (reactivation completed and verified 2026-09-08, the same day this suite was written; status: `cupcake-config.md`) |
+| Downstream system | Cupcake — **ACTIVE** (reactivation completed and verified 2026-09-08, the same day this suite was written; status: [[cupcake-config|Cupcake Configuration]]) |
 
 ## Integration facts
 
 | Item | State |
 |---|---|
-| Companion suite | `cupcake/cupcake-config.md` + `cupcake-reference.md` + `cupcake-explainer.md` — the system this skill feeds |
+| Companion suite | [[cupcake-config|Cupcake Configuration]] + [[cupcake-reference|Usage, Invocation, and Worked Examples]] + [[cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]] — the system this skill feeds |
 | Sibling skills | `mb-sentinel-review`, `mb-submit-memory` — same custom-skill family; no structural coupling |
 | Register | `register-global` lists `rules-cupcake-global` (19 documents) |
-| Governance principles | `security-global/principles/sec-review-before-trust.md`, `security-global/infrastructure/sec-dependency-skill-supply-chain.md`, `sec-defense-in-depth.md` — this pipeline is their enforcement-authoring arm |
+| Governance principles | [[sec-review-before-trust|Review Before Trust]], [[sec-dependency-skill-supply-chain|Dependency and Skill Supply Chain]], [[sec-defense-in-depth|Defense in Depth]] — this pipeline is their enforcement-authoring arm |
 
 ## Worked precedent (2026-09-08)
 
@@ -68,4 +68,4 @@ standing pattern for any future rule change.
   compiled, tested 13/13, and is now enforced).
 - New Cupcake requirement discovered the same day: every project folder the
   agent works in needs the `.cupcake/policies/opencode` + `.cupcake/system`
-  skeleton, or the checker crashes on boot there (see `cupcake-config.md`).
+  skeleton, or the checker crashes on boot there (see [[cupcake-config|Cupcake Configuration]]).

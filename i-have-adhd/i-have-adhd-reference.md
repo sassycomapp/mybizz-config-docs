@@ -7,19 +7,19 @@ date-created: 2026-09-19
 
 # i-have-adhd — Reference: Invocation, Operation, Update
 
-Companion to `i-have-adhd-config.md` (current installed state, open items) and
-`i-have-adhd-explainer.md` (design reasoning). Agent-facing. The full ruleset
+Companion to [[i-have-adhd-config|Configuration]] (current installed state, open items) and
+[[i-have-adhd-explainer|Explainer]] (design reasoning). Agent-facing. The full ruleset
 lives in the skill's own `SKILL.md` (loaded into the session prompt on
 invocation); this doc carries what is needed to invoke, run, constrain,
 update, and remove the skill on this machine.
 
-Config-management set: `i-have-adhd-exam-plan.md` (transient job-spec — read
-second, every exam run), `i-have-adhd-exam-report.md` (last verified state),
-`i-have-adhd-log.md` (chronological events), `i-have-adhd-learnings.md`
+Config-management set: [[i-have-adhd-exam-plan|Exam Plan]] (transient job-spec — read
+second, every exam run), [[i-have-adhd-exam-report|Exam Report]] (last verified state),
+[[i-have-adhd-log|Log]] (chronological events), [[i-have-adhd-learnings|Learnings]]
 (transient knowledge). The exam skill's canonical source is
-`i-have-adhd-skill.md` (installed as `mb-config-i-have-adhd`; the installed
+[[i-have-adhd-skill|I Have Adhd Skill]] (installed as `mb-config-i-have-adhd`; the installed
 copy is the only executing one — copy, never move). Research provenance:
-`i-have-adhd-intro.md` (third-party sources — not verified state).
+[[i-have-adhd-intro|I Have Adhd Intro]] (third-party sources — not verified state).
 
 ---
 
@@ -92,7 +92,7 @@ What the install wrote on this machine (2026-09-19):
 | `opencode.json` | Nothing — no plugin registration, no MCP entry |
 
 Manual fallback (no npx skills CLI): fetch the upstream `SKILL.md` raw file
-and write it into the skill directory (per `i-have-adhd-intro.md` Option B;
+and write it into the skill directory (per [[i-have-adhd-intro|I Have Adhd Intro]] Option B;
 the exact upstream raw URL is not verified here — open item).
 
 ## Always-on toggle
@@ -145,7 +145,7 @@ for the npx skills CLI's conventional path).
 - Do not assume `stop adhd mode` survives a session — the marker re-applies the ruleset at every new session start; the phrase is mid-session only.
 - Do not hand-patch the installed `SKILL.md` expecting changes to survive a reinstall — it is vendor material; changes arrive via upstream and reinstall.
 - Do not remove the `~/.config/skills` symlink as part of uninstalling this skill.
-- Do not treat `i-have-adhd-intro.md` as verified state — it is research notes assembled from third-party reviews; several of its specifics (star counts, marker path, install layout) are unverified or stale for this machine.
+- Do not treat [[i-have-adhd-intro|I Have Adhd Intro]] as verified state — it is research notes assembled from third-party reviews; several of its specifics (star counts, marker path, install layout) are unverified or stale for this machine.
 - Do not run deep design or architecture sessions expecting exploratory output while the marker is present, without either saying `normal mode` or starting the session with the marker removed.
 - Do not create a second activation path for the same ruleset (a duplicate skill folder or a second slash-command file) — it would load the same instructions twice into the session prompt. The installer's own registry copy at `~/.agents/skills/i-have-adhd/` is documented state (config §Install surface), not a violation; manually created duplicates remain prohibited.
 - Do not describe the installed bundle as pinned to a specific upstream version or HEAD — no pin exists (config open item 2).

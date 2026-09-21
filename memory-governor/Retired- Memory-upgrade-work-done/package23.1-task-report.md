@@ -19,12 +19,12 @@ dream.
 
 ---
 
-## Group A — mb-3-cs-project-library `agents.md`
+## Group A — mb-3-cs-project-library [[agents|mb-3-cs]]
 
 - Pre-flight: diff was exactly the 12-line `## Anvil Agent References` section
   from the Package 23 Plan; no credentials; the 4 frontmatter repairs were already
-  committed (HEAD `4502201`); only `agents.md` was modified.
-- Staged `agents.md` only; committed `0eed750` —
+  committed (HEAD `4502201`); only [[agents|mb-3-cs]] was modified.
+- Staged [[agents|mb-3-cs]] only; committed `0eed750` —
   `docs(agents): document Anvil Agent References skill paths`; pushed
   `4502201..0eed750` → `main`. Branch `## main...origin/main`.
 
@@ -42,7 +42,7 @@ dream.
 
 ## GBrain synchronization
 
-- Dry-run `4502201f..0eed7505` — Modified: `agents.md` (correct source ID/path, no
+- Dry-run `4502201f..0eed7505` — Modified: [[agents|mb-3-cs]] (correct source ID/path, no
   `git pull`, no parse failures).
 - Live sync `Synced 4502201f..0eed7505: +0/~1/-0` — 0 chunks created, no errors, no
   `--skip-failed`, no dream (documentation-only change).
@@ -75,7 +75,7 @@ dream.
 
 ## Files changed (this package)
 
-1. `mb-3-cs-project-library/agents.md` (committed `0eed750`)
+1. [[agents|mb-3-cs]] (committed `0eed750`)
 2. `project-template/dev-(SLUG)/(slug)-project-library/opencode.json` (committed `39bac4d`)
 3. `project-template/dev-(SLUG)/(slug)-project-library/opencode.json.backup-2026-08-13` (deleted, was untracked)
 

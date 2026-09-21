@@ -10,20 +10,20 @@ skill holds the **procedure** only — expected values live in the spec doc and
 are read fresh at the start of every run. The submission skill is working
 well; this exam verifies that and repairs nothing.
 
-- Spec: `mb-submit-memory/mb-submit-memory-config.md` — read it first, every run
-- **Exam plan: `mb-submit-memory/mb-submit-memory-exam-plan.md` — read second,
+- Spec: [[mb-submit-memory-config|Configuration]] — read it first, every run
+- **Exam plan: [[mb-submit-memory-exam-plan|Exam Plan]] — read second,
   every run.** The plan-driven cycle: the config-manager synthesizes this plan
   fresh before each run (from spec + last report + log + learnings) and this
   skill executes it in hand. The plan carries run-specifics and deltas; the
   **standing check inventory lives in this skill** (below) — permanent
   occurrences graduate here, never into plans
-- Reference: `mb-submit-memory/mb-submit-memory-reference.md` — invocation,
+- Reference: [[mb-submit-memory-reference|Reference: Usage, Invocation, and the Full Cycle]] — invocation,
   the full submission cycle, prerequisites
-- Report: `mb-submit-memory/mb-submit-memory-exam-report.md` — one file,
+- Report: [[mb-submit-memory-exam-report|Exam Report]] — one file,
   overwritten each run (write-then-replace)
-- Log: `mb-submit-memory/mb-submit-memory-log.md` — one run row per exam;
+- Log: [[mb-submit-memory-log|Log]] — one run row per exam;
   free rows for notable events witnessed between runs
-- Learnings: `mb-submit-memory/submit-memory-learnings.md` — file new
+- Learnings: [[submit-memory-learnings|Learnings]] — file new
   patterns/nuances; delete entries once graduated into a permanent home
 - The system's own operational learnings:
   `/mnt/c/mybizz/logs/mb-submit-memory/learnings.md` — read for context; the
@@ -133,14 +133,14 @@ developer-run request bundled into ONE request at the gate.
 
 ## Report
 
-Write `mb-submit-memory-exam-report.md`: verdict line; per-tier tables (check
+Write [[mb-submit-memory-exam-report|Exam Report]]: verdict line; per-tier tables (check
 ID, expected, actual, result); findings with class + evidence + recommended
 repair + risk; runner attribution for every deferred item (guard-forbidden vs
 unlock-gated); overwritten in full each run (write-then-replace: failed runs
 never touch the prior report; written before any pruning). Then: one run row
-appended to `mb-submit-memory-log.md` (run-row format per
-`config-manager-reference.md`); new learnings filed to
-`submit-memory-learnings.md`.
+appended to [[mb-submit-memory-log|Log]] (run-row format per
+[[config-manager-reference|Reference: Commands, Procedures]]); new learnings filed to
+[[submit-memory-learnings|Learnings]].
 
 ## Gate protocol
 

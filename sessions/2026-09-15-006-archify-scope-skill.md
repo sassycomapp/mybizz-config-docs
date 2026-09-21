@@ -21,7 +21,7 @@ tags:
 
 Session number 006 (per the developer sessions log). Documents the design,
 installation, and first live run of the `mb-archify-scope` front-of-pipe skill,
-plus the Archify authoring learnings gained from the `memory-ecosystem` diagram.
+plus the Archify authoring learnings gained from the [[2026-09-15-memory-ecosystem|Run Learnings (memory-ecosystem 2026-09-15)]] diagram.
 
 ## What happened this session
 
@@ -35,13 +35,13 @@ plus the Archify authoring learnings gained from the `memory-ecosystem` diagram.
    with the developer (Intent, ASK, Context, Preliminary scope, Scope the source,
    Feasibility probe, Report and gate, Handoff contract) plus a Phase 9
    close-out (learnings) added during the run. Deliverables:
-   - Repo spec: `C:\mybizz\mybizz-config-docs\archify\archify-scope-skill.md`
+   - Repo spec: [[archify-scope-skill|Scoping Skill Specification]]
    - Installed skill: `~/.config/opencode/skills/mb-archify-scope/SKILL.md`
      (invoked as `/mb-archify-scope`; rename from `mb-archify-scoping`)
    - Output folder: `C:\mybizz\mybizz-config-docs\archify\output\`
 
 3. **First live run — memory-ecosystem architecture diagram.** Scope approved:
-   `architecture` type (guide-consistent), 9 primary nodes, one store with two
+   [[architecture|Architecture]] type (guide-consistent), 9 primary nodes, one store with two
    badges (GBrain: mirror/durable), read paths as primary nodes, one
    `security-group` "durable gate" boundary. Probe (nodes-only) passed before
    connecting. Authoring converged 17 → 0 diagnostics over two focused repair
@@ -62,18 +62,18 @@ plus the Archify authoring learnings gained from the `memory-ecosystem` diagram.
      `image input not supported`)
 
 5. **Output artifacts.**
-   - `output/memory-ecosystem-scope.md` (Scope Card)
+   - [[memory-ecosystem-scope|memory-ecosystem]] (Scope Card)
    - `output/memory-ecosystem-header.json` (machine contract)
    - `output/memory-ecosystem-probe.json` (stub probe — passes)
    - `output/memory-ecosystem-draft.json` (frozen candidate)
    - `output/memory-ecosystem-render.html` (delivered artifact)
    - `output/memory-ecosystem-render.visual-check.*.png` (+ contact sheet + JSON)
-   - `output/learnings/2026-09-15-memory-ecosystem.md` (10 run learnings)
+   - [[2026-09-15-memory-ecosystem|Run Learnings (memory-ecosystem 2026-09-15)]] (10 run learnings)
 
 ## Key learnings (detailed in the run learnings file)
 
 - Type choice is the highest-leverage scoping decision; run
-  `archify guide "<scenario>" --json` at scope time; prefer `architecture`
+  `archify guide "<scenario>" --json` at scope time; prefer [[architecture|Architecture]]
   (free pos, edge-tolerant) unless grid semantics are required
 - Probe (components+boundary stub) before connecting — catches
   desktop-readability/font-scale and overlap classes pre-flight
@@ -94,11 +94,11 @@ plus the Archify authoring learnings gained from the `memory-ecosystem` diagram.
   developer's `cp /tmp/opencode/installed-SKILL.md
   ~/.config/opencode/skills/mb-archify-scope/SKILL.md` to land (skill-directory
   writes are blocked for the agent by policy)
-- **Git**: `archify-scope-skill.md` and `archify/output/` are new/untracked in
+- **Git**: [[archify-scope-skill|Scoping Skill Specification]] and `archify/output/` are new/untracked in
   `mybizz-config-docs`; also a pre-existing modification to
-  `gbrain/gbrain-explainer.md` (not from this session) — commit/push pending
+  [[gbrain-explainer|Explainer]] (not from this session) — commit/push pending
   developer instruction
-- The archify GBrain knowledge gap noted in `archify-config.md` (no dedicated
+- The archify GBrain knowledge gap noted in [[archify-config|Configuration]] (no dedicated
   GBrain page) is partially addressed by this session page
 
 ## Next steps

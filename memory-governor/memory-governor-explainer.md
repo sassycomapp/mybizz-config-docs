@@ -9,8 +9,8 @@ date-created: 2026-09-05
 
 *Companion note: for current confirmed state — the system is ACTIVE as of
 2026-09-08, with every listed defect resolved — see
-`memory-governor-config.md`. For procedures, see
-`memory-governor-reference.md`.*
+[[memory-governor-config|Memory Governor Configuration]]. For procedures, see
+[[memory-governor-reference|Usage, Invocation, and Incident Response]].*
 
 ## 1. Opening
 
@@ -257,12 +257,12 @@ guaranteed to require human review.
 
 This suite participates in the config-management system (`mb-config-manager`).
 The roles of the seven suite files, and the exam cycle that runs them, are the
-architecture described in `config-manager-explainer.md` — emulated from the
+architecture described in [[config-manager-explainer|Explainer]] — emulated from the
 PostgreSQL pilot. The short local version:
 
-- `memory-governor-config.md` is the **spec** — the ideal state every exam
+- [[memory-governor-config|Memory Governor Configuration]] is the **spec** — the ideal state every exam
   checks against.
-- Before each exam run, the config-manager synthesizes `memory-governor-exam-plan.md`:
+- Before each exam run, the config-manager synthesizes [[memory-governor-exam-plan|Exam Plan]]:
   a fresh job-spec built from this spec, the last report, the log, and the
   learnings. The plan is transient (the file is live; contents rewritten each
   cycle).
@@ -275,8 +275,8 @@ PostgreSQL pilot. The short local version:
   (this exam cross-references; quick row counts permitted).
 - Several checks are permanently **developer-run**: credentialed registry
   checks, the full test suite, the auto-start execution, recovery drills.
-- The run rewrites `memory-governor-exam-report.md` (current state, no
-  history), appends one row to `memory-governor-log.md`, files new learnings,
+- The run rewrites [[memory-governor-exam-report|Exam Report]] (current state, no
+  history), appends one row to [[memory-governor-log|Log]], files new learnings,
   and prunes absorbed entries.
 
 ## 15. S.W.O.T.
@@ -317,14 +317,14 @@ remaining dependency named.
 
 ---
 
-*Companion documents: `memory-governor-config.md` (the spec),
-`memory-governor-reference.md` (procedures and incident response),
-`memory-governor-exam-plan.md` / `memory-governor-exam-report.md` /
-`memory-governor-log.md` / `memory-governor-learnings.md` (config-management
-set), `memory-governor-skill.md` (exam skill canonical source). Architecture:
-`mb-config-manager/config-manager-explainer.md`. The full memory-system map:
-`memory-master-explainer.md`. The front end: `mb-submit-memory` (its own
-suite). System health procedure: `memory-functionality-audit.md`
+*Companion documents: [[memory-governor-config|Memory Governor Configuration]] (the spec),
+[[memory-governor-reference|Usage, Invocation, and Incident Response]] (procedures and incident response),
+[[memory-governor-exam-plan|Exam Plan]] / [[memory-governor-exam-report|Exam Report]] /
+[[memory-governor-log|Log]] / [[memory-governor-learnings|Learnings]] (config-management
+set), [[memory-governor-skill|Memory Governor Skill]] (exam skill canonical source). Architecture:
+[[config-manager-explainer|Explainer]]. The full memory-system map:
+[[memory-master-explainer|Master Explainer]]. The front end: `mb-submit-memory` (its own
+suite). System health procedure: [[memory-functionality-audit|Full-System Procedure]]
 (mybizz-os-docs).*
 
 *End of document*

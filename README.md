@@ -16,14 +16,14 @@ steady-state functional reference only.
 
 | Folder | Reference document |
 |---|---|
-| `opencode/` | `opencode-reference.md` |
-| `gstack/` | `gstack-reference.md`, `gstack-skills-reference.md` |
-| `gbrain/` | `gbrain-reference.md` |
-| `postgresql/` | `postgresql-reference.md` |
-| `matt-pocock-skills/` | `matt-pocock-skills-reference.md` |
-| `anvil-agent-references/` | `anvil-agent-references-reference.md` |
-| `magdoub-wireframe/` | `magdoub-wireframe-reference.md` |
-| `graphify/` | `graphify-reference.md` |
+| `opencode/` | [[opencode-reference|Commands, Verification, Troubleshooting]] |
+| `gstack/` | [[gstack-reference|GStack Reference]], [[gstack-skills-reference|GStack Skills Reference]] |
+| `gbrain/` | [[gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]] |
+| `postgresql/` | [[postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]] |
+| `matt-pocock-skills/` | [[matt-pocock-skills-reference|Matt Pocock Skills Reference]] |
+| `anvil-agent-references/` | [[anvil-agent-references-reference|Reference: Install, Skills, and Technical Detail]] |
+| `magdoub-wireframe/` | [[magdoub-wireframe-reference|Reference: Invocation, Operation, Update]] |
+| `graphify/` | [[graphify-reference|Graphify Reference]] |
 
 Plus, directly in this folder: `projects-config-register.md` — the register of every
 project's `{slug}-config.yaml` (see below).
@@ -48,8 +48,8 @@ of sync. Concretely, this shows up as:
 - **Each project's configuration lives in exactly one file** — its own `{slug}-config.yaml`,
   registered in `projects-config-register.md` — not duplicated in `docmap.md`, not
   scattered across skill definitions.
-- **Reference documents point at each other instead of repeating content.** `gbrain-reference.md`
-  defers to `postgresql-reference.md` for database operational detail rather than duplicating
+- **Reference documents point at each other instead of repeating content.** [[gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]]
+  defers to [[postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]] for database operational detail rather than duplicating
   it. `daily-ops.md` references config facts rather than hardcoding them.
 - **ADRs use filename-based identity, not sequential numbers** — the same reasoning applied
   one level further: a number is a second, fragile identity alongside a document's real name,

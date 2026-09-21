@@ -10,20 +10,20 @@ Exams OpenCode's configuration state against its spec. This skill holds the
 the start of every run. OpenCode is working well; this exam verifies that and
 repairs nothing.
 
-- Spec: `opencode/opencode-config.md` — read it first, every run
-- **Exam plan: `opencode/opencode-exam-plan.md` — read second, every run.**
+- Spec: [[opencode-config|OpenCode Configuration]] — read it first, every run
+- **Exam plan: [[opencode-exam-plan|Exam Plan]] — read second, every run.**
   The plan-driven cycle: the config-manager synthesizes this plan fresh before
   each run (from spec + last report + log + learnings) and this skill executes it
   in hand. The plan carries run-specifics and deltas; the **standing check
   inventory lives in this skill** (below) — permanent occurrences graduate here,
   never into plans
-- Reference: `opencode/opencode-reference.md` — restart, verification,
+- Reference: [[opencode-reference|Commands, Verification, Troubleshooting]] — restart, verification,
   troubleshooting, deny-list behavior
-- Report: `opencode/opencode-exam-report.md` — one file, overwritten each run
+- Report: [[opencode-exam-report|Exam Report]] — one file, overwritten each run
   (write-then-replace)
-- Log: `opencode/opencode-log.md` — one run row per exam; free rows for notable
+- Log: [[opencode-log|Log]] — one run row per exam; free rows for notable
   events witnessed between runs
-- Learnings: `opencode/opencode-learnings.md` — file new patterns/nuances; delete
+- Learnings: [[opencode-learnings|Learnings]] — file new patterns/nuances; delete
   entries once graduated into a permanent home
 
 ## Scope boundary (anti-duplication)
@@ -37,9 +37,9 @@ repairs nothing.
 - **GBrain server liveness** belongs to `mb-config-gbrain` — this exam owns the
   `mcp.gbrain` **config entry only** (present, local server), never server state.
 - **Session database** and its cleanup belong to
-  `opencode-project-session-data-integrity.md` — agent content reads are
+  [[opencode-project-session-data-integrity|Project & Session Data Integrity]] — agent content reads are
   guard-denied; this exam checks presence only (directory listing), never content.
-- **Full skill inventory** belongs to `skill-index.md` (docs-managed) — this exam
+- **Full skill inventory** belongs to [[skill-index|Skill Index]] (docs-managed) — this exam
   checks discovery **mechanics** (that the documented real install methods still
   resolve for the installed `mb-config-*` set), never re-audits the inventory.
 - **PostgreSQL/data-model state** belongs to `mb-config-postgresql` — OpenCode's
@@ -82,7 +82,7 @@ alternate path.
   search argument (run #1, 2026-09-15) — write no token into any command text,
   including read-only inspection args; use path/token-free glob forms instead.
 - Never read `~/.config/opencode/opencode.jsonc` or
-  `opencode-project-session-data-integrity.md` raw — sensitive-data guard class;
+  [[opencode-project-session-data-integrity|Project & Session Data Integrity]] raw — sensitive-data guard class;
   use `opencode debug config` for resolved state, presence checks for files.
 
 ## Run #1 lessons graduated (2026-09-15)
@@ -143,12 +143,12 @@ alternate path.
 
 ## Report
 
-Write `opencode-exam-report.md`: verdict line; per-tier tables (check ID,
+Write [[opencode-exam-report|Exam Report]]: verdict line; per-tier tables (check ID,
 expected, actual, result); findings with class + evidence + recommended repair +
 risk; runner attribution for every deferred item (guard-forbidden vs
 unlock-gated); overwritten in full each run (write-then-replace: failed runs
 never touch the prior report; written before any pruning). Then: one run row
-appended to `opencode-log.md` (run-row format per `config-manager-reference.md`);
+appended to [[opencode-log|Log]] (run-row format per [[config-manager-reference|Reference: Commands, Procedures]]);
 new learnings filed.
 
 ## Gate protocol
@@ -158,7 +158,7 @@ new learnings filed.
   edits its own config, its own skill, or the plugin tree. Every repair is
   developer-run or proposed.
 - Spec-doc corrections → flagged to docs governance, never applied here (e.g. a
-  version drift, or the `opencode-config.md` five-part suite table if the suite
+  version drift, or the [[opencode-config|OpenCode Configuration]] five-part suite table if the suite
   set changes).
 - Deny-list (never heal, never touch): `~/.config/opencode/opencode.jsonc`
   content (sensitive-data class — agent never reads) · the session-data doc

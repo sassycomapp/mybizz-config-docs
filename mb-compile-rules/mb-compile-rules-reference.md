@@ -11,8 +11,8 @@ Execution reference for `/mb-compile-rules`. **The authoritative procedure
 is the skill's own `SKILL.md` in this folder — it loads automatically on
 invocation and is never summarized away.** This document carries the
 environment-verified facts and the rules that shape execution. Current
-state: `mb-compile-rules-config.md`. Why the design is what it is:
-`mb-compile-rules-explainer.md`.
+state: [[mb-compile-rules-config|mb-compile-rules Configuration]]. Why the design is what it is:
+[[mb-compile-rules-explainer|mb-compile-rules Explainer]].
 
 ## Invocation
 

@@ -19,8 +19,8 @@ catches overlap and desktop-readability/font-scale failures pre-flight.
 Origin: session 2026-09-15 (006). Proven live on the memory-ecosystem
 architecture diagram: type chosen by keyword ("memory flows" → dataflow) had
 failed earlier with 42→21→12 route/corridor diagnostics; re-scoped as
-`architecture` via the guide, the same subject validated clean in two repair
+[[architecture|Architecture]] via the guide, the same subject validated clean in two repair
 rounds (17→0 diagnostics).
 
-Canonical spec: `C:\mybizz\mybizz-config-docs\archify\archify-scope-skill.md` —
+Canonical spec: [[archify-scope-skill|Scoping Skill Specification]] —
 installed copy `~/.config/opencode/skills/mb-archify-scope/SKILL.md`.

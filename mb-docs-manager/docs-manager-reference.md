@@ -10,7 +10,7 @@ date-created: 2026-09-10
 Execution procedure for the `mb-docs-manager` skill (V11). `SKILL.md` in the
 installed folder (`~/.config/opencode/skills/mb-docs-manager/`) is the
 authoritative definition; this document is the operational form. Why the
-rules are shaped this way: `docs-manager-explainer.md`.
+rules are shaped this way: [[docs-manager-explainer|Explainer]].
 
 ## Invocation
 

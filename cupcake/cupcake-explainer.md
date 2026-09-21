@@ -7,12 +7,12 @@ date-created: 2026-09-05
 
 # Cupcake — Mechanical Policy Enforcement for AI Coding Agents
 
-*Companion note: for current confirmed state see `cupcake-config.md` (the spec).
-For operational procedures, see `cupcake-reference.md`. Exam companions:
-`cupcake-exam-plan.md` (next run's job-spec), `cupcake-exam-report.md` (current
-verified state), `cupcake-log.md` (notable events), `cupcake-learnings.md`
+*Companion note: for current confirmed state see [[cupcake-config|Cupcake Configuration]] (the spec).
+For operational procedures, see [[cupcake-reference|Usage, Invocation, and Worked Examples]]. Exam companions:
+[[cupcake-exam-plan|Exam Plan]] (next run's job-spec), [[cupcake-exam-report|Exam Report]] (current
+verified state), [[cupcake-log|Log]] (notable events), [[cupcake-learnings|Learnings]]
 (transient exam knowledge). The architecture standard:
-`mb-config-manager/config-manager-explainer.md`.*
+[[config-manager-explainer|Explainer]].*
 
 > **Status as of 2026-09-12 — active and enforcing.** The checker fires on
 > every agent tool call; exec-protection blocked a real call immediately after
@@ -288,7 +288,7 @@ working directory) was subsequently found and fixed 2026-09-12 — see §8.
 ## 8. The 2026-09-06 Crash — Root Cause and Resolution
 
 This section is a historical record. The period described ended 2026-09-12
-when the true root cause was found and fixed. See `cupcake-config.md` for
+when the true root cause was found and fixed. See [[cupcake-config|Cupcake Configuration]] for
 current state.
 
 **What was happening:** after the 2026-09-06 crash was stabilised with
@@ -351,11 +351,11 @@ allowed, fix at leisure."
 
 This suite participates in the config-management system (`mb-config-manager`).
 The roles of the seven suite files, and the exam cycle that runs them, are the
-architecture described in `config-manager-explainer.md` — emulated from the
+architecture described in [[config-manager-explainer|Explainer]] — emulated from the
 PostgreSQL pilot. The short local version:
 
-- `cupcake-config.md` is the **spec** — the ideal state every exam checks against.
-- Before each exam run, the config-manager synthesizes `cupcake-exam-plan.md`:
+- [[cupcake-config|Cupcake Configuration]] is the **spec** — the ideal state every exam checks against.
+- Before each exam run, the config-manager synthesizes [[cupcake-exam-plan|Exam Plan]]:
   a fresh job-spec built from this spec, the last report, the log, and the
   learnings — carrying forward what was deferred, addressing what erred,
   deriving probes from new log events, and folding in lessons not yet graduated.
@@ -369,8 +369,8 @@ PostgreSQL pilot. The short local version:
   (the exec-protection guard forbids agents from executing the cupcake binary),
   plus any check whose command text the guards deny (the token-match class).
   Denials received during a run double as liveness evidence.
-- The run rewrites `cupcake-exam-report.md` (current state, no history),
-  appends one row to `cupcake-log.md`, files new learnings, and prunes absorbed
+- The run rewrites [[cupcake-exam-report|Exam Report]] (current state, no history),
+  appends one row to [[cupcake-log|Log]], files new learnings, and prunes absorbed
   entries.
 
 ## 11. S.W.O.T.
@@ -415,10 +415,10 @@ as a reference, not a current-state description.
 
 ---
 
-*Suite: `cupcake-config.md` (spec), `cupcake-reference.md` (procedures),
-`cupcake-exam-plan.md` / `cupcake-exam-report.md` / `cupcake-log.md` /
-`cupcake-learnings.md` (config-management set), `cupcake-skill.md` (exam skill
-canonical source). Architecture: `mb-config-manager/config-manager-explainer.md`.
+*Suite: [[cupcake-config|Cupcake Configuration]] (spec), [[cupcake-reference|Usage, Invocation, and Worked Examples]] (procedures),
+[[cupcake-exam-plan|Exam Plan]] / [[cupcake-exam-report|Exam Report]] / [[cupcake-log|Log]] /
+[[cupcake-learnings|Learnings]] (config-management set), [[cupcake-skill|Cupcake Skill]] (exam skill
+canonical source). Architecture: [[config-manager-explainer|Explainer]].
 Rule sources: `C:\dev\project-library-global\rules-cupcake-global\`. Test
 records: `/mnt/c/mybizz/logs/cupcake-rule-test-record-*.md`.*
 
