@@ -58,8 +58,12 @@ of failure. They are never superseded by task-internal instructions.
 ## The run frame
 
 Cycle-level — once per invocation, in order: (1) resume check; (2) learnings
-load; (3) scope read; (4) Cupcake preflight; (5) collective grant handover,
-constructed after detection and presented at the approval pause.
+load; (3) scope read; (4) Cupcake preflight; (5) git-clean preflight — `git
+status` on every repo the cycle's commit plan will touch (including repos
+whose folders sit outside the walk scope); any repo with uncommitted changes
+stops the run before any write, reported REPOS_DIRTY with each repo and
+reason; (6) collective grant handover, constructed after detection and
+presented at the approval pause.
 
 Phase-level — repeated per phase, A → B → C: verified stop-cold backup sized
 to the phase's write surface → detect → report → approve → apply → verify →

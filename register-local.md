@@ -47,15 +47,15 @@ doc-ids where basenames repeat.
 | matt-pocock-skills-config | matt-pocock-skills/matt-pocock-skills-config.md | matt-pocock-skills | docs-suite | Live |  |
 | matt-pocock-skills-explainer | matt-pocock-skills/matt-pocock-skills-explainer.md | matt-pocock-skills | docs-suite | Live |  |
 | matt-pocock-skills-reference | matt-pocock-skills/matt-pocock-skills-reference.md | matt-pocock-skills | docs-suite | Live |  |
-| align-docs-config | mb-align-docs/align-docs-config.md | mb-align-docs | docs-suite | Live |  |
-| align-docs-explainer | mb-align-docs/align-docs-explainer.md | mb-align-docs | docs-suite | Live |  |
-| align-docs-reference | mb-align-docs/align-docs-reference.md | mb-align-docs | docs-suite | Live |  |
+| align-docs-config | mb-align-docs/align-docs-config.md | mb-align-docs | docs-suite | Retired | folder removed 2026-09-22 (WP7 retirement of the superseded skill; content superseded by the mb-doccycle suite; 39-file backup at C:\backup-mb-doccycle\wp7-retirement-20260922T183427) |
+| align-docs-explainer | mb-align-docs/align-docs-explainer.md | mb-align-docs | docs-suite | Retired | folder removed 2026-09-22 (WP7 retirement; superseded by doccycle suite) |
+| align-docs-reference | mb-align-docs/align-docs-reference.md | mb-align-docs | docs-suite | Retired | folder removed 2026-09-22 (WP7 retirement; superseded by doccycle suite) |
 | mb-compile-rules-config | mb-compile-rules/mb-compile-rules-config.md | mb-compile-rules | docs-suite | Live |  |
 | mb-compile-rules-explainer | mb-compile-rules/mb-compile-rules-explainer.md | mb-compile-rules | docs-suite | Live |  |
 | mb-compile-rules-reference | mb-compile-rules/mb-compile-rules-reference.md | mb-compile-rules | docs-suite | Live |  |
-| docs-manager-config | mb-docs-manager/docs-manager-config.md | mb-docs-manager | docs-suite | Live |  |
-| docs-manager-explainer | mb-docs-manager/docs-manager-explainer.md | mb-docs-manager | docs-suite | Live |  |
-| docs-manager-reference | mb-docs-manager/docs-manager-reference.md | mb-docs-manager | docs-suite | Live |  |
+| docs-manager-config | mb-docs-manager/docs-manager-config.md | mb-docs-manager | docs-suite | Retired | folder removed 2026-09-22 (WP7 retirement; superseded by doccycle suite) |
+| docs-manager-explainer | mb-docs-manager/docs-manager-explainer.md | mb-docs-manager | docs-suite | Retired | folder removed 2026-09-22 (WP7 retirement; superseded by doccycle suite) |
+| docs-manager-reference | mb-docs-manager/docs-manager-reference.md | mb-docs-manager | docs-suite | Retired | folder removed 2026-09-22 (WP7 retirement; superseded by doccycle suite) |
 | sentinel-config | mb-sentinel-review/sentinel-config.md | mb-sentinel-review | docs-suite | Live |  |
 | sentinel-explainer | mb-sentinel-review/sentinel-explainer.md | mb-sentinel-review | docs-suite | Live |  |
 | sentinel-reference | mb-sentinel-review/sentinel-reference.md | mb-sentinel-review | docs-suite | Live |  |
@@ -68,12 +68,16 @@ doc-ids where basenames repeat.
 | sysdoc-creator-config | mb-sysdoc-creator/sysdoc-creator-config.md | mb-sysdoc-creator | docs-suite | Live |  |
 | sysdoc-creator-explainer | mb-sysdoc-creator/sysdoc-creator-explainer.md | mb-sysdoc-creator | docs-suite | Live |  |
 | sysdoc-creator-reference | mb-sysdoc-creator/sysdoc-creator-reference.md | mb-sysdoc-creator | docs-suite | Live |  |
-| wikilinks-config | mb-wikilinks/wikilinks-config.md | mb-wikilinks | docs-suite | Live |  |
-| wikilinks-explainer | mb-wikilinks/wikilinks-explainer.md | mb-wikilinks | docs-suite | Live |  |
-| wikilinks-reference | mb-wikilinks/wikilinks-reference.md | mb-wikilinks | docs-suite | Live |  |
+| wikilinks-config | mb-wikilinks/wikilinks-config.md | mb-wikilinks | docs-suite | Retired | folder removed 2026-09-22 (WP7 retirement; superseded by doccycle suite) |
+| wikilinks-explainer | mb-wikilinks/wikilinks-explainer.md | mb-wikilinks | docs-suite | Retired | folder removed 2026-09-22 (WP7 retirement; superseded by doccycle suite) |
+| wikilinks-reference | mb-wikilinks/wikilinks-reference.md | mb-wikilinks | docs-suite | Retired | folder removed 2026-09-22 (WP7 retirement; superseded by doccycle suite) |
 | memory-governor-config | memory-governor/memory-governor-config.md | memory-governor | docs-suite | Live |  |
 | memory-governor-explainer | memory-governor/memory-governor-explainer.md | memory-governor | docs-suite | Live |  |
 | memory-governor-reference | memory-governor/memory-governor-reference.md | memory-governor | docs-suite | Live |  |
+| doccycle-config | mb-doccycle/doccycle-config.md | mb-doccycle | docs-suite | Live | registered at source 2026-09-22 (WP7); workflow suite for the merged documentation-management skill |
+| doccycle-reference | mb-doccycle/doccycle-reference.md | mb-doccycle | docs-suite | Live | registered at source 2026-09-22 (WP7) |
+| doccycle-explainer | mb-doccycle/doccycle-explainer.md | mb-doccycle | docs-suite | Live | registered at source 2026-09-22 (WP7) |
+| doccycle-run-discipline | mb-doccycle/doccycle-run-discipline.md | mb-doccycle | docs-suite | Live | registered at source 2026-09-22 (WP7); the shared run frame, moved from os-reference-docs at WP1 |
 | 1-plan | memory-governor/Retired- Memory-upgrade-work-done/1-plan.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
 | 10.0-task-report | memory-governor/Retired- Memory-upgrade-work-done/10.0-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |
 | 10.1-task-report | memory-governor/Retired- Memory-upgrade-work-done/10.1-task-report.md | memory-governor/Retired- Memory-upgrade-work-done | docs-suite | Live |  |

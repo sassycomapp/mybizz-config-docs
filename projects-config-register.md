@@ -32,7 +32,7 @@ going forward, as a required step in the "start a project" protocol.
 ## GitHub repositories
 
 Maintained by the developer; mirrors the scope scaffold ([[mybizz-scope-list|Mybizz Scope List]]).
-The mb-docs-manager pre-flight runs `git status` on each — including repos whose folders are
+The mb-doccycle pre-flight runs `git status` on each — including repos whose folders are
 outside the walk scope.
 
 | repo | visibility | local path (WSL) |

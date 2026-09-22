@@ -12,7 +12,7 @@ in_scope: yes (scope scaffold, 2026-09-09)
 note: >
   canonical config/reference/explainer suites for system components, one
   folder per component; hosts projects-config-register.md (the register
-  of every project's {slug}-config.yaml); walked in scope by mb-docs-manager
+  of every project's {slug}-config.yaml); walked in scope by mb-doccycle
 
 folders_note: >
   one folder per component suite (archify, cupcake, gbrain, gstack, opencode,

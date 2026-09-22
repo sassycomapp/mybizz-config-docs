@@ -57,8 +57,11 @@ of sync. Concretely, this shows up as:
 
 ## Kept fresh by
 
-`mb-docs-manager` (installed skill — register verification is defined in its SKILL.md
-Section 3.1) — reads `projects-config-register.md` and cross-checks it against the real
-filesystem, flagging missing or orphaned entries. Registering a new project's config YAML
-here is a required step in the "start a project" protocol, checked by mb-docs-manager runs
-rather than after the fact.
+`mb-doccycle` (the documentation-management workflow, installed 2026-09-22 —
+register verification is defined in its phase specs and run frame) — reads
+`projects-config-register.md` and cross-checks it against the real
+filesystem, flagging missing or orphaned entries. Registering a new
+project's config YAML here is a required step in the "start a project"
+protocol, checked by mb-doccycle runs rather than after the fact. (The
+retired `mb-docs-manager` was superseded 2026-09-22; its suite folder was
+removed and its register rows retired.)
