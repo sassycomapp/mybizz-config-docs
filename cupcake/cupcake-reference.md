@@ -20,12 +20,15 @@ Bash-governance amendment live-tested 35/35, and the system-protection bash
 matcher corrected (its `/dev/` substring had halted every `/mnt/c/dev/` path
 and `/dev/null` redirect). Full record:
 `/mnt/c/mybizz/logs/cupcake-rule-test-record-2026-09-12.md`. The procedures
-below are the proven operational record. One load-bearing requirement: the
-engine boots only when the folder it runs in has the
-`.cupcake/policies/opencode` + `.cupcake/system` skeleton — the plugin now
-passes the session's project directory (`cwd: event.cwd`), so create the
-skeleton in every project folder before working there (see
-[[cupcake-config|Cupcake Configuration]]).
+below are the proven operational record. **Amended 2026-09-22 (set-and-forget):
+`failMode: open` is the environment default, and sessions in folders without a
+`.cupcake` skeleton evaluate global policies only via the fallback home
+`~/.config/cupcake/fallback` (WARN-logged per call) — launching from any folder
+is safe, with no per-folder preparation ever required.** One load-bearing
+requirement remains: any folder that DOES carry a `.cupcake` skeleton must keep
+at least one real local policy module in `.cupcake/policies/opencode` (the
+input-gated `cup-noop-fallback.rego` placeholder satisfies this) — OPA v1.19.1's
+wasm compiler panics on an aggregator-only bundle.
 
 ---
 
@@ -116,6 +119,46 @@ only asks the policy engine for a decision — it never executes a real tool
 call, so the plugin's `tool.execute.after` hook never fires. Only a genuine
 tool execution moves the count (see [[cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]] §7E).
 
+## `git-grant` — commit allowances (WP3, 2026-09-22)
+
+```
+git-grant --repo <folder> --count N --minutes M
+```
+
+Issues a bounded commit allowance for one repository: `git commit`,
+`git push`, and `git merge` in that repo are allowed while the entry is
+live, and each allowed action consumes one unit. `--minutes` is
+configurable (default 30, matching `mg-grant`'s fixed expiry). Writes the
+same generated-file discipline as `mg-grant`:
+`~/.config/cupcake/policies/opencode/cup-git-grants-data.rego`, package
+`cupcake.global.policies.git_grants_data` — never hand-edited.
+
+The compiled commits policy resolves the target repo from the command's
+`git -C <path>` when the command names one, otherwise from the session
+working directory (a cwd inside the repo matches by prefix). Publish
+(`npm/yarn/pnpm publish`) and the named deploy CLI invocations are
+outside the channel entirely — they deny absolutely regardless of any
+grant. Before the first `git-grant` call the file does not exist and
+every git commit/push/merge denies (fail-closed).
+
+**Worked example — full cycle:**
+```
+git-grant --repo /mnt/c/mybizz/mb-doccycle --count 2 --minutes 30
+cat ~/.config/cupcake/policies/opencode/cup-git-grants-data.rego
+# grants := { "/mnt/c/mybizz/mb-doccycle": {"count": 2, "expires_at_ns": ...} }
+
+# — a real `git commit -m "..."` in that repo (through the plugin) —
+# count now 1 — decremented by the plugin's tool.execute.after hook
+# — a second real commit — count now 0
+# — a third commit attempt — ❌ Policy Violation (or expiry prunes the entry)
+
+git-revoke: none — allowances expire; re-granting a repo updates the entry in place
+```
+
+**Important: a raw `cupcake eval` pipe exercises the allow/deny decision
+but not the decrement**, exactly as for path grants — the count moves
+only through genuine plugin-governed tool calls.
+
 ## Confirming the plugin is loaded exactly once
 
 ```bash
@@ -174,11 +217,20 @@ opa check (path-to-file.rego)
 
 Distinct from a normal live incident: **every** tool call fails with a bare
 `Cupcake exited with code 1` and no policy decision at all. Confirmed
-real-world trigger, 2026-09-06: build-mode tool calls (Bash, Glob, Read) all
-failed this way in the same session where identical read-only calls had
-succeeded earlier in plan mode — evidence the crash is specific to whichever
-enforcement path build mode invokes, never confirmed because the crash blocked
-every tool needed to investigate it.
+real-world triggers, 2026-09-06 and 2026-09-22 (full accounts in the
+[[cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]).
+
+**Since the 2026-09-22 set-and-forget amendment, this failure class cannot
+block the environment anymore:** `failMode: open` is the environment default
+(evaluation failures degrade to log-and-allow), and skeleton-less folders fall
+back to `~/.config/cupcake/fallback` instead of failing checker init. A crash
+of this shape after 2026-09-22 means the plugin file itself is damaged or
+missing — recover by restoring a backup
+(`cp ~/.config/opencode/plugin/cupcake.js.bak-20260922-pre-amendment ~/.config/opencode/plugin/cupcake.js`)
+and restarting.
+
+The historical diagnostic sequence remains valid for understanding either
+incident, and for any future pre-amendment plugin version:
 
 **Diagnostic sequence — developer's own terminal:**
 
@@ -309,9 +361,9 @@ remain the only way to rebuild the rule set.
 - Do not assume a package name is correct without confirming it matches the deployment folder — `cupcake.global.policies.*` for global, `cupcake.policies.*` for project-local. A mismatch loads silently and never fires.
 - Do not run `cupcake eval` (or any direct `cupcake` invocation) from the agent's own tool context — standing rule regardless of enforcement status; when active, `cupcake_exec_protection` blocks it mechanically. Hand the exact command to the developer.
 - Do not construct an indirect path around an exec-protection block — wrapper script, shell function, or any other means, for any reason, including testing or diagnosis.
-- Do not run `cupcake init` in a project that has not actually started — see config.md's project-init status.
+- Do not run `cupcake init` in a project that has not actually started — see config.md's project-init status. (Note: `cupcake init` stalled interactively without output when run in `~/.config/cupcake/fallback` on 2026-09-22; the fallback skeleton was built by selective copy from the proven makepdlf scaffold instead. Init is now optional everywhere — the fallback covers skeleton-less folders.)
 - Do not create a project-local copy of `cupcake.js`, symlinked or otherwise — exactly one copy, at the global path.
 - Do not use `time.*` or `opa.runtime().env` in any rule — both fail silently live.
 - Do not test the grant decrement with a raw `cupcake eval` pipe — the decrement hook never fires without a real tool execution.
 - Do not hand-edit `cup-grants-data.rego` — always `mg-grant`/`mg-revoke`.
-- Do not launch OpenCode from a folder that lacks the `.cupcake/policies/opencode` + `.cupcake/system` skeleton — the checker uses the session's project directory (via `cwd: event.cwd` in the plugin, fixed 2026-09-12), so the project must have the skeleton.
+- Every `.cupcake` skeleton must keep at least one real local policy module — never empty `policies/opencode` (the OPA wasm compiler panics on an aggregator-only bundle); the input-gated `cup-noop-fallback.rego` placeholder satisfies this and never fires.
