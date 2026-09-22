@@ -312,6 +312,39 @@ conversational approval is invisible (AGENTS.md/CLAUDE.md/opencode.json
 protections) cause real friction. This is accepted as a deliberate revisit
 decision, not an unresolved urgency.
 
+## 8A. The 2026-09-22 Crash and the Set-and-Forget Amendment
+
+The 2026-09-12 fix traded one failure mode for a hidden second one: the checker
+now ran in the session's project directory — but only makepdlf-project-library
+had ever been initialized with a `.cupcake` skeleton. Launching OpenCode from
+any other folder reproduced the total crash: checker init failed (no skeleton),
+`failMode: closed` blocked every tool call, and `failMode` by design does not
+cover init failures. The incident surfaced 2026-09-22 when enforcement was
+re-enabled from `project-library-global`.
+
+**Diagnosis, three layers deep:** (1) the missing skeleton; (2) the
+fail-closed default converting init failure into a total outage; (3) — found
+while building the fallback home — OPA v1.19.1's WASM compiler panics
+(`index out of range`) on a bundle whose aggregator module is the only real
+module, so an empty `policies/opencode` scaffold is itself a crash condition.
+Proven by controlled `opa build` tests: aggregator alone panics; aggregator
+plus a constant never-firing rule still panics (the optimizer prunes it);
+aggregator plus an input-gated rule compiles.
+
+**The set-and-forget amendment (2026-09-22, developer criteria: "never suffer
+another Cupcake crash without having to remember anything"):** two plugin
+changes — `failMode: open` becomes the environment default (a project may opt
+into closed), and a session folder without a `.cupcake` skeleton falls back to
+the global-only home `~/.config/cupcake/fallback` (WARN-logged per call), built
+once by selective copy from the proven makepdlf scaffold after `cupcake init`
+stalled interactively. Every existing skeleton was made boot-safe by placing
+the input-gated `cup-noop-fallback.rego` placeholder (gated on a session id no
+real session can carry; it never fires). **Live proof:** ten consecutive tool
+calls from the skeleton-less folder, each WARN-logged and each evaluated clean
+under enforcement. Consequence: per-folder initialization is now an opt-in that
+adds project-local policies, never a requirement — Cupcake runs with any repo,
+set and forgotten.
+
 ## 9. Known Limitations, Honestly Stated
 
 **Some rules block by default because Cupcake cannot see conversational

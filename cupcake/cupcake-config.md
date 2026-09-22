@@ -15,11 +15,12 @@ where a decision was made and the reasoning matters, see
 
 ---
 
-## Current operational status — ACTIVE (verified 2026-09-12)
+## Current operational status — ACTIVE (set-and-forget amendment live-verified 2026-09-22)
 
-**Cupcake is active and enforcing.** Verified live 2026-09-12: exec-protection
-blocked a real agent tool call immediately after session restart; every policy
-file compiles cleanly; the full hook chain fires correctly on every tool call.
+**Cupcake is active and enforcing everywhere, with no per-folder preparation.**
+Verified live 2026-09-22: the set-and-forget amendment (fail-open default +
+global-only fallback home) proven by ten consecutive tool calls from a
+never-initialized folder, each evaluated clean under enforcement.
 
 **Operational history — key events:**
 
@@ -31,6 +32,7 @@ file compiles cleanly; the full hook chain fires correctly on every tool call.
 | 2026-09-12 | Root cause of silent fail-open found and fixed: the plugin was spawning the checker without a working directory, so the checker looked for its rules in OpenCode's launch folder (not the project). One-line plugin fix (`cwd: event.cwd` in Bun.spawn). Live block confirmed immediately after restart. |
 | 2026-09-12 | **Bash-governance rule placed and live-verified** — the shell write channel (python/perl heredoc and -c/-e write execution, `sed -i`, `>`/`>>` redirects, `tee`, `cp`/`mv`/`ln` destination, `rm`/`touch`/`truncate` operands, `dd of=`) now feeds the same outside-project boundary, exempt list, grant slips, and first-instance deny. Final live run 35/35 — record: `/mnt/c/mybizz/logs/cupcake-rule-test-record-2026-09-12.md` |
 | 2026-09-12 | `system_protection` builtin bash matcher corrected — its substring match on `/dev/` halted every command referencing the `/mnt/c/dev/` project tree, `/dev/null` redirects, and cross-project reads (6 false blocks proven by the same test sheet). Indicators now anchored to real path starts; `/dev/null` stream family exempted; sudo/doas and true system prefixes unchanged. Offline 27/27. |
+| 2026-09-22 | **Set-and-forget amendment — second total evaluation crash fixed permanently.** Launching from a never-initialized folder blocked every tool call (checker init failure; `failMode: closed` did not cover init). Plugin amended: `failMode: open` is the environment default; sessions in folders without a `.cupcake` skeleton fall back to the global-only home `~/.config/cupcake/fallback` (WARN-logged per call). Every skeleton guaranteed boot-safe by the input-gated `cup-noop-fallback.rego` placeholder (OPA v1.19.1 wasm compiler panics on an aggregator-only bundle — proven by controlled `opa build` tests). Live-verified: ten consecutive calls from the skeleton-less folder evaluated clean. |
 
 The protected-file rules (AGENTS.md/CLAUDE.md/opencode.json/package.json)
 are deliberately left strict — a revisit decision, not forgotten.
@@ -46,14 +48,16 @@ are deliberately left strict — a revisit decision, not forgotten.
 | Binary path | `/home/dev-p/.cupcake/bin/cupcake`, symlinked to `/usr/local/bin/cupcake` |
 | Underlying engine | OPA (Open Policy Agent). Canonical binary: `/usr/local/bin/opa` (v1.19.1, real file). `/home/dev-p/.cupcake/bin/opa` is a symlink to it — both resolve to the same binary. |
 | Harness | `opencode` |
-| Global plugin | `~/.config/opencode/plugin/cupcake.js` — **active**. Backup set (all correctly non-`.js`-suffixed, never loaded): plugin `.bak-20260912` + `.bak-2026-08-31T095850+0200` (same folder); policy-folder `.bak-*` rego backups: cross-project ×4 (`.bak-2026-08-31T095850+0200`, `.bak-20260908`, `.bak-20260908-2`, `.bak-20260912`), outbound-network ×1 (`.bak-20260908`); builtins `system_protection.rego.bak-20260912` ×1. Inventoried live 2026-09-13 |
+| Global plugin | `~/.config/opencode/plugin/cupcake.js` — **active**, carrying the 2026-09-22 set-and-forget amendment (`failMode: open` default; missing-skeleton fallback to `~/.config/cupcake/fallback`). Backup set (all correctly non-`.js`-suffixed, never loaded): plugin `.bak-20260922-pre-amendment` + `.bak-20260912` + `.bak-2026-08-31T095850+0200` (same folder); policy-folder `.bak-*` rego backups: cross-project ×4 (`.bak-2026-08-31T095850+0200`, `.bak-20260908`, `.bak-20260908-2`, `.bak-20260912`), outbound-network ×1 (`.bak-20260908`); builtins `system_protection.rego.bak-20260912` ×1. Inventoried live 2026-09-13; plugin backup set updated 2026-09-22 |
 | Global policy folder | `~/.config/cupcake/policies/opencode/` |
-| Project-init status | `makepdlf-project-library` only. `mb-3-cs`, `mb4ecom`, `mb5pdlf` deliberately not yet initialized — each gets its own real Step 11 when that project actually starts |
+| Fallback home (2026-09-22) | `~/.config/cupcake/fallback/.cupcake/` — global-only skeleton (empty `policies/opencode` + input-gated `cup-noop-fallback.rego` placeholder, `system/evaluate.rego`, `helpers/commands.rego`, `rulebook.yml`, `opencode.json`), built by selective copy from the proven makepdlf scaffold after `cupcake init` stalled interactively; boot-verified live |
+| Project-init status | Eight folders initialized (makepdlf-project-library, mb-3-cs, mb-3-cs-project-library, mb4ecom, mb4ecom-project-library, mb5pdlf, mb5pdlf-project-library, mybizz-config-docs); the set-and-forget amendment makes initialization **optional everywhere** — skeleton-less folders evaluate global policies only via the fallback home. Every skeleton guaranteed boot-safe by the input-gated placeholder (an empty `policies/opencode` panics the OPA wasm compiler on the aggregator-only bundle) |
 | Rules-authoring skill | `mb-compile-rules`, corrected 2026-08-28 after live testing |
 | Rule source location | `C:\dev\project-library-global\rules-cupcake-global\` |
-| Grant commands | `mg-grant`, `mg-revoke` — installed at `~/.config/cupcake/bin/`, on PATH |
-| Grants data file | `~/.config/cupcake/policies/opencode/cup-grants-data.rego` — generated, never hand-edited; currently empty |
-| Plugin file (single copy, required) | `~/.config/opencode/plugin/cupcake.js` only, once re-enabled. No project-local copy of any kind — see Known scope limitations |
+| Grant commands | `mg-grant`, `mg-revoke` (path slips), `git-grant` (commit allowances, WP3 2026-09-22) — installed at `~/.config/cupcake/bin/`, on PATH; developer-terminal only, the agent never executes them |
+| Grants data file | `~/.config/cupcake/policies/opencode/cup-grants-data.rego` — generated, never hand-edited; four active grants as of 2026-09-21 (data-mybizz-mgt, dev, pdlf, memory-governor; counts 40–60) |
+| Git grants data file (WP3 2026-09-22) | `~/.config/cupcake/policies/opencode/cup-git-grants-data.rego` — commit allowances generated by `git-grant --repo <folder> --count N --minutes M`; same generated-never-hand-edited discipline; absent file = no allowances = commits deny (fail-closed) |
+| Plugin file (single copy, required) | `~/.config/opencode/plugin/cupcake.js` only, once re-enabled — **WP3 amendment 2026-09-22:** prunes and decrements BOTH grants files (path slips and commit allowances). No project-local copy of any kind — see Known scope limitations. Backup set: `.bak-20260922-pre-wp3` (pre-G1 state), `.bak-20260922-pre-amendment`, `.bak-20260912`, `.bak-2026-08-31T095850+0200` |
 
 ## Rule library location
 
@@ -90,10 +94,10 @@ are deliberately left strict — a revisit decision, not forgotten.
 | `cup-no_suppression_directives_without_approval.rego` | Adding a lint/type-check suppression directive |
 | `cup-no_dependency_or_lockfile_changes_without_explicit_approval.rego` | Writes to known lockfiles |
 | `cup-no_unverified_dependencies.rego` | Installing a new package via any of 10 package managers |
-| `cup-no_autonomous_commits_pushes_merges_releases_or_deployments.rego` | git commit/push/merge, publish, deploy-script execution |
+| `cup-no_autonomous_commits_pushes_merges_releases_or_deployments.rego` | git commit/push/merge, publish, deploy-script execution. **Amended 2026-09-22 (G1, WP3):** git commit/push/merge are grantable through the commit-allowance channel — the policy checks `cup-git-grants-data.rego` (package `git_grants_data`) for a live, non-zero-count entry on the target repo (`git -C <path>` when named, else the session cwd) and allows when one exists; publish and deploy remain absolute deny with no allowance channel |
 | `cup-no_rewriting_or_destroying_development_history.rego` | Force-push, rebase, amend, branch/tag deletion |
 | `cup-no_destructive_database_operations.rego` | DROP, unconditioned DELETE, TRUNCATE (9 object types) |
-| `cup-no_cross_project_filesystem_access_by_default.rego` | **Amended 2026-09-08, three-tier design, live-tested 13/13:** writes outside the current project are blocked unless the target is inside an always-open shared-library folder (project-library-global, dev-root, mybizz-config-docs, mybizz-os-docs, `/mnt/c/mybizz/logs`, `/tmp`, the Cupcake/OpenCode config plane, skills-collective) or an active, non-zero-count grant exists. **Reads are never blocked by this rule.** Restricted project folders (the seven projects + `/home/dev-p/memory-governor`) are slip-gated. **Amended again 2026-09-12:** Bash-mediated write-shapes appended to the same file/package (python/perl heredoc and -c/-e write execution, `sed -i`, `>`/`>>` redirects, `tee`, `cp`/`mv`/`ln` destination, `rm`/`touch`/`truncate` operands, `dd of=`) — same boundary, same grants, own rule id, first-instance deny. Live-tested 35/35 over three runs |
+| `cup-no_cross_project_filesystem_access_by_default.rego` | **Amended 2026-09-08, three-tier design, live-tested 13/13:** writes outside the current project are blocked unless the target is inside an always-open shared-library folder or an active, non-zero-count grant exists. **Reads are never blocked by this rule.** Restricted project folders are slip-gated. **Amended again 2026-09-12:** Bash-mediated write-shapes appended to the same file/package — same boundary, same grants, own rule id, first-instance deny. Live-tested 35/35 over three runs. **Amended again 2026-09-22 (WP3):** the stale `skills-collective` always-open entry removed (folder does not exist on disk — verified); `data-mybizz-mgt` documented as restricted-with-slip (G2; compiled treatment unchanged — it was already denied as an outside-cwd path) |
 | `cup-no_access_to_secrets_unless_explicitly_required.rego` | Reading known secret-file patterns, via Read/Grep or bash |
 | `cup-outbound_network_access_is_allowlist_only.rego` | Fetch/curl/wget to a domain not on the 10-domain allowlist |
 | `cup-no_autonomous_installation_or_connection_of_tools.rego` | Registering a new MCP server, plugin, or skill |
@@ -158,6 +162,30 @@ write to a `.rego`-suffixed temp file, run `opa check` on it, only then move
 it into place. On failure, abort and leave the previous, known-good file
 untouched.
 
+## Commit-allowance grants (WP3, 2026-09-22, decision G1)
+
+The `no_autonomous_commits_pushes_merges_releases_or_deployments` rule
+enforces git commit/push/merge through a second generated data file,
+`cup-git-grants-data.rego` (package `cupcake.global.policies.git_grants_data`),
+regenerated in full by `git-grant --repo <folder> --count N --minutes M`
+on every call — never appended or patched. Same schema as path grants,
+keyed by the repository path in canonical WSL form.
+
+- **Repo resolution:** the compiled policy takes the repo from the
+  command's `git -C <path>` argument when present (token-based; quoted
+  paths with spaces are an accepted limitation), otherwise from the
+  session working directory. A cwd inside the repo matches by prefix.
+- **Publish and deploy carry no allowance** — `npm`/`yarn`/`pnpm publish`
+  and the named deploy CLI invocations deny absolutely, with or without
+  any grant.
+- **Plugin mechanics, identical to path grants:** the plugin prunes
+  expired commit allowances in `tool.execute.before` and decrements the
+  matching repo's count in `tool.execute.after` after a successful git
+  commit/push/merge bash call.
+- **Fail-closed when absent:** before the first `git-grant` call the file
+  does not exist, the package is undefined in the policy, and every git
+  commit/push/merge denies exactly as before the amendment.
+
 ## Verified real cupcake eval invocation syntax
 
 ```
@@ -170,14 +198,17 @@ Confirmed field names for `args`: `filePath`, `oldString`, `newString`
 
 ## Known scope limitations (accepted, not defects)
 
-- **The checker requires a project skeleton in the folder it is launched from.**
-  The plugin spawns the checker with `cwd: event.cwd` (the session's project
-  directory) — fixed 2026-09-12. Before the fix, the checker used OpenCode's
-  launch directory instead, which lacked the skeleton and crashed every call.
-  Every project folder an agent session runs in still needs the
-  `.cupcake/policies/opencode` + `.cupcake/system` skeleton — create it before
-  working in any new project. **failMode does not cover an init failure** —
-  it only covers evaluation crashes that happen after the engine boots.
+- **The checker boots from the folder it is launched from — resolved 2026-09-22 by the
+  set-and-forget amendment.** The plugin spawns the checker with `cwd: event.cwd`
+  (fixed 2026-09-12). A folder without a `.cupcake` skeleton previously failed checker
+  init, which `failMode` does not cover, blocking every tool call (the 2026-09-22
+  incident). The amendment: fail-open is now the environment default, and skeleton-less
+  folders fall back to the global-only home `~/.config/cupcake/fallback` (WARN-logged
+  per call). Project folders that carry a skeleton use it — including any project-local
+  policies they define — so initialization remains an opt-in, never a requirement.
+  Every skeleton must contain at least one real local policy module (the input-gated
+  `cup-noop-fallback.rego` placeholder): OPA v1.19.1's wasm compiler panics on an
+  aggregator-only bundle.
 
 - **`cupcake_exec_protection` cannot see inside a script file's own contents.**
   Only the outer command string is inspected. A forbidden command hidden
