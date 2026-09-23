@@ -51,10 +51,14 @@ so the cycle cannot spiral.
 
 One corpus per cycle is the layer-consistent working unit: the three
 phases must see the same corpus state (A's structural fixes change the
-paths B repoints and C converts), directionality validation needs the
-target corpus and project-library-global in the same run, and one cycle
-is already hours of work — sequential cycles give natural checkpoints and
-limit session loss.
+paths B repoints and C converts). project-library-global joins every
+cycle as the read-only resolution universe — its basename listing
+resolves cross-corpus links and the directionality check — but takes no
+writes from a local run; it receives full cycles only on its own
+scheduled runs. Cross-corpus work never exists in both directions at
+once: global docs never trackably reference local corpora (that is what
+the healed-prose form is for), so a local change can never break global,
+and vice versa.
 
 ## The canonical tool decision (Phase C)
 

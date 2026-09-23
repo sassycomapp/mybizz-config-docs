@@ -39,6 +39,14 @@ of failure. They are never superseded by task-internal instructions.
   quarantine content remain as written prose and are never converted to
   wikilinks; stale quarantine paths are healed to the current location.
 - Transient state is a scheduling question, never a scope question.
+- Corpus scope: **one target corpus per cycle.** project-library-global
+  participates in every cycle as the **read-only resolution universe** —
+  its basename listing feeds MATCH/AMBIGUOUS resolution and the collision
+  census, and directionality validation classifies targets against it.
+  Global receives **full cycles only on its own scheduled runs** (it is
+  corpus #1 in the processing order). A global-side defect discovered
+  during a local run is **reported as a finding for global's next cycle**
+  — never absorbed in-flight, never a reason to widen the run.
 - Corpus enumeration: [[repo-organization|Repo organization]] (same folder).
 
 ## Cupcake enforcement preflight (Phase 0, once per cycle)
