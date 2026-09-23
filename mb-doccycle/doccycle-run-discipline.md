@@ -135,7 +135,9 @@ per-source sync and embed for every changed source, verified per source with
 es.exe (Everything) is the primary tool for every file search. Binary:
 `C:\Program Files\Everything 1.5a\es.exe`; invoke via WSL interop as
 `"/mnt/c/Program Files/Everything 1.5a/es.exe" <search-term>`. Flags: `-p`
-path-scoped, `-n` result limit, `-s` sort by path, `-w` whole word, `-i`
+path-scoped, `-n` result limit, `-s <term>` **search** (e.g. `-s "*.md"`
+finds all markdown files — it is the search flag, not a sort flag; healed
+2026-09-22 after two universe-build debugging rounds), `-w` whole word, `-i`
 case-sensitive, `-r` POSIX regex. Raise `-n` (≥20) or scope with `-p` before
 filtering — a small unfiltered limit is consumed by backup copies before any
 live path appears and reads as "file not found". A zero-hit result on a

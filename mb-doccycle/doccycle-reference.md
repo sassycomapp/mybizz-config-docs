@@ -7,11 +7,16 @@ date-created: 2026-09-22
 
 # mb-doccycle — Usage, Invocation, and Worked Examples
 
+# mb-doccycle — Usage, Invocation, and Worked Examples
+
 Operational reference for the mb-doccycle documentation-management
 workflow. Companion to [[doccycle-config|mb-doccycle Configuration]]
 (current state) and [[doccycle-run-discipline|mb-doccycle — Shared Run
 Discipline]] (the binding run frame — cycle-level steps, approvals,
-collective grants, verification, commits and sync).
+collective grants, verification, commits and sync). Exam set: the
+configuration cycle runs via [[doccycle-skill|the exam skill]] under
+[[doccycle-exam-plan|a fresh plan]]; outcomes in [[doccycle-exam-report|
+the report]] and [[doccycle-log|the log]].
 
 ---
 
@@ -71,8 +76,10 @@ Issued in ONE collective block per cycle after detection and approval:
 path slips per restricted folder (approved file count + buffer), the
 backup-root line, and the commit allowance per repo. The workflow never
 issues a grant itself and never works around a denial. Grant paths in
-forward-slash WSL form, lowercase. 30-minute default expiry; a
-re-grant updates the entry in place.
+forward-slash WSL form, lowercase. 30-minute default expiry; a re-grant
+updates the entry **in place** — a grant of N is N total, not N plus the
+residual count; size each block for the whole remaining cycle or request
+a follow-up block.
 
 ## File search — es.exe (Everything) first
 

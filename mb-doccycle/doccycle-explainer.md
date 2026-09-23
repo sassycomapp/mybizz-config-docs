@@ -7,6 +7,14 @@ date-created: 2026-09-22
 
 # mb-doccycle — The Documentation-Management Workflow (Explainer)
 
+Companion note: this system is examinable — the standing check inventory
+lives in [[doccycle-skill|the exam skill]], each run is driven by
+[[doccycle-exam-plan|the exam plan]] synthesized fresh by the
+config-manager, and outcomes are recorded in [[doccycle-log|the log]] and
+[[doccycle-exam-report|the exam report]]. The exam is detection and
+verification only — the workflow is working well and nothing gets fixed
+without the developer's gate decision.
+
 Why the workflow exists, why it has the shape it has, and what it
 deliberately does not solve. For current state see
 [[doccycle-config|mb-doccycle Configuration]]; for commands see
@@ -119,6 +127,48 @@ mb-align-docs, mb-wikilinks) and their shared run frame
 proven rules were absorbed into the phase specs and the run frame; their
 sub-agent architecture was retired (no sub-agents, no exceptions — G4);
 their pre-ruling texts were corrected where the rulings changed them
-(directionality, quarantine, alignment-log semantics). The old skills'
-learnings and run records remain as historical archives — nothing
-deleted, nothing moved (WP6 handles the learnings supersession sweep).
+(directionality, quarantine, alignment-log semantics). The old skills and
+their suite folders were removed 2026-09-22 (WP7, developer-confirmed;
+39-file verified backup); their logs and run records remain as historical
+archives.
+
+## Config maintenance
+
+The configuration suite for this system is maintained by the
+configuration-management cycle: [[doccycle-skill|the exam skill]] exams
+live state against [[doccycle-config|the spec]] under
+[[doccycle-exam-plan|a fresh exam plan]], catches silent failures, and
+heals only through the developer gate. Learnings are transient
+([[doccycle-learnings|way-station]]); the log records events
+([[doccycle-log|log]]).
+
+## S.W.O.T. (2026-09-22, suite build-out state)
+
+- **Strengths:** one git-backed text ends the drift machine; the canonical
+  detector is tested code (27 tests, defect-family fixtures); grants
+  coexistence proven live (G1); the retirement residue is verified and
+  archived; the acceptance run exercised the full cycle end to end.
+- **Weaknesses:** two detector defects queued (folder-token suffix
+  matching; empty display; universe scaffold filtering); the suffix-variant
+  matcher remains semantically loose (wrong-target pairs relied on the
+  triage layer — by design, but noisy).
+- **Opportunities:** universe construction gains scaffold filtering as a
+  run-frame step; the amendment ride makes the detector's false-alarm
+  classes fail mechanically rather than by triage.
+- **Threats:** muscle memory to the retired skills (all references healed
+  or retired); grant expiry mid-cycle (the observed re-grant-replaces-
+  count behavior); the scope scaffold's skill-name list pending a
+  developer-owned update.
+
+## Companion documents
+
+| File | Orientation |
+|---|---|
+| [[doccycle-config|Configuration]] | Ideal — the spec |
+| [[doccycle-reference|Reference]] | Agent-facing commands |
+| [[doccycle-run-discipline|Run Discipline]] | The binding shared frame |
+| [[doccycle-skill|Exam Skill]] | Standing check inventory |
+| [[doccycle-exam-plan|Exam Plan]] | Next run's job-spec |
+| [[doccycle-exam-report|Exam Report]] | Last run's verified state |
+| [[doccycle-log|Log]] | Events, not lessons |
+| [[doccycle-learnings|Learnings]] | Transient way-station |
