@@ -1,8 +1,7 @@
 ---
-name: mb-config-matt-pocock-skills
-description: Matt Pocock Skills configuration exam — verifies the 35-skill installation's live configuration state (source clone pin, symlink topology, broken links, per-project setup gate, upgrade standing-rule, inventory conformance) against matt-pocock-skills-config.md and proves the set functionally resolves; detection and verification only — the installation is working well and this module changes nothing; catches silent failures and proposes gated repairs. Use when asked to "exam matt pocock skills", "check matt pocock skills health/install", or as part of a full mb-config-manager run.
+title: "matt-pocock-skills-skill"
+doc-id: "matt-pocock-skills-skill"
 ---
-
 # mb-config-matt-pocock-skills — Exam Skill
 
 Exams the Matt Pocock skills installation's configuration state against its spec.

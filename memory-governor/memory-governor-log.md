@@ -1,10 +1,7 @@
 ---
-document: "Memory Governor — Log"
-doc-id: memory-governor-log
-state: Live
-date-created: 2026-09-13
+title: "memory-governor-log"
+doc-id: "memory-governor-log"
 ---
-
 # Memory Governor — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,

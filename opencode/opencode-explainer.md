@@ -1,10 +1,7 @@
 ---
-document: "OpenCode Explainer"
-doc-id: opencode-explainer
-state: Live
-date-created: 2026-09-05
+title: "opencode-explainer"
+doc-id: "opencode-explainer"
 ---
-
 # OpenCode Explainer
 
 *Companion note: for current confirmed state (identity, global-config content,

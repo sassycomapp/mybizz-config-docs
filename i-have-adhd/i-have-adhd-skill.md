@@ -1,8 +1,7 @@
 ---
-name: mb-config-i-have-adhd
-description: i-have-adhd configuration exam — verifies the output-style skill's live configuration state (bundle contents, activation surfaces, always-on marker, single-path discipline, run evidence) against i-have-adhd-config.md and proves the injection mechanism functionally works; detection and verification only — the skill is working well and this module changes nothing; catches silent failures and proposes gated repairs. Use when asked to "exam i-have-adhd", "check i-have-adhd health", or as part of a full mb-config-manager run.
+title: "i-have-adhd-skill"
+doc-id: "i-have-adhd-skill"
 ---
-
 # mb-config-i-have-adhd — Exam Skill
 
 Exams the i-have-adhd output-style skill's configuration state against its spec.

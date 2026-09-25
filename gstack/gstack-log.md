@@ -1,10 +1,7 @@
 ---
-document: "GStack — Log"
-doc-id: gstack-log
-state: Live
-date-created: 2026-09-16
+title: "gstack-log"
+doc-id: "gstack-log"
 ---
-
 # GStack — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,

@@ -1,10 +1,7 @@
 ---
-document: "sysdoc-creator — Reference"
-doc-id: sysdoc-creator-reference
-state: Live
-date-created: 2026-09-09
+title: "sysdoc-creator-reference"
+doc-id: "sysdoc-creator-reference"
 ---
-
 # sysdoc-creator — Reference
 
 Execution procedure for the `mb-sysdoc-creator` skill. `skill.md` in this

@@ -1,8 +1,7 @@
 ---
-name: mb-config-postgresql
-description: PostgreSQL configuration exam — verifies both instances (Windows PG15 pdlf ledger, WSL PG16 gbrain/memory_governor) against their spec doc, catches silent failures, proposes gated heals. Use when asked to "exam postgresql", "check postgres config/health", or as part of a full mb-config-manager run.
+title: "postgresql-skill"
+doc-id: "postgresql-skill"
 ---
-
 # mb-config-postgresql — Exam Skill
 
 Exams the live PostgreSQL system against its spec. This skill holds the **procedure**

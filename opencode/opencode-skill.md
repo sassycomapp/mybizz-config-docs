@@ -1,8 +1,7 @@
 ---
-name: mb-config-opencode
-description: OpenCode configuration exam — verifies the harness's live configuration state (version, global-config consolidation, merge semantics, permission posture, plugin single-load/discovery, MCP entry, Active Project Standard) against opencode-config.md and proves the config layer functionally executes; detection and verification only — OpenCode is working well and this module changes nothing; catches silent failures and proposes gated repairs. Use when asked to "exam opencode", "check opencode health", or as part of a full mb-config-manager run.
+title: "opencode-skill"
+doc-id: "opencode-skill"
 ---
-
 # mb-config-opencode — Exam Skill
 
 Exams OpenCode's configuration state against its spec. This skill holds the

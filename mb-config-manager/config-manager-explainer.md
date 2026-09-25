@@ -1,10 +1,7 @@
 ---
-document: "mb-config-manager — Explainer"
-doc-id: config-manager-explainer
-state: Live
-date-created: 2026-09-12
+title: "config-manager-explainer"
+doc-id: "config-manager-explainer"
 ---
-
 # mb-config-manager — Explainer
 
 The authoritative narrative of the configuration-management system: what it is,

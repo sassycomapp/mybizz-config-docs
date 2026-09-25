@@ -1,10 +1,7 @@
 ---
-document: "Durable fact — Archify desktop containment is viewer-inherent for card-bearing artifacts"
-doc-id: 2026-09-15-archify-desktop-containment
-state: Live
-date-created: 2026-09-15
+title: "2026-09-15-archify-desktop-containment"
+doc-id: "2026-09-15-archify-desktop-containment"
 ---
-
 # Durable fact — Archify desktop containment is viewer-inherent for card-bearing artifacts
 
 Archify's strict desktop containment rule (`documentElement.scrollHeight <=

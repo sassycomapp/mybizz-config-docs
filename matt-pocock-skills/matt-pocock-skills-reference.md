@@ -1,10 +1,7 @@
 ---
-document: "Matt Pocock Skills Reference"
-doc-id: matt-pocock-skills-reference
-state: Live
-date-created: 2026-09-08
+title: "matt-pocock-skills-reference"
+doc-id: "matt-pocock-skills-reference"
 ---
-
 # Matt Pocock Skills Reference
 
 Execution reference for the 35 installed Matt Pocock skills. Current state

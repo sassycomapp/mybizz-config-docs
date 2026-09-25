@@ -1,10 +1,7 @@
 ---
-document: "mb-config-manager — Reference: Commands, Procedures"
-doc-id: config-manager-reference
-state: Live
-date-created: 2026-09-12
+title: "config-manager-reference"
+doc-id: "config-manager-reference"
 ---
-
 # mb-config-manager — Reference
 
 Agent-facing procedures for running the config-management system. Architecture and

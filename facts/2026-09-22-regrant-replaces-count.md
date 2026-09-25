@@ -1,10 +1,7 @@
 ---
-document: "Fact — re-granting a path replaces the entry count"
-doc-id: 2026-09-22-regrant-replaces-count
-state: Live
-date-created: 2026-09-22
+title: "2026-09-22-regrant-replaces-count"
+doc-id: "2026-09-22-regrant-replaces-count"
 ---
-
 # Fact — re-granting a path replaces the entry count
 
 Re-running `mg-grant --path <folder> --count N` for an already-granted

@@ -1,10 +1,7 @@
 ---
-document: "Sentinel Configuration — dev-makepdlf"
-doc-id: sentinel-config
-state: Live
-date-created: 2026-09-05
+title: "sentinel-config"
+doc-id: "sentinel-config"
 ---
-
 # Sentinel Configuration — dev-makepdlf
 
 Canonical current-state configuration record. Agent-facing. Reflects the

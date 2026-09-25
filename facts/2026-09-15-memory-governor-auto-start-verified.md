@@ -1,10 +1,7 @@
 ---
-document: "Fact — memory governor auto-start installed and verified"
-doc-id: 2026-09-15-memory-governor-auto-start-verified
-state: Live
-date-created: 2026-09-15
+title: "2026-09-15-memory-governor-auto-start-verified"
+doc-id: "2026-09-15-memory-governor-auto-start-verified"
 ---
-
 # Fact — memory governor auto-start installed and verified
 
 The memory governor's **permanent auto-start is installed and verified

@@ -1,10 +1,7 @@
 ---
-document: "Graphify Explainer"
-doc-id: graphify-explainer
-state: Live
-date-created: 2026-09-05
+title: "graphify-explainer"
+doc-id: "graphify-explainer"
 ---
-
 # Graphify Explainer
 
 ## 1. What this actually is

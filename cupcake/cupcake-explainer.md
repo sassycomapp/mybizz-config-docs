@@ -1,10 +1,7 @@
 ---
-document: "Cupcake — Mechanical Policy Enforcement for AI Coding Agents"
-doc-id: cupcake-explainer
-state: Live
-date-created: 2026-09-05
+title: "cupcake-explainer"
+doc-id: "cupcake-explainer"
 ---
-
 # Cupcake — Mechanical Policy Enforcement for AI Coding Agents
 
 *Companion note: for current confirmed state see [[cupcake-config|Cupcake Configuration]] (the spec).

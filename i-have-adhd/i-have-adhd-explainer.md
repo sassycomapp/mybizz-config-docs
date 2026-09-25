@@ -1,10 +1,7 @@
 ---
-document: "i-have-adhd — Explainer"
-doc-id: i-have-adhd-explainer
-state: Live
-date-created: 2026-09-19
+title: "i-have-adhd-explainer"
+doc-id: "i-have-adhd-explainer"
 ---
-
 # i-have-adhd — Explainer
 
 *Companion note: for current confirmed state (paths, versions, integration,

@@ -1,10 +1,7 @@
 ---
-document: "sysdoc-creator — Explainer"
-doc-id: sysdoc-creator-explainer
-state: Live
-date-created: 2026-09-09
+title: "sysdoc-creator-explainer"
+doc-id: "sysdoc-creator-explainer"
 ---
-
 # sysdoc-creator — Explainer
 
 ## 1. What this actually is

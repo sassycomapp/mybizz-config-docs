@@ -1,19 +1,7 @@
 ---
-doc-id: 2026-09-14-002-graphify-config-mgmt
-state: Live
-date-created: 2026-09-14
-type: session-summary
-title: 'Session 2026-09-14 — Configuration Management: graphify'
-date: '2026-09-14T00:00:00.000Z'
-session: 2026-09-14-002
-document: >-
-  Session Summary — 2026-09-14 Config-Management: graphify built, run in full
-  (incl. Tier 3 realistic run), finalized
-ingested_via: 'mcp:put_page'
-ingested_at: '2026-09-14T19:47:31.338Z'
-source_kind: 'mcp:put_page'
+title: "2026-09-14-002-graphify-config-mgmt"
+doc-id: "2026-09-14-002-graphify-config-mgmt"
 ---
-
 # Session 2026-09-14 — Configuration Management: graphify
 
 ## What was done

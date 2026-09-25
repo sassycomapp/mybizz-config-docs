@@ -1,10 +1,7 @@
 ---
-document: "Cupcake — Log"
-doc-id: cupcake-log
-state: Live
-date-created: 2026-09-13
+title: "cupcake-log"
+doc-id: "cupcake-log"
 ---
-
 # Cupcake — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,

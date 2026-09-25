@@ -1,15 +1,7 @@
 ---
-doc-id: 3-plan
-document: "Work Package 3 — Cross-file Graphify Adequacy Test"
-date-created: 2026-08-14
-title: Work Package 3 — Cross-file Graphify Adequacy Test
-report: package-3-plan
-date: 2026-08-14
-time_utc_plus_2: 2026-08-14 13:43 +0200 (SAST)
-state: Complete (read-only adequacy test — PASS)
-repo: mb-3-cs
+title: "3-plan"
+doc-id: "3-plan"
 ---
-
 # Work Package 3 — Cross-file Graphify Adequacy Test
 
 Read-only adequacy test against the existing Graphify graph

@@ -1,10 +1,7 @@
 ---
-document: "Durable fact — Archify scoping skill pre-work"
-doc-id: 2026-09-15-archify-scope-pre-work
-state: Live
-date-created: 2026-09-15
+title: "2026-09-15-archify-scope-pre-work"
+doc-id: "2026-09-15-archify-scope-pre-work"
 ---
-
 # Durable fact — Archify scoping skill pre-work
 
 Archify drawing work is preceded by `/mb-archify-scope` pre-work. The scoping

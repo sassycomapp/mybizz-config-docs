@@ -1,10 +1,7 @@
 ---
-document: "PostgreSQL — Exam Plan"
-doc-id: postgresql-exam-plan
-state: Live
-date-created: 2026-09-12
+title: "postgresql-exam-plan"
+doc-id: "postgresql-exam-plan"
 ---
-
 # PostgreSQL — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before

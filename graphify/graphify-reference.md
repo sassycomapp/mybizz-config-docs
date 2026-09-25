@@ -1,10 +1,7 @@
 ---
-document: "Graphify Reference"
-doc-id: graphify-reference
-state: Live
-date-created: 2026-09-05
+title: "graphify-reference"
+doc-id: "graphify-reference"
 ---
-
 # Graphify Reference
 
 Execution reference for the installed Graphify CLI (0.9.40), verified against

@@ -1,10 +1,7 @@
 ---
-document: "Fact — session numbers come from the sessions log"
-doc-id: 2026-09-15-session-numbers-from-sessions-log
-state: Live
-date-created: 2026-09-15
+title: "2026-09-15-session-numbers-from-sessions-log"
+doc-id: "2026-09-15-session-numbers-from-sessions-log"
 ---
-
 # Fact — session numbers come from the sessions log
 
 Session numbers are defined by the developer's sessions log

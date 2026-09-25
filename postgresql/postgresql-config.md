@@ -1,10 +1,7 @@
 ---
-document: "PostgreSQL — Configuration"
-doc-id: postgresql-config
-state: Live
-date-created: 2026-09-05
+title: "postgresql-config"
+doc-id: "postgresql-config"
 ---
-
 # PostgreSQL — Configuration
 
 Canonical, current-state configuration record for every PostgreSQL instance on

@@ -1,10 +1,7 @@
 ---
-document: "Sentinel Reference — Usage, Invocation, and Worked Examples"
-doc-id: sentinel-reference
-state: Live
-date-created: 2026-09-05
+title: "sentinel-reference"
+doc-id: "sentinel-reference"
 ---
-
 # Sentinel Reference — Usage, Invocation, and Worked Examples
 
 Companion to [[sentinel-config|dev-makepdlf]] (current state) and

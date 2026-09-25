@@ -1,10 +1,7 @@
 ---
-document: "GBrain — Exam Plan"
-doc-id: gbrain-exam-plan
-state: Live
-date-created: 2026-09-13
+title: "gbrain-exam-plan"
+doc-id: "gbrain-exam-plan"
 ---
-
 # GBrain — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before

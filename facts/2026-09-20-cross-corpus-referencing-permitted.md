@@ -1,10 +1,7 @@
 ---
-document: "Durable fact — Cross-corpus referencing is normal (developer ruling 2026-09-20)"
-doc-id: 2026-09-20-cross-corpus-referencing-permitted
-state: Live
-date-created: 2026-09-20
+title: "2026-09-20-cross-corpus-referencing-permitted"
+doc-id: "2026-09-20-cross-corpus-referencing-permitted"
 ---
-
 # Durable fact — Cross-corpus referencing is permitted
 
 A local document referencing a document in another project library is normal

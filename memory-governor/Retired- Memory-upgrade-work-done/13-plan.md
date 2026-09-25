@@ -1,15 +1,7 @@
 ---
-doc-id: 13-plan
-document: "Work Package 13 — Graphify Git Hook Evaluation"
-date-created: 2026-08-14
-title: Work Package 13 — Graphify Git Hook Evaluation
-plan: package-13-plan
-date: 2026-08-14
-time_utc_plus_2: 2026-08-14 16:30 +0200 (SAST)
-state: "Complete (read-only evaluation — recommendation: do not install)"
-repo: mb-3-cs
+title: "13-plan"
+doc-id: "13-plan"
 ---
-
 # Work Package 13 — Graphify Git Hook Evaluation
 
 Read-only evaluation of Graphify Git hook behaviour. No hook installed, no

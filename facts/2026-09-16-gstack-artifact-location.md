@@ -1,10 +1,7 @@
 ---
-document: "Fact — GStack artifact location and the missing gstack-outputs lane"
-doc-id: 2026-09-16-gstack-artifact-location
-state: Live
-date-created: 2026-09-16
+title: "2026-09-16-gstack-artifact-location"
+doc-id: "2026-09-16-gstack-artifact-location"
 ---
-
 # Fact — GStack artifact location and the missing gstack-outputs lane
 
 GStack skills save all their output to a per-project directory under the user

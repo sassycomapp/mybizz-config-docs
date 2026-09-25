@@ -1,10 +1,7 @@
 ---
-document: "magdoub-wireframe — Configuration"
-doc-id: magdoub-wireframe-config
-state: Live
-date-created: 2026-09-06
+title: "magdoub-wireframe-config"
+doc-id: "magdoub-wireframe-config"
 ---
-
 # magdoub-wireframe — Configuration
 
 Canonical current-state configuration record for the Magdoub Claude Wireframe

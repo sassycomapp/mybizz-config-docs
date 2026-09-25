@@ -1,10 +1,7 @@
 ---
-document: "Durable fact — Graphify rebuild provenance stamping (cwd)"
-doc-id: 2026-09-14-graphify-cwd-provenance
-state: Live
-date-created: 2026-09-14
+title: "2026-09-14-graphify-cwd-provenance"
+doc-id: "2026-09-14-graphify-cwd-provenance"
 ---
-
 # Durable fact — Graphify rebuild provenance stamping
 
 `graphify extract` stamps the graph's `built_at_commit` from the invoking

@@ -1,15 +1,7 @@
 ---
-doc-id: 6-plan
-document: "Work Package 6 — Read-only Review of the Completed Graphify Graph"
-date-created: 2026-08-14
-title: Work Package 6 — Read-only Review of the Completed Graphify Graph
-report: package-6-plan
-date: 2026-08-14
-time_utc_plus_2: 2026-08-14 14:16 +0200 (SAST)
-state: Complete (read-only review — recommendation only)
-repo: mb-3-cs
+title: "6-plan"
+doc-id: "6-plan"
 ---
-
 # Work Package 6 — Read-only Review of the Completed Graphify Graph
 
 Read-only review of the completed `mb-3-cs` Graphify graph and its generated

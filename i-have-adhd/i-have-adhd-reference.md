@@ -1,10 +1,7 @@
 ---
-document: "i-have-adhd — Reference: Invocation, Operation, Update"
-doc-id: i-have-adhd-reference
-state: Live
-date-created: 2026-09-19
+title: "i-have-adhd-reference"
+doc-id: "i-have-adhd-reference"
 ---
-
 # i-have-adhd — Reference: Invocation, Operation, Update
 
 Companion to [[i-have-adhd-config|Configuration]] (current installed state, open items) and

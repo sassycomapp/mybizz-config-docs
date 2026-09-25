@@ -1,8 +1,7 @@
 ---
-name: mb-config-anvil-agent-references
-description: anvil-agent-references configuration exam — verifies the Anvil vendor skill-checkout installation's live configuration state (source clone HEAD, symlink topology in `~/.agents/skills/`, broken links, OpenCode discovery discipline, repository structure, per-project setup state, GBrain source registration, stale-reference absences) against anvil-agent-references-config.md and proves the set functionally resolves; detection and verification only — the installation is working well and this module changes nothing; catches silent failures and proposes gated repairs. Use when asked to "exam anvil agent references", "check anvil skills health/install", or as part of a full mb-config-manager run.
+title: "anvil-agent-skill"
+doc-id: "anvil-agent-skill"
 ---
-
 # mb-config-anvil-agent-references — Exam Skill
 
 Exams the anvil-agent-references installation's configuration state against its

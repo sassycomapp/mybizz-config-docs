@@ -1,10 +1,7 @@
 ---
-document: "Archify — Learnings"
-doc-id: archify-learnings
-state: Live
-date-created: 2026-09-16
+title: "archify-learnings"
+doc-id: "archify-learnings"
 ---
-
 # Archify — Learnings
 
 Transient way-station for exam-run knowledge: patterns, decisions, nuances. No

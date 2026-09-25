@@ -1,15 +1,7 @@
 ---
-doc-id: 17-task-report
-document: "Work Package 17 — Credentials, Runtime Dependencies, and OpenCode Inheritance"
-date-created: 2026-08-16
-title: Work Package 17 — Credentials, Runtime Dependencies, and OpenCode Inheritance
-report: package17-task-report
-date: 2026-08-16
-time_utc_plus_2: 2026-08-16 09:47 +0200 (SAST)
-state: Complete (validated healthy — no repairs required; environment READY)
-repo: mb-3-cs (live) — validation only, no changes
+title: "17-task-report"
+doc-id: "17-task-report"
 ---
-
 # Work Package 17 — Credentials, Runtime Dependencies, and OpenCode Inheritance
 
 Validation-only. No reinstall, no upgrade, no sync/dream, no tracked-file

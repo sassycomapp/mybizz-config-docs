@@ -1,15 +1,7 @@
 ---
-doc-id: 12-plan
-document: "Work Package 12 — Graph Artifact and Git Suitability Review"
-date-created: 2026-08-14
-title: Work Package 12 — Graph Artifact and Git Suitability Review
-plan: package-12-plan
-date: 2026-08-14
-time_utc_plus_2: 2026-08-14 16:23 +0200 (SAST)
-state: Complete (read-only review — no follow-up package required)
-repo: mb-3-cs
+title: "12-plan"
+doc-id: "12-plan"
 ---
-
 # Work Package 12 — Graph Artifact and Git Suitability Review
 
 Read-only review of the Graphify artifacts and Git state. No files modified,

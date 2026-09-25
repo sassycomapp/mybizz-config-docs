@@ -1,10 +1,7 @@
 ---
-document: "anvil-agent-references — Explainer"
-doc-id: anvil-agent-references-explainer
-state: Live
-date-created: 2026-09-06
+title: "anvil-agent-references-explainer"
+doc-id: "anvil-agent-references-explainer"
 ---
-
 # anvil-agent-references — Explainer
 
 *Companion note: for current confirmed state (paths, versions, inventory,

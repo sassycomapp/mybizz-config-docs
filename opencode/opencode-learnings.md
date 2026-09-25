@@ -1,10 +1,7 @@
 ---
-document: "OpenCode — Learnings"
-doc-id: opencode-learnings
-state: Live
-date-created: 2026-09-15
+title: "opencode-learnings"
+doc-id: "opencode-learnings"
 ---
-
 # OpenCode — Learnings
 
 Transient way-station for exam-run knowledge: patterns, decisions, nuances. No

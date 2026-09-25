@@ -1,18 +1,7 @@
 ---
-doc-id: 2026-09-15-007-opencode-config-suite
-document: "Session 007 — mb-config-opencode config-management suite built, installed, run #1 HEALTHY"
-state: Live
-date-created: 2026-09-15
-type: session
-title: >-
-  Session 007 — mb-config-opencode config-management suite built, installed, run
-  #1 HEALTHY
-date: '2026-09-15T00:00:00.000Z'
-ingested_via: 'mcp:put_page'
-ingested_at: '2026-09-16T03:56:22.030Z'
-source_kind: 'mcp:put_page'
+title: "2026-09-15-007-opencode-config-suite"
+doc-id: "2026-09-15-007-opencode-config-suite"
 ---
-
 # Session 007 — mb-config-opencode config-management suite built, installed, run #1 HEALTHY
 
 ## What was done

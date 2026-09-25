@@ -1,10 +1,7 @@
 ---
-document: "Durable fact — Archify learnings close-out trigger"
-doc-id: 2026-09-15-archify-learnings-closeout
-state: Live
-date-created: 2026-09-15
+title: "2026-09-15-archify-learnings-closeout"
+doc-id: "2026-09-15-archify-learnings-closeout"
 ---
-
 # Durable fact — Archify learnings close-out trigger
 
 Archify run learnings are recorded only on an explicit trigger: after a run,

@@ -1,21 +1,7 @@
 ---
-doc-id: 2026-09-16-008-gstack-config-mgmt
-document: "Session 008 — gstack configuration-management suite: run #1 HEALTHY"
-state: Live
-date-created: 2026-09-16
-type: session-summary
-title: 'Session 008 — gstack configuration-management suite: run #1 HEALTHY'
-date: '2026-09-16T00:00:00.000Z'
-topic: config-management
-session: 8
-subject: gstack suite emulation + install + formal run
-captured_at: '2026-09-16T06:23:04.392Z'
-captured_via: capture-cli
-ingested_via: put_page
-ingested_at: '2026-09-16T06:23:07.624Z'
-source_kind: put_page
+title: "2026-09-16-008-gstack-config-mgmt"
+doc-id: "2026-09-16-008-gstack-config-mgmt"
 ---
-
 # Session 2026-09-16 — Configuration Management: gstack
 
 ## What was done

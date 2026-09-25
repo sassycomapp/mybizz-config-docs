@@ -1,10 +1,7 @@
 ---
-document: "Doc Suite Specification — config / reference / explainer"
-doc-id: doc-suite-specification
-state: Live
-date-created: 2026-09-06
+title: "doc-suite-specification"
+doc-id: "doc-suite-specification"
 ---
-
 # Doc Suite Specification — config / reference / explainer
 
 Canonical specification for the three-document pattern used across this

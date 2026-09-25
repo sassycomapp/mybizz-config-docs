@@ -1,15 +1,7 @@
 ---
-doc-id: package23.1-task-report
-document: "Work Package 23.1 — Commit Final Optional Documentation and Template Fixes"
-date-created: 2026-08-16
-title: Work Package 23.1 — Commit Final Optional Documentation and Template Fixes
-report: package23.1-task-report
-date: 2026-08-16
-time_utc_plus_2: 2026-08-16T222007+0200 (SAST)
-state: Complete — 2 commits pushed, 1 source synced, backup removed
-repo: mb-3-cs-project-library + project-template
+title: "package23.1-task-report"
+doc-id: "package23.1-task-report"
 ---
-
 # Work Package 23.1 — Commit Final Optional Documentation and Template Fixes
 
 Committed and pushed the two approved optional changes, synchronized the one

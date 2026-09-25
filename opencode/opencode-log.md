@@ -1,10 +1,7 @@
 ---
-document: "OpenCode — Log"
-doc-id: opencode-log
-state: Live
-date-created: 2026-09-15
+title: "opencode-log"
+doc-id: "opencode-log"
 ---
-
 # OpenCode — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,

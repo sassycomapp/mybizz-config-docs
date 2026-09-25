@@ -1,10 +1,7 @@
 ---
-document: "magdoub-wireframe — Explainer"
-doc-id: magdoub-wireframe-explainer
-state: Live
-date-created: 2026-09-06
+title: "magdoub-wireframe-explainer"
+doc-id: "magdoub-wireframe-explainer"
 ---
-
 # magdoub-wireframe — Explainer
 
 *Companion note: for current confirmed state (paths, versions, integration,

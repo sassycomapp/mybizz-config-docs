@@ -1,10 +1,7 @@
 ---
-document: "GStack — Exam Plan"
-doc-id: gstack-exam-plan
-state: Live
-date-created: 2026-09-16
+title: "gstack-exam-plan"
+doc-id: "gstack-exam-plan"
 ---
-
 # GStack — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before

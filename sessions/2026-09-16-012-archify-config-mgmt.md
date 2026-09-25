@@ -1,15 +1,7 @@
 ---
-type: concept
-title: 'Session 012 — Archify configuration-management suite (run #1 formal)'
-state: Live
-doc-id: 2026-09-16-012-archify-config-mgmt
-document: 'Session 012 — Archify configuration-management suite (run #1 formal)'
-date-created: '2026-09-16T00:00:00.000Z'
-ingested_via: 'mcp:put_page'
-ingested_at: '2026-09-16T16:15:20.243Z'
-source_kind: 'mcp:put_page'
+title: "2026-09-16-012-archify-config-mgmt"
+doc-id: "2026-09-16-012-archify-config-mgmt"
 ---
-
 # Session 012 — Archify configuration-management suite (run #1 formal)
 
 Full config-management rerun for Archify, from start to finish, per

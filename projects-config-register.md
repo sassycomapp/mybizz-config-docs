@@ -1,10 +1,7 @@
 ---
-document: Register — Projects Config
-doc-id: projects-config-register
-state: Live
-date-created: 2026-08-13
+title: "projects-config-register"
+doc-id: "projects-config-register"
 ---
-
 # Register — Projects Config
 
 Append-only. Rows are never deleted. Only `state`, `date-state-changed`, `superseded-by`, and

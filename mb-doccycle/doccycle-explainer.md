@@ -1,10 +1,7 @@
 ---
-document: "The mb-doccycle Documentation-Management Workflow"
-doc-id: doccycle-explainer
-state: Live
-date-created: 2026-09-22
+title: "doccycle-explainer"
+doc-id: "doccycle-explainer"
 ---
-
 # mb-doccycle — The Documentation-Management Workflow (Explainer)
 
 Companion note: this system is examinable — the standing check inventory

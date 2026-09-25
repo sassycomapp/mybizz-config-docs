@@ -1,10 +1,7 @@
 ---
-document: "SSS - sentinel Security System"
-doc-id: sentinel-security-system
-state: Live
-date-created: 2026-09-09
+title: "sentinel-security-system"
+doc-id: "sentinel-security-system"
 ---
-
 # SSS - sentinel Security System
 
 The "#" headings below are not always headings and do notreally denote heirarchy. Thje are used loosely to indicate divisions in the notes. These are very unstructured notes but do follow a chain of thought

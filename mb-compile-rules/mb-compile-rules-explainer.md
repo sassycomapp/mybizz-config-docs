@@ -1,10 +1,7 @@
 ---
-document: "mb-compile-rules Explainer"
-doc-id: mb-compile-rules-explainer
-state: Live
-date-created: 2026-09-08
+title: "mb-compile-rules-explainer"
+doc-id: "mb-compile-rules-explainer"
 ---
-
 # mb-compile-rules Explainer
 
 ## 1. What this actually is

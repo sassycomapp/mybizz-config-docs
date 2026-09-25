@@ -1,10 +1,7 @@
 ---
-document: "GStack Explainer"
-doc-id: gstack-explainer
-state: Live
-date-created: 2026-09-08
+title: "gstack-explainer"
+doc-id: "gstack-explainer"
 ---
-
 # GStack Explainer
 
 ## 0. Config-management coverage

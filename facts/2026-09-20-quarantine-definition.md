@@ -1,10 +1,7 @@
 ---
-document: "Durable fact — Quarantine definition (developer ruling 2026-09-20)"
-doc-id: 2026-09-20-quarantine-definition
-state: Live
-date-created: 2026-09-20
+title: "2026-09-20-quarantine-definition"
+doc-id: "2026-09-20-quarantine-definition"
 ---
-
 # Durable fact — Quarantine definition
 
 Quarantine holds retired-but-valuable documents: content marked obsolete and

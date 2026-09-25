@@ -1,10 +1,7 @@
 ---
-document: "mb-doccycle — Shared Run Discipline"
-doc-id: doccycle-run-discipline
-state: Live
-date-created: 2026-09-22
+title: "doccycle-run-discipline"
+doc-id: "doccycle-run-discipline"
 ---
-
 # mb-doccycle — Shared Run Discipline
 
 Single source of the run frame for [[mb-doccycle-skill|mb-doccycle]] (the

@@ -1,10 +1,7 @@
 ---
-document: "mb-doccycle Usage and Invocation"
-doc-id: doccycle-reference
-state: Live
-date-created: 2026-09-22
+title: "doccycle-reference"
+doc-id: "doccycle-reference"
 ---
-
 # mb-doccycle — Usage, Invocation, and Worked Examples
 
 # mb-doccycle — Usage, Invocation, and Worked Examples

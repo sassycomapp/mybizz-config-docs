@@ -1,10 +1,7 @@
 ---
-document: "i-have-adhd — Learnings"
-doc-id: i-have-adhd-learnings
-state: Live
-date-created: 2026-09-20
+title: "i-have-adhd-learnings"
+doc-id: "i-have-adhd-learnings"
 ---
-
 # i-have-adhd — Learnings
 
 Transient way-station for exam-run knowledge: patterns, decisions, nuances. No

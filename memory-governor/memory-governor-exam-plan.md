@@ -1,10 +1,7 @@
 ---
-document: "Memory Governor — Exam Plan"
-doc-id: memory-governor-exam-plan
-state: Live
-date-created: 2026-09-13
+title: "memory-governor-exam-plan"
+doc-id: "memory-governor-exam-plan"
 ---
-
 # Memory Governor — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before

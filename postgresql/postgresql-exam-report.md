@@ -1,10 +1,7 @@
 ---
-document: "PostgreSQL — Exam Report"
-doc-id: postgresql-exam-report
-state: Live
-date-created: 2026-09-13
+title: "postgresql-exam-report"
+doc-id: "postgresql-exam-report"
 ---
-
 # PostgreSQL — Exam Report
 
 Run #2 — **first formal plan-driven run** (2026-09-13). Plan:

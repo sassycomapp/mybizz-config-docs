@@ -1,10 +1,7 @@
 ---
-document: "anvil-agent-references — Exam Report"
-doc-id: anvil-agent-references-exam-report
-state: Live
-date-created: 2026-09-16
+title: "anvil-agent-references-exam-report"
+doc-id: "anvil-agent-references-exam-report"
 ---
-
 # anvil-agent-references — Exam Report
 
 Run #1 — **first formal plan-driven exam** (2026-09-16). Plan:

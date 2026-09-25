@@ -1,10 +1,7 @@
 ---
-document: "Fact — mg-grant lowercases the granted path"
-doc-id: 2026-09-15-mg-grant-lowercase-paths
-state: Live
-date-created: 2026-09-15
+title: "2026-09-15-mg-grant-lowercase-paths"
+doc-id: "2026-09-15-mg-grant-lowercase-paths"
 ---
-
 # Fact — mg-grant lowercases the granted path
 
 The `mg-grant` tool (`~/.config/cupcake/bin/mg-grant`) canonicalizes the

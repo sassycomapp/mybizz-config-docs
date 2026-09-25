@@ -1,10 +1,7 @@
 ---
-document: "OpenCode — Exam Report"
-doc-id: opencode-exam-report
-state: Live
-date-created: 2026-09-15
+title: "opencode-exam-report"
+doc-id: "opencode-exam-report"
 ---
-
 # OpenCode — Exam Report
 
 Run #1 — **first formal plan-driven exam** (2026-09-15). Plan:

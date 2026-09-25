@@ -1,22 +1,7 @@
 ---
-doc-id: 2026-09-15-006-archify-scope-skill
-document: "Session 006 — the mb-archify-scope scoping skill designed, installed, and proven on the memory-ecosystem diagram"
-state: Live
-date-created: 2026-09-15
-type: session
-title: >-
-  Session 006 — the mb-archify-scope scoping skill designed, installed, and
-  proven on the memory-ecosystem diagram
-date: '2026-09-15T00:00:00.000Z'
-ingested_via: 'mcp:put_page'
-ingested_at: '2026-09-15T15:32:39.924Z'
-source_kind: 'mcp:put_page'
-tags:
-  - archify
-  - scoping-skill
-  - sessions
+title: "2026-09-15-006-archify-scope-skill"
+doc-id: "2026-09-15-006-archify-scope-skill"
 ---
-
 # Session 006 — mb-archify-scope
 
 Session number 006 (per the developer sessions log). Documents the design,

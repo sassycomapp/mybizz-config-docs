@@ -1,10 +1,7 @@
 ---
-document: "Durable fact — The memory family (developer-stated 2026-09-14)"
-doc-id: 2026-09-14-memory-family
-state: Live
-date-created: 2026-09-14
+title: "2026-09-14-memory-family"
+doc-id: "2026-09-14-memory-family"
 ---
-
 # Durable fact — The memory family
 
 The memory family, as stated by the developer on 2026-09-14, consists of:

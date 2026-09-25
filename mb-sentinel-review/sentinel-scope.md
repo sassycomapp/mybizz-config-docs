@@ -1,10 +1,7 @@
 ---
-document: "Sentinel — Scope"
-doc-id: sentinel-scope
-state: Live
-date-created: 2026-09-09
+title: "sentinel-scope"
+doc-id: "sentinel-scope"
 ---
-
 # Sentinel — Scope
 
 Agreed scope for the Sentinel system. Drafted 2026-09-09 from the scoping

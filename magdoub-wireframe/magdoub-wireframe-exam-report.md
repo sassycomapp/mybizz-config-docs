@@ -1,10 +1,7 @@
 ---
-document: "Magdoub Wireframe — Exam Report"
-doc-id: magdoub-wireframe-exam-report
-state: Live
-date-created: 2026-09-16
+title: "magdoub-wireframe-exam-report"
+doc-id: "magdoub-wireframe-exam-report"
 ---
-
 # Magdoub Wireframe — Exam Report
 
 Run #1 — **first formal plan-driven exam** (2026-09-16). Plan:

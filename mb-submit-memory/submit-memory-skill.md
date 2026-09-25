@@ -1,8 +1,7 @@
 ---
-name: mb-config-mb-submit-memory
-description: mb-submit-memory configuration exam — verifies the submission skill's live configuration state (installed file, governance chain, logs lane, mirror/slot state) against mb-submit-memory-config.md and proves the governed path functionally executes (auth-gate probe, detect surface); detection and verification only — the skill is working well and this module changes nothing; catches silent failures and proposes gated repairs. Use when asked to "exam submit-memory", "check submit-memory health", or as part of a full mb-config-manager run.
+title: "submit-memory-skill"
+doc-id: "submit-memory-skill"
 ---
-
 # mb-config-mb-submit-memory — Exam Skill
 
 Exams the mb-submit-memory system's configuration state against its spec. This

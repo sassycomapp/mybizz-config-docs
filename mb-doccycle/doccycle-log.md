@@ -1,10 +1,7 @@
 ---
-document: "mb-doccycle — Log"
-doc-id: doccycle-log
-state: Live
-date-created: 2026-09-22
+title: "doccycle-log"
+doc-id: "doccycle-log"
 ---
-
 # mb-doccycle — Log
 
 Chronological record of notable events for this system: exam runs and

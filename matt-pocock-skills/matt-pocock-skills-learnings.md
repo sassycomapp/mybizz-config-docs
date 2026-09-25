@@ -1,10 +1,7 @@
 ---
-document: "Matt Pocock Skills — Learnings"
-doc-id: matt-pocock-skills-learnings
-state: Live
-date-created: 2026-09-08
+title: "matt-pocock-skills-learnings"
+doc-id: "matt-pocock-skills-learnings"
 ---
-
 # Matt Pocock Skills — Learnings
 
 Transient way-station for exam-run knowledge: patterns, decisions, nuances. No

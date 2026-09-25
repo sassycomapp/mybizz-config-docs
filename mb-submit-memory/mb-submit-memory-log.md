@@ -1,10 +1,7 @@
 ---
-document: "mb-submit-memory — Log"
-doc-id: mb-submit-memory-log
-state: Live
-date-created: 2026-09-15
+title: "mb-submit-memory-log"
+doc-id: "mb-submit-memory-log"
 ---
-
 # mb-submit-memory — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,

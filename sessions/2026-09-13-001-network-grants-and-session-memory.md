@@ -1,19 +1,7 @@
 ---
-doc-id: 2026-09-13-001-network-grants-and-session-memory
-document: "Session 001 — 13 September 2026 — Network Grants and the Session Close-Out Design"
-state: Live
-date-created: 2026-09-13
-type: session-log
-title: >-
-  Session 001 — 13 September 2026 — Network Grants and the Session Close-Out
-  Design
-date: '2026-09-13T00:00:00.000Z'
-session-number: 1
-ingested_via: 'mcp:put_page'
-ingested_at: '2026-09-13T15:18:20.674Z'
-source_kind: 'mcp:put_page'
+title: "2026-09-13-001-network-grants-and-session-memory"
+doc-id: "2026-09-13-001-network-grants-and-session-memory"
 ---
-
 # Session 001 — Network Grants and the Session Close-Out Design
 
 This page is the full summary of the session closed out on 13 September 2026.

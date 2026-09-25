@@ -1,10 +1,7 @@
 ---
-document: "mb-doccycle — Exam Skill"
-doc-id: doccycle-skill
-state: Live
-date-created: 2026-09-22
+title: "doccycle-skill"
+doc-id: "doccycle-skill"
 ---
-
 # mb-config-doccycle — Exam Skill (source)
 
 Exams the mb-doccycle documentation-management workflow system's live

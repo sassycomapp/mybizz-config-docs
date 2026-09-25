@@ -1,10 +1,7 @@
 ---
-document: "PostgreSQL — Learnings"
-doc-id: postgresql-learnings
-state: Live
-date-created: 2026-09-12
+title: "postgresql-learnings"
+doc-id: "postgresql-learnings"
 ---
-
 # PostgreSQL — Learnings
 
 Transient way-station for exam-run knowledge: patterns, decisions, nuances. No

@@ -1,8 +1,7 @@
 ---
-name: mb-config-memory-governor
-description: Memory-governor configuration exam — verifies the live governor system (API + worker processes, HTTP auth-gate, repo integrity, decision-engine conformance) against memory-governor-config.md, catches silent failures, proposes gated repairs. Use when asked to "exam memory governor", "check governor health", or as part of a full mb-config-manager run.
+title: "memory-governor-skill"
+doc-id: "memory-governor-skill"
 ---
-
 # mb-config-memory-governor — Exam Skill
 
 Exams the live memory-governor system against its spec. This skill holds the

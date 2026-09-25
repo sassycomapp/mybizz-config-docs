@@ -1,10 +1,7 @@
 ---
-document: "Cupcake — Exam Report"
-doc-id: cupcake-exam-report
-state: Live
-date-created: 2026-09-13
+title: "cupcake-exam-report"
+doc-id: "cupcake-exam-report"
 ---
-
 # Cupcake — Exam Report
 
 Run #1 — **first formal plan-driven run** (2026-09-13). Plan:

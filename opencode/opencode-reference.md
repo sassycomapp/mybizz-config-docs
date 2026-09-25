@@ -1,10 +1,7 @@
 ---
-document: "OpenCode Reference — Commands, Verification, Troubleshooting"
-doc-id: opencode-reference
-state: Live
-date-created: 2026-09-05
+title: "opencode-reference"
+doc-id: "opencode-reference"
 ---
-
 # OpenCode Reference — Commands, Verification, Troubleshooting
 
 Companion to [[opencode-config|OpenCode Configuration]] (current state),

@@ -1,10 +1,7 @@
 ---
-document: "Memory Governor — Learnings"
-doc-id: memory-governor-learnings
-state: Live
-date-created: 2026-09-13
+title: "memory-governor-learnings"
+doc-id: "memory-governor-learnings"
 ---
-
 # Memory Governor — Learnings
 
 Transient way-station for exam-run knowledge: patterns, decisions, nuances. No

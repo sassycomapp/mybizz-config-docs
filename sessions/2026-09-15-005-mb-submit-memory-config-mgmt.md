@@ -1,17 +1,7 @@
 ---
-doc-id: 2026-09-15-005-mb-submit-memory-config-mgmt
-document: "Session 005 — 15 September 2026 — mb-submit-memory Config Management, Run #1, and the Auto-Start Migration"
-state: Live
-date-created: 2026-09-15
-type: concept
-title: >-
-  Session 005 — 15 September 2026 — mb-submit-memory Config Management, Run #1,
-  and the Auto-Start Migration
-ingested_via: 'mcp:put_page'
-ingested_at: '2026-09-15T09:31:09.896Z'
-source_kind: 'mcp:put_page'
+title: "2026-09-15-005-mb-submit-memory-config-mgmt"
+doc-id: "2026-09-15-005-mb-submit-memory-config-mgmt"
 ---
-
 # Session 005 — 15 September 2026 — mb-submit-memory Config Management, Run #1, and the Auto-Start Migration
 
 Continuation of session 003's task (build the configuration-management suite for mb-submit-memory); session 005 completed the entire arc. Recorded per the developer's instruction: this is session 005 — never record it as session 003.

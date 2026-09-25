@@ -1,10 +1,7 @@
 ---
-document: "Fact — grant discipline: request, never self-grant"
-doc-id: 2026-09-15-grant-discipline-request-never-self-grant
-state: Live
-date-created: 2026-09-15
+title: "2026-09-15-grant-discipline-request-never-self-grant"
+doc-id: "2026-09-15-grant-discipline-request-never-self-grant"
 ---
-
 # Fact — grant discipline: request, never self-grant
 
 Standing rule (developer instruction, 2026-09-15, session 003–005; encoded in

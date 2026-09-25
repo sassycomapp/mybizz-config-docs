@@ -1,10 +1,7 @@
 ---
-document: "i-have-adhd — Log"
-doc-id: i-have-adhd-log
-state: Live
-date-created: 2026-09-20
+title: "i-have-adhd-log"
+doc-id: "i-have-adhd-log"
 ---
-
 # i-have-adhd — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,

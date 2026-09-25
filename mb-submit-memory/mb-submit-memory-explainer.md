@@ -1,10 +1,7 @@
 ---
-document: "mb-submit-memory — Explainer"
-doc-id: mb-submit-memory-explainer
-state: Live
-date-created: 2026-09-05
+title: "mb-submit-memory-explainer"
+doc-id: "mb-submit-memory-explainer"
 ---
-
 # mb-submit-memory — Explainer
 
 *Companion note: current state in [[mb-submit-memory-config|Configuration]]; the full

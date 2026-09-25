@@ -1,15 +1,7 @@
 ---
-doc-id: 18-task-report
-document: "Work Package 18 — Graphify Installation and Runtime Validation"
-date-created: 2026-08-16
-title: Work Package 18 — Graphify Installation and Runtime Validation
-report: package18-task-report
-date: 2026-08-16
-time_utc_plus_2: 2026-08-16 09:54 +0200 (SAST)
-state: Complete (Graphify healthy — no repairs, no file changes)
-repo: mb-3-cs (live) — validation only
+title: "18-task-report"
+doc-id: "18-task-report"
 ---
-
 # Work Package 18 — Graphify Installation and Runtime Validation
 
 Independent Graphify validation against the live repo and existing artifact.

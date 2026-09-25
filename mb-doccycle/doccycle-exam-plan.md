@@ -1,10 +1,7 @@
 ---
-document: "mb-doccycle — Exam Plan"
-doc-id: doccycle-exam-plan
-state: Live
-date-created: 2026-09-22
+title: "doccycle-exam-plan"
+doc-id: "doccycle-exam-plan"
 ---
-
 # mb-doccycle — Exam Plan (Run #1)
 
 ## §1 Run header

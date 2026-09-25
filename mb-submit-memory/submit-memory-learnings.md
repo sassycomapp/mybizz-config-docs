@@ -1,10 +1,7 @@
 ---
-document: "mb-submit-memory — Learnings"
-doc-id: submit-memory-learnings
-state: Live
-date-created: 2026-09-15
+title: "submit-memory-learnings"
+doc-id: "submit-memory-learnings"
 ---
-
 # mb-submit-memory — Learnings
 
 Transient way-station for exam-run knowledge: patterns, decisions, nuances. No

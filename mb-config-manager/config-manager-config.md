@@ -1,10 +1,7 @@
 ---
-document: "Config Manager — Configuration"
-doc-id: config-manager-config
-state: Live
-date-created: 2026-09-12
+title: "config-manager-config"
+doc-id: "config-manager-config"
 ---
-
 # Config Manager — Configuration
 
 Canonical current-state configuration for the config-management system itself.

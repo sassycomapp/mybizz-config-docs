@@ -1,10 +1,7 @@
 ---
-document: "Graphify — Exam Report"
-doc-id: graphify-exam-report
-state: Live
-date-created: 2026-09-14
+title: "graphify-exam-report"
+doc-id: "graphify-exam-report"
 ---
-
 # Graphify — Exam Report
 
 **Final verdict: HEALTHY** — all tiers 0–3 formally executed including the full Tier 3 realistic run (complete documented rebuild), every check PASS, one genuine tool defect found and fixed in-run (F-4, cwd provenance stamping), zero open findings.

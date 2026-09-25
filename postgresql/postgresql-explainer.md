@@ -1,10 +1,7 @@
 ---
-document: "PostgreSQL — Explainer"
-doc-id: postgresql-explainer
-state: Live
-date-created: 2026-09-05
+title: "postgresql-explainer"
+doc-id: "postgresql-explainer"
 ---
-
 # PostgreSQL — Explainer
 
 Companion to [[postgresql-config|Configuration]] (every setting and value — the spec),

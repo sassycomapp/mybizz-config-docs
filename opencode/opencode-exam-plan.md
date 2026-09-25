@@ -1,10 +1,7 @@
 ---
-document: "OpenCode — Exam Plan"
-doc-id: opencode-exam-plan
-state: Live
-date-created: 2026-09-15
+title: "opencode-exam-plan"
+doc-id: "opencode-exam-plan"
 ---
-
 # OpenCode — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before

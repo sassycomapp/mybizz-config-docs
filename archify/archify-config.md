@@ -1,10 +1,7 @@
 ---
-document: "Archify — Configuration"
-doc-id: archify-config
-state: Live
-date-created: 2026-09-06
+title: "archify-config"
+doc-id: "archify-config"
 ---
-
 # Archify — Configuration
 
 Canonical current-state configuration record for the Archify skill. Agent-facing.

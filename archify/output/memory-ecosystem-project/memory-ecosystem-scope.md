@@ -1,8 +1,6 @@
 ---
-document: "Scope Card — memory-ecosystem"
-doc-id: memory-ecosystem-scope
-state: Live
-date-created: 2026-09-15
+title: "memory-ecosystem-scope"
+doc-id: "memory-ecosystem-scope"
 ---
 # Scope Card — memory-ecosystem
 

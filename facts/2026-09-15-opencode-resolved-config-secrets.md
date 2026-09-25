@@ -1,10 +1,7 @@
 ---
-document: "Fact — OpenCode resolved-config stdout is secret-bearing"
-doc-id: 2026-09-15-opencode-resolved-config-secrets
-state: Live
-date-created: 2026-09-15
+title: "2026-09-15-opencode-resolved-config-secrets"
+doc-id: "2026-09-15-opencode-resolved-config-secrets"
 ---
-
 # Fact — OpenCode resolved-config stdout is secret-bearing
 
 `opencode debug config` resolves and prints the fully merged configuration —

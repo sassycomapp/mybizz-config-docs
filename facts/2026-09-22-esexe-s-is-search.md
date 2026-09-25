@@ -1,10 +1,7 @@
 ---
-document: "Fact — es.exe -s is the search flag, not sort"
-doc-id: 2026-09-22-esexe-s-is-search
-state: Live
-date-created: 2026-09-22
+title: "2026-09-22-esexe-s-is-search"
+doc-id: "2026-09-22-esexe-s-is-search"
 ---
-
 # Fact — es.exe `-s` is the search flag, not sort
 
 In es.exe (Everything CLI), `-s <text>` is the **search** flag: the text

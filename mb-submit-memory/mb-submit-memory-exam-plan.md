@@ -1,10 +1,7 @@
 ---
-document: "mb-submit-memory — Exam Plan"
-doc-id: mb-submit-memory-exam-plan
-state: Live
-date-created: 2026-09-15
+title: "mb-submit-memory-exam-plan"
+doc-id: "mb-submit-memory-exam-plan"
 ---
-
 # mb-submit-memory — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before

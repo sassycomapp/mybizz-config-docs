@@ -1,8 +1,7 @@
 ---
-name: mb-config-gstack
-description: GStack configuration exam — verifies the GStack workflow layer's live configuration state (clone version/HEAD, discovery link topology, config files, binary tree, integration facts) against gstack-config.md and proves the installation functionally executes; detection and verification only — GStack is working well and this module changes nothing; catches silent failures and proposes gated repairs. Use when asked to "exam gstack", "check gstack health", or as part of a full mb-config-manager run.
+title: "gstack-skill"
+doc-id: "gstack-skill"
 ---
-
 # mb-config-gstack — Exam Skill
 
 Exams GStack's configuration state against its spec. This skill holds the

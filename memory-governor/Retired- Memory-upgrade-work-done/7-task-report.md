@@ -1,15 +1,7 @@
 ---
-doc-id: 7-task-report
-document: "Work Package 7 — Commit Graphify Scope Configuration"
-date-created: 2026-08-14
-title: Work Package 7 — Commit Graphify Scope Configuration
-report: package-7-task-report
-date: 2026-08-14
-time_utc_plus_2: 2026-08-14 14:23 +0200 (SAST)
-state: Complete (file change made; commit/push held for approval)
-repo: mb-3-cs
+title: "7-task-report"
+doc-id: "7-task-report"
 ---
-
 # Work Package 7 — Commit Graphify Scope Configuration
 
 Appended `graphify-out/` to the repository `.gitignore` and verified the

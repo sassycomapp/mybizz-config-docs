@@ -1,10 +1,7 @@
 ---
-document: "anvil-agent-references — Learnings"
-doc-id: anvil-agent-learnings
-state: Live
-date-created: 2026-09-06
+title: "anvil-agent-learnings"
+doc-id: "anvil-agent-learnings"
 ---
-
 # anvil-agent-references — Learnings
 
 Transient way-station for exam-run knowledge: patterns, decisions, nuances. No

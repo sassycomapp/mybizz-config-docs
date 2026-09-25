@@ -1,10 +1,7 @@
 ---
-document: "mb-doccycle — Learnings"
-doc-id: doccycle-learnings
-state: Live
-date-created: 2026-09-22
+title: "doccycle-learnings"
+doc-id: "doccycle-learnings"
 ---
-
 # mb-doccycle — Learnings
 
 Transient way-station for the doccycle config exam: new knowledge,

@@ -1,10 +1,7 @@
 ---
-document: "i-have-adhd — Exam Report"
-doc-id: i-have-adhd-exam-report
-state: Live
-date-created: 2026-09-20
+title: "i-have-adhd-exam-report"
+doc-id: "i-have-adhd-exam-report"
 ---
-
 # i-have-adhd — Exam Report
 
 Run #1 — **first formal plan-driven exam, gate closed** (2026-09-20). Plan:

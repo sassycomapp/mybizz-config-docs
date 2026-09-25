@@ -1,10 +1,7 @@
 ---
-document: "GBrain Dream Cycle — Exam Report"
-doc-id: gbrain-dream-cycle-exam-report
-state: Live
-date-created: 2026-09-14
+title: "gbrain-dream-cycle-exam-report"
+doc-id: "gbrain-dream-cycle-exam-report"
 ---
-
 # GBrain Dream Cycle — Exam Report
 
 Run #1 — **first formal plan-driven exam** (2026-09-14). Plan:

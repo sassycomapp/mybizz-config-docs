@@ -1,8 +1,7 @@
 ---
-name: mb-config-gbrain
-description: GBrain configuration exam — verifies the live GBrain system (CLI version, config, schema pack, 13 registered sources, MCP integration, sync state) against gbrain-config.md, catches silent failures, proposes gated repairs. Use when asked to "exam gbrain", "check gbrain health/config", or as part of a full mb-config-manager run.
+title: "gbrain-skill"
+doc-id: "gbrain-skill"
 ---
-
 # mb-config-gbrain — Exam Skill
 
 Exams the live GBrain system against its spec. This skill holds the **procedure**

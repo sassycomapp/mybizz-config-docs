@@ -1,15 +1,7 @@
 ---
-doc-id: 1-plan
-document: "Work Package 1 — Read-only Baseline Inspection"
-date-created: 2026-08-14
-title: Work Package 1 — Read-only Baseline Inspection
-report: package-1-plan
-date: 2026-08-14
-time_utc_plus_2: 2026-08-14 12:48 +0200 (SAST)
-state: Complete (read-only gate)
-repo: mb-3-cs
+title: "1-plan"
+doc-id: "1-plan"
 ---
-
 # Work Package 1 — Read-only Baseline Inspection
 
 Read-only baseline inspection of `mb-3-cs` covering Git, GBrain, Graphify,

@@ -1,10 +1,7 @@
 ---
-document: "Matt Pocock Skills — Log"
-doc-id: matt-pocock-skills-log
-state: Live
-date-created: 2026-09-08
+title: "matt-pocock-skills-log"
+doc-id: "matt-pocock-skills-log"
 ---
-
 # Matt Pocock Skills — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,

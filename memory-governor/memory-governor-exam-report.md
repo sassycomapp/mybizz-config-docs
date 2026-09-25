@@ -1,10 +1,7 @@
 ---
-document: "Memory Governor — Exam Report"
-doc-id: memory-governor-exam-report
-state: Live
-date-created: 2026-09-13
+title: "memory-governor-exam-report"
+doc-id: "memory-governor-exam-report"
 ---
-
 # Memory Governor — Exam Report
 
 Run #1 — **first formal plan-driven exam** (2026-09-13). Plan:

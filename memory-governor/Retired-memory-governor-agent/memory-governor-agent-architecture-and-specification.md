@@ -1,29 +1,7 @@
 ---
-doc-id: memory-governor-agent-architecture-and-specification
-document: "Memory Governor Agent — Architecture & Specification"
-state: Live
-date-created: 2026-08-20
-title: Memory Governor Agent — Architecture & Specification
-version: 2.2
-status: Approved foundation — supersedes all v1 sketch files and v2.0/2.1
-date: 2026-08-20
-companion_document: memory-governor-agent-scope.md
-changelog:
-  - "2.1: resolved register repo location (inside app repo), Postgres/register
-    dual-write handling (outbox-driven retry, not synchronous), and register
-    schema insufficiency (added candidates/ JSON payload alongside the
-    register index). Added memory_events.attempt_count/last_error columns."
-  - "2.2: rewrote decide_path() to the two-outcome model (Scope Doc §3,
-    Principle 2) — the engine's own automatic output is now limited to
-    auto_promote or needs_review; added Policy.classification and
-    Policy.recommended_action so a review item can still carry a
-    suggested disposition without the system closing it out unilaterally.
-    Added §5A confirming the remember-based GBrain write mechanism and
-    its async timing. NOTE: Phases 1-6, already built against the
-    original four-outcome decide_path(), will need rework against this
-    revision before the build resumes — not yet done."
+title: "memory-governor-agent-architecture-and-specification"
+doc-id: "memory-governor-agent-architecture-and-specification"
 ---
-
 # Memory Governor Agent — Architecture & Specification
 
 This is the technical foundation for implementation. Every design choice

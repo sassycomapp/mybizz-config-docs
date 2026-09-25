@@ -1,10 +1,7 @@
 ---
-document: "GBrain — Learnings"
-doc-id: gbrain-learnings
-state: Live
-date-created: 2026-09-13
+title: "gbrain-learnings"
+doc-id: "gbrain-learnings"
 ---
-
 # GBrain — Learnings
 
 Transient way-station for exam-run knowledge: patterns, decisions, nuances. No

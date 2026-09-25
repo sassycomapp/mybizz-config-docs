@@ -1,10 +1,7 @@
 ---
-document: "Durable fact — Archify explicit geometry anchors and repair order"
-doc-id: 2026-09-15-archify-geometry-anchors
-state: Live
-date-created: 2026-09-15
+title: "2026-09-15-archify-geometry-anchors"
+doc-id: "2026-09-15-archify-geometry-anchors"
 ---
-
 # Durable fact — Archify explicit geometry anchors and repair order
 
 When an Archify connection uses explicit `via`/`fromSide`/`toSide`, the port

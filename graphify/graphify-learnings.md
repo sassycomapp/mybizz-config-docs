@@ -1,10 +1,7 @@
 ---
-document: "Graphify — Learnings"
-doc-id: graphify-learnings
-state: Live
-date-created: 2026-09-14
+title: "graphify-learnings"
+doc-id: "graphify-learnings"
 ---
-
 # Graphify — Learnings
 
 Transient way-station for exam-run knowledge: patterns, decisions, nuances. No

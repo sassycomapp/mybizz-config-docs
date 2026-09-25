@@ -1,21 +1,7 @@
 ---
-doc-id: 2026-09-16-009-matt-pocock-skills-config-mgmt
-document: "Session 009 — matt-pocock-skills configuration-management suite: built, installed, run #1 HEALTHY"
-state: Live
-date-created: 2026-09-16
-type: note
-title: >-
-  Session 009 — matt-pocock-skills configuration-management suite: built,
-  installed, run #1 HEALTHY
-date: '2026-09-16T00:00:00.000Z'
-topic: config-management
-captured_at: '2026-09-16T09:54:27.988Z'
-captured_via: capture-cli
-ingested_via: put_page
-ingested_at: '2026-09-16T09:54:06.913Z'
-source_kind: put_page
+title: "2026-09-16-009-matt-pocock-skills-config-mgmt"
+doc-id: "2026-09-16-009-matt-pocock-skills-config-mgmt"
 ---
-
 # Session 009 — matt-pocock-skills configuration-management suite: built, installed, run #1 HEALTHY
 
 ## What was done (with evidence)

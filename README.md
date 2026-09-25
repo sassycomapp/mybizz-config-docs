@@ -1,10 +1,7 @@
 ---
-document: "mybizz-config-docs — README"
-doc-id: README
-state: Live
-date-created: 2026-09-05
+title: "README"
+doc-id: "README"
 ---
-
 # mybizz-config-docs — README
 
 Tool-by-tool configuration reference documents — one folder per tool, each holding a single,

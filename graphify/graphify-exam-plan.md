@@ -1,10 +1,7 @@
 ---
-document: "Graphify — Exam Plan"
-doc-id: graphify-exam-plan
-state: Live
-date-created: 2026-09-14
+title: "graphify-exam-plan"
+doc-id: "graphify-exam-plan"
 ---
-
 # Graphify — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before

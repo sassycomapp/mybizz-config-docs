@@ -1,10 +1,7 @@
 ---
-document: "GBrain Dream Cycle — Explainer"
-doc-id: gbrain-dream-cycle-explainer
-state: Live
-date-created: 2026-09-05
+title: "gbrain-dream-cycle-explainer"
+doc-id: "gbrain-dream-cycle-explainer"
 ---
-
 # GBrain Dream Cycle — Explainer
 
 *Companion note: for current confirmed state (invocation model, provider

@@ -1,11 +1,7 @@
 ---
-doc-id: opencode-permission-access-control-model
-state: Live
-date-created: 2026-09-05
-document: OpenCode — Permission & Access Control Model
-status: Current — verified live 2026-09-17
+title: "opencode-permission-access-control-model"
+doc-id: "opencode-permission-access-control-model"
 ---
-
 # OpenCode — Permission & Access Control Model
 
 ## What this covers

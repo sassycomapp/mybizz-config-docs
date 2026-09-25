@@ -1,10 +1,7 @@
 ---
-document: "mb-archify-scope — Scoping Skill Specification"
-doc-id: archify-scope-skill
-state: Live
-date-created: 2026-09-15
+title: "archify-scope-skill"
+doc-id: "archify-scope-skill"
 ---
-
 # mb-archify-scope — Front-of-pipe scoping for /archify
 
 Turns a drawing request into an agreed **Scope Card** before any Archify

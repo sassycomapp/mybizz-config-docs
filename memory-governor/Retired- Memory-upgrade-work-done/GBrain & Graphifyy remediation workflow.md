@@ -1,10 +1,7 @@
 ---
-document: "Work package 1 — Read-only baseline"
-doc-id: GBrain & Graphifyy remediation workflow
-state: Live
-date-created: 2026-09-05
+title: "GBrain & Graphifyy remediation workflow"
+doc-id: "GBrain & Graphifyy remediation workflow"
 ---
-
 This is an appropriate task for OpenCode, but it must be executed as a controlled sequence of small, verified work packages, not as one large autonomous prompt.
 
 DeepSeek V4 Pro should be adequate for most of the work, including inspection, SQL diagnosis, documentation, Graphify configuration, and ordinary OpenCode orchestration. I would not give it unrestricted authority over database updates, Git hooks, AGENTS.md, or model-dependent GBrain operations. Use explicit approval gates and require verification after every state-changing action.

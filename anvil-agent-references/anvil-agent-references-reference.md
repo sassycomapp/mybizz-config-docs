@@ -1,10 +1,7 @@
 ---
-document: "anvil-agent-references — Reference: Install, Skills, and Technical Detail"
-doc-id: anvil-agent-references-reference
-state: Live
-date-created: 2026-09-05
+title: "anvil-agent-references-reference"
+doc-id: "anvil-agent-references-reference"
 ---
-
 # anvil-agent-references — Reference: Install, Skills, and Technical Detail
 
 Companion to [[anvil-agent-references-config|Configuration]] (state, inventory, open items)

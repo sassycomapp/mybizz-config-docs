@@ -1,10 +1,7 @@
 ---
-document: "Archify — Exam Report"
-doc-id: archify-exam-report
-state: Live
-date-created: 2026-09-16
+title: "archify-exam-report"
+doc-id: "archify-exam-report"
 ---
-
 # Archify — Exam Report
 
 **Verdict (run #1, Tiers 0–3): HEALTHY — ** all tiers executed, zero DOWN, zero

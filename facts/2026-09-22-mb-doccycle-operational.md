@@ -1,10 +1,7 @@
 ---
-document: "Fact — mb-doccycle is operational"
-doc-id: 2026-09-22-mb-doccycle-operational
-state: Live
-date-created: 2026-09-22
+title: "2026-09-22-mb-doccycle-operational"
+doc-id: "2026-09-22-mb-doccycle-operational"
 ---
-
 # Fact — mb-doccycle is operational (2026-09-22)
 
 The merged documentation-management workflow **mb-doccycle** is

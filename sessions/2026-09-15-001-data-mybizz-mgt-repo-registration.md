@@ -1,15 +1,7 @@
 ---
-type: concept
-title: Session 2026-09-15 — data-mybizz-mgt repo + GBrain + opencode registration
-state: Live
-doc-id: 2026-09-15-001-data-mybizz-mgt-repo-registration
-document: Session 2026-09-15 — data-mybizz-mgt repo + GBrain + opencode registration
-date-created: '2026-09-15T00:00:00.000Z'
-ingested_via: 'mcp:put_page'
-ingested_at: '2026-09-15T05:16:44.732Z'
-source_kind: 'mcp:put_page'
+title: "2026-09-15-001-data-mybizz-mgt-repo-registration"
+doc-id: "2026-09-15-001-data-mybizz-mgt-repo-registration"
 ---
-
 # Session 2026-09-15 — data-mybizz-mgt repo + GBrain + opencode registration
 
 ## What was done

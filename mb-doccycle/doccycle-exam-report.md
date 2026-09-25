@@ -1,10 +1,7 @@
 ---
-document: "mb-doccycle — Exam Report"
-doc-id: doccycle-exam-report
-state: Live
-date-created: 2026-09-22
+title: "doccycle-exam-report"
+doc-id: "doccycle-exam-report"
 ---
-
 # mb-doccycle — Exam Report (Run #1, formal, 2026-09-22)
 
 **Verdict: HEALTHY** — Tiers 0–2 all PASS; zero DOWN / UNHEALTHY / DRIFT

@@ -1,10 +1,7 @@
 ---
-document: "i-have-adhd — Exam Plan"
-doc-id: i-have-adhd-exam-plan
-state: Live
-date-created: 2026-09-20
+title: "i-have-adhd-exam-plan"
+doc-id: "i-have-adhd-exam-plan"
 ---
-
 # i-have-adhd — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before

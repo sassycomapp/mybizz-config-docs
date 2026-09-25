@@ -1,15 +1,7 @@
 ---
-doc-id: 19-task-report
-document: "Work Package 19 — GBrain–Graphify–OpenCode Complementary Integration"
-date-created: 2026-08-16
-title: Work Package 19 — GBrain–Graphify–OpenCode Complementary Integration
-report: package19-task-report
-date: 2026-08-16
-time_utc_plus_2: 2026-08-16 10:02 +0200 (SAST)
-state: Complete (integration validated complementary — no defects, no changes)
-repo: mb-3-cs (live) — validation only
+title: "19-task-report"
+doc-id: "19-task-report"
 ---
-
 # Work Package 19 — GBrain–Graphify–OpenCode Complementary Integration
 
 Final validation of the complementary integration. No tracked-file, config,

@@ -1,10 +1,7 @@
 ---
-document: "magdoub-wireframe — Reference: Invocation, Operation, Update"
-doc-id: magdoub-wireframe-reference
-state: Live
-date-created: 2026-09-06
+title: "magdoub-wireframe-reference"
+doc-id: "magdoub-wireframe-reference"
 ---
-
 # magdoub-wireframe — Reference: Invocation, Operation, Update
 
 Companion to [[magdoub-wireframe-config|Configuration]] (current installed state, open items)

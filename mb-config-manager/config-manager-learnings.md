@@ -1,10 +1,7 @@
 ---
-document: "Config Manager — Learnings"
-doc-id: config-manager-learnings
-state: Live
-date-created: 2026-09-12
+title: "config-manager-learnings"
+doc-id: "config-manager-learnings"
 ---
-
 # Config Manager — Learnings
 
 Transient way-station for the config-manager's own knowledge: patterns, decisions,

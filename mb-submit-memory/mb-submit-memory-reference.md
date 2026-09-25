@@ -1,10 +1,7 @@
 ---
-document: "mb-submit-memory — Reference: Usage, Invocation, and the Full Cycle"
-doc-id: mb-submit-memory-reference
-state: Live
-date-created: 2026-09-05
+title: "mb-submit-memory-reference"
+doc-id: "mb-submit-memory-reference"
 ---
-
 # mb-submit-memory — Reference: Usage, Invocation, and the Full Cycle
 
 Companion to [[mb-submit-memory-config|Configuration]] (current state) and

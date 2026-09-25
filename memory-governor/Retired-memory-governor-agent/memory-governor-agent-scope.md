@@ -1,43 +1,7 @@
 ---
-doc-id: memory-governor-agent-scope
-document: "Memory Governor Agent — Scope Document"
-state: Live
-date-created: 2026-08-20
-title: Memory Governor Agent — Scope Document
-version: 2.2
-status: Approved foundation — supersedes all v1 sketch files and v2.0/2.1
-date: 2026-08-20
-supersedes:
-  - memory-governor-agent-concept.md (v1)
-  - memory-governor-agent-scope.md (v1, v2.0)
-  - memory-governor-agent-decision-state-machine.md (v1)
-  - memory-governor-agent-json-schema.md (v1)
-  - memory-governor-agent-pydantic-models.md (v1)
-  - memory-governor-agent-openapi-spec.md (v1)
-  - memory-governor-agent-suggested-layout.md (v1)
-  - models.py / policy.py / state_machine.py / storage.py / app.api.py / app.main.py (v1, illustrative sketches only)
-foundation_documents:
-  - gbrain-config.md
-  - graphify-config.md
-  - gbrain-reference.md
-  - graphify-reference.md
-  - memory-explainer.md
-  - working-ledger.md
-changelog:
-  - "2.1: resolved three open items from v2.0 — register repo location,
-    Postgres/register dual-write handling, register schema sufficiency.
-    Added operational footprint note."
-  - "2.2: reduced the governor's own automatic outcomes from four to two
-    (Principle 2, rewritten) — the system may only auto-promote or route
-    to review; 'rejected' and 'quarantined' become developer-chosen
-    dispositions on a review item, never system-assigned states. Added
-    §11A, placing confidence/contradiction judgment on the submitting
-    agent, never the governor. Added a third writer — PDLF step
-    completion, running at every one of PDLF's 46 steps, not only at its
-    7 gates (§13A). Added `anvil-agent-references` as an explicit
-    out-of-scope, direct-to-GBrain exception (§5)."
+title: "memory-governor-agent-scope"
+doc-id: "memory-governor-agent-scope"
 ---
-
 # Memory Governor Agent — Scope Document
 
 The thirteen v1 sketch files are illustrative indications of the kind of

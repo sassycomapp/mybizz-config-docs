@@ -1,10 +1,7 @@
 ---
-document: "GBrain — Log"
-doc-id: gbrain-log
-state: Live
-date-created: 2026-09-13
+title: "gbrain-log"
+doc-id: "gbrain-log"
 ---
-
 # GBrain — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,

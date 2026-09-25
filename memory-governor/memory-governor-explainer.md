@@ -1,10 +1,7 @@
 ---
-document: "Memory Governor — Explainer"
-doc-id: memory-governor-explainer
-state: Live
-date-created: 2026-09-05
+title: "memory-governor-explainer"
+doc-id: "memory-governor-explainer"
 ---
-
 # Memory Governor — Explainer
 
 *Companion note: for current confirmed state — the system is ACTIVE as of

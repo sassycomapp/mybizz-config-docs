@@ -1,10 +1,7 @@
 ---
-document: "GStack — Exam Report"
-doc-id: gstack-exam-report
-state: Live
-date-created: 2026-09-16
+title: "gstack-exam-report"
+doc-id: "gstack-exam-report"
 ---
-
 # GStack — Exam Report
 
 **Verdict: HEALTHY — all Tier 0–2 checks PASS, zero live defects.** Formal run #1

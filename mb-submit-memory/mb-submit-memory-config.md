@@ -1,10 +1,7 @@
 ---
-document: "mb-submit-memory — Configuration"
-doc-id: mb-submit-memory-config
-state: Live
-date-created: 2026-09-05
+title: "mb-submit-memory-config"
+doc-id: "mb-submit-memory-config"
 ---
-
 # mb-submit-memory — Configuration
 
 Canonical current-state configuration record. Agent-facing. States facts,

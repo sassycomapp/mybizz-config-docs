@@ -1,10 +1,7 @@
 ---
-document: "GBrain — Configuration"
-doc-id: gbrain-config
-state: Live
-date-created: 2026-09-05
+title: "gbrain-config"
+doc-id: "gbrain-config"
 ---
-
 # GBrain — Configuration
 
 Canonical current-state configuration record for GBrain as a division-wide

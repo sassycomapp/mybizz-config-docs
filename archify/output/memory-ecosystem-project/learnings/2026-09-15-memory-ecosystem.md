@@ -1,10 +1,7 @@
 ---
-document: "Archify — Run Learnings (memory-ecosystem 2026-09-15)"
-doc-id: 2026-09-15-memory-ecosystem
-state: Live
-date-created: 2026-09-15
+title: "2026-09-15-memory-ecosystem"
+doc-id: "2026-09-15-memory-ecosystem"
 ---
-
 # Archify — Run Learnings — memory-ecosystem (2026-09-15)
 
 Transient way-station for learnings gained from the first real `/mb-archify-scope`

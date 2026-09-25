@@ -1,10 +1,7 @@
 ---
-document: "mb-doccycle Configuration"
-doc-id: doccycle-config
-state: Live
-date-created: 2026-09-22
+title: "doccycle-config"
+doc-id: "doccycle-config"
 ---
-
 # mb-doccycle Configuration
 
 Canonical current-state configuration record for the mb-doccycle

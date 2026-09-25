@@ -1,8 +1,7 @@
 ---
-name: mb-config-cupcake
-description: Cupcake configuration exam — verifies the live policy-enforcement layer (binary, plugin, policy inventory, rule liveness) against cupcake-config.md, catches silent failures (rule present but not firing), proposes gated repairs. Use when asked to "exam cupcake", "check cupcake health", or as part of a full mb-config-manager run.
+title: "cupcake-skill"
+doc-id: "cupcake-skill"
 ---
-
 # mb-config-cupcake — Exam Skill
 
 Exams the live Cupcake policy-enforcement system against its spec. This skill holds

@@ -1,10 +1,7 @@
 ---
-document: "mb-submit-memory — Exam Report"
-doc-id: mb-submit-memory-exam-report
-state: Live
-date-created: 2026-09-15
+title: "mb-submit-memory-exam-report"
+doc-id: "mb-submit-memory-exam-report"
 ---
-
 # mb-submit-memory — Exam Report
 
 **Run #1 formal — 2026-09-15. Verdict: HEALTHY.** Tier 0–2 all PASS, zero live

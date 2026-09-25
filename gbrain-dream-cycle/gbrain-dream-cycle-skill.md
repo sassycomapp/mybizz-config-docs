@@ -1,8 +1,7 @@
 ---
-name: mb-config-gbrain-dream-cycle
-description: GBrain Dream Cycle configuration exam — verifies the dream cycle's live configuration state (invocation model, scheduling absence, provider dependency, schema-pack coupling, trigger surfaces, known-limitation record) against gbrain-dream-cycle-config.md and proves the pipeline functionally executes; detection and verification only — the dream cycle is working well and this module changes nothing; catches silent failures and proposes gated repairs. Use when asked to "exam dream cycle", "check dream cycle health", or as part of a full mb-config-manager run.
+title: "gbrain-dream-cycle-skill"
+doc-id: "gbrain-dream-cycle-skill"
 ---
-
 # mb-config-gbrain-dream-cycle — Exam Skill
 
 Exams the Dream Cycle's configuration state against its spec. This skill holds

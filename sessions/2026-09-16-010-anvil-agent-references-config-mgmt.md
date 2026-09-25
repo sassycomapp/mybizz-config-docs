@@ -1,22 +1,7 @@
 ---
-doc-id: 2026-09-16-010-anvil-agent-references-config-mgmt
-document: "Session 2026-09-16-010 — anvil-agent-references config-management suite"
-state: Live
-date-created: 2026-09-16
-type: session
-title: Session 2026-09-16-010 — anvil-agent-references config-management suite
-date: '2026-09-16T00:00:00.000Z'
-emotion: 0.95
-ingested_via: 'mcp:put_page'
-ingested_at: '2026-09-16T12:04:21.737Z'
-source_kind: 'mcp:put_page'
-tags:
-  - anvil-agent-references
-  - config-management
-  - mb-config-manager
-  - session
+title: "2026-09-16-010-anvil-agent-references-config-mgmt"
+doc-id: "2026-09-16-010-anvil-agent-references-config-mgmt"
 ---
-
 # Session 010 — anvil-agent-references config-management suite build + run #1 + W-1..W-5 closure
 
 ## What happened

@@ -1,10 +1,7 @@
 ---
-document: "GBrain Dream Cycle — Learnings"
-doc-id: gbrain-dream-cycle-learnings
-state: Live
-date-created: 2026-09-14
+title: "gbrain-dream-cycle-learnings"
+doc-id: "gbrain-dream-cycle-learnings"
 ---
-
 # GBrain Dream Cycle — Learnings
 
 Transient way-station for exam-run knowledge: patterns, decisions, nuances. No

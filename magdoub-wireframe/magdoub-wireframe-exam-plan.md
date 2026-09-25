@@ -1,10 +1,7 @@
 ---
-document: "Magdoub Wireframe — Exam Plan"
-doc-id: magdoub-wireframe-exam-plan
-state: Live
-date-created: 2026-09-16
+title: "magdoub-wireframe-exam-plan"
+doc-id: "magdoub-wireframe-exam-plan"
 ---
-
 # Magdoub Wireframe — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before

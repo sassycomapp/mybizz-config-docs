@@ -1,10 +1,7 @@
 ---
-document: "Cupcake — Exam Plan"
-doc-id: cupcake-exam-plan
-state: Live
-date-created: 2026-09-13
+title: "cupcake-exam-plan"
+doc-id: "cupcake-exam-plan"
 ---
-
 # Cupcake — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before

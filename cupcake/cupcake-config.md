@@ -1,10 +1,7 @@
 ---
-document: "Cupcake Configuration"
-doc-id: cupcake-config
-state: Live
-date-created: 2026-09-05
+title: "cupcake-config"
+doc-id: "cupcake-config"
 ---
-
 # Cupcake Configuration
 
 Canonical current-state configuration record. Agent-facing. Reflects the

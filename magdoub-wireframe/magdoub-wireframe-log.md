@@ -1,10 +1,7 @@
 ---
-document: "Magdoub Wireframe — Log"
-doc-id: magdoub-wireframe-log
-state: Live
-date-created: 2026-09-06
+title: "magdoub-wireframe-log"
+doc-id: "magdoub-wireframe-log"
 ---
-
 # Magdoub Wireframe — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,

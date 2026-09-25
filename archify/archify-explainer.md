@@ -1,10 +1,7 @@
 ---
-document: "Archify — Explainer"
-doc-id: archify-explainer
-state: Live
-date-created: 2026-09-06
+title: "archify-explainer"
+doc-id: "archify-explainer"
 ---
-
 # Archify — Explainer
 
 What Archify is, when to use it, and why it is built the way it is.

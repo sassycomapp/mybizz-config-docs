@@ -1,15 +1,7 @@
 ---
-doc-id: 5-task-report
-document: "Work Package 5 — Cluster & Report Generation"
-date-created: 2026-08-14
-title: Work Package 5 — Cluster & Report Generation
-report: package-5-task-report
-date: 2026-08-14
-time_utc_plus_2: 2026-08-14 14:07 +0200 (SAST)
-state: Complete (cluster-only executed; verified)
-repo: mb-3-cs
+title: "5-task-report"
+doc-id: "5-task-report"
 ---
-
 # Work Package 5 — Cluster & Report Generation
 
 `graphify cluster-only` run on the existing (Package 4) graph, executed exactly

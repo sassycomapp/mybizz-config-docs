@@ -1,10 +1,7 @@
 ---
-document: "Durable fact — Config-manager open items are closed directly when the developer asks"
-doc-id: 2026-09-16-config-manager-close-items-directly
-state: Live
-date-created: 2026-09-16
+title: "2026-09-16-config-manager-close-items-directly"
+doc-id: "2026-09-16-config-manager-close-items-directly"
 ---
-
 # Durable fact — Config-manager open items are closed directly when the developer asks
 
 Config-manager open items that the developer asks to be closed are resolved

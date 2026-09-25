@@ -1,10 +1,7 @@
 ---
-document: "anvil-agent-references — Exam Plan"
-doc-id: anvil-agent-references-exam-plan
-state: Live
-date-created: 2026-09-16
+title: "anvil-agent-references-exam-plan"
+doc-id: "anvil-agent-references-exam-plan"
 ---
-
 # anvil-agent-references — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before

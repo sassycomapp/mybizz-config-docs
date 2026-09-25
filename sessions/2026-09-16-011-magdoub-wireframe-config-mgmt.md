@@ -1,18 +1,7 @@
 ---
-doc-id: 2026-09-16-011-magdoub-wireframe-config-mgmt
-document: "Session 2026-09-16-011 — magdoub-wireframe config-management suite built, installed, run"
-type: session
-title: >-
-  Session 2026-09-16-011 — magdoub-wireframe config-management suite built,
-  installed, run
-state: Live
-provenance: close-out-process v2.1
-date-created: '2026-09-16T00:00:00.000Z'
-ingested_via: 'mcp:put_page'
-ingested_at: '2026-09-16T13:32:58.332Z'
-source_kind: 'mcp:put_page'
+title: "2026-09-16-011-magdoub-wireframe-config-mgmt"
+doc-id: "2026-09-16-011-magdoub-wireframe-config-mgmt"
 ---
-
 # Session 011 — magdoub-wireframe config-management suite
 
 **Subject:** Build, install, and formally run the configuration-management suite

@@ -1,10 +1,7 @@
 ---
-document: "Graphify — Log"
-doc-id: graphify-log
-state: Live
-date-created: 2026-09-14
+title: "graphify-log"
+doc-id: "graphify-log"
 ---
-
 # Graphify — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,

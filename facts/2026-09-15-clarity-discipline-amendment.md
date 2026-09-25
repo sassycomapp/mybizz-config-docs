@@ -1,10 +1,7 @@
 ---
-document: "Fact — clarity-discipline amendment (config-setup-prompt.md)"
-doc-id: 2026-09-15-clarity-discipline-amendment
-state: Live
-date-created: 2026-09-15
+title: "2026-09-15-clarity-discipline-amendment"
+doc-id: "2026-09-15-clarity-discipline-amendment"
 ---
-
 # Fact — clarity-discipline amendment (config-setup-prompt.md)
 
 `C:\data-mybizz-mgt\prompts\config-setup-prompt.md` carries the

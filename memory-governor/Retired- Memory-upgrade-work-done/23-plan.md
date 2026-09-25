@@ -1,15 +1,7 @@
 ---
-doc-id: 23-plan
-document: "Work Package 23 — Resolve Remaining Open Items (Plan)"
-date-created: 2026-08-16
-title: Work Package 23 — Resolve Remaining Open Items (Plan)
-report: package23-plan
-date: 2026-08-16
-time_utc_plus_2: 2026-08-16T221058+0200 (SAST)
-state: Plan complete — read-only review; no changes made
-repo: (read-only review across mb-3-cs, mb-3-cs-project-library, project-template, deferred repos)
+title: "23-plan"
+doc-id: "23-plan"
 ---
-
 # Work Package 23 — Resolve Remaining Open Items (Plan)
 
 Plan mode made **zero changes**. Read-only inspection only. No secret value was

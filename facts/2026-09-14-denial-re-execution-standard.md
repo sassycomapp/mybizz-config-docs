@@ -1,10 +1,7 @@
 ---
-document: "Durable fact — Developer standard: an honoured denial never substitutes for a formal execution"
-doc-id: 2026-09-14-denial-re-execution-standard
-state: Live
-date-created: 2026-09-14
+title: "2026-09-14-denial-re-execution-standard"
+doc-id: "2026-09-14-denial-re-execution-standard"
 ---
-
 # Durable fact — Developer standard on guard denials (2026-09-14)
 
 An honoured guard denial never substitutes for a formal execution. When a

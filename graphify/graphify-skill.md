@@ -1,8 +1,7 @@
 ---
-name: mb-config-graphify
-description: Graphify configuration exam — verifies the installed Graphify toolchain (CLI/package identity, OpenCode skill surface, mb-3-cs scope configuration, graph artifact provenance and shape, OpenCode MCP entry, AGENTS.md guidance-block markers, plugin surface) against graphify-config.md and proves the query surfaces functionally execute; detection and verification only — Graphify is working well and this module changes nothing; catches silent failures and proposes gated repairs. Use when asked to "exam graphify", "check graphify health", or as part of a full mb-config-manager run.
+title: "graphify-skill"
+doc-id: "graphify-skill"
 ---
-
 # mb-config-graphify — Exam Skill
 
 Exams Graphify's configuration state against its spec. This skill holds the

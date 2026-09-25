@@ -1,10 +1,7 @@
 ---
-document: "Matt Pocock Skills — Exam Report"
-doc-id: matt-pocock-skills-exam-report
-state: Live
-date-created: 2026-09-16
+title: "matt-pocock-skills-exam-report"
+doc-id: "matt-pocock-skills-exam-report"
 ---
-
 # Matt Pocock Skills — Exam Report
 
 Run #1 — **first formal plan-driven exam** (2026-09-16). Plan:

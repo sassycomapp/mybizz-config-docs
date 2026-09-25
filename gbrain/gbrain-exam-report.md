@@ -1,10 +1,7 @@
 ---
-document: "GBrain — Exam Report"
-doc-id: gbrain-exam-report
-state: Live
-date-created: 2026-09-13
+title: "gbrain-exam-report"
+doc-id: "gbrain-exam-report"
 ---
-
 # GBrain — Exam Report
 
 Run #1 — **first formal plan-driven run** (2026-09-13). Plan:

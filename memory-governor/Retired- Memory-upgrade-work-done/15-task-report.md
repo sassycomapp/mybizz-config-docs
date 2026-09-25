@@ -1,15 +1,7 @@
 ---
-doc-id: 15-task-report
-document: "Work Package 15 — Authoritative Environment Inventory"
-date-created: 2026-08-14
-title: Work Package 15 — Authoritative Environment Inventory
-report: package15-task-report
-date: 2026-08-14
-time_utc_plus_2: 2026-08-14 17:46 +0200 (SAST)
-state: Complete (read-only inventory — no blockers, zero changes)
-repo: mb-3-cs (live) / mb-3-cs-project-library (test workspace)
+title: "15-task-report"
+doc-id: "15-task-report"
 ---
-
 # Work Package 15 — Authoritative Environment Inventory
 
 Read-only environment map for the GBrain–Graphify–OpenCode completion work.

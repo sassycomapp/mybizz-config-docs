@@ -1,15 +1,7 @@
 ---
-doc-id: 21-task-report
-document: "Work Package 21 — Final GBrain–Graphify–OpenCode Acceptance"
-date-created: 2026-08-16
-title: Work Package 21 — Final GBrain–Graphify–OpenCode Acceptance
-report: package21-task-report
-date: 2026-08-16
-time_utc_plus_2: 2026-08-16T111412+0200 (SAST)
-state: Complete — READY FOR DEVELOPMENT WITH DOCUMENTED LIMITATION
-repo: mb-3-cs (live) — acceptance validation only; no code/DB/artifact/config changes
+title: "21-task-report"
+doc-id: "21-task-report"
 ---
-
 # Work Package 21 — Final GBrain–Graphify–OpenCode Acceptance
 
 Final acceptance and readiness certification for Phase 2. This package ran

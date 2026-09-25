@@ -1,10 +1,7 @@
 ---
-document: "Durable fact — The three documentation skills' charter (developer statement 2026-09-20)"
-doc-id: 2026-09-20-doc-skills-charter
-state: Live
-date-created: 2026-09-20
+title: "2026-09-20-doc-skills-charter"
+doc-id: "2026-09-20-doc-skills-charter"
 ---
-
 # Durable fact — The three documentation skills' charter
 
 The three documentation skills exist to: A) resolve the routing files

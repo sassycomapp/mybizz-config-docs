@@ -1,8 +1,7 @@
 ---
-name: mb-config-magdoub-wireframe
-description: Magdoub Wireframe configuration exam — verifies the Magdoub Claude Wireframe skill installation's live configuration state (real clone pin, two-hop discovery symlink, bundled-files inventory, no-confirmed-run state, settled sync/update policy) against magdoub-wireframe-config.md and proves the installation functionally resolves; detection and verification only — the installation is working well and this module changes nothing; catches silent failures and proposes gated repairs. Use when asked to "exam magdoub wireframe", "check wireframe skill health/install", or as part of a full mb-config-manager run.
+title: "magdoub-wireframe-skill"
+doc-id: "magdoub-wireframe-skill"
 ---
-
 # mb-config-magdoub-wireframe — Exam Skill
 
 Exams the Magdoub Claude Wireframe skill installation's configuration state

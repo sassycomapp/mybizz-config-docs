@@ -1,10 +1,7 @@
 ---
-document: "Archify — Reference"
-doc-id: archify-reference
-state: Live
-date-created: 2026-09-06
+title: "archify-reference"
+doc-id: "archify-reference"
 ---
-
 # Archify — Reference
 
 Invocation, commands, authoring procedure, and failure rules. Mid-task lookup.

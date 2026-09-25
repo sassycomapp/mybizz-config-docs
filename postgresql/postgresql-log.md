@@ -1,10 +1,7 @@
 ---
-document: "PostgreSQL — Log"
-doc-id: postgresql-log
-state: Live
-date-created: 2026-09-12
+title: "postgresql-log"
+doc-id: "postgresql-log"
 ---
-
 # PostgreSQL — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,

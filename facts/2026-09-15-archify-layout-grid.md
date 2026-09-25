@@ -1,10 +1,7 @@
 ---
-document: "Durable fact — Archify dataflow grid budget and the corridor wall"
-doc-id: 2026-09-15-archify-layout-grid
-state: Live
-date-created: 2026-09-15
+title: "2026-09-15-archify-layout-grid"
+doc-id: "2026-09-15-archify-layout-grid"
 ---
-
 # Durable fact — Archify dataflow grid budget and the corridor wall
 
 Archify's `dataflow` renderer is a strict stage/row grid: row tops

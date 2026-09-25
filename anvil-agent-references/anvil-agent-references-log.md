@@ -1,10 +1,7 @@
 ---
-document: "anvil-agent-references — Log"
-doc-id: anvil-agent-references-log
-state: Live
-date-created: 2026-09-06
+title: "anvil-agent-references-log"
+doc-id: "anvil-agent-references-log"
 ---
-
 # anvil-agent-references — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,

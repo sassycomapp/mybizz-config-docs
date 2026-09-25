@@ -1,10 +1,7 @@
 ---
-document: "Archify — Log"
-doc-id: archify-log
-state: Live
-date-created: 2026-09-16
+title: "archify-log"
+doc-id: "archify-log"
 ---
-
 # Archify — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,

@@ -1,10 +1,7 @@
 ---
-document: "PostgreSQL — Reference: Commands, Procedures, and Troubleshooting"
-doc-id: postgresql-reference
-state: Live
-date-created: 2026-09-05
+title: "postgresql-reference"
+doc-id: "postgresql-reference"
 ---
-
 # PostgreSQL — Reference: Commands, Procedures, and Troubleshooting
 
 Companion to [[postgresql-config|Configuration]] (the spec — every setting, path, and value) and

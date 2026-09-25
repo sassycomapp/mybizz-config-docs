@@ -1,10 +1,7 @@
 ---
-document: "GBrain Dream Cycle — Log"
-doc-id: gbrain-dream-cycle-log
-state: Live
-date-created: 2026-09-14
+title: "gbrain-dream-cycle-log"
+doc-id: "gbrain-dream-cycle-log"
 ---
-
 # GBrain Dream Cycle — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,

@@ -1,10 +1,7 @@
 ---
-document: "Fact — data-mybizz-mgt folder rename (underscore dropped)"
-doc-id: 2026-09-15-data-mybizz-mgt-folder-rename
-state: Live
-date-created: 2026-09-15
+title: "2026-09-15-data-mybizz-mgt-folder-rename"
+doc-id: "2026-09-15-data-mybizz-mgt-folder-rename"
 ---
-
 # Fact — data-mybizz-mgt folder rename (underscore dropped)
 
 The Mybizz management data folder is `C:\data-mybizz-mgt`. It was renamed

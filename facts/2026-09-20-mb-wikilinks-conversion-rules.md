@@ -1,10 +1,7 @@
 ---
-document: "Durable fact — mb-wikilinks conversion rules (developer-confirmed 2026-09-20)"
-doc-id: 2026-09-20-mb-wikilinks-conversion-rules
-state: Live
-date-created: 2026-09-20
+title: "2026-09-20-mb-wikilinks-conversion-rules"
+doc-id: "2026-09-20-mb-wikilinks-conversion-rules"
 ---
-
 # Durable fact — mb-wikilinks conversion rules
 
 mb-wikilinks converts document references to [[basename|Display Text]] form

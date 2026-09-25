@@ -1,8 +1,7 @@
 ---
-name: mb-config-archify
-description: Archify configuration exam — verifies the Archify skill installation's live configuration state (discovery symlink, clone/package identity, schemas/references/renderers inventory, update-notice contract, scoping-skill component, runtime output convention) against archify-config.md and proves the installation functionally resolves; detection and verification only — the installation is working well and this module changes nothing; catches silent failures and proposes gated repairs. Use when asked to "exam archify", "check archify health/config", or as part of a full mb-config-manager run.
+title: "archify-skill"
+doc-id: "archify-skill"
 ---
-
 # mb-config-archify — Exam Skill
 
 Exams the Archify skill installation's configuration state against its spec. This

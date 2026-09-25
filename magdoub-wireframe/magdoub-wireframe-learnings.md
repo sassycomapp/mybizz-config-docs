@@ -1,10 +1,7 @@
 ---
-document: "Magdoub Wireframe — Learnings"
-doc-id: magdoub-wireframe-learnings
-state: Live
-date-created: 2026-09-06
+title: "magdoub-wireframe-learnings"
+doc-id: "magdoub-wireframe-learnings"
 ---
-
 # Magdoub Wireframe — Learnings
 
 Transient way-station for exam-run knowledge: patterns, decisions, nuances. No

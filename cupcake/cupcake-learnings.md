@@ -1,10 +1,7 @@
 ---
-document: "Cupcake — Learnings"
-doc-id: cupcake-learnings
-state: Live
-date-created: 2026-09-13
+title: "cupcake-learnings"
+doc-id: "cupcake-learnings"
 ---
-
 # Cupcake — Learnings
 
 Transient way-station for exam-run knowledge: patterns, decisions, nuances. No

@@ -1,10 +1,7 @@
 ---
-document: "Sentinel — What It Is, What It Does, and Why It Matters"
-doc-id: sentinel-explainer
-state: Live
-date-created: 2026-09-05
+title: "sentinel-explainer"
+doc-id: "sentinel-explainer"
 ---
-
 # Sentinel — What It Is, What It Does, and Why It Matters
 
 ## The Objective, Stated Plainly

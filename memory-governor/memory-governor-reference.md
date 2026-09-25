@@ -1,10 +1,7 @@
 ---
-document: "Memory Governor Reference — Usage, Invocation, and Incident Response"
-doc-id: memory-governor-reference
-state: Live
-date-created: 2026-09-05
+title: "memory-governor-reference"
+doc-id: "memory-governor-reference"
 ---
-
 # Memory Governor Reference — Usage, Invocation, and Incident Response
 
 Companion to [[memory-governor-config|Memory Governor Configuration]] (the spec — current state — ACTIVE, all

@@ -1,10 +1,7 @@
 ---
-document: "OpenCode Configuration"
-doc-id: opencode-config
-state: Live
-date-created: 2026-09-05
+title: "opencode-config"
+doc-id: "opencode-config"
 ---
-
 # OpenCode Configuration
 
 Canonical current-state configuration record. Agent-facing. Reflects the
