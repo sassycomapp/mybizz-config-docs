@@ -87,4 +87,4 @@ Pipeline proven live: watcher running, single instance, crash-restart verified,
 | F-4 (uncommitted corpus edits) | **Acknowledged** — standing close-out (developer commit+push, then sync+embed) |
 | Tier 3 | **Unlocked and executed in full** (DM3-1a–g + DM3-2a–e above); F-5 recorded for decision |
 
-**Final verdict: HEALTHY.** Tiers 0–3 executed in full; zero DOWN/UNHEALTHY/DRIFT; F-1/F-2 resolved in-run per approved dispositions; F-3 delegated; F-5 open for developer decision (accept-as-noise recommended); F-4 standing close-out.
+**Final verdict: HEALTHY.** Tiers 0–3 executed in full; zero DOWN/UNHEALTHY/DRIFT; F-1/F-2 resolved in-run per approved dispositions; F-3 delegated; F-5 closed by developer decision (accepted as known noise, recorded in the reference); F-4 standing close-out (completed 2026-09-25: both corpora committed, pushed, synced, embedded).

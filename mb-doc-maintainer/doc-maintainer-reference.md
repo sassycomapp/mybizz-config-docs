@@ -104,6 +104,20 @@ Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" |
   Where-Object { $_.CommandLine -like '*save-watcher.ps1*' } |
   ForEach-Object { Stop-Process -Id $_.ProcessId -Force }
 
+## Known watcher behavior (accepted noise, developer decision F-5 2026-09-25)
+
+Rename-back churn (create → rename → rename-back → delete inside one debounce
+window) emits one redundant deletion event for the transient path — its entry
+retains only `[Renamed]` and promotes as a deletion of a file that never
+durably existed. This is **accepted as known noise** (developer decision,
+2026-09-25): the maintainer's deletion handler no-ops on unregistered,
+unreferenced paths, so the cost is one extra event file and one no-op run-log
+line. Do not treat it as a defect; do not harden the coalescing layer unless
+real save patterns make this noise frequent (the narrow drop-rule — drop
+entries whose only kind is `Renamed` and which no longer exist at promotion —
+is the recorded candidate, rejected for now because a wrong edge case loses
+real events).
+
 # manual run for testing (short debounce)
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\mybizz\mb-doc-maintainer\watch\save-watcher.ps1" `
   -ScopeAuthority "C:\mybizz\mybizz-os-docs\os-reference-docs\mybizz-scope-list.md" `
