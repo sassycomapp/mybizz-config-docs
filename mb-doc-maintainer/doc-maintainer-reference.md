@@ -103,6 +103,7 @@ Stop-ScheduledTask  -TaskName "mb-doc-maintainer-save-watcher"
 Get-CimInstance Win32_Process -Filter "Name='powershell.exe'" |
   Where-Object { $_.CommandLine -like '*save-watcher.ps1*' } |
   ForEach-Object { Stop-Process -Id $_.ProcessId -Force }
+```
 
 ## Known watcher behavior (accepted noise, developer decision F-5 2026-09-25)
 
@@ -118,6 +119,7 @@ entries whose only kind is `Renamed` and which no longer exist at promotion —
 is the recorded candidate, rejected for now because a wrong edge case loses
 real events).
 
+```bash
 # manual run for testing (short debounce)
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:\mybizz\mb-doc-maintainer\watch\save-watcher.ps1" `
   -ScopeAuthority "C:\mybizz\mybizz-os-docs\os-reference-docs\mybizz-scope-list.md" `

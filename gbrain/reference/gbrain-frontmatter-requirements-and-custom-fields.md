@@ -1,3 +1,7 @@
+---
+title: "gbrain-frontmatter-requirements-and-custom-fields"
+doc-id: "gbrain-frontmatter-requirements-and-custom-fields"
+---
 # GBrain Frontmatter Requirements and Custom Fields
 
 ## Direct answer

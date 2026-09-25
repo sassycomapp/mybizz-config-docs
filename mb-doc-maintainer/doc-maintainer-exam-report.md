@@ -15,7 +15,7 @@ Pipeline proven live: watcher running, single instance, crash-restart verified,
 
 ---
 
-## Step 0 — self-validation (recorded in config-manager-log.md)
+## Step 0 — self-validation (recorded in [[config-manager-log|Config Manager Log]])
 
 | Check | Result |
 |---|---|

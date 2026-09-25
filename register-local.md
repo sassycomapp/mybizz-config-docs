@@ -261,3 +261,5 @@ doc-ids where basenames repeat.
 | doc-maintainer-exam-plan | doc-maintainer-exam-plan.md | Live |  | registered by mb-doc-maintainer live run (F-1 gate-approved); tier 3 DM3-1 |
 | doc-maintainer-exam-report | doc-maintainer-exam-report.md | Live |  | registered by mb-doc-maintainer live run (F-1 gate-approved); tier 3 DM3-1 |
 | config-manager-log | config-manager-log.md | Live |  | registered by mb-doc-maintainer live run (discovered missing during DM3-1 pre-state) |
+| gbrain-frontmatter-requirements-and-custom-fields | gbrain-frontmatter-requirements-and-custom-fields.md | Live |  | created 2026-09-25 (gbrain frontmatter/title-handling reference note); registered by mb-doc-maintainer |
+| gbrain-skills-convention-gbrain-first | gbrain-skills-convention-gbrain-first.md | Live |  | created 2026-09-25 (pointer note to gbrain repo skills/conventions/brain-first.md); registered by mb-doc-maintainer |
