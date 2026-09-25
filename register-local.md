@@ -263,3 +263,7 @@ doc-ids where basenames repeat.
 | config-manager-log | config-manager-log.md | Live |  | registered by mb-doc-maintainer live run (discovered missing during DM3-1 pre-state) |
 | gbrain-frontmatter-requirements-and-custom-fields | gbrain-frontmatter-requirements-and-custom-fields.md | Live |  | created 2026-09-25 (gbrain frontmatter/title-handling reference note); registered by mb-doc-maintainer |
 | gbrain-skills-convention-gbrain-first | gbrain-skills-convention-gbrain-first.md | Live |  | created 2026-09-25 (pointer note to gbrain repo skills/conventions/brain-first.md); registered by mb-doc-maintainer |
+| doc-auditor-records | doc-auditor-records | Live |  | mb-doc-auditor audit record (one block per run) |
+| doc-auditor-config | doc-auditor-config | Live |  | mb-doc-auditor suite documentation (config spec / reference / explainer) |
+| doc-auditor-reference | doc-auditor-reference | Live |  | mb-doc-auditor suite documentation (config spec / reference / explainer) |
+| doc-auditor-explainer | doc-auditor-explainer | Live |  | mb-doc-auditor suite documentation (config spec / reference / explainer) |
