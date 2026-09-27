@@ -5,8 +5,14 @@ doc-id: "doc-auditor-explainer"
 # mb-doc-auditor — What It Is, What It Does, and Why It Is Built This Way
 
 Companion to [[doc-auditor-config|Configuration]] (current state) and
-[[doc-auditor-reference|Reference]] (commands and procedures). This document
-owns the mental model: what the auditor is, what situation it is for, and why
+[[doc-auditor-reference|Reference]] (commands and procedures). Exam set:
+[[doc-auditor-exam-plan|Exam Plan]] (next run's job-spec — transient),
+[[doc-auditor-exam-report|Exam Report]] (last run's verified state),
+[[doc-auditor-log|Log]] (notable events), [[doc-auditor-learnings|Learnings]]
+(transient exam knowledge), [[doc-auditor-skill|Exam Skill]] (the standing
+check inventory — canonical source lives in this suite folder). The exam cycle
+architecture: [[config-manager-explainer|Explainer]]. This document owns the
+mental model: what the auditor is, what situation it is for, and why
 its sharpest rules exist.
 
 ---
@@ -145,6 +151,62 @@ documentation (this folder). Its own plumbing obeys its own rules: the audit
 record carries exact two-field frontmatter and a register row; it is never its
 own trigger; it never writes to G-brain.
 
+## Config maintenance — how this system is examined and kept healthy
+
+This suite participates in the config-management system (`mb-config-manager`).
+The roles of the suite files, and the exam cycle that runs them, are the
+architecture described in [[config-manager-explainer|Explainer]]. The short
+local version:
+
+- [[doc-auditor-config|Configuration]] is the **spec** — the ideal state every
+  exam checks against.
+- Before each run, the config-manager synthesizes
+  [[doc-auditor-exam-plan|Exam Plan]]: a fresh job-spec built from this spec,
+  the last report, the log, and the learnings — carrying forward what was
+  deferred, addressing what erred, deriving probes from new log events, and
+  folding in lessons not yet graduated. The plan is transient.
+- The exam runs the installed skill (`mb-config-doc-auditor`) with the plan in
+  hand — detection fully autonomous; healing gated. Suite-file repairs are the
+  only agent-healable class; the subject skill, its source, the contract, the
+  scope authority, and any G-brain write are developer-gated or deny-listed.
+- **Scope boundary with the maintainer module:** the maintainer system
+  (watcher, queue, task, run-log discipline) belongs to
+  `mb-config-doc-maintainer`; this exam reads only the run-log artifact as the
+  auditor's evidence input.
+- The run rewrites [[doc-auditor-exam-report|Exam Report]] (current state, no
+  history), appends one row to [[doc-auditor-log|Log]], files new learnings,
+  and prunes absorbed entries.
+
+## S.W.O.T.
+
+**Strengths.** The pipeline is proven end-to-end on a live library root
+(project-library-global, 2026-09-25: 486 files, 6 mechanical repairs applied
+and verified); byte-surgical repairs with explicit refusal classes mean the
+tooling never guesses identity; the contract separation means the system cannot
+invent requirements; the append-only audit record makes every completed audit
+interrogable on demand.
+
+**Weaknesses.** Live verification covers one library root; tool-automatic
+repair coverage is deliberately narrow (frontmatter and registration — link
+repairs are agent-level by design); the nested-corpus doc-id convention is
+matched by a detection heuristic only, with the convention itself an open
+developer decision; no scheduler exists in v1 — nothing runs by itself.
+
+**Opportunities.** The exam cycle makes silent degradation of the auditor — a
+diverged installed skill, broken tools, a missing record artifact — detectable
+on demand; the spec's open items (nested-corpus convention, gbrain source
+registration, carried audit findings) are explicit gate-resolvable states
+rather than drift; scope-bounded invocations scale from a single folder to a
+whole library without changing the machinery.
+
+**Threats.** The doc-id candidate set is evidence-derived from this corpus's
+registers — a future corpus with a different derivation needs the set revisited,
+and the refusals make that visible rather than dangerous; contract or scope
+changes alter the ground truth every run reads — change control (developer-owned
+contract, live scope authority) is the mitigation; the gbrain dependency is
+read-only, so a CLI failure degrades to Can wait rather than blocking — by
+design, but it means G9/G10 verification is advisory when the CLI is down.
+
 ## Honest Limits
 
 - The nested-corpus registration convention is matched by a candidate
@@ -179,8 +241,14 @@ run re-reads first.
 ---
 
 *Suite: [[doc-auditor-config|Configuration]] (spec), [[doc-auditor-reference|Reference]]
-(commands and procedures). Requirements source: `gbrain/gbrain-doc-contract.md`.
+(commands and procedures), [[doc-auditor-exam-plan|Exam Plan]] /
+[[doc-auditor-exam-report|Exam Report]] / [[doc-auditor-log|Log]] /
+[[doc-auditor-learnings|Learnings]] (config-management set),
+[[doc-auditor-skill|Exam Skill]] (standing check inventory),
+[[doc-auditor-records|Audit Record]] (append-only run evidence). Requirements
+source: `gbrain/gbrain-doc-contract.md`.
 Governing plan: `mb-doc-auditor — Complete Consolidated Plan.md`
-(doc-auditor-maintaner-planning, amendments A–H applied 2026-09-25).*
+(doc-auditor-maintaner-planning, amendments A–H applied 2026-09-25). Exam
+architecture: [[config-manager-explainer|Explainer]].*
 
 *End of document*

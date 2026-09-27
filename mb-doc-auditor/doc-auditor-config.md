@@ -52,7 +52,7 @@ as of 2026-09-25. States facts, not history — reasoning in
 
 | Item | Value |
 |---|---|
-| Source ID | not yet registered (open item #2) |
+| Source ID | `mb-doc-auditor` — registered 2026-09-27, non-federated (developer instruction, mirrors mb-doc-maintainer; open item #2 closed); first import 1 page / 7 chunks, 100% embedded, checkpoint `aa91ff7f` |
 | Live reads | `gbrain sources list` / `gbrain orphans` via `gbrain_reader.py`, read-only, timeout 60 s |
 
 ## Register usage
@@ -79,6 +79,6 @@ as of 2026-09-25. States facts, not history — reasoning in
 | # | Item | Status |
 |---|---|---|
 | 1 | Nested-corpus registration convention (path-derived compound doc-ids vs bare stems) — detection heuristic works; the convention itself awaits a developer decision surfaced by the first live audit. | Open |
-| 2 | GBrain source registration for `mb-doc-auditor` (+ repo-organization row) — not yet applied. | Open |
+| 2 | GBrain source registration for `mb-doc-auditor` (+ repo-organization row) — registered 2026-09-27 (non-federated, mirrors mb-doc-maintainer); repo-organization.md row added; first import 1 page / 7 chunks / 100% embedded, checkpoint `aa91ff7f`. | Closed 2026-09-27 |
 | 3 | First-live-audit outstanding items carried in `doc-auditor-records.md` (2026-09-25): 1 stem-collision registration decision (README ×5), 12 broken WikiLinks needing target decisions, 9 pre-existing legacy-schema register rows (Can wait). | Open — human decisions |
 | 4 | Live-session confirmation of skill discovery (convention-verified 2026-09-25; listing confirms at next session start). | Open |

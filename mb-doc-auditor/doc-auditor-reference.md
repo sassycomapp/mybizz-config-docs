@@ -5,7 +5,11 @@ doc-id: "doc-auditor-reference"
 # mb-doc-auditor — Reference: Invocation, Tools, Procedures
 
 Companion to [[doc-auditor-config|Configuration]] (the spec — current state)
-and [[doc-auditor-explainer|Explainer]] (what it is and why). The installed
+and [[doc-auditor-explainer|Explainer]] (what it is and why). Exam set:
+[[doc-auditor-exam-plan|Exam Plan]] (next run's job-spec — synthesized fresh
+before each run), [[doc-auditor-exam-report|Exam Report]] (last run's verified
+state), [[doc-auditor-log|Log]] (events), [[doc-auditor-learnings|Learnings]]
+(transient). The installed
 `SKILL.md` is the authoritative procedure for the audit loop itself; this
 reference carries the exact commands and mechanics an agent consults while
 running it.

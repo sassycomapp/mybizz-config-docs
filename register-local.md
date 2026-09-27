@@ -71,10 +71,10 @@ doc-ids where basenames repeat.
 | memory-governor-config | memory-governor-config.md | Live |  |  |
 | memory-governor-explainer | memory-governor-explainer.md | Live |  |  |
 | memory-governor-reference | memory-governor-reference.md | Live |  |  |
-| doccycle-config | doccycle-config.md | Live |  | registered at source 2026-09-22 (WP7); workflow suite for the merged documentation-management skill |
-| doccycle-reference | doccycle-reference.md | Live |  | registered at source 2026-09-22 (WP7) |
-| doccycle-explainer | doccycle-explainer.md | Live |  | registered at source 2026-09-22 (WP7) |
-| doccycle-run-discipline | doccycle-run-discipline.md | Live |  | registered at source 2026-09-22 (WP7); the shared run frame, moved from os-reference-docs at WP1 |
+| doccycle-config | doccycle-config.md | Retired |  | retired 2026-09-27 (system deleted per developer instruction: suite folder removed, gbrain source removed, GitHub repo deleted); save-time maintenance carried by mb-doc-maintainer, periodic audits by mb-doc-auditor |
+| doccycle-reference | doccycle-reference.md | Retired |  | retired 2026-09-27 (system deleted per developer instruction; suite folder removed) |
+| doccycle-explainer | doccycle-explainer.md | Retired |  | retired 2026-09-27 (system deleted per developer instruction; suite folder removed) |
+| doccycle-run-discipline | doccycle-run-discipline.md | Retired |  | retired 2026-09-27 (system deleted per developer instruction; suite folder removed) |
 | 1-plan | 1-plan.md | Live |  |  |
 | 10.0-task-report | 10.0-task-report.md | Live |  |  |
 | 10.1-task-report | 10.1-task-report.md | Live |  |  |
@@ -267,3 +267,8 @@ doc-ids where basenames repeat.
 | doc-auditor-config | doc-auditor-config | Live |  | mb-doc-auditor suite documentation (config spec / reference / explainer) |
 | doc-auditor-reference | doc-auditor-reference | Live |  | mb-doc-auditor suite documentation (config spec / reference / explainer) |
 | doc-auditor-explainer | doc-auditor-explainer | Live |  | mb-doc-auditor suite documentation (config spec / reference / explainer) |
+| doc-auditor-exam-plan | doc-auditor-exam-plan | Live |  | mb-doc-auditor config-management suite (exam plan — next run's job-spec); created 2026-09-26 (Phase 8 suite build-out) |
+| doc-auditor-exam-report | doc-auditor-exam-report | Live |  | mb-doc-auditor config-management suite (exam report — last run's verified state); created 2026-09-26 (Phase 8 suite build-out) |
+| doc-auditor-log | doc-auditor-log | Live |  | mb-doc-auditor config-management suite (log — notable events); created 2026-09-26 (Phase 8 suite build-out) |
+| doc-auditor-learnings | doc-auditor-learnings | Live |  | mb-doc-auditor config-management suite (learnings — transient); created 2026-09-26 (Phase 8 suite build-out) |
+| doc-auditor-skill | doc-auditor-skill | Live |  | mb-doc-auditor config-management suite (exam skill source — canonical, copied to install); created 2026-09-26 (Phase 8 suite build-out) |
