@@ -87,8 +87,8 @@ component's own config suite (`gbrain-config.md`, `memory-governor-config.md`,
 | Item | Value |
 |---|---|
 | Source | `mybizz-config-docs` (federated; corpus-wide) — no dedicated source for this suite |
-| Ingest state | last sync 2026-09-27T12:34:36Z predates this folder's files (2026-09-27 17:25–17:32) — suite not yet ingested |
-| Next sync | standing `sync-gbrain` script picks the folder up on its next run |
+| Ingest state | ingested 2026-09-28 by targeted `gbrain sync --source mybizz-config-docs` at commit `c0570db` — 4 pages, 45 chunks, 13 links extracted; source now 266 pages |
+| Next sync | standing `sync-gbrain` script (or targeted `gbrain sync --source mybizz-config-docs`) picks up future changes |
 
 ## Register usage
 
@@ -108,7 +108,7 @@ component's own config suite (`gbrain-config.md`, `memory-governor-config.md`,
 | # | Item | Status |
 |---|---|---|
 | 1 | Register rows for the suite's four documents — pending a [[doc-maintainer-config|mb-doc-maintainer]] run; creation events for the folder's files are absent from the queue (folder created 2026-09-27 evening) | Open |
-| 2 | GBrain ingest of the suite — pending the next `mybizz-config-docs` source sync | Open |
+| 2 | GBrain ingest of the suite — closed 2026-09-28 (targeted sync ingested 4 pages at commit `c0570db`) | Closed |
 | 3 | Report folder `C:\mybizz\memory-diagnostic-reports\` absent — created by the first run | Open |
 | 4 | First live run of the skill — not yet executed; all runtime claims remain procedure until then | Open |
 | 5 | No `mb-config-*` config-exam module exists for this suite | Open |
