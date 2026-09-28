@@ -1,11 +1,11 @@
 ---
-title: "memory-system-diagnostic-explainer"
-doc-id: "memory-system-diagnostic-explainer"
+title: "mb-memory-system-diagnostic-explainer"
+doc-id: "mb-memory-system-diagnostic-explainer"
 ---
-# memory-system-diagnostic — What It Is, What It Does, and Why It Is Built This Way
+# mb-memory-system-diagnostic — What It Is, What It Does, and Why It Is Built This Way
 
-Companion to [[memory-system-diagnostic-config|Configuration]] (current
-state) and [[memory-system-diagnostic-reference|Reference]] (commands and
+Companion to [[mb-memory-system-diagnostic-config|Configuration]] (current
+state) and [[mb-memory-system-diagnostic-reference|Reference]] (commands and
 report formats). The installed `SKILL.md` is the authoritative procedure; this
 document owns the mental model: what the diagnostic is for, when to reach for
 it, and why its sharpest rules exist.
@@ -22,7 +22,7 @@ saved, a stale graph still answers queries, a rotted backup still sits in its
 folder looking like a backup. The failure modes of memory are silent by
 nature, which is exactly why they need a loud, on-demand, honest check.
 
-`memory-system-diagnostic` is that check. It walks the ecosystem in one
+`mb-memory-system-diagnostic` is that check. It walks the ecosystem in one
 ordered pass, section by section, running real commands and logging real
 metrics — and where it finds something wrong, it stops and treats the defect
 in place rather than accumulating it into an end-of-run report. It is
@@ -34,13 +34,13 @@ move.
 
 One procedure document, materialized in three layers:
 
-1. **The source artifact** — `memory-system-diagnostic-skill.md` in this
+1. **The source artifact** — `mb-memory-system-diagnostic-skill.md` in this
    suite folder; the canonical procedure, in the corpus's documentation-skill
    format (`title`/`doc-id` = filename stem).
 2. **The installed skill** — a copy at
-   `~/.config/opencode/skills/memory-system-diagnostic/SKILL.md`, carrying the
+   `~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md`, carrying the
    skill-discovery frontmatter (`name`/`description`) — the only copy that
-   does — which is what makes `/memory-system-diagnostic` invocable in
+   does — which is what makes `/mb-memory-system-diagnostic` invocable in
    OpenCode.
 3. **Run reports** — one file per run at
    `C:\mybizz\memory-diagnostic-reports\`, appended section by section as
@@ -218,11 +218,11 @@ reporting (the report file is metrics and verdicts, not prose).
 
 ---
 
-*Suite: [[memory-system-diagnostic-config|Configuration]] (spec),
-[[memory-system-diagnostic-reference|Reference]] (commands and report
-formats), [[memory-system-diagnostic-skill|Skill]] (the procedure — canonical
+*Suite: [[mb-memory-system-diagnostic-config|Configuration]] (spec),
+[[mb-memory-system-diagnostic-reference|Reference]] (commands and report
+formats), [[mb-memory-system-diagnostic-skill|Skill]] (the procedure — canonical
 artifact in this folder, installed copy at
-`~/.config/opencode/skills/memory-system-diagnostic/SKILL.md`). Ecosystem
+`~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md`). Ecosystem
 boundary: `archify/output/memory-ecosystem-project/memory-ecosystem-scope.md`.*
 
 *End of document*

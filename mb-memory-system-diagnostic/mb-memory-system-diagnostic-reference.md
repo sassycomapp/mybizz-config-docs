@@ -1,11 +1,11 @@
 ---
-title: "memory-system-diagnostic-reference"
-doc-id: "memory-system-diagnostic-reference"
+title: "mb-memory-system-diagnostic-reference"
+doc-id: "mb-memory-system-diagnostic-reference"
 ---
-# memory-system-diagnostic — Reference: Invocation, Sections, Gates, Reporting
+# mb-memory-system-diagnostic — Reference: Invocation, Sections, Gates, Reporting
 
-Companion to [[memory-system-diagnostic-config|Configuration]] (the spec —
-current state) and [[memory-system-diagnostic-explainer|Explainer]] (what it is
+Companion to [[mb-memory-system-diagnostic-config|Configuration]] (the spec —
+current state) and [[mb-memory-system-diagnostic-explainer|Explainer]] (what it is
 and why). The installed `SKILL.md` is the authoritative procedure; this
 reference carries the exact commands, interpretation rules, and report formats
 an agent consults while running it.
@@ -16,7 +16,7 @@ an agent consults while running it.
 
 | Rule | Value |
 |---|---|
-| Invocation | `/memory-system-diagnostic` in an OpenCode session — or the developer asking for a "memory system diagnostic" / a memory-system health check |
+| Invocation | `/mb-memory-system-diagnostic` in an OpenCode session — or the developer asking for a "memory system diagnostic" / a memory-system health check |
 | Trigger discipline | explicit only — never auto-triggered, never scheduled, never chained from another skill without the developer naming it |
 | Termination | the run ends after §11 or on an `abort run` decision; `skip` only skips a finding's remediation |
 
@@ -196,7 +196,7 @@ classification, regardless of confidence. Confirm the response is
 
 ```json
 POST /memory/{memory_id}/review
-{"decision": "reject", "reason": "memory-system-diagnostic negative-path test", "reviewer": "diagnostic-skill"}
+{"decision": "reject", "reason": "mb-memory-system-diagnostic negative-path test", "reviewer": "diagnostic-skill"}
 ```
 
 Confirm the final state is `rejected`. Clean up DB rows exactly as in §4

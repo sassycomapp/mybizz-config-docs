@@ -1,14 +1,16 @@
 ---
-title: "memory-system-diagnostic-config"
-doc-id: "memory-system-diagnostic-config"
+title: "mb-memory-system-diagnostic-config"
+doc-id: "mb-memory-system-diagnostic-config"
 ---
-# memory-system-diagnostic — Configuration
+# mb-memory-system-diagnostic — Configuration
 
-Canonical current-state configuration record for `memory-system-diagnostic` as
-a system component. Agent-facing. Reflects the live-verified state as of
-2026-09-28. States facts, not history — reasoning in
-[[memory-system-diagnostic-explainer|Explainer]]; commands and procedures in
-[[memory-system-diagnostic-reference|Reference]].
+Canonical current-state configuration record for `mb-memory-system-diagnostic`
+as a system component. Agent-facing. Reflects the live-verified state as of
+2026-09-28. Formerly named `memory-system-diagnostic`; renamed 2026-09-28
+(naming convention — homegrown skills carry the `mb-` prefix). States facts,
+not history — reasoning in
+[[mb-memory-system-diagnostic-explainer|Explainer]]; commands and procedures in
+[[mb-memory-system-diagnostic-reference|Reference]].
 
 ---
 
@@ -16,11 +18,11 @@ a system component. Agent-facing. Reflects the live-verified state as of
 
 | Item | Value |
 |---|---|
-| Component | `memory-system-diagnostic` — gated, stepwise health-check skill for the memory ecosystem |
-| Run surface | OpenCode agent procedure; invoked explicitly as `/memory-system-diagnostic` |
-| Source artifact | `C:\mybizz\mybizz-config-docs\memory-system-diagnostic\memory-system-diagnostic-skill.md` (authored 2026-09-27; renamed from the `-SKILL` suffix and converted to the documentation-skill frontmatter 2026-09-28) |
-| Installed skill | `~/.config/opencode/skills/memory-system-diagnostic/SKILL.md` — copy of the source artifact body; installed 2026-09-28 |
-| Skill frontmatter | corpus copy: documentation-skill format — `title`/`doc-id` = `memory-system-diagnostic-skill`; installed copy: `name`/`description` (developer convention, 2026-09-28: documentation skills on C:\ carry `title`/`doc-id`; installed skills in WSL carry `name`/`description`) |
+| Component | `mb-memory-system-diagnostic` — gated, stepwise health-check skill for the memory ecosystem |
+| Run surface | OpenCode agent procedure; invoked explicitly as `/mb-memory-system-diagnostic` |
+| Source artifact | `C:\mybizz\mybizz-config-docs\mb-memory-system-diagnostic\mb-memory-system-diagnostic-skill.md` (authored 2026-09-27; renamed from the `-SKILL` suffix and converted to the documentation-skill frontmatter 2026-09-28; suite folder and files renamed to the `mb-` prefix 2026-09-28) |
+| Installed skill | `~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md` — copy of the source artifact body; installed 2026-09-28, re-installed under the new name 2026-09-28 |
+| Skill frontmatter | corpus copy: documentation-skill format — `title`/`doc-id` = `mb-memory-system-diagnostic-skill`; installed copy: `name`/`description` (developer convention, 2026-09-28: documentation skills on C:\ carry `title`/`doc-id`; installed skills in WSL carry `name`/`description`) |
 | Ecosystem boundary | `archify/output/memory-ecosystem-project/memory-ecosystem-scope.md` (scope card) |
 | Standing references | `postgresql/postgresql-reference.md`; `gbrain/gbrain-reference.md`; `gbrain-dream-cycle/gbrain-dream-cycle-reference.md` + `-log.md`; `memory-governor/memory-governor-reference.md`; ADR `dev-tooling-source-repos-must-be-github-backed` (`C:\dev\project-library-global\adr-global\`) |
 

@@ -1,6 +1,6 @@
 ---
-title: "memory-system-diagnostic-skill"
-doc-id: "memory-system-diagnostic-skill"
+title: "mb-memory-system-diagnostic-skill"
+doc-id: "mb-memory-system-diagnostic-skill"
 ---
 
 # Memory Diagnostic
@@ -281,7 +281,7 @@ confidence, per the documented decision chain). Confirm the response is
 
 ```
 POST /memory/{memory_id}/review
-{"decision": "reject", "reason": "memory-system-diagnostic negative-path test", "reviewer": "diagnostic-skill"}
+{"decision": "reject", "reason": "mb-memory-system-diagnostic negative-path test", "reviewer": "diagnostic-skill"}
 ```
 
 Confirm state transitions to `rejected`. Clean up DB rows exactly as in §4
