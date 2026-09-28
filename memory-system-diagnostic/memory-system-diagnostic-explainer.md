@@ -34,12 +34,14 @@ move.
 
 One procedure document, materialized in three layers:
 
-1. **The source artifact** — `memory-system-diagnostic-SKILL.md` in this
-   suite folder; the canonical procedure, carrying skill-discovery frontmatter
-   (`name`/`description`).
-2. **The installed skill** — a verbatim copy at
-   `~/.config/opencode/skills/memory-system-diagnostic/SKILL.md`, which is
-   what makes `/memory-system-diagnostic` invocable in OpenCode.
+1. **The source artifact** — `memory-system-diagnostic-skill.md` in this
+   suite folder; the canonical procedure, in the corpus's documentation-skill
+   format (`title`/`doc-id` = filename stem).
+2. **The installed skill** — a copy at
+   `~/.config/opencode/skills/memory-system-diagnostic/SKILL.md`, carrying the
+   skill-discovery frontmatter (`name`/`description`) — the only copy that
+   does — which is what makes `/memory-system-diagnostic` invocable in
+   OpenCode.
 3. **Run reports** — one file per run at
    `C:\mybizz\memory-diagnostic-reports\`, appended section by section as
    each closes, ending in an aggregate roll-up.
@@ -218,7 +220,7 @@ reporting (the report file is metrics and verdicts, not prose).
 
 *Suite: [[memory-system-diagnostic-config|Configuration]] (spec),
 [[memory-system-diagnostic-reference|Reference]] (commands and report
-formats), [[memory-system-diagnostic-SKILL|Skill]] (the procedure — canonical
+formats), [[memory-system-diagnostic-skill|Skill]] (the procedure — canonical
 artifact in this folder, installed copy at
 `~/.config/opencode/skills/memory-system-diagnostic/SKILL.md`). Ecosystem
 boundary: `archify/output/memory-ecosystem-project/memory-ecosystem-scope.md`.*

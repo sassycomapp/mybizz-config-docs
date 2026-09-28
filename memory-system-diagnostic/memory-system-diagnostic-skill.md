@@ -1,6 +1,6 @@
 ---
-name: memory-system-diagnostic
-description: Run a stepwise, gated health check across the memory ecosystem (GBrain, PostgreSQL Instance B, Memory Governor, mb-submit-memory, Graphify, Dream Cycle) with a Cupcake-interaction check, using a diagnostic-then-remediation-then-reporting loop per section. Use when the developer explicitly asks for a "memory system diagnostic", to "check memory system health", or invokes this skill by name. Never auto-triggered. Not a compliance audit — a live, interactive pass that stops and treats real defects in place instead of accumulating them into an end report.
+title: "memory-system-diagnostic-skill"
+doc-id: "memory-system-diagnostic-skill"
 ---
 
 # Memory Diagnostic

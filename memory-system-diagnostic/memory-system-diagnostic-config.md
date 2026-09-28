@@ -18,9 +18,9 @@ a system component. Agent-facing. Reflects the live-verified state as of
 |---|---|
 | Component | `memory-system-diagnostic` — gated, stepwise health-check skill for the memory ecosystem |
 | Run surface | OpenCode agent procedure; invoked explicitly as `/memory-system-diagnostic` |
-| Source artifact | `C:\mybizz\mybizz-config-docs\memory-system-diagnostic\memory-system-diagnostic-SKILL.md` (authored 2026-09-27) |
-| Installed skill | `~/.config/opencode/skills/memory-system-diagnostic/SKILL.md` — verbatim copy of the source artifact; installed 2026-09-28 |
-| Skill frontmatter | skill-discovery format: `name: memory-system-diagnostic` + `description:` (developer-mandated convention for this artifact, 2026-09-28) |
+| Source artifact | `C:\mybizz\mybizz-config-docs\memory-system-diagnostic\memory-system-diagnostic-skill.md` (authored 2026-09-27; renamed from the `-SKILL` suffix and converted to the documentation-skill frontmatter 2026-09-28) |
+| Installed skill | `~/.config/opencode/skills/memory-system-diagnostic/SKILL.md` — copy of the source artifact body; installed 2026-09-28 |
+| Skill frontmatter | corpus copy: documentation-skill format — `title`/`doc-id` = `memory-system-diagnostic-skill`; installed copy: `name`/`description` (developer convention, 2026-09-28: documentation skills on C:\ carry `title`/`doc-id`; installed skills in WSL carry `name`/`description`) |
 | Ecosystem boundary | `archify/output/memory-ecosystem-project/memory-ecosystem-scope.md` (scope card) |
 | Standing references | `postgresql/postgresql-reference.md`; `gbrain/gbrain-reference.md`; `gbrain-dream-cycle/gbrain-dream-cycle-reference.md` + `-log.md`; `memory-governor/memory-governor-reference.md`; ADR `dev-tooling-source-repos-must-be-github-backed` (`C:\dev\project-library-global\adr-global\`) |
 
@@ -100,7 +100,7 @@ component's own config suite (`gbrain-config.md`, `memory-governor-config.md`,
 
 | Decision | Value |
 |---|---|
-| Skill front matter | `name`/`description` skill-discovery format for the artifact in this folder (instruction given with the implementation task, 2026-09-28) |
+| Skill artifact format | documentation-skill convention on the corpus copy — `title`/`doc-id` = filename stem, lowercase `-skill.md` suffix, `SKILL.md` reserved for the install location (developer convention, 2026-09-28; survey: 20/21 corpus skill files conform) |
 | Invocation | explicit only — never auto-triggered, never scheduled |
 
 ## Open items
@@ -112,4 +112,4 @@ component's own config suite (`gbrain-config.md`, `memory-governor-config.md`,
 | 3 | Report folder `C:\mybizz\memory-diagnostic-reports\` absent — created by the first run | Open |
 | 4 | First live run of the skill — not yet executed; all runtime claims remain procedure until then | Open |
 | 5 | No `mb-config-*` config-exam module exists for this suite | Open |
-| 6 | Frontmatter-format conflict at the maintainer's repair surface: the artifact carries skill-discovery frontmatter (`name`/`description`), which the two-field doc-contract rule would classify as `EXTRA_FIELD` and repair away — needs a developer decision (exemption, or a two-field `-skill.md` corpus copy with `SKILL.md` only at the install location, per the sibling-suite pattern) before the next maintenance run touches this folder | Open |
+| 6 | Frontmatter-format conflict at the maintainer's repair surface — closed 2026-09-28: corpus copy renamed to `memory-system-diagnostic-skill.md` and converted to the two-field documentation-skill format (survey: 20/21 corpus skill files conform); `SKILL.md` with `name`/`description` exists only at the install location | Closed |
