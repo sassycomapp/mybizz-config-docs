@@ -114,11 +114,18 @@ Only `postgresql-x64-15` should ever be Running. A second registration, plain `P
 ### Connecting
 
 ```bash
-psql "postgresql://postgres:gbrain_local@localhost:5432/gbrain" -c "<SQL>"
+# Read the connection string into a variable — the password lives in
+# ~/.gbrain/config.json (database_url) and ~/.pgpass, never in documents
+# (credential rotated 2026-09-28; the previously-quoted literal is retired).
+PGURL=$(jq -r .database_url /home/dev-p/.gbrain/config.json)
+psql "$PGURL" -c "<SQL>"
 ```
 
-For the `memory_governor` database, source the governor's own `.env` and
-use its `MEMORY_GOVERNOR_DATABASE_URL` (referenced by name only).
+For the `memory_governor` database, use the postgres URL with the database
+segment swapped (`"${PGURL%/*}/memory_governor"` — verified 2026-09-28) or
+source the governor's own `.env` and use its `MEMORY_GOVERNOR_DATABASE_URL`
+(referenced by name only). Keep the conninfo a single argument so psql
+errors cannot echo it.
 
 ### Management — systemd is PID 1 since the 2026-09-15 migration; `systemctl` and `service` both work — reconciled 2026-09-28
 
@@ -171,29 +178,30 @@ terminating mid-session), not necessarily a config fault. If the units are
 confirmed present and the cluster is still down after a genuine reboot,
 that's a real regression worth investigating fresh.
 
-### Useful live queries (verified live 2026-09-09)
+### Useful live queries (verified live 2026-09-09; variable form 2026-09-28)
 
 ```bash
+# Prerequisite: PGURL=$(jq -r .database_url /home/dev-p/.gbrain/config.json)
 # Real embedding-coverage check, independent of gbrain doctor's own report
-psql "postgresql://postgres:gbrain_local@localhost:5432/gbrain" -c "SELECT COUNT(*) AS total_chunks, COUNT(embedding) AS chunks_with_embedding, COUNT(*) - COUNT(embedding) AS missing FROM content_chunks;"
+psql "$PGURL" -c "SELECT COUNT(*) AS total_chunks, COUNT(embedding) AS chunks_with_embedding, COUNT(*) - COUNT(embedding) AS missing FROM content_chunks;"
 
-# Page count (the live number: 1,759 as of 2026-09-09)
-psql "postgresql://postgres:gbrain_local@localhost:5432/gbrain" -c "SELECT count(*) FROM pages;"
+# Page count
+psql "$PGURL" -c "SELECT count(*) FROM pages;"
 
 # Tables and RLS coverage
-psql "postgresql://postgres:gbrain_local@localhost:5432/gbrain" -c "SELECT count(*) AS tables, count(*) FILTER (WHERE relrowsecurity) AS rls_tables FROM pg_class WHERE relkind='r' AND relnamespace=(SELECT oid FROM pg_namespace WHERE nspname='public');"
+psql "$PGURL" -c "SELECT count(*) AS tables, count(*) FILTER (WHERE relrowsecurity) AS rls_tables FROM pg_class WHERE relkind='r' AND relnamespace=(SELECT oid FROM pg_namespace WHERE nspname='public');"
 
 # List all databases on this instance
-psql "postgresql://postgres:gbrain_local@localhost:5432/postgres" -c "\l+"
+psql "${PGURL%/*}/postgres" -c "\l+"
 
 # Table inventory in a database
-psql "postgresql://postgres:gbrain_local@localhost:5432/gbrain" -c "\dt"
+psql "$PGURL" -c "\dt"
 
 # Installed extensions
-psql "postgresql://postgres:gbrain_local@localhost:5432/gbrain" -c "SELECT extname, extversion FROM pg_extension;"
+psql "$PGURL" -c "SELECT extname, extversion FROM pg_extension;"
 
 # Role inventory (the roles the suite documents)
-psql "postgresql://postgres:gbrain_local@localhost:5432/postgres" -c "SELECT rolname, rolcanlogin FROM pg_roles WHERE rolcanlogin ORDER BY rolname;"
+psql "${PGURL%/*}/postgres" -c "SELECT rolname, rolcanlogin FROM pg_roles WHERE rolcanlogin ORDER BY rolname;"
 ```
 
 **A note on `psql`'s pager:** results longer than one screen open in a

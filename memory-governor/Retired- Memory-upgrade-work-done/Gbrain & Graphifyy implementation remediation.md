@@ -69,7 +69,7 @@ Action
 Run:
 
 bash
-psql "postgresql://postgres:gbrain_local@localhost:5432/gbrain" -c "
+psql "$PGURL" -c "
 SELECT
     id,
     path,
@@ -107,7 +107,7 @@ Replace <source-id> with the actual source identifier.
 
 Action
 bash
-psql "postgresql://postgres:gbrain_local@localhost:5432/gbrain" -c "
+psql "$PGURL" -c "
 UPDATE sources
 SET config = config || '{\"strategy\":\"code\"}'::jsonb
 WHERE id = '<source-id>';
@@ -115,7 +115,7 @@ WHERE id = '<source-id>';
 Clear the stored commit so the source is genuinely rescanned:
 
 bash
-psql "postgresql://postgres:gbrain_local@localhost:5432/gbrain" -c "
+psql "$PGURL" -c "
 UPDATE sources
 SET last_commit = NULL
 WHERE id = '<source-id>';

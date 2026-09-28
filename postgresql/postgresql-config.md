@@ -84,7 +84,7 @@ The variable itself has zero consumers — kept for future use.
 | Data directory | `/var/lib/postgresql/16/main` |
 | Config directory | `/etc/postgresql/16/main/` (`postgresql.conf`, `pg_hba.conf`, `pg_ident.conf`, `start.conf`, `conf.d/`, `environment`) — `pg_hba.conf` is root/postgres-owned, not readable by `dev-p` |
 | Log file | `/var/log/postgresql/postgresql-16-main.log` |
-| Connection string (gbrain DB) | `postgresql://postgres:gbrain_local@localhost:5432/gbrain` |
+| Connection string (gbrain DB) | `postgresql://postgres:<password>@localhost:5432/gbrain` — the password lives only in `~/.gbrain/config.json` (`database_url`) and `~/.pgpass`; reference by variable name in every command (rotated 2026-09-28; the previously-documented literal is retired — never re-quote it) |
 | Connection string (governor DB) | In `memory_governor`'s own `.env` as `MEMORY_GOVERNOR_DATABASE_URL` (referenced by name only) |
 | Management tooling | `systemctl` and `service` both work — systemd has been PID 1 since the 2026-09-15 migration (reconciled 2026-09-28 by the memory-system-diagnostic §2 live check; see [[postgresql-reference|Reference]] §Management). `pg_ctlcluster` remains the cluster-level start/stop tool. |
 | Boot config | Since the 2026-09-28 boot-command retirement, `/etc/wsl.conf` no longer invokes `start-memory-system.sh`: under systemd, `postgresql.service` (enabled) owns the cluster and the two governor user units own the memory processes; the script remains on disk as a manual fallback only. Historical: the 2026-09-09 full-restart test proved the old boot command; both 2026-09-28 boots proved it now fights `memory-governor-api.service` for port 8321 (see [[memory-governor-reference|Reference]] §Permanent auto-start migration). |
@@ -101,7 +101,7 @@ proves nothing about the role's own privileges). Verified: `memory_governor_svc`
 
 | Role | Notes |
 |---|---|
-| `postgres` | Owns `gbrain`. Password: `gbrain_local` (in the connection string above) |
+| `postgres` | Owns `gbrain`. Password: held only in `~/.pgpass` and `~/.gbrain/config.json` (`database_url`) — never quoted in corpus documents (rotated 2026-09-28) |
 | `memory_governor_svc` | Owns `memory_governor` (all 5 tables). Scoped — cannot connect to `gbrain`. Password in `memory_governor`'s own `.env` (`MEMORY_GOVERNOR_DATABASE_URL`). |
 | `ledger_writer` / `ledger_approver` | Login-capable test roles from the memory governor's own RLS live-testing — cited as the verified precedent in [[sec-database-access-control|Database Access Control]] ("live-tested, correctly blocked the `ledger_writer` role from inserting override-type events it wasn't scoped for"). Own nothing (`gbrain`'s 62 tables are all owned by `postgres`). Documented here 2026-09-09 — the existing suite never mentioned them. |
 
