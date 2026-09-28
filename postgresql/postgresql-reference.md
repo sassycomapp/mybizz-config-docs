@@ -120,20 +120,31 @@ psql "postgresql://postgres:gbrain_local@localhost:5432/gbrain" -c "<SQL>"
 For the `memory_governor` database, source the governor's own `.env` and
 use its `MEMORY_GOVERNOR_DATABASE_URL` (referenced by name only).
 
-### Management — `pg_ctlcluster`/`service`, never `systemctl`
+### Management — systemd is PID 1 since the 2026-09-15 migration; `systemctl` and `service` both work — reconciled 2026-09-28
 
-WSL in this environment does not run `systemd` as PID 1 (confirmed:
-`ps -p 1 -o comm=` → `init(Ubuntu)`). Any command involving `systemctl`
-fails here (`Failed to connect to bus: Host is down`) — expected, not a
-fault.
+**Reconciled 2026-09-28** by the `memory-system-diagnostic` skill's §2 live
+init-check (the open item below is closed). Live results in this environment:
+
+- PID 1 = `systemd` (`ps -p 1 -o comm=`).
+- `systemctl status postgresql` → active (exited), preset enabled, EXIT 0.
+- `service postgresql status` → works, EXIT 0 — the service wrapper now
+  delegates to systemd; both management paths are currently valid.
+- `pg_lsclusters` → 16/main online, port 5432.
 
 ```bash
-pg_lsclusters                          # list clusters and status (online/down)
-sudo pg_ctlcluster 16 main start       # start manually
-sudo pg_ctlcluster 16 main stop        # stop manually
-service postgresql status              # status check (works here; systemctl does not)
-service postgresql start               # start via the service wrapper
+systemctl status postgresql            # systemd unit status — verified 2026-09-28
+service postgresql status              # service wrapper — verified 2026-09-28 (systemd-backed)
+pg_lsclusters                          # cluster list/status — verified 2026-09-28
+sudo pg_ctlcluster 16 main start       # cluster-level manual start (not re-verified 2026-09-28)
+sudo pg_ctlcluster 16 main stop        # cluster-level manual stop (not re-verified 2026-09-28)
 ```
+
+Historical note (2026-09-13): WSL then ran `init(Ubuntu)` as PID 1 and
+`systemctl` failed (`Failed to connect to bus: Host is down`). The
+2026-09-15 Memory Governor auto-start migration flipped `systemd=true` in
+`/etc/wsl.conf` — a change to the entire WSL environment's init model. The
+prior "never systemctl" guidance described the pre-migration environment
+only and no longer applies.
 
 ### Boot durability — extended 2026-09-09, proven live
 
@@ -215,7 +226,7 @@ on. Direct `psql` access is appropriate specifically when:
 
 - Do not attempt a direct WSL `psql` connection to reach `pdlf` — use the PowerShell bridge.
 - Do not build a `.sql` file with PowerShell `Out-File` and pass it to `psql -f` without confirming it's BOM-free.
-- Do not use `systemctl` in WSL for PostgreSQL management — use `pg_ctlcluster`/`service`.
+- Since the 2026-09-15 migration systemd is PID 1 in WSL — `systemctl` is a valid PostgreSQL management path (reconciled 2026-09-28, see Management above); `pg_ctlcluster` remains the cluster-level start/stop tool. Do not assume either the pre- or post-migration init model without a live check.
 - Do not start the dead duplicate `PostgreSQL` Windows service.
 - Do not assume a "stale pid file" message on WSL cluster start indicates a config fault — it usually means an unclean prior WSL shutdown.
 - Do not drop a database role without first running `DROP OWNED BY <role>` in every database where it holds privileges — the real, verified drop sequence (2026-09-09).
