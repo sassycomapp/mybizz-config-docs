@@ -8,7 +8,14 @@ Companion to [[mb-memory-system-diagnostic-config|Configuration]] (the spec —
 current state) and [[mb-memory-system-diagnostic-explainer|Explainer]] (what it is
 and why). The installed `SKILL.md` is the authoritative procedure; this
 reference carries the exact commands, interpretation rules, and report formats
-an agent consults while running it.
+an agent consults while running it. The config-management exam set for this
+suite ([[mb-memory-system-diagnostic-exam-plan|Exam Plan]] ·
+[[mb-memory-system-diagnostic-exam-report|Exam Report]] ·
+[[mb-memory-system-diagnostic-log|Log]] ·
+[[mb-memory-system-diagnostic-learnings|Learnings]] ·
+[[mb-memory-system-diagnostic-exam-skill|Exam Skill]]) is synthesized and
+consumed per the [[config-manager-agent|Config Manager]] plan-driven cycle —
+the exam verifies this suite's state and never runs the diagnostic itself.
 
 ---
 

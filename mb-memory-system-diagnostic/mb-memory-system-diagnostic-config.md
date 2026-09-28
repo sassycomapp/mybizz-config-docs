@@ -20,8 +20,8 @@ not history — reasoning in
 |---|---|
 | Component | `mb-memory-system-diagnostic` — gated, stepwise health-check skill for the memory ecosystem |
 | Run surface | OpenCode agent procedure; invoked explicitly as `/mb-memory-system-diagnostic` |
-| Source artifact | `C:\mybizz\mybizz-config-docs\mb-memory-system-diagnostic\mb-memory-system-diagnostic-skill.md` (authored 2026-09-27; renamed from the `-SKILL` suffix and converted to the documentation-skill frontmatter 2026-09-28; suite folder and files renamed to the `mb-` prefix 2026-09-28) |
-| Installed skill | `~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md` — copy of the source artifact body; installed 2026-09-28, re-installed under the new name 2026-09-28 |
+| Source artifact | `C:\mybizz\mybizz-config-docs\mb-memory-system-diagnostic\mb-memory-system-diagnostic-skill.md` (authored 2026-09-27; renamed from the `-SKILL` suffix and converted to the documentation-skill frontmatter 2026-09-28; suite folder and files renamed to the `mb-` prefix 2026-09-28; §0 principle 8 + §2 recipe updated to the verified variable-name/journald pattern 2026-09-28 by config-exam F-3) |
+| Installed skill | `~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md` — copy of the source artifact body; installed 2026-09-28, re-installed under the new name 2026-09-28, re-installed byte-exact after the F-3 edits (hash pair `b90ec20c33bf4272` / `b90ec20c33bf4272`, 2026-09-28) |
 | Skill frontmatter | corpus copy: documentation-skill format — `title`/`doc-id` = `mb-memory-system-diagnostic-skill`; installed copy: `name`/`description` (developer convention, 2026-09-28: documentation skills on C:\ carry `title`/`doc-id`; installed skills in WSL carry `name`/`description`) |
 | Ecosystem boundary | `archify/output/memory-ecosystem-project/memory-ecosystem-scope.md` (scope card) |
 | Standing references | `postgresql/postgresql-reference.md`; `gbrain/gbrain-reference.md`; `gbrain-dream-cycle/gbrain-dream-cycle-reference.md` + `-log.md`; `memory-governor/memory-governor-reference.md`; ADR `dev-tooling-source-repos-must-be-github-backed` (`C:\dev\project-library-global\adr-global\`) |
@@ -67,7 +67,8 @@ governed write; §10 real Dream Cycle run; §1's `gh repo create` remediation;
 |---|---|---|
 | Run report | `C:\mybizz\memory-diagnostic-reports\memory-diagnostic-(YYYY-MM-DD).md` | append-only during the run — one result block per section as it closes, then the §11 roll-up |
 
-The folder does not exist as of 2026-09-28; the first run creates it.
+The folder was created by the first live run (2026-09-28); it holds one report
+per run, appended section by section.
 
 ## Live-verified component presence (2026-09-28)
 
@@ -111,7 +112,7 @@ component's own config suite (`gbrain-config.md`, `memory-governor-config.md`,
 |---|---|---|
 | 1 | Register rows for the suite's four documents — pending a [[doc-maintainer-config|mb-doc-maintainer]] run; creation events for the folder's files are absent from the queue (folder created 2026-09-27 evening) | Open |
 | 2 | GBrain ingest of the suite — closed 2026-09-28 (targeted sync ingested 4 pages at commit `c0570db`) | Closed |
-| 3 | Report folder `C:\mybizz\memory-diagnostic-reports\` absent — created by the first run | Open |
-| 4 | First live run of the skill — not yet executed; all runtime claims remain procedure until then | Open |
-| 5 | No `mb-config-*` config-exam module exists for this suite | Open |
+| 3 | Report folder `C:\mybizz\memory-diagnostic-reports\` — closed 2026-09-28: created by the first live run; holds `memory-diagnostic-2026-09-28.md` | Closed |
+| 4 | First live run — closed 2026-09-28: executed full §1–§11, 10/10 sections completed, 7 PASS + 3 REMEDIATED in-run, zero aborts/skips; report at `C:\mybizz\memory-diagnostic-reports\memory-diagnostic-2026-09-28.md`; follow-up item 4 (skill-recipe currency) resolved same day by config-exam F-3 | Closed |
+| 5 | No `mb-config-*` config-exam module — closed 2026-09-28: `mb-config-mb-memory-system-diagnostic` built by config-exam run #1 (register row Installed, hash pair `d3975df16f28c2f9` / `4418e09f0c07ee23` at build) | Closed |
 | 6 | Frontmatter-format conflict at the maintainer's repair surface — closed 2026-09-28: corpus copy renamed to `memory-system-diagnostic-skill.md` and converted to the two-field documentation-skill format (survey: 20/21 corpus skill files conform); `SKILL.md` with `name`/`description` exists only at the install location | Closed |

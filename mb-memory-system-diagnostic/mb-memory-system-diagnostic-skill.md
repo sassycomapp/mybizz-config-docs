@@ -66,6 +66,14 @@ live-testing the binary it is policed by. Cupcake is tested only for its
    result. §3's Governor restart-posture check uses `systemctl --user
    status` per the newer record; if that fails outright, treat it as a
    finding, not a contradiction to paper over.
+8. **Environment currency (live-verified 2026-09-28):** WSL here is
+   systemd-managed — journald holds the Governor's logs (the retired
+   /tmp/memory-governor*.log paths must not be used), and agent reads of
+   `.env` are forbidden by the secrets guard. §2's credential-bearing
+   probes follow §3's verified pattern (read the connection URL from the
+   gbrain config into a shell variable, never source `.env`, keep conninfo
+   a single argument); §7's log sweep reads journald scoped to the run's
+   start time.
 
 ---
 
@@ -172,9 +180,14 @@ due for a reconciling update regardless.
 **Diagnostic:**
 
 ```bash
+# Verified 2026-09-28 pattern (§3): reach the DB through the gbrain config's
+# database_url read into a shell variable — never source .env (agent-forbidden
+# by the secrets guard); keep conninfo a single argument so psql errors cannot
+# echo it. Credential referenced by variable name only.
+PGURL=$(jq -r .database_url /home/dev-p/.gbrain/config.json)
 pg_lsclusters
-psql "postgresql://postgres:***@localhost:5432/gbrain" -c "SELECT count(*) AS tables, count(*) FILTER (WHERE relrowsecurity) AS rls_tables FROM pg_class WHERE relkind='r' AND relnamespace=(SELECT oid FROM pg_namespace WHERE nspname='public');"
-psql "postgresql://postgres:***@localhost:5432/postgres" -c "SELECT rolname, rolcanlogin FROM pg_roles WHERE rolcanlogin ORDER BY rolname;"
+psql "${PGURL%/*}/gbrain" -c "SELECT count(*) AS tables, count(*) FILTER (WHERE relrowsecurity) AS rls_tables FROM pg_class WHERE relkind='r' AND relnamespace=(SELECT oid FROM pg_namespace WHERE nspname='public');"
+psql "${PGURL%/*}/postgres" -c "SELECT rolname, rolcanlogin FROM pg_roles WHERE rolcanlogin ORDER BY rolname;"
 ```
 
 **Role isolation — `has_database_privilege` only, never `SET ROLE`** (a

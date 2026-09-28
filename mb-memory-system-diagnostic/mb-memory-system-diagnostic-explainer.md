@@ -222,7 +222,14 @@ reporting (the report file is metrics and verdicts, not prose).
 [[mb-memory-system-diagnostic-reference|Reference]] (commands and report
 formats), [[mb-memory-system-diagnostic-skill|Skill]] (the procedure — canonical
 artifact in this folder, installed copy at
-`~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md`). Ecosystem
-boundary: `archify/output/memory-ecosystem-project/memory-ecosystem-scope.md`.*
+`~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md`),
+[[mb-memory-system-diagnostic-exam-plan|Exam Plan]] / 
+[[mb-memory-system-diagnostic-exam-report|Exam Report]] /
+[[mb-memory-system-diagnostic-log|Log]] /
+[[mb-memory-system-diagnostic-learnings|Learnings]] /
+[[mb-memory-system-diagnostic-exam-skill|Exam Skill]] (the config-management
+exam set — the diagnostic's own standing check inventory; the diagnostic is
+never executed by its exam). Ecosystem boundary:
+`archify/output/memory-ecosystem-project/memory-ecosystem-scope.md`.*
 
 *End of document*
