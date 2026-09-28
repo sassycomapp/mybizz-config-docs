@@ -146,28 +146,29 @@ Historical note (2026-09-13): WSL then ran `init(Ubuntu)` as PID 1 and
 prior "never systemctl" guidance described the pre-migration environment
 only and no longer applies.
 
-### Boot durability — extended 2026-09-09, proven live
+### Boot durability — systemd owns the boot since the 2026-09-28 retirement
 
-The `/etc/wsl.conf` `[boot]` command now starts PostgreSQL **and** the
-memory-system processes at every WSL boot:
+**Boot-command retirement (2026-09-28):** `/etc/wsl.conf` no longer carries
+a `[boot]` command invoking `start-memory-system.sh`. Under systemd
+(PID 1 since 2026-09-15): `postgresql.service` (enabled) starts the
+cluster, and the two governor user units start the memory processes.
+Historical: the 2026-09-09 boot command (`service postgresql start` +
+`start-memory-system.sh`) was proven live then, but at both 2026-09-28
+boots its script instance won the port-8321 bind race against
+`memory-governor-api.service`, which crash-looped until the duplicate was
+killed — full retirement decided 2026-09-28 (see
+[[memory-governor-reference|Reference]] §Permanent auto-start migration).
 
-```ini
-[boot]
-command = "service postgresql start; su dev-p -c /home/dev-p/memory-governor/scripts/start-memory-system.sh"
-```
-
-The `start-memory-system.sh` script is idempotent (each process starts
-only if not already running) and self-healing (restarts a dead worker).
 **The only real verification method:** a full WSL shutdown from PowerShell
-(`wsl --shutdown`), then a fresh terminal, then `ss -tlnp | grep 8321` and
-`ps aux | grep app.worker` — both alive with zero manual intervention.
-Proven live 2026-09-09 (the full restart test; both processes born at
-boot).
+(`wsl --shutdown`), then a fresh terminal, then `pg_lsclusters` (16/main
+online), `systemctl --user status memory-governor-api memory-governor-worker`
+(both active), `ss -tlnp | grep 8321` (held by the unit's pid) — zero
+manual intervention, zero crash-looping.
 
 **If found down unexpectedly:** check `pg_lsclusters` for a "stale pid
 file" message on manual start — indicates an unclean prior shutdown (WSL
-terminating mid-session), not necessarily a config fault. If the boot fix
-is confirmed present and the cluster is still down after a genuine reboot,
+terminating mid-session), not necessarily a config fault. If the units are
+confirmed present and the cluster is still down after a genuine reboot,
 that's a real regression worth investigating fresh.
 
 ### Useful live queries (verified live 2026-09-09)

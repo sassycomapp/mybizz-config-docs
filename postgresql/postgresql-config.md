@@ -86,8 +86,8 @@ The variable itself has zero consumers — kept for future use.
 | Log file | `/var/log/postgresql/postgresql-16-main.log` |
 | Connection string (gbrain DB) | `postgresql://postgres:gbrain_local@localhost:5432/gbrain` |
 | Connection string (governor DB) | In `memory_governor`'s own `.env` as `MEMORY_GOVERNOR_DATABASE_URL` (referenced by name only) |
-| Management tooling | `pg_ctlcluster` / `service` — **not** `systemctl`. WSL PID 1 here is `init(Ubuntu)`, not `systemd`. |
-| Boot config | `/etc/wsl.conf`, `[boot]` section: `command = "service postgresql start; su dev-p -c /home/dev-p/memory-governor/scripts/start-memory-system.sh"` — PostgreSQL **and** the memory-system processes auto-start at every WSL boot. Proven live: the 2026-09-09 full-restart test (both processes born at boot). |
+| Management tooling | `systemctl` and `service` both work — systemd has been PID 1 since the 2026-09-15 migration (reconciled 2026-09-28 by the memory-system-diagnostic §2 live check; see [[postgresql-reference|Reference]] §Management). `pg_ctlcluster` remains the cluster-level start/stop tool. |
+| Boot config | Since the 2026-09-28 boot-command retirement, `/etc/wsl.conf` no longer invokes `start-memory-system.sh`: under systemd, `postgresql.service` (enabled) owns the cluster and the two governor user units own the memory processes; the script remains on disk as a manual fallback only. Historical: the 2026-09-09 full-restart test proved the old boot command; both 2026-09-28 boots proved it now fights `memory-governor-api.service` for port 8321 (see [[memory-governor-reference|Reference]] §Permanent auto-start migration). |
 | Autovacuum posture | `on` (cluster-wide). Hot-table recency is the health signal: `content_chunks` and `pages` vacuum within days of writes (last: 2026-09-11 / 2026-09-13). The `facts` table showing `last_autovacuum = never` is **normal** — it is low-write; flag only if a *hot* table stops vacuuming. |
 
 ### Role-isolation test method (authoritative, verified 2026-09-13)

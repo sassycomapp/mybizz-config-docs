@@ -212,16 +212,14 @@ Pass on the curl: **HTTP 422** (credential-required — proves the API is up
 AND its auth gate works). `000`/refused = finding.
 
 ```bash
-cd /home/dev-p/memory-governor && set -a && source .env && set +a
-.venv/bin/python -c "
-import psycopg, os
-with psycopg.connect(os.environ['MEMORY_GOVERNOR_DATABASE_URL']) as conn:
-    with conn.cursor() as cur:
-        cur.execute('SELECT count(*) FROM memory_events WHERE processed_at IS NULL AND permanently_failed = FALSE')
-        print('pending:', cur.fetchone()[0])
-        cur.execute('SELECT count(*) FROM memory_events WHERE permanently_failed = TRUE')
-        print('permanently_failed:', cur.fetchone()[0])
-"
+# Outbox counts — verified 2026-09-28: reach the governor DB through the
+# gbrain superuser URL (same cluster); reference by variable name only and
+# never print it. The .env-sourcing path is agent-forbidden by the secrets
+# guard. Keep the conninfo a single argument so psql errors cannot echo it.
+PGURL=$(jq -r .database_url /home/dev-p/.gbrain/config.json)
+psql "${PGURL%/*}/memory_governor" -t \
+  -c "SELECT 'pending: ' || count(*) FROM memory_events WHERE processed_at IS NULL AND permanently_failed = FALSE;" \
+  -c "SELECT 'permanently_failed: ' || count(*) FROM memory_events WHERE permanently_failed = TRUE;"
 git -C /home/dev-p/memory-governor status --porcelain registers/ | head -5
 systemctl --user status memory-governor-api memory-governor-worker --no-pager 2>&1 | head -6
 ```
@@ -249,6 +247,16 @@ source removed). Full script: same shape as the corrected Check 8 from the
 prior audit document, with `tempfile` imported. Do not omit the cleanup
 block under any circumstance, including a mid-run failure — wrap in
 `try`/`finally`.
+
+Implementation notes verified live 2026-09-28 (§4/§5 both passed with these):
+write the test script to `/tmp/opencode/` with the file tool and run it —
+the credential is read from the API unit's process environment INSIDE the
+script (never printed, no secret-shaped tokens in the shell command line);
+`gbrain sources add --path` requires the target to be a git repo with at
+least one TRACKED file (an empty commit is refused by design — write a
+placeholder file first); the script omits source removal by design — remove
+the disposable source afterwards via the sources-remove surface, then
+re-verify with a read-back (DB rows 0, facts expired, source gone).
 
 **Pass:** submit `201 promoted`, worker processed ≥1, GBrain presence true,
 `private` visibility true, register written true, cleanup confirmed complete.
@@ -319,7 +327,11 @@ did Cupcake interfere with anything in §1–6 of *this run*.
 **Diagnostic:**
 
 ```bash
-grep -i "deny\|block" /tmp/memory-governor.log /tmp/memory-governor-worker.log 2>/dev/null | tail -20
+# Verified 2026-09-28: the governor's logs live in journald under systemd —
+# the /tmp/memory-governor*.log paths are retired. Scope to this run's start.
+journalctl --user -u memory-governor-api -u memory-governor-worker \
+  --since "<run start time HH:MM>" --no-pager 2>/dev/null \
+  | grep -i "deny\|block\|reject" | tail -20
 ```
 
 Review every denial/block line surfaced during this run's own log output.

@@ -171,9 +171,21 @@ service management, restart=on-failure), not a missing capability.
 
 **Impact warning:** enabling `systemd=true` changes the init model for the
 entire WSL environment and **requires a full `wsl --shutdown`** (which
-terminates any running agent session). The `[boot]` command still executes
-under systemd; the start script is idempotent, so double-starts are prevented.
-Post-restart verification must confirm PostgreSQL still auto-starts.
+terminates any running agent session). Post-restart verification must
+confirm PostgreSQL still auto-starts.
+
+**Correction 2026-09-28 (memory-system-diagnostic §3):** the earlier belief
+that "the start script is idempotent, so double-starts are prevented" was
+DISPROVED at both 2026-09-28 boots — the script's API won the port-8321
+bind race and `memory-governor-api.service` crash-looped on
+"address already in use" until the duplicate was killed (twice,
+journal-confirmed). **Boot-command retirement decided (full retirement):**
+the `[boot]` command no longer invokes `start-memory-system.sh` — the units
+own API + worker, `postgresql.service` owns the cluster; the script remains
+on disk as a manual fallback for running the stack when the units are down.
+`/etc/wsl.conf` is a system file — the developer applies that edit;
+verification is a fresh `wsl --shutdown` boot with port 8321 held by the
+unit's pid only, no crash-looping, auth-gate 422.
 
 **Step 1 — author the two unit files (agent-runnable, already placed):**
 `~/.config/systemd/user/memory-governor-api.service` and

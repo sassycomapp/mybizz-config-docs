@@ -20,7 +20,7 @@ resolved). States facts, not history — reasoning in
 | Decision engine | Two-outcome model (`auto_promote` / `needs_review`) — live since Phase 6.5, commit `c4df67d` |
 | HIGH_RISK_TYPES | **RESOLVED 2026-09-08** (developer decision): `policy`, `credential`, `identity`, [[architecture|Architecture]], [[security|Security Check]] — all five spec categories are now representable (`MemoryType` enum extended) and governed |
 | Test suite | **304 passed, 0 failed** (2026-09-08, post-resolution run; build record was 296) |
-| Operational status | **ACTIVE** — API + worker both running since 2026-09-08 (started on demand; permanent auto-start approved, pending developer execution — see Pending developer execution) |
+| Operational status | **ACTIVE** — API + worker both running under their systemd user units (permanent auto-start executed + verified 2026-09-15; boot-command retirement decided 2026-09-28 — see Pending developer execution item 4) |
 
 ## Processes (two, by design)
 
@@ -32,8 +32,10 @@ resolved). States facts, not history — reasoning in
 Both must run for the system to function: the API decides, the worker
 delivers (GBrain writes + register/payload writes). Start procedure in
 [[memory-governor-reference|Usage, Invocation, and Incident Response]]. Permanent auto-start: two systemd user
-units (`memory-governor-api`, `memory-governor-worker`) — command sequence
-provided, pending developer execution.
+units (`memory-governor-api`, `memory-governor-worker`) — enabled + verified
+2026-09-15. Boot-command retirement (2026-09-28): the `[boot]` command no
+longer invokes `start-memory-system.sh` — the units own both processes;
+the script remains a manual fallback only.
 
 ## Database
 
@@ -161,6 +163,6 @@ Every write path goes through transition validation — creation included.
 1. Outbound-network rule + cross-folder rule formal eval tests + keep decisions (both amendments already live and one real-call-verified each).
 2. Credentialed registry/review-queue check (closes the governor-side `owning_project` verification).
 3. Commit + push of the governor repository's resolution changes.
-4. ~~Permanent auto-start: WSL systemd migration + the two service units~~ **EXECUTED + VERIFIED 2026-09-15 (session 005):** systemd enabled (`systemd=true` under `[boot]`, boot command preserved — PostgreSQL auto-started); both units enabled and active under the user manager (`memory-governor-api`, `memory-governor-worker`, Restart=on-failure); auth-gate 422; port 8321 held by the service. The system is restart-independent. (At the migration boot the boot script started the API but not the worker — the units now guarantee both; the script's idempotent skip is standing-check territory.)
+4. ~~Permanent auto-start: WSL systemd migration + the two service units~~ **EXECUTED + VERIFIED 2026-09-15 (session 005):** systemd enabled (`systemd=true` under `[boot]`, boot command preserved — PostgreSQL auto-started); both units enabled and active under the user manager (`memory-governor-api`, `memory-governor-worker`, Restart=on-failure); auth-gate 422; port 8321 held by the service. The system is restart-independent. (At the migration boot the boot script started the API but not the worker. The expected idempotent skip never materialized: at BOTH 2026-09-28 boots the boot script's API won the port-8321 bind race and the api unit crash-looped until the duplicate was killed — full boot-command retirement decided 2026-09-28, see [[memory-governor-reference|Reference]] §Permanent auto-start migration.)
 5. gbrain sync of the documentation commits.
 ```
