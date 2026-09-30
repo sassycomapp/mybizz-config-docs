@@ -97,7 +97,7 @@ component's own config suite (`gbrain-config.md`, `memory-governor-config.md`,
 
 | Register | State |
 |---|---|
-| `C:\mybizz\mybizz-config-docs\register-local.md` | no rows for this suite as of 2026-09-28; registration is creation-event work for [[doc-maintainer-config|mb-doc-maintainer]] — the pending-events queue holds no events for these files as of 2026-09-28 |
+| `C:\mybizz\mybizz-config-docs\register-local.md` | no rows for this suite as of 2026-09-28; registration is creation-event work for mb-doc-maintainer — the pending-events queue holds no events for these files as of 2026-09-28 |
 
 ## Recorded decisions (developer)
 
@@ -110,7 +110,7 @@ component's own config suite (`gbrain-config.md`, `memory-governor-config.md`,
 
 | # | Item | Status |
 |---|---|---|
-| 1 | Register rows for the suite's four documents — pending a [[doc-maintainer-config|mb-doc-maintainer]] run; creation events for the folder's files are absent from the queue (folder created 2026-09-27 evening) | Open |
+| 1 | Register rows for the suite's four documents — pending a mb-doc-maintainer run; creation events for the folder's files are absent from the queue (folder created 2026-09-27 evening) | Open |
 | 2 | GBrain ingest of the suite — closed 2026-09-28 (targeted sync ingested 4 pages at commit `c0570db`) | Closed |
 | 3 | Report folder `C:\mybizz\memory-diagnostic-reports\` — closed 2026-09-28: created by the first live run; holds `memory-diagnostic-2026-09-28.md` | Closed |
 | 4 | First live run — closed 2026-09-28: executed full §1–§11, 10/10 sections completed, 7 PASS + 3 REMEDIATED in-run, zero aborts/skips; report at `C:\mybizz\memory-diagnostic-reports\memory-diagnostic-2026-09-28.md`; follow-up item 4 (skill-recipe currency) resolved same day by config-exam F-3 | Closed |
