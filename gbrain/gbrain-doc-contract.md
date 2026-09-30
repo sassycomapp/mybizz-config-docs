@@ -1,6 +1,6 @@
 ---
 title: "gbrain-doc-contract"
-doc-id: "mb-62de0f89"
+doc-id: "mb-33c1a0cb"
 ---
 # gbrain-doc-contract
 
@@ -20,5 +20,5 @@ numbers were removed.
 
 ## MyBizz convention (developer-owned; GBrain does not require it)
 
-- **C1** — Documentation files and documentation skills (on C:\, not installed): frontmatter is `title: "filename-stem"` and `doc-id: "mb-xxxxxxxx"`. The doc-id is a permanent random code that `mb-doc-check` adds and never changes, so a renamed or moved document can always be recognised. GBrain ignores it.
+- **C1** — Documentation files and documentation skills (on C:\, not installed): frontmatter `title: "filename-stem"` and `doc-id: "filename-stem"`.
 - **C2** — Installed skills (WSL): frontmatter `name` and `description`, both YAML strings. Out of scope for this contract; documentation skills never modify them.
