@@ -34,10 +34,28 @@ GBrain reads project repositories — documentation, ADRs, specifications, and
 where configured, source code — and stores them as searchable content in a
 PostgreSQL database. It organizes everything into **brains** (databases) and
 **sources** (registered repos inside a brain); this brain currently holds
-thirteen sources, four of them federated (participating in every other
+fifteen sources (2026-09-30), ten of them federated (participating in every other
 source's search by default). A query is scoped to its own project's sources
 unless told otherwise; federated sources are the mechanism by which shared
 cross-project material is reachable everywhere without being named.
+
+A source is `federated`, `unset` or `isolated`. `unset` (never set) keeps a
+source out of other sources' searches, while a session working inside it can still
+read the federated sources — the state of the four code sources. `isolated` (set
+explicitly with `sources unfederate`) cuts a source off in both directions — the
+state of `anvil-agent-references-code`.
+
+**Links between sources (2026-09-30).** In 0.46.1.0 a link connected only to pages
+of its own source (or of the source named `default`). From 0.51.8.0 on — the
+installed 0.59.18.0 included — a link written `[[source-id:page-name]]` connects
+to that page in the named source, provided the page holding the link is in a
+federated source. Bare names and ordinary markdown links still cannot cross
+sources, and a wrong page name is dropped. The page name is GBrain's slug:
+lowercase, spaces as hyphens, no `.md`, the path counted from the root of the
+target repository. These links are written only when links are collected from the
+database (`gbrain extract --stale`), never by a plain sync. This was tested on a
+sandbox copy of 0.59.18.0 and is the reason for the upgrade; it has not yet been
+exercised on this brain.
 
 Search is hybrid: exact keyword matching combined with vector-based semantic
 matching (content embedded via an external model, so meaning-similar text is
@@ -210,6 +228,15 @@ ended, not that every phase did meaningful work. See
 **The brain's mirror can lag its sources** — sync is commit-based; content is
 current only as of the last synced commit. The file wins.
 
+**Facts are stored per source.** `remember` writes into the source that the call
+selects, and `recall` reads it (0.59.18.0: also every federated source, unless a
+source is given). The memory governor's facts therefore sit in
+`memory-governor-code` — see [[memory-governor-explainer|Explainer]] §5.
+
+**A stale brain default stops sync.** The memory governor changes the brain-level
+default source with every write. In 0.59.18.0 a default that names a deleted
+source makes every sync end with an error (incident 2026-09-30, in the reference).
+
 ## 12. Config maintenance — how this system is examined and kept healthy
 
 This suite participates in the config-management system (`mb-config-manager`).
@@ -239,16 +266,23 @@ PostgreSQL pilot. The short local version:
 
 ## 13. S.W.O.T.
 
-**Strengths.** Division-wide memory proven at scale (1,800+ pages, 100%
-embedding coverage verified independently); multi-source federation across every
-project repo; a proven sync path with zero recorded sync failures; the
+**Strengths.** Division-wide memory proven at scale (2,400+ pages per the
+doctor of 2026-09-30, 100% embedding coverage verified independently on
+2026-09-13); multi-source federation across every project repo; a proven sync path
+(the standing script syncs every registered source; the failures recorded on
+2026-09-30 — a stale brain default, one network lookup error and one invalid-YAML
+file — were all resolved); a scripted, backed-up upgrade procedure (proven
+2026-09-30); the
 schema-pack system pins structure (30/12) and is verified via cheap MCP calls.
 
-**Weaknesses.** The two-checkout situation (live install vs stale source clone)
-persists as an open item; page-accounting between sources and identity totals
-was unexplained at pilot (273 pages); several checks are permanently
-developer-run (config.json content, sync samples); version lags upstream
-(0.46.1.0 vs 0.50.0.0) by deliberate policy.
+**Weaknesses.** The live install is a Git checkout in detached HEAD on a release
+tag, with a local commit parked on `master` (the stale source clone was deleted
+2026-09-13); page-accounting between sources and identity totals was unexplained
+at pilot (273 pages — on 2026-09-30 the doctor reported 273 database pages with no
+backing file before the upgrade and 30 after); several checks are permanently
+developer-run (config.json content, sync samples); the version lags upstream
+(0.59.18.0 installed, 0.60.11.0 exists) by deliberate policy; the dream cycle has
+not run for most sources (an accepted `cycle_freshness` FAIL).
 
 **Opportunities.** The config-management exam makes silent memory degradation —
 coverage decay, source drift, sync failure — detectable on demand; the
@@ -257,9 +291,9 @@ a spec-refresh loop rather than undocumented drift.
 
 **Threats.** Unsynced mirrors silently diverge from their sources (sync is
 commit-based); a failed upgrade would be self-inflicted (policy guards against
-newness-driven upgrades); the stale source clone could mislead diagnosis if
-mistaken for the live install (spec documents the distinction; never resolve
-unilaterally).
+newness-driven upgrades; the upgrade of 2026-09-30 was scripted and backed up);
+the brain default source is changed by the memory governor and can go stale, which
+stops every sync.
 
 ---
 

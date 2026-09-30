@@ -28,12 +28,16 @@ developer — never inferred or guessed.
    gbrain sources list
    ```
    If not, STOP and report. This skill never registers a source itself.
-2. **The memory-governor API must be running** (verified by a live check
-   first — it is started on demand, not always-on):
+2. **The memory governor must be running** — both processes, API and worker
+   (verified by a live check first; since 2026-09-15 they run as systemd user
+   services, so they normally start by themselves):
    ```bash
    ss -tlnp | grep 8321
+   systemctl --user is-active memory-governor-api memory-governor-worker
    ```
-   If nothing listens: start it (from the governor folder):
+   If either is not active: `systemctl --user start memory-governor-api
+   memory-governor-worker`. Manual fallback, only when the units are down (from
+   the governor folder):
    ```bash
    cd /home/dev-p/memory-governor && set -a && source .env && set +a && setsid nohup .venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8321 >> /tmp/memory-governor.log 2>&1 < /dev/null &
    ```
@@ -56,7 +60,16 @@ developer — never inferred or guessed.
    ```bash
    gbrain call recall '{"grep": "<a real, specific phrase from the content>"}'
    ```
-   More than one query if the content spans more than one topic. Then form:
+   More than one query if the content spans more than one topic.
+   **Known recall gap (2026-09-30).** This search reads the source selected by
+   the current folder (in GBrain 0.59.18.0 also every federated source). Governed
+   facts are stored in the source `memory-governor-code`, which is not federated,
+   so a zero result does not prove that no governed fact exists — the 2026-09-30
+   run reported exactly this. A possible remedy, not adopted and not yet
+   exercised: a second search restricted with `"source_id": "memory-governor-code"`
+   (an input added in 0.59.18.0). The decision sits with the developer (governor
+   configuration, Pending developer execution item 6); a change to the procedure
+   belongs in the skill's own `SKILL.md`. Then form:
    - **Confidence** (`method: "model_based"`): 0.85+ clearly stated and
      nothing related found, or found content squarely agrees · 0.5–0.85
      understandable but genuinely ambiguous or partial unconfirmed overlap ·
@@ -130,5 +143,6 @@ Step 6 without an explicit approval on record from within the same run.
   resubmit with a different confidence to force promotion.
 - Do not auto-trigger this skill — invocation is always explicit.
 - Do not read, print, or copy `.env` or any credential value.
+- Do not treat a zero result from the fact search as proof that no governed fact exists — governed facts sit in `memory-governor-code`, which that search does not read (Step 3).
 - Do not conflate `mg-grant`/`mg-revoke` (Cupcake's cross-project grant
   tools) with anything in the memory-governor system.

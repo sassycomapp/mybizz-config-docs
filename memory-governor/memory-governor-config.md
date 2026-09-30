@@ -6,7 +6,8 @@ doc-id: "mb-63bdf286"
 
 Canonical current-state configuration record. Agent-facing. Reflects the
 verified live state as of 2026-09-08 (system ACTIVE, all listed defects
-resolved). States facts, not history — reasoning in
+resolved) and re-verified 2026-09-30 after the GBrain upgrade (see
+§GBrain upgrade verification). States facts, not history — reasoning in
 [[memory-governor-explainer|Explainer]]; procedures in [[memory-governor-reference|Usage, Invocation, and Incident Response]].
 
 ---
@@ -19,7 +20,7 @@ resolved). States facts, not history — reasoning in
 | Application | FastAPI (Python), `app/main.py`, version `0.1.0` (pyproject) |
 | Decision engine | Two-outcome model (`auto_promote` / `needs_review`) — live since Phase 6.5, commit `c4df67d` |
 | HIGH_RISK_TYPES | **RESOLVED 2026-09-08** (developer decision): `policy`, `credential`, `identity`, [[architecture|Architecture]], [[security|Security Check]] — all five spec categories are now representable (`MemoryType` enum extended) and governed |
-| Test suite | **304 passed, 0 failed** (2026-09-08, post-resolution run; build record was 296) |
+| Test suite | **304 passed, 0 failed** (2026-09-08, post-resolution run; build record was 296); not re-run after the GBrain upgrade of 2026-09-30 — see Pending developer execution item 7 |
 | Operational status | **ACTIVE** — API + worker both running under their systemd user units (permanent auto-start executed + verified 2026-09-15; boot-command retirement decided 2026-09-28 — see Pending developer execution item 4) |
 
 ## Processes (two, by design)
@@ -131,8 +132,24 @@ Every write path goes through transition validation — creation included.
 | Write mechanism | `remember` (MEMORY_VERBS) — never `gbrain sync`; each fact stamped `entity = owning_project` |
 | Visibility mapping | `shared_all` → world; `project_local` / `shared_specific` → private |
 | Write timing | Asynchronous, via the `gbrain_write` outbox event — ~0.15s in practice |
-| Source switching | `gbrain sources default <owning_project>` before every write — fails loudly on an unknown source (the coupling defect guard) |
-| MEMORY_VERBS surface | Enabled (`mcp_surface: verbs`, verified 2026-09-08) |
+| Source switching | `gbrain sources default <owning_project>` before every write — fails loudly on an unknown source (the coupling defect guard). This sets only the brain-level default: GBrain ranks the registered source whose folder contains the current folder above it, and the worker runs inside `/home/dev-p/memory-governor` (source `memory-governor-code`) |
+| Where governed facts land | Source `memory-governor-code`, not the owning project's source (verified 2026-09-30: 49 → 50 facts after a governed submission for `mybizz-os-docs`). That source is not federated |
+| Brain default after a write | `sources.default` = the last owning project (`mybizz-os-docs` on 2026-09-30). A default that names a deleted source stops `gbrain sync` under 0.59.18.0 — see the reference, incident 2026-09-30 |
+| GBrain version | 0.59.18.0, schema 169 (upgraded 2026-09-30 from 0.46.1.0). `remember`, `recall`, `forget`: no input removed, none newly required. New optional inputs: `source_id`, `expected_revision`, `force`, `request_id` (`remember`); `source_id`, `budget_policy` (`recall`); `request_id` (`forget`) |
+| MEMORY_VERBS surface | Enabled (`mcp_surface: verbs`, verified 2026-09-08; still `verbs` on 2026-09-30) |
+
+## GBrain upgrade verification — 2026-09-30 (0.46.1.0 → 0.59.18.0, schema 128 → 169)
+
+| Item | Value |
+|---|---|
+| Services after the upgrade | `memory-governor-api` and `memory-governor-worker` both active; port 8321 held by one listener; unauthenticated `GET /memory/review-queue` answers 422; the worker unit still carries the `~/.bun/bin` PATH line |
+| Stop and start order used | API stopped first, 60 seconds wait so the worker delivers what is already promoted, then the worker; started together with `systemctl --user start` |
+| Facts before and after | 85 facts in 5 sources, none missing: `memory-governor-code` 49, `mybizz-config-docs` 22, `default` 12, `makepdlf-project-library` 1, `mb-3-cs-code` 1. Every other source holds none |
+| Governed write, end to end | `/mb-submit-memory` on `environment-explainer.md` (source `mybizz-os-docs`) → `promoted`, memory_id `2cb82774-957c-4772-be3e-8d421f030c4a`; the fact landed in `memory-governor-code` (49 → 50) |
+| Worker's source step | `gbrain sources default mybizz-os-docs` succeeded under 0.59.18.0; `sources.default` printed `mybizz-os-docs` afterwards |
+| Interface comparison | 114 agent tools present in both versions: no input removed, none newly required (names and inputs only — behavior was not compared) |
+| Database dump before the upgrade | `~/backups/db-memory_governor-before-upgrade.dump` (readable, 2026-09-30) |
+| Not verified | The full test suite was not re-run. The scripts/run-tests-deterministic.sh runner was not executed (see the reference) |
 
 ## Backup / disaster recovery
 
@@ -148,6 +165,9 @@ Every write path goes through transition validation — creation included.
 - **GBrain's dream cycle cannot be routed through the governor's API** — confirmed permanent structural limit (no interception point in GBrain's `dream`; forking GBrain was considered and rejected). Governed by the documented manual discipline. This is the one honestly-documented exception to "every writer routes through the same API" — an architectural boundary of the third-party tool, reported as such per the standing no-discrepancies requirement.
 - **Phase 13.4 / 16.2 / 16.3 are explicitly parked** (a real PDLF step end-to-end; repeated real dream cycles under ordinary use) — they require real PDLF activity that cannot exist before PDLF's go-live. Deliberately parked working infrastructure, not incomplete builds. Reported separately, per the no-open-defects requirement, as scheduled-pending-external-dependency, not defects.
 - **A `GBrain-dreaming` credential may exist from early provisioning but is functionally unused** — dreaming never presents a credential.
+- **Governed facts land in one source, `memory-governor-code`, not in the owning project's source** (2026-09-30). `mb-submit-memory`'s fact searches from a documentation session cannot see them, because that source is not federated. The isolation between projects is enforced by the governor (entity stamping, visibility mapping, read-time resolution), not by GBrain's sources.
+- **The brain-level default source is changed by every governed write.** A default that names a source that no longer exists stops `gbrain sync` under 0.59.18.0 (incident 2026-09-30: `diag-mg-sec4`).
+- **`scripts/run-tests-deterministic.sh` is not aware of the systemd units.** It stops the worker with `kill` and afterwards starts an unmanaged copy, which leaves the unit stopped.
 
 ## Do not
 
@@ -157,6 +177,8 @@ Every write path goes through transition validation — creation included.
 - Do not chain shell commands without verifying each result — the recorded real cost of this mistake is an accidental write into live memory.
 - Do not assume test fixtures are shared across test files — `api_client`/`real_credential_headers` exist only in `test_api.py`.
 - Do not hand-edit `registers/` or the database — the worker and API are the writers.
+- Do not run `scripts/run-tests-deterministic.sh` while `memory-governor-worker.service` is active — it would leave an unmanaged second worker (procedure in the reference).
+- Do not leave `sources.default` naming a source that does not exist.
 
 ## Pending developer execution (commands provided in the run record; not defects)
 
@@ -165,4 +187,6 @@ Every write path goes through transition validation — creation included.
 3. Commit + push of the governor repository's resolution changes.
 4. ~~Permanent auto-start: WSL systemd migration + the two service units~~ **EXECUTED + VERIFIED 2026-09-15 (session 005):** systemd enabled (`systemd=true` under `[boot]`, boot command preserved — PostgreSQL auto-started); both units enabled and active under the user manager (`memory-governor-api`, `memory-governor-worker`, Restart=on-failure); auth-gate 422; port 8321 held by the service. The system is restart-independent. (At the migration boot the boot script started the API but not the worker. The expected idempotent skip never materialized: at BOTH 2026-09-28 boots the boot script's API won the port-8321 bind race and the api unit crash-looped until the duplicate was killed — full boot-command retirement decided 2026-09-28, see [[memory-governor-reference|Reference]] §Permanent auto-start migration.)
 5. gbrain sync of the documentation commits.
+6. Decide where governed facts should live. Options: (a) leave them in `memory-governor-code`; (b) pass `source_id` = the owning project in the worker's `remember` call (new optional input in 0.59.18.0); (c) federate `memory-governor-code`. No change made.
+7. Re-run the full test suite after the GBrain upgrade (stop the systemd worker first — procedure in the reference).
 ```

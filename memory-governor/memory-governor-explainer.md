@@ -5,7 +5,8 @@ doc-id: "mb-47216ab9"
 # Memory Governor — Explainer
 
 *Companion note: for current confirmed state — the system is ACTIVE as of
-2026-09-08, with every listed defect resolved — see
+2026-09-08, with every listed defect resolved, and re-verified on 2026-09-30
+after the GBrain upgrade — see
 [[memory-governor-config|Memory Governor Configuration]]. For procedures, see
 [[memory-governor-reference|Usage, Invocation, and Incident Response]].*
 
@@ -109,13 +110,31 @@ permanent regression coverage.
 The system's own end-to-end test then caught a deeper layer: governed
 memories were written into GBrain **world-visible regardless of declared
 scope**, and carried no project identity, so no project-scoped read was
-even possible. GBrain's facts layer is brain-global — an unscoped recall
-finds any fact from any context. The real guarantees now enforced: every
+even possible. (The 2026-09-08 wording called GBrain's facts layer
+brain-global; that was corrected on 2026-09-30, see below.) The real
+guarantees now enforced: every
 governed fact is stamped with its owning project (`entity`), and
 visibility is mapped from declared scope (`shared_all` → world; everything
-else → private). Project-scoped recall is entity-scoped recall. The
-boundary — GBrain's facts layer has no native source scoping — is a real
-property of the platform, reported honestly rather than papered over.
+else → private). Project-scoped recall is entity-scoped recall.
+
+**Correction 2026-09-30 — facts are stored per source, not brain-globally.**
+Reading GBrain's code (0.46.1.0 and 0.59.18.0) and the per-source recall
+snapshot taken before the GBrain upgrade showed that every fact belongs to a
+source. `recall` reads the facts of the selected source (0.59.18.0: also of
+every federated source for a local call without an explicit source, unless
+a `source_id` is given). The worker sets the brain default to the owning
+project before each write, but GBrain ranks the registered source whose
+folder contains the current folder above the brain default, and the worker
+runs inside `/home/dev-p/memory-governor` — the source `memory-governor-code`.
+So governed facts land in `memory-governor-code` whatever the owning project
+(verified 2026-09-30: 49 → 50 facts after a governed submission for
+`mybizz-os-docs`). That source is not federated, which is why
+`mb-submit-memory`'s fact searches from a documentation session cannot see
+governed facts. Isolation between projects is still enforced by the governor
+itself (entity stamping, visibility mapping, read-time resolution); it does
+not come from GBrain's sources. This is not an effect of the GBrain upgrade —
+the same rule applies in both versions. The options for changing it are
+recorded as an open decision in the configuration.
 
 ## 6. Backup and Disaster Recovery — Why Two Writes, Not One
 
@@ -234,10 +253,22 @@ API** — covered in §10. Its content reaches GBrain through a real,
 deliberate, always-applied manual discipline. A permanent property of the
 third-party tool, reported per the no-discrepancies requirement.
 
-**GBrain's facts layer has no native source scoping** — covered in §5.
-Governed-memory isolation is enforced by the governor (API-level
-visibility resolution + write-path stamping), within the platform's real
-capabilities. Reported.
+**Governed facts are stored in one source, `memory-governor-code`** —
+covered in §5 (corrected 2026-09-30). Governed-memory isolation is enforced
+by the governor (API-level visibility resolution + write-path stamping), not
+by GBrain's sources. Reported.
+
+**The GBrain upgrade of 2026-09-30 (0.46.1.0 → 0.59.18.0).** The governor
+reaches GBrain only through the `gbrain` command line (`sources default`,
+`remember`), so the upgrade touched it only there. Across 114 agent tools
+present in both versions, no input was removed and none became required;
+the verbs gained optional inputs (`source_id` and others). After the upgrade
+both processes ran, all 85 facts were still present, and a real governed
+submission was promoted end to end. One incident surfaced: the brain default
+source named a source that no longer existed, which stops `gbrain sync`
+under 0.59.18.0 (reference, incident 2026-09-30). The governor's own test
+runner is not aware of the systemd units and was not run. No change to the
+governor's code was made or needed.
 
 **Several phases are closed by explicit developer decision, not
 completion**, pending PDLF's own go-live (a real PDLF step end-to-end;
@@ -284,8 +315,11 @@ governed; the register is a git-committed second write (disaster recovery
 proven twice); the event backbone needs no message broker; 304-test suite
 green at last full run.
 
-**Weaknesses.** System is restart-dependent (systemd units pending developer
-execution — a WSL restart relies on the boot script); several checks are
+**Weaknesses.** The deterministic test runner is not aware of the systemd
+units (it stops the worker with `kill` and starts an unmanaged copy afterwards);
+governed facts land in a single source and are invisible to
+`mb-submit-memory`'s fact searches; the brain default source is changed by
+every write and can go stale; several checks are
 permanently developer-run (credentialed checks, full test suite); row counts
 are live and drift continuously (point-in-time assertions only).
 

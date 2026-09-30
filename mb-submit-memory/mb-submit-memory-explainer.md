@@ -53,7 +53,7 @@ route to the developer's review list — it can never quietly reject or
 quarantine anything), and it derives *who* submitted a candidate from the
 cryptographic credential used, never from anything the request claims.
 
-Two couplings make the system genuinely complex, and both have bitten:
+Three couplings make the system genuinely complex, and all three have bitten:
 
 - **The name coupling.** A submission names a project, and the gate's
   background writer hands the approved memory to GBrain *by that project's
@@ -67,6 +67,13 @@ Two couplings make the system genuinely complex, and both have bitten:
   it hunts for. Started carelessly, it runs but cannot reach anything —
   every submission fails authentication. It must be started the one correct
   way (documented in the reference).
+- **The default-source coupling (2026-09-30).** Before every write, the gate's
+  worker sets GBrain's brain-level default source to the submission's project. A
+  default that names a source that no longer exists stops `gbrain sync` under
+  GBrain 0.59.18.0 — as happened on 2026-09-30 (`diag-mg-sec4`) — until it is
+  reset (`gbrain sources default default`). And because GBrain ranks the worker's
+  own folder above that default, governed facts land in the source
+  `memory-governor-code`, not in the project's source.
 
 One more living reality: the quick, ungoverned path is not hypothetical —
 the tool surface that carries it is explicitly enabled and sits in every
@@ -122,13 +129,23 @@ real program someone must start; until 2026-09-08 it had only ever been
 started by hand, and on that day it was found not running — a memory
 system whose gate is closed. It was brought up live and verified end-to-end
 (authentication gating correctly observed), and a permanent auto-start
-installation was recommended and approved so "the gate was closed" stops
-being a possible state.
+installation was recommended, approved and executed (systemd user units,
+verified 2026-09-15) so "the gate was closed" stops being a possible state.
 
-**Open questions.** The permanent auto-start installation is pending
-developer execution; the two copies of the skill file can drift (no sync
-mechanism); the governor's own records of past submissions' project names
-await a credentialed verification; and the gate-vs-quick-path tension is
+**Why a search for related facts can come back empty (2026-09-30).** The skill
+searches GBrain's facts before it forms a judgment. That search reads the source
+selected by the current folder (in GBrain 0.59.18.0 also every federated source).
+Governed facts are stored in `memory-governor-code`, which is not federated, so
+the search does not see them: the run of 2026-09-30 reported three fact searches
+with zero results while the page search found the document already indexed. A
+zero result is therefore not proof that nothing governed exists. The remedy is an
+open developer decision (configuration, open items).
+
+**Open questions.** The permanent auto-start installation was executed and
+verified on 2026-09-15; the skill file has a single installed copy since
+2026-09-15; the governor's own records of past submissions' project names were
+partly verified on 2026-09-15 (no endpoint lists all project rows); the recall gap
+above awaits a developer decision; and the gate-vs-quick-path tension is
 managed by documented discipline rather than mechanics — the honest,
 currently-accepted state.
 
@@ -171,11 +188,13 @@ PostgreSQL pilot. The short local version:
 real judgment (confidence + contradiction) formed before any submission; the
 gate's deterministic engine and credential-derived provenance; the skill's
 doctrine survived its first live denials intact (2026-09-14: `under_review`
-left to the developer, the credential denial honored absolutely).
+left to the developer, the credential denial honored absolutely); proven end to
+end again on GBrain 0.59.18.0 (2026-09-30: promoted, nothing left in review).
 
-**Weaknesses.** The governor is started on demand and was found down once
-(2026-09-08) — the permanent auto-start installation is approved but still
-pending; several checks are permanently developer-run (anything credentialed);
+**Weaknesses.** The governor was found down once (2026-09-08) — since
+2026-09-15 it runs under systemd, which removes that failure mode but not a
+stopped unit; the detect step cannot see governed facts (recall gap, 2026-09-30);
+several checks are permanently developer-run (anything credentialed);
 the subject skill has no repo-side source copy since the mirror slot was
 repurposed (2026-09-15) — the spec's recorded fingerprint is its only anchor.
 
@@ -190,7 +209,9 @@ session next to this skill — the counterweight is documented discipline, not
 mechanics; the startup coupling means a carelessly started governor 401s every
 submission; project-registry and gbrain-source naming drift silently kills
 flushes (operational learning #2) — the credentialed Tier 3 check is the only
-close watch on it.
+close watch on it. A stale brain default (a source that no longer exists) stops
+every sync under GBrain 0.59.18.0 — the worker changes that default with every
+write.
 
 ---
 

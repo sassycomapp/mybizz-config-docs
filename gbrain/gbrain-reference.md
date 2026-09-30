@@ -19,8 +19,8 @@ GBrain is the advisory memory layer. It stores and searches project documents
 and code as searchable vector memories. GBrain does not override repo files,
 ADRs, or OpenCode rules — files are always authoritative.
 
-**Engine:** PostgreSQL 16 + pgvector (WSL-native) | **Version:** `0.46.1.0`
-(upgrade available: 0.48.2.0) | **Schema:** v128 | **Pack:** gbrain-everything
+**Engine:** PostgreSQL 16 + pgvector (WSL-native) | **Version:** `0.59.18.0`
+(upgraded 2026-09-30 from 0.46.1.0; `0.60.11.0` exists upstream) | **Schema:** v169 | **Pack:** gbrain-everything
 **Connection:** `postgresql://postgres:***@localhost:5432/gbrain`
 
 Current sources, credentials, and MCP entry: [[gbrain-config|Configuration]]. Cross-
@@ -77,6 +77,7 @@ containment relationships use Graphify's `get_neighbors`.
 | `gbrain sync --source <id>` | Sync one registered source |
 | `gbrain sync --source <id> --no-pull` | Sync without any git interaction |
 | `gbrain sync --source <id> --dry-run` | Preview, no writes |
+| `gbrain sync --source <id> --exclude '<glob>'` | Skip files matching the glob (repeatable) — the standing script excludes `obsolete/**` and `**/obsolete/**` |
 | `gbrain sync --all` | Sync all registered sources |
 | `gbrain sync --break-lock` | Break a stale sync lock |
 | `gbrain embed --stale` | Embed chunks missing embeddings |
@@ -94,14 +95,28 @@ uncommitted changes that must be preserved.
 with an unquoted `: ` or a bare backtick) and **blocks the entire sync** at
 that checkpoint — `last_commit`/`last_sync_at` do not advance. Remedy: quote
 the offending value and re-sync. `--skip-failed` exists but leaves files
-permanently un-imported; prefer the quote fix.
+permanently un-imported; prefer the quote fix. `gbrain frontmatter validate
+<path>` pinpoints the file; its `--fix` repairs only NULL_BYTES, MISSING_CLOSE,
+NESTED_QUOTES and SLUG_MISMATCH (backups under `~/.gbrain/backups/frontmatter/`)
+— an unquoted colon (YAML_PARSE) needs the manual quote. A file that keeps
+failing is skipped automatically after 3 consecutive syncs.
 
 **A strategy change alone does not trigger a rescan** if the source's git
 commit hasn't changed — clear `last_commit` first to force a full walk.
 
-**New sources are not covered by the standing sync script** — verified
-2026-09-06: `sync-gbrain.sh` syncs the repo source only; a newly registered
-source needs `gbrain sync --source <id>` for its first import.
+**The standing sync script enumerates every registered source** (`gbrain
+sources list --json | jq`; since 2026-09-28) and runs `gbrain sync --source <id>
+--no-pull --exclude 'obsolete/**' --exclude '**/obsolete/**'` for each, then
+`gbrain extract --stale` and `gbrain embed --stale`. Run it with `bash
+/mnt/c/mybizz/scripts/sync-gbrain.sh`; it logs to `C:\mybizz\logs\gbrain-logs\`
+and exits with an error if any step fails. A bare `gbrain sync` syncs only the
+source of the current folder. (The 2026-09-06 statement — the script covered the
+repo source only — was true then and is superseded.) `--no-pull` was added
+2026-09-30: the repositories are edited and committed only in WSL, so there is
+nothing to pull, and a network hiccup ("Could not resolve host") otherwise leaves
+a sync incomplete. Changes made outside WSL would not be picked up. The one
+clone that follows an upstream project (`anvil-agent-references`) is updated by
+hand: `git -C /mnt/c/mybizz/anvil-agent-references pull`.
 
 **Two content paths, two layers (do not mix):** sync writes the pages/corpus
 layer; it must never be used to move governed content into GBrain — only the
@@ -132,6 +147,8 @@ with `--strategy code`.
 | `gbrain sources add <id> --path <dir>` | Register a local source |
 | `gbrain sources remove <id> --confirm-destructive` | Remove source and data |
 | `gbrain sources status <id>` | Per-source diagnostic |
+| `gbrain sources default <id>` | Set the brain-level default source (`sources.default`). The id must exist — under 0.59.18.0 a default that names a deleted source stops every sync |
+| `gbrain sources federate <id>` / `unfederate <id>` | Include a source in cross-source default search (and let it write links into other sources) / isolate it explicitly. A source never set shows as `unset` |
 
 Overlapping source paths are refused (child under a registered parent or vice
 versa). Inactive projects' sources stay registered — searchable history from
@@ -148,6 +165,13 @@ WHICH BRAIN (DB)?                    WHICH SOURCE (repo in DB)?
  5. (reserved: brains.default v2)     5. sources.default config
  6. fallback: 'host'                  6. fallback: 'default'
 ```
+
+Facts follow the same order: `remember` writes into the selected source and
+`recall` reads it. In 0.59.18.0 a call whose source came from the current
+folder or from the default also reads every federated source; `--source`,
+`GBRAIN_SOURCE` or `source_id` read one source only. The fact snapshot of
+2026-09-30 was taken with `GBRAIN_SOURCE=<id>` for that reason. Details for the
+memory governor: [[memory-governor-reference|Usage, Invocation, and Incident Response]].
 
 ### Skillpack
 
@@ -171,18 +195,47 @@ OpenCode auto-discovery. Bundle content tracks the CLI version — always
 | `gbrain recall` / `gbrain takes-list` | Hot-memory facts / weighted claims |
 | `gbrain serve` | Start MCP server |
 | `gbrain self-upgrade --check-only` | Report available upgrade without applying |
-| `gbrain upgrade` | (bun-link) pull + install + migrations |
-| `gbrain apply-migrations --yes` | Apply pending migrations directly |
+| `gbrain upgrade` | Upstream's one-step upgrade. **Not used for this install** — see §Upgrading (upstream's guide says it can run setup phases that start autopilot) |
+| `gbrain apply-migrations --force-schema --yes` | Apply schema migrations only — the form used in the 2026-09-30 cutover. Plain `--yes` can also run setup phases |
+| `gbrain jobs list [--status S]` / `stats` / `cancel <id>` | Job queue: inspect / cancel |
 
 **MEMORY_VERBS:** the memory verbs (`remember`, `recall`, `entity`,
-`forget`, `synthesize`, `context_pack`, `delta`) are present in the current
-version's default MCP surface — no `mcp_surface` config is set in this
-environment (verified 2026-09-06). A verbs-only surface (`gbrain config set
-mcp_surface verbs`) remains available as a config choice.
+`forget`, `synthesize`, `context_pack`, `delta`) are present in the MCP
+surface. `mcp_surface` is `verbs` in the **database** config plane (`gbrain
+config get mcp_surface` → `verbs`, `[config] source: db plane`; verified
+2026-09-30 before and after the upgrade); `~/.gbrain/config.json` carries no
+such key, which reconciles the 2026-09-06 and 2026-09-08 records. Change it with
+`gbrain config set mcp_surface <verbs|starter|full>`. Compared 2026-09-30: no
+agent tool present in both 0.46.1.0 and 0.59.18.0 lost an input or gained a
+required one.
 
 **After upgrading a bun-link install while OpenCode is running:** the
 in-memory `gbrain serve` keeps serving the old version until a full process
 restart — the CLI reports the new version immediately.
+
+---
+
+## Upgrading GBrain (this install: a linked Git checkout) — procedure used 2026-09-30
+
+Rules (upstream's authorization-upgrade guide plus this environment's policy):
+the decision is the developer's; never install from npm; do not run `gbrain
+upgrade`, `gbrain self-upgrade`, `gbrain post-upgrade` or plain `gbrain
+apply-migrations --yes` for the cutover (they can run setup phases that start
+autopilot); never run old and new workers together; every waiting job must be
+authorized or cancelled before a worker starts.
+
+1. **Prepare.** Bun ≥ 1.3.11; the checkout clean; `git -C /home/dev-p/gbrain branch pre-upgrade-backup HEAD`; save `gbrain doctor` and a per-source fact snapshot (from the home folder: `GBRAIN_SOURCE=<id> gbrain call recall '{"limit": 500}'` for every source).
+2. **Stop everything that uses GBrain.** OpenCode (it starts `gbrain serve`); the memory governor (API first, wait 60 seconds, then the worker); cancel the waiting jobs (`gbrain jobs list --status waiting`, `gbrain jobs cancel <id>`).
+3. **Back up.** Every database (`sudo -u postgres pg_dump -Fc <db>`) and `~/.gbrain`; check each dump with `pg_restore -l`.
+4. **Install.** Fetch only the release tag (a plain `git fetch --tags` returns an error because the floating tag `latest-stable` has moved), check that it is the tested commit, `git checkout <tag>`, `bun install --ignore-scripts`, confirm `gbrain --version`.
+5. **Migrate.** `gbrain apply-migrations --force-schema --yes`.
+6. **Prove.** Doctor before and after; start the governor; per-source fact comparison; a full sync; one real `/mb-submit-memory` run; `gbrain config get sources.default` must name an existing source.
+
+Rollback: `cutover-rollback.sh --yes` (checks out `master`, runs `bun install
+--ignore-scripts`, restores every dump). Scripts: `cutover-block2.sh`,
+`cutover-block3.sh` and `cutover-rollback.sh` in `C:\mybizz\scripts\`; block 1
+was run from `~/backups/cutover-block1.sh`. After an upgrade the checkout stays in
+detached HEAD on the release tag; `master` still holds the previous state.
 
 ---
 
@@ -223,6 +276,38 @@ The failure record's filename was a git rename destination — GBrain moves the
 slug without re-parsing content, so the stored copy keeps pre-rename
 frontmatter until a genuine content change re-parses it. Not urgent; clears on
 the next content-touching sync.
+
+### Every sync ends with `Source "<id>" not found or is archived` (2026-09-30)
+
+Cause: `sources.default` named a source that no longer existed (`diag-mg-sec4`, a
+leftover of a diagnostic; the memory governor's worker changes the default before
+every write). Under 0.59.18.0 every sync then fails, for all sources. Check and
+fix:
+```bash
+gbrain config get sources.default
+gbrain sources list
+gbrain sources default default
+```
+Result: failures dropped from 15 to 3 (the three had other causes), then to none.
+
+### A sync says `git pull failed … Could not resolve host: github.com` (2026-09-30)
+
+A passing network problem. GBrain reports the sync as incomplete and leaves its
+position unchanged, so a retry is safe. The standing script now passes
+`--no-pull`, so it no longer depends on GitHub.
+
+### One invalid-frontmatter file blocks a whole source (2026-09-30)
+
+`docs/agents/issue-tracker.md` in `mb4ecom-project-library` and
+`mb5pdlf-project-library` began `document: Issue tracker: Local markdown` — a colon
+inside an unquoted value. Fix: quote the value (`document: "Issue tracker: Local
+markdown"`), commit, push, sync. `gbrain frontmatter validate <repo>` finds such
+files without changing anything.
+
+### `git fetch --tags` refuses to overwrite `latest-stable` (2026-09-30)
+
+Harmless: the floating tag moved upstream. Fetch only the release tag instead
+(see §Upgrading).
 
 ### A credentials-looking file describes a superseded setup
 
@@ -273,7 +358,11 @@ directly instead.
 | GBrain CLI | `~/.bun/bin/gbrain` (on PATH) |
 | Config | `~/.gbrain/config.json` |
 | Live install (diagnosis) | `/home/dev-p/gbrain/src/` |
-| Source clone (stale, v0.25.0) | `/mnt/c/mybizz/gbrain` — see config.md open items |
+| Source clone | deleted 2026-09-13 (was `/mnt/c/mybizz/gbrain`, v0.25.0) — see config.md open items |
+| Pre-upgrade backups | `~/backups/` (private — the settings archive holds keys) |
+| Cutover scripts | `C:\mybizz\scripts\cutover-block2.sh`, `cutover-block3.sh`, `cutover-rollback.sh` |
+| Sync logs | `C:\mybizz\logs\gbrain-logs\sync-<timestamp>.log` |
+| Frontmatter repair backups | `~/.gbrain/backups/frontmatter/` |
 | Schema packs | `~/.gbrain/schema-packs/` |
 | Legacy PGLite (retained, unused) | `~/.gbrain/brain.pglite` |
 | Sync failure / upgrade error logs | `~/.gbrain/sync-failures.jsonl` / `~/.gbrain/upgrade-errors.jsonl` |
@@ -293,6 +382,10 @@ reporting `up_to_date` gets no timestamp update; doctor's short-circuit fires
 only when the working tree is clean — commit and push uncommitted changes,
 then re-sync.
 
+**Every sync ends with `Source "<id>" not found or is archived`:** the brain default names a deleted source — `gbrain config get sources.default`, then `gbrain sources default default`.
+
+**A sync says `Could not resolve host`, or an embedding probe cannot connect:** a passing network problem (both seen 2026-09-30); retry after a minute. The standing script no longer pulls.
+
 **MCP not responding in OpenCode:** full process restart first (see above):
 ```bash
 pkill -f "opencode web"
@@ -310,6 +403,9 @@ opencode web --hostname 0.0.0.0
 - Do not rely on `strategy` being stored per source — pass `--strategy code` explicitly on every sync that needs code files.
 - Do not call `gbrain sync` to move governed content into GBrain — only the governor's async `remember` path counts as governed ([[memory-governor-config|Memory Governor Configuration]]). Sync is for the pages layer; the governed path is for the facts layer.
 - Do not treat an offline test pass as live verification for anything GBrain-adjacent — the same evidence-not-proof standard as everywhere else.
-- Do not upgrade GBrain on version-newness alone — the standing policy is upgrade-only-on-check-failure and is an open item (config.md).
-- Do not assume the standing sync script covers newly registered sources — run `gbrain sync --source <id>` for a new source's first import.
+- Do not upgrade GBrain on version-newness alone — an upgrade is a developer decision (the one of 2026-09-30 is recorded in config.md) and follows the procedure above.
+- Do not run a bare `gbrain sync` — it syncs only the source of the current folder; use `bash /mnt/c/mybizz/scripts/sync-gbrain.sh`.
+- Do not use `gbrain upgrade`, `gbrain self-upgrade` or plain `gbrain apply-migrations --yes` for this install — use the procedure above.
+- Do not leave `sources.default` naming a source that does not exist — under 0.59.18.0 every sync then fails.
+- Do not remove `memory-governor-code`, or any code source, before the facts stored in it are understood.
 - Do not re-enable the `gbrain autopilot` schedule or put the dream cycle on a scheduler — on-demand invocation is the deliberate design; the autopilot was found inert and removed 2026-09-06 (see [[gbrain-dream-cycle-config|Configuration]]).

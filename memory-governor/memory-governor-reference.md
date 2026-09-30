@@ -25,6 +25,17 @@ Exam companions: [[memory-governor-exam-plan|Exam Plan]] (next run's job-spec),
 
 It gracefully pauses the worker (kill by PID — the documented safe method), runs the full suite with the environment loaded, and **always** restarts the worker afterwards (trap, even on failure). Extra pytest arguments pass through (e.g. `... -k test_name`). Bare `pytest` is acceptable only when the worker is not running.
 
+**Since the systemd units (2026-09-15) this runner is not systemd-aware — do not run it while `memory-governor-worker.service` is active.** It stops the worker with `kill`, and afterwards starts a plain unmanaged worker. The unit then stays stopped, and a later `systemctl --user start` would run a second worker beside the unmanaged one. Recommended procedure (read from the script on 2026-09-30, **not yet exercised**):
+
+```bash
+systemctl --user stop memory-governor-worker
+cd /home/dev-p/memory-governor && set -a && source .env && set +a && .venv/bin/python -m pytest -q
+systemctl --user start memory-governor-worker
+gbrain config get sources.default
+```
+
+The suite writes test facts into the live brain and expires them itself. Afterwards `sources.default` must name a source that exists (see the incident of 2026-09-30 below).
+
 ## Starting and stopping the system (two processes, both required)
 
 Start (from the app folder, `.env` sourced first — no dotenv autoload):
@@ -57,6 +68,20 @@ kill by PID from `ps aux` output.
 Permanent auto-start (**installed and verified 2026-09-15, session 005**): WSL systemd
 + two user units (`memory-governor-api`, `memory-governor-worker`) —
 enabled and active; the migration procedure below is retained as the record of how it was done.
+
+### Stopping and starting around a GBrain upgrade (used 2026-09-30)
+
+```bash
+systemctl --user stop memory-governor-api
+sleep 60          # the worker polls every 60 seconds and delivers what is already promoted
+systemctl --user stop memory-governor-worker
+# ... upgrade, then:
+systemctl --user start memory-governor-api memory-governor-worker
+ss -tlnp | grep 8321
+curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:8321/memory/review-queue   # must print 422
+```
+
+Confirm that the worker unit still contains the `~/.bun/bin` PATH line. Prove the result afterwards with a per-source fact comparison and one real `/mb-submit-memory` run.
 
 ## Submitting a candidate — the real, correct paths
 
@@ -267,7 +292,10 @@ over pages/chunks and returns unrelated content by semantic similarity;
 gbrain call recall '{"grep": "<unique marker text from the mistaken fact>"}'
 ```
 Confirm exactly one result matches and its provenance unambiguously
-identifies it as the mistaken write.
+identifies it as the mistaken write. Governed facts live in the source
+`memory-governor-code` (2026-09-30): put `GBRAIN_SOURCE=memory-governor-code`
+in front of the command, and run it from a folder that does not select
+another source (for example your home folder).
 
 **3. Correct it with `forget`, never a guessed argument.** `forget` takes
 the opaque `fact_id` from the recall result — never a page slug, never a
@@ -291,6 +319,21 @@ with a `try`/`finally` that unconditionally restores the original state.
 
 **6. Add a permanent standing test for the specific failure mode.**
 
+## Recovering from a stale brain default (incident 2026-09-30)
+
+**Symptom:** after the upgrade to 0.59.18.0, every `gbrain sync --source <id>` printed `Source "diag-mg-sec4" not found or is archived` and ended with an error, for all 15 sources. The same message had already appeared for `pdlf` before the upgrade.
+
+**Cause:** the brain-level default source (`sources.default`) named a source that no longer existed. The worker changes that default before every governed write. The name `diag-mg-sec4` looks like a leftover of a diagnostic (not confirmed). The new version checks that the default exists; the old one was more forgiving.
+
+**Check and fix:**
+```
+gbrain config get sources.default
+gbrain sources list
+gbrain sources default default
+gbrain config get sources.default
+```
+The second command must show that the named source exists. If it does not, the third command sets the default to the source `default`. The next governed write sets it to its owning project again. Result on 2026-09-30: failures dropped from 15 to 3 (the remaining three had other causes) and then to none.
+
 ## `remember`, `recall`, `forget` — real MEMORY_VERBS mechanics
 
 - **MCP-protocol verbs, not standalone CLI subcommands** — `gbrain recall
@@ -303,19 +346,16 @@ with a `try`/`finally` that unconditionally restores the original state.
   ```
   Read-only; safe at any time. `remember` accepts: `fact`, `provenance`
   (required), `ttl`, `entity`, `kind`, `visibility` (`world`|`private`).
+- **GBrain 0.59.18.0 (2026-09-30) — inputs compared with 0.46.1.0:** nothing removed, nothing newly required. New optional inputs: `remember`: `source_id` (source to write to; defaults to the selected source), `expected_revision`, `force`, `request_id`; `recall`: `source_id` (narrows the read to one source), `budget_policy`; `forget`: `request_id`. The invocation `gbrain call <verb> '<json>'` is unchanged.
+- **Which source a call uses:** `--source`, then the variable `GBRAIN_SOURCE`, then a `.gbrain-source` file, then the registered source whose folder contains the current folder, then the brain default set by `gbrain sources default`. `remember` writes into that source. Facts are stored per source.
 
-## Isolation boundary — stated honestly (2026-09-08)
+## Isolation boundary — stated honestly (2026-09-08; corrected 2026-09-30)
 
-GBrain's facts layer is brain-global: an unscoped grep finds any fact from
-any context, and no GBrain mechanism scopes recall to the active source.
-Project isolation for governed memories is therefore enforced by (a) the
-governor's own API (read-time visibility resolution against the requesting
-project) and (b) the write-path stamping added 2026-09-08 (entity =
-owning_project; visibility mapped from declared scope). The former
-recall-level cross-project assertion tested a property GBrain does not
-provide; the corrected test asserts the guarantees that genuinely hold.
-This boundary is a property of GBrain's facts layer — reported, not
-silently worked around.
+**Correction 2026-09-30:** the earlier statement that GBrain's facts layer is brain-global is wrong. Reading GBrain's code (0.46.1.0 and 0.59.18.0) and the per-source recall snapshot of 2026-09-30 show that every fact belongs to a source. In 0.46.1.0, `recall` reads the facts of the selected source. In 0.59.18.0, a local call without an explicit source also reads the facts of every federated source, and `source_id` narrows it to one source.
+
+Where governed facts land: the worker sets the brain default to the owning project, but GBrain ranks the source whose folder contains the current folder above the brain default. The worker runs inside `/home/dev-p/memory-governor`, which is the source `memory-governor-code`. So governed facts land in `memory-governor-code` (verified 2026-09-30: 49 → 50 after a governed submission for `mybizz-os-docs`). That source is not federated, so `mb-submit-memory`'s fact searches from a documentation session cannot see them.
+
+Project isolation for governed memories is enforced by (a) the governor's own API (read-time visibility resolution against the requesting project) and (b) the write-path stamping added 2026-09-08 (entity = owning_project; visibility mapped from declared scope). It does not come from GBrain's sources. Open decision: see the configuration, Pending developer execution item 6.
 
 ## Do not
 
@@ -333,3 +373,5 @@ silently worked around.
   silently never leave the outbox.
 - Do not kill the processes with a `pkill -f` pattern that appears in your
   own command line — the shell kills itself (confirmed live).
+- Do not run `scripts/run-tests-deterministic.sh` while `memory-governor-worker.service` is active — it leaves an unmanaged second worker (procedure above).
+- Do not leave `sources.default` naming a source that does not exist — under 0.59.18.0 every sync then fails.
