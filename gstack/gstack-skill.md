@@ -1,6 +1,6 @@
 ---
 title: "gstack-skill"
-doc-id: "gstack-skill"
+doc-id: "mb-d542b185"
 ---
 # mb-config-gstack — Exam Skill
 
@@ -44,7 +44,7 @@ repairs nothing.
 - **OpenCode structure rows** (symlink + hybrid rows) belong to
   `mb-config-opencode` — this exam confirms the rows' targets exist, never
   re-audits OpenCode's config.
-- **Cross-tool skill enumeration** belongs to [[skill-index|Skill Index]] (docs-managed) —
+- **Cross-tool skill enumeration** belongs to [[skills-register|Skill Register]] (docs-managed) —
   this exam checks the discovery **mechanics** (that the documented link
   topology resolves), never re-audits the inventory.
 

@@ -1,6 +1,6 @@
 ---
 title: "graphify-config"
-doc-id: "graphify-config"
+doc-id: "mb-765e162c"
 ---
 # Graphify Configuration
 
@@ -42,11 +42,11 @@ reminder string to bash commands; it writes no files of its own.
 | File | Content |
 |---|---|
 | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs/.graphifyignore` | `.opencode/` and `opencode.json` (exactly two lines; tracked in git) |
-| Repo `.gitignore` (graphify-relevant lines) | `graphify-out/`, `.opencode/`, [[agents|mb-3-cs]], `opencode.json`, `tests/` |
+| Repo `.gitignore` (graphify-relevant lines) | `graphify-out/`, `.opencode/`, mb-3-cs, `opencode.json`, `tests/` |
 | `graphify-out/.graphify_build.json` | `{"gitignore": false}` — persisted from a prior `--no-gitignore` run; sticks until reset |
 | `graphify-out/.graphify_root` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs` (absolute, machine-specific) |
 
-`.graphifyignore` does not list [[agents|mb-3-cs]] though `.gitignore` does — no
+`.graphifyignore` does not list mb-3-cs though `.gitignore` does — no
 effect (markdown is not a code-extraction target).
 
 ## Current graph state — mb-3-cs (verified live 2026-09-08)

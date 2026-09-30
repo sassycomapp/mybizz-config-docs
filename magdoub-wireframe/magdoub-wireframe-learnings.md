@@ -1,6 +1,6 @@
 ---
 title: "magdoub-wireframe-learnings"
-doc-id: "magdoub-wireframe-learnings"
+doc-id: "mb-49040aef"
 ---
 # Magdoub Wireframe — Learnings
 

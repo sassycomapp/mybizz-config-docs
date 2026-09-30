@@ -1,6 +1,6 @@
 ---
 title: "opencode-reference"
-doc-id: "opencode-reference"
+doc-id: "mb-2a5a7cdf"
 ---
 # OpenCode Reference — Commands, Verification, Troubleshooting
 

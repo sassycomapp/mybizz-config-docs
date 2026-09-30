@@ -1,6 +1,6 @@
 ---
 title: "gbrain-dream-cycle-config"
-doc-id: "gbrain-dream-cycle-config"
+doc-id: "mb-c6df61ed"
 ---
 # GBrain Dream Cycle — Configuration
 

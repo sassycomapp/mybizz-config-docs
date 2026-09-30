@@ -1,6 +1,6 @@
 ---
 title: "gstack-config"
-doc-id: "gstack-config"
+doc-id: "mb-41c80bdf"
 ---
 # GStack Configuration
 
@@ -60,7 +60,7 @@ hand-edit a generated file. Regenerate with `bun run gen:skill-docs`.
 
 | Item | State |
 |---|---|
-| Cross-tool skill enumeration | [[skill-index|Skill Index]] — the authoritative on-disk inventory across all skill owners; consistent with the live state above |
+| Cross-tool skill enumeration | [[skills-register|Skill Register]] — the authoritative on-disk inventory across all skill owners; consistent with the live state above |
 | OpenCode structure rows | [[opencode-config|OpenCode Configuration]] (symlink + hybrid rows) |
 | Outputs convention | Skills save internally to `~/.gstack/projects/$SLUG/` (verified live 2026-09-16). The AGENTS.md copy lane (`gstack-outputs/` in the active project) is a **convention, not live state** — the folder does not exist on this system outside backups (verified 2026-09-16; the earlier "confirmed live in `mb5pdlf-project-library`" claim was falsified — folder absent there). Full fact — where every skill saves and the non-existence of the copy lane — in [[gstack-reference|GStack Reference]] §Artifact locations (2026-09-16) |
 | GBrain relationship | gstack's GBrain skills operate on the existing self-hosted PostgreSQL GBrain — `/setup-gbrain`'s own PGLite/Supabase description does not describe this environment (authority: [[gbrain-config|Configuration]]) |

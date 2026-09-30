@@ -1,6 +1,6 @@
 ---
 title: "postgresql-learnings"
-doc-id: "postgresql-learnings"
+doc-id: "mb-9b586d8e"
 ---
 # PostgreSQL — Learnings
 

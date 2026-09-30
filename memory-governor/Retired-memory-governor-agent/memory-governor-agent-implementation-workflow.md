@@ -1,6 +1,6 @@
 ---
 title: "memory-governor-agent-implementation-workflow"
-doc-id: "memory-governor-agent-implementation-workflow"
+doc-id: "mb-aa9bfa8d"
 ---
 # Memory Governor Agent — Stepwise Implementation Workflow
 

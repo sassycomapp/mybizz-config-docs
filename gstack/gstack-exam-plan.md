@@ -1,6 +1,6 @@
 ---
 title: "gstack-exam-plan"
-doc-id: "gstack-exam-plan"
+doc-id: "mb-5870025e"
 ---
 # GStack — Exam Plan
 
@@ -30,7 +30,7 @@ carry run-specifics + references only.
 | Tier 3 unlock state | **Locked** — Tier 3 rows execute only if the developer unlocks this run |
 | Developer-run requests this run (bundled into ONE request) | (a) `~/.gstack` file-content reads if any guard denies them (sensitive-data guards — proven classes); (b) any check whose command text the guards deny; (c) `.env.example` content verification (the one template line claim) |
 | Expected-value source of truth | [[gstack-config|GStack Configuration]] — read fresh at run start; never rely on remembered values |
-| Scope boundary | This module exams GStack itself: clone version/HEAD, discovery topology, config files, binary tree, integration facts. Sibling modules own: GBrain server/schema/conformance (`mb-config-gbrain`), dream-cycle pipeline (`mb-config-gbrain-dream-cycle`), OpenCode structure rows and Active Project Standard (`mb-config-opencode`), cross-tool skill enumeration ([[skill-index|Skill Index]], docs-managed). Skill-inventory re-audit is NOT performed here (docs governance owns [[skill-index|Skill Index]]). |
+| Scope boundary | This module exams GStack itself: clone version/HEAD, discovery topology, config files, binary tree, integration facts. Sibling modules own: GBrain server/schema/conformance (`mb-config-gbrain`), dream-cycle pipeline (`mb-config-gbrain-dream-cycle`), OpenCode structure rows and Active Project Standard (`mb-config-opencode`), cross-tool skill enumeration ([[skills-register|Skill Register]], docs-managed). Skill-inventory re-audit is NOT performed here (docs governance owns [[skills-register|Skill Register]]). |
 ## 2. Carried-forward items
 
 None — bootstrap (no prior exam exists). Recorded spec states kept under watch

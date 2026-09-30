@@ -1,6 +1,6 @@
 ---
 title: "magdoub-wireframe-exam-plan"
-doc-id: "magdoub-wireframe-exam-plan"
+doc-id: "mb-1626420d"
 ---
 # Magdoub Wireframe — Exam Plan
 

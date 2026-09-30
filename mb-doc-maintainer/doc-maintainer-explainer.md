@@ -1,6 +1,6 @@
 ---
 title: "doc-maintainer-explainer"
-doc-id: "doc-maintainer-explainer"
+doc-id: "mb-c74618cb"
 ---
 # mb-doc-maintainer — What It Is, What It Does, and Why It Is Built This Way
 

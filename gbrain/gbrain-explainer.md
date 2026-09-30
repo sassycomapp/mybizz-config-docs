@@ -1,6 +1,6 @@
 ---
 title: "gbrain-explainer"
-doc-id: "gbrain-explainer"
+doc-id: "mb-3187a352"
 ---
 # GBrain — Explainer
 

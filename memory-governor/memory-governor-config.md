@@ -1,6 +1,6 @@
 ---
 title: "memory-governor-config"
-doc-id: "memory-governor-config"
+doc-id: "mb-63bdf286"
 ---
 # Memory Governor Configuration
 
@@ -138,7 +138,7 @@ Every write path goes through transition validation — creation included.
 
 | Item | Value |
 |---|---|
-| Register location | Inside this repository, `registers/` — [[register-memory-governor|Register Memory Governor]] (candidate index) + `registers/candidates/<memory_id>.json` (full payload per candidate) |
+| Register location | Inside this repository, `registers/` — Register Memory Governor (candidate index) + `registers/candidates/<memory_id>.json` (full payload per candidate) |
 | Write mechanism | Asynchronous outbox/worker; retries with backoff; surfaces failure after 5 consecutive attempts. The worker git-commits AND pushes register changes |
 | Register integrity | Index rows correspond to real payload files (verified 2026-09-08); real promoted candidates present, including a supersession pair |
 | Recovery proven | Twice — Phase 7.5 isolated drill and Phase 15.2 full-system drill |

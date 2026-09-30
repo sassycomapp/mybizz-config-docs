@@ -1,6 +1,6 @@
 ---
 title: "mb-compile-rules-config"
-doc-id: "mb-compile-rules-config"
+doc-id: "mb-9fcb2ee6"
 ---
 # mb-compile-rules Configuration
 

@@ -1,6 +1,6 @@
 ---
 title: "sentinel-security-system"
-doc-id: "sentinel-security-system"
+doc-id: "mb-9e02a9c8"
 ---
 # SSS - sentinel Security System
 

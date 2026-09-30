@@ -1,6 +1,6 @@
 ---
 title: "gbrain-log"
-doc-id: "gbrain-log"
+doc-id: "mb-761703d8"
 ---
 # GBrain — Log
 

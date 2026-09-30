@@ -1,6 +1,6 @@
 ---
 title: "2026-09-15-001-data-mybizz-mgt-repo-registration"
-doc-id: "2026-09-15-001-data-mybizz-mgt-repo-registration"
+doc-id: "mb-7c925181"
 ---
 # Session 2026-09-15 — data-mybizz-mgt repo + GBrain + opencode registration
 
@@ -23,7 +23,7 @@ doc-id: "2026-09-15-001-data-mybizz-mgt-repo-registration"
    --source-id data-mybizz-mgt`: 23/23 pages swept, **0 links + 0 timeline
    entries persisted; 78 candidates skipped** — targets are documents in other
    sources, not pages; expected to self-correct when mb-wikilinks retrofits
-   [[wikilinks]].
+   wikilinks.
 4. **opencode registration**: `external_directory` gained
    `"C:\\data-mybizz-mgt\\**": "allow"` in the global `opencode.jsonc`
    (edit tool, granted). Verified in resolved config via `opencode debug
@@ -73,7 +73,7 @@ doc-id: "2026-09-15-001-data-mybizz-mgt-repo-registration"
 
 - **mg-grant lowercases paths** (`to_wsl()`): granting
   `/home/dev-p/.config/opencode/AGENTS.md` recorded the grant as
-  [[agents|mb-3-cs]] — on a case-sensitive FS a file-level grant for an uppercase
+  mb-3-cs — on a case-sensitive FS a file-level grant for an uppercase
   filename may not match. Prefer folder-level grants for uppercase paths.
   (Moot here: the protected-files policy blocks agent edits regardless.)
 - **Permission-denied rename** on DrvFs was an OS-level handle, not a grants
@@ -98,14 +98,14 @@ doc-id: "2026-09-15-001-data-mybizz-mgt-repo-registration"
 - **Docs corpus sweep (assigned to the docs skills, not done here)**: old-path
   references remain in `dev-root/docmap.md`, `mybizz-config-docs` (
   `projects-config-register.md`, [[gbrain-config|Configuration]], gstack references,
-  [[config-manager-explainer|Explainer]], [[docs-manager-config|Config]], one sessions page),
+  [[config-manager-explainer|Explainer]], Config, one sessions page),
   `mybizz-os-docs` ([[fact-save-and-recall|Operating Procedure]], [[opening-and-closing|Operating Procedure]]), and
   pdlf docs (2 files).
 - **Restart opencode** — `external_directory` + AGENTS.md + skill files load
   at process start.
 - **Grants active, left un-revoked** per developer instruction: the obsolete
   `/mnt/c/_data-mybizz-mgt` grant (dead path), `/mnt/c/data-mybizz-mgt`,
-  `opencode.jsonc`, [[agents|mb-3-cs]] (lowercased), `skills/mb-docs-manager`.
+  `opencode.jsonc`, mb-3-cs (lowercased), `skills/mb-docs-manager`.
 - **Flagged in mybizz-config-docs working tree** (Phase F, not handled): tracked
   file deleted — `sessions/2026-09-14-001-dream-cycle-config-mgmt.md` (` D`);
   untracked artifact dir `.sources/`. Developer decides; nothing committed.

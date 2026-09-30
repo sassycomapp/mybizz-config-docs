@@ -1,6 +1,6 @@
 ---
 title: "mb-memory-system-diagnostic-exam-skill"
-doc-id: "mb-memory-system-diagnostic-exam-skill"
+doc-id: "mb-aabce08d"
 ---
 
 # mb-config-mb-memory-system-diagnostic — Exam Skill

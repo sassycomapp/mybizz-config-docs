@@ -1,6 +1,6 @@
 ---
 title: "anvil-agent-references-reference"
-doc-id: "anvil-agent-references-reference"
+doc-id: "mb-99b48631"
 ---
 # anvil-agent-references — Reference: Install, Skills, and Technical Detail
 
@@ -158,21 +158,21 @@ Before behavior changes, inspect enough of `anvil.yaml` to identify `startup_for
 
 | Task trigger | Load |
 |---|---|
-| New or simple container Form | [[basic-container-form|Basic Container Form]] |
-| Existing button/input handler edit | stay in the skill file; load [[dom-event-vs-component-event|Dom Event Vs Component Event]] only if event source is unclear |
-| No root `<anvil-form>` / implicit `HtmlComponent` container | [[template-shapes|Template Shapes]], then [[htmlcomponent-container|Htmlcomponent Container]] |
-| Form using a layout with `<anvil-block>` | [[template-shapes|Template Shapes]], then [[layout-using-form|Layout Using Form]] |
-| Form defining slots with `<anvil-slot>` | [[layout-defining-html-form|Layout Defining Html Form]], plus [[html-frontmatter|Html Frontmatter]] if custom properties/events are involved |
-| Root shape, attribute prefixes, bindings, blocks, slots, dropzones, or event signature lookup | [[cheat-sheet|Cheat Sheet]] |
-| `anvil:name`, `anvil:dom-node`, native DOM events, direct DOM access, runtime class/style helpers on plain HTML | [[html-dom|Html Dom]]; use [[dom-event-vs-component-event|Dom Event Vs Component Event]] for a concrete recipe |
-| RepeatingPanel item templates, `writeback:`, or item refresh behavior | [[repeating-panel-item-template|Repeating Panel Item Template]] |
-| Reusable component Form | [[custom-component|Custom Component]]; also [[html-frontmatter|Html Frontmatter]] for custom API metadata |
-| Custom component container or `<anvil-dropzone>` | [[custom-component-container|Custom Component Container]] and [[html-frontmatter|Html Frontmatter]] |
-| Legacy YAML template or converted `HtmlTemplate` | [[yaml-template|Yaml Template]], [[template-shapes|Template Shapes]], then [[yaml-htmltemplate-conversion|Yaml Htmltemplate Conversion]] |
-| M3 or dependency component specs | inspect `anvil.yaml` and dependency docs/files first, then [[dependency-component|Dependency Component]] |
-| Form Python class shape, handler signatures, lifecycle, client runtime caveats, dynamic updates | [[python|Python]] |
-| `anvil.js`, `anvil.js.window`, browser APIs, JS proxies, Promises | the [[javascript-interop|Javascript Interop]] reference (below) |
-| Roles, theme CSS, generated component DOM, dependency styling internals | [[styling|Styling]], [[styling-examples|Styling Examples]], [[component-dom|Component Dom]] |
+| New or simple container Form | Basic Container Form |
+| Existing button/input handler edit | stay in the skill file; load Dom Event Vs Component Event only if event source is unclear |
+| No root `<anvil-form>` / implicit `HtmlComponent` container | Template Shapes, then Htmlcomponent Container |
+| Form using a layout with `<anvil-block>` | Template Shapes, then Layout Using Form |
+| Form defining slots with `<anvil-slot>` | Layout Defining Html Form, plus Html Frontmatter if custom properties/events are involved |
+| Root shape, attribute prefixes, bindings, blocks, slots, dropzones, or event signature lookup | Cheat Sheet |
+| `anvil:name`, `anvil:dom-node`, native DOM events, direct DOM access, runtime class/style helpers on plain HTML | Html Dom; use Dom Event Vs Component Event for a concrete recipe |
+| RepeatingPanel item templates, `writeback:`, or item refresh behavior | Repeating Panel Item Template |
+| Reusable component Form | Custom Component; also Html Frontmatter for custom API metadata |
+| Custom component container or `<anvil-dropzone>` | Custom Component Container and Html Frontmatter |
+| Legacy YAML template or converted `HtmlTemplate` | Yaml Template, Template Shapes, then Yaml Htmltemplate Conversion |
+| M3 or dependency component specs | inspect `anvil.yaml` and dependency docs/files first, then Dependency Component |
+| Form Python class shape, handler signatures, lifecycle, client runtime caveats, dynamic updates | Python |
+| `anvil.js`, `anvil.js.window`, browser APIs, JS proxies, Promises | the Javascript Interop reference (below) |
+| Roles, theme CSS, generated component DOM, dependency styling internals | Styling, Styling Examples, Component Dom |
 
 **Simple event edits stay on the normal path** — adding/changing simple event wiring, matching handlers, fixed button/input behavior, or item-template bindings doesn't need the table, unless the task expands into layout restructuring, new Forms, YAML conversion, frontmatter, custom components, styling, data modeling, dependency APIs, reusable Forms, or raw DOM work. For newly added component events, prefer `@handle(...)`; use `on:<event>` only when preserving/extending existing markup-wired events.
 
@@ -190,7 +190,7 @@ Decorator gotcha: use `@handle(...)` when the module has `from anvil import *`; 
 
 **Styling, by what's being styled:**
 - Raw HTML elements: stable domain-specific classes in the template + selectors in `theme/assets/theme.css`.
-- Dynamic raw HTML state: read [[html-dom|Html Dom]] before using plain-HTML runtime style/class helpers.
+- Dynamic raw HTML state: read Html Dom before using plain-HTML runtime style/class helpers.
 - Anvil components: component properties, roles, documented dependency APIs, `.anvil-role-<role-name>` CSS selectors.
 - M3 or dependency components: inspect docs/dependency files before guessing properties, layout behavior, or CSS hooks.
 
@@ -221,7 +221,7 @@ Validate one changed file at a time, or a shared parent when changes span multip
 - Never create `client_code/__init__.py` — `client_code/` is an Anvil code root, not a Python package.
 - Prefer relative imports for app-local references.
 - Check the Skulpt client runtime reference (below) before adding stdlib or external imports.
-- Use [[javascript-interop|Javascript Interop]] reference before touching `anvil.js`/`anvil.js.window`/browser APIs.
+- Use Javascript Interop reference before touching `anvil.js`/`anvil.js.window`/browser APIs.
 
 **Validate:** `anvil --json validate client_code/<Module>.py` (or the package's `__init__.py`).
 
@@ -329,7 +329,7 @@ Never use `.then()`, `await_promise()`, or Python `async`/`await` for these. Use
 
 ## Material 3 theme reference (`docs/m3/`)
 
-Not a skill — a component/theme reference inside `docs/m3/`: [[api|Api]] (generated API/attribute reference for the `m3` module), `components/` (`_index.md`, `components.md`, `layouts.md`, `colour-schemes.md`, `img/`), and `layouts.md`. Relevant whenever a task touches M3 components or layouts (see the `client-forms` Load-By-Task entry).
+Not a skill — a component/theme reference inside `docs/m3/`: Api (generated API/attribute reference for the `m3` module), `components/` (`_index.md`, `components.md`, `layouts.md`, `colour-schemes.md`, `img/`), and `layouts.md`. Relevant whenever a task touches M3 components or layouts (see the `client-forms` Load-By-Task entry).
 
 **What it is:** an open-source Anvil theme (`github.com/anvil-works/material-3-theme`) implementing Google's Material 3 design system. Currently in beta — not every M3 component is supported yet; components without a direct M3 counterpart are styled to match the M3 spec as closely as possible. Add via **Settings → Dependencies → Third Party**, dependency ID `4UK6WHQ6UX7AKELK`. Caution: an app with an existing theme may have CSS that conflicts with M3's — if styling looks wrong, try a blank M3 app to isolate the cause.
 
@@ -355,7 +355,7 @@ def m3_button_click(self, **event_args):
     self.layout.show_sidesheet = True
 ```
 
-Full property/event references: [[api|Api]] in this checkout, plus Anvil's own docs. **`colour-schemes.md` is currently an empty draft stub** (`draft: true`, verified 2026-09-06) — nothing to document until Anvil publishes real content.
+Full property/event references: Api in this checkout, plus Anvil's own docs. **`colour-schemes.md` is currently an empty draft stub** (`draft: true`, verified 2026-09-06) — nothing to document until Anvil publishes real content.
 
 **Standing constraints in this environment:** [[adr-anvil-extras-exclusion|Anvil Extras Exclusion]] excludes Anvil Extras (M3 conflict) and limits UI to M3-dependency components; [[adr-htmltemplate-use|HTMLTemplate Use]] bans `HTMLTemplate` — prefer the two native M3 Layouts.
 

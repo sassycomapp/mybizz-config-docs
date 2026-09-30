@@ -1,6 +1,6 @@
 ---
 title: "magdoub-wireframe-reference"
-doc-id: "magdoub-wireframe-reference"
+doc-id: "mb-a5ce0ec0"
 ---
 # magdoub-wireframe — Reference: Invocation, Operation, Update
 

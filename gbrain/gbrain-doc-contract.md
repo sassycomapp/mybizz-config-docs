@@ -1,50 +1,24 @@
 ---
 title: "gbrain-doc-contract"
-doc-id: "gbrain-doc-contract"
+doc-id: "mb-62de0f89"
 ---
 # gbrain-doc-contract
 
-The G-brain documentation contract enforced by `mb-doc-maintainer`. This document is the Phase 1 artifact of the mb-doc-maintainer plan.
+The minimum a document must meet so GBrain can ingest it and read its title.
+Nothing else is required. Rule IDs are kept from the previous version; missing
+numbers were removed.
 
-## Authority hierarchy
+## GBrain requirements
 
-The implemented G-brain (v0.46.1.0, live at `/home/dev-p/gbrain`) is the **Level A primary authority**; MyBizz documentation (`C:\mybizz\mybizz-config-docs\gbrain\`, the governing ADRs) is **Level B supporting context**. Implemented behaviour takes precedence; genuine contradictions are surfaced, never silently resolved; behaviour Level A does not establish is recorded as **not established** — the maintainer never invents it.
+- **G1** — Frontmatter, if present, must be valid YAML. Invalid YAML: the file is not ingested and the source's sync bookmark stops advancing.
+- **G2** — Frontmatter, if present: first line `---`, closing `---`, something between them, no null bytes.
+- **G4** — Never write a `slug:` field. GBrain derives the slug from the path.
+- **G5** — `title` must be a YAML string. Always quote it. A value containing a double quote is wrapped in single quotes.
+- **G7** — A wikilink, if used, is `[[bare-name]]` or `[[dir/slug]]`, optionally with `|Display Text`. A bare name must be the only file with that basename in the source; otherwise it does not resolve.
+- **G8** — GBrain takes the page title from `title:`, else the first H1, else the path. No other field is used.
+- **G9** — GBrain ingests only committed files in a registered source. Uncommitted edits are not ingested.
 
-## Canonical G-brain requirements
+## MyBizz convention (developer-owned; GBrain does not require it)
 
-| #   | Requirement                                                                                                                                                                                                                                                                                                    | Authoritative source                                                                | Status                  |
-| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------- |
-| G1  | Frontmatter, where present, must parse as valid YAML. A file whose frontmatter fails to parse is not ingested; the failure is recorded per (source, path) in `~/.gbrain/sync-failures.jsonl` and the sync bookmark does not advance until fixed (or explicitly skipped); doctor warns until it imports cleanly | `src/core/markdown.ts` (YAML_PARSE); `src/core/sync-failure-ledger.ts`              | Canonical               |
-| G2  | Fence structure: first non-empty line `---`, closed by `---`, non-empty body, no null bytes. gray-matter silently accepts broken fences; the validator catches them                                                                                                                                            | `src/core/markdown.ts` (MISSING_OPEN, MISSING_CLOSE, EMPTY_FRONTMATTER, NULL_BYTES) | Canonical (structural)  |
-| G3  | Entirely missing frontmatter is a metadata-coverage finding, not an ingestion blocker; strict per-source enforcement is opt-in                                                                                                                                                                                 | `src/core/brain-writer.ts` (strictMissingOpen)                                      | Canonical (severity)    |
-| G4  | If a `slug:` field is present, it must equal the path-derived slug (G-brain derives slug from the path)                                                                                                                                                                                                        | `src/core/markdown.ts` (SLUG_MISMATCH)                                              | Canonical (conditional) |
-| G5  | If `title`, `type`, or `slug` are present, they must be YAML strings                                                                                                                                                                                                                                           | `src/core/markdown.ts` (NON_STRING_FIELD)                                           | Canonical (conditional) |
-| G6  | WikiLink grammar: `[[dir/slug]]`, `[[dir/slug\|Display Text]]`, qualified `[[source-id:dir/slug]]`, generic `[[bare-name]]`. Trailing `.md` and `#section` anchors stripped; external URLs skipped                                                                                                             | `src/core/link-extraction.ts` (WIKILINK_RE, QUALIFIED_WIKILINK_RE, bare-name pass)  | Canonical               |
-| G7  | Bare-name wikilinks resolve via basename uniqueness; ambiguous basenames do not resolve reliably and degrade the link graph                                                                                                                                                                                    | `src/core/link-extraction.ts` (bare-name pass → SlugResolver)                       | Canonical               |
-| G8  | Page title resolution: frontmatter `title:` → first H1 → slug-derived. No other field contributes. `document:` is not read by G-brain                                                                                                                                                                          | `src/core/markdown.ts` (#2446)                                                      | Canonical               |
-| G9  | Corpus ingestion boundary = registered sources; overlapping source paths refused; sync reads git commits (markdown by default) — an uncommitted save is not yet ingested                                                                                                                                       | `docs/architecture/brains-and-sources.md`; live source registration                 | Canonical               |
-| G10 | Page types and type inference governed by the active schema pack (`gbrain-everything`); pages with zero inbound wikilinks are orphans — a first-class health signal, not an error                                                                                                                              | `docs/architecture/schema-packs.md`; `gbrain orphans`                               | Canonical (context)     |
-
-## Operating-contract requirements (MyBizz governance — enforceable because the developer assigned them; may be stricter than G-brain, never looser)
-
-| #   | Requirement                                                                                                                                                                                                                                                                          | Governing source                                              |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
-| O1  | Permanent corpus documents carry exactly `title:` (= filename stem = doc-id) and `doc-id:` — and nothing else; frontmatter contains only these two fields (D2 exclusivity). `title:` is the only reliable title source for this corpus (H1s are inconsistent, link-style, or absent) | D1/D2 developer decision; numbering ADR                       |
-| O2  | `doc-id` = the filename's slug; no numeric identifiers; references cite by filename                                                                                                                                                                                                  | `adr-filename-and-frontmatter-numbering-policy.md`            |
-| O3  | `tmp-` prefixed transient files are exempt from frontmatter requirements                                                                                                                                                                                                             | `adr-frontmatter-exemption-transient-files.md`                |
-| O4  | Register schema per D4; four-event model per D5                                                                                                                                                                                                                                      | Developer decision; register-membership policy (V2 items 6–7) |
-| O5  | Documentation scope derives live from the scope authority; the skill carries no scope list of its own                                                                                                                                                                                | `mybizz-scope-list.md`; Spec §5                               |
-| O6  | WikiLink display convention `[[basename\|Display Text]]`                                                                                                                                                                                                                             | MyBizz convention (compatible subset of G6)                   |
-| O7  | Link targets must exist                                                                                                                                                                                                                                                              | Spec §10                                                      |
-
-## Not established (the maintainer must never invent these)
-
-No requirement exists for: any frontmatter field beyond O1 — and conversely, no frontmatter field beyond `title` and `doc-id` is permitted (`document`, `state`, `date-created`, `tags` are prohibited, not optional — D2 exclusivity); registers (G-brain reads the file tree); tags; the MECE people/companies directory pattern (a recommendation in `docs/GBRAIN_RECOMMENDED_SCHEMA.md`, not enforcement); any wikilink density; any filename pattern beyond G1–G5 and O1–O2.
-
-## NOT-required list (anti-work-generation)
-
-The maintainer never enforces: perfect or exhaustive metadata; tag coverage; MECE directories; wikilink density targets; register `notes` wording; numbering; date formats beyond YAML validity; or any property not listed in Canonical or Operating-contract requirements.
-
-## Contract change control
-
-The contract changes only by developer decision. `mb-doc-maintainer` enforces it as written; it may not extend, reinterpret, or quietly add requirements.
+- **C1** — Documentation files and documentation skills (on C:\, not installed): frontmatter is `title: "filename-stem"` and `doc-id: "mb-xxxxxxxx"`. The doc-id is a permanent random code that `mb-doc-check` adds and never changes, so a renamed or moved document can always be recognised. GBrain ignores it.
+- **C2** — Installed skills (WSL): frontmatter `name` and `description`, both YAML strings. Out of scope for this contract; documentation skills never modify them.

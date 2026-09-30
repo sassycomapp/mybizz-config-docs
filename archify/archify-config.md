@@ -1,6 +1,6 @@
 ---
 title: "archify-config"
-doc-id: "archify-config"
+doc-id: "mb-61a8f528"
 ---
 # Archify — Configuration
 
@@ -34,7 +34,7 @@ and why, [[archify-reference|Reference]] for commands and procedures.
 |---|---|
 | Install method | WSL symlink from OpenCode's global skill discovery path to the real Windows-drive folder |
 | Discovery path | `~/.config/opencode/skills/archify` → `/mnt/c/mybizz/archify/archify` |
-| Skill status | Working (per [[skill-index|Skill Index]]; confirmed by successful doctor run) |
+| Skill status | Working (per [[skills-register|Skill Register]]; confirmed by successful doctor run) |
 | Update check | Notification-only; never downloads, installs, or executes an update |
 | Update-check disable | `ARCHIFY_UPDATE_CHECK_DISABLED=1` (disables networking and reminder-state writes) |
 
@@ -70,7 +70,7 @@ begins; it scopes, it never draws.
 |---|---|
 | OpenCode | Skill discovered via symlink in the global skills folder; invoked as `/archify` |
 | Scoping skill | `mb-archify-scope` is the documented front-of-pipe component — see the "Scoping skill component" section above; invoked before `/archify`, never instead of it |
-| GBrain | No dedicated GBrain knowledge page exists for archify (all searches return unrelated content); install facts live in [[skill-index|Skill Index]] and [[opencode-config|OpenCode Configuration]] |
+| GBrain | No dedicated GBrain knowledge page exists for archify (all searches return unrelated content); install facts live in [[skills-register|Skill Register]] and [[opencode-config|OpenCode Configuration]] |
 | Memory Governor | No treatment — archify produces HTML artifacts, not memory submissions; not a governed writer |
 | Cupcake | No archify-specific rule in the global policy folder (re-verified 2026-09-16 — the only archify mention is the mg-grant access entry for `mb-config-archify`, an access grant, not an enforcement rule). Cupcake is **ACTIVE and enforcing** per [[cupcake-config|Cupcake Configuration]] §Current operational status (verified live 2026-09-12). Enforcement status is not fixed and should not be assumed current — re-check [[cupcake-config|Cupcake Configuration]] whenever enforcement state changes |
 | security-global | No principle bears directly; the only network surface is the optional update check (IP + timestamp to one fixed manifest URL, nothing else transmitted, disableable) |

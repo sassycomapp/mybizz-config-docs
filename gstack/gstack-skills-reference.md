@@ -1,6 +1,6 @@
 ---
 title: "gstack-skills-reference"
-doc-id: "gstack-skills-reference"
+doc-id: "mb-ac92bf3c"
 ---
 # GStack Skills Reference
 

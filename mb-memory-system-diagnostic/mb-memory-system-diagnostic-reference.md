@@ -1,6 +1,6 @@
 ---
 title: "mb-memory-system-diagnostic-reference"
-doc-id: "mb-memory-system-diagnostic-reference"
+doc-id: "mb-b0ec721d"
 ---
 # mb-memory-system-diagnostic — Reference: Invocation, Sections, Gates, Reporting
 

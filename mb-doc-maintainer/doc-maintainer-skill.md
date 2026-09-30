@@ -1,6 +1,6 @@
 ---
 title: "doc-maintainer-skill"
-doc-id: "doc-maintainer-skill"
+doc-id: "mb-007e603e"
 ---
 # mb-config-doc-maintainer — Exam Skill
 

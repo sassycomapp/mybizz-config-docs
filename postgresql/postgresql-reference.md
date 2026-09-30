@@ -1,6 +1,6 @@
 ---
 title: "postgresql-reference"
-doc-id: "postgresql-reference"
+doc-id: "mb-5bad908d"
 ---
 # PostgreSQL — Reference: Commands, Procedures, and Troubleshooting
 

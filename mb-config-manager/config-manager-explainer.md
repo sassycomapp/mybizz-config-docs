@@ -1,6 +1,6 @@
 ---
 title: "config-manager-explainer"
-doc-id: "config-manager-explainer"
+doc-id: "mb-c28cb8f9"
 ---
 # mb-config-manager — Explainer
 

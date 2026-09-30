@@ -1,6 +1,6 @@
 ---
 title: "memory-governor-reference"
-doc-id: "memory-governor-reference"
+doc-id: "mb-38660a2f"
 ---
 # Memory Governor Reference — Usage, Invocation, and Incident Response
 

@@ -1,6 +1,6 @@
 ---
 title: "memory-ecosystem-scope"
-doc-id: "memory-ecosystem-scope"
+doc-id: "mb-8f007ac3"
 ---
 # Scope Card — memory-ecosystem
 

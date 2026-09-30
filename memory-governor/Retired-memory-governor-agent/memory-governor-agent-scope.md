@@ -1,6 +1,6 @@
 ---
 title: "memory-governor-agent-scope"
-doc-id: "memory-governor-agent-scope"
+doc-id: "mb-10605846"
 ---
 # Memory Governor Agent — Scope Document
 

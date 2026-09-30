@@ -1,6 +1,6 @@
 ---
 title: "doc-suite-specification"
-doc-id: "doc-suite-specification"
+doc-id: "mb-f4adba8c"
 ---
 # Doc Suite Specification — config / reference / explainer
 

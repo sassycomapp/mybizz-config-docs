@@ -1,6 +1,6 @@
 ---
 title: "cupcake-explainer"
-doc-id: "cupcake-explainer"
+doc-id: "mb-258b7bd2"
 ---
 # Cupcake — Mechanical Policy Enforcement for AI Coding Agents
 

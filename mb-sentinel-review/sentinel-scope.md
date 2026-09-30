@@ -1,6 +1,6 @@
 ---
 title: "sentinel-scope"
-doc-id: "sentinel-scope"
+doc-id: "mb-401ad111"
 ---
 # Sentinel — Scope
 

@@ -1,6 +1,6 @@
 ---
 title: "i-have-adhd-config"
-doc-id: "i-have-adhd-config"
+doc-id: "mb-ba0e811b"
 ---
 # i-have-adhd — Configuration
 

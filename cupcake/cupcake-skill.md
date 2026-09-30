@@ -1,6 +1,6 @@
 ---
 title: "cupcake-skill"
-doc-id: "cupcake-skill"
+doc-id: "mb-9d71d658"
 ---
 # mb-config-cupcake — Exam Skill
 

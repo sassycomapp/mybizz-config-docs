@@ -1,6 +1,6 @@
 ---
 title: "gbrain-skills-convention-gbrain-first"
-doc-id: "gbrain-skills-convention-gbrain-first"
+doc-id: "mb-c3d9df8d"
 ---
 skills/conventions/brain-first.md
 

@@ -1,6 +1,6 @@
 ---
 title: "gstack-explainer"
-doc-id: "gstack-explainer"
+doc-id: "mb-b80e9856"
 ---
 # GStack Explainer
 
@@ -159,7 +159,7 @@ PostgreSQL pilot and the gbrain-dream-cycle precedent. The short local version:
   (this exam reads `~/.gstack/*.json` records only); the dream cycle belongs to
   `mb-config-gbrain-dream-cycle` (`/sync-gbrain` is a knowledge check only);
   OpenCode structure rows belong to `mb-config-opencode`; cross-tool skill
-  enumeration belongs to [[skill-index|Skill Index]] (docs-managed). This exam owns the
+  enumeration belongs to [[skills-register|Skill Register]] (docs-managed). This exam owns the
   discovery **mechanics** — that the documented clone, links, binaries, and
   config files resolve and are consistent.
 - Several checks are permanently **developer-run**: `~/.gstack` credential-

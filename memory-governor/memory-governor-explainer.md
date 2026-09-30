@@ -1,6 +1,6 @@
 ---
 title: "memory-governor-explainer"
-doc-id: "memory-governor-explainer"
+doc-id: "mb-47216ab9"
 ---
 # Memory Governor — Explainer
 
@@ -321,7 +321,7 @@ remaining dependency named.
 set), [[memory-governor-skill|Memory Governor Skill]] (exam skill canonical source). Architecture:
 [[config-manager-explainer|Explainer]]. The full memory-system map:
 [[memory-master-explainer|Master Explainer]]. The front end: `mb-submit-memory` (its own
-suite). System health procedure: [[memory-functionality-audit|Full-System Procedure]]
+suite). System health procedure: Full-System Procedure (memory functionality audit)
 (mybizz-os-docs).*
 
 *End of document*

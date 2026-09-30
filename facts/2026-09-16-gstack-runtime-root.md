@@ -1,6 +1,6 @@
 ---
 title: "2026-09-16-gstack-runtime-root"
-doc-id: "2026-09-16-gstack-runtime-root"
+doc-id: "mb-7bc1c0b3"
 ---
 # Fact — GStack runtime root and mixed-interpreter bin tree on the OpenCode host
 

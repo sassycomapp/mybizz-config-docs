@@ -1,6 +1,6 @@
 ---
 title: "memory-governor-exam-plan"
-doc-id: "memory-governor-exam-plan"
+doc-id: "mb-24d4eef4"
 ---
 # Memory Governor — Exam Plan
 

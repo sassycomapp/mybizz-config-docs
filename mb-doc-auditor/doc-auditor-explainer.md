@@ -1,6 +1,6 @@
 ---
 title: "doc-auditor-explainer"
-doc-id: "doc-auditor-explainer"
+doc-id: "mb-194de91e"
 ---
 # mb-doc-auditor — What It Is, What It Does, and Why It Is Built This Way
 

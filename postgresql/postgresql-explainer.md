@@ -1,6 +1,6 @@
 ---
 title: "postgresql-explainer"
-doc-id: "postgresql-explainer"
+doc-id: "mb-e4410ed0"
 ---
 # PostgreSQL — Explainer
 

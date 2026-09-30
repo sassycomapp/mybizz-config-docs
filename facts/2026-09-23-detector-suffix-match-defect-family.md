@@ -1,6 +1,6 @@
 ---
 title: "2026-09-23-detector-suffix-match-defect-family"
-doc-id: "2026-09-23-detector-suffix-match-defect-family"
+doc-id: "mb-44871199"
 ---
 # Fact — detector suffix-variant matching over-matches common words
 

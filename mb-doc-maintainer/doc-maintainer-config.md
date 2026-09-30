@@ -1,6 +1,6 @@
 ---
 title: "doc-maintainer-config"
-doc-id: "doc-maintainer-config"
+doc-id: "mb-62b3add2"
 ---
 # mb-doc-maintainer — Configuration
 

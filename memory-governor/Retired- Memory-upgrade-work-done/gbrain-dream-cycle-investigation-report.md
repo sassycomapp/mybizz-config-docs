@@ -1,6 +1,6 @@
 ---
 title: "gbrain-dream-cycle-investigation-report"
-doc-id: "gbrain-dream-cycle-investigation-report"
+doc-id: "mb-802dd12d"
 ---
 # Investigation Report — The Custom Six-Skill Pipeline and the GBrain Dream Cycle
 *Prepared to support planning a "learning → self-healing → refining" loop. Combines what I

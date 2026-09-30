@@ -1,6 +1,6 @@
 ---
 title: "magdoub-wireframe-log"
-doc-id: "magdoub-wireframe-log"
+doc-id: "mb-40c67432"
 ---
 # Magdoub Wireframe — Log
 

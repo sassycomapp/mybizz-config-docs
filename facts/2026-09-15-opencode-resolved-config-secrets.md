@@ -1,6 +1,6 @@
 ---
 title: "2026-09-15-opencode-resolved-config-secrets"
-doc-id: "2026-09-15-opencode-resolved-config-secrets"
+doc-id: "mb-1e29eb49"
 ---
 # Fact — OpenCode resolved-config stdout is secret-bearing
 

@@ -1,6 +1,6 @@
 ---
 title: "opencode-permission-access-control-model"
-doc-id: "opencode-permission-access-control-model"
+doc-id: "mb-cefaa6e8"
 ---
 # OpenCode — Permission & Access Control Model
 

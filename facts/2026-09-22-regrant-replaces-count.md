@@ -1,6 +1,6 @@
 ---
 title: "2026-09-22-regrant-replaces-count"
-doc-id: "2026-09-22-regrant-replaces-count"
+doc-id: "mb-bfda00e3"
 ---
 # Fact — re-granting a path replaces the entry count
 
@@ -19,4 +19,4 @@ count is exceeded. The residual count never persists across a re-grant.
 Context: session 014 (`sessions/2026-09-22-014-mb-doccycle-wp2-wp8`),
 WP8 acceptance run. Confidence 0.9, method: live observation ×3. Approved
 at the 2026-09-22 close-out gate. Graduated into
-[[doccycle-reference|mb-doccycle Reference]] §Grant commands (2026-09-22).
+mb-doccycle Reference §Grant commands (2026-09-22).

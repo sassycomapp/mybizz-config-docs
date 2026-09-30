@@ -1,6 +1,6 @@
 ---
 title: "mb-memory-system-diagnostic-explainer"
-doc-id: "mb-memory-system-diagnostic-explainer"
+doc-id: "mb-dd98962e"
 ---
 # mb-memory-system-diagnostic — What It Is, What It Does, and Why It Is Built This Way
 

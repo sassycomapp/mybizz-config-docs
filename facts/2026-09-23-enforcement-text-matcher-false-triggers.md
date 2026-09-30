@@ -1,6 +1,6 @@
 ---
 title: "2026-09-23-enforcement-text-matcher-false-triggers"
-doc-id: "2026-09-23-enforcement-text-matcher-false-triggers"
+doc-id: "mb-8a823758"
 ---
 # Fact — text-matcher false triggers and the script-file protocol
 

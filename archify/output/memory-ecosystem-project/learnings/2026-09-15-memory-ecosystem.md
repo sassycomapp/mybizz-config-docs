@@ -1,6 +1,6 @@
 ---
 title: "2026-09-15-memory-ecosystem"
-doc-id: "2026-09-15-memory-ecosystem"
+doc-id: "mb-9e40a3d5"
 ---
 # Archify — Run Learnings — memory-ecosystem (2026-09-15)
 

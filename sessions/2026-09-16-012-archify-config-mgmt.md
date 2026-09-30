@@ -1,6 +1,6 @@
 ---
 title: "2026-09-16-012-archify-config-mgmt"
-doc-id: "2026-09-16-012-archify-config-mgmt"
+doc-id: "mb-872d37de"
 ---
 # Session 012 — Archify configuration-management suite (run #1 formal)
 

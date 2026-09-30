@@ -1,6 +1,6 @@
 ---
 title: "doc-auditor-learnings"
-doc-id: "doc-auditor-learnings"
+doc-id: "mb-902d4c5a"
 ---
 # mb-doc-auditor — Learnings
 
@@ -15,4 +15,4 @@ graduation rules) live in the orchestrator's own
 
 | # | learning | right action | destination |
 |---|---|---|---|
-| L-2 | Bounded-root link checks report cross-suite wikilinks as "missing" — targets exist elsewhere in the corpus ([[config-manager-*]] from the suite folder) but not under the bounded root; nested-corpus reality | Carry as evidence under spec open item #1; no convention decided by the exam | W-1 watch evidence; spec open item 1 (governance flag, never applied by the exam) |
+| L-2 | Bounded-root link checks report cross-suite wikilinks as "missing" — targets exist elsewhere in the corpus (`[[config-manager-*]]` from the suite folder) but not under the bounded root; nested-corpus reality | Carry as evidence under spec open item #1; no convention decided by the exam | W-1 watch evidence; spec open item 1 (governance flag, never applied by the exam) |

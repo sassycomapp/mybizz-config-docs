@@ -1,6 +1,6 @@
 ---
 title: "gbrain-skill"
-doc-id: "gbrain-skill"
+doc-id: "mb-0bfb2a59"
 ---
 # mb-config-gbrain — Exam Skill
 

@@ -1,6 +1,6 @@
 ---
 title: "2026-09-15-archify-layout-grid"
-doc-id: "2026-09-15-archify-layout-grid"
+doc-id: "mb-8b7e83cc"
 ---
 # Durable fact — Archify dataflow grid budget and the corridor wall
 

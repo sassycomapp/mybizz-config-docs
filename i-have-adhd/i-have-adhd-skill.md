@@ -1,6 +1,6 @@
 ---
 title: "i-have-adhd-skill"
-doc-id: "i-have-adhd-skill"
+doc-id: "mb-d1492612"
 ---
 # mb-config-i-have-adhd — Exam Skill
 

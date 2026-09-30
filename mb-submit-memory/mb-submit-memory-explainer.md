@@ -1,6 +1,6 @@
 ---
 title: "mb-submit-memory-explainer"
-doc-id: "mb-submit-memory-explainer"
+doc-id: "mb-91eb637f"
 ---
 # mb-submit-memory — Explainer
 

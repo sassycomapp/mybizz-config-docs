@@ -1,6 +1,6 @@
 ---
 title: "mb-submit-memory-log"
-doc-id: "mb-submit-memory-log"
+doc-id: "mb-77cc21de"
 ---
 # mb-submit-memory — Log
 

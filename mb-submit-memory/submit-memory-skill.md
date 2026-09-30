@@ -1,6 +1,6 @@
 ---
 title: "submit-memory-skill"
-doc-id: "submit-memory-skill"
+doc-id: "mb-1e60b7fc"
 ---
 # mb-config-mb-submit-memory — Exam Skill
 

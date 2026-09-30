@@ -1,6 +1,6 @@
 ---
 title: "anvil-agent-references-config"
-doc-id: "anvil-agent-references-config"
+doc-id: "mb-87d907ea"
 ---
 # anvil-agent-references — Configuration
 
@@ -57,7 +57,7 @@ technical detail, see [[anvil-agent-references-reference|Reference: Install, Ski
 | `skills/` | 5 skill folders — see Skills inventory |
 | `stubs/` | 63 `.pyi` files — `stubs/client/` (31) and `stubs/server/` (32), covering **[[anvil|anvil]] and `stripe`** APIs |
 | `reference/types/` | `anvil-yaml.d.ts`, `form-yaml.d.ts`, `index.d.ts` — generated `.d.ts` material for `anvil.yaml` and form templates |
-| `docs/m3/` | Material 3 theme reference — [[api|Api]] (generated API/attrs reference), `components/` (`_index.md`, `components.md`, `layouts.md`, `colour-schemes.md`, `img/`), `layouts.md` |
+| `docs/m3/` | Material 3 theme reference — Api (generated API/attrs reference), `components/` (`_index.md`, `components.md`, `layouts.md`, `colour-schemes.md`, `img/`), `layouts.md` |
 | `.codex-plugin/` | Codex plugin metadata (`plugin.json`) |
 | `.claude-plugin/` | Claude Code plugin metadata (`plugin.json`) |
 

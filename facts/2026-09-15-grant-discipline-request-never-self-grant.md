@@ -1,6 +1,6 @@
 ---
 title: "2026-09-15-grant-discipline-request-never-self-grant"
-doc-id: "2026-09-15-grant-discipline-request-never-self-grant"
+doc-id: "mb-7aa71251"
 ---
 # Fact — grant discipline: request, never self-grant
 

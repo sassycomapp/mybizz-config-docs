@@ -1,6 +1,6 @@
 ---
 title: "mb-memory-system-diagnostic-exam-report"
-doc-id: "mb-memory-system-diagnostic-exam-report"
+doc-id: "mb-201231c2"
 ---
 # mb-memory-system-diagnostic — Exam Report
 

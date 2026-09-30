@@ -1,6 +1,6 @@
 ---
 title: "mb-submit-memory-config"
-doc-id: "mb-submit-memory-config"
+doc-id: "mb-e76d96dd"
 ---
 # mb-submit-memory — Configuration
 

@@ -1,6 +1,6 @@
 ---
 title: "postgresql-config"
-doc-id: "postgresql-config"
+doc-id: "mb-a8b414df"
 ---
 # PostgreSQL — Configuration
 

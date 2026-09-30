@@ -1,10 +1,10 @@
 ---
 title: "2026-09-20-mb-wikilinks-conversion-rules"
-doc-id: "2026-09-20-mb-wikilinks-conversion-rules"
+doc-id: "mb-34ce0a4e"
 ---
 # Durable fact — mb-wikilinks conversion rules
 
-mb-wikilinks converts document references to [[basename|Display Text]] form
+mb-wikilinks converts document references to `[[basename|Display Text]]` form
 only. Never candidates: folder references, URLs, code identifiers, config keys,
 table/column names, registers, templates, quoted shell command text, and
 collision basenames — including case-collisions (agents.md ≡ AGENTS.md on

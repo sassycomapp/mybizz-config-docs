@@ -1,6 +1,6 @@
 ---
 title: "2026-09-16-008-gstack-config-mgmt"
-doc-id: "2026-09-16-008-gstack-config-mgmt"
+doc-id: "mb-5e0b36c4"
 ---
 # Session 2026-09-16 — Configuration Management: gstack
 

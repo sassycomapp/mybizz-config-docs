@@ -1,6 +1,6 @@
 ---
 title: "opencode-log"
-doc-id: "opencode-log"
+doc-id: "mb-70bf28c0"
 ---
 # OpenCode — Log
 
@@ -15,7 +15,7 @@ working data; content beyond eventness is not the point.)
 | 2026-09-01 | Global config folder briefly carried two files at once — `opencode.json` and `opencode.jsonc`, both real, both loaded, ambiguous precedence | Consolidated into a single `opencode.jsonc`; stray file deleted; the `instructions` pointer fixed away from four deleted `INDEX.md` files toward `register-global.md` (see [[opencode-config|OpenCode Configuration]]) |
 | 2026-09-05 | Core suite created (config, reference, explainer, permission model, session-data docs) | Five-document suite stood up for the harness |
 | 2026-09-06 | Cupcake suspension (2026-09-06) required a **full process restart** to take effect — plugin loaded exactly once, at process start, never per-session | Mechanism verified live for the first time ([[opencode-explainer|OpenCode Explainer]] §2); restart is the only reload path, permanently |
-| 2026-09-08 | Full real audit of every skill on the machine (2026-09-08) | Skill discovery is **not** a single mechanism — 4 confirmed real methods (plain folders, same-drive symlinks, hybrid, two-hop); inventory captured in [[skill-index|Skill Index]]; taxonomy in [[opencode-explainer|OpenCode Explainer]] §3 |
+| 2026-09-08 | Full real audit of every skill on the machine (2026-09-08) | Skill discovery is **not** a single mechanism — 4 confirmed real methods (plain folders, same-drive symlinks, hybrid, two-hop); inventory captured in [[skills-register|Skill Register]]; taxonomy in [[opencode-explainer|OpenCode Explainer]] §3 |
 | 2026-09-08 | Cupcake reactivation (2026-09-08) — a second full restart required | Load-once confirmed a second, independent time — the finding generalizes to plugins, skills, MCP entries |
 | 2026-09-09 | Config **merge semantics verified empirically** via `opencode debug config` — project config overrides global only on conflicting keys; nested permission maps merge deeply; a project `permission.bash: {"*": "allow"}` retained **all 13 global deny patterns** | The precedence caveat closed (was unverified); deep-merge is now a verified behavior, not an inference ([[opencode-permission-access-control-model|Permission & Access Control Model]]) |
 | 2026-09-09 | Live verification day: everything in [[opencode-config|OpenCode Configuration]] verified key-by-key; bash deny-list proven live (a command matching `rm -rf *` was refused before execution, the target file survived); both WSL distros and the real (non-default) working distro confirmed | Config doc now reflects verified live state, dated; deny patterns match command **text**, not intent — rephrase only when the match is incidental |

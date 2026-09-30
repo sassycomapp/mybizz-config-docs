@@ -1,6 +1,6 @@
 ---
 title: "2026-09-15-data-mybizz-mgt-folder-rename"
-doc-id: "2026-09-15-data-mybizz-mgt-folder-rename"
+doc-id: "mb-186553e0"
 ---
 # Fact — data-mybizz-mgt folder rename (underscore dropped)
 

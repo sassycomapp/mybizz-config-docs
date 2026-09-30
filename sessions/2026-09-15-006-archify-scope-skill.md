@@ -1,12 +1,12 @@
 ---
 title: "2026-09-15-006-archify-scope-skill"
-doc-id: "2026-09-15-006-archify-scope-skill"
+doc-id: "mb-6c56787b"
 ---
 # Session 006 — mb-archify-scope
 
 Session number 006 (per the developer sessions log). Documents the design,
 installation, and first live run of the `mb-archify-scope` front-of-pipe skill,
-plus the Archify authoring learnings gained from the [[2026-09-15-memory-ecosystem|Run Learnings (memory-ecosystem 2026-09-15)]] diagram.
+plus the Archify authoring learnings gained from the Run Learnings (memory-ecosystem 2026-09-15) diagram.
 
 ## What happened this session
 
@@ -47,13 +47,13 @@ plus the Archify authoring learnings gained from the [[2026-09-15-memory-ecosyst
      `image input not supported`)
 
 5. **Output artifacts.**
-   - [[memory-ecosystem-scope|memory-ecosystem]] (Scope Card)
+   - memory-ecosystem (Scope Card)
    - `output/memory-ecosystem-header.json` (machine contract)
    - `output/memory-ecosystem-probe.json` (stub probe — passes)
    - `output/memory-ecosystem-draft.json` (frozen candidate)
    - `output/memory-ecosystem-render.html` (delivered artifact)
    - `output/memory-ecosystem-render.visual-check.*.png` (+ contact sheet + JSON)
-   - [[2026-09-15-memory-ecosystem|Run Learnings (memory-ecosystem 2026-09-15)]] (10 run learnings)
+   - Run Learnings (memory-ecosystem 2026-09-15) (10 run learnings)
 
 ## Key learnings (detailed in the run learnings file)
 

@@ -1,6 +1,6 @@
 ---
 title: "postgresql-skill"
-doc-id: "postgresql-skill"
+doc-id: "mb-ef9195fc"
 ---
 # mb-config-postgresql — Exam Skill
 

@@ -1,6 +1,6 @@
 ---
 title: "submit-memory-learnings"
-doc-id: "submit-memory-learnings"
+doc-id: "mb-57436ffa"
 ---
 # mb-submit-memory — Learnings
 

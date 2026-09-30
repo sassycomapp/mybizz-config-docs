@@ -1,6 +1,6 @@
 ---
 title: "2026-09-14-denial-re-execution-standard"
-doc-id: "2026-09-14-denial-re-execution-standard"
+doc-id: "mb-c8b52248"
 ---
 # Durable fact — Developer standard on guard denials (2026-09-14)
 

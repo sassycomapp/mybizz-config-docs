@@ -1,6 +1,6 @@
 ---
 title: "config-manager-reference"
-doc-id: "config-manager-reference"
+doc-id: "mb-8ddcefac"
 ---
 # mb-config-manager — Reference
 

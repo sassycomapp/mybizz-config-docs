@@ -1,6 +1,6 @@
 ---
 title: "2026-09-15-007-opencode-config-suite"
-doc-id: "2026-09-15-007-opencode-config-suite"
+doc-id: "mb-9c2693c3"
 ---
 # Session 007 — mb-config-opencode config-management suite built, installed, run #1 HEALTHY
 

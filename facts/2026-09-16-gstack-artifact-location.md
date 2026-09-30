@@ -1,6 +1,6 @@
 ---
 title: "2026-09-16-gstack-artifact-location"
-doc-id: "2026-09-16-gstack-artifact-location"
+doc-id: "mb-3ba82a94"
 ---
 # Fact — GStack artifact location and the missing gstack-outputs lane
 

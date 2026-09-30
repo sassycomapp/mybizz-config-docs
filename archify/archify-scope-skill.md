@@ -1,6 +1,6 @@
 ---
 title: "archify-scope-skill"
-doc-id: "archify-scope-skill"
+doc-id: "mb-99f24066"
 ---
 # mb-archify-scope — Front-of-pipe scoping for /archify
 

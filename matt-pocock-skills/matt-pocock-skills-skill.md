@@ -1,6 +1,6 @@
 ---
 title: "matt-pocock-skills-skill"
-doc-id: "matt-pocock-skills-skill"
+doc-id: "mb-0fc6bba6"
 ---
 # mb-config-matt-pocock-skills — Exam Skill
 

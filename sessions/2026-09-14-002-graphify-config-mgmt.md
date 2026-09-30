@@ -1,6 +1,6 @@
 ---
 title: "2026-09-14-002-graphify-config-mgmt"
-doc-id: "2026-09-14-002-graphify-config-mgmt"
+doc-id: "mb-2bb59395"
 ---
 # Session 2026-09-14 — Configuration Management: graphify
 

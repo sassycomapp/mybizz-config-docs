@@ -1,6 +1,6 @@
 ---
 title: "GBrain & Graphifyy remediation workflow"
-doc-id: "GBrain & Graphifyy remediation workflow"
+doc-id: "mb-3937f5bc"
 ---
 This is an appropriate task for OpenCode, but it must be executed as a controlled sequence of small, verified work packages, not as one large autonomous prompt.
 

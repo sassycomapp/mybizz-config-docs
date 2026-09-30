@@ -1,6 +1,6 @@
 ---
 title: "gbrain-dream-cycle-reference"
-doc-id: "gbrain-dream-cycle-reference"
+doc-id: "mb-afe3a341"
 ---
 # GBrain Dream Cycle — Reference: Invocation, Verification, Diagnostics
 

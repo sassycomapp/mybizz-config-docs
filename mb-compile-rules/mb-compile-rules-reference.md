@@ -1,6 +1,6 @@
 ---
 title: "mb-compile-rules-reference"
-doc-id: "mb-compile-rules-reference"
+doc-id: "mb-c2e50820"
 ---
 # mb-compile-rules Reference
 

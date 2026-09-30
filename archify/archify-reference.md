@@ -1,6 +1,6 @@
 ---
 title: "archify-reference"
-doc-id: "archify-reference"
+doc-id: "mb-c9f14557"
 ---
 # Archify — Reference
 
@@ -104,7 +104,7 @@ minimum, then stop.
 | `node bin/archify.mjs preview <type> <input.json> <output.html> [--no-open] --quality standard\|showcase` | Optional loopback desktop watcher — never start by default |
 | `node bin/archify.mjs compare architecture <base.json> <head.json> <output.html> [--receipt path] [--json]` | Before/Delta/After review proof |
 | `node bin/archify.mjs migrate workflow <old.json> <new.json> --to-schema 2 [--json]` | Non-destructive workflow schema v1→v2 migration |
-| `node bin/archify.mjs inspect <type> <input.json>` / `check <output.html>` / [[examples|Examples]] | Inspection utilities |
+| `node bin/archify.mjs inspect <type> <input.json>` / `check <output.html>` / Examples | Inspection utilities |
 | `node bin/archify.mjs brands [name] [--json]` / `brands capture <url> [--json]` | Brand-mark discovery / digest-pinned capture |
 | `node scripts/check-update.mjs [--ack "<eventKey>"]` | Update-awareness checker |
 

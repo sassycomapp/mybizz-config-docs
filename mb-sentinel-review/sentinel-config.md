@@ -1,6 +1,6 @@
 ---
 title: "sentinel-config"
-doc-id: "sentinel-config"
+doc-id: "mb-967f5148"
 ---
 # Sentinel Configuration — dev-makepdlf
 

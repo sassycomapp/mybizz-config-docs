@@ -1,6 +1,6 @@
 ---
 title: "mb-compile-rules-explainer"
-doc-id: "mb-compile-rules-explainer"
+doc-id: "mb-3c93f17d"
 ---
 # mb-compile-rules Explainer
 

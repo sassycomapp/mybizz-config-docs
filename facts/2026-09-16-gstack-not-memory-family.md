@@ -1,6 +1,6 @@
 ---
 title: "2026-09-16-gstack-not-memory-family"
-doc-id: "2026-09-16-gstack-not-memory-family"
+doc-id: "mb-6ed01780"
 ---
 # Fact — GStack is not a memory-family member
 

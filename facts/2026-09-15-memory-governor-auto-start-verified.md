@@ -1,6 +1,6 @@
 ---
 title: "2026-09-15-memory-governor-auto-start-verified"
-doc-id: "2026-09-15-memory-governor-auto-start-verified"
+doc-id: "mb-a782c00a"
 ---
 # Fact — memory governor auto-start installed and verified
 

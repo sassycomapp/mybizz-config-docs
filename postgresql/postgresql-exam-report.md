@@ -1,6 +1,6 @@
 ---
 title: "postgresql-exam-report"
-doc-id: "postgresql-exam-report"
+doc-id: "mb-758f50e9"
 ---
 # PostgreSQL — Exam Report
 

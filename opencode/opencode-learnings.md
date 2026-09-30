@@ -1,6 +1,6 @@
 ---
 title: "opencode-learnings"
-doc-id: "opencode-learnings"
+doc-id: "mb-cecab1e4"
 ---
 # OpenCode — Learnings
 

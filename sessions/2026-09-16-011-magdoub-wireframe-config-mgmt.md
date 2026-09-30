@@ -1,6 +1,6 @@
 ---
 title: "2026-09-16-011-magdoub-wireframe-config-mgmt"
-doc-id: "2026-09-16-011-magdoub-wireframe-config-mgmt"
+doc-id: "mb-c10b1e79"
 ---
 # Session 011 — magdoub-wireframe config-management suite
 

@@ -1,6 +1,6 @@
 ---
 title: "2026-09-14-graphify-cwd-provenance"
-doc-id: "2026-09-14-graphify-cwd-provenance"
+doc-id: "mb-3970c8f0"
 ---
 # Durable fact — Graphify rebuild provenance stamping
 

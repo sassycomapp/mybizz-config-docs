@@ -1,6 +1,6 @@
 ---
 title: "gstack-log"
-doc-id: "gstack-log"
+doc-id: "mb-92e5f88a"
 ---
 # GStack — Log
 

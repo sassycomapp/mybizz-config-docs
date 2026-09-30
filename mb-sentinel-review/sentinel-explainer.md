@@ -1,6 +1,6 @@
 ---
 title: "sentinel-explainer"
-doc-id: "sentinel-explainer"
+doc-id: "mb-d54f779d"
 ---
 # Sentinel — What It Is, What It Does, and Why It Matters
 

@@ -1,6 +1,6 @@
 ---
 title: "2026-09-16-009-matt-pocock-skills-config-mgmt"
-doc-id: "2026-09-16-009-matt-pocock-skills-config-mgmt"
+doc-id: "mb-56eeae25"
 ---
 # Session 009 — matt-pocock-skills configuration-management suite: built, installed, run #1 HEALTHY
 

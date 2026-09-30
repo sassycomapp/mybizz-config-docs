@@ -1,12 +1,12 @@
 ---
 title: "2026-09-23-renderings-stencils-not-link-targets"
-doc-id: "2026-09-23-renderings-stencils-not-link-targets"
+doc-id: "mb-9716cdd8"
 ---
 # Fact — renderings and stencils are not resolvable link targets
 
 Registered html renderings, .json manifests, and retired stencils are
 register rows but not brain pages — GBrain never ingests them as pages —
-so their [[...]] references cannot resolve and must NOT convert. The
+so their `[[...]]` references cannot resolve and must NOT convert. The
 Phase-C unresolvable-target rule applies: "an unresolvable proposed target
 is a finding, not a link." (4 pairs dropped on 2026-09-23: a stencil cheat-
 sheet, one html decision tree, one json manifest, in makepdlf.)

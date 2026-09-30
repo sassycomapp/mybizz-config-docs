@@ -1,6 +1,6 @@
 ---
 title: "config-manager-log"
-doc-id: "config-manager-log"
+doc-id: "mb-34f3948e"
 ---
 # Config Manager — Log
 

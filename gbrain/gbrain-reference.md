@@ -1,6 +1,6 @@
 ---
 title: "gbrain-reference"
-doc-id: "gbrain-reference"
+doc-id: "mb-55906d51"
 ---
 # GBrain — Reference: Commands, Mechanics, Incidents, Troubleshooting
 

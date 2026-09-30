@@ -1,6 +1,6 @@
 ---
 title: "postgresql-log"
-doc-id: "postgresql-log"
+doc-id: "mb-debae53d"
 ---
 # PostgreSQL — Log
 

@@ -1,6 +1,6 @@
 ---
 title: "cupcake-config"
-doc-id: "cupcake-config"
+doc-id: "mb-afd0ad78"
 ---
 # Cupcake Configuration
 

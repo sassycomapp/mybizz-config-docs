@@ -1,6 +1,6 @@
 ---
 title: "opencode-exam-plan"
-doc-id: "opencode-exam-plan"
+doc-id: "mb-21046eca"
 ---
 # OpenCode — Exam Plan
 
@@ -29,7 +29,7 @@ references only.
 | Tier 3 unlock state | **Locked** — Tier 3 rows execute only if the developer unlocks this run |
 | Developer-run requests this run (bundled into ONE request) | (a) any probe whose command text the guards deny; (b) `opencode debug config` **if** guard-denied (sensitive-data class — the resolved config may carry env/value references); (c) the WSL default-distro confirmation if the `wsl.exe` probe is denied; (d) the full-restart-disable (OC3-1) — inherently developer-run and run-with-developer's-schedule, never agent-run |
 | Expected-value source of truth | [[opencode-config|OpenCode Configuration]] — read fresh at run start; never rely on remembered values |
-| Scope boundary | OpenCode **is the harness this exam runs inside** — the config-manager itself lives under `~/.config/opencode/` (skills, plugin). Self-referential by nature: config-manager self-health is step-0 (register↔skill↔source), never this exam. Cupcake **enforcement** (rules compile + fire) belongs to `mb-config-cupcake`; this exam owns the plugin's **discoverability/dedup mechanics** (exactly one path). GBrain **server** liveness belongs to `mb-config-gbrain`; this exam owns the `mcp.gbrain` **config entry**. The **session database** and its cleanup belong to [[opencode-project-session-data-integrity|Project & Session Data Integrity]] (agent content reads guard-denied — presence-only, via listing). Full skill **inventory** belongs to [[skill-index|Skill Index]] (docs-managed) — this exam checks discovery **mechanics**, never re-audits the inventory |
+| Scope boundary | OpenCode **is the harness this exam runs inside** — the config-manager itself lives under `~/.config/opencode/` (skills, plugin). Self-referential by nature: config-manager self-health is step-0 (register↔skill↔source), never this exam. Cupcake **enforcement** (rules compile + fire) belongs to `mb-config-cupcake`; this exam owns the plugin's **discoverability/dedup mechanics** (exactly one path). GBrain **server** liveness belongs to `mb-config-gbrain`; this exam owns the `mcp.gbrain` **config entry**. The **session database** and its cleanup belong to [[opencode-project-session-data-integrity|Project & Session Data Integrity]] (agent content reads guard-denied — presence-only, via listing). Full skill **inventory** belongs to [[skills-register|Skill Register]] (docs-managed) — this exam checks discovery **mechanics**, never re-audits the inventory |
 
 ## 2. Carried-forward items
 

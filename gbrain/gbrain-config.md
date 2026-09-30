@@ -1,6 +1,6 @@
 ---
 title: "gbrain-config"
-doc-id: "gbrain-config"
+doc-id: "mb-b677b7b4"
 ---
 # GBrain — Configuration
 
@@ -189,4 +189,4 @@ re-decided per run.
 | 1 | Upgrade policy: `0.46.1.0` in use while `0.50.0.0` is available (banner + releases verified 2026-09-13). Upgrade is **non-trivial**: coordinated queue cutover (pause → drain → stop → backup → install → review legacy jobs), old/new workers must not coexist, schema migrations apply. Prerequisites check: Bun 1.3.14 ≥ 1.3.11 minimum ✓; fresh DB backup now exists (2026-09-13, both locations — see Backups section). Policy: upgrade only on check failure or by developer decision. | Open |
 | 2 | MEMORY_VERBS premise reconciled: [[memory-governor-config|Memory Governor Configuration]] records `mcp_surface: verbs` enabled as its Step 0.2 build prerequisite, while current `~/.gbrain/config.json` carries no `mcp_surface` key (re-verified 2026-09-13, masked jq) and the current version's default MCP surface includes the memory verbs (observed 2026-09-06). Both records stated with provenance; the verbs-only surface (`gbrain config set mcp_surface verbs`) remains available as a config choice. | Open |
 | 3 | Source clone at `/mnt/c/mybizz/gbrain` (v0.25.0) **deleted 2026-09-13** per developer decision — verified not implemented (running code is the bun-global install; zero references in any config/script) and not pristine (local debris only: auto-managed `.gitignore` lines + a stray `pnpm-lock.yaml`; nothing unique — upstream public, re-clonable). | Resolved |
-| 4 | Project [[agents|mb-3-cs]] managed-block decisions: whether to fold the Access Model bullets into the Graph Memory Guidance block, and whether the block should ever be committed — raised, never decided; do not act without explicit direction. | Open |
+| 4 | Project mb-3-cs managed-block decisions: whether to fold the Access Model bullets into the Graph Memory Guidance block, and whether the block should ever be committed — raised, never decided; do not act without explicit direction. | Open |

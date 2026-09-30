@@ -1,6 +1,6 @@
 ---
 title: "gstack-learnings"
-doc-id: "gstack-learnings"
+doc-id: "mb-560c62ee"
 ---
 # GStack — Learnings
 

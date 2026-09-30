@@ -1,6 +1,6 @@
 ---
 title: "2026-09-15-005-mb-submit-memory-config-mgmt"
-doc-id: "2026-09-15-005-mb-submit-memory-config-mgmt"
+doc-id: "mb-d6cf9916"
 ---
 # Session 005 — 15 September 2026 — mb-submit-memory Config Management, Run #1, and the Auto-Start Migration
 

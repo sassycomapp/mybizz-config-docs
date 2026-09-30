@@ -1,6 +1,6 @@
 ---
 title: "magdoub-wireframe-explainer"
-doc-id: "magdoub-wireframe-explainer"
+doc-id: "mb-3a3e9555"
 ---
 # magdoub-wireframe — Explainer
 

@@ -1,6 +1,6 @@
 ---
 title: "2026-09-22-mb-doccycle-operational"
-doc-id: "2026-09-22-mb-doccycle-operational"
+doc-id: "mb-3ab2acd5"
 ---
 # Fact — mb-doccycle is operational (2026-09-22)
 

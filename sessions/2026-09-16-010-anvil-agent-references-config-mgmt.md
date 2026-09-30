@@ -1,6 +1,6 @@
 ---
 title: "2026-09-16-010-anvil-agent-references-config-mgmt"
-doc-id: "2026-09-16-010-anvil-agent-references-config-mgmt"
+doc-id: "mb-aa0339ab"
 ---
 # Session 010 — anvil-agent-references config-management suite build + run #1 + W-1..W-5 closure
 

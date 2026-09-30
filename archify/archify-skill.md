@@ -1,6 +1,6 @@
 ---
 title: "archify-skill"
-doc-id: "archify-skill"
+doc-id: "mb-4db6df85"
 ---
 # mb-config-archify — Exam Skill
 

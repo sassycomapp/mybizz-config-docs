@@ -1,6 +1,6 @@
 ---
 title: "2026-09-15-archify-scope-pre-work"
-doc-id: "2026-09-15-archify-scope-pre-work"
+doc-id: "mb-9ea4afb2"
 ---
 # Durable fact — Archify scoping skill pre-work
 

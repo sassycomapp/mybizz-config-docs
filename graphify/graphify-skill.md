@@ -1,6 +1,6 @@
 ---
 title: "graphify-skill"
-doc-id: "graphify-skill"
+doc-id: "mb-17a33472"
 ---
 # mb-config-graphify — Exam Skill
 
@@ -117,7 +117,7 @@ learnings.
 |---|---|---|---|
 | GF1-1 | A→D | Upstream lag state: `pip index versions graphifyy` (outbound network — agent-attempted; guard denial → developer bundle) | Installed behind latest (spec records `0.9.56` as of 2026-09-08); a newer upstream number = spec-refresh flag, never an upgrade trigger |
 | GF1-2 | A | Scope config: `$MB/.graphifyignore` exactly two lines (`.opencode/`, `opencode.json`); `$MB/graphify-out/.graphify_build.json` = `{"gitignore": false}`; `$MB/graphify-out/.graphify_root` = `/mnt/c/dev/dev-mb-3-cs/mb-3-cs` | All exact (config §Scope configuration). `$MB` = `/mnt/c/dev/dev-mb-3-cs/mb-3-cs` |
-| GF1-3 | A | Repo `.gitignore` graphify-relevant lines: `graphify-out/`, `.opencode/`, [[agents|mb-3-cs]], `opencode.json`, `tests/` | All present (config §Scope configuration — repo `.gitignore`) |
+| GF1-3 | A | Repo `.gitignore` graphify-relevant lines: `graphify-out/`, `.opencode/`, mb-3-cs, `opencode.json`, `tests/` | All present (config §Scope configuration — repo `.gitignore`) |
 | GF1-4 | A | Graph provenance + shape: `built_at_commit` vs live `git -C $MB rev-parse HEAD`; nodes/edges/communities/confidence/ghost counts vs the spec's recorded values (574 / 468 / 158 / 451 EXTRACTED + 17 INFERRED + 0 AMBIGUOUS / 95 ghost template nodes); `directed` = `false`; artifact `$MB/graphify-out/graph.json` exists | **Provenance equality is the hard check — mismatch = DRIFT** (authority model §7.3: a stale graph describes code that no longer exists). Counts are point-in-time (LE-1): movement vs the 2026-09-08 recording is explainable, exact equality never asserted; `directed: false` is structural, mismatch = DRIFT |
 | GF1-5 | A | MCP entry in the **project-root** `opencode.json` (the gitignored one — not `.opencode/opencode.json`, which is plugin registration): `mcp.graphify` type `local`, enabled `true`, command `["/usr/bin/python3", "-m", "graphify.serve", "/mnt/c/dev/dev-mb-3-cs/mb-3-cs/graphify-out/graph.json"]`, no API-key field | Exact (config §OpenCode MCP integration). Config-file read class: proven agent-readable 2026-09-14; a guard denial → developer bundle, never an alternate path |
 | GF1-6 | A | AGENTS.md guidance block: `<!-- BEGIN GRAPH MEMORY GUIDANCE -->` … `<!-- END GRAPH MEMORY GUIDANCE -->` markers present in `$MB/AGENTS.md` | Both present (config §Related integration facts). Position may move — the markers are the invariant, never line numbers. Markers only; block content owned by [[memory-master-explainer|Master Explainer]] |

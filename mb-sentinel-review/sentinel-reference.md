@@ -1,6 +1,6 @@
 ---
 title: "sentinel-reference"
-doc-id: "sentinel-reference"
+doc-id: "mb-a075fac8"
 ---
 # Sentinel Reference — Usage, Invocation, and Worked Examples
 

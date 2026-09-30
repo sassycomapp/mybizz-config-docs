@@ -1,6 +1,6 @@
 ---
 title: "doc-auditor-config"
-doc-id: "doc-auditor-config"
+doc-id: "mb-2abc22b9"
 ---
 # mb-doc-auditor — Configuration
 

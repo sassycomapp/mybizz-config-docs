@@ -1,6 +1,6 @@
 ---
 title: "postgresql-exam-plan"
-doc-id: "postgresql-exam-plan"
+doc-id: "mb-c446fbf2"
 ---
 # PostgreSQL — Exam Plan
 

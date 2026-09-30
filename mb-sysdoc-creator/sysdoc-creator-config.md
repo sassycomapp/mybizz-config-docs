@@ -1,6 +1,6 @@
 ---
 title: "sysdoc-creator-config"
-doc-id: "sysdoc-creator-config"
+doc-id: "mb-7688c176"
 ---
 # sysdoc-creator — Config
 
@@ -93,6 +93,6 @@ verified live this date unless noted.
 
 ## Open items
 
-1. [[skill-index|Skill Index]] (`mybizz-os-docs`) lists six mb-* siblings as working — `mb-sysdoc-creator` is absent. Correct the register if it is meant to be complete.
+1. [[skills-register|Skill Register]] (`mybizz-os-docs`) lists six mb-* siblings as working — `mb-sysdoc-creator` is absent. Correct the register if it is meant to be complete.
 2. No version field in SKILL.md — currency between the two copies is provable only by diff.
 3. This suite's file prefix (`sysdoc-creator-`) differs from the folder/skill name (`mb-sysdoc-creator`) — developer-stated naming for this suite; sibling suites use the folder name as prefix.

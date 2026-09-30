@@ -1,6 +1,6 @@
 ---
 title: "opencode-project-session-data-integrity"
-doc-id: "opencode-project-session-data-integrity"
+doc-id: "mb-c29025d5"
 ---
 # OpenCode — Project & Session Data Integrity
 

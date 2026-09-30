@@ -1,6 +1,6 @@
 ---
 title: "config-setup-prompt"
-doc-id: "config-setup-prompt"
+doc-id: "mb-68a57783"
 ---
 # Config Manager — Setup Prompt
 

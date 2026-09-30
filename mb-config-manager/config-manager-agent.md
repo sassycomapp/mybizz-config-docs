@@ -1,6 +1,6 @@
 ---
 title: "config-manager-agent"
-doc-id: "config-manager-agent"
+doc-id: "mb-4855d95c"
 ---
 # mb-config-manager — Orchestrator Agent
 

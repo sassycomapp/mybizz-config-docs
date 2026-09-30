@@ -1,6 +1,6 @@
 ---
 title: "doc-auditor-skill"
-doc-id: "doc-auditor-skill"
+doc-id: "mb-02940a97"
 ---
 # mb-config-doc-auditor — Exam Skill
 

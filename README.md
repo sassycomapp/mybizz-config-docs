@@ -1,6 +1,6 @@
 ---
 title: "README"
-doc-id: "README"
+doc-id: "mb-46a3cb92"
 ---
 # mybizz-config-docs — README
 

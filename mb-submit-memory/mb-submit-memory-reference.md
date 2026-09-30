@@ -1,6 +1,6 @@
 ---
 title: "mb-submit-memory-reference"
-doc-id: "mb-submit-memory-reference"
+doc-id: "mb-c96f4742"
 ---
 # mb-submit-memory — Reference: Usage, Invocation, and the Full Cycle
 

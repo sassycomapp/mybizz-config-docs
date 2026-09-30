@@ -1,6 +1,6 @@
 ---
 title: "cupcake-log"
-doc-id: "cupcake-log"
+doc-id: "mb-18cc8b96"
 ---
 # Cupcake — Log
 

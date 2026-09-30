@@ -1,6 +1,6 @@
 ---
 title: "memory-governor-agent-architecture-and-specification"
-doc-id: "memory-governor-agent-architecture-and-specification"
+doc-id: "mb-6e1b2b63"
 ---
 # Memory Governor Agent — Architecture & Specification
 

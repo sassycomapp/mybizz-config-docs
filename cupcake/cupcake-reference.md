@@ -1,6 +1,6 @@
 ---
 title: "cupcake-reference"
-doc-id: "cupcake-reference"
+doc-id: "mb-e79d3d01"
 ---
 # Cupcake Reference — Usage, Invocation, and Worked Examples
 

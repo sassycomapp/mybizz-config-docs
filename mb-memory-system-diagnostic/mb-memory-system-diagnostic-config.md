@@ -1,6 +1,6 @@
 ---
 title: "mb-memory-system-diagnostic-config"
-doc-id: "mb-memory-system-diagnostic-config"
+doc-id: "mb-2b9404b5"
 ---
 # mb-memory-system-diagnostic — Configuration
 

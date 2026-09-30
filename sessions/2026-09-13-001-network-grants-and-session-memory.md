@@ -1,6 +1,6 @@
 ---
 title: "2026-09-13-001-network-grants-and-session-memory"
-doc-id: "2026-09-13-001-network-grants-and-session-memory"
+doc-id: "mb-7c41f10c"
 ---
 # Session 001 — Network Grants and the Session Close-Out Design
 
