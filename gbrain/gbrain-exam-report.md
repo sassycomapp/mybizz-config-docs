@@ -1,11 +1,12 @@
 ---
 title: "gbrain-exam-report"
 doc-id: "mb-0192f9b2"
+updated: "2026-10-01"
 ---
 # GBrain — Exam Report
 
 Run #1 — **first formal plan-driven run** (2026-09-13). Plan:
-[[gbrain-exam-plan|Exam Plan]] (step-0 self-validation: PASS — 8 suite files, hash pair
+[[[mybizz-config-docs:gbrain/gbrain-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-exam-plan.md) (step-0 self-validation: PASS — 8 suite files, hash pair
 MATCH 4a2e10d8a69752f7, spec present, no open run). Detection only — Tiers 0–2
 agent-runnable checks executed; Tier 3 locked. Scope boundary honored: DB-level
 facts cross-referenced from the postgres module's run-#2 report, not re-probed.
@@ -37,7 +38,7 @@ facts cross-referenced from the postgres module's run-#2 report, not re-probed.
 | G2-1 | 0.46.1.0 live; upgrade only on check failure | 0.46.1.0; upstream latest 0.50.0.0 (banner) | PASS (policy holds) |
 | G2-2 | `gbrain-everything@1.0.0+7021205a`, 30/12 | exact match (MCP) | PASS |
 | G2-3 | MCP entry exact | **guard-denied this run** → developer bundle | DEFERRED |
-| G2-4 | embedding 3-large 1536d | [[config|Config]] table: model + dims + chunk_strategy=semantic | PASS |
+| G2-4 | embedding 3-large 1536d | [[[makepdlf-project-library:docs-local/config\|Config]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/config.md) table: model + dims + chunk_strategy=semantic | PASS |
 | G2-5 | bundle per spec | 65 entries + 4 underscore metadata files (matches evolved state; spec stale — CF-4) | DRIFT (carried) |
 | G2-6 | Page accounting reconciles | **RESOLVED: per-source DB attribution sums to exactly 1,880 = identity; zero unattributed pages** — see finding 2 | PASS |
 | G2-7 | All source paths exist | 14/14 | PASS |
@@ -46,7 +47,7 @@ facts cross-referenced from the postgres module's run-#2 report, not re-probed.
 ## Findings
 
 1. **Spec-drift flags re-confirmed (CF-1..4, pending governance).** The
-   [[gbrain-config|Configuration]] refresh has **not** been approved/applied: spec lists 13
+   [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md) refresh has **not** been approved/applied: spec lists 13
    sources (live: 14 incl. `pdlf`); counts/dates stale; `brain.pglite` still
    listed present (absent since before the pilot); bundle row stale (65 entries,
    no `skillify`, 4 underscore metadata files). All re-flagged for one batched
@@ -59,7 +60,7 @@ facts cross-referenced from the postgres module's run-#2 report, not re-probed.
    cross-snapshot sums. → learning graduated into the plan/skill method.
 3. **Guard reclassification (G2-3).** `opencode.jsonc` jq reads were denied this
    run (previously passed) — the MCP-entry check moves to the developer bundle;
-   the nondeterminism documented in [[config-manager-learnings|Learnings]] revalidated.
+   the nondeterminism documented in [[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md) revalidated.
 4. **Learning confirmed (LE-1):** count drift at sync is by design — coverage %
    held at 100% through two syncs today; config.md's point-in-time note is the
    correct doctrine.

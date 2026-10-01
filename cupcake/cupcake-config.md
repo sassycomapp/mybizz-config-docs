@@ -1,14 +1,15 @@
 ---
 title: "cupcake-config"
 doc-id: "mb-afd0ad78"
+updated: "2026-10-01"
 ---
 # Cupcake Configuration
 
 Canonical current-state configuration record. Agent-facing. Reflects the
 live-verified state as of 2026-09-13. This document states facts, not history —
 where a decision was made and the reasoning matters, see
-[[cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]; for operational commands and procedures, see
-[[cupcake-reference|Usage, Invocation, and Worked Examples]].
+[[[mybizz-config-docs:cupcake/cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md); for operational commands and procedures, see
+[[[mybizz-config-docs:cupcake/cupcake-reference|Usage, Invocation, and Worked Examples]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-reference.md).
 
 ---
 
@@ -24,7 +25,7 @@ never-initialized folder, each evaluated clean under enforcement.
 | Date | Event |
 |---|---|
 | 2026-08-29 | 19 custom rules built, tested, and deployed in a single session |
-| 2026-09-06 | Total evaluation crash during ordinary work — every tool call failed. Root cause: an unvalidated scaffold file in the project-local policy folder. Fail-open mode applied; scaffold removed. See [[cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]] §7F for the full account. |
+| 2026-09-06 | Total evaluation crash during ordinary work — every tool call failed. Root cause: an unvalidated scaffold file in the project-local policy folder. Fail-open mode applied; scaffold removed. See [[[mybizz-config-docs:cupcake/cupcake-explainer\|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md) §7F for the full account. |
 | 2026-09-08 | Cross-folder rule amended (three-tier design); full 13/13 live test passed — record: `/mnt/c/mybizz/logs/cupcake-rule-test-record-2026-09-08.md` |
 | 2026-09-12 | Root cause of silent fail-open found and fixed: the plugin was spawning the checker without a working directory, so the checker looked for its rules in OpenCode's launch folder (not the project). One-line plugin fix (`cwd: event.cwd` in Bun.spawn). Live block confirmed immediately after restart. |
 | 2026-09-12 | **Bash-governance rule placed and live-verified** — the shell write channel (python/perl heredoc and -c/-e write execution, `sed -i`, `>`/`>>` redirects, `tee`, `cp`/`mv`/`ln` destination, `rm`/`touch`/`truncate` operands, `dd of=`) now feeds the same outside-project boundary, exempt list, grant slips, and first-instance deny. Final live run 35/35 — record: `/mnt/c/mybizz/logs/cupcake-rule-test-record-2026-09-12.md` |

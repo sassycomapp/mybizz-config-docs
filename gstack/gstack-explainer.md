@@ -1,15 +1,16 @@
 ---
 title: "gstack-explainer"
 doc-id: "mb-b80e9856"
+updated: "2026-10-01"
 ---
 # GStack Explainer
 
 ## 0. Config-management coverage
 
 This suite is part of the config-management system (`mb-config-manager`): the
-spec is [[gstack-config|GStack Configuration]], the exam procedure is [[gstack-skill|Gstack Skill]], and the
-per-run job-spec is [[gstack-exam-plan|Exam Plan]] / [[gstack-exam-report|Exam Report]] /
-[[gstack-log|Log]] / [[gstack-learnings|GStack Learnings]]. See §7 (Config maintenance) below.
+spec is [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md), the exam procedure is [[[mybizz-config-docs:gstack/gstack-skill|Gstack Skill]]](C:/mybizz/mybizz-config-docs/gstack/gstack-skill.md), and the
+per-run job-spec is [[[mybizz-config-docs:gstack/gstack-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gstack/gstack-exam-plan.md) / [[[mybizz-config-docs:gstack/gstack-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gstack/gstack-exam-report.md) /
+[[[mybizz-config-docs:gstack/gstack-log|Log]]](C:/mybizz/mybizz-config-docs/gstack/gstack-log.md) / [[[mybizz-config-docs:gstack/gstack-learnings|GStack Learnings]]](C:/mybizz/mybizz-config-docs/gstack/gstack-learnings.md). See §7 (Config maintenance) below.
 
 ## 1. What this actually is
 
@@ -134,20 +135,20 @@ brain-sync remote (artifact sync is currently local-only). Which setup
 version produced the July bare-name links (provenance only, no rule
 depends on it).
 
-*Companion documents: [[gstack-config|GStack Configuration]] (state), [[gstack-reference|GStack Reference]]
-(workflows and commands), [[gstack-skills-reference|GStack Skills Reference]] (catalog).
-Cross-component reasoning: [[memory-master-explainer|Master Explainer]].*
+*Companion documents: [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md) (state), [[[mybizz-config-docs:gstack/gstack-reference|GStack Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-reference.md)
+(workflows and commands), [[[mybizz-config-docs:gstack/gstack-skills-reference|GStack Skills Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-skills-reference.md) (catalog).
+Cross-component reasoning: [[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md).*
 
 ## 7. Config maintenance — how this system is examined and kept healthy
 
 This suite participates in the config-management system (`mb-config-manager`).
 The roles of the seven suite files, and the exam cycle that runs them, are the
-architecture described in [[config-manager-explainer|Explainer]] — emulated from the
+architecture described in [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md) — emulated from the
 PostgreSQL pilot and the gbrain-dream-cycle precedent. The short local version:
 
-- [[gstack-config|GStack Configuration]] is the **spec** — the ideal state every exam checks
+- [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md) is the **spec** — the ideal state every exam checks
   against. GStack is working well; the exam verifies that and changes nothing.
-- Before each exam run, the config-manager synthesizes [[gstack-exam-plan|Exam Plan]]:
+- Before each exam run, the config-manager synthesizes [[[mybizz-config-docs:gstack/gstack-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gstack/gstack-exam-plan.md):
   a fresh job-spec built from this spec, the last report, the log, and the
   learnings. The plan is transient (the file is live; contents rewritten each
   cycle).
@@ -159,15 +160,15 @@ PostgreSQL pilot and the gbrain-dream-cycle precedent. The short local version:
   (this exam reads `~/.gstack/*.json` records only); the dream cycle belongs to
   `mb-config-gbrain-dream-cycle` (`/sync-gbrain` is a knowledge check only);
   OpenCode structure rows belong to `mb-config-opencode`; cross-tool skill
-  enumeration belongs to [[skills-register|Skill Register]] (docs-managed). This exam owns the
+  enumeration belongs to [[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md) (docs-managed). This exam owns the
   discovery **mechanics** — that the documented clone, links, binaries, and
   config files resolve and are consistent.
 - Several checks are permanently **developer-run**: `~/.gstack` credential-
   bearing content reads (sensitive-data guard — proven class), the `.env.example`
   content claim, and everything in Tier 3 (a real skill lifecycle is expensive
   and writes artifacts; the upgrade decision is the developer's).
-- The run rewrites [[gstack-exam-report|Exam Report]] (current state, no history), appends
-  one row to [[gstack-log|Log]], files new learnings, and prunes absorbed entries.
+- The run rewrites [[[mybizz-config-docs:gstack/gstack-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gstack/gstack-exam-report.md) (current state, no history), appends
+  one row to [[[mybizz-config-docs:gstack/gstack-log|Log]]](C:/mybizz/mybizz-config-docs/gstack/gstack-log.md), files new learnings, and prunes absorbed entries.
 
 ## 8. S.W.O.T.
 
@@ -198,10 +199,10 @@ describes (mitigated: GS0-GS2 topology checks every run).
 
 ---
 
-*Companion documents: [[gstack-config|GStack Configuration]] (the spec),
-[[gstack-reference|GStack Reference]] (procedures and commands),
-[[gstack-skills-reference|GStack Skills Reference]] (catalog), [[gstack-exam-plan|Exam Plan]] /
+*Companion documents: [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md) (the spec),
+[[[mybizz-config-docs:gstack/gstack-reference|GStack Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-reference.md) (procedures and commands),
+[[[mybizz-config-docs:gstack/gstack-skills-reference|GStack Skills Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-skills-reference.md) (catalog), [[[mybizz-config-docs:gstack/gstack-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gstack/gstack-exam-plan.md) /
 `-exam-report.md` / `-log.md` / `-learnings.md` (config-management set),
-[[gstack-skill|Gstack Skill]] (exam skill canonical source). Architecture:
-[[config-manager-explainer|Explainer]]. Cross-component framing:
-[[memory-master-explainer|Master Explainer]].*
+[[[mybizz-config-docs:gstack/gstack-skill|Gstack Skill]]](C:/mybizz/mybizz-config-docs/gstack/gstack-skill.md) (exam skill canonical source). Architecture:
+[[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md). Cross-component framing:
+[[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md).*

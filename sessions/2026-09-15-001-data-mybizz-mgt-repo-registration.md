@@ -1,6 +1,7 @@
 ---
 title: "2026-09-15-001-data-mybizz-mgt-repo-registration"
 doc-id: "mb-7c925181"
+updated: "2026-10-01"
 ---
 # Session 2026-09-15 — data-mybizz-mgt repo + GBrain + opencode registration
 
@@ -29,13 +30,13 @@ doc-id: "mb-7c925181"
    (edit tool, granted). Verified in resolved config via `opencode debug
    config`. Takes effect on next opencode restart.
 5. **Excel replaced by Markdown**: `Repo organization.xlsx` (deleted by the
-   developer) → [[repo-organization|Repo organization]], built from the developer's
+   developer) → [[[mybizz-os-docs:os-reference-docs/repo-organization|Repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md), built from the developer's
    image of the sheet; the new repo row appended (13 rows total).
 6. **Root files created** in data-mybizz-mgt: `README.md` (structure, key
    documents, naming note) and `register-local.md` (append-only; _desktop
    docs registered provisionally; Budget/Models/prompts membership left open
    for mb-align-docs).
-7. **Scope scaffold updated** ([[mybizz-scope-list|Mybizz Scope List]]): in-scope root
+7. **Scope scaffold updated** ([[[mybizz-os-docs:os-reference-docs/mybizz-scope-list|Mybizz Scope List]]](C:/mybizz/mybizz-os-docs/os-reference-docs/mybizz-scope-list.md)): in-scope root
    entry and GitHub repo list row updated to the new name. Developer later
    asked to "update" it, then aborted on seeing it was already done.
 8. **mb-docs-manager skill files fixed** (4 files, agent-editable under
@@ -46,7 +47,7 @@ doc-id: "mb-7c925181"
    's/_data-mybizz-mgt/data-mybizz-mgt/g'` after the
    protected-AI-governance-files policy refused the agent edit (even with a
    developer-issued grant on the file path).
-10. **YAML repair**: [[master-task-list|mybizz-OS]] frontmatter `status:` value
+10. **YAML repair**: [[[data-mybizz-mgt:desktop/master-task-list|mybizz-OS]]](C:/data-mybizz-mgt/desktop/master-task-list.md) frontmatter `status:` value
     contained an unquoted colon → gbrain sync blocked with a parse failure.
     Fixed by quoting the value; committed and pushed by the developer
     (`f38b285`).
@@ -89,7 +90,7 @@ doc-id: "mb-7c925181"
 - GitHub: `sassycomapp/data-mybizz-mgt` (private, master, 2 commits)
 - GBrain source: `data-mybizz-mgt` (federated), 23 pages, synced to `f38b285`
 - `opencode.jsonc` external_directory entry (restart pending)
-- [[repo-organization|Repo organization]], `README.md`, `register-local.md`
+- [[[mybizz-os-docs:os-reference-docs/repo-organization|Repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md), `README.md`, `register-local.md`
 - Fixed: scope scaffold, 4 mb-docs-manager skill files, global AGENTS.md
   (developer-run), master-task-list.md frontmatter
 
@@ -97,9 +98,9 @@ doc-id: "mb-7c925181"
 
 - **Docs corpus sweep (assigned to the docs skills, not done here)**: old-path
   references remain in `dev-root/docmap.md`, `mybizz-config-docs` (
-  `projects-config-register.md`, [[gbrain-config|Configuration]], gstack references,
-  [[config-manager-explainer|Explainer]], Config, one sessions page),
-  `mybizz-os-docs` ([[fact-save-and-recall|Operating Procedure]], [[opening-and-closing|Operating Procedure]]), and
+  `projects-config-register.md`, [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md), gstack references,
+  [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md), Config, one sessions page),
+  `mybizz-os-docs` ([[[mybizz-os-docs:operating-procedures/fact-save-and-recall|Operating Procedure]]](C:/mybizz/mybizz-os-docs/operating-procedures/fact-save-and-recall.md), [[[mybizz-os-docs:operating-procedures/opening-and-closing|Operating Procedure]]](C:/mybizz/mybizz-os-docs/operating-procedures/opening-and-closing.md)), and
   pdlf docs (2 files).
 - **Restart opencode** — `external_directory` + AGENTS.md + skill files load
   at process start.

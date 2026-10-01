@@ -1,13 +1,14 @@
 ---
 title: "memory-governor-exam-plan"
 doc-id: "mb-24d4eef4"
+updated: "2026-10-01"
 ---
 # Memory Governor — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before
-each run from: [[memory-governor-config|Memory Governor Configuration]] (spec), the last
-[[memory-governor-exam-report|Exam Report]], [[memory-governor-log|Log]], and
-[[memory-governor-learnings|Learnings]]. Consumed by the skill at run time; rewritten at
+each run from: [[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) (spec), the last
+[[[mybizz-config-docs:memory-governor/memory-governor-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-exam-report.md), [[[mybizz-config-docs:memory-governor/memory-governor-log|Log]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-log.md), and
+[[[mybizz-config-docs:memory-governor/memory-governor-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-learnings.md). Consumed by the skill at run time; rewritten at
 the start of the following cycle. The file is live; its contents are transient.
 
 **This first plan is hand-written** (emulation of the PostgreSQL architecture): it
@@ -28,7 +29,7 @@ run-specifics + references instead.
 | Step-0 result | recorded at execution |
 | Tier 3 unlock state | **Locked** — Tier 3 rows execute only if the developer unlocks this run |
 | Developer-run requests this run (bundled into ONE request) | (a) M2-7 credentialed registry check (needs real credential headers); (b) any check whose command text the guards deny |
-| Expected-value source of truth | [[memory-governor-config|Memory Governor Configuration]] — read fresh at run start; never rely on remembered values |
+| Expected-value source of truth | [[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) — read fresh at run start; never rely on remembered values |
 | Scope boundary | DB conformance belongs to `mb-config-postgresql` (cross-reference; quick row counts permitted); backup freshness checked there (P1-11) |
 
 ## 2. Carried-forward items
@@ -57,7 +58,7 @@ None — no prior exam exists (first formal run; bootstrap).
 
 ## 6. Standing checks — the complete enumeration (Tiers 0-3)
 
-The complete enumeration lives in the skill ([[memory-governor-skill|Memory Governor Skill]], Tiers
+The complete enumeration lives in the skill ([[[mybizz-config-docs:memory-governor/memory-governor-skill|Memory Governor Skill]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-skill.md), Tiers
 0–3, M0-1…M3-4 with runners and pass rules); this plan carries run-specifics.
 Summary of the standing inventory:
 
@@ -68,11 +69,11 @@ Summary of the standing inventory:
 
 ## 7. Report requirements
 
-The run writes [[memory-governor-exam-report|Exam Report]]: verdict line; per-tier tables
+The run writes [[[mybizz-config-docs:memory-governor/memory-governor-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-exam-report.md): verdict line; per-tier tables
 (check ID, expected, actual, result); findings with class + evidence +
 recommended repair; runner attribution for every deferred item (guard-forbidden /
 unlock-gated / pending-developer-execution); overwritten in full each run
-(write-then-replace). Then: one run row appended to [[memory-governor-log|Log]];
+(write-then-replace). Then: one run row appended to [[[mybizz-config-docs:memory-governor/memory-governor-log|Log]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-log.md);
 new learnings filed.
 
 ## 8. Gate protocol

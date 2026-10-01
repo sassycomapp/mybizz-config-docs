@@ -1,6 +1,7 @@
 ---
 title: "postgresql-learnings"
 doc-id: "mb-9b586d8e"
+updated: "2026-10-01"
 ---
 # PostgreSQL — Learnings
 
@@ -11,7 +12,7 @@ here immediately on graduation. The plan is never an absorption destination — 
 is transient; pruning into a plan destroys the knowledge when the next cycle
 overwrites it. Entries never accumulate. Cross-cutting learnings (guard classes,
 graduation rules) live in the orchestrator's own
-[[config-manager-learnings|Learnings]], not here.
+[[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md), not here.
 
 <!-- empty — both current learnings graduated 2026-09-13 (facts-autovacuum →
      config.md; SET-ROLE method → skill) -->

@@ -1,6 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-exam-report"
 doc-id: "mb-201231c2"
+updated: "2026-10-01"
 ---
 # mb-memory-system-diagnostic — Exam Report
 
@@ -12,13 +13,13 @@ resolved (subject pair byte-exact after re-copy), F-2 applied (spec open items
 pair `b90ec20c33bf4272` both sides). Tier 3 UNLOCKED by developer instruction
 same day: MS3-1 31/31 PASS, MS3-2 14/14 PASS + one cross-suite awareness note.**
 
-Run header: plan [[mb-memory-system-diagnostic-exam-plan|Exam Plan]] (bootstrap,
+Run header: plan [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-plan.md) (bootstrap,
 hand-written); run date 2026-09-28; executor: config-manager cycle per
-[[config-manager-agent|config-manager-agent.md]] + [[config-setup-prompt|config-setup-prompt]];
-expected values read fresh from [[mb-memory-system-diagnostic-config|Configuration]] at
+[[[mybizz-config-docs:mb-config-manager/config-manager-agent|config-manager-agent.md]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) + [[[mybizz-config-docs:mb-config-manager/config-setup-prompt|config-setup-prompt]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-setup-prompt.md);
+expected values read fresh from [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-config.md) at
 run start. Evidence: `/tmp/opencode/mbmsd-run1/`.
 
-## Step 0 — config-manager self-validation (recorded in [[config-manager-log|Config Manager Log]], 2026-09-28)
+## Step 0 — config-manager self-validation (recorded in [[[mybizz-config-docs:mb-config-manager/config-manager-log|Config Manager Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md), 2026-09-28)
 
 - Hash pairs probed for 17 installed `mb-config-*` skills via the approved glob
   form (`mb-config-*/SKILL.md`). This system's pair: source

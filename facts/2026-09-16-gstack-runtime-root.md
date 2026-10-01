@@ -1,6 +1,7 @@
 ---
 title: "2026-09-16-gstack-runtime-root"
 doc-id: "mb-7bc1c0b3"
+updated: "2026-10-01"
 ---
 # Fact — GStack runtime root and mixed-interpreter bin tree on the OpenCode host
 
@@ -22,4 +23,4 @@ shebang — running `bash <name>` on a Bun script yields confusing multi-line
 errors. `gstack-brain-sync` is still bash (reference's `bash ...` invocation
 correct).
 
-Recorded in [[gstack-reference|GStack Reference]] (§bin-tree notes via docs governance).
+Recorded in [[[mybizz-config-docs:gstack/gstack-reference|GStack Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-reference.md) (§bin-tree notes via docs governance).

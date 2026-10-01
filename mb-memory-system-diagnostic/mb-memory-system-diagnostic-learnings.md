@@ -1,6 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-learnings"
 doc-id: "mb-dde12f3e"
+updated: "2026-10-01"
 ---
 # mb-memory-system-diagnostic — Learnings
 
@@ -11,7 +12,7 @@ here immediately on graduation. The plan is never an absorption destination —
 it is transient; pruning into a plan destroys the knowledge when the next cycle
 overwrites it. Entries never accumulate. Cross-cutting learnings (guard classes,
 graduation rules) live in the orchestrator's own
-[[config-manager-learnings|Learnings]], not here.
+[[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md), not here.
 
 | # | learning | right action | destination |
 |---|---|---|---|

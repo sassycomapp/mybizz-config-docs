@@ -1,12 +1,13 @@
 ---
 title: "gstack-skills-reference"
 doc-id: "mb-ac92bf3c"
+updated: "2026-10-01"
 ---
 # GStack Skills Reference
 
 Catalog of invocable GStack commands, verified live 2026-09-08 against the
-installed `1.58.1.0` set. Topology and versions: [[gstack-config|GStack Configuration]].
-Workflows and authority: [[gstack-reference|GStack Reference]].
+installed `1.58.1.0` set. Topology and versions: [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md).
+Workflows and authority: [[[mybizz-config-docs:gstack/gstack-reference|GStack Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-reference.md).
 
 ## Invocation rules — read before typing a command
 
@@ -24,7 +25,7 @@ Workflows and authority: [[gstack-reference|GStack Reference]].
   `C:\mybizz\mybizz-os-docs\operating-procedures\daily-ops.md`, "FIX: GSTACK SKILLS
   MISSING, OUTDATED, OR ONLY PARTIALLY WORKING IN OPENCODE".
 - SKILL.md files are auto-generated — never edit one directly (see
-  [[gstack-config|GStack Configuration]] for regeneration).
+  [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md) for regeneration).
 
 **Count: 53 invocable skills + the aggregate `/gstack` entry = 54** (verified
 live 2026-09-08; supersedes all earlier counts of 52).
@@ -55,7 +56,7 @@ live 2026-09-08; supersedes all earlier counts of 52).
 
 | Command | What it does |
 |---|---|
-| `/design-consultation` | Creates [[DESIGN|DESIGN]] — researches landscape, proposes full design system. |
+| `/design-consultation` | Creates [[[mb-3-cs-project-library:docs-local/design\|DESIGN]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/DESIGN.md) — researches landscape, proposes full design system. |
 | `/design-shotgun` | Generates multiple AI design variants, opens a comparison board. |
 | `/design-html` | Generates production-quality HTML/CSS. |
 | `/design-review` | Designer's-eye QA — finds visual issues, fixes with atomic commits. |
@@ -88,8 +89,8 @@ live 2026-09-08; supersedes all earlier counts of 52).
 
 | Command | What it does |
 |---|---|
-| `/setup-gbrain` | Installs and configures GBrain. **Do not trust its own backend description (PGLite/Supabase) — this environment runs self-hosted PostgreSQL; authority is [[gbrain-config|Configuration]].** |
-| `/sync-gbrain` | Keeps GBrain current with a repo's code, refreshes agent search guidance. Flags: `--dream`, `--full`, `--code-only`, `--dry-run`. Idempotent. **`--dream` has a source-overlap trap against manually-registered sources — see [[gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]] before using it.** |
+| `/setup-gbrain` | Installs and configures GBrain. **Do not trust its own backend description (PGLite/Supabase) — this environment runs self-hosted PostgreSQL; authority is [[[mybizz-config-docs:gbrain/gbrain-config\|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md).** |
+| `/sync-gbrain` | Keeps GBrain current with a repo's code, refreshes agent search guidance. Flags: `--dream`, `--full`, `--code-only`, `--dry-run`. Idempotent. **`--dream` has a source-overlap trap against manually-registered sources — see [[[mybizz-config-docs:gbrain/gbrain-reference\|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md) before using it.** |
 | `/setup-deploy` | Configures deployment settings for `/land-and-deploy`. |
 
 ## Context & State
@@ -195,8 +196,8 @@ Or run everything at once: `/autoplan`
 
 ## Separate, unrelated set
 
-Four `gstack-openclaw-*` folders ([[step-14-plan-ceo-review|Step 14 Plan Ceo Review]], `investigate`,
-[[step-12-office-hours|Step 12 Office Hours]], `retro`) exist in the discovery path — installed via
+Four `gstack-openclaw-*` folders ([[[makepdlf-project-library:stepwise/step-14-plan-ceo-review|Step 14 Plan Ceo Review]]](C:/dev/dev-makepdlf/makepdlf-project-library/stepwise/step-14-plan-ceo-review.md), `investigate`,
+[[[makepdlf-project-library:stepwise/step-12-office-hours|Step 12 Office Hours]]](C:/dev/dev-makepdlf/makepdlf-project-library/stepwise/step-12-office-hours.md), `retro`) exist in the discovery path — installed via
 `clawhub install` for OpenClaw, which is not used in this environment.
 Not part of this catalog; deliberately not removed (an update recreates them).
 
@@ -207,7 +208,7 @@ Not part of this catalog; deliberately not removed (an update recreates them).
 - Do not assume `/handoff` exists or that `hackernews-frontpage` is a
   standalone command.
 - Do not trust `/setup-gbrain`'s own backend description — check
-  [[gbrain-config|Configuration]].
+  [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md).
 - Do not hand-edit any SKILL.md — regenerate from the template.
 - Do not run `/sync-gbrain --dream` against a manually-registered GBrain
-  source — source-overlap trap (see [[gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]]).
+  source — source-overlap trap (see [[[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md)).

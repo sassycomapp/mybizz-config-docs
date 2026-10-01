@@ -1,20 +1,21 @@
 ---
 title: "mb-memory-system-diagnostic-reference"
 doc-id: "mb-b0ec721d"
+updated: "2026-10-01"
 ---
 # mb-memory-system-diagnostic — Reference: Invocation, Sections, Gates, Reporting
 
-Companion to [[mb-memory-system-diagnostic-config|Configuration]] (the spec —
-current state) and [[mb-memory-system-diagnostic-explainer|Explainer]] (what it is
+Companion to [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-config.md) (the spec —
+current state) and [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-explainer.md) (what it is
 and why). The installed `SKILL.md` is the authoritative procedure; this
 reference carries the exact commands, interpretation rules, and report formats
 an agent consults while running it. The config-management exam set for this
-suite ([[mb-memory-system-diagnostic-exam-plan|Exam Plan]] ·
-[[mb-memory-system-diagnostic-exam-report|Exam Report]] ·
-[[mb-memory-system-diagnostic-log|Log]] ·
-[[mb-memory-system-diagnostic-learnings|Learnings]] ·
-[[mb-memory-system-diagnostic-exam-skill|Exam Skill]]) is synthesized and
-consumed per the [[config-manager-agent|Config Manager]] plan-driven cycle —
+suite ([[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-plan.md) ·
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-report.md) ·
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-log|Log]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-log.md) ·
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings.md) ·
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-skill|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-skill.md)) is synthesized and
+consumed per the [[[mybizz-config-docs:mb-config-manager/config-manager-agent|Config Manager]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) plan-driven cycle —
 the exam verifies this suite's state and never runs the diagnostic itself.
 
 ---

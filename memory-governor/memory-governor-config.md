@@ -1,6 +1,7 @@
 ---
 title: "memory-governor-config"
 doc-id: "mb-63bdf286"
+updated: "2026-10-01"
 ---
 # Memory Governor Configuration
 
@@ -8,7 +9,7 @@ Canonical current-state configuration record. Agent-facing. Reflects the
 verified live state as of 2026-09-08 (system ACTIVE, all listed defects
 resolved) and re-verified 2026-09-30 after the GBrain upgrade (see
 §GBrain upgrade verification). States facts, not history — reasoning in
-[[memory-governor-explainer|Explainer]]; procedures in [[memory-governor-reference|Usage, Invocation, and Incident Response]].
+[[[mybizz-config-docs:memory-governor/memory-governor-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-explainer.md); procedures in [[[mybizz-config-docs:memory-governor/memory-governor-reference|Usage, Invocation, and Incident Response]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-reference.md).
 
 ---
 
@@ -19,7 +20,7 @@ resolved) and re-verified 2026-09-30 after the GBrain upgrade (see
 | Repository | `github.com/sassycomapp/memory-governor` (local clone `/home/dev-p/memory-governor`, WSL-native — do not relocate) |
 | Application | FastAPI (Python), `app/main.py`, version `0.1.0` (pyproject) |
 | Decision engine | Two-outcome model (`auto_promote` / `needs_review`) — live since Phase 6.5, commit `c4df67d` |
-| HIGH_RISK_TYPES | **RESOLVED 2026-09-08** (developer decision): `policy`, `credential`, `identity`, [[architecture|Architecture]], [[security|Security Check]] — all five spec categories are now representable (`MemoryType` enum extended) and governed |
+| HIGH_RISK_TYPES | **RESOLVED 2026-09-08** (developer decision): `policy`, `credential`, `identity`, [[[mb-3-cs-project-library:docs-local/architecture\|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md), [[[makepdlf-project-library:docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security\|Security Check]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security.md) — all five spec categories are now representable (`MemoryType` enum extended) and governed |
 | Test suite | **304 passed, 0 failed** (2026-09-08, post-resolution run; build record was 296); not re-run after the GBrain upgrade of 2026-09-30 — see Pending developer execution item 7 |
 | Operational status | **ACTIVE** — API + worker both running under their systemd user units (permanent auto-start executed + verified 2026-09-15; boot-command retirement decided 2026-09-28 — see Pending developer execution item 4) |
 
@@ -32,7 +33,7 @@ resolved) and re-verified 2026-09-30 after the GBrain upgrade (see
 
 Both must run for the system to function: the API decides, the worker
 delivers (GBrain writes + register/payload writes). Start procedure in
-[[memory-governor-reference|Usage, Invocation, and Incident Response]]. Permanent auto-start: two systemd user
+[[[mybizz-config-docs:memory-governor/memory-governor-reference|Usage, Invocation, and Incident Response]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-reference.md). Permanent auto-start: two systemd user
 units (`memory-governor-api`, `memory-governor-worker`) — enabled + verified
 2026-09-15. Boot-command retirement (2026-09-28): the `[boot]` command no
 longer invokes `start-memory-system.sh` — the units own both processes;
@@ -53,7 +54,7 @@ the script remains a manual fallback only.
 
 | Defect resolved | Fix |
 |---|---|
-| HIGH_RISK_TYPES spec inconsistency (only `policy` was representable; four spec categories were unimplementable) | `MemoryType` enum extended with `credential`, `identity`, [[architecture|Architecture]], [[security|Security Check]]; `HIGH_RISK_TYPES` now covers all five spec categories; tests added — the architectural intent is now truly implemented |
+| HIGH_RISK_TYPES spec inconsistency (only `policy` was representable; four spec categories were unimplementable) | `MemoryType` enum extended with `credential`, `identity`, [[[mb-3-cs-project-library:docs-local/architecture\|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md), [[[makepdlf-project-library:docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security\|Security Check]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security.md); `HIGH_RISK_TYPES` now covers all five spec categories; tests added — the architectural intent is now truly implemented |
 | Project-isolation defect (every governed memory was written **world-visible** regardless of declared scope — caught by the system's own Step 12.2 isolation test) | Visibility mapping: `shared_all` → world; `project_local` / `shared_specific` → private. Project-local memories are no longer world-readable |
 | Facts carried no project identity (project-scoped recall impossible) | Every governed fact is now stamped with `entity = owning_project` — entity-scoped recall is the project-scoped read |
 | Worker had no production entry point (the documented "dedicated worker process" was unstartable outside tests) | `python -m app.worker` entry point added; worker running |
@@ -185,7 +186,7 @@ Every write path goes through transition validation — creation included.
 1. Outbound-network rule + cross-folder rule formal eval tests + keep decisions (both amendments already live and one real-call-verified each).
 2. Credentialed registry/review-queue check (closes the governor-side `owning_project` verification).
 3. Commit + push of the governor repository's resolution changes.
-4. ~~Permanent auto-start: WSL systemd migration + the two service units~~ **EXECUTED + VERIFIED 2026-09-15 (session 005):** systemd enabled (`systemd=true` under `[boot]`, boot command preserved — PostgreSQL auto-started); both units enabled and active under the user manager (`memory-governor-api`, `memory-governor-worker`, Restart=on-failure); auth-gate 422; port 8321 held by the service. The system is restart-independent. (At the migration boot the boot script started the API but not the worker. The expected idempotent skip never materialized: at BOTH 2026-09-28 boots the boot script's API won the port-8321 bind race and the api unit crash-looped until the duplicate was killed — full boot-command retirement decided 2026-09-28, see [[memory-governor-reference|Reference]] §Permanent auto-start migration.)
+4. ~~Permanent auto-start: WSL systemd migration + the two service units~~ **EXECUTED + VERIFIED 2026-09-15 (session 005):** systemd enabled (`systemd=true` under `[boot]`, boot command preserved — PostgreSQL auto-started); both units enabled and active under the user manager (`memory-governor-api`, `memory-governor-worker`, Restart=on-failure); auth-gate 422; port 8321 held by the service. The system is restart-independent. (At the migration boot the boot script started the API but not the worker. The expected idempotent skip never materialized: at BOTH 2026-09-28 boots the boot script's API won the port-8321 bind race and the api unit crash-looped until the duplicate was killed — full boot-command retirement decided 2026-09-28, see [[[mybizz-config-docs:memory-governor/memory-governor-reference|Reference]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-reference.md) §Permanent auto-start migration.)
 5. gbrain sync of the documentation commits.
 6. Decide where governed facts should live. Options: (a) leave them in `memory-governor-code`; (b) pass `source_id` = the owning project in the worker's `remember` call (new optional input in 0.59.18.0); (c) federate `memory-governor-code`. No change made.
 7. Re-run the full test suite after the GBrain upgrade (stop the systemd worker first — procedure in the reference).

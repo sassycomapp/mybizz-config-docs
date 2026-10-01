@@ -1,14 +1,15 @@
 ---
 title: "memory-governor-explainer"
 doc-id: "mb-47216ab9"
+updated: "2026-10-01"
 ---
 # Memory Governor — Explainer
 
 *Companion note: for current confirmed state — the system is ACTIVE as of
 2026-09-08, with every listed defect resolved, and re-verified on 2026-09-30
 after the GBrain upgrade — see
-[[memory-governor-config|Memory Governor Configuration]]. For procedures, see
-[[memory-governor-reference|Usage, Invocation, and Incident Response]].*
+[[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md). For procedures, see
+[[[mybizz-config-docs:memory-governor/memory-governor-reference|Usage, Invocation, and Incident Response]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-reference.md).*
 
 ## 1. Opening
 
@@ -285,12 +286,12 @@ guaranteed to require human review.
 
 This suite participates in the config-management system (`mb-config-manager`).
 The roles of the seven suite files, and the exam cycle that runs them, are the
-architecture described in [[config-manager-explainer|Explainer]] — emulated from the
+architecture described in [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md) — emulated from the
 PostgreSQL pilot. The short local version:
 
-- [[memory-governor-config|Memory Governor Configuration]] is the **spec** — the ideal state every exam
+- [[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) is the **spec** — the ideal state every exam
   checks against.
-- Before each exam run, the config-manager synthesizes [[memory-governor-exam-plan|Exam Plan]]:
+- Before each exam run, the config-manager synthesizes [[[mybizz-config-docs:memory-governor/memory-governor-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-exam-plan.md):
   a fresh job-spec built from this spec, the last report, the log, and the
   learnings. The plan is transient (the file is live; contents rewritten each
   cycle).
@@ -303,8 +304,8 @@ PostgreSQL pilot. The short local version:
   (this exam cross-references; quick row counts permitted).
 - Several checks are permanently **developer-run**: credentialed registry
   checks, the full test suite, the auto-start execution, recovery drills.
-- The run rewrites [[memory-governor-exam-report|Exam Report]] (current state, no
-  history), appends one row to [[memory-governor-log|Log]], files new learnings,
+- The run rewrites [[[mybizz-config-docs:memory-governor/memory-governor-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-exam-report.md) (current state, no
+  history), appends one row to [[[mybizz-config-docs:memory-governor/memory-governor-log|Log]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-log.md), files new learnings,
   and prunes absorbed entries.
 
 ## 15. S.W.O.T.
@@ -348,13 +349,13 @@ remaining dependency named.
 
 ---
 
-*Companion documents: [[memory-governor-config|Memory Governor Configuration]] (the spec),
-[[memory-governor-reference|Usage, Invocation, and Incident Response]] (procedures and incident response),
-[[memory-governor-exam-plan|Exam Plan]] / [[memory-governor-exam-report|Exam Report]] /
-[[memory-governor-log|Log]] / [[memory-governor-learnings|Learnings]] (config-management
-set), [[memory-governor-skill|Memory Governor Skill]] (exam skill canonical source). Architecture:
-[[config-manager-explainer|Explainer]]. The full memory-system map:
-[[memory-master-explainer|Master Explainer]]. The front end: `mb-submit-memory` (its own
+*Companion documents: [[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) (the spec),
+[[[mybizz-config-docs:memory-governor/memory-governor-reference|Usage, Invocation, and Incident Response]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-reference.md) (procedures and incident response),
+[[[mybizz-config-docs:memory-governor/memory-governor-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-exam-plan.md) / [[[mybizz-config-docs:memory-governor/memory-governor-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-exam-report.md) /
+[[[mybizz-config-docs:memory-governor/memory-governor-log|Log]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-log.md) / [[[mybizz-config-docs:memory-governor/memory-governor-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-learnings.md) (config-management
+set), [[[mybizz-config-docs:memory-governor/memory-governor-skill|Memory Governor Skill]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-skill.md) (exam skill canonical source). Architecture:
+[[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md). The full memory-system map:
+[[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md). The front end: `mb-submit-memory` (its own
 suite). System health procedure: Full-System Procedure (memory functionality audit)
 (mybizz-os-docs).*
 

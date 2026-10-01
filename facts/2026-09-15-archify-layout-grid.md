@@ -1,6 +1,7 @@
 ---
 title: "2026-09-15-archify-layout-grid"
 doc-id: "mb-8b7e83cc"
+updated: "2026-10-01"
 ---
 # Durable fact — Archify dataflow grid budget and the corridor wall
 
@@ -10,7 +11,7 @@ default node 112×58, minimum node spacing 10px, minimum flow length 34px,
 showcase rhythm ≥8px per segment and ≥16px interior. A flow crossing a
 stage/lane band must pass through a **row band that is empty of nodes** —
 stacked nodes in a column act as a wall that automatic routing cannot clear
-and that explicit routing struggles to thread. Prefer [[architecture|Architecture]] (free
+and that explicit routing struggles to thread. Prefer [[[mb-3-cs-project-library:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md) (free
 `pos`, edge-tolerant, guides for a component map) unless the subject genuinely
 demands grid semantics.
 

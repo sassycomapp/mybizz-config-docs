@@ -1,12 +1,13 @@
 ---
 title: "mb-submit-memory-config"
 doc-id: "mb-e76d96dd"
+updated: "2026-10-01"
 ---
 # mb-submit-memory — Configuration
 
 Canonical current-state configuration record. Agent-facing. States facts,
-not history — decisions and reasoning in [[mb-submit-memory-explainer|Explainer]];
-the full cycle in [[mb-submit-memory-reference|Reference: Usage, Invocation, and the Full Cycle]]; the skill's own
+not history — decisions and reasoning in [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-explainer.md);
+the full cycle in [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-reference|Reference: Usage, Invocation, and the Full Cycle]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-reference.md); the skill's own
 `SKILL.md` is the authoritative procedure. All values verified live
 2026-09-08 unless noted; rows and sections dated 2026-09-30 were re-verified after
 the GBrain upgrade to 0.59.18.0.
@@ -37,7 +38,7 @@ path. Never calls `gbrain remember` or `gbrain sync` directly.
 | Start procedure (manual fallback — the systemd units normally start it) | `cd /home/dev-p/memory-governor && set -a && source .env && set +a && setsid nohup .venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8321 >> /tmp/memory-governor.log 2>&1 < /dev/null &` — `.env` must be sourced first (no dotenv autoload) |
 | Permanent auto-start | **Installed and verified 2026-09-15 (session 005):** systemd enabled in WSL; the governor runs as two auto-start, auto-restart user services (`memory-governor-api`, `memory-governor-worker`) |
 | Stop and start | `systemctl --user stop memory-governor-api`, wait 60 seconds, `systemctl --user stop memory-governor-worker`; start both with `systemctl --user start memory-governor-api memory-governor-worker` (the order used for the GBrain upgrade, 2026-09-30). Re-verified 2026-09-30: both units active, port 8321 held by one listener, an unauthenticated `GET /memory/review-queue` answers 422 |
-| Database | `memory_governor` on WSL-native PostgreSQL 16 (server verified up today). DB-level state (5 tables, 5 real candidate rows, owner `memory_governor_svc`) verified 2026-09-05 by [[memory-governor-config|Memory Governor Configuration]]; re-check requires the service credential (not accessed) |
+| Database | `memory_governor` on WSL-native PostgreSQL 16 (server verified up today). DB-level state (5 tables, 5 real candidate rows, owner `memory_governor_svc`) verified 2026-09-05 by [[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md); re-check requires the service credential (not accessed) |
 | Its own GBrain source | `memory-governor-code` — registered (46 pages listed 2026-09-30, 53 in early September); the 2026-09-05 recommendation was actioned. Governed facts are stored in this source (49 → 50 after the run of 2026-09-30); it is not federated |
 | Past-run evidence | `/tmp/memory-governor.log` — clean startup + `POST /memory/projects` 201 + `POST /memory/candidate` 201; `registers/candidates/` holds the real candidate records |
 
@@ -77,5 +78,5 @@ pending a credentialed API check (needs the `manual_submission` credential).
 - Permanent auto-start installation (systemd migration) — **executed and verified 2026-09-15** (see Downstream system); closed.
 - Stray `0.48.2.0` file deletion — pending developer (restricted folder).
 - Dual SKILL.md copies — dissolved 2026-09-15 (exam run #1 gate): the mirror slot was repurposed as the exam-skill source; the subject skill has a single installed copy.
-- Recall gap (2026-09-30): the detect step cannot see governed facts, which are stored in `memory-governor-code`. Options are recorded in [[memory-governor-config|Memory Governor Configuration]] (Pending developer execution item 6); the reference notes a possible second search with `source_id` — not adopted, not yet exercised. Any change to the procedure belongs in the skill's own `SKILL.md`.
+- Recall gap (2026-09-30): the detect step cannot see governed facts, which are stored in `memory-governor-code`. Options are recorded in [[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) (Pending developer execution item 6); the reference notes a possible second search with `source_id` — not adopted, not yet exercised. Any change to the procedure belongs in the skill's own `SKILL.md`.
 - Near-identical duplicate copy of `environment-explainer.md` in the `pdlf` source (found by the 2026-09-30 run) — developer decision whether to keep both.

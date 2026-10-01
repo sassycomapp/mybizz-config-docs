@@ -1,17 +1,18 @@
 ---
 title: "anvil-agent-references-reference"
 doc-id: "mb-99b48631"
+updated: "2026-10-01"
 ---
 # anvil-agent-references — Reference: Install, Skills, and Technical Detail
 
-Companion to [[anvil-agent-references-config|Configuration]] (state, inventory, open items)
-and [[anvil-agent-references-explainer|Explainer]] (what this is and why). Agent-facing —
+Companion to [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-config|Configuration]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-config.md) (state, inventory, open items)
+and [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-explainer.md) (what this is and why). Agent-facing —
 exact commands, exact per-skill rules, real technical constraints.
-Config-management set: [[anvil-agent-references-exam-plan|Exam Plan]] (transient
-job-spec — read second, every run), [[anvil-agent-references-exam-report|Exam Report]]
-(last verified state), [[anvil-agent-references-log|Log]] (chronological events),
-[[anvil-agent-learnings|Learnings]] (transient knowledge), [[anvil-agent-skill|Anvil Agent Skill]] (exam
-skill canonical source). Architecture: [[config-manager-explainer|Explainer]].
+Config-management set: [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-plan.md) (transient
+job-spec — read second, every run), [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-report.md)
+(last verified state), [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-log|Log]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-log.md) (chronological events),
+[[[mybizz-config-docs:anvil-agent-references/anvil-agent-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-learnings.md) (transient knowledge), [[[mybizz-config-docs:anvil-agent-references/anvil-agent-skill|Anvil Agent Skill]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-skill.md) (exam
+skill canonical source). Architecture: [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md).
 
 ---
 
@@ -77,7 +78,7 @@ Works against `anvil.yaml`, HTML/YAML form templates under `client_code/`, and P
 ## Universal editing boundaries
 
 **Cupcake qualifier:** Cupcake's enforcement status is not fixed and should not
-be assumed current at any given time — check [[cupcake-config|Cupcake Configuration]]'s Current
+be assumed current at any given time — check [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)'s Current
 Operational Status before relying on any Cupcake-based statement below as
 active, mechanical enforcement. The rules described here are standing policy
 and what enforcement blocks when active; whether that enforcement is currently
@@ -89,7 +90,7 @@ discipline regardless of enforcement status.
 - Never edit `.anvil/` dependency material inside an app checkout.
 - Inspect `.anvil/deps/<package>/anvil.yaml` and dependency docs before guessing dependency APIs.
 - Never guess unfamiliar `anvil.*` symbols, component properties, roles, or CSS hooks — confirm from stubs, dependency docs/files, or working examples.
-- **Never AI-write `anvil.yaml`** — standing policy regardless of enforcement status; `cup-block-anvil-yaml-writes.rego` enforces it mechanically when Cupcake is active (status: qualifier above and [[cupcake-config|Cupcake Configuration]]). Stop and hand the change to the developer either way. The `anvil-yaml` skill's type reference and validation knowledge still apply for *reading, planning, and validating* manifest changes.
+- **Never AI-write `anvil.yaml`** — standing policy regardless of enforcement status; `cup-block-anvil-yaml-writes.rego` enforces it mechanically when Cupcake is active (status: qualifier above and [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)). Stop and hand the change to the developer either way. The `anvil-yaml` skill's type reference and validation knowledge still apply for *reading, planning, and validating* manifest changes.
 
 ---
 
@@ -109,7 +110,7 @@ discipline regardless of enforcement status.
 - New `/runtime/services/tables.yml` entries should set `client_config.enable_v2: true`.
 - Preserve an existing table's `client_config` unless the user explicitly asks to migrate.
 - Default new tables to `client: none`. Use `search` only for intentional direct client searches; `full` only when the user explicitly requests unrestricted client table writes.
-- Preserve non-empty `db_schema.*.indexes`; don't add new indexes unless explicitly asked and the plan supports them. New tables: omit [[indexes|Indexes]] or use `indexes: []`.
+- Preserve non-empty `db_schema.*.indexes`; don't add new indexes unless explicitly asked and the plan supports them. New tables: omit [[[default:anvil-docs/data-tables/indexes|Indexes]]](C:/dev/project-library-global/anvil-docs/data-tables/indexes.md) or use `indexes: []`.
 
 **Users table specifics:**
 - Adding the Users service requires a matching `db_schema` Users table if `server_config.user_table` is set to a string key.
@@ -304,7 +305,7 @@ No general automated server test path exists in this template — suggest testin
 
 Client-side Python (`client_code/`) runs on **Skulpt in the browser, not full CPython.** Confirmed supported top-level stdlib imports:
 
-`array`, `builtins`, `calendar`, `collections`, `datetime`, `fractions`, `functools`, `itertools`, `json`, `keyword`, `math`, `operator`, `platform`, `random`, `re`, `signal`, `string`, `sys`, `time`, `turtle`, [[types|1 represents the data is cached, 0 otherwise]], `typing`, `urllib`, `uuid`.
+`array`, `builtins`, `calendar`, `collections`, `datetime`, `fractions`, `functools`, `itertools`, `json`, `keyword`, `math`, `operator`, `platform`, `random`, `re`, `signal`, `string`, `sys`, `time`, `turtle`, [[[default:anvil-docs/data-tables/anvil/tables/v2/types|1 represents the data is cached, 0 otherwise]]](C:/dev/project-library-global/anvil-docs/data-tables/anvil/tables/v2/types.md), `typing`, `urllib`, `uuid`.
 
 **Top-level availability doesn't guarantee submodule parity** — `collections` is available, `collections.abc` is not. External packages generally aren't available client-side unless the app or a dependency ships browser-compatible code. When client code needs unsupported behavior: move it to `server_code/` behind `@anvil.server.callable`, use Anvil/browser APIs via `anvil.js`, or use an already-present app-local/dependency client module.
 
@@ -357,7 +358,7 @@ def m3_button_click(self, **event_args):
 
 Full property/event references: Api in this checkout, plus Anvil's own docs. **`colour-schemes.md` is currently an empty draft stub** (`draft: true`, verified 2026-09-06) — nothing to document until Anvil publishes real content.
 
-**Standing constraints in this environment:** [[adr-anvil-extras-exclusion|Anvil Extras Exclusion]] excludes Anvil Extras (M3 conflict) and limits UI to M3-dependency components; [[adr-htmltemplate-use|HTMLTemplate Use]] bans `HTMLTemplate` — prefer the two native M3 Layouts.
+**Standing constraints in this environment:** [[[default:adr-global/adr-anvil-extras-exclusion|Anvil Extras Exclusion]]](C:/dev/project-library-global/adr-global/adr-anvil-extras-exclusion.md) excludes Anvil Extras (M3 conflict) and limits UI to M3-dependency components; [[[default:adr-global/adr-htmltemplate-use|HTMLTemplate Use]]](C:/dev/project-library-global/adr-global/adr-htmltemplate-use.md) bans `HTMLTemplate` — prefer the two native M3 Layouts.
 
 ---
 
@@ -367,7 +368,7 @@ Full property/event references: Api in this checkout, plus Anvil's own docs. **`
 git -C /mnt/c/mybizz/anvil-agent-references pull
 ```
 
-- Developer-run only, from a terminal — never AI-invoked (the clone sits outside every project root; an AI-run write there is a cross-project write, which Cupcake's cross-project-write rule blocks when active — enforcement status per the qualifier in Universal editing boundaries and [[cupcake-config|Cupcake Configuration]]'s Current Operational Status).
+- Developer-run only, from a terminal — never AI-invoked (the clone sits outside every project root; an AI-run write there is a cross-project write, which Cupcake's cross-project-write rule blocks when active — enforcement status per the qualifier in Universal editing boundaries and [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)'s Current Operational Status).
 - Symlinked skills update automatically — nothing to re-link for existing skills.
 - After an update, check for new/renamed skills (content is generated; names could change between releases):
 ```bash

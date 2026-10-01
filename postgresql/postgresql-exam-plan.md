@@ -1,12 +1,13 @@
 ---
 title: "postgresql-exam-plan"
 doc-id: "mb-c446fbf2"
+updated: "2026-10-01"
 ---
 # PostgreSQL — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before
-each run from: [[postgresql-config|Configuration]] (spec), the last [[postgresql-exam-report|Exam Report]],
-[[postgresql-log|Log]] (events since last run), [[postgresql-learnings|Learnings]]. Consumed by
+each run from: [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md) (spec), the last [[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md),
+[[[mybizz-config-docs:postgresql/postgresql-log|Log]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-log.md) (events since last run), [[[mybizz-config-docs:postgresql/postgresql-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-learnings.md). Consumed by
 the skill at run time; rewritten at the start of the following cycle. The file is
 live; its contents are transient.
 
@@ -22,11 +23,11 @@ edition is the first hand-written plan and the format template.
 |---|---|
 | Plan for run | #2 — **first formal plan-driven run** |
 | Run date | 2026-09-13 |
-| Prior report | [[postgresql-exam-report|Exam Report]] (2026-09-12, detection-only pilot) |
+| Prior report | [[[mybizz-config-docs:postgresql/postgresql-exam-report\|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md) (2026-09-12, detection-only pilot) |
 | Step-0 result | PASS (3/3 hash pairs match; suite files present; spec doc exists; no open run) |
 | Tier 3 unlock state | **Locked** — Tier 3 rows execute only if the developer unlocks this run |
 | Developer-run requests this run (bundled into ONE request) | (a) Instance A log scan; (b) Instance A operational probes via bridge (`.env` sourcing is agent-forbidden); (c) Instance B log scan (system path — agent-forbidden); (d) boot-config check `/etc/wsl.conf` (system path — agent-forbidden); (e) `.env` integrity check (secrets guard); (f) `pg_hba` posture checks — only if Tier 3 unlocked |
-| Expected-value source of truth | [[postgresql-config|Configuration]] — read fresh at run start; never rely on remembered values |
+| Expected-value source of truth | [[[mybizz-config-docs:postgresql/postgresql-config\|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md) — read fresh at run start; never rely on remembered values |
 
 ## 2. Carried-forward items (from last report)
 
@@ -64,16 +65,16 @@ The complete, authoritative check inventory — **P0-1…P3-6, with runner (A=ag
 D=developer), probe, and pass rule per check — lives in the installed skill**
 (`mb-config-postgresql/SKILL.md`, Tiers 0–3). It graduated there 2026-09-12; this
 plan no longer duplicates it. Expected values for every check come from
-[[postgresql-config|Configuration]], read fresh at run start. This section carries only
+[[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md), read fresh at run start. This section carries only
 run-specific deltas to that inventory — this run: none.
 
 ## 7. Report requirements
 
-The run writes [[postgresql-exam-report|Exam Report]]: verdict line; per-tier tables (check
+The run writes [[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md): verdict line; per-tier tables (check
 ID, expected, actual, result); findings with class + evidence + recommended repair
 + rollback; runner attribution for every deferred item (guard-forbidden vs
 unlock-gated); overwritten in full each run. Then: one run row appended to
-[[postgresql-log|Log]] (run-row format per [[config-manager-reference|Reference: Commands, Procedures]]); new
+[[[mybizz-config-docs:postgresql/postgresql-log|Log]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-log.md) (run-row format per [[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md)); new
 learnings filed.
 
 ## 8. Gate protocol

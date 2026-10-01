@@ -1,11 +1,12 @@
 ---
 title: "mb-memory-system-diagnostic-explainer"
 doc-id: "mb-dd98962e"
+updated: "2026-10-01"
 ---
 # mb-memory-system-diagnostic — What It Is, What It Does, and Why It Is Built This Way
 
-Companion to [[mb-memory-system-diagnostic-config|Configuration]] (current
-state) and [[mb-memory-system-diagnostic-reference|Reference]] (commands and
+Companion to [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-config.md) (current
+state) and [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-reference.md) (commands and
 report formats). The installed `SKILL.md` is the authoritative procedure; this
 document owns the mental model: what the diagnostic is for, when to reach for
 it, and why its sharpest rules exist.
@@ -218,16 +219,16 @@ reporting (the report file is metrics and verdicts, not prose).
 
 ---
 
-*Suite: [[mb-memory-system-diagnostic-config|Configuration]] (spec),
-[[mb-memory-system-diagnostic-reference|Reference]] (commands and report
-formats), [[mb-memory-system-diagnostic-skill|Skill]] (the procedure — canonical
+*Suite: [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-config.md) (spec),
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-reference.md) (commands and report
+formats), [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-skill|Skill]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-skill.md) (the procedure — canonical
 artifact in this folder, installed copy at
 `~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md`),
-[[mb-memory-system-diagnostic-exam-plan|Exam Plan]] / 
-[[mb-memory-system-diagnostic-exam-report|Exam Report]] /
-[[mb-memory-system-diagnostic-log|Log]] /
-[[mb-memory-system-diagnostic-learnings|Learnings]] /
-[[mb-memory-system-diagnostic-exam-skill|Exam Skill]] (the config-management
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-plan.md) / 
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-report.md) /
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-log|Log]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-log.md) /
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings.md) /
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-skill|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-skill.md) (the config-management
 exam set — the diagnostic's own standing check inventory; the diagnostic is
 never executed by its exam). Ecosystem boundary:
 `archify/output/memory-ecosystem-project/memory-ecosystem-scope.md`.*

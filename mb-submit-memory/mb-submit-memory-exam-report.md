@@ -1,6 +1,7 @@
 ---
 title: "mb-submit-memory-exam-report"
 doc-id: "mb-aae27791"
+updated: "2026-10-01"
 ---
 # mb-submit-memory — Exam Report
 
@@ -17,7 +18,7 @@ gate. The system is working well; this exam changes nothing.
 | Suite completeness, Installed systems | 7/7 at 8/8 files |
 | Register spec-doc paths | 19/19 exist |
 | Target's last log run-row disposition | Present (11 rows; last row disposed) |
-| Guard denials | 1 — exec-protection on token-literal step-0 command text (documented class). Honored absolutely; the approved glob form used instead. Recorded in [[config-manager-log|Log]] |
+| Guard denials | 1 — exec-protection on token-literal step-0 command text (documented class). Honored absolutely; the approved glob form used instead. Recorded in [[[mybizz-config-docs:mb-config-manager/config-manager-log\|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) |
 
 ## Tier 0 — Invocability (runner A)
 
@@ -34,7 +35,7 @@ gate. The system is working well; this exam changes nothing.
 | SM1-2 | `gbrain config get mcp_surface` → `verbs` (spec §Governance chain) | `verbs` (source: db plane) | **PASS** — matches this spec; cross-spec flag F-C (W-6) |
 | SM1-3 | Governor API listening on `127.0.0.1:8321` | LISTENING (python, pid 14623) | **PASS** |
 | SM1-4 | Run-logs lane present per spec §Logs | 2 run logs + learnings.md (8 entries) | **PASS with flag F-A** — live growth vs spec's "one + 6" = spec progress → governance |
-| SM1-5 | Spec §Identity mirror claim vs reality | No repo-side mirror — [[submit-memory-skill|Submit Memory Skill]] is the exam-skill source (developer instruction 2026-09-15) | **PASS with flag F-B** — spec claim superseded → governance; hash anchor = spec fingerprint (SM0-2) |
+| SM1-5 | Spec §Identity mirror claim vs reality | No repo-side mirror — [[[mybizz-config-docs:mb-submit-memory/submit-memory-skill\|Submit Memory Skill]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/submit-memory-skill.md) is the exam-skill source (developer instruction 2026-09-15) | **PASS with flag F-B** — spec claim superseded → governance; hash anchor = spec fingerprint (SM0-2) |
 
 ## Tier 2 — Functional proof (runner A)
 
@@ -82,5 +83,5 @@ Gate dispositions (2026-09-15): F-A approved → spec §Logs corrected; F-B
 approved → spec §Identity corrected and the dual-copies open item dissolved;
 F-C resolved by developer directive (correct, do not flag) → dream-cycle spec
 MEMORY_VERBS row corrected. All three applied and verified.
-[[memory-master-explainer|Master Explainer]] updated to current verified state (its own
+[[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md) updated to current verified state (its own
 commit, standing authorization).

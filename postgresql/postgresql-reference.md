@@ -1,14 +1,15 @@
 ---
 title: "postgresql-reference"
 doc-id: "mb-5bad908d"
+updated: "2026-10-01"
 ---
 # PostgreSQL — Reference: Commands, Procedures, and Troubleshooting
 
-Companion to [[postgresql-config|Configuration]] (the spec — every setting, path, and value) and
-[[postgresql-explainer|Explainer]] (the authoritative whole-system narrative — what this
-system is and why, for every reader). Exam companions: [[postgresql-exam-plan|Exam Plan]]
-(next run's job-spec), [[postgresql-exam-report|Exam Report]] (current verified state),
-[[postgresql-log|Log]] (notable events), [[postgresql-learnings|Learnings]] (transient exam
+Companion to [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md) (the spec — every setting, path, and value) and
+[[[mybizz-config-docs:postgresql/postgresql-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-explainer.md) (the authoritative whole-system narrative — what this
+system is and why, for every reader). Exam companions: [[[mybizz-config-docs:postgresql/postgresql-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-plan.md)
+(next run's job-spec), [[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md) (current verified state),
+[[[mybizz-config-docs:postgresql/postgresql-log|Log]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-log.md) (notable events), [[[mybizz-config-docs:postgresql/postgresql-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-learnings.md) (transient exam
 knowledge). This document is agent-facing — how to actually connect to, query, and
 troubleshoot each instance safely.
 
@@ -105,7 +106,7 @@ $env:PGPASSWORD = ($pgLine -split "=", 2)[1]
 ```powershell
 Get-Service -Name "*postgresql*" | Format-Table Name, Status, StartType
 ```
-Only `postgresql-x64-15` should ever be Running. A second registration, plain `PostgreSQL`, exists pointing at the same data directory — leave it Stopped; do not start it (see [[postgresql-config|Configuration]]).
+Only `postgresql-x64-15` should ever be Running. A second registration, plain `PostgreSQL`, exists pointing at the same data directory — leave it Stopped; do not start it (see [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md)).
 
 ---
 
@@ -164,7 +165,7 @@ Historical: the 2026-09-09 boot command (`service postgresql start` +
 boots its script instance won the port-8321 bind race against
 `memory-governor-api.service`, which crash-looped until the duplicate was
 killed — full retirement decided 2026-09-28 (see
-[[memory-governor-reference|Reference]] §Permanent auto-start migration).
+[[[mybizz-config-docs:memory-governor/memory-governor-reference|Reference]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-reference.md) §Permanent auto-start migration).
 
 **The only real verification method:** a full WSL shutdown from PowerShell
 (`wsl --shutdown`), then a fresh terminal, then `pg_lsclusters` (16/main
@@ -217,7 +218,7 @@ primary interface and should be preferred for anything it already reports
 on. Direct `psql` access is appropriate specifically when:
 - Cross-checking a CLI-reported fact independently (confirming a fact two
   ways, not trusting one report alone)
-- The CLI doesn't expose a needed field (e.g. a source's raw [[config|Config]]
+- The CLI doesn't expose a needed field (e.g. a source's raw [[[makepdlf-project-library:docs-local/config|Config]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/config.md)
   JSON — no dedicated subcommand for arbitrary key inspection)
 - Diagnosing something the CLI's own error messages don't surface clearly
   enough
@@ -228,7 +229,7 @@ on. Direct `psql` access is appropriate specifically when:
 
 - **Never assume `localhost:5432` means the same thing on both sides.** From WSL it's Instance B (`gbrain`, `memory_governor`). From Windows it's Instance A (`pdlf`). They share a port number and nothing else — genuinely independent servers.
 - **A raw WSL `psql` call intended for `pdlf` will not fail — it will silently connect to `gbrain`'s cluster instead**, since both listen on `localhost:5432` from their own side. This is more dangerous than an outright connection failure; always use the PowerShell bridge for `pdlf`.
-- **`compliance_ledger` no longer exists** (removed 2026-09-05, backed up first — see [[postgresql-config|Configuration]]). It was never the real ledger — that's `pdlf` on Instance A — noted here in case an older reference to it is still found anywhere.
+- **`compliance_ledger` no longer exists** (removed 2026-09-05, backed up first — see [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md)). It was never the real ledger — that's `pdlf` on Instance A — noted here in case an older reference to it is still found anywhere.
 - **Destructive SQL from an agent is blocked by two layers** — the OpenCode permission deny patterns (`*DROP TABLE*`, `*DROP DATABASE*`, `*TRUNCATE*` in the global config) and Cupcake's own destructive-SQL rule. A denied database command should never be worked around; the denial is the system working.
 
 ## Do not

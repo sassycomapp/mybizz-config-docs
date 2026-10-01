@@ -1,17 +1,18 @@
 ---
 title: "magdoub-wireframe-explainer"
 doc-id: "mb-3a3e9555"
+updated: "2026-10-01"
 ---
 # magdoub-wireframe — Explainer
 
 *Companion note: for current confirmed state (paths, versions, integration,
-open items) see [[magdoub-wireframe-config|Configuration]]. For invocation, operation,
-update, and the do-not list, see [[magdoub-wireframe-reference|Reference: Invocation, Operation, Update]]. For the
-config-management set: [[magdoub-wireframe-exam-plan|Exam Plan]] (transient job-spec),
-[[magdoub-wireframe-exam-report|Exam Report]] (last verified state),
-[[magdoub-wireframe-log|Log]] (chronological events),
-[[magdoub-wireframe-learnings|Learnings]] (transient knowledge), and
-[[magdoub-wireframe-skill|Magdoub Wireframe Skill]] (exam skill canonical source).*
+open items) see [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-config|Configuration]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-config.md). For invocation, operation,
+update, and the do-not list, see [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-reference|Reference: Invocation, Operation, Update]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-reference.md). For the
+config-management set: [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-plan.md) (transient job-spec),
+[[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-report.md) (last verified state),
+[[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-log|Log]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-log.md) (chronological events),
+[[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-learnings.md) (transient knowledge), and
+[[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-skill|Magdoub Wireframe Skill]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-skill.md) (exam skill canonical source).*
 
 ---
 
@@ -57,7 +58,7 @@ value beyond the wireframes themselves.
 
 **Not good for:** production UI — the output is deliberately disposable HTML,
 not Anvil components, and none of it is meant to ship. Producing
-ADR-conforming construction-instruction wireframes directly — the [[adr-design-rules|Wireframe Design Rules]]
+ADR-conforming construction-instruction wireframes directly — the [[[default:adr-global/adr-design-rules|Wireframe Design Rules]]](C:/dev/project-library-global/adr-global/adr-design-rules.md)
 ADR (now scoped by its Section A) governs wireframes *not* created by this skill;
 Magdoub output is a different genre and exempt as an artifact, but an
 ADR-conforming deliverable still requires a conformance pass beyond what this
@@ -103,29 +104,29 @@ changed in recent upstream history.
 ### Where this sits relative to the rest of the system
 
 - **PDLF** registers the skill as its visual-iteration stage: a structural pass between the design reviews, then a second pass with an approval gate before screen work. It is one of five deliberately narrow skill families; it owns visual iteration and nothing else.
-- **Cupcake** constrains it more than any other component — with one standing caveat: enforcement status is not fixed and should not be assumed current at any given time (check [[cupcake-config|Cupcake Configuration]]'s Current Operational Status). Standing policy denies sub-agent creation, enforced when active at three independent layers, and the skill's Phase 2 was written assuming sub-agents exist. The structural phase is unaffected; the color phase's mechanism on this machine is the suite's principal open question.
+- **Cupcake** constrains it more than any other component — with one standing caveat: enforcement status is not fixed and should not be assumed current at any given time (check [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)'s Current Operational Status). Standing policy denies sub-agent creation, enforced when active at three independent layers, and the skill's Phase 2 was written assuming sub-agents exist. The structural phase is unaffected; the color phase's mechanism on this machine is the suite's principal open question.
 - **Memory Governor** does not see it: skill content is vendor-published reference material arriving via a real git clone, so it takes the same permanent ordinary-sync bypass as Anvil's agent references. The update command, unlike the content, is confined to the developer's own terminal because it rewrites files outside every project root — a deliberate split between how the skill's content flows and who may touch the clone.
 - **security-global's review-before-trust principle** is the standard this skill was supposed to be admitted under: publisher, license, maintenance, spawn-capability. Its profile is benign on every axis, but no record of that review exists — which is itself the finding.
-- **The [[adr-design-rules|Wireframe Design Rules]] ADR** governs what a wireframe *document* must be in project-library-global — instructive, three-section, scaffold-read-first. Reconciliation **resolved 2026-09-16** by Section A: the ADR applies only to wireframes not created by this skill; this skill's comparison artifact is a different genre, exempt; but the exemption is not an escape hatch for ADR-conforming deliverables (A3).
+- **The [[[default:adr-global/adr-design-rules|Wireframe Design Rules]]](C:/dev/project-library-global/adr-global/adr-design-rules.md) ADR** governs what a wireframe *document* must be in project-library-global — instructive, three-section, scaffold-read-first. Reconciliation **resolved 2026-09-16** by Section A: the ADR applies only to wireframes not created by this skill; this skill's comparison artifact is a different genre, exempt; but the exemption is not an escape hatch for ADR-conforming deliverables (A3).
 
 ### Open architectural questions
 
 1. **What executes Phase 2 here?** The honest candidates are a main-agent fallback (sequential CSS authorship — losing the parallelism, keeping the output contract) or treating the skill as Phase-1-only in this environment. The answer determines whether PDLF's gated second stage can run as designed or needs its own adaptation.
 2. **The first real run is a verification event, not a routine use.** Everything in the config doc except run behavior is verified; the skill's actual behavior here — first-run flows against Anvil projects, interplay with the ADR's mandatory reading — is untested. Treating the first run as routine would let unverified assumptions harden into practice.
-3. **ADR reconciliation — RESOLVED 2026-09-16 (developer decision).** If PDLF projects need ADR-conforming wireframes, either the skill's output needs a conformance pass after generation, or the ADR needs a documented carve-out for exploratory comparison artifacts. **Decision:** the carve-out was taken — [[adr-design-rules|Wireframe Design Rules]] gained Section A (Magdoub-skill exemption): the ADR applies only to wireframes not created by this skill; Magdoub output is a different genre, exempt as an artifact; but the exemption is not an escape hatch — an ADR-conforming deliverable still requires a conformance pass (ADR §A3). Avoiding non-compliant deliverables at scale is now handled by A3's explicit clause.
+3. **ADR reconciliation — RESOLVED 2026-09-16 (developer decision).** If PDLF projects need ADR-conforming wireframes, either the skill's output needs a conformance pass after generation, or the ADR needs a documented carve-out for exploratory comparison artifacts. **Decision:** the carve-out was taken — [[[default:adr-global/adr-design-rules|Wireframe Design Rules]]](C:/dev/project-library-global/adr-global/adr-design-rules.md) gained Section A (Magdoub-skill exemption): the ADR applies only to wireframes not created by this skill; Magdoub output is a different genre, exempt as an artifact; but the exemption is not an escape hatch — an ADR-conforming deliverable still requires a conformance pass (ADR §A3). Avoiding non-compliant deliverables at scale is now handled by A3's explicit clause.
 4. **Retiring the old in-folder reference doc.** It predates this suite, carries two stale claims, and lives where a clone reset won't touch it but a reinstall would. Keeping two reference documents for one component recreates the drift problem the doc-suite pattern exists to prevent.
 
 ## 5. Config maintenance — how this system is examined and kept healthy
 
 This suite participates in the config-management system (`mb-config-manager`).
 The roles of the seven suite files, and the exam cycle that runs them, are the
-architecture described in [[config-manager-explainer|Explainer]] — emulated from the
+architecture described in [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md) — emulated from the
 PostgreSQL pilot. The short local version:
 
-- [[magdoub-wireframe-config|Configuration]] is the **spec** — the ideal state every exam
+- [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-config|Configuration]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-config.md) is the **spec** — the ideal state every exam
   checks against.
 - Before each exam run, the config-manager synthesizes
-  [[magdoub-wireframe-exam-plan|Exam Plan]]: a fresh job-spec built from this spec, the
+  [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-plan.md): a fresh job-spec built from this spec, the
   last report, the log, and the learnings. The plan is transient (the file is
   live; contents rewritten each cycle).
 - The exam runs the installed skill (`mb-config-magdoub-wireframe`) with the
@@ -133,12 +134,12 @@ PostgreSQL pilot. The short local version:
   no agent-healable items**: the clone is developer-owned (update command
   developer-run only, settled policy), and every open item resolves by developer
   decision or docs governance.
-- **Scope boundary:** PDLF's step 22/26 usage and [[adr-design-rules|Wireframe Design Rules]] ADR interplay
+- **Scope boundary:** PDLF's step 22/26 usage and [[[default:adr-global/adr-design-rules|Wireframe Design Rules]]](C:/dev/project-library-global/adr-global/adr-design-rules.md) ADR interplay
   belong to the PDLF / project-library-global docs domain; the `task`-tool guard
   layer and spawn-tools policy belong to the cupcake/opencode modules; gbrain's
   sync state belongs to the gbrain module. This exam touches none of them.
-- The run rewrites [[magdoub-wireframe-exam-report|Exam Report]] (current state, no
-  history), appends one row to [[magdoub-wireframe-log|Log]], files new learnings,
+- The run rewrites [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-report.md) (current state, no
+  history), appends one row to [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-log|Log]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-log.md), files new learnings,
   and prunes absorbed entries.
 
 ## 6. S.W.O.T.
@@ -171,9 +172,9 @@ developer-run immediately.
 
 ---
 
-*Companion documents: [[magdoub-wireframe-config|Configuration]] (state),
-[[magdoub-wireframe-reference|Reference: Invocation, Operation, Update]] (commands and rules),
-[[magdoub-wireframe-exam-plan|Exam Plan]] / [[magdoub-wireframe-exam-report|Exam Report]] /
-[[magdoub-wireframe-log|Log]] / [[magdoub-wireframe-learnings|Learnings]]
-(config-management set), [[magdoub-wireframe-skill|Magdoub Wireframe Skill]] (exam skill canonical
-source). Architecture: [[config-manager-explainer|Explainer]].*
+*Companion documents: [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-config|Configuration]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-config.md) (state),
+[[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-reference|Reference: Invocation, Operation, Update]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-reference.md) (commands and rules),
+[[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-plan.md) / [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-report.md) /
+[[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-log|Log]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-log.md) / [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-learnings.md)
+(config-management set), [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-skill|Magdoub Wireframe Skill]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-skill.md) (exam skill canonical
+source). Architecture: [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md).*

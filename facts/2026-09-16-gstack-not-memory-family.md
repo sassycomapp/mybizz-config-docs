@@ -1,6 +1,7 @@
 ---
 title: "2026-09-16-gstack-not-memory-family"
 doc-id: "mb-6ed01780"
+updated: "2026-10-01"
 ---
 # Fact — GStack is not a memory-family member
 
@@ -10,7 +11,7 @@ adjacency (GBrain is memory; GStack is workflow). Developer correction
 2026-09-16 (session 008).
 
 This supersedes the stale claim that GStack was "one of the six closely-related
-memory-system components" in [[memory-master-explainer|Master Explainer]] — that document never
+memory-system components" in [[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md) — that document never
 listed GStack as a member, and the earlier config row was a stale
 cross-reference. No master-explainer edit was needed (fact-54, the memory
 family, never included GStack — consistent).

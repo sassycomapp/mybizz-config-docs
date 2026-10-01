@@ -1,6 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-exam-skill"
 doc-id: "mb-aabce08d"
+updated: "2026-10-01"
 ---
 
 # mb-config-mb-memory-system-diagnostic — Exam Skill
@@ -10,13 +11,13 @@ its spec. This skill holds the **procedure** only — expected values live in th
 spec doc and are read fresh at the start of every run. The diagnostic skill is
 working well; this exam verifies that and repairs nothing.
 
-- Spec: [[mb-memory-system-diagnostic-config|Configuration]] — read it first, every run
-- **Exam plan: [[mb-memory-system-diagnostic-exam-plan|Exam Plan]] — read second, every run.** The plan-driven cycle: the config-manager synthesizes this plan fresh before each run (spec + last report + log + learnings) and this skill executes it in hand. Run-specifics and deltas live in the plan; the **standing check inventory lives in this skill** (below) — permanent occurrences graduate here, never into plans
-- Reference: [[mb-memory-system-diagnostic-reference|Reference]] — invocation, section commands, gate semantics, report formats
-- Explainer: [[mb-memory-system-diagnostic-explainer|Explainer]] — the whole-system narrative
-- Report: [[mb-memory-system-diagnostic-exam-report|Exam Report]] — one file, overwritten each run (write-then-replace)
-- Log: [[mb-memory-system-diagnostic-log|Log]] — one run row per exam; free rows for notable events witnessed between runs
-- Learnings: [[mb-memory-system-diagnostic-learnings|Learnings]] — transient; delete entries once graduated into a permanent home
+- Spec: [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-config.md) — read it first, every run
+- **Exam plan: [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-plan.md) — read second, every run.** The plan-driven cycle: the config-manager synthesizes this plan fresh before each run (spec + last report + log + learnings) and this skill executes it in hand. Run-specifics and deltas live in the plan; the **standing check inventory lives in this skill** (below) — permanent occurrences graduate here, never into plans
+- Reference: [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-reference.md) — invocation, section commands, gate semantics, report formats
+- Explainer: [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-explainer.md) — the whole-system narrative
+- Report: [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-report.md) — one file, overwritten each run (write-then-replace)
+- Log: [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-log|Log]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-log.md) — one run row per exam; free rows for notable events witnessed between runs
+- Learnings: [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings.md) — transient; delete entries once graduated into a permanent home
 
 ## Scope boundary (anti-duplication)
 
@@ -83,14 +84,14 @@ quoted verbatim including its `***` / variable-name placeholders.
 
 ## Report
 
-Write [[mb-memory-system-diagnostic-exam-report|Exam Report]]: verdict line;
+Write [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-report.md): verdict line;
 per-tier tables (check ID, expected, actual, result); findings with class +
 evidence + recommended repair + risk; runner attribution for every deferred
 item (guard-forbidden vs unlock-gated). Overwritten in full each run
 (write-then-replace; failed runs never touch the prior report; written before
 any pruning). Then: one run row appended to
-[[mb-memory-system-diagnostic-log|Log]]; new learnings filed in
-[[mb-memory-system-diagnostic-learnings|Learnings]].
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-log|Log]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-log.md); new learnings filed in
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings.md).
 
 ## Gate protocol
 

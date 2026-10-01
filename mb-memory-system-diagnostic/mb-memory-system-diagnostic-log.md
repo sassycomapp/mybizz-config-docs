@@ -1,13 +1,14 @@
 ---
 title: "mb-memory-system-diagnostic-log"
 doc-id: "mb-ee5e2942"
+updated: "2026-10-01"
 ---
 # mb-memory-system-diagnostic — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,
 crashes, failure incidents, upgrades, error reports, significant guard denials.
 Events, not lessons — lessons live in
-[[mb-memory-system-diagnostic-learnings|Learnings]]. Pruned under the absorption
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings.md). Pruned under the absorption
 rule. (Seeded with development-period events so the system has working data;
 content beyond eventness is not the point.)
 

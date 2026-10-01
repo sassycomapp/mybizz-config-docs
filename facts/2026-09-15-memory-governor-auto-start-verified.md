@@ -1,6 +1,7 @@
 ---
 title: "2026-09-15-memory-governor-auto-start-verified"
 doc-id: "mb-a782c00a"
+updated: "2026-10-01"
 ---
 # Fact — memory governor auto-start installed and verified
 
@@ -26,6 +27,6 @@ standing-check — it ran at two restarts and failed both. **Decision — full
 boot-command retirement (developer-approved 2026-09-28):** the `[boot]`
 command no longer invokes `start-memory-system.sh`; the units own both
 processes and `postgresql.service` owns the cluster. Unit definitions:
-[[memory-governor-reference|Usage, Invocation, and Incident Response]]
+[[[mybizz-config-docs:memory-governor/memory-governor-reference|Usage, Invocation, and Incident Response]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-reference.md)
 §Permanent auto-start migration. Previously approved 2026-09-08; units
 placed 2026-09-13.

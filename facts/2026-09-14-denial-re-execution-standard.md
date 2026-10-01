@@ -1,6 +1,7 @@
 ---
 title: "2026-09-14-denial-re-execution-standard"
 doc-id: "mb-c8b52248"
+updated: "2026-10-01"
 ---
 # Durable fact — Developer standard on guard denials (2026-09-14)
 
@@ -18,6 +19,6 @@ substitutes for a same-run execution.
 Stated by the developer 2026-09-14 during the graphify configuration-
 management run #1, and applied live there: every denied check was
 re-executed formally and passed. Permanent home:
-[[config-manager-learnings|Learnings]] entry #4; destination
-[[config-manager-reference|Reference: Commands, Procedures]] (Guard denials / Developer-returned results
+[[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md) entry #4; destination
+[[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md) (Guard denials / Developer-returned results
 sections).

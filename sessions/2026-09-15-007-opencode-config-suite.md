@@ -1,6 +1,7 @@
 ---
 title: "2026-09-15-007-opencode-config-suite"
 doc-id: "mb-9c2693c3"
+updated: "2026-10-01"
 ---
 # Session 007 — mb-config-opencode config-management suite built, installed, run #1 HEALTHY
 
@@ -8,14 +9,14 @@ doc-id: "mb-9c2693c3"
 
 1. **Suite build-out (Phase 1).** Built the OpenCode configuration-management
    suite to the 7-file standard + skill source in `mybizz-config-docs/opencode/`:
-   [[opencode-exam-plan|Exam Plan]] (hand-written bootstrap plan, the format template),
-   [[opencode-exam-report|Exam Report]] (placeholder), [[opencode-log|Log]] (seeded from the
+   [[[mybizz-config-docs:opencode/opencode-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-plan.md) (hand-written bootstrap plan, the format template),
+   [[[mybizz-config-docs:opencode/opencode-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-report.md) (placeholder), [[[mybizz-config-docs:opencode/opencode-log|Log]]](C:/mybizz/mybizz-config-docs/opencode/opencode-log.md) (seeded from the
    suite's documented history: the 2026-09-01 config consolidation, the
    2026-09-06/08 plugin-restart incidents, the 2026-09-09 merge/deny/distro
-   verifications, skill discovery taxonomy), [[opencode-learnings|Learnings]] (preamble +
-   empty table), [[opencode-skill|Opencode Skill]] (born-with-inventory, `mb-config-opencode`),
-   and localized [[opencode-explainer|OpenCode Explainer]] (top companion note, §8 Config
-   maintenance, §9 S.W.O.T., footer) and [[opencode-reference|Commands, Verification, Troubleshooting]] (exam-set
+   verifications, skill discovery taxonomy), [[[mybizz-config-docs:opencode/opencode-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/opencode/opencode-learnings.md) (preamble +
+   empty table), [[[mybizz-config-docs:opencode/opencode-skill|Opencode Skill]]](C:/mybizz/mybizz-config-docs/opencode/opencode-skill.md) (born-with-inventory, `mb-config-opencode`),
+   and localized [[[mybizz-config-docs:opencode/opencode-explainer|OpenCode Explainer]]](C:/mybizz/mybizz-config-docs/opencode/opencode-explainer.md) (top companion note, §8 Config
+   maintenance, §9 S.W.O.T., footer) and [[[mybizz-config-docs:opencode/opencode-reference|Commands, Verification, Troubleshooting]]](C:/mybizz/mybizz-config-docs/opencode/opencode-reference.md) (exam-set
    pointers in the header).
 2. **Install (Phase 2).** Requested `mg-grant --path
    ~/.config/opencode/skills/mb-config-opencode --count 3` (developer-run,
@@ -55,9 +56,9 @@ doc-id: "mb-9c2693c3"
    (`C:\data-mybizz-mgt\**`) and **F-5** `agent.docs-manager` subagent is
    undocumented.
 6. **Gate approved all items (Phases 4–5).** F-4 and F-5 **approved and
-   applied**: [[opencode-config|OpenCode Configuration]] §Global config updated (4th root, docs-manager
+   applied**: [[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md) §Global config updated (4th root, docs-manager
    row, 13-pattern note, 2026-09-15 re-verified banner, AGENTS.md ~16.2 KB) and
-   [[opencode-permission-access-control-model|Permission & Access Control Model]] per-agent bullet updated.
+   [[[mybizz-config-docs:opencode/opencode-permission-access-control-model|Permission & Access Control Model]]](C:/mybizz/mybizz-config-docs/opencode/opencode-permission-access-control-model.md) per-agent bullet updated.
    **F-6** security confirmation recorded: `opencode debug config` stdout carries
    **literal API values** while the source `.jsonc` correctly holds `{env:...}`
    placeholders — confirms the sensitive-data guard class, the capture-delete
@@ -67,8 +68,8 @@ doc-id: "mb-9c2693c3"
    field extraction = permanently developer-run; exec-protection guard matches
    tokens in argument literals), learnings entries deleted.
 7. **Register + logs updated.** Register row carries final hash/install/run
-   facts; [[config-manager-log|Log]] records step-0 PASS + run closure;
-   [[opencode-log|Log]] records the run row with the full gate disposition.
+   facts; [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) records step-0 PASS + run closure;
+   [[[mybizz-config-docs:opencode/opencode-log|Log]]](C:/mybizz/mybizz-config-docs/opencode/opencode-log.md) records the run row with the full gate disposition.
 
 ## Quirks and their dispositions
 
@@ -83,7 +84,7 @@ doc-id: "mb-9c2693c3"
   the re-installed hash as `268bb702a0384482`; the true first-16 is
   `268bb702a038448b` (b, not 2). Corrected in all three files.
 - **A log-row editing slip caught and corrected:** an edit on
-  [[config-manager-log|Log]] briefly replaced the mb-submit-memory row instead of
+  [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) briefly replaced the mb-submit-memory row instead of
   appending; restored verbatim.
 
 ## Standards the developer set
@@ -106,5 +107,5 @@ doc-id: "mb-9c2693c3"
 - None open in this suite. Next regular exam run of `mb-config-opencode` will be
   plan-synthesized per the standard cycle. Tier 3 (restart + WSL distro +
   upgrade decision) remains available for a future unlock.
-- The pre-existing [[gbrain-explainer|Explainer]] working-tree change predates
+- The pre-existing [[[mybizz-config-docs:gbrain/gbrain-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-explainer.md) working-tree change predates
   this session — flagged, not touched.

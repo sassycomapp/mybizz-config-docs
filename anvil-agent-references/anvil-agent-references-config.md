@@ -1,14 +1,15 @@
 ---
 title: "anvil-agent-references-config"
 doc-id: "mb-87d907ea"
+updated: "2026-10-01"
 ---
 # anvil-agent-references — Configuration
 
 Canonical current-state configuration record. Agent-facing. Reflects the
 live-verified state as of 2026-09-06. This document states facts, not history —
 where a decision was made and the reasoning matters, see
-[[anvil-agent-references-explainer|Explainer]]; for exact commands and per-skill
-technical detail, see [[anvil-agent-references-reference|Reference: Install, Skills, and Technical Detail]].
+[[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-explainer.md); for exact commands and per-skill
+technical detail, see [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-reference|Reference: Install, Skills, and Technical Detail]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-reference.md).
 
 ---
 
@@ -45,7 +46,7 @@ technical detail, see [[anvil-agent-references-reference|Reference: Install, Ski
 | Symlinks (created 2026-08-12) | `anvil-yaml`, `client-forms`, `client-modules`, `data-models`, `server-code` |
 | OpenCode discovery | Confirmed working — all five skills appear in the OpenCode skill catalog (verified live 2026-09-06) |
 | Duplicate discovery paths | None — no anvil entries in `~/.claude/skills/`; no project-local anvil skills |
-| Shared root | `~/.agents/skills/` also hosts Matt Pocock's 35 skills (see [[matt-pocock-skills-reference|Matt Pocock Skills Reference]]) |
+| Shared root | `~/.agents/skills/` also hosts Matt Pocock's 35 skills (see [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-reference\|Matt Pocock Skills Reference]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-reference.md)) |
 
 ## Repository structure (live-verified 2026-09-16)
 
@@ -55,7 +56,7 @@ technical detail, see [[anvil-agent-references-reference|Reference: Install, Ski
 | `CLAUDE.md` | Same guidance for Claude Code-style agents; imports `AGENTS.md` via `@./AGENTS.md` |
 | `README.md` | Install instructions (Codex plugin, Claude Code plugin, manual symlinks) |
 | `skills/` | 5 skill folders — see Skills inventory |
-| `stubs/` | 63 `.pyi` files — `stubs/client/` (31) and `stubs/server/` (32), covering **[[anvil|anvil]] and `stripe`** APIs |
+| `stubs/` | 63 `.pyi` files — `stubs/client/` (31) and `stubs/server/` (32), covering **[[[default:anvil-docs/api/anvil\|anvil]]](C:/dev/project-library-global/anvil-docs/api/anvil.md) and `stripe`** APIs |
 | `reference/types/` | `anvil-yaml.d.ts`, `form-yaml.d.ts`, `index.d.ts` — generated `.d.ts` material for `anvil.yaml` and form templates |
 | `docs/m3/` | Material 3 theme reference — Api (generated API/attrs reference), `components/` (`_index.md`, `components.md`, `layouts.md`, `colour-schemes.md`, `img/`), `layouts.md` |
 | `.codex-plugin/` | Codex plugin metadata (`plugin.json`) |
@@ -75,7 +76,7 @@ technical detail, see [[anvil-agent-references-reference|Reference: Install, Ski
 
 | Item | Codex (`.codex-plugin/plugin.json`) | Claude Code (`.claude-plugin/plugin.json`) |
 |---|---|---|
-| Plugin name | [[anvil|anvil]] | [[anvil|anvil]] |
+| Plugin name | [[[default:anvil-docs/api/anvil\|anvil]]](C:/dev/project-library-global/anvil-docs/api/anvil.md) | [[[default:anvil-docs/api/anvil\|anvil]]](C:/dev/project-library-global/anvil-docs/api/anvil.md) |
 | Version | `1.0.0` | `1.0.0` |
 | Description | "Anvil app editing workflows and reference material for AI agents." | "Anvil app editing workflows and reference material for Claude Code." |
 | Skills path | `./skills/` | — (plugin dir structure) |
@@ -96,22 +97,22 @@ technical detail, see [[anvil-agent-references-reference|Reference: Install, Ski
 
 | Item | Value |
 |---|---|
-| PDLF | Supplies platform-specific ground truth "underneath every single one of these steps" ([[pdlf-system-explainer|The Project Development Lifecycle Framework]]); one of five skill families' supporting sources |
+| PDLF | Supplies platform-specific ground truth "underneath every single one of these steps" ([[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-system-explainer\|The Project Development Lifecycle Framework]]](C:/pdlf/pdlf-library/pdlf-explainer-docs/pdlf-system-explainer.md)); one of five skill families' supporting sources |
 | Environment standards | Anvil.works working methods + Material 3 theme + M3 dependency + MUI overlay are prescribed standards (global AGENTS.md); this skill set is the agent-facing reference for them |
-| Governing ADRs (project-library-global) | [[adr-anvil-extras-exclusion|Anvil Extras Exclusion]] (M3-only components), [[adr-htmltemplate-use|HTMLTemplate Use]] (HTMLTemplate banned), [[adr-material-3-theme-component-scope|Material 3 Theme Component Scope]], [[adr-anvil-platform-constraints|Anvil Platform Constraints and Design Boundaries]] |
-| Cupcake rules bearing on this component | `cup-block-anvil-yaml-writes.rego` (AI writes to `anvil.yaml`); `cup-protected_ai_governance_files_may_not_be_modified.rego` (AI writes to `AGENTS.md`/`CLAUDE.md`); `cup-no_cross_project_filesystem_access_by_default.rego` (AI writes outside the project root). Standing policy regardless; mechanically enforced only when Cupcake enforcement is active — status: [[cupcake-config|Cupcake Configuration]] Current Operational Status |
+| Governing ADRs (project-library-global) | [[[default:adr-global/adr-anvil-extras-exclusion\|Anvil Extras Exclusion]]](C:/dev/project-library-global/adr-global/adr-anvil-extras-exclusion.md) (M3-only components), [[[default:adr-global/adr-htmltemplate-use\|HTMLTemplate Use]]](C:/dev/project-library-global/adr-global/adr-htmltemplate-use.md) (HTMLTemplate banned), [[[default:adr-global/adr-material-3-theme-component-scope\|Material 3 Theme Component Scope]]](C:/dev/project-library-global/adr-global/adr-material-3-theme-component-scope.md), [[[default:adr-global/adr-anvil-platform-constraints\|Anvil Platform Constraints and Design Boundaries]]](C:/dev/project-library-global/adr-global/adr-anvil-platform-constraints.md) |
+| Cupcake rules bearing on this component | `cup-block-anvil-yaml-writes.rego` (AI writes to `anvil.yaml`); `cup-protected_ai_governance_files_may_not_be_modified.rego` (AI writes to `AGENTS.md`/`CLAUDE.md`); `cup-no_cross_project_filesystem_access_by_default.rego` (AI writes outside the project root). Standing policy regardless; mechanically enforced only when Cupcake enforcement is active — status: [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) Current Operational Status |
 | Sibling corpus | `C:\dev\project-library-global\anvil-docs\` — vendor-docs corpus, moved out 2026-09-08 (formerly `mybizz-config-docs/anvil-docs/`) |
 
 ## Settled policies (developer decisions on record)
 
 Cupcake-based statements in this suite describe standing policy and what
 enforcement blocks when active — enforcement status is not fixed and is not
-restated as current anywhere in this suite; check [[cupcake-config|Cupcake Configuration]]'s
+restated as current anywhere in this suite; check [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)'s
 Current Operational Status for the live state.
 
 | Policy | Detail |
 |---|---|
-| Memory Governor bypass | Permanent — this source syncs into GBrain by ordinary `gbrain sync`, never through the governor's API. Vendor-published reference material: no genuine confidence/contradiction judgment to make ([[memory-governor-config|Memory Governor Configuration]]). Keeping the source current is the developer's own responsibility. |
+| Memory Governor bypass | Permanent — this source syncs into GBrain by ordinary `gbrain sync`, never through the governor's API. Vendor-published reference material: no genuine confidence/contradiction judgment to make ([[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md)). Keeping the source current is the developer's own responsibility. |
 | Update command execution | `git pull` in the clone is developer-run only, never AI-invoked — the clone sits outside every project root; an AI-run write there is a cross-project write, which is the discipline Cupcake's cross-project-write rule enforces when active (status per the note above). |
 
 ## Known stale external references (state, 2026-09-06)
@@ -129,13 +130,13 @@ Current Operational Status for the live state.
 |---|---|---|
 | 1 | Upstream update — CLOSED 2026-09-16. The pending update recorded at 2026-09-06 was executed: clone moved to `7c9b0a7` (the then-upstream HEAD, verified live). One new upstream commit (`afe281d`, 2026-09-16 origin check) has since landed — a fresh, small drift, recaptured in §Identity. Next update remains developer-run: `git -C /mnt/c/mybizz/anvil-agent-references pull` (standing discipline — never AI-invoked). | Closed |
 | 2 | License + adoption review — CLOSED 2026-09-16. Adoption-time review now performed and recorded (see §Adoption review below), replacing "no adoption-time review on record". Four axes: publisher = platform vendor (pass); maintenance active (pass — upstream commit landed 2026-09-16); no spawn capability (pass); license = **absent** — GitHub license API 404 re-confirmed live 2026-09-16, no LICENSE file in clone. License axis recorded as documented accepted risk. | Closed |
-| 3 | Per-project setup in `mb-3-cs`, `mb4ecom`, `mb5pdlf` app roots — CLOSED as deliberate deferral 2026-09-16. These three roots are deliberately not project-initialized ([[cupcake-config|Cupcake Configuration]] project-init status); their Anvil per-project setup is developer-run and tied to each project's own initialization. When a project initializes, the setup step is a developer action (AI writes to `AGENTS.md` prohibited; Cupcake active). Recorded disposition; trigger-bound, not dangling. | Closed (developer-run on project init) |
+| 3 | Per-project setup in `mb-3-cs`, `mb4ecom`, `mb5pdlf` app roots — CLOSED as deliberate deferral 2026-09-16. These three roots are deliberately not project-initialized ([[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) project-init status); their Anvil per-project setup is developer-run and tied to each project's own initialization. When a project initializes, the setup step is a developer action (AI writes to `AGENTS.md` prohibited; Cupcake active). Recorded disposition; trigger-bound, not dangling. | Closed (developer-run on project init) |
 | 4 | No confirmed run record of any of the five skills — CLOSED 2026-09-16. The config exam's Tier-2 functional sweep (5/5 reachability + valid frontmatter through the symlinks) and Tier-3 byte-identity audit (5/5 SKILL.md SHA-256 equal to vendor sources) constitute the confirmed on-record verification that all five skills resolve and load as the vendor published them. Any first in-app task invocation remains a future verification event (explainer §9), but the "unverified install" gap is closed. | Closed |
 | 5 | First `gbrain sync` of `anvil-agent-references-code` — CLOSED 2026-09-16. Sync has executed: 34 pages indexed, last sync 2026-09-06 (verified live). Index state corrected in §GBrain registration. | Closed |
 
 ## Adoption review (recorded 2026-09-16, closes open item 2)
 
-Per [[sec-dependency-skill-supply-chain|Dependency and Skill Supply Chain]] (publisher, license, maintenance, spawn
+Per [[[default:security-global/infrastructure/sec-dependency-skill-supply-chain|Dependency and Skill Supply Chain]]](C:/dev/project-library-global/security-global/infrastructure/sec-dependency-skill-supply-chain.md) (publisher, license, maintenance, spawn
 check) — the four required axes reviewed against live evidence on 2026-09-16:
 
 | Axis | Requirement | Evidence | Verdict |

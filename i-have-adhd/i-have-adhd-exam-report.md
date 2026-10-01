@@ -1,11 +1,12 @@
 ---
 title: "i-have-adhd-exam-report"
 doc-id: "mb-36562066"
+updated: "2026-10-01"
 ---
 # i-have-adhd — Exam Report
 
 Run #1 — **first formal plan-driven exam, gate closed** (2026-09-20). Plan:
-[[i-have-adhd-exam-plan|Exam Plan]] (bootstrap — no prior report). Install: copy-install
+[[[mybizz-config-docs:i-have-adhd/i-have-adhd-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-exam-plan.md) (bootstrap — no prior report). Install: copy-install
 executed 2026-09-20 without `mg-grant` (Cupcake disabled; developer authorized
 proceed-without-grant in chat) — hash pair identical `b27623b6faf7ebe8`;
 register flipped `WIP` → `Installed`; re-installed once after the gate-approved

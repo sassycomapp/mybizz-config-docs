@@ -1,14 +1,15 @@
 ---
 title: "cupcake-reference"
 doc-id: "mb-e79d3d01"
+updated: "2026-10-01"
 ---
 # Cupcake Reference — Usage, Invocation, and Worked Examples
 
-Companion to [[cupcake-config|Cupcake Configuration]] (the spec — current installed state, operational
-status) and [[cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]] (design, history, and real incidents — the
-authoritative whole-system narrative). Exam companions: [[cupcake-exam-plan|Exam Plan]]
-(next run's job-spec), [[cupcake-exam-report|Exam Report]] (current verified state),
-[[cupcake-log|Log]] (notable events), [[cupcake-learnings|Learnings]] (transient exam
+Companion to [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) (the spec — current installed state, operational
+status) and [[[mybizz-config-docs:cupcake/cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md) (design, history, and real incidents — the
+authoritative whole-system narrative). Exam companions: [[[mybizz-config-docs:cupcake/cupcake-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-plan.md)
+(next run's job-spec), [[[mybizz-config-docs:cupcake/cupcake-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-report.md) (current verified state),
+[[[mybizz-config-docs:cupcake/cupcake-log|Log]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-log.md) (notable events), [[[mybizz-config-docs:cupcake/cupcake-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-learnings.md) (transient exam
 knowledge). Agent-facing.
 
 **Status note:** Cupcake is **ACTIVE** as of 2026-09-12 — enforcement verified
@@ -114,7 +115,7 @@ mg-revoke --path /mnt/c/tmp/target
 **Important: a raw `cupcake eval` pipe does not exercise the decrement.** It
 only asks the policy engine for a decision — it never executes a real tool
 call, so the plugin's `tool.execute.after` hook never fires. Only a genuine
-tool execution moves the count (see [[cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]] §7E).
+tool execution moves the count (see [[[mybizz-config-docs:cupcake/cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md) §7E).
 
 ## `git-grant` — commit allowances (WP3, 2026-09-22)
 
@@ -188,7 +189,7 @@ cause: `regex.replace` fails silently in the real compiled engine
 
 The grant logic's first design used `time.now_ns()` inside Rego. An isolated
 live probe confirmed the same silent-failure signature. The fix moved all time
-computation out of Rego entirely — see [[cupcake-config|Cupcake Configuration]]'s grants mechanics.
+computation out of Rego entirely — see [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)'s grants mechanics.
 
 ## Confirming a rule is genuinely live and correctly scoped
 
@@ -215,7 +216,7 @@ opa check (path-to-file.rego)
 Distinct from a normal live incident: **every** tool call fails with a bare
 `Cupcake exited with code 1` and no policy decision at all. Confirmed
 real-world triggers, 2026-09-06 and 2026-09-22 (full accounts in the
-[[cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]).
+[[[mybizz-config-docs:cupcake/cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md)).
 
 **Since the 2026-09-22 set-and-forget amendment, this failure class cannot
 block the environment anymore:** `failMode: open` is the environment default
@@ -246,7 +247,7 @@ incident, and for any future pre-amendment plugin version:
    `example.rego` in a project-local policy folder; if it entered git history
    via a broad `git add -A` rather than the `mb-compile-rules` pipeline, it is
    a strong suspect for breaking the whole scanned folder (confirmed present
-   as of 2026-09-06 — see [[cupcake-config|Cupcake Configuration]]):
+   as of 2026-09-06 — see [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)):
    ```bash
    cat .cupcake/policies/opencode/example.rego
    opa check .cupcake/policies/opencode/example.rego
@@ -319,7 +320,7 @@ add `.cupcake/policies/opencode/example.rego` to the project's `.gitignore`.
 If step 5 doesn't produce a clean result, `failMode: "open"` means work isn't
 blocked while diagnosis continues. **Until this sequence is actually run and
 the crash reproduced-and-resolved, the fix remains a candidate, not a
-solution** — see [[cupcake-config|Cupcake Configuration]]'s standing context.
+solution** — see [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)'s standing context.
 
 ## Disabling Cupcake — immediate, fully reversible
 

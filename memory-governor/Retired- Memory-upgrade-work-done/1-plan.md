@@ -1,6 +1,7 @@
 ---
 title: "1-plan"
 doc-id: "mb-38fad74a"
+updated: "2026-10-01"
 ---
 # Work Package 1 — Read-only Baseline Inspection
 
@@ -103,7 +104,7 @@ hooks, configs, packages, or agent instructions were modified.
 4. **Pending backfill:** `mb4ecom-code` source has 1 queued backfill job.
 5. **AGENTS.md cross-reference unverified:** the `master-task-list.md Task 3.7`
    reference for Graphify's role was not inspected (out of scope for this gate).
-6. **Missing timestamp-standard ADR:** the [[adr-timezone-utc-storage-display-conversion|Client Timezone: IANA String, UTC Storage, Display-Time Conversion]]
+6. **Missing timestamp-standard ADR:** the [[[default:adr-global/adr-timezone-utc-storage-display-conversion|Client Timezone: IANA String, UTC Storage, Display-Time Conversion]]](C:/dev/project-library-global/adr-global/adr-timezone-utc-storage-display-conversion.md)
    ADR referenced by both AGENTS.md files is not present on disk under
    `mb-3-cs-project-library`. The timestamp header on this report uses a plain
    UTC+2 (SAST) ISO-8601 value as a fallback because the authoritative

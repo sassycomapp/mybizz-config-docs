@@ -1,12 +1,13 @@
 ---
 title: "config-manager-reference"
 doc-id: "mb-8ddcefac"
+updated: "2026-10-01"
 ---
 # mb-config-manager — Reference
 
 Agent-facing procedures for running the config-management system. Architecture and
-file model: [[config-manager-explainer|Explainer]]. Routing table:
-[[config-manager-register|Register: Managed Systems]].
+file model: [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md). Routing table:
+[[[mybizz-config-docs:mb-config-manager/config-manager-register|Register: Managed Systems]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md).
 
 ## Invocation
 

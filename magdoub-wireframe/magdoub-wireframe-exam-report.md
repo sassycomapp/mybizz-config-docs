@@ -1,11 +1,12 @@
 ---
 title: "magdoub-wireframe-exam-report"
 doc-id: "mb-057de579"
+updated: "2026-10-01"
 ---
 # Magdoub Wireframe — Exam Report
 
 Run #1 — **first formal plan-driven exam** (2026-09-16). Plan:
-[[magdoub-wireframe-exam-plan|Exam Plan]] (bootstrap — no prior report). Step-0: **PASS**
+[[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-plan.md) (bootstrap — no prior report). Step-0: **PASS**
 — 12/12 hash pairs match via the approved glob form (postgresql `b41a3e117dee1809`
 · cupcake `f5e8489cf60a8abc` · gbrain `58dc0b52cbc86d72` · memory-governor
 `c40df342d523aa59` · gbrain-dream-cycle `a4872e9d61f1c32f` · graphify
@@ -17,7 +18,7 @@ spec-doc paths resolve; no open run blocks (bootstrap). One guard denial at
 step-0 (brace-expansion glob across sibling suite folders — recorded class) —
 honored, directory-read form used. Detection Tiers 0–2, then Tier 3 **unlocked at
 the gate** (2026-09-16, all items approved) and executed.
-Scope boundary honored (PDLF step 22/26 + [[adr-design-rules|Wireframe Design Rules]] ADR = docs domain;
+Scope boundary honored (PDLF step 22/26 + [[[default:adr-global/adr-design-rules|Wireframe Design Rules]]](C:/dev/project-library-global/adr-global/adr-design-rules.md) ADR = docs domain;
 `task`-tool guard layer = cupcake/opencode domain; gbrain sync = gbrain module —
 none probed).
 
@@ -74,11 +75,11 @@ confirmed exhaustively; the Tier 1/2 sampling is validated at full breadth.
 
 **MW3-2 — open-item decisions (all gate-approved, recorded in the spec):**
 - **W-3 supply-chain review — PERFORMED AND RECORDED** in
-  [[magdoub-wireframe-config|Configuration]] (Security supply-chain review, 2026-09-16):
+  [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-config|Configuration]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-config.md) (Security supply-chain review, 2026-09-16):
   benign on all four axes (publisher individual/acceptable · MIT clear ·
   maintenance dormant-but-stable acceptable · spawn-capability benign in this
   environment). Open item 3 **closed**.
-- **W-4 [[adr-design-rules|Wireframe Design Rules]] ADR reconciliation — FLAGGED TO DOCS GOVERNANCE at the
+- **W-4 [[[default:adr-global/adr-design-rules|Wireframe Design Rules]]](C:/dev/project-library-global/adr-global/adr-design-rules.md) ADR reconciliation — FLAGGED TO DOCS GOVERNANCE at the
   gate, then RESOLVED BY DIRECT DEVELOPER DECISION 2026-09-16** (ADR Section A
   added — Magdoub-skill exemption; open item 4 closed post-run; see suite log
   row).

@@ -1,6 +1,7 @@
 ---
 title: "matt-pocock-skills-skill"
 doc-id: "mb-0fc6bba6"
+updated: "2026-10-01"
 ---
 # mb-config-matt-pocock-skills — Exam Skill
 
@@ -9,20 +10,20 @@ This skill holds the **procedure** only — expected values live in the spec doc
 are read fresh at the start of every run. The installation is working well; this
 exam verifies that and repairs nothing.
 
-- Spec: [[matt-pocock-skills-config|Matt Pocock Skills Configuration]] — read it first, every run
-- **Exam plan: [[matt-pocock-skills-exam-plan|Exam Plan]] — read
+- Spec: [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-config|Matt Pocock Skills Configuration]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-config.md) — read it first, every run
+- **Exam plan: [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-exam-plan.md) — read
   second, every run.** The plan-driven cycle: the config-manager synthesizes
   this plan fresh before each run (from spec + last report + log + learnings)
   and this skill executes it in hand. The plan carries run-specifics and
   deltas; the **standing check inventory lives in this skill** (below) —
   permanent occurrences graduate here, never into plans
-- Reference: [[matt-pocock-skills-reference|Matt Pocock Skills Reference]] — invocation,
+- Reference: [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-reference|Matt Pocock Skills Reference]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-reference.md) — invocation,
   standing rules, per-project setup gate, inline-execution table
-- Report: [[matt-pocock-skills-exam-report|Exam Report]] — one file,
+- Report: [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-exam-report.md) — one file,
   overwritten each run (write-then-replace)
-- Log: [[matt-pocock-skills-log|Log]] — one run row per exam;
+- Log: [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-log|Log]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-log.md) — one run row per exam;
   free rows for notable events witnessed between runs
-- Learnings: [[matt-pocock-skills-learnings|Learnings]] — file new
+- Learnings: [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-learnings.md) — file new
   patterns/nuances; delete entries once graduated into a permanent home
 
 ## Scope boundary (anti-duplication)
@@ -103,13 +104,13 @@ copied into reports, outputs, or learnings.
 
 ## Report
 
-Write [[matt-pocock-skills-exam-report|Exam Report]]: verdict line; per-tier tables (check
+Write [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-exam-report.md): verdict line; per-tier tables (check
 ID, expected, actual, result); findings with class + evidence + recommended
 repair + risk; runner attribution for every deferred item (guard-forbidden vs
 unlock-gated); overwritten in full each run (write-then-replace: failed runs
 never touch the prior report; written before any pruning). Then: one run row
-appended to [[matt-pocock-skills-log|Log]] (run-row format per
-[[config-manager-reference|Reference: Commands, Procedures]]); new learnings filed.
+appended to [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-log|Log]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-log.md) (run-row format per
+[[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md)); new learnings filed.
 
 ## Gate protocol
 

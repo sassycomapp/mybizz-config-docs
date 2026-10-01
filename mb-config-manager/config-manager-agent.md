@@ -1,6 +1,7 @@
 ---
 title: "config-manager-agent"
 doc-id: "mb-4855d95c"
+updated: "2026-10-01"
 ---
 # mb-config-manager — Orchestrator Agent
 
@@ -29,7 +30,7 @@ documentation tool.
 
 ## Routing
 
-1. Read [[config-manager-register|Register: Managed Systems]].
+1. Read [[[mybizz-config-docs:mb-config-manager/config-manager-register|Register: Managed Systems]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md).
 2. Run each system whose state is `Installed`, by invoking its exam skill
    (e.g. `mb-config-postgresql`) — with that system's exam-plan in hand
    (synthesized first, per the exam cycle below). Scope per the invocation form.
@@ -50,7 +51,7 @@ Concrete checks, each executed and recorded:
 4. The register's most recent log run-row for the target system has a disposition
    — an open/undispositioned run blocks a new one (one-run-at-a-time).
 
-Result recorded in [[config-manager-log|Log]] (pass/fail row). Inconsistency in
+Result recorded in [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) (pass/fail row). Inconsistency in
 yourself is logged and reported — never self-healed. A system that exams itself
 with its own machinery is circular redundancy; your documents are governed by the
 docs-management skills instead.
@@ -60,7 +61,7 @@ docs-management skills instead.
 **Plan-driven.** The skill holds the standing procedure; each run is driven by a
 per-run exam-plan you synthesize immediately before running the skill.
 
-1. **Synthesize the exam-plan** — read the system's [[config|Config]] (the spec), the last
+1. **Synthesize the exam-plan** — read the system's [[[makepdlf-project-library:docs-local/config|Config]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/config.md) (the spec), the last
    `exam-report.md` (deferred + erred items), the `log.md` (events since last run),
    and the `learnings.md` (lessons not yet graduated). Write the system's
    `exam-plan.md`: run header (date, Tier-3 unlock state, developer-run requests),
@@ -188,5 +189,5 @@ the entry. Never accumulate.
 Built (Installed, formal exam runs verified): `mb-config-postgresql` (pilot),
 `mb-config-cupcake`, `mb-config-gbrain`, `mb-config-memory-governor`,
 `mb-config-gbrain-dream-cycle` (2026-09-14). The enhanced plan-driven cycle above is tuned on
-PostgreSQL first, then emulates across systems. [[config-manager-register|Register: Managed Systems]] is
+PostgreSQL first, then emulates across systems. [[[mybizz-config-docs:mb-config-manager/config-manager-register|Register: Managed Systems]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md) is
 the authority for what runs.

@@ -1,19 +1,20 @@
 ---
 title: "gbrain-dream-cycle-exam-plan"
 doc-id: "mb-47ecb66c"
+updated: "2026-10-01"
 ---
 # GBrain Dream Cycle — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before
-each run from: [[gbrain-dream-cycle-config|Configuration]] (spec), the last
-[[gbrain-dream-cycle-exam-report|Exam Report]], [[gbrain-dream-cycle-log|Log]] (events since last
-run), [[gbrain-dream-cycle-learnings|Learnings]]. Consumed by the skill at run time;
+each run from: [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-config.md) (spec), the last
+[[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-exam-report.md), [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-log|Log]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-log.md) (events since last
+run), [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-learnings.md). Consumed by the skill at run time;
 rewritten at the start of the following cycle. The file is live; its contents are
 transient.
 
 **This first plan is hand-written** (emulation of the PostgreSQL architecture): it
 also serves as the format template. The **standing check inventory lives in the
-skill** ([[gbrain-dream-cycle-skill|Gbrain Dream Cycle Skill]], born-with-inventory); this plan carries
+skill** ([[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-skill|Gbrain Dream Cycle Skill]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-skill.md), born-with-inventory); this plan carries
 run-specifics and references. Once verified by a run, future plans carry
 run-specifics + references only.
 
@@ -29,7 +30,7 @@ run-specifics + references only.
 | Step-0 result | recorded at execution |
 | Tier 3 unlock state | **Locked** — Tier 3 rows execute only if the developer unlocks this run |
 | Developer-run requests this run (bundled into ONE request) | (a) `~/.gbrain/config.json` content check — `mcp_surface` key absence (sensitive-data guard blocks agent reads — proven class); (b) ANTHROPIC_API_KEY validity curl, if the guard denies the agent attempt; (c) any check whose command text the guards deny |
-| Expected-value source of truth | [[gbrain-dream-cycle-config|Configuration]] — read fresh at run start; never rely on remembered values |
+| Expected-value source of truth | [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-config\|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-config.md) — read fresh at run start; never rely on remembered values |
 | Scope boundary | Parent `mb-config-gbrain` owns binary/version/config/schema-pack/sources/models/MCP/sync conformance — this exam cross-references its current report, never re-probes (version echo DC0-1 is the one permitted overlap); DB-level checks belong to `mb-config-postgresql`; resolved call-graph belongs to Graphify |
 
 ## 2. Carried-forward items
@@ -65,7 +66,7 @@ None — no prior exam exists (first formal run; bootstrap).
 ## 6. Standing checks — summary (the complete enumeration lives in the skill)
 
 Every check: id, runner (A=agent, D=developer), probe, expected source, pass
-rule — full tables in [[gbrain-dream-cycle-skill|Gbrain Dream Cycle Skill]] (Tiers 0–3). Summary:
+rule — full tables in [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-skill|Gbrain Dream Cycle Skill]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-skill.md) (Tiers 0–3). Summary:
 
 - **Tier 0 (A) — invocability:** DC0-1 version 0.46.1.0 · DC0-2 autopilot absent (crontab + script + log) · DC0-3 schema pack `gbrain-everything@1.0.0` (`7021205a`) unchanged
 - **Tier 1 (A/D) — state conformance:** DC1-1 Anthropic credential present, env-only (validity curl agent-attempted → developer bundle on denial) · DC1-2 trigger surfaces exist · DC1-3 no `mcp_surface` key (D — config content) · DC1-4 `code` `extractable: false` intact · DC1-5 suite completeness (7 files)
@@ -74,12 +75,12 @@ rule — full tables in [[gbrain-dream-cycle-skill|Gbrain Dream Cycle Skill]] (T
 
 ## 7. Report requirements
 
-The run writes [[gbrain-dream-cycle-exam-report|Exam Report]]: verdict line; per-tier tables
+The run writes [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-exam-report.md): verdict line; per-tier tables
 (check ID, expected, actual, result); findings with class + evidence + recommended
 repair + risk; runner attribution for every deferred item (guard-forbidden vs
 unlock-gated); overwritten in full each run (write-then-replace; failed runs never
 touch the prior report; written before any pruning). Then: one run row appended to
-[[gbrain-dream-cycle-log|Log]] (run-row format per [[config-manager-reference|Reference: Commands, Procedures]]);
+[[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-log|Log]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-log.md) (run-row format per [[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md));
 new learnings filed.
 
 ## 8. Gate protocol

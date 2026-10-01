@@ -1,11 +1,12 @@
 ---
 title: "postgresql-exam-report"
 doc-id: "mb-758f50e9"
+updated: "2026-10-01"
 ---
 # PostgreSQL — Exam Report
 
 Run #2 — **first formal plan-driven run** (2026-09-13). Plan:
-[[postgresql-exam-plan|Exam Plan]] (step-0 self-validation: PASS). Detection only —
+[[[mybizz-config-docs:postgresql/postgresql-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-plan.md) (step-0 self-validation: PASS). Detection only —
 Tiers 0–2 agent-runnable checks executed; Tier 3 locked. Instance A operational
 probes: developer-run request issued (secrets guard on bridge `.env` — per plan).
 
@@ -42,7 +43,7 @@ probes: developer-run request issued (secrets guard on bridge `.env` — per pla
 | P2-8 | 16.14 | 16.14 (Ubuntu 24.04 pkg) | PASS |
 | P2-9 | gbrain, memory_governor, postgres (+templates) | exact | PASS |
 | P2-9b | `compliance_ledger` absent | count 0 | PASS |
-| P2-10 | 62 tables / 62 RLS / owner postgres / schema v128 / embedding 3-large 1536d | 62/62, model + dims + schema_version=128 from [[config|Config]] table | PASS |
+| P2-10 | 62 tables / 62 RLS / owner postgres / schema v128 / embedding 3-large 1536d | 62/62, model + dims + schema_version=128 from [[[makepdlf-project-library:docs-local/config\|Config]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/config.md) table | PASS |
 | P2-11 | plpgsql, vector 0.6.0, pg_trgm 1.6, pgcrypto 1.3 | exact | PASS |
 | P2-12 | governor: 5 tables, all owned by svc | 5 tables, owner `memory_governor_svc` only | PASS |
 | P2-13 | svc cannot connect gbrain; roles exact | `has_database_privilege(svc→gbrain)=false`; svc→govdb=true; writer→gbrain=false; role set exact | PASS |
@@ -52,7 +53,7 @@ probes: developer-run request issued (secrets guard on bridge `.env` — per pla
 
 ## Findings
 
-1. **DRIFT — RESOLVED 2026-09-13.** The [[postgresql-config|Configuration]] refresh was
+1. **DRIFT — RESOLVED 2026-09-13.** The [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md) refresh was
    **approved by the developer in-session and applied**: counts refreshed
    (1,824 pages / 5,529 chunks / 164 MB), verification date → 2026-09-13,
    facts-autovacuum nuance + role-isolation test method added. Finding closed.
@@ -81,7 +82,7 @@ probes: developer-run request issued (secrets guard on bridge `.env` — per pla
 ## Developer-run request (bundled, one pass)
 
 1. **Instance A ops** (P0-2, P1-9, P1-10, P2-1..P2-7): the bridge command from
-   [[postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]] §Instance A — version, `\l` db set, `pdlf` table
+   [[[mybizz-config-docs:postgresql/postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md) §Instance A — version, `\l` db set, `pdlf` table
    inventory + schema vs spec, extensions, `postgres` admin tables, role list,
    locks/autovacuum/idle-in-txn, C: disk
 2. **Instance A log scan** (P1-9) — `data\log\` recent entries

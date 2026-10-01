@@ -1,6 +1,7 @@
 ---
 title: "2026-09-16-012-archify-config-mgmt"
 doc-id: "mb-872d37de"
+updated: "2026-10-01"
 ---
 # Session 012 — Archify configuration-management suite (run #1 formal)
 
@@ -15,21 +16,21 @@ Tier 3 when the dense test subject needed a scoping skill first).
 
 **Suite built to the 7-file standard + skill source + scope-skill component**
 under `archify/`:
-- [[archify-exam-plan|Exam Plan]] — bootstrap run #1 plan (modeled on magdoub-wireframe's)
-- [[archify-exam-report|Exam Report]] — verdict HEALTHY, all tiers, findings table
-- [[archify-log|Log]] — seeded + one run row + one gate row
-- [[archify-learnings|Learnings]] — transient stub
-- [[archify-config|Configuration]] — **gained a §Scoping skill component** (`mb-archify-scope`
+- [[[mybizz-config-docs:archify/archify-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/archify/archify-exam-plan.md) — bootstrap run #1 plan (modeled on magdoub-wireframe's)
+- [[[mybizz-config-docs:archify/archify-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/archify/archify-exam-report.md) — verdict HEALTHY, all tiers, findings table
+- [[[mybizz-config-docs:archify/archify-log|Log]]](C:/mybizz/mybizz-config-docs/archify/archify-log.md) — seeded + one run row + one gate row
+- [[[mybizz-config-docs:archify/archify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/archify/archify-learnings.md) — transient stub
+- [[[mybizz-config-docs:archify/archify-config|Configuration]]](C:/mybizz/mybizz-config-docs/archify/archify-config.md) — **gained a §Scoping skill component** (`mb-archify-scope`
   documented as a permanent front-of-pipe component, not transient tooling);
   Cupcake integration row refreshed to ACTIVE (2026-09-12) with no-archify-rule
   confirmation
-- [[archify-explainer|Explainer]] — gained "Why scoping comes first", Config-maintenance,
+- [[[mybizz-config-docs:archify/archify-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/archify/archify-explainer.md) — gained "Why scoping comes first", Config-maintenance,
   S.W.O.T., companion-documents footer; run-learnings facts graduated
-- [[archify-reference|Reference]] — `/mb-archify-scope` front-of-pipe pointer + exam-set
+- [[[mybizz-config-docs:archify/archify-reference|Reference]]](C:/mybizz/mybizz-config-docs/archify/archify-reference.md) — `/mb-archify-scope` front-of-pipe pointer + exam-set
   pointer + graduated authoring invariants (type-choice leverage,
   probe-before-connect, desktop viewBox constraint, exact-port anchoring,
   corridor separation, repair order, visual-review calibration)
-- [[archify-skill|Archify Skill]] — the born-with-inventory exam module (Tiers 0–3, AR0–AR3)
+- [[[mybizz-config-docs:archify/archify-skill|Archify Skill]]](C:/mybizz/mybizz-config-docs/archify/archify-skill.md) — the born-with-inventory exam module (Tiers 0–3, AR0–AR3)
 
 **Installed:** `mb-config-archify` → `~/.config/opencode/skills/mb-config-archify/SKILL.md`
 (copy via mg-grant, hash pair `165897270158a38e` verified). Register flipped
@@ -73,14 +74,14 @@ Step-0 surfaced **anvil-agent-references stale GAP** — source
 matched its installed copy (`8f2f4ccd…`). Resolved: developer-run re-sync
 executed, hash pair verified, register hash updated, log closed. The general
 class (component-skill spec-gained-after-install) is recorded in
-[[config-manager-learnings|Learnings]] #5.
+[[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md) #5.
 
 ## Run-learnings graduation
 
 Canonical Archify facts from the memory-ecosystem run (type-choice leverage,
 probe-before-connect, desktop viewBox constraint, exact-port anchoring, corridor
 separation, repair order, visual-review-by-human) were graduated into
-[[archify-reference|Reference]] invariants and [[archify-explainer|Explainer]]. The
+[[[mybizz-config-docs:archify/archify-reference|Reference]]](C:/mybizz/mybizz-config-docs/archify/archify-reference.md) invariants and [[[mybizz-config-docs:archify/archify-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/archify/archify-explainer.md). The
 memory-ecosystem project itself was reorganized under
 `archify/output/memory-ecosystem-project/` (one folder per project slug) and is
 **not** used as exam evidence — this run performed its own Tier-3 proof.

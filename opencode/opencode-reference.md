@@ -1,16 +1,17 @@
 ---
 title: "opencode-reference"
 doc-id: "mb-2a5a7cdf"
+updated: "2026-10-01"
 ---
 # OpenCode Reference — Commands, Verification, Troubleshooting
 
-Companion to [[opencode-config|OpenCode Configuration]] (current state),
-[[opencode-permission-access-control-model|Permission & Access Control Model]] (the permission layers),
-[[opencode-project-session-data-integrity|Project & Session Data Integrity]] (session database
-maintenance), and [[opencode-explainer|OpenCode Explainer]] (mechanics and real incidents).
-Config-management set: [[opencode-exam-plan|Exam Plan]] (transient job-spec — read
-second, every run), [[opencode-exam-report|Exam Report]] (last verified state),
-[[opencode-log|Log]] (chronological events), [[opencode-learnings|Learnings]]
+Companion to [[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md) (current state),
+[[[mybizz-config-docs:opencode/opencode-permission-access-control-model|Permission & Access Control Model]]](C:/mybizz/mybizz-config-docs/opencode/opencode-permission-access-control-model.md) (the permission layers),
+[[[mybizz-config-docs:opencode/opencode-project-session-data-integrity|Project & Session Data Integrity]]](C:/mybizz/mybizz-config-docs/opencode/opencode-project-session-data-integrity.md) (session database
+maintenance), and [[[mybizz-config-docs:opencode/opencode-explainer|OpenCode Explainer]]](C:/mybizz/mybizz-config-docs/opencode/opencode-explainer.md) (mechanics and real incidents).
+Config-management set: [[[mybizz-config-docs:opencode/opencode-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-plan.md) (transient job-spec — read
+second, every run), [[[mybizz-config-docs:opencode/opencode-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-report.md) (last verified state),
+[[[mybizz-config-docs:opencode/opencode-log|Log]]](C:/mybizz/mybizz-config-docs/opencode/opencode-log.md) (chronological events), [[[mybizz-config-docs:opencode/opencode-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/opencode/opencode-learnings.md)
 (transient knowledge). Agent-facing.
 
 ---
@@ -44,7 +45,7 @@ opencode web --hostname 0.0.0.0
 ```
 
 Plugin and global config changes are only read at process start — see
-[[opencode-explainer|OpenCode Explainer]] §2. There is no reload mechanism; a full restart
+[[[mybizz-config-docs:opencode/opencode-explainer|OpenCode Explainer]]](C:/mybizz/mybizz-config-docs/opencode/opencode-explainer.md) §2. There is no reload mechanism; a full restart
 is the only way to pick up a change. Verified live 2026-09-08 (the Cupcake
 reactivation) and 2026-09-09 (the plugin re-rename).
 
@@ -81,7 +82,7 @@ work around a deny by rephrasing.
 ## Creating a correct, Windows-visible symlink
 
 **Never** create it from WSL pointing at a Windows-drive target — see
-[[opencode-explainer|OpenCode Explainer]] §4. From the Windows side instead (Developer Mode
+[[[mybizz-config-docs:opencode/opencode-explainer|OpenCode Explainer]]](C:/mybizz/mybizz-config-docs/opencode/opencode-explainer.md) §4. From the Windows side instead (Developer Mode
 must be enabled):
 
 ```bash

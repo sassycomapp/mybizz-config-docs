@@ -1,11 +1,12 @@
 ---
 title: "gbrain-dream-cycle-exam-report"
 doc-id: "mb-08bd55a5"
+updated: "2026-10-01"
 ---
 # GBrain Dream Cycle — Exam Report
 
 Run #1 — **first formal plan-driven exam** (2026-09-14). Plan:
-[[gbrain-dream-cycle-exam-plan|Exam Plan]] (bootstrap — no prior report). Step-0: **PASS**
+[[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-exam-plan.md) (bootstrap — no prior report). Step-0: **PASS**
 — 5/5 hash pairs match via the approved glob form (`cupcake` f5e8489cf60a8abc ·
 `dream-cycle` 3573929bebb1b92e · `gbrain` 58dc0b52cbc86d72 · `memory-governor`
 c40df342d523aa59 · `postgresql` b41a3e117dee1809); all five Installed suites carry

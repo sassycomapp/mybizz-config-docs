@@ -1,15 +1,16 @@
 ---
 title: "mb-submit-memory-explainer"
 doc-id: "mb-91eb637f"
+updated: "2026-10-01"
 ---
 # mb-submit-memory — Explainer
 
-*Companion note: current state in [[mb-submit-memory-config|Configuration]]; the full
-cycle in [[mb-submit-memory-reference|Reference: Usage, Invocation, and the Full Cycle]]; the subject skill's own `SKILL.md`
+*Companion note: current state in [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-config.md); the full
+cycle in [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-reference|Reference: Usage, Invocation, and the Full Cycle]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-reference.md); the subject skill's own `SKILL.md`
 is the authoritative procedure. For how this system is examined and kept
 healthy by the config-management apparatus, see §5 below and the suite's
-exam set ([[mb-submit-memory-exam-plan|Exam Plan]] / `-exam-report.md` /
-[[mb-submit-memory-log|Log]] / [[submit-memory-learnings|Learnings]]).*
+exam set ([[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-exam-plan.md) / `-exam-report.md` /
+[[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-log|Log]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-log.md) / [[[mybizz-config-docs:mb-submit-memory/submit-memory-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/submit-memory-learnings.md)).*
 
 ## 1. What this actually is
 
@@ -153,14 +154,14 @@ currently-accepted state.
 
 This suite participates in the config-management system (`mb-config-manager`).
 The roles of the suite files, and the exam cycle that runs them, are the
-architecture described in [[config-manager-explainer|Explainer]] — emulated from the
+architecture described in [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md) — emulated from the
 PostgreSQL pilot. The short local version:
 
-- [[mb-submit-memory-config|Configuration]] is the **spec** — the ideal state every exam
+- [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-config.md) is the **spec** — the ideal state every exam
   checks against. The submission skill is working well; the exam verifies that
   and changes nothing.
 - Before each exam run, the config-manager synthesizes
-  [[mb-submit-memory-exam-plan|Exam Plan]]: a fresh job-spec built from this spec, the
+  [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-exam-plan.md): a fresh job-spec built from this spec, the
   last report, the log, and the learnings. The plan is transient (the file is
   live; contents rewritten each cycle).
 - The exam runs the installed skill (`mb-config-mb-submit-memory`) with the
@@ -178,9 +179,9 @@ PostgreSQL pilot. The short local version:
   (agent-side `.env` sourcing is a proven permanent denial class — the
   bundle-handoff pattern applies), the governor start/stop, and everything in
   Tier 3 (the auto-start installation and the restricted-folder deletion).
-- The run rewrites [[mb-submit-memory-exam-report|Exam Report]] (current state, no
-  history), appends one row to [[mb-submit-memory-log|Log]], files new learnings
-  to [[submit-memory-learnings|Learnings]], and prunes absorbed entries.
+- The run rewrites [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-exam-report.md) (current state, no
+  history), appends one row to [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-log|Log]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-log.md), files new learnings
+  to [[[mybizz-config-docs:mb-submit-memory/submit-memory-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/submit-memory-learnings.md), and prunes absorbed entries.
 
 ## 6. S.W.O.T.
 
@@ -215,11 +216,11 @@ write.
 
 ---
 
-*Companion documents: [[mb-submit-memory-config|Configuration]] (the spec),
-[[mb-submit-memory-reference|Reference: Usage, Invocation, and the Full Cycle]] (procedures and rules), the subject skill's
-`SKILL.md` (authoritative procedure), [[mb-submit-memory-exam-plan|Exam Plan]] /
-`-exam-report.md` / [[mb-submit-memory-log|Log]] / [[submit-memory-learnings|Learnings]]
-(config-management set), [[submit-memory-skill|Submit Memory Skill]] (exam skill canonical
-source). Architecture: [[config-manager-explainer|Explainer]].
-The full memory-system map: [[memory-master-explainer|Master Explainer]]. The gate's own
-suite: [[memory-governor-config|Memory Governor Configuration]] + `-reference.md` + `-explainer.md`.*
+*Companion documents: [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-config.md) (the spec),
+[[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-reference|Reference: Usage, Invocation, and the Full Cycle]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-reference.md) (procedures and rules), the subject skill's
+`SKILL.md` (authoritative procedure), [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-exam-plan.md) /
+`-exam-report.md` / [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-log|Log]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-log.md) / [[[mybizz-config-docs:mb-submit-memory/submit-memory-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/submit-memory-learnings.md)
+(config-management set), [[[mybizz-config-docs:mb-submit-memory/submit-memory-skill|Submit Memory Skill]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/submit-memory-skill.md) (exam skill canonical
+source). Architecture: [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md).
+The full memory-system map: [[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md). The gate's own
+suite: [[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) + `-reference.md` + `-explainer.md`.*

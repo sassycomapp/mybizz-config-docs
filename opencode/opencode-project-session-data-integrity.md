@@ -1,6 +1,7 @@
 ---
 title: "opencode-project-session-data-integrity"
 doc-id: "mb-c29025d5"
+updated: "2026-10-01"
 ---
 # OpenCode — Project & Session Data Integrity
 
@@ -9,7 +10,7 @@ doc-id: "mb-c29025d5"
 A confirmed, upstream limitation in OpenCode's own project/session
 database (`opencode.db`), and the two maintenance scripts that exist to
 manage it. This does not cover permission/access control — see
-[[opencode-permission-access-control-model|Permission & Access Control Model]] for that.
+[[[mybizz-config-docs:opencode/opencode-permission-access-control-model|Permission & Access Control Model]]](C:/mybizz/mybizz-config-docs/opencode/opencode-permission-access-control-model.md) for that.
 
 ## The underlying problem
 

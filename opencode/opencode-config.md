@@ -1,6 +1,7 @@
 ---
 title: "opencode-config"
 doc-id: "mb-c7616d53"
+updated: "2026-10-01"
 ---
 # OpenCode Configuration
 
@@ -11,10 +12,10 @@ five-part OpenCode suite; each file owns one scope:
 | File | Owns |
 |---|---|
 | `opencode-config.md` (this file) | Configuration state, environment position, active projects |
-| [[opencode-reference|Commands, Verification, Troubleshooting]] | Procedures: inspection, restart, verification, recovery |
-| [[opencode-permission-access-control-model|Permission & Access Control Model]] | The permission layers and their verified behavior |
-| [[opencode-project-session-data-integrity|Project & Session Data Integrity]] | The session database and its maintenance |
-| [[opencode-explainer|OpenCode Explainer]] | Mechanics, real incidents, design reasoning |
+| [[[mybizz-config-docs:opencode/opencode-reference\|Commands, Verification, Troubleshooting]]](C:/mybizz/mybizz-config-docs/opencode/opencode-reference.md) | Procedures: inspection, restart, verification, recovery |
+| [[[mybizz-config-docs:opencode/opencode-permission-access-control-model\|Permission & Access Control Model]]](C:/mybizz/mybizz-config-docs/opencode/opencode-permission-access-control-model.md) | The permission layers and their verified behavior |
+| [[[mybizz-config-docs:opencode/opencode-project-session-data-integrity\|Project & Session Data Integrity]]](C:/mybizz/mybizz-config-docs/opencode/opencode-project-session-data-integrity.md) | The session database and its maintenance |
+| [[[mybizz-config-docs:opencode/opencode-explainer\|OpenCode Explainer]]](C:/mybizz/mybizz-config-docs/opencode/opencode-explainer.md) | Mechanics, real incidents, design reasoning |
 
 ---
 
@@ -26,7 +27,7 @@ five-part OpenCode suite; each file owns one scope:
 | Upstream | `github.com/anomalyco/opencode` |
 | Global config | `~/.config/opencode/opencode.jsonc` — the only global config file (consolidated from two, 2026-09-01) |
 | Config precedence | **Verified 2026-09-09 against the upstream documentation and empirically via `opencode debug config`**: configs are **merged, not replaced** — project config overrides global only for conflicting keys, non-conflicting settings from both are preserved, and nested permission maps merge deeply (see the permission model document for the verified test). Project config has the highest precedence among standard config files. |
-| Harness role | OpenCode is the harness spanning every environment layer (see [[pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]) — the pre-makePDLF supporting systems run inside or beside it, the makePDLF layer builds the PDLF application in it, and the PDLF layer builds the shipped estate through it |
+| Harness role | OpenCode is the harness spanning every environment layer (see [[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer\|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]](C:/pdlf/pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer.md)) — the pre-makePDLF supporting systems run inside or beside it, the makePDLF layer builds the PDLF application in it, and the PDLF layer builds the shipped estate through it |
 | WSL distro (real, active) | `Ubuntu` — **not** the default (`Ubuntu-22.04`, stopped). Any Windows-triggered command invoking `wsl.exe` must explicitly pass `-d Ubuntu -u dev-p` |
 
 ## Global config — real, current content (verified key-by-key 2026-09-09; re-verified via run #1 developer bundle 2026-09-15)
@@ -35,7 +36,7 @@ five-part OpenCode suite; each file owns one scope:
 |---|---|
 | `default_agent` | `plan` |
 | `instructions` | `C:/dev/project-library-global/register-global/register-global.md` (verified resolving; corrected 2026-09-01 — previously pointed at four deleted `INDEX.md` files) |
-| `permission.task` | `deny` — Layer 1 of the three-layer `task`-denial system, see [[cupcake-config|Cupcake Configuration]] |
+| `permission.task` | `deny` — Layer 1 of the three-layer `task`-denial system, see [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) |
 | `permission.edit` | `ask` by default; `**/anvil.yaml` explicitly `deny` |
 | `permission.webfetch` | `ask` |
 | `permission.bash` | `ask` by default; explicit `deny` on destructive git operations, `DROP`/`TRUNCATE` SQL patterns, and `curl`/`wget` piped directly to a shell (13 patterns in the live map — verified 2026-09-15) |
@@ -67,7 +68,7 @@ verified 2026-09-09; re-verified 2026-09-15.
 | Magdoub wireframe skill | Two-hop — empty intermediate folder pointing to real content in `~/.claude/skills/` |
 | `secure-software-engineering` | Plain, real folder (installed 2026-09-09 from `github.com/magnus919/agent-skills`) |
 
-Full, current skill inventory by owner: [[skills-register|Skill Register]]. Full GStack-specific detail: [[gstack-config|GStack Configuration]].
+Full, current skill inventory by owner: [[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md). Full GStack-specific detail: [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md).
 
 ## Active Project Standard
 

@@ -1,6 +1,7 @@
 ---
 title: "2026-09-13-001-network-grants-and-session-memory"
 doc-id: "mb-7c41f10c"
+updated: "2026-10-01"
 ---
 # Session 001 — Network Grants and the Session Close-Out Design
 
@@ -40,7 +41,7 @@ a short list of important facts worth believing later, checks them against
 existing memory for contradictions, shows the list once for a single
 approval, sends the important facts through the Memory Governor, and saves
 the full session summary as a page like this one. It then adds one row to
-the sessions log at [[2026-09-15-session-numbers-from-sessions-log|session numbers come from the sessions log]],
+the sessions log at [[[mybizz-config-docs:facts/2026-09-15-session-numbers-from-sessions-log|session numbers come from the sessions log]]](C:/mybizz/mybizz-config-docs/facts/2026-09-15-session-numbers-from-sessions-log.md),
 recording the number, date, topic, subject, title, and exact page name. A
 second log at the same folder, `Facts-log.md`, indexes every durable fact
 saved, with its GBrain fact number. At the start of a new session, the AI

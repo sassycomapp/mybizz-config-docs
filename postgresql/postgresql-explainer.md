@@ -1,14 +1,15 @@
 ---
 title: "postgresql-explainer"
 doc-id: "mb-e4410ed0"
+updated: "2026-10-01"
 ---
 # PostgreSQL — Explainer
 
-Companion to [[postgresql-config|Configuration]] (every setting and value — the spec),
-[[postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]] (commands and procedures for agents),
-[[postgresql-exam-plan|Exam Plan]] (next exam's job-spec), [[postgresql-exam-report|Exam Report]]
-(current verified state), [[postgresql-log|Log]] (notable events),
-[[postgresql-learnings|Learnings]] (transient exam knowledge). This document is for any
+Companion to [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md) (every setting and value — the spec),
+[[[mybizz-config-docs:postgresql/postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md) (commands and procedures for agents),
+[[[mybizz-config-docs:postgresql/postgresql-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-plan.md) (next exam's job-spec), [[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md)
+(current verified state), [[[mybizz-config-docs:postgresql/postgresql-log|Log]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-log.md) (notable events),
+[[[mybizz-config-docs:postgresql/postgresql-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-learnings.md) (transient exam knowledge). This document is for any
 reader — human developer, visiting technical consultant, or agent: what
 PostgreSQL is doing across this whole system, database by database — what each
 one is, what component of Mybizz actually uses it, and why it exists at all.
@@ -28,7 +29,7 @@ real, in-use components of your system** (`gbrain`, `memory_governor`,
 databases, not part of your system at all.
 
 **Where each server sits in the environment's layers** (per
-[[pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]): Instance B (WSL, PostgreSQL 16)
+[[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]](C:/pdlf/pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer.md)): Instance B (WSL, PostgreSQL 16)
 hosts the **pre-makePDLF layer's** memory — GBrain and the memory governor
 are supporting systems built before and beneath PDLF. Instance A (Windows,
 PostgreSQL 15) hosts the **PDLF layer's own ledger** — the record the PDLF
@@ -47,7 +48,7 @@ separate servers means a problem in one — a bad sync, a runaway process, a
 corrupted write — can never reach across and damage the other. The
 separation also mirrors the environment's own access-control pattern: each
 server has its own, separately scoped roles with the minimum privilege each
-writer needs ([[sec-database-access-control|Database Access Control]], which cites this exact
+writer needs ([[[default:security-global/infrastructure/sec-database-access-control|Database Access Control]]](C:/dev/project-library-global/security-global/infrastructure/sec-database-access-control.md), which cites this exact
 arrangement as its verified precedent).
 
 **Instance A**, on Windows, runs PostgreSQL 15 and hosts `pdlf`.
@@ -59,7 +60,7 @@ one from the WSL side. That's a coincidence of default configuration, not a
 relationship between them — and it is the single most operationally
 dangerous fact about this arrangement: a database call made from the wrong
 side connects to the wrong server *silently*. See
-[[postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]] for the rules that prevent it.
+[[[mybizz-config-docs:postgresql/postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md) for the rules that prevent it.
 
 ---
 
@@ -114,7 +115,7 @@ step-completion process (once PDLF is actually running steps), and — by
 design, and only by design — nothing else. GBrain's own automatic "dream
 cycle" enrichment is deliberately unable to route through this database at
 all; that's a confirmed, permanent architectural limitation, not an
-oversight, documented in [[memory-governor-config|Memory Governor Configuration]].
+oversight, documented in [[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md).
 
 **The RLS test roles, explained.** Two login-capable roles on this
 instance — `ledger_writer` and `ledger_approver` — exist from the memory
@@ -166,7 +167,7 @@ isolation reasoning from Section 1, and partly practical — this predates
 some of the WSL-centric tooling and was set up as a standalone Windows
 service. The real operational cost of that choice is that reaching it from
 WSL requires a PowerShell bridge rather than a direct connection — covered
-fully in [[postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]. That cost is worth stating plainly:
+fully in [[[mybizz-config-docs:postgresql/postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md). That cost is worth stating plainly:
 the bridge exists because WSL cannot pass environment variables to Windows
 programs, and because `localhost:5432` is a different server on each side
 — the same fact that makes the memory system's own database calls safe
@@ -265,7 +266,7 @@ listening on that side. The memory system's own database checks have the
 same property in reverse.
 
 The working rules that prevent it (enforced in
-[[postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]): all `pdlf` access goes through the PowerShell
+[[[mybizz-config-docs:postgresql/postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md)): all `pdlf` access goes through the PowerShell
 bridge; all GBrain/governor access runs inside WSL; and any database check
 names its instance explicitly. The 2026-09-09 audits of both instances
 were run under exactly those rules.
@@ -274,7 +275,7 @@ were run under exactly those rules.
 
 ## 9. The layer placement — where each database sits in the environment
 
-Per [[pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]] (the pre-makePDLF, makePDLF,
+Per [[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]](C:/pdlf/pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer.md) (the pre-makePDLF, makePDLF,
 PDLF, and shipped layers):
 
 - **Instance B (WSL PostgreSQL 16) is pre-makePDLF-layer infrastructure.**
@@ -286,7 +287,7 @@ PDLF, and shipped layers):
   — it comes into real use only when the PDLF layer runs real projects.
 - **The shipped estate contains no PostgreSQL at all.** Client instances
   hold their data in Anvil's own Data Tables (per
-  [[adr-client-instance-architecture|Client Instance Architecture]]), not in any database of ours. The
+  [[[default:adr-global/adr-client-instance-architecture|Client Instance Architecture]]](C:/dev/project-library-global/adr-global/adr-client-instance-architecture.md)), not in any database of ours. The
   shipped estate is out of scope for both PostgreSQL instances, exactly as
   it is out of scope for every developer-side system.
 
@@ -300,11 +301,11 @@ boundary without the bridge silently lands in the wrong one.
 
 This suite participates in the config-management system (`mb-config-manager`).
 The roles of the seven suite files, and the exam cycle that runs them, are the
-architecture described in [[config-manager-explainer|Explainer]] — tuned on this suite
+architecture described in [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md) — tuned on this suite
 first. The short local version:
 
-- [[postgresql-config|Configuration]] is the **spec** — the ideal state every exam checks against.
-- Before each exam run, the config-manager synthesizes [[postgresql-exam-plan|Exam Plan]]:
+- [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md) is the **spec** — the ideal state every exam checks against.
+- Before each exam run, the config-manager synthesizes [[[mybizz-config-docs:postgresql/postgresql-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-plan.md):
   a fresh job-spec built from this spec, the last report, the log, and the
   learnings — carrying forward what was deferred, deriving probes from new log
   events, and folding in lessons not yet graduated. The plan is transient.
@@ -312,8 +313,8 @@ first. The short local version:
   hand — detection fully autonomous; healing only through the developer gate.
   Some checks are permanently **developer-run** (log scans, `.env`-dependent
   probes, superuser checks) — agent tooling is guard-blocked on them by design.
-- The run rewrites [[postgresql-exam-report|Exam Report]] (current state, no history),
-  appends one row to [[postgresql-log|Log]], files new learnings, and prunes
+- The run rewrites [[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md) (current state, no history),
+  appends one row to [[[mybizz-config-docs:postgresql/postgresql-log|Log]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-log.md), files new learnings, and prunes
   absorbed log/learning entries.
 - What may be healed is allowlisted in the plan; spec-doc corrections are
   flagged to docs governance, never applied by the exam itself.
@@ -357,13 +358,13 @@ create remain a mystery.
 
 ---
 
-*Companion documents: [[postgresql-config|Configuration]] (spec),
-[[postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]] (commands), [[postgresql-exam-plan|Exam Plan]] (next run),
-[[postgresql-exam-report|Exam Report]] (current state), [[postgresql-log|Log]] (events),
-[[postgresql-learnings|Learnings]] (transient knowledge). The architecture standard:
-[[config-manager-explainer|Explainer]]. The layer map:
-[[pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]. The
-memory system: [[memory-governor-config|Memory Governor Configuration]], `mb-submit-memory` (its own suites).
-The ledger contract: [[spec-postgres-ledger|Spec Postgres Ledger]] (makepdlf-project-library).*
+*Companion documents: [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md) (spec),
+[[[mybizz-config-docs:postgresql/postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md) (commands), [[[mybizz-config-docs:postgresql/postgresql-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-plan.md) (next run),
+[[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md) (current state), [[[mybizz-config-docs:postgresql/postgresql-log|Log]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-log.md) (events),
+[[[mybizz-config-docs:postgresql/postgresql-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-learnings.md) (transient knowledge). The architecture standard:
+[[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md). The layer map:
+[[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]](C:/pdlf/pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer.md). The
+memory system: [[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md), `mb-submit-memory` (its own suites).
+The ledger contract: [[[makepdlf-project-library:specifications-local/spec-postgres-ledger|Spec Postgres Ledger]]](C:/dev/dev-makepdlf/makepdlf-project-library/specifications-local/spec-postgres-ledger.md) (makepdlf-project-library).*
 
 *End of document*

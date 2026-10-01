@@ -1,6 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-config"
 doc-id: "mb-2b9404b5"
+updated: "2026-10-01"
 ---
 # mb-memory-system-diagnostic — Configuration
 
@@ -9,8 +10,8 @@ as a system component. Agent-facing. Reflects the live-verified state as of
 2026-09-28. Formerly named `memory-system-diagnostic`; renamed 2026-09-28
 (naming convention — homegrown skills carry the `mb-` prefix). States facts,
 not history — reasoning in
-[[mb-memory-system-diagnostic-explainer|Explainer]]; commands and procedures in
-[[mb-memory-system-diagnostic-reference|Reference]].
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-explainer.md); commands and procedures in
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-reference.md).
 
 ---
 

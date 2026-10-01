@@ -1,16 +1,17 @@
 ---
 title: "matt-pocock-skills-reference"
 doc-id: "mb-f0c79098"
+updated: "2026-10-01"
 ---
 # Matt Pocock Skills Reference
 
 Execution reference for the 35 installed Matt Pocock skills. Current state
-values: [[matt-pocock-skills-config|Matt Pocock Skills Configuration]]. Why the set is built this way:
-[[matt-pocock-skills-explainer|Matt Pocock Skills Explainer]]. Config-management set:
-[[matt-pocock-skills-exam-plan|Exam Plan]] (transient job-spec — read second, every
-run), [[matt-pocock-skills-exam-report|Exam Report]] (last verified state),
-[[matt-pocock-skills-log|Log]] (chronological events),
-[[matt-pocock-skills-learnings|Learnings]] (transient knowledge). Agent-facing.
+values: [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-config|Matt Pocock Skills Configuration]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-config.md). Why the set is built this way:
+[[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-explainer|Matt Pocock Skills Explainer]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-explainer.md). Config-management set:
+[[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-exam-plan.md) (transient job-spec — read second, every
+run), [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-exam-report.md) (last verified state),
+[[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-log|Log]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-log.md) (chronological events),
+[[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-learnings.md) (transient knowledge). Agent-facing.
 
 ## Standing rules
 
@@ -18,7 +19,7 @@ run), [[matt-pocock-skills-exam-report|Exam Report]] (last verified state),
   tool family (`task`, `delegate`, `call_omo_agent`,
   `agent_session_create`) — denied natively in OpenCode config, denied by
   the Cupcake rule `cup-block-task-tool.rego` whenever enforcement is
-  active (live status: [[cupcake-config|Cupcake Configuration]], Current Operational Status),
+  active (live status: [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md), Current Operational Status),
   and listed in `spawn-tools-denylist.json`. Do not retry under another
   name.
 - **No upgrades.** Updates/upgrades of this skill set happen by deliberate
@@ -28,7 +29,7 @@ run), [[matt-pocock-skills-exam-report|Exam Report]] (last verified state),
 ## Mandatory per-project setup gate
 
 `/setup-matt-pocock-skills` must have been run in a project before any other
-engineering skill from this set is used there — [[step-19-to-tickets|Step 19 to Tickets]], `to-spec`,
+engineering skill from this set is used there — [[[makepdlf-project-library:stepwise/step-19-to-tickets|Step 19 to Tickets]]](C:/dev/dev-makepdlf/makepdlf-project-library/stepwise/step-19-to-tickets.md), `to-spec`,
 `triage`, and `code-review` depend on its output. Check:
 
 ```bash
@@ -38,7 +39,7 @@ ls <project-path>/agents/
 All four files present (`agents/domain.md`, `agents/instructions.md`,
 `agents/issue-tracker.md`, `agents/triage-labels.md`) = configured. Missing
 or incomplete = run `/setup-matt-pocock-skills` in that project first.
-Current per-project state: [[matt-pocock-skills-config|Matt Pocock Skills Configuration]].
+Current per-project state: [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-config|Matt Pocock Skills Configuration]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-config.md).
 
 ## Invocation
 
@@ -61,7 +62,7 @@ user-invoked one.
 | Command | Type | What it does |
 |---|---|---|
 | `/ask-matt` | user | Router over this set — asks which skill or flow fits your situation. |
-| `/grill-with-docs` | user | Grilling session that also builds the project's domain model, updating [[CONTEXT|mb-3-cs (Mybizz Consulting Services)]] and ADRs inline. |
+| `/grill-with-docs` | user | Grilling session that also builds the project's domain model, updating [[[mb-3-cs-project-library:docs-local/context\|mb-3-cs (Mybizz Consulting Services)]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/CONTEXT.md) and ADRs inline. |
 | `/triage` | user | Move issues through a state machine of triage roles. |
 | `/improve-codebase-architecture` | user | Scan a codebase for deepening opportunities, present an HTML report, grill through the pick. |
 | `/setup-matt-pocock-skills` | user | One-time per-repo config (issue tracker, triage labels, domain doc layout). |
@@ -73,7 +74,7 @@ user-invoked one.
 | `/diagnosing-bugs` | model | Disciplined diagnosis loop: red feedback loop → minimise → hypothesise → instrument → fix → regression-test. |
 | `/research` | model | Investigate against high-trust primary sources; capture findings as a cited Markdown file. |
 | `/tdd` | model | Red-green-refactor TDD, one vertical slice at a time. |
-| `/domain-modeling` | model | Build/sharpen the domain model: glossary challenges, edge-case stress tests, [[CONTEXT|mb-3-cs (Mybizz Consulting Services)]]/ADR updates. |
+| `/domain-modeling` | model | Build/sharpen the domain model: glossary challenges, edge-case stress tests, [[[mb-3-cs-project-library:docs-local/context\|mb-3-cs (Mybizz Consulting Services)]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/CONTEXT.md)/ADR updates. |
 | `/codebase-design` | model | Deep-module design vocabulary: behaviour behind small interfaces at clean seams. |
 | `/code-review` | model | Two-axis review since a fixed point: Standards + Spec. |
 | `/resolving-merge-conflicts` | model | Resolve merge/rebase conflicts hunk by hunk, by intent; never `--abort`. |
@@ -87,7 +88,7 @@ user-invoked one.
 | `/handoff` | user | Compact the conversation into a handoff document for another agent. |
 | `/teach` | user | Teach a concept over multiple sessions, using the directory as stateful workspace. |
 | `/to-questionnaire` | user | Turn an unanswerable decision into a Markdown questionnaire for the one person who can answer. |
-| `/wait-what` | user | Re-pitch a message that didn't land, with missing context, in [[CONTEXT|mb-3-cs (Mybizz Consulting Services)]] vocabulary. |
+| `/wait-what` | user | Re-pitch a message that didn't land, with missing context, in [[[mb-3-cs-project-library:docs-local/context\|mb-3-cs (Mybizz Consulting Services)]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/CONTEXT.md) vocabulary. |
 | `/grilling` | model | The reusable interview primitive behind grill-me / grill-with-docs / triage / wayfinder. |
 | `/writing-for-agents` | model | Writing documents for agents: skills, AGENTS.md/CLAUDE.md, pointer-reachable docs. |
 

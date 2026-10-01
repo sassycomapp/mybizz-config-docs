@@ -1,17 +1,18 @@
 ---
 title: "memory-governor-reference"
 doc-id: "mb-38660a2f"
+updated: "2026-10-01"
 ---
 # Memory Governor Reference — Usage, Invocation, and Incident Response
 
-Companion to [[memory-governor-config|Memory Governor Configuration]] (the spec — current state — ACTIVE, all
-defects resolved 2026-09-08) and [[memory-governor-explainer|Explainer]] (the
+Companion to [[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) (the spec — current state — ACTIVE, all
+defects resolved 2026-09-08) and [[[mybizz-config-docs:memory-governor/memory-governor-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-explainer.md) (the
 authoritative whole-system narrative — design, mechanics, and real incidents).
-Exam companions: [[memory-governor-exam-plan|Exam Plan]] (next run's job-spec),
-[[memory-governor-exam-report|Exam Report]] (current verified state),
-[[memory-governor-log|Log]] (notable events), [[memory-governor-learnings|Learnings]]
+Exam companions: [[[mybizz-config-docs:memory-governor/memory-governor-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-exam-plan.md) (next run's job-spec),
+[[[mybizz-config-docs:memory-governor/memory-governor-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-exam-report.md) (current verified state),
+[[[mybizz-config-docs:memory-governor/memory-governor-log|Log]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-log.md) (notable events), [[[mybizz-config-docs:memory-governor/memory-governor-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-learnings.md)
 (transient exam knowledge). The architecture standard:
-[[config-manager-explainer|Explainer]]. Agent-facing.
+[[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md). Agent-facing.
 
 ---
 
@@ -114,7 +115,7 @@ Evaluated in order; `auto_promote` only if nothing triggers:
 3. `unresolved_contradiction` — cross-project, unresolved, or
    `manual_review` (recommended action: none — never auto-decided)
 4. `high_risk_type` — memory type is one of the five spec categories:
-   `policy`, `credential`, `identity`, [[architecture|Architecture]], [[security|Security Check]]
+   `policy`, `credential`, `identity`, [[[mb-3-cs-project-library:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md), [[[makepdlf-project-library:docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security|Security Check]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security.md)
 5. `low_confidence` — confidence below the review threshold (default 0.65)
 6. `medium_risk_moderate_confidence` — any sharing, or confidence < 0.5,
    with confidence below the auto-promote threshold (default 0.85)

@@ -1,6 +1,7 @@
 ---
 title: "anvil-agent-skill"
 doc-id: "mb-c6a3ff36"
+updated: "2026-10-01"
 ---
 # mb-config-anvil-agent-references — Exam Skill
 
@@ -9,22 +10,22 @@ spec. This skill holds the **procedure** only — expected values live in the sp
 doc and are read fresh at the start of every run. The installation is working
 well; this exam verifies that and repairs nothing.
 
-- Spec: [[anvil-agent-references-config|Configuration]] — read it first, every run
-- **Exam plan: [[anvil-agent-references-exam-plan|Exam Plan]] —
+- Spec: [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-config|Configuration]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-config.md) — read it first, every run
+- **Exam plan: [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-plan.md) —
   read second, every run.** The plan-driven cycle: the config-manager synthesizes
   this plan fresh before each run (from spec + last report + log + learnings)
   and this skill executes it in hand. The plan carries run-specifics and
   deltas; the **standing check inventory lives in this skill** (below) —
   permanent occurrences graduate here, never into plans
-- Reference: [[anvil-agent-references-reference|Reference: Install, Skills, and Technical Detail]] —
+- Reference: [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-reference|Reference: Install, Skills, and Technical Detail]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-reference.md) —
   installation, per-skill rules, update procedure, GBrain sync path
-- Explainer: [[anvil-agent-references-explainer|Explainer]] — what
+- Explainer: [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-explainer.md) — what
   this is, suitability, runtime constraints, open items
-- Report: [[anvil-agent-references-exam-report|Exam Report]] — one
+- Report: [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-report.md) — one
   file, overwritten each run (write-then-replace)
-- Log: [[anvil-agent-references-log|Log]] — one run row per
+- Log: [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-log|Log]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-log.md) — one run row per
   exam; free rows for notable events witnessed between runs
-- Learnings: [[anvil-agent-learnings|Learnings]] — file new
+- Learnings: [[[mybizz-config-docs:anvil-agent-references/anvil-agent-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-learnings.md) — file new
   patterns/nuances; delete entries once graduated into a permanent home
 
 ## Scope boundary (anti-duplication)
@@ -113,19 +114,19 @@ ordinary `gbrain sync` only).
 
 | ID | Runner | Check | Expected |
 |---|---|---|---|
-| AR3-1 | D | Full mechanical integrity audit: all 5 symlinks resolve to their intended clone targets; every SKILL.md present + byte-identical to its vendor source; exhaustive stub/type/doc/plugin counts vs the spec's recorded structure; plugin JSON contents verified against recorded values (name [[anvil|anvil]], version `1.0.0`, documented descriptions) | Every link correct, all SKILL.md match vendor bytes, structure counts exact. Cost: ~15 reads incl. 5 SKILL.md hashes; 0 writes. This is the exhaustive sweep that Tier 2 samples |
+| AR3-1 | D | Full mechanical integrity audit: all 5 symlinks resolve to their intended clone targets; every SKILL.md present + byte-identical to its vendor source; exhaustive stub/type/doc/plugin counts vs the spec's recorded structure; plugin JSON contents verified against recorded values (name [[[default:anvil-docs/api/anvil\|anvil]]](C:/dev/project-library-global/anvil-docs/api/anvil.md), version `1.0.0`, documented descriptions) | Every link correct, all SKILL.md match vendor bytes, structure counts exact. Cost: ~15 reads incl. 5 SKILL.md hashes; 0 writes. This is the exhaustive sweep that Tier 2 samples |
 | AR3-2 | D | Deliberate update + license decision: record the observed clone-update delta (installed HEAD moved to upstream `7c9b0a7`; stub count 63 at orientation) — decide whether the spec's Identity/Repository-structure rows get refreshed via docs governance, and re-confirm the no-license open item posture | Decision recorded; any spec refresh routed through docs governance, never self-applied. Stay-current-with-upstream is the expected default (generated checkout — update cadence is an operational habit, not a no-upgrade pin) |
 | AR3-3 | D | Per-project setup closure decision: for the 3 Not-done app roots (`mb-3-cs`, `mb4ecom`, `mb5pdlf`), confirm whether the developer will run the setup step (AI writes to project `AGENTS.md` are prohibited either way) | Decision recorded (done-later / declined / scheduled); open item carried until the developer acts |
 
 ## Report
 
-Write [[anvil-agent-references-exam-report|Exam Report]]: verdict line; per-tier tables
+Write [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-report.md): verdict line; per-tier tables
 (check ID, expected, actual, result); findings with class + evidence + recommended
 repair + risk; runner attribution for every deferred item (guard-forbidden vs
 unlock-gated); overwritten in full each run (write-then-replace: failed runs
 never touch the prior report; written before any pruning). Then: one run row
-appended to [[anvil-agent-references-log|Log]] (run-row format per
-[[config-manager-reference|Reference: Commands, Procedures]]); new learnings filed.
+appended to [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-log|Log]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-log.md) (run-row format per
+[[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md)); new learnings filed.
 
 ## Gate protocol
 

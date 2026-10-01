@@ -1,6 +1,7 @@
 ---
 title: "2026-09-16-010-anvil-agent-references-config-mgmt"
 doc-id: "mb-aa0339ab"
+updated: "2026-10-01"
 ---
 # Session 010 — anvil-agent-references config-management suite build + run #1 + W-1..W-5 closure
 
@@ -16,21 +17,21 @@ closed **by direct resolution**, not left as governance flags.
 ## Phases executed
 
 ### Phase 0 — Orientation
-- Read [[config-manager-explainer|Explainer]], [[config-manager-reference|Reference: Commands, Procedures]],
-  [[config-manager-register|Register: Managed Systems]], the target's existing docs, and the
+- Read [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md), [[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md),
+  [[[mybizz-config-docs:mb-config-manager/config-manager-register|Register: Managed Systems]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md), the target's existing docs, and the
   matt-pocock-skills suite as the closest precedent (same system family —
   symlinked-skills install in `~/.agents/skills/`, developer-run-only updates).
 - Live probes established: clone HEAD `7c9b0a7` (was `3593c16` at spec write),
   stubs 63 (spec said 62), gbrain source indexed 34 pages (spec said 0).
 
 ### Phase 1 — Suite build-out
-- [[anvil-agent-learnings|Learnings]] — preamble + table added.
-- [[anvil-agent-references-log|Log]] — created, seeded with documented history
+- [[[mybizz-config-docs:anvil-agent-references/anvil-agent-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-learnings.md) — preamble + table added.
+- [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-log|Log]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-log.md) — created, seeded with documented history
   (install 2026-08-12, suite creation 2026-09-06, build-out, run #1).
-- [[anvil-agent-references-exam-plan|Exam Plan]] — bootstrap, hand-written (format
+- [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-plan.md) — bootstrap, hand-written (format
   template).
-- [[anvil-agent-references-exam-report|Exam Report]] — placeholder, then full report.
-- [[anvil-agent-skill|Anvil Agent Skill]] — born-with check inventory, Tiers 0–3.
+- [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-report.md) — placeholder, then full report.
+- [[[mybizz-config-docs:anvil-agent-references/anvil-agent-skill|Anvil Agent Skill]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-skill.md) — born-with check inventory, Tiers 0–3.
 - Explainer localized (§10 config-maintenance, §11 S.W.O.T., companion footer,
   exam-set pointer); reference gained the config-management set header.
 
@@ -71,8 +72,8 @@ closed **by direct resolution**, not left as governance flags.
 | # | Item | Closure |
 |---|---|---|
 | W-1 | Upstream update / spec staleness | Spec §Identity corrected: installed HEAD `7c9b0a7` (not `3593c16`); stubs 63 (31+32); skill inventory line counts refreshed (anvil-yaml 68, client-forms 154). Fresh one-commit upstream drift `afe281d` recaptured in §Identity. The `git pull` for `afe281d` stays developer-run (standing discipline — never AI-invoked on that clone). |
-| W-2 | License / adoption review | Performed the missing [[sec-dependency-skill-supply-chain|Dependency and Skill Supply Chain]] adoption review, recorded in config.md: publisher Pass, maintenance Pass, spawn-capability Pass (grep across all 5 SKILL.md, zero matches), license **Not met** (GitHub API 404 re-confirmed 2026-09-16, no LICENSE on disk). Disposition: accepted with documented, dated risk. |
-| W-3 | Per-project setup (3 app roots) | Closed as deliberate deferral: [[cupcake-config|Cupcake Configuration]] project-init status records `mb-3-cs`, `mb4ecom`, `mb5pdlf` as deliberately not initialized; setup is trigger-bound to each project's start (developer-run then). |
+| W-2 | License / adoption review | Performed the missing [[[default:security-global/infrastructure/sec-dependency-skill-supply-chain\|Dependency and Skill Supply Chain]]](C:/dev/project-library-global/security-global/infrastructure/sec-dependency-skill-supply-chain.md) adoption review, recorded in config.md: publisher Pass, maintenance Pass, spawn-capability Pass (grep across all 5 SKILL.md, zero matches), license **Not met** (GitHub API 404 re-confirmed 2026-09-16, no LICENSE on disk). Disposition: accepted with documented, dated risk. |
+| W-3 | Per-project setup (3 app roots) | Closed as deliberate deferral: [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) project-init status records `mb-3-cs`, `mb4ecom`, `mb5pdlf` as deliberately not initialized; setup is trigger-bound to each project's start (developer-run then). |
 | W-4 | No run record of the 5 skills | Closed: Tier-2/3 verification record (5/5 reachability + 5/5 byte-identity vs vendor) now stands as the confirmed on-record verification the skills load as published. First in-app task invocation remains a future event. |
 | W-5 | First gbrain sync pending | Closed: index-state corrected to live (34 pages, last sync 2026-09-06). |
 

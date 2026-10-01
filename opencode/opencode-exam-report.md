@@ -1,11 +1,12 @@
 ---
 title: "opencode-exam-report"
 doc-id: "mb-f1821aef"
+updated: "2026-10-01"
 ---
 # OpenCode — Exam Report
 
 Run #1 — **first formal plan-driven exam** (2026-09-15). Plan:
-[[opencode-exam-plan|Exam Plan]] (bootstrap — no prior report). Step-0: **PASS**
+[[[mybizz-config-docs:opencode/opencode-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-plan.md) (bootstrap — no prior report). Step-0: **PASS**
 — 8/8 hash pairs match via the approved glob form (postgresql `b41a3e117dee1809`
 · cupcake `f5e8489cf60a8abc` · gbrain `58dc0b52cbc86d72` · memory-governor
 `c40df342d523aa59` · gbrain-dream-cycle `a4872e9d61f1c32f` · graphify

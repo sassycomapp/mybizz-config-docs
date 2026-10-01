@@ -1,6 +1,7 @@
 ---
 title: "mb-compile-rules-explainer"
 doc-id: "mb-3c93f17d"
+updated: "2026-10-01"
 ---
 # mb-compile-rules Explainer
 
@@ -86,9 +87,9 @@ referencing a helper that was never written. Atomic writes make that
 failure impossible.
 
 **Why this pipeline is a supply-chain control.** The security standards
-require that nothing new is trusted by default ([[sec-review-before-trust|Review Before Trust]])
+require that nothing new is trusted by default ([[[default:security-global/principles/sec-review-before-trust|Review Before Trust]]](C:/dev/project-library-global/security-global/principles/sec-review-before-trust.md))
 and name third-party skill and dependency review
-([[sec-dependency-skill-supply-chain|Dependency and Skill Supply Chain]]). An enforcement file is itself a
+([[[default:security-global/infrastructure/sec-dependency-skill-supply-chain|Dependency and Skill Supply Chain]]](C:/dev/project-library-global/security-global/infrastructure/sec-dependency-skill-supply-chain.md)). An enforcement file is itself a
 security control — an unvalidated one entering the live folder by any
 other path (a careless "add everything" save) was the recorded cause of
 the total 2026-09-06 outage. This pipeline is the sanctioned door, and
@@ -102,6 +103,6 @@ written: the cross-folder rule went through this very pipeline, passed
 13/13 live tests, and is now enforced — the strongest possible validation
 of both the pipeline and these documents.
 
-*Companion documents: [[mb-compile-rules-config|mb-compile-rules Configuration]] (state),
-[[mb-compile-rules-reference|mb-compile-rules Reference]] (commands and rules), `SKILL.md` (the
-authoritative procedure). System context: [[cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]].*
+*Companion documents: [[[mybizz-config-docs:mb-compile-rules/mb-compile-rules-config|mb-compile-rules Configuration]]](C:/mybizz/mybizz-config-docs/mb-compile-rules/mb-compile-rules-config.md) (state),
+[[[mybizz-config-docs:mb-compile-rules/mb-compile-rules-reference|mb-compile-rules Reference]]](C:/mybizz/mybizz-config-docs/mb-compile-rules/mb-compile-rules-reference.md) (commands and rules), `SKILL.md` (the
+authoritative procedure). System context: [[[mybizz-config-docs:cupcake/cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md).*

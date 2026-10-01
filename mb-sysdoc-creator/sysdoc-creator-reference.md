@@ -1,12 +1,13 @@
 ---
 title: "sysdoc-creator-reference"
 doc-id: "mb-04e4093c"
+updated: "2026-10-01"
 ---
 # sysdoc-creator — Reference
 
 Execution procedure for the `mb-sysdoc-creator` skill. `skill.md` in this
 folder is the authoritative definition; this document is the operational
-form. Why the rules are shaped this way: [[sysdoc-creator-explainer|Explainer]].
+form. Why the rules are shaped this way: [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-explainer.md).
 
 ## Invocation
 
@@ -35,8 +36,8 @@ form. Why the rules are shaped this way: [[sysdoc-creator-explainer|Explainer]].
 3. Read `learnings.md`. Apply anything already-settled; do not re-derive.
 
 ### Phase 2 — Intake and destination check
-4. Confirm [[doc-suite-specification|config / reference / explainer]] exists at
-   [[doc-suite-specification|config / reference / explainer]].
+4. Confirm [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification|config / reference / explainer]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) exists at
+   [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification|config / reference / explainer]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md).
    Missing → STOP and report; never draft from memory of the spec.
 5. Read every supplied file in full; fetch every provided URL.
 6. No destination path given → STOP here and ask.
@@ -65,7 +66,7 @@ form. Why the rules are shaped this way: [[sysdoc-creator-explainer|Explainer]].
     Phase 3 with the named gap). Never draft without this approval.
 
 ### Phase 6 — Draft
-13. Draft all three documents bound by [[doc-suite-specification|config / reference / explainer]]:
+13. Draft all three documents bound by [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification|config / reference / explainer]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md):
     `-config.md` = state only; `-reference.md` = execution only;
     `-explainer.md` = orientation, suitability, reasoning, in that order.
 14. Self-check each draft against its stray-line test; move misplaced

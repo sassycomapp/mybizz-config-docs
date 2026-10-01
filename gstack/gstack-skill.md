@@ -1,6 +1,7 @@
 ---
 title: "gstack-skill"
 doc-id: "mb-d542b185"
+updated: "2026-10-01"
 ---
 # mb-config-gstack — Exam Skill
 
@@ -9,20 +10,20 @@ Exams GStack's configuration state against its spec. This skill holds the
 the start of every run. GStack is working well; this exam verifies that and
 repairs nothing.
 
-- Spec: [[gstack-config|GStack Configuration]] — read it first, every run
-- **Exam plan: [[gstack-exam-plan|Exam Plan]] — read second, every run.**
+- Spec: [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md) — read it first, every run
+- **Exam plan: [[[mybizz-config-docs:gstack/gstack-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gstack/gstack-exam-plan.md) — read second, every run.**
   The plan-driven cycle: the config-manager synthesizes this plan fresh before
   each run (from spec + last report + log + learnings) and this skill executes it
   in hand. The plan carries run-specifics and deltas; the **standing check
   inventory lives in this skill** (below) — permanent occurrences graduate here,
   never into plans
-- Reference: [[gstack-reference|GStack Reference]] — workflows, commands, brain sync,
+- Reference: [[[mybizz-config-docs:gstack/gstack-reference|GStack Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-reference.md) — workflows, commands, brain sync,
   restart/refresh
-- Report: [[gstack-exam-report|Exam Report]] — one file, overwritten each run
+- Report: [[[mybizz-config-docs:gstack/gstack-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gstack/gstack-exam-report.md) — one file, overwritten each run
   (write-then-replace)
-- Log: [[gstack-log|Log]] — one run row per exam; free rows for notable
+- Log: [[[mybizz-config-docs:gstack/gstack-log|Log]]](C:/mybizz/mybizz-config-docs/gstack/gstack-log.md) — one run row per exam; free rows for notable
   events witnessed between runs
-- Learnings: [[gstack-learnings|GStack Learnings]] — file new patterns/nuances; delete
+- Learnings: [[[mybizz-config-docs:gstack/gstack-learnings|GStack Learnings]]](C:/mybizz/mybizz-config-docs/gstack/gstack-learnings.md) — file new patterns/nuances; delete
   entries once graduated into a permanent home
 
 ## Scope boundary (anti-duplication)
@@ -44,7 +45,7 @@ repairs nothing.
 - **OpenCode structure rows** (symlink + hybrid rows) belong to
   `mb-config-opencode` — this exam confirms the rows' targets exist, never
   re-audits OpenCode's config.
-- **Cross-tool skill enumeration** belongs to [[skills-register|Skill Register]] (docs-managed) —
+- **Cross-tool skill enumeration** belongs to [[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md) (docs-managed) —
   this exam checks the discovery **mechanics** (that the documented link
   topology resolves), never re-audits the inventory.
 
@@ -71,7 +72,7 @@ verification (the "one template line" claim) is classified developer-run (D).
 - Never run `/sync-gbrain --dream` against a manually-registered GBrain source —
   source-overlap trap; the honest bypass is `gbrain dream --source <id>`.
 - Never trust `/setup-gbrain`'s own GBrain backend description — this
-  environment runs self-hosted PostgreSQL; [[gbrain-config|Configuration]] is authoritative.
+  environment runs self-hosted PostgreSQL; [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md) is authoritative.
 - Never remove the OpenClaw `gstack-openclaw-*` skill folders — updates recreate
   them; removal is churn, not a fix.
 - Never treat upstream `1.81.0.0` documentation (Aside-first browser, team mode,
@@ -118,13 +119,13 @@ verification (the "one template line" claim) is classified developer-run (D).
 
 ## Report
 
-Write [[gstack-exam-report|Exam Report]]: verdict line; per-tier tables
+Write [[[mybizz-config-docs:gstack/gstack-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gstack/gstack-exam-report.md): verdict line; per-tier tables
 (check ID, expected, actual, result); findings with class + evidence + recommended
 repair + risk; runner attribution for every deferred item (guard-forbidden vs
 unlock-gated); overwritten in full each run (write-then-replace: failed runs
 never touch the prior report; written before any pruning). Then: one run row
-appended to [[gstack-log|Log]] (run-row format per
-[[config-manager-reference|Reference: Commands, Procedures]]); new learnings filed.
+appended to [[[mybizz-config-docs:gstack/gstack-log|Log]]](C:/mybizz/mybizz-config-docs/gstack/gstack-log.md) (run-row format per
+[[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md)); new learnings filed.
 
 ## Gate protocol
 

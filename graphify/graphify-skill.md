@@ -1,6 +1,7 @@
 ---
 title: "graphify-skill"
 doc-id: "mb-17a33472"
+updated: "2026-10-01"
 ---
 # mb-config-graphify — Exam Skill
 
@@ -9,20 +10,20 @@ Exams Graphify's configuration state against its spec. This skill holds the
 at the start of every run. Graphify is working well; this exam verifies that
 and repairs nothing.
 
-- Spec: [[graphify-config|Graphify Configuration]] — read it first, every run
-- **Exam plan: [[graphify-exam-plan|Exam Plan]] — read second, every run.**
+- Spec: [[[mybizz-config-docs:graphify/graphify-config|Graphify Configuration]]](C:/mybizz/mybizz-config-docs/graphify/graphify-config.md) — read it first, every run
+- **Exam plan: [[[mybizz-config-docs:graphify/graphify-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/graphify/graphify-exam-plan.md) — read second, every run.**
   The plan-driven cycle: the config-manager synthesizes this plan fresh before
   each run (from spec + last report + log + learnings) and this skill executes
   it in hand. The plan carries run-specifics and deltas; the **standing check
   inventory lives in this skill** (below) — permanent occurrences graduate
   here, never into plans
-- Reference: [[graphify-reference|Graphify Reference]] — commands, procedures, the
+- Reference: [[[mybizz-config-docs:graphify/graphify-reference|Graphify Reference]]](C:/mybizz/mybizz-config-docs/graphify/graphify-reference.md) — commands, procedures, the
   Do-not list
-- Report: [[graphify-exam-report|Exam Report]] — one file, overwritten each run
+- Report: [[[mybizz-config-docs:graphify/graphify-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/graphify/graphify-exam-report.md) — one file, overwritten each run
   (write-then-replace)
-- Log: [[graphify-log|Log]] — one run row per exam; free rows for
+- Log: [[[mybizz-config-docs:graphify/graphify-log|Log]]](C:/mybizz/mybizz-config-docs/graphify/graphify-log.md) — one run row per exam; free rows for
   notable events witnessed between runs
-- Learnings: [[graphify-learnings|Learnings]] — file new patterns/nuances;
+- Learnings: [[[mybizz-config-docs:graphify/graphify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/graphify/graphify-learnings.md) — file new patterns/nuances;
   delete entries once graduated into a permanent home
 
 ## Scope boundary (anti-duplication)
@@ -35,7 +36,7 @@ and repairs nothing.
 - **GBrain-side conformance** belongs to `mb-config-gbrain` — cross-reference
   its current report, never re-probe.
 - **The AGENTS.md block's content** (single shared GBrain+Graphify guidance
-  block) is owned by [[memory-master-explainer|Master Explainer]] — this module
+  block) is owned by [[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md) — this module
   verifies marker presence only, never reads content as authority, never edits.
 - **OpenCode global configuration** belongs to `mb-config-opencode` (when
   built) — the repo-local `opencode.json` here is examined only as Graphify's
@@ -120,7 +121,7 @@ learnings.
 | GF1-3 | A | Repo `.gitignore` graphify-relevant lines: `graphify-out/`, `.opencode/`, mb-3-cs, `opencode.json`, `tests/` | All present (config §Scope configuration — repo `.gitignore`) |
 | GF1-4 | A | Graph provenance + shape: `built_at_commit` vs live `git -C $MB rev-parse HEAD`; nodes/edges/communities/confidence/ghost counts vs the spec's recorded values (574 / 468 / 158 / 451 EXTRACTED + 17 INFERRED + 0 AMBIGUOUS / 95 ghost template nodes); `directed` = `false`; artifact `$MB/graphify-out/graph.json` exists | **Provenance equality is the hard check — mismatch = DRIFT** (authority model §7.3: a stale graph describes code that no longer exists). Counts are point-in-time (LE-1): movement vs the 2026-09-08 recording is explainable, exact equality never asserted; `directed: false` is structural, mismatch = DRIFT |
 | GF1-5 | A | MCP entry in the **project-root** `opencode.json` (the gitignored one — not `.opencode/opencode.json`, which is plugin registration): `mcp.graphify` type `local`, enabled `true`, command `["/usr/bin/python3", "-m", "graphify.serve", "/mnt/c/dev/dev-mb-3-cs/mb-3-cs/graphify-out/graph.json"]`, no API-key field | Exact (config §OpenCode MCP integration). Config-file read class: proven agent-readable 2026-09-14; a guard denial → developer bundle, never an alternate path |
-| GF1-6 | A | AGENTS.md guidance block: `<!-- BEGIN GRAPH MEMORY GUIDANCE -->` … `<!-- END GRAPH MEMORY GUIDANCE -->` markers present in `$MB/AGENTS.md` | Both present (config §Related integration facts). Position may move — the markers are the invariant, never line numbers. Markers only; block content owned by [[memory-master-explainer|Master Explainer]] |
+| GF1-6 | A | AGENTS.md guidance block: `<!-- BEGIN GRAPH MEMORY GUIDANCE -->` … `<!-- END GRAPH MEMORY GUIDANCE -->` markers present in `$MB/AGENTS.md` | Both present (config §Related integration facts). Position may move — the markers are the invariant, never line numbers. Markers only; block content owned by [[[mybizz-os-docs:os-reference-docs/memory-master-explainer\|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md) |
 | GF1-7 | A | Plugin surface: `$MB/.opencode/plugins/graphify.js` exists (bash-reminder hook; writes no files of its own); `$MB/.opencode/node_modules/` exists | Both present (config §Install surface — repo-local scope) |
 | GF1-8 | A | Suite completeness: eight files in `graphify/` (config, exam-plan, exam-report, log, learnings, explainer, reference, skill) | All present (missing file = GAP) |
 | GF1-9 | A | Labeling state: `pip show anthropic` absent from site-packages (community labels are deterministic representative-node names — accepted state) | Absent (config §Related integration facts). Presence = labeling state changed → spec-refresh flag, not a defect |
@@ -141,13 +142,13 @@ learnings.
 
 ## Report
 
-Write [[graphify-exam-report|Exam Report]]: verdict line; per-tier tables (check ID,
+Write [[[mybizz-config-docs:graphify/graphify-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/graphify/graphify-exam-report.md): verdict line; per-tier tables (check ID,
 expected, actual, result); findings with class + evidence + recommended
 repair + risk; runner attribution for every deferred item (guard-forbidden vs
 unlock-gated); overwritten in full each run (write-then-replace: failed runs
 never touch the prior report; written before any pruning). Then: one run row
-appended to [[graphify-log|Log]] (run-row format per
-[[config-manager-reference|Reference: Commands, Procedures]]); new learnings filed.
+appended to [[[mybizz-config-docs:graphify/graphify-log|Log]]](C:/mybizz/mybizz-config-docs/graphify/graphify-log.md) (run-row format per
+[[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md)); new learnings filed.
 
 ## Gate protocol
 

@@ -1,6 +1,7 @@
 ---
 title: "memory-governor-skill"
 doc-id: "mb-386cddb3"
+updated: "2026-10-01"
 ---
 # mb-config-memory-governor — Exam Skill
 
@@ -8,11 +9,11 @@ Exams the live memory-governor system against its spec. This skill holds the
 **procedure** only — expected values live in the spec doc and are read fresh at
 the start of every run.
 
-- Spec: [[memory-governor-config|Memory Governor Configuration]] — read it first, every run
-- Reference: [[memory-governor-reference|Usage, Invocation, and Incident Response]]
-- Report: [[memory-governor-exam-report|Exam Report]] — one file, overwritten each run
-- Log: [[memory-governor-log|Log]] — one run row per exam; event rows between runs
-- Learnings: [[memory-governor-learnings|Learnings]] — transient; delete on graduation
+- Spec: [[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) — read it first, every run
+- Reference: [[[mybizz-config-docs:memory-governor/memory-governor-reference|Usage, Invocation, and Incident Response]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-reference.md)
+- Report: [[[mybizz-config-docs:memory-governor/memory-governor-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-exam-report.md) — one file, overwritten each run
+- Log: [[[mybizz-config-docs:memory-governor/memory-governor-log|Log]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-log.md) — one run row per exam; event rows between runs
+- Learnings: [[[mybizz-config-docs:memory-governor/memory-governor-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-learnings.md) — transient; delete on graduation
 
 ## Scope boundary (anti-duplication)
 
@@ -22,7 +23,7 @@ the start of every run.
   `mb-config-postgresql` — cross-reference its current report; a quick row-count
   sanity check is permitted here, full DB conformance is not.
 - **The backup convention** for the governor database lives in
-  [[postgresql-config|Configuration]] §Backups (estate-wide) — freshness checked there (P1-11).
+  [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md) §Backups (estate-wide) — freshness checked there (P1-11).
 
 ## Hard behavioral rules (from the spec's own Do-not list)
 
@@ -76,11 +77,11 @@ the start of every run.
 
 ## Report
 
-Write [[memory-governor-exam-report|Exam Report]]: verdict line; per-tier tables (check ID,
+Write [[[mybizz-config-docs:memory-governor/memory-governor-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-exam-report.md): verdict line; per-tier tables (check ID,
 expected, actual, result); findings with class + evidence + recommended repair;
 runner attribution for every deferred item (guard-forbidden vs unlock-gated vs
 pending-developer-execution); overwritten in full each run (write-then-replace).
-Then: one run row appended to [[memory-governor-log|Log]]; new learnings filed.
+Then: one run row appended to [[[mybizz-config-docs:memory-governor/memory-governor-log|Log]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-log.md); new learnings filed.
 
 ## Gate protocol
 

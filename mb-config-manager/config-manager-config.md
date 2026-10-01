@@ -1,20 +1,21 @@
 ---
 title: "config-manager-config"
 doc-id: "mb-48323f1a"
+updated: "2026-10-01"
 ---
 # Config Manager — Configuration
 
 Canonical current-state configuration for the config-management system itself.
-Concept: [[config-manager-explainer|Explainer]]; procedures: [[config-manager-reference|Reference: Commands, Procedures]].
+Concept: [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md); procedures: [[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md).
 
 ## Identity
 
 | Item | Value |
 |---|---|
 | System | `mb-config-manager` — configuration management for live systems |
-| Orchestrator | an **agent**, not a skill — draft: [[config-manager-agent|Orchestrator Agent]] |
+| Orchestrator | an **agent**, not a skill — draft: [[[mybizz-config-docs:mb-config-manager/config-manager-agent\|Orchestrator Agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) |
 | Exam modules | per-system skills — draft: `{system}/{system}-skill.md` |
-| Routing table | [[config-manager-register|Register: Managed Systems]] — authoritative for Enabled systems |
+| Routing table | [[[mybizz-config-docs:mb-config-manager/config-manager-register\|Register: Managed Systems]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md) — authoritative for Enabled systems |
 | Separation | config skills never touch docs registers; docs skills never probe live systems |
 
 ## Settings
@@ -29,7 +30,7 @@ Concept: [[config-manager-explainer|Explainer]]; procedures: [[config-manager-re
 | Report convention | `{system}-exam-report.md` per system folder — one file, overwritten each run, no history |
 | Exam-plan convention | `{system}-exam-plan.md` per system — transient, rewritten at the start of each cycle |
 | Log convention | `{system}-log.md` per system — one run row per exam + free rows for notable events (crashes, incidents, upgrades, errors, significant guard denials); appended at observation time; pruned once absorbed |
-| Learnings convention | `{system}-learnings.md` per system; orchestrator's own: [[config-manager-learnings|Learnings]]. Transient — every entry eventually dropped or graduated into a permanent home |
+| Learnings convention | `{system}-learnings.md` per system; orchestrator's own: [[[mybizz-config-docs:mb-config-manager/config-manager-learnings\|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md). Transient — every entry eventually dropped or graduated into a permanent home |
 | Graduation | Dual track: into the skill → agent-applied; into config/reference/explainer → flagged through docs governance |
 | Tier 3 (deep/intrusive) | Explicit developer unlock per run; plan header carries the unlock state |
 | Credentials | Referenced by variable name only — never printed |
@@ -38,7 +39,7 @@ Concept: [[config-manager-explainer|Explainer]]; procedures: [[config-manager-re
 
 | Component | Source (this repo) | Installed location |
 |---|---|---|
-| Orchestrator agent | [[config-manager-agent|Orchestrator Agent]] | resolved at agent install time (developer-set) |
+| Orchestrator agent | [[[mybizz-config-docs:mb-config-manager/config-manager-agent\|Orchestrator Agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) | resolved at agent install time (developer-set) |
 | System exam skills | `{system}/{system}-skill.md` — canonical, git-versioned | `~/.config/opencode/skills/<skill-name>/SKILL.md` — installed **copy** (only executing copy) |
 
 The skill file is **copied** at install, never moved — the suite folder keeps the

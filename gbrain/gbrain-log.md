@@ -1,12 +1,13 @@
 ---
 title: "gbrain-log"
 doc-id: "mb-761703d8"
+updated: "2026-10-01"
 ---
 # GBrain — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,
 crashes, failure incidents, upgrades, error reports, significant guard denials.
-Events, not lessons — lessons live in [[gbrain-learnings|Learnings]]. Pruned under the
+Events, not lessons — lessons live in [[[mybizz-config-docs:gbrain/gbrain-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-learnings.md). Pruned under the
 absorption rule. (Seeded with development-period events so the system has working
 data.)
 

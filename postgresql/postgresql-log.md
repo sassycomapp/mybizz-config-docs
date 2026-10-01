@@ -1,12 +1,13 @@
 ---
 title: "postgresql-log"
 doc-id: "mb-debae53d"
+updated: "2026-10-01"
 ---
 # PostgreSQL — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,
 crashes, failure incidents, upgrades, error reports, significant guard denials.
-Events, not lessons — lessons live in [[postgresql-learnings|Learnings]]. Pruned under the
+Events, not lessons — lessons live in [[[mybizz-config-docs:postgresql/postgresql-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-learnings.md). Pruned under the
 absorption rule: an entry goes once absorbed into a learning, skill row, plan item,
 or governance flag, and resolved.
 

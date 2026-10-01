@@ -1,6 +1,7 @@
 ---
 title: "matt-pocock-skills-explainer"
 doc-id: "mb-f1cf9f44"
+updated: "2026-10-01"
 ---
 # Matt Pocock Skills Explainer
 
@@ -26,7 +27,7 @@ engineering judgment get applied, step by step, inside this session."
 - **Alignment before building.** A reusable interview primitive
   ("grilling") plus four packaged forms of it, on the evidence that the
   most common failure mode is the agent building the wrong thing well.
-- **A shared language.** Domain modeling that maintains [[CONTEXT|mb-3-cs (Mybizz Consulting Services)]] and
+- **A shared language.** Domain modeling that maintains [[[mb-3-cs-project-library:docs-local/context|mb-3-cs (Mybizz Consulting Services)]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/CONTEXT.md) and
   ADRs, so project jargon becomes concise, consistent, and cheap for an
   agent to use — naming, navigation, and fewer thinking tokens.
 - **Feedback loops.** A red-green-refactor TDD skill and a gated
@@ -110,13 +111,13 @@ canonical state lives in exactly one place.
 
 This suite participates in the config-management system (`mb-config-manager`).
 The roles of the seven suite files, and the exam cycle that runs them, are the
-architecture described in [[config-manager-explainer|Explainer]] — emulated from the
+architecture described in [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md) — emulated from the
 PostgreSQL pilot. The short local version:
 
-- [[matt-pocock-skills-config|Matt Pocock Skills Configuration]] is the **spec** — the ideal state every exam
+- [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-config|Matt Pocock Skills Configuration]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-config.md) is the **spec** — the ideal state every exam
   checks against.
 - Before each exam run, the config-manager synthesizes
-  [[matt-pocock-skills-exam-plan|Exam Plan]]: a fresh job-spec built from this spec, the
+  [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-exam-plan.md): a fresh job-spec built from this spec, the
   last report, the log, and the learnings. The plan is transient (the file is
   live; contents rewritten each cycle).
 - The exam runs the installed skill (`mb-config-matt-pocock-skills`) with the
@@ -128,8 +129,8 @@ PostgreSQL pilot. The short local version:
   `anvil-agent-references` (coexistence presence only); GStack's install
   locations and inventory belong to `mb-config-gstack`; `spawn-tools-denylist`
   and Cupcake policy belong to the cupcake/opencode modules.
-- The run rewrites [[matt-pocock-skills-exam-report|Exam Report]] (current state, no
-  history), appends one row to [[matt-pocock-skills-log|Log]], files new
+- The run rewrites [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-exam-report.md) (current state, no
+  history), appends one row to [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-log|Log]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-log.md), files new
   learnings, and prunes absorbed entries.
 
 ## 6. S.W.O.T.
@@ -159,9 +160,9 @@ developer-run immediately).
 
 ---
 
-*Companion documents: [[matt-pocock-skills-config|Matt Pocock Skills Configuration]] (state),
-[[matt-pocock-skills-reference|Matt Pocock Skills Reference]] (commands and rules),
-[[matt-pocock-skills-exam-plan|Exam Plan]] / [[matt-pocock-skills-exam-report|Exam Report]] /
-[[matt-pocock-skills-log|Log]] / [[matt-pocock-skills-learnings|Learnings]]
-(config-management set), [[matt-pocock-skills-skill|Matt Pocock Skills Skill]] (exam skill canonical
-source). Architecture: [[config-manager-explainer|Explainer]].*
+*Companion documents: [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-config|Matt Pocock Skills Configuration]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-config.md) (state),
+[[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-reference|Matt Pocock Skills Reference]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-reference.md) (commands and rules),
+[[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-exam-plan.md) / [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-exam-report.md) /
+[[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-log|Log]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-log.md) / [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-learnings.md)
+(config-management set), [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-skill|Matt Pocock Skills Skill]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-skill.md) (exam skill canonical
+source). Architecture: [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md).*

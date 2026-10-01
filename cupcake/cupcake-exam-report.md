@@ -1,13 +1,14 @@
 ---
 title: "cupcake-exam-report"
 doc-id: "mb-19213c10"
+updated: "2026-10-01"
 ---
 # Cupcake — Exam Report
 
 Run #1 — **first formal plan-driven run** (2026-09-13). Plan:
-[[cupcake-exam-plan|Exam Plan]] (step-0 self-validation: PASS — 8 suite files, hash pair
+[[[mybizz-config-docs:cupcake/cupcake-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-plan.md) (step-0 self-validation: PASS — 8 suite files, hash pair
 MATCH ff34de94c7edd6df, spec present, no open run). Detection only — Tiers 0–2
-executed; Tier 3 locked (inherently developer-run). Spec: [[cupcake-config|Cupcake Configuration]]
+executed; Tier 3 locked (inherently developer-run). Spec: [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)
 (refreshed pre-run per developer approval — backup inventory + jsonc naming).
 
 ## Verdict: ACTIVE & HEALTHY — enforcement proven live; zero compile failures; inventory exact
@@ -49,7 +50,7 @@ executed; Tier 3 locked (inherently developer-run). Spec: [[cupcake-config|Cupca
 2. **CF-3 verified:** the guard token-match class held — two build-phase commands
    containing the token `cupcake` were denied (honored, rerouted via approved glob
    form); one relative-path command containing the same token later passed,
-   reconfirming the nondeterminism documented in [[config-manager-learnings|Learnings]].
+   reconfirming the nondeterminism documented in [[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md).
    Denials recorded as liveness evidence per the standing doctrine.
 3. **CF-5-class verification:** the ID'd check inventory (C0-1…C2-7, 17
    agent-runnable checks) executed correctly from this plan — the template format
@@ -60,7 +61,7 @@ executed; Tier 3 locked (inherently developer-run). Spec: [[cupcake-config|Cupca
 
 ## Open question for the developer (C3-3 finding 4)
 
-The decrement gap on bash writes: is **file-tool-only decrement the intended design** (bash shapes enforce the boundary via denial instead — which they do: ungranted bash writes ARE blocked), or should bash writes decrement too? **My recommendation:** accept file-tool-only decrement as intended design, and record it in [[cupcake-config|Cupcake Configuration]]'s grant mechanics section (one sentence: "count decrement fires for file-tool writes; Bash-mediated writes within a granted path are permitted without decrement until grant expiry"). Rationale: bash writes inside a *granted* folder are already inside a developer-approved slip; expiry bounds exposure; extending decrement to bash shapes would be a plugin code change for marginal gain — "never change what is working well without a sound justified reason."
+The decrement gap on bash writes: is **file-tool-only decrement the intended design** (bash shapes enforce the boundary via denial instead — which they do: ungranted bash writes ARE blocked), or should bash writes decrement too? **My recommendation:** accept file-tool-only decrement as intended design, and record it in [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)'s grant mechanics section (one sentence: "count decrement fires for file-tool writes; Bash-mediated writes within a granted path are permitted without decrement until grant expiry"). Rationale: bash writes inside a *granted* folder are already inside a developer-approved slip; expiry bounds exposure; extending decrement to bash shapes would be a plugin code change for marginal gain — "never change what is working well without a sound justified reason."
 
 ## Guard layers
 

@@ -1,6 +1,7 @@
 ---
 title: "archify-scope-skill"
 doc-id: "mb-99f24066"
+updated: "2026-10-01"
 ---
 # mb-archify-scope — Front-of-pipe scoping for /archify
 
@@ -279,7 +280,7 @@ not hand-route around them.
 - **Anti-duplication:** this skill is the front of the pipe only. It does not
   restate the Archify skill's authoring procedure, command reference, checker
   workflow, or update-notice contract — those live in the Archify skill itself
-  and in [[archify-reference|Reference]]. It does not restate this repo's
+  and in [[[mybizz-config-docs:archify/archify-reference|Reference]]](C:/mybizz/mybizz-config-docs/archify/archify-reference.md). It does not restate this repo's
   docs-management rules (own your commits, learnings, docs-manager cycle):
   this skill is deliberately lightweight, front-of-pipe, and produces no log
   and no governance loop of its own beyond the Phase 9 close-out learnings

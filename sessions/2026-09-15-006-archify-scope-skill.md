@@ -1,6 +1,7 @@
 ---
 title: "2026-09-15-006-archify-scope-skill"
 doc-id: "mb-6c56787b"
+updated: "2026-10-01"
 ---
 # Session 006 — mb-archify-scope
 
@@ -20,13 +21,13 @@ plus the Archify authoring learnings gained from the Run Learnings (memory-ecosy
    with the developer (Intent, ASK, Context, Preliminary scope, Scope the source,
    Feasibility probe, Report and gate, Handoff contract) plus a Phase 9
    close-out (learnings) added during the run. Deliverables:
-   - Repo spec: [[archify-scope-skill|Scoping Skill Specification]]
+   - Repo spec: [[[mybizz-config-docs:archify/archify-scope-skill|Scoping Skill Specification]]](C:/mybizz/mybizz-config-docs/archify/archify-scope-skill.md)
    - Installed skill: `~/.config/opencode/skills/mb-archify-scope/SKILL.md`
      (invoked as `/mb-archify-scope`; rename from `mb-archify-scoping`)
    - Output folder: `C:\mybizz\mybizz-config-docs\archify\output\`
 
 3. **First live run — memory-ecosystem architecture diagram.** Scope approved:
-   [[architecture|Architecture]] type (guide-consistent), 9 primary nodes, one store with two
+   [[[mb-3-cs-project-library:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md) type (guide-consistent), 9 primary nodes, one store with two
    badges (GBrain: mirror/durable), read paths as primary nodes, one
    `security-group` "durable gate" boundary. Probe (nodes-only) passed before
    connecting. Authoring converged 17 → 0 diagnostics over two focused repair
@@ -58,7 +59,7 @@ plus the Archify authoring learnings gained from the Run Learnings (memory-ecosy
 ## Key learnings (detailed in the run learnings file)
 
 - Type choice is the highest-leverage scoping decision; run
-  `archify guide "<scenario>" --json` at scope time; prefer [[architecture|Architecture]]
+  `archify guide "<scenario>" --json` at scope time; prefer [[[mb-3-cs-project-library:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md)
   (free pos, edge-tolerant) unless grid semantics are required
 - Probe (components+boundary stub) before connecting — catches
   desktop-readability/font-scale and overlap classes pre-flight
@@ -79,11 +80,11 @@ plus the Archify authoring learnings gained from the Run Learnings (memory-ecosy
   developer's `cp /tmp/opencode/installed-SKILL.md
   ~/.config/opencode/skills/mb-archify-scope/SKILL.md` to land (skill-directory
   writes are blocked for the agent by policy)
-- **Git**: [[archify-scope-skill|Scoping Skill Specification]] and `archify/output/` are new/untracked in
+- **Git**: [[[mybizz-config-docs:archify/archify-scope-skill|Scoping Skill Specification]]](C:/mybizz/mybizz-config-docs/archify/archify-scope-skill.md) and `archify/output/` are new/untracked in
   `mybizz-config-docs`; also a pre-existing modification to
-  [[gbrain-explainer|Explainer]] (not from this session) — commit/push pending
+  [[[mybizz-config-docs:gbrain/gbrain-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-explainer.md) (not from this session) — commit/push pending
   developer instruction
-- The archify GBrain knowledge gap noted in [[archify-config|Configuration]] (no dedicated
+- The archify GBrain knowledge gap noted in [[[mybizz-config-docs:archify/archify-config|Configuration]]](C:/mybizz/mybizz-config-docs/archify/archify-config.md) (no dedicated
   GBrain page) is partially addressed by this session page
 
 ## Next steps

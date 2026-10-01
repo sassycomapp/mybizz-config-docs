@@ -1,6 +1,7 @@
 ---
 title: "magdoub-wireframe-skill"
 doc-id: "mb-dd11c72e"
+updated: "2026-10-01"
 ---
 # mb-config-magdoub-wireframe — Exam Skill
 
@@ -9,20 +10,20 @@ against its spec. This skill holds the **procedure** only — expected values li
 in the spec doc and are read fresh at the start of every run. The installation
 is working well; this exam verifies that and repairs nothing.
 
-- Spec: [[magdoub-wireframe-config|Configuration]] — read it first, every run
-- **Exam plan: [[magdoub-wireframe-exam-plan|Exam Plan]] — read
+- Spec: [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-config|Configuration]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-config.md) — read it first, every run
+- **Exam plan: [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-plan.md) — read
   second, every run.** The plan-driven cycle: the config-manager synthesizes
   this plan fresh before each run (from spec + last report + log + learnings)
   and this skill executes it in hand. The plan carries run-specifics and
   deltas; the **standing check inventory lives in this skill** (below) —
   permanent occurrences graduate here, never into plans
-- Reference: [[magdoub-wireframe-reference|Reference: Invocation, Operation, Update]] — invocation,
+- Reference: [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-reference|Reference: Invocation, Operation, Update]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-reference.md) — invocation,
   settled policy, do-not list
-- Report: [[magdoub-wireframe-exam-report|Exam Report]] — one file,
+- Report: [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-report.md) — one file,
   overwritten each run (write-then-replace)
-- Log: [[magdoub-wireframe-log|Log]] — one run row per exam;
+- Log: [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-log|Log]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-log.md) — one run row per exam;
   free rows for notable events witnessed between runs
-- Learnings: [[magdoub-wireframe-learnings|Learnings]] — file new
+- Learnings: [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-learnings.md) — file new
   patterns/nuances; delete entries once graduated into a permanent home
 
 ## Scope boundary (anti-duplication)
@@ -31,7 +32,7 @@ is working well; this exam verifies that and repairs nothing.
   the real clone in `~/.claude/skills/wireframe/`, the OpenCode discovery
   symlink in `~/.config/opencode/skills/wireframe/`, the bundled file set, the
   runtime output structure, and the settled sync/update policy.
-- **PDLF's step 22/26 usage** of the skill and the [[adr-design-rules|Wireframe Design Rules]] ADR interplay
+- **PDLF's step 22/26 usage** of the skill and the [[[default:adr-global/adr-design-rules|Wireframe Design Rules]]](C:/dev/project-library-global/adr-global/adr-design-rules.md) ADR interplay
   belong to the PDLF / project-library-global docs domain (config open item 4 —
   **resolved 2026-09-16**: ADR §A exempts Magdoub-created wireframes; other
   wireframes fully governed — referenced, never verified here, never treated as
@@ -62,14 +63,14 @@ copied into reports, outputs, or learnings.
 - **Never execute Phase 2's parallel foreground Task agents as SKILL.md
   instructs** — sub-agent creation is prohibited standing policy (three-layer
   denial when active; enforcement status not fixed — check
-  [[cupcake-config|Cupcake Configuration]]'s Current Operational Status before relying on any
+  [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)'s Current Operational Status before relying on any
   enforcement claim). The replacement mechanism is open item 1 — never
   improvised.
 - **Never submit skill content through the Memory Governor** — permanent
   bypass; ordinary `gbrain sync` only (settled policy 2026-09-06).
 - **Never create a second discovery path** for this skill — a duplicate
   double-loads it (dedup is by discovery path).
-- **Never treat [[skills-register|Skill Register]] "working" as run evidence** — no confirmed
+- **Never treat [[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md) "working" as run evidence** — no confirmed
   real run exists (config §Integration facts).
 
 ## Tier 0 — Invocability (run first; failure = report `DOWN`, stop; remaining tiers skipped)
@@ -104,18 +105,18 @@ copied into reports, outputs, or learnings.
 | ID | Runner | Check | Expected |
 |---|---|---|---|
 | MW3-1 | D | Full mechanical integrity audit: SKILL.md byte count exact (27,731 B), `wc -l` every counted bundled file, `sha256sum` of SKILL.md + the three templates + design-taste.md, working tree clean, local `main` == `origin/main` | Every file's byte/line count matches config §Bundled files; tree clean; no local/origin divergence. Cost: ~6 hashes + counts, 0 writes. Exhaustive sweep that Tier 1/2 sample |
-| MW3-2 | D | Open-item decisions (config §Open items): (a) **W-3** supply-chain review — perform and record the review owed at adoption (publisher, license, maintenance, spawn-capability per [[sec-review-before-trust|Review Before Trust]] / [[sec-dependency-skill-supply-chain|Dependency and Skill Supply Chain]]), or record a deliberate deferral; (b) **W-5** old single-file reference — retired or retained, deliberate decision; (c) **W-1** Phase-2 mechanism — direction if the developer chooses to decide now (main-agent sequential fallback vs Phase-1-only) | Decisions recorded; spec edits (if any follow) only via docs governance |
+| MW3-2 | D | Open-item decisions (config §Open items): (a) **W-3** supply-chain review — perform and record the review owed at adoption (publisher, license, maintenance, spawn-capability per [[[default:security-global/principles/sec-review-before-trust\|Review Before Trust]]](C:/dev/project-library-global/security-global/principles/sec-review-before-trust.md) / [[[default:security-global/infrastructure/sec-dependency-skill-supply-chain\|Dependency and Skill Supply Chain]]](C:/dev/project-library-global/security-global/infrastructure/sec-dependency-skill-supply-chain.md)), or record a deliberate deferral; (b) **W-5** old single-file reference — retired or retained, deliberate decision; (c) **W-1** Phase-2 mechanism — direction if the developer chooses to decide now (main-agent sequential fallback vs Phase-1-only) | Decisions recorded; spec edits (if any follow) only via docs governance |
 | MW3-3 | D | Update discipline re-confirmation (settled policy 2026-09-06): update command stays developer-run only, never AI-invoked; content reaches GBrain by ordinary `gbrain sync` only | Policy intact, restated. No action unless the developer deliberately decides otherwise |
 
 ## Report
 
-Write [[magdoub-wireframe-exam-report|Exam Report]]: verdict line; per-tier tables (check
+Write [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-report.md): verdict line; per-tier tables (check
 ID, expected, actual, result); findings with class + evidence + recommended
 repair + risk; runner attribution for every deferred item (guard-forbidden vs
 unlock-gated); overwritten in full each run (write-then-replace: failed runs
 never touch the prior report; written before any pruning). Then: one run row
-appended to [[magdoub-wireframe-log|Log]] (run-row format per
-[[config-manager-reference|Reference: Commands, Procedures]]); new learnings filed.
+appended to [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-log|Log]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-log.md) (run-row format per
+[[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md)); new learnings filed.
 
 ## Gate protocol
 

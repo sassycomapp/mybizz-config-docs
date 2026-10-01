@@ -1,13 +1,14 @@
 ---
 title: "matt-pocock-skills-config"
 doc-id: "mb-0f9a35df"
+updated: "2026-10-01"
 ---
 # Matt Pocock Skills Configuration
 
 Canonical current-state configuration record. Agent-facing. States facts,
 not history or rules — commands and rules in
-[[matt-pocock-skills-reference|Matt Pocock Skills Reference]], reasoning in
-[[matt-pocock-skills-explainer|Matt Pocock Skills Explainer]]. All values verified live 2026-09-08
+[[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-reference|Matt Pocock Skills Reference]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-reference.md), reasoning in
+[[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-explainer|Matt Pocock Skills Explainer]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-explainer.md). All values verified live 2026-09-08
 unless noted.
 
 ## Identity
@@ -27,7 +28,7 @@ unless noted.
 |---|---|
 | Live install root | `~/.agents/skills/` — an OpenCode discovery root |
 | Mechanism | 35 matt-pocock skill symlinks → source clone's `skills/<category>/<name>/` (created 2026-08-12); nothing copied |
-| Shared root | Same directory hosts 5 Anvil skills (`anvil-yaml`, `client-forms`, `client-modules`, `data-models`, `server-code` → `anvil-agent-references/skills/`) — pointer: [[anvil-agent-references-config|Configuration]] |
+| Shared root | Same directory hosts 5 Anvil skills (`anvil-yaml`, `client-forms`, `client-modules`, `data-models`, `server-code` → `anvil-agent-references/skills/`) — pointer: [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-config\|Configuration]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-config.md) |
 | Broken links | 0 (verified 2026-09-08) |
 | GStack relationship | None — GStack installs to its own discovery path; no shared entries |
 | Stale artifact | `matt-pocock-skills-reference.md:Zone.Identifier` (25 B) sits in `~/.agents/skills/` — inert Windows-Zone remnant; cleanup optional, no action taken |
@@ -56,7 +57,7 @@ unless noted.
 
 | Item | State |
 |---|---|
-| Prior document | [[matt-pocock-skills-reference|Matt Pocock Skills Reference]] — **removed**; its verified content is merged into this suite (developer decision, 2026-09-08) |
+| Prior document | [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-reference\|Matt Pocock Skills Reference]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-reference.md) — **removed**; its verified content is merged into this suite (developer decision, 2026-09-08) |
 | Stale claims retired with it | `C:\mybizz\skills-collective\matt-pocock-skills` browsable-hub path (does not exist); pre-drift state |
 
 ## Open items

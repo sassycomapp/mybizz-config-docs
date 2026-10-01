@@ -1,6 +1,7 @@
 ---
 title: "sysdoc-creator-config"
 doc-id: "mb-7688c176"
+updated: "2026-10-01"
 ---
 # sysdoc-creator — Config
 
@@ -21,10 +22,10 @@ verified live this date unless noted.
 | File | Lines | Role |
 |---|---|---|
 | `skill.md` | 309 | Skill definition — authoritative copy |
-| [[doc-suite-specification|config / reference / explainer]] | 135 | Governing specification for every suite this skill produces |
+| [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|config / reference / explainer]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | 135 | Governing specification for every suite this skill produces |
 | `sysdoc-creator-config.md` | — | This document |
-| [[sysdoc-creator-reference|Reference]] | — | Companion — execution |
-| [[sysdoc-creator-explainer|Explainer]] | — | Companion — orientation and reasoning |
+| [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-reference\|Reference]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-reference.md) | — | Companion — execution |
+| [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-explainer\|Explainer]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-explainer.md) | — | Companion — orientation and reasoning |
 
 ## Installed surface
 
@@ -39,7 +40,7 @@ verified live this date unless noted.
 
 | Item | Value |
 |---|---|
-| File | [[doc-suite-specification|config / reference / explainer]] |
+| File | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|config / reference / explainer]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) |
 | Indexed in GBrain as | `mb-sysdoc-creator/doc-suite-specification` |
 | Defines | Per-document contents, never-contains lists, stray-line tests for all three suite documents |
 | Applies to | Every suite this skill drafts — no independent structure improvisation permitted |
@@ -76,7 +77,7 @@ verified live this date unless noted.
 
 | System | Finding |
 |---|---|
-| Cupcake | No component-specific rule found (rule inventory checked 2026-09-09). The skill's own Hard Rule 7 defines its block-handling discipline; enforcement status of any Cupcake rule is not fixed — live status lives in [[cupcake-config|Cupcake Configuration]]'s Current Operational Status |
+| Cupcake | No component-specific rule found (rule inventory checked 2026-09-09). The skill's own Hard Rule 7 defines its block-handling discipline; enforcement status of any Cupcake rule is not fixed — live status lives in [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)'s Current Operational Status |
 | Memory Governor | None found — not a governed writer; its outputs are developer-authored docs synced ordinarily |
 | security-global | None found — no principles bear directly on this component's defaults |
 | Related skills | mb-docs-manager (structural/navigational docs), mb-align-docs (cross-document consistency), mb-wikilinks (cross-reference conversion), mb-compile-rules (Cupcake rule pipeline), mb-submit-memory (memory submission) — see explainer for the division of labor |
@@ -93,6 +94,6 @@ verified live this date unless noted.
 
 ## Open items
 
-1. [[skills-register|Skill Register]] (`mybizz-os-docs`) lists six mb-* siblings as working — `mb-sysdoc-creator` is absent. Correct the register if it is meant to be complete.
+1. [[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md) (`mybizz-os-docs`) lists six mb-* siblings as working — `mb-sysdoc-creator` is absent. Correct the register if it is meant to be complete.
 2. No version field in SKILL.md — currency between the two copies is provable only by diff.
 3. This suite's file prefix (`sysdoc-creator-`) differs from the folder/skill name (`mb-sysdoc-creator`) — developer-stated naming for this suite; sibling suites use the folder name as prefix.

@@ -1,21 +1,22 @@
 ---
 title: "mb-memory-system-diagnostic-exam-plan"
 doc-id: "mb-5d565c27"
+updated: "2026-10-01"
 ---
 # mb-memory-system-diagnostic — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager
 before each run from:
-[[mb-memory-system-diagnostic-config|Configuration]] (spec), the last
-[[mb-memory-system-diagnostic-exam-report|Exam Report]],
-[[mb-memory-system-diagnostic-log|Log]] (events since last run),
-[[mb-memory-system-diagnostic-learnings|Learnings]]. Consumed by the skill at
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-config.md) (spec), the last
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-report.md),
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-log|Log]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-log.md) (events since last run),
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings.md). Consumed by the skill at
 run time; rewritten at the start of the following cycle. The file is live; its
 contents are transient.
 
 **This first plan is hand-written** (emulation of the proven cycle): it also
 serves as the format template. The **standing check inventory lives in the
-skill** ([[mb-memory-system-diagnostic-skill|Exam Skill source]],
+skill** ([[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-skill|Exam Skill source]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-skill.md),
 born-with-inventory); this plan carries run-specifics and references.
 
 ---
@@ -27,10 +28,10 @@ born-with-inventory); this plan carries run-specifics and references.
 | Plan for run | #1 — first formal plan-driven run (no prior exam exists — bootstrap) |
 | Run date | 2026-09-28 |
 | Prior report | none — placeholder present; missing prior report = expected, not silence |
-| Step-0 result | recorded at execution ([[config-manager-log|Config Manager Log]]) |
+| Step-0 result | recorded at execution ([[[mybizz-config-docs:mb-config-manager/config-manager-log\|Config Manager Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md)) |
 | Tier 3 unlock state | **Locked** — Tier 3 rows execute only if the developer unlocks this run |
 | Developer-run requests this run (bundled into ONE request at the gate) | (a) Tier 3 unlock decision (MS3-1 read-only deep audit of the installed copy + recorded constants vs live sibling-suite records; MS3-2 cross-suite constant verification against gbrain-config / memory-governor-config / postgresql-config / graphify-config / gbrain-dream-cycle-config current state); (b) any check whose command text a guard denies; (c) none else anticipated |
-| Expected-value source of truth | [[mb-memory-system-diagnostic-config|Configuration]] — read fresh at run start; never rely on remembered values |
+| Expected-value source of truth | [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-config\|Configuration]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-config.md) — read fresh at run start; never rely on remembered values |
 | Named state-change steps (Amendment: procedural conflicts stated, not asked) | **S-1 (2026-09-28):** the config-manager register carried no `mb-memory-system-diagnostic` row — added by named plan step in state `WIP` (spec doc `mb-memory-system-diagnostic/mb-memory-system-diagnostic-config.md` exists; examinable), citing the developer instruction "Run mb-config-manager on mb-memory-system-diagnostic" (2026-09-28) and the doc-maintainer S-1 precedent (2026-09-25) / doc-auditor S-1 precedent (2026-09-26); the row flips `WIP` → `Installed` at Phase 2 per the setup prompt. **S-2 (2026-09-28):** grant discipline — the 2026-09-15 amendment governs this session: when a guard denies, the agent requests the grant in chat and the developer executes it; denials are never worked around (first instance already recorded: mg-grant count 12 issued for suite writes). |
 | Scope boundary | This module exams **the diagnostic skill itself**: its source artifact and installed copy (identity, hash pair, frontmatter formats), its suite documents and register rows, its recorded constants (62/62 RLS, high-risk category list, heavyweight-gate inventory, report path, GBrain-ingest state), and its invocation surface. **The six memory-ecosystem components** (GBrain, PostgreSQL Instance B, Memory Governor, mb-submit-memory, Graphify, Dream Cycle) belong to their own `mb-config-*` exam modules — this exam never re-tests them live; it verifies only that the diagnostic's recorded constants match those suites' current recorded state. **Running the diagnostic itself is out of exam scope** — it is a heavyweight, developer-invoked procedure (§4/§5/§10 real-write sections); the exam verifies its install and state, never executes it. Cupcake internals are out of scope entirely (the exam, like the subject skill, never touches them). PostgreSQL Instance A / `pdlf` is out of scope entirely. |
 
@@ -65,7 +66,7 @@ None — bootstrap (the learnings table is empty at first plan synthesis).
 ## 6. Standing checks — summary (the complete enumeration lives in the skill)
 
 Every check: id, runner (A=agent, D=developer), probe, expected source, pass
-rule — full tables in the [[mb-memory-system-diagnostic-skill|exam skill source]]
+rule — full tables in the [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-skill|exam skill source]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-skill.md)
 (Tiers 0–3). Summary:
 
 - **Tier 0 (A) — invocability:** MS0-1 installed subject skill present with functional frontmatter (`name: mb-memory-system-diagnostic` + description) · MS0-2 skill discoverable in the OpenCode skill surface (name listed)
@@ -76,14 +77,14 @@ rule — full tables in the [[mb-memory-system-diagnostic-skill|exam skill sourc
 ## 7. Report requirements
 
 The run writes
-[[mb-memory-system-diagnostic-exam-report|Exam Report]]: verdict line; per-tier
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-report.md): verdict line; per-tier
 tables (check ID, expected, actual, result); findings with class + evidence +
 recommended repair + risk; runner attribution for every deferred item
 (guard-forbidden vs unlock-gated). Overwritten in full each run
 (write-then-replace; failed runs never touch the prior report; written before
 any pruning). Then: one run row appended to
-[[mb-memory-system-diagnostic-log|Log]] (run-row format per
-[[config-manager-reference|Reference: Commands, Procedures]]); new learnings
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-log|Log]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-log.md) (run-row format per
+[[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md)); new learnings
 filed.
 
 ## 8. Gate protocol

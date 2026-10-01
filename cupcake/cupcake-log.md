@@ -1,12 +1,13 @@
 ---
 title: "cupcake-log"
 doc-id: "mb-18cc8b96"
+updated: "2026-10-01"
 ---
 # Cupcake — Log
 
 Chronological record of notable events for this system: exam runs and outcomes,
 crashes, failure incidents, upgrades, error reports, significant guard denials.
-Events, not lessons — lessons live in [[cupcake-learnings|Learnings]]. Pruned under the
+Events, not lessons — lessons live in [[[mybizz-config-docs:cupcake/cupcake-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-learnings.md). Pruned under the
 absorption rule. (Seeded with development-period events so the system has working
 data.)
 

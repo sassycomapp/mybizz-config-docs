@@ -1,18 +1,19 @@
 ---
 title: "gbrain-dream-cycle-config"
 doc-id: "mb-c6df61ed"
+updated: "2026-10-01"
 ---
 # GBrain Dream Cycle — Configuration
 
 Canonical current-state configuration record. Agent-facing. Reflects the
 live-verified state as of 2026-09-06. States facts, not history — see
-[[gbrain-dream-cycle-explainer|Explainer]] for the reasoning and the incident whose
+[[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-explainer.md) for the reasoning and the incident whose
 detail is operationally relevant; for commands and the post-run verification
-procedure, see [[gbrain-dream-cycle-reference|Reference: Invocation, Verification, Diagnostics]].
+procedure, see [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-reference|Reference: Invocation, Verification, Diagnostics]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-reference.md).
 
 **System context:** the Dream Cycle is GBrain's own deepening mechanism — one
-of the six closely-related memory components (see [[gbrain-config|Configuration]]'s system
-context). Cross-component reasoning lives in [[memory-master-explainer|Master Explainer]],
+of the six closely-related memory components (see [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md)'s system
+context). Cross-component reasoning lives in [[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md),
 which also owns the confirmed full phase sequence.
 
 ---
@@ -21,7 +22,7 @@ which also owns the confirmed full phase sequence.
 
 | Item | Value |
 |---|---|
-| Parent system | GBrain `0.46.1.0` (upgrade available: 0.48.2.0 — see [[gbrain-config|Configuration]] open items) |
+| Parent system | GBrain `0.46.1.0` (upgrade available: 0.48.2.0 — see [[[mybizz-config-docs:gbrain/gbrain-config\|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md) open items) |
 | Schema pack coupling | `gbrain-everything@1.0.0` (sha8 `7021205a`) — the only installed pack; dream phases operate within its extractability rules |
 | Invocation model | **Manual, on-demand only — deliberate design choice, confirmed 2026-09-06.** No schedule exists or is wanted |
 | Trigger surfaces | `gbrain dream` (full), `gbrain dream --phase <name>` (single phase), `gbrain dream --source <id>` (source-scoped), `/sync-gbrain --dream` (gstack skill — see overlap trap, reference.md) |
@@ -45,13 +46,13 @@ which also owns the confirmed full phase sequence.
 | `extract_atoms` | Anthropic | `ANTHROPIC_API_KEY` — required, present (env-only) and **verified valid against the live API 2026-09-06** |
 
 No other dream-cycle phase in active use has a distinct credential
-requirement beyond GBrain's base model configuration ([[gbrain-config|Configuration]],
+requirement beyond GBrain's base model configuration ([[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md),
 Models section).
 
 ## MEMORY_VERBS surface
 
-Reconciled 2026-09-06 (see [[gbrain-config|Configuration]] open item 2);
-[[memory-governor-config|Memory Governor Configuration]] records `mcp_surface: verbs` enabled as its build
+Reconciled 2026-09-06 (see [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md) open item 2);
+[[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) records `mcp_surface: verbs` enabled as its build
 prerequisite. At the 2026-09-06 reconciliation the default MCP surface
 included the memory verbs with no `mcp_surface` key set; since then the key
 was set explicitly: `gbrain config get mcp_surface` → `verbs` (observed live

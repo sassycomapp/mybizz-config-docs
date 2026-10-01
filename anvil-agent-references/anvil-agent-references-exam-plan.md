@@ -1,18 +1,19 @@
 ---
 title: "anvil-agent-references-exam-plan"
 doc-id: "mb-0aa9e73d"
+updated: "2026-10-01"
 ---
 # anvil-agent-references — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before
-each run from: [[anvil-agent-references-config|Configuration]] (spec), the last
-[[anvil-agent-references-exam-report|Exam Report]], [[anvil-agent-references-log|Log]] (events since
-last run), [[anvil-agent-learnings|Learnings]]. Consumed by the skill at run time; rewritten
+each run from: [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-config|Configuration]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-config.md) (spec), the last
+[[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-report.md), [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-log|Log]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-log.md) (events since
+last run), [[[mybizz-config-docs:anvil-agent-references/anvil-agent-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-learnings.md). Consumed by the skill at run time; rewritten
 at the start of the following cycle. The file is live; its contents are transient.
 
 **This first plan is hand-written** (emulation of the established architecture):
 it also serves as the format template. The **standing check inventory lives in the
-skill** ([[anvil-agent-skill|Anvil Agent Skill]], born-with-inventory); this plan carries
+skill** ([[[mybizz-config-docs:anvil-agent-references/anvil-agent-skill|Anvil Agent Skill]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-skill.md), born-with-inventory); this plan carries
 run-specifics and references. Once verified by a run, future plans carry
 run-specifics + references only.
 
@@ -28,7 +29,7 @@ run-specifics + references only.
 | Step-0 result | recorded at execution |
 | Tier 3 unlock state | **Locked** — Tier 3 rows execute only if the developer unlocks this run |
 | Developer-run requests this run (bundled into ONE request) | (a) any check whose command text the guards deny (unexpected for this system — no sensitive-data config content in scope; the sensitive-file guard may deny the session-start-adjacent paths, but those are not exam targets; denied anyway → bundled, honored absolutely); (b) Tier 3 items if unlocked — AR3-1 (full mechanical audit) is the likely unlock candidate |
-| Expected-value source of truth | [[anvil-agent-references-config|Configuration]] — read fresh at run start; never rely on remembered values |
+| Expected-value source of truth | [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-config\|Configuration]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-config.md) — read fresh at run start; never rely on remembered values |
 | Scope boundary | This module exams **the anvil-agent-references install lifecycle**: the source clone (`/mnt/c/mybizz/anvil-agent-references`), the 5 symlinks in `~/.agents/skills/` (anvil-yaml, client-forms, client-modules, data-models, server-code), GBrain registration of source `anvil-agent-references-code`, and repository structure (stubs, type refs, docs/m3, plugin metadata). The 35 Matt Pocock symlinks sharing `~/.agents/skills/` belong to `mb-config-matt-pocock-skills` — coexistence **presence/count only**, never touched, never inventoried. GStack's install locations and skill inventory belong to `mb-config-gstack`. `anvil-docs/` (separate vendor-docs mirror) is adjacency only — out of exam scope. Cupcake guard policy and `spawn-tools-denylist.json` belong to the cupcake/opencode modules, not this exam |
 
 ## 2. Carried-forward items
@@ -66,7 +67,7 @@ None — no prior exam exists (first formal run; bootstrap).
 ## 6. Standing checks — summary (the complete enumeration lives in the skill)
 
 Every check: id, runner (A=agent, D=developer), probe, expected source, pass
-rule — full tables in [[anvil-agent-skill|Anvil Agent Skill]] (Tiers 0–3). Summary:
+rule — full tables in [[[mybizz-config-docs:anvil-agent-references/anvil-agent-skill|Anvil Agent Skill]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-skill.md) (Tiers 0–3). Summary:
 
 - **Tier 0 (A) — invocability:** AR0-1 source clone present + HEAD reachable · AR0-2 discovery root `~/.agents/skills/` returns the anvil set (5 symlinks → clone's `skills/`). Failure = DOWN, stop.
 - **Tier 1 (A) — state conformance:** AR1-1 link graph (5 anvil symlinks; 0 broken; total link count = 40 shared-root with the matt set, presence-only) · AR1-2 OpenCode discovery (no second discovery path, no `~/.claude/skills/` anvil entries) · AR1-3 repository structure (skills/ 5, stubs 63 = 31 client + 32 server per config §Repository structure — read fresh, reference/types 3, docs/m3 layout, plugin metadata) · AR1-4 per-project setup state (2 Done / 3 Not-done — Not-done = deliberate, project-init-tied; per the recorded matrix) · AR1-5 suite completeness (7 files) · AR1-6 GBrain source registration (`anvil-agent-references-code`, non-federated) · AR1-7 stale external references absent (`/mnt/c/mybizz/config`, `skills-collective`, `docs/material-3`)
@@ -75,13 +76,13 @@ rule — full tables in [[anvil-agent-skill|Anvil Agent Skill]] (Tiers 0–3). S
 
 ## 7. Report requirements
 
-The run writes [[anvil-agent-references-exam-report|Exam Report]]: verdict line; per-tier
+The run writes [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-report.md): verdict line; per-tier
 tables (check ID, expected, actual, result); findings with class + evidence +
 recommended repair + risk; runner attribution for every deferred item
 (guard-forbidden vs unlock-gated); overwritten in full each run
 (write-then-replace; failed runs never touch the prior report; written before any
-pruning). Then: one run row appended to [[anvil-agent-references-log|Log]]
-(run-row format per [[config-manager-reference|Reference: Commands, Procedures]]); new learnings filed.
+pruning). Then: one run row appended to [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-log|Log]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-log.md)
+(run-row format per [[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md)); new learnings filed.
 
 ## 8. Gate protocol
 

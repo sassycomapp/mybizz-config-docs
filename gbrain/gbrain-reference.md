@@ -1,14 +1,15 @@
 ---
 title: "gbrain-reference"
 doc-id: "mb-55906d51"
+updated: "2026-10-01"
 ---
 # GBrain — Reference: Commands, Mechanics, Incidents, Troubleshooting
 
-Companion to [[gbrain-config|Configuration]] (the spec — current state) and
-[[gbrain-explainer|Explainer]] (what it is and why — the authoritative whole-system
-narrative). Exam companions: [[gbrain-exam-plan|Exam Plan]] (next run's job-spec),
-[[gbrain-exam-report|Exam Report]] (current verified state), [[gbrain-log|Log]] (notable
-events), [[gbrain-learnings|Learnings]] (transient exam knowledge). Agent-facing.
+Companion to [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md) (the spec — current state) and
+[[[mybizz-config-docs:gbrain/gbrain-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-explainer.md) (what it is and why — the authoritative whole-system
+narrative). Exam companions: [[[mybizz-config-docs:gbrain/gbrain-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-exam-plan.md) (next run's job-spec),
+[[[mybizz-config-docs:gbrain/gbrain-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-exam-report.md) (current verified state), [[[mybizz-config-docs:gbrain/gbrain-log|Log]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-log.md) (notable
+events), [[[mybizz-config-docs:gbrain/gbrain-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-learnings.md) (transient exam knowledge). Agent-facing.
 Division-scoped — applies across all projects.
 
 ---
@@ -23,9 +24,9 @@ ADRs, or OpenCode rules — files are always authoritative.
 (upgraded 2026-09-30 from 0.46.1.0; `0.60.11.0` exists upstream) | **Schema:** v169 | **Pack:** gbrain-everything
 **Connection:** `postgresql://postgres:***@localhost:5432/gbrain`
 
-Current sources, credentials, and MCP entry: [[gbrain-config|Configuration]]. Cross-
+Current sources, credentials, and MCP entry: [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md). Cross-
 component reasoning (Graphify, Dream Cycle, Memory Governor, the authority
-model): [[memory-master-explainer|Master Explainer]].
+model): [[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md).
 
 ---
 
@@ -121,13 +122,13 @@ hand: `git -C /mnt/c/mybizz/anvil-agent-references pull`.
 **Two content paths, two layers (do not mix):** sync writes the pages/corpus
 layer; it must never be used to move governed content into GBrain — only the
 governor's own async `remember` path counts as governed
-([[memory-governor-config|Memory Governor Configuration]], GBrain integration). Symmetrically, the
-governed path writes facts, never corpus pages. See [[gbrain-config|Configuration]]'s
+([[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md), GBrain integration). Symmetrically, the
+governed path writes facts, never corpus pages. See [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md)'s
 "Content paths into GBrain."
 
 ### Dream Cycle
 
-Invocation, phase order, and diagnostics: [[gbrain-dream-cycle-reference|Reference: Invocation, Verification, Diagnostics]].
+Invocation, phase order, and diagnostics: [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-reference|Reference: Invocation, Verification, Diagnostics]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-reference.md).
 Fact that affects source management: dream phases (including
 `resolve_symbol_edges`) only populate the call graph if the source was synced
 with `--strategy code`.
@@ -171,7 +172,7 @@ Facts follow the same order: `remember` writes into the selected source and
 folder or from the default also reads every federated source; `--source`,
 `GBRAIN_SOURCE` or `source_id` read one source only. The fact snapshot of
 2026-09-30 was taken with `GBRAIN_SOURCE=<id>` for that reason. Details for the
-memory governor: [[memory-governor-reference|Usage, Invocation, and Incident Response]].
+memory governor: [[[mybizz-config-docs:memory-governor/memory-governor-reference|Usage, Invocation, and Incident Response]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-reference.md).
 
 ### Skillpack
 
@@ -263,7 +264,7 @@ mv ~/.gbrain/upgrade-errors.jsonl ~/.gbrain/upgrade-errors.jsonl.resolved-<date>
 
 ### Embedding/chat calls fail with "API key is invalid"
 
-Dream Cycle `extract_atoms`-phase issue — see [[gbrain-dream-cycle-reference|Reference: Invocation, Verification, Diagnostics]].
+Dream Cycle `extract_atoms`-phase issue — see [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-reference|Reference: Invocation, Verification, Diagnostics]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-reference.md).
 
 ### A sync gets BLOCKED on invalid frontmatter, and doesn't advance
 
@@ -328,7 +329,7 @@ never print, copy, or archive the values.
 
 When GBrain recall conflicts with current files, the files win. Cross-tool
 authority ordering (including Graphify confidence tiers): see
-[[memory-master-explainer|Master Explainer]] §7.
+[[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md) §7.
 
 ---
 
@@ -401,11 +402,11 @@ opencode web --hostname 0.0.0.0
 - Do not switch or install a different schema pack expecting it to fix the call-graph limitation — confirmed impossible with any bundled pack.
 - Do not run `gbrain sync --skip-failed` as a default remedy — fix the offending frontmatter and re-sync cleanly.
 - Do not rely on `strategy` being stored per source — pass `--strategy code` explicitly on every sync that needs code files.
-- Do not call `gbrain sync` to move governed content into GBrain — only the governor's async `remember` path counts as governed ([[memory-governor-config|Memory Governor Configuration]]). Sync is for the pages layer; the governed path is for the facts layer.
+- Do not call `gbrain sync` to move governed content into GBrain — only the governor's async `remember` path counts as governed ([[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md)). Sync is for the pages layer; the governed path is for the facts layer.
 - Do not treat an offline test pass as live verification for anything GBrain-adjacent — the same evidence-not-proof standard as everywhere else.
 - Do not upgrade GBrain on version-newness alone — an upgrade is a developer decision (the one of 2026-09-30 is recorded in config.md) and follows the procedure above.
 - Do not run a bare `gbrain sync` — it syncs only the source of the current folder; use `bash /mnt/c/mybizz/scripts/sync-gbrain.sh`.
 - Do not use `gbrain upgrade`, `gbrain self-upgrade` or plain `gbrain apply-migrations --yes` for this install — use the procedure above.
 - Do not leave `sources.default` naming a source that does not exist — under 0.59.18.0 every sync then fails.
 - Do not remove `memory-governor-code`, or any code source, before the facts stored in it are understood.
-- Do not re-enable the `gbrain autopilot` schedule or put the dream cycle on a scheduler — on-demand invocation is the deliberate design; the autopilot was found inert and removed 2026-09-06 (see [[gbrain-dream-cycle-config|Configuration]]).
+- Do not re-enable the `gbrain autopilot` schedule or put the dream cycle on a scheduler — on-demand invocation is the deliberate design; the autopilot was found inert and removed 2026-09-06 (see [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-config.md)).

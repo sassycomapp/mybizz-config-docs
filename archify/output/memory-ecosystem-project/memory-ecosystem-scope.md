@@ -1,6 +1,7 @@
 ---
 title: "memory-ecosystem-scope"
 doc-id: "mb-8f007ac3"
+updated: "2026-10-01"
 ---
 # Scope Card — memory-ecosystem
 
@@ -21,7 +22,7 @@ confers durable status.
 
 ## Decisions (developer-approved verbatim)
 
-- **Type:** [[architecture|Architecture]] (guide agrees; low confidence, subject-justified)
+- **Type:** [[[mb-3-cs-project-library:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md) (guide agrees; low confidence, subject-justified)
 - **Quality profile:** `showcase`
 - **One store, two badges:** GBrain is one node with "mirror layer · durable layer"
 - **Read paths are primary nodes** (GBrain hybrid search + Graphify)
@@ -29,9 +30,9 @@ confers durable status.
 ## Type reason
 
 The subject is a component ecosystem with five write flows and two read flows.
-[[architecture|Architecture]] forgives many edges and supports trust boundaries; `dataflow`
+[[[mb-3-cs-project-library:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md) forgives many edges and supports trust boundaries; `dataflow`
 (the keyword-driven choice that failed previously) is a strict grid that
-punishes dense crossing flows. Guide call returned [[architecture|Architecture]].
+punishes dense crossing flows. Guide call returned [[[mb-3-cs-project-library:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md).
 
 ## Node Inventory (9 primary)
 

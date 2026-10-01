@@ -1,12 +1,13 @@
 ---
 title: "cupcake-exam-plan"
 doc-id: "mb-cd94d069"
+updated: "2026-10-01"
 ---
 # Cupcake — Exam Plan
 
 Transient job-spec for the next exam run. Synthesized by the config-manager before
-each run from: [[cupcake-config|Cupcake Configuration]] (spec), the last [[cupcake-exam-report|Exam Report]],
-[[cupcake-log|Log]] (events since last run), [[cupcake-learnings|Learnings]]. Consumed by
+each run from: [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) (spec), the last [[[mybizz-config-docs:cupcake/cupcake-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-report.md),
+[[[mybizz-config-docs:cupcake/cupcake-log|Log]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-log.md) (events since last run), [[[mybizz-config-docs:cupcake/cupcake-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-learnings.md). Consumed by
 the skill at run time; rewritten at the start of the following cycle. The file is
 live; its contents are transient.
 
@@ -25,11 +26,11 @@ references instead.
 |---|---|
 | Plan for run | #1 — first formal plan-driven run (pilot 2026-09-12 was detection-only, pre-architecture) |
 | Run date | set at execution |
-| Prior report | [[cupcake-exam-report|Exam Report]] (2026-09-12, pilot) |
+| Prior report | [[[mybizz-config-docs:cupcake/cupcake-exam-report\|Exam Report]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-report.md) (2026-09-12, pilot) |
 | Step-0 result | recorded at execution |
 | Tier 3 unlock state | **Locked** — Tier 3 rows execute only if the developer unlocks this run (Tier 3 items are inherently developer-run: the exec-protection guard forbids agents from executing the cupcake binary) |
 | Developer-run requests this run (bundled into ONE request) | (a) authoritative live eval health check (reference-doc invocation); (b) any check whose command text the guards deny |
-| Expected-value source of truth | [[cupcake-config|Cupcake Configuration]] — read fresh at run start; never rely on remembered values |
+| Expected-value source of truth | [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) — read fresh at run start; never rely on remembered values |
 | Structural constraint | the agent never executes the cupcake binary, never reads/edits anything inside `.cupcake/` or `~/.config/cupcake/` beyond read-only inventory, never touches policy or plugin files |
 
 ## 2. Carried-forward items (from pilot report, 2026-09-12)
@@ -91,7 +92,7 @@ run-specific deltas only.
 | C2-1 | A | Policy inventory | 19 custom + 3 builtins + `system/evaluate.rego` aggregator — file names matched against the spec's rule tables |
 | C2-2 | A | Task-denial layer 1 | `"task": "deny"` in `~/.config/opencode/opencode.jsonc` (note: `.jsonc`, not `.json`) |
 | C2-3 | A | `spawn-tools-denylist.json` | exactly: task, delegate, call_omo_agent, agent_session_create |
-| C2-4 | A | Source↔deployed correspondence | 20 sources ↔ 19 deployed; [[no_bash_mediated_file_writes_without_grant|Rule: No Bash-Mediated File Writes Without Grant]] folded into the cross-project rule (expected — see LE-1); verify bash-shape indicators still present in that rego |
+| C2-4 | A | Source↔deployed correspondence | 20 sources ↔ 19 deployed; [[[default:rules-cupcake-global/no_bash_mediated_file_writes_without_grant\|Rule: No Bash-Mediated File Writes Without Grant]]](C:/dev/project-library-global/rules-cupcake-global/no_bash_mediated_file_writes_without_grant.md) folded into the cross-project rule (expected — see LE-1); verify bash-shape indicators still present in that rego |
 | C2-5 | A | Grant tooling | `mg-grant`, `mg-revoke` present on PATH |
 | C2-6 | A | Plugin backup set | inventoried vs spec (CF-1) |
 | C2-7 | A | Grants data file | present, generated-form |
@@ -107,12 +108,12 @@ run-specific deltas only.
 
 ## 7. Report requirements
 
-The run writes [[cupcake-exam-report|Exam Report]]: verdict line; per-tier tables (check ID,
+The run writes [[[mybizz-config-docs:cupcake/cupcake-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-report.md): verdict line; per-tier tables (check ID,
 expected, actual, result); findings with class + evidence + recommended repair;
 runner attribution for every deferred item (guard-forbidden vs unlock-gated);
 liveness evidence (which denial proved firing); overwritten in full each run
 (write-then-replace: failed runs never touch the prior report). Then: one run row
-appended to [[cupcake-log|Log]] (run-row format per [[config-manager-reference|Reference: Commands, Procedures]]);
+appended to [[[mybizz-config-docs:cupcake/cupcake-log|Log]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-log.md) (run-row format per [[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md));
 new learnings filed.
 
 ## 8. Gate protocol

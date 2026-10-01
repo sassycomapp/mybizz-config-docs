@@ -1,15 +1,16 @@
 ---
 title: "gbrain-dream-cycle-reference"
 doc-id: "mb-afe3a341"
+updated: "2026-10-01"
 ---
 # GBrain Dream Cycle — Reference: Invocation, Verification, Diagnostics
 
-Companion to [[gbrain-dream-cycle-config|Configuration]] (current state, acceptance-test
-record) and [[gbrain-dream-cycle-explainer|Explainer]] (reasoning, incident).
-Config-management set: [[gbrain-dream-cycle-exam-plan|Exam Plan]] (transient job-spec —
-read second, every run), [[gbrain-dream-cycle-exam-report|Exam Report]] (last verified
-state), [[gbrain-dream-cycle-log|Log]] (chronological events),
-[[gbrain-dream-cycle-learnings|Learnings]] (transient knowledge). Agent-facing.
+Companion to [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-config.md) (current state, acceptance-test
+record) and [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-explainer.md) (reasoning, incident).
+Config-management set: [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-exam-plan.md) (transient job-spec —
+read second, every run), [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-exam-report.md) (last verified
+state), [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-log|Log]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-log.md) (chronological events),
+[[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-learnings.md) (transient knowledge). Agent-facing.
 
 **Invocation model:** manual, on-demand only — the scheduled autopilot was
 found inert and deliberately removed (2026-09-06). Nothing runs unless you
@@ -35,7 +36,7 @@ recompute_emotional_weight, consolidate, propose_takes, grade_takes,
 calibration_profile, drift, conversation_facts_backfill, enrich_thin,
 skillopt, embed, orphans, schema-suggest, purge`. Phase taxonomy (verified
 via doctor): 12 source-scoped, 9 brain-global, 2 mixed — full classification
-in [[gbrain-config|Configuration]]'s doctor notes and [[memory-master-explainer|Master Explainer]] §4.
+in [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md)'s doctor notes and [[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md) §4.
 
 ## Post-run verification procedure — after EVERY dream invocation
 
@@ -143,4 +144,4 @@ orchestrator's code stage — `gbrain dream --source <existing-id>` directly.
   isolate with `--phase`.
 - Do not re-enable the autopilot schedule or put the dream cycle on a
   scheduler — on-demand invocation is the deliberate design (autopilot found
-  inert and removed 2026-09-06; see [[gbrain-dream-cycle-config|Configuration]]).
+  inert and removed 2026-09-06; see [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-config.md)).

@@ -1,6 +1,7 @@
 ---
 title: "2026-09-16-gstack-artifact-location"
 doc-id: "mb-3ba82a94"
+updated: "2026-10-01"
 ---
 # Fact — GStack artifact location and the missing gstack-outputs lane
 
@@ -24,4 +25,4 @@ project root; the earlier config claim "confirmed live in
 repo-side copy; `~/.gstack/projects/$SLUG/` is the sole authoritative artifact
 location.
 
-Full annotated record: [[gstack-reference|GStack Reference]] §Artifact locations.
+Full annotated record: [[[mybizz-config-docs:gstack/gstack-reference|GStack Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-reference.md) §Artifact locations.

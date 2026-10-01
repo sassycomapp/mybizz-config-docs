@@ -1,16 +1,17 @@
 ---
 title: "opencode-explainer"
 doc-id: "mb-4e022a9c"
+updated: "2026-10-01"
 ---
 # OpenCode Explainer
 
 *Companion note: for current confirmed state (identity, global-config content,
-plugin state, skill discovery, Active Project Standard) see [[opencode-config|OpenCode Configuration]].
-For commands and the restart/verification procedures, see [[opencode-reference|Commands, Verification, Troubleshooting]].
+plugin state, skill discovery, Active Project Standard) see [[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md).
+For commands and the restart/verification procedures, see [[[mybizz-config-docs:opencode/opencode-reference|Commands, Verification, Troubleshooting]]](C:/mybizz/mybizz-config-docs/opencode/opencode-reference.md).
 For the permission layers and the verified merge, see
-[[opencode-permission-access-control-model|Permission & Access Control Model]]. For how this system is examined and
+[[[mybizz-config-docs:opencode/opencode-permission-access-control-model|Permission & Access Control Model]]](C:/mybizz/mybizz-config-docs/opencode/opencode-permission-access-control-model.md). For how this system is examined and
 kept healthy by the config-management apparatus, see §8 below and the suite's exam
-set ([[opencode-exam-plan|Exam Plan]] / `-exam-report.md` / `-log.md` / `-learnings.md`).*
+set ([[[mybizz-config-docs:opencode/opencode-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-plan.md) / `-exam-report.md` / `-log.md` / `-learnings.md`).*
 
 ---
 
@@ -26,7 +27,7 @@ OpenCode's own real behavior, including its genuine rough edges, matters
 more than any single tool built on top of it.
 
 **OpenCode spans every layer of the environment** (see
-[[pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]] for the layer map): the
+[[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]](C:/pdlf/pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer.md) for the layer map): the
 pre-makePDLF supporting systems run inside or beside it, the makePDLF
 project builds the PDLF application in it, the PDLF layer builds the
 shipped estate through it — and nothing in it travels to the shipped
@@ -74,7 +75,7 @@ point at identical content.**
 Skills reach OpenCode through more than one real pathway, and they are not
 all installed the same way — confirmed directly by a full, real audit of
 every skill on this machine (2026-09-08, the full inventory is
-[[skills-register|Skill Register]]):
+[[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md)):
 
 - **Plain, real folders** — no symlink at all. This project's own custom
   skills (`mb-align-docs`, `mb-docs-manager`, etc.) work this way.
@@ -140,7 +141,7 @@ both loaded, with genuinely different content in each, and no clear,
 verified answer for which one would win if they ever conflicted. Confirmed
 and fixed 2026-09-01: consolidated into a single `opencode.jsonc`, the
 other deleted. One file, one source of truth, going forward — see
-[[opencode-config|OpenCode Configuration]] for the real, current content.
+[[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md) for the real, current content.
 
 ---
 
@@ -189,12 +190,12 @@ must ensure that plugin is discoverable from exactly one path.
 
 This suite participates in the config-management system (`mb-config-manager`).
 The roles of the seven suite files, and the exam cycle that runs them, are the
-architecture described in [[config-manager-explainer|Explainer]] — emulated from the
+architecture described in [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md) — emulated from the
 PostgreSQL pilot. The short local version:
 
-- [[opencode-config|OpenCode Configuration]] is the **spec** — the ideal state every exam checks
+- [[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md) is the **spec** — the ideal state every exam checks
   against. OpenCode is working well; the exam verifies that and changes nothing.
-- Before each exam run, the config-manager synthesizes [[opencode-exam-plan|Exam Plan]]:
+- Before each exam run, the config-manager synthesizes [[[mybizz-config-docs:opencode/opencode-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-plan.md):
   a fresh job-spec built from this spec, the last report, the log, and the
   learnings. The plan is transient (the file is live; contents rewritten each
   cycle).
@@ -213,16 +214,16 @@ PostgreSQL pilot. The short local version:
   **discoverability/dedup mechanics** (exactly one discoverable path). GBrain
   **server** liveness belongs to `mb-config-gbrain` — this exam owns the
   `mcp.gbrain` **config entry**. The **session database** and its cleanup belong
-  to [[opencode-project-session-data-integrity|Project & Session Data Integrity]] (agent content reads
+  to [[[mybizz-config-docs:opencode/opencode-project-session-data-integrity|Project & Session Data Integrity]]](C:/mybizz/mybizz-config-docs/opencode/opencode-project-session-data-integrity.md) (agent content reads
   guard-denied — the exam checks presence only, via directory listing). Full skill
-  **inventory** belongs to [[skills-register|Skill Register]] (docs-managed) — this exam checks
+  **inventory** belongs to [[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md) (docs-managed) — this exam checks
   discovery **mechanics**, never re-audits the inventory.
 - Several checks are permanently **developer-run**: `opencode.jsonc` content
   (sensitive-data guard class), the session-data doc content (proven denial), and
   everything in Tier 3 (full restart; WSL default-distro check via `wsl.exe`;
   the upgrade decision).
-- The run rewrites [[opencode-exam-report|Exam Report]] (current state, no history), appends
-  one row to [[opencode-log|Log]], files new learnings, and prunes absorbed entries.
+- The run rewrites [[[mybizz-config-docs:opencode/opencode-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-report.md) (current state, no history), appends
+  one row to [[[mybizz-config-docs:opencode/opencode-log|Log]]](C:/mybizz/mybizz-config-docs/opencode/opencode-log.md), files new learnings, and prunes absorbed entries.
 
 ## 9. S.W.O.T.
 
@@ -253,14 +254,14 @@ spec explicitly forbids treating Paused configs as stale).
 
 ---
 
-*Companion documents: [[opencode-config|OpenCode Configuration]] (current configuration, real skill
+*Companion documents: [[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md) (current configuration, real skill
 inventory, active-project standard),
-[[opencode-permission-access-control-model|Permission & Access Control Model]] (the permission layers),
-[[opencode-project-session-data-integrity|Project & Session Data Integrity]] (the session database),
-[[opencode-reference|Commands, Verification, Troubleshooting]] (procedures). Config-management set:
-[[opencode-exam-plan|Exam Plan]] / `-exam-report.md` / `-log.md` / `-learnings.md`.
-Exam skill canonical source: [[opencode-skill|Opencode Skill]]. Architecture:
-[[config-manager-explainer|Explainer]]. The environment layer map:
-[[pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]].*
+[[[mybizz-config-docs:opencode/opencode-permission-access-control-model|Permission & Access Control Model]]](C:/mybizz/mybizz-config-docs/opencode/opencode-permission-access-control-model.md) (the permission layers),
+[[[mybizz-config-docs:opencode/opencode-project-session-data-integrity|Project & Session Data Integrity]]](C:/mybizz/mybizz-config-docs/opencode/opencode-project-session-data-integrity.md) (the session database),
+[[[mybizz-config-docs:opencode/opencode-reference|Commands, Verification, Troubleshooting]]](C:/mybizz/mybizz-config-docs/opencode/opencode-reference.md) (procedures). Config-management set:
+[[[mybizz-config-docs:opencode/opencode-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-plan.md) / `-exam-report.md` / `-log.md` / `-learnings.md`.
+Exam skill canonical source: [[[mybizz-config-docs:opencode/opencode-skill|Opencode Skill]]](C:/mybizz/mybizz-config-docs/opencode/opencode-skill.md). Architecture:
+[[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md). The environment layer map:
+[[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]](C:/pdlf/pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer.md).*
 
 *End of document*

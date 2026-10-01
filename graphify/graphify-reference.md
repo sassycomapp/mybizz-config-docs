@@ -1,16 +1,17 @@
 ---
 title: "graphify-reference"
 doc-id: "mb-eda396e1"
+updated: "2026-10-01"
 ---
 # Graphify Reference
 
 Execution reference for the installed Graphify CLI (0.9.40), verified against
 `graphify --help` and live state on 2026-09-08. Current state values:
-[[graphify-config|Graphify Configuration]]. Why each rule exists: [[graphify-explainer|Graphify Explainer]].
+[[[mybizz-config-docs:graphify/graphify-config|Graphify Configuration]]](C:/mybizz/mybizz-config-docs/graphify/graphify-config.md). Why each rule exists: [[[mybizz-config-docs:graphify/graphify-explainer|Graphify Explainer]]](C:/mybizz/mybizz-config-docs/graphify/graphify-explainer.md).
 Standing configuration management (2026-09-14): exam plan
-[[graphify-exam-plan|Exam Plan]], current verified state [[graphify-exam-report|Exam Report]],
-notable events [[graphify-log|Log]], transient exam knowledge
-[[graphify-learnings|Learnings]], exam skill source [[graphify-skill|Graphify Skill]] (the installed
+[[[mybizz-config-docs:graphify/graphify-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/graphify/graphify-exam-plan.md), current verified state [[[mybizz-config-docs:graphify/graphify-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/graphify/graphify-exam-report.md),
+notable events [[[mybizz-config-docs:graphify/graphify-log|Log]]](C:/mybizz/mybizz-config-docs/graphify/graphify-log.md), transient exam knowledge
+[[[mybizz-config-docs:graphify/graphify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/graphify/graphify-learnings.md), exam skill source [[[mybizz-config-docs:graphify/graphify-skill|Graphify Skill]]](C:/mybizz/mybizz-config-docs/graphify/graphify-skill.md) (the installed
 copy at `~/.config/opencode/skills/mb-config-graphify/SKILL.md` is the only
 executing one — copy, never move).
 
@@ -126,7 +127,7 @@ Platform registration: `graphify install [--platform P]`; per-platform
 copilot vscode claw droid trae trae-cn codebuddy kilo`. `graphify opencode
 install` writes an AGENTS.md section + a `tool.execute.before` plugin — not
 used in this environment (manual MCP entry instead; see
-[[graphify-config|Graphify Configuration]]).
+[[[mybizz-config-docs:graphify/graphify-config|Graphify Configuration]]](C:/mybizz/mybizz-config-docs/graphify/graphify-config.md)).
 
 ## Hooks and merge driver
 
@@ -160,7 +161,7 @@ creates/appends `.gitattributes`). The merge driver only ever matters if
 python3 -m graphify.serve <path>/graphify-out/graph.json
 ```
 
-Exposes 10 tools in 0.9.40 (list in [[graphify-config|Graphify Configuration]]); the 7 core tools
+Exposes 10 tools in 0.9.40 (list in [[[mybizz-config-docs:graphify/graphify-config|Graphify Configuration]]](C:/mybizz/mybizz-config-docs/graphify/graphify-config.md)); the 7 core tools
 need no API key — pure networkx reads over the local `graph.json`. The CLI and
 the MCP tools read the identical artifact and always agree; use either. After
 adding or changing any `mcp.*` entry, a full OpenCode process restart (quit
@@ -203,7 +204,7 @@ Wrong-directory install recovery:
 - Do not add or change any `mcp.*` entry and expect tools without a full
   OpenCode process restart.
 - Do not install hooks or the merge driver without re-examining the
-  gitignore premise ([[graphify-explainer|Graphify Explainer]]) — the standing decision is
+  gitignore premise ([[[mybizz-config-docs:graphify/graphify-explainer|Graphify Explainer]]](C:/mybizz/mybizz-config-docs/graphify/graphify-explainer.md)) — the standing decision is
   "not installed".
 - Do not track `graphify-out/` without a fresh credential-shaped scan
   (`sk-`, `AKIA`, `ghp_`, `xoxb`, PEM headers) — the standing decision is

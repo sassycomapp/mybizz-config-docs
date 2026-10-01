@@ -1,19 +1,20 @@
 ---
 title: "postgresql-config"
 doc-id: "mb-a8b414df"
+updated: "2026-10-01"
 ---
 # PostgreSQL — Configuration
 
 Canonical, current-state configuration record for every PostgreSQL instance on
 this machine. Pure facts and settings — no narrative, no history, no design
-rationale. For the "why," see [[postgresql-explainer|Explainer]]. For commands and
-procedures, see [[postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]. Last fully verified live: 2026-09-13
+rationale. For the "why," see [[[mybizz-config-docs:postgresql/postgresql-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-explainer.md). For commands and
+procedures, see [[[mybizz-config-docs:postgresql/postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md). Last fully verified live: 2026-09-13
 (run #2, first formal plan-driven exam).
 
 **Two entirely separate instances exist. Do not confuse them.** The layer
 placement: Instance B hosts the pre-makePDLF layer's memory; Instance A
 hosts the PDLF layer's ledger (see
-[[pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]] for the layer map).
+[[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]](C:/pdlf/pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer.md) for the layer map).
 
 ---
 
@@ -26,7 +27,7 @@ hosts the PDLF layer's ledger (see
 | Data directory | `C:\Program Files\PostgreSQL\15\data` |
 | Port | `5432` |
 | Host (from Windows) | `127.0.0.1` or `localhost` (equivalent — verified 2026-08-26) |
-| Reached from WSL via | PowerShell bridge only — see [[postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]. Direct WSL `psql` to `localhost:5432` connects to Instance B instead, silently. |
+| Reached from WSL via | PowerShell bridge only — see [[[mybizz-config-docs:postgresql/postgresql-reference\|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md). Direct WSL `psql` to `localhost:5432` connects to Instance B instead, silently. |
 | Auth method | `scram-sha-256` for all users/addresses, including `0.0.0.0/0` and `::/0`. No trust paths. (Verified 2026-09-05 with superuser access; `pg_hba.conf` itself is readable only by superuser — re-verification as `pdlf_agent` is refused by design.) |
 | Service (real, running) | `postgresql-x64-15` — Status: Running, StartType: Automatic (verified live 2026-09-13) |
 | Service (dead duplicate) | `PostgreSQL` — Status: Stopped, StartType: Automatic. Same data directory as above. Harmless; cannot conflict since only one process can bind the port. Do not start it. (Verified live 2026-09-09.) |
@@ -38,7 +39,7 @@ hosts the PDLF layer's ledger (see
 |---|---|
 | `postgres` | Superuser. Credential: `PGADMIN_USER`/`PGADMIN_PASSWORD` in `C:\dev\dev-makepdlf\makepdlf-project-library\.env` (referenced by variable name only — never printed) |
 | `pdlf_agent` | Owns the `pdlf` database. Password stored as `PGPASSWORD` in the same `.env` |
-| ~~`pgvector_user`~~ / ~~`pgvector_readonly`~~ | **REMOVED 2026-09-09** — dormant leftovers from the pre-GBrain mem0/vector experiments (login-capable + a no-login group; EXECUTE grants on the pgvector extension functions in the `postgres` database; zero table grants; zero owned objects). Revoked via `DROP OWNED` in `postgres`, then dropped; verified gone cluster-wide 2026-09-09. See [[postgresql-explainer|Explainer]] for the full investigation. |
+| ~~`pgvector_user`~~ / ~~`pgvector_readonly`~~ | **REMOVED 2026-09-09** — dormant leftovers from the pre-GBrain mem0/vector experiments (login-capable + a no-login group; EXECUTE grants on the pgvector extension functions in the `postgres` database; zero table grants; zero owned objects). Revoked via `DROP OWNED` in `postgres`, then dropped; verified gone cluster-wide 2026-09-09. See [[[mybizz-config-docs:postgresql/postgresql-explainer\|Explainer]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-explainer.md) for the full investigation. |
 
 ### Databases (verified live 2026-09-13)
 
@@ -58,7 +59,7 @@ seven currently hold 0 rows (verified live 2026-09-13).
 2026-09-05 (6 of 7 tables) was corrected in the spec the same day — commit
 `fae811c` ("docs(spec): correct postgres ledger spec — PowerShell
 connection pattern + triage_findings live schema",
-[[spec-postgres-ledger|Spec Postgres Ledger]]). The spec now documents the
+[[[makepdlf-project-library:specifications-local/spec-postgres-ledger|Spec Postgres Ledger]]](C:/dev/dev-makepdlf/makepdlf-project-library/specifications-local/spec-postgres-ledger.md)). The spec now documents the
 live schema, including `resolution_note`/`resolved_at` on
 `triage_findings`. The spec file is authoritative.
 
@@ -86,8 +87,8 @@ The variable itself has zero consumers — kept for future use.
 | Log file | `/var/log/postgresql/postgresql-16-main.log` |
 | Connection string (gbrain DB) | `postgresql://postgres:<password>@localhost:5432/gbrain` — the password lives only in `~/.gbrain/config.json` (`database_url`) and `~/.pgpass`; reference by variable name in every command (rotated 2026-09-28; the previously-documented literal is retired — never re-quote it) |
 | Connection string (governor DB) | In `memory_governor`'s own `.env` as `MEMORY_GOVERNOR_DATABASE_URL` (referenced by name only) |
-| Management tooling | `systemctl` and `service` both work — systemd has been PID 1 since the 2026-09-15 migration (reconciled 2026-09-28 by the memory-system-diagnostic §2 live check; see [[postgresql-reference|Reference]] §Management). `pg_ctlcluster` remains the cluster-level start/stop tool. |
-| Boot config | Since the 2026-09-28 boot-command retirement, `/etc/wsl.conf` no longer invokes `start-memory-system.sh`: under systemd, `postgresql.service` (enabled) owns the cluster and the two governor user units own the memory processes; the script remains on disk as a manual fallback only. Historical: the 2026-09-09 full-restart test proved the old boot command; both 2026-09-28 boots proved it now fights `memory-governor-api.service` for port 8321 (see [[memory-governor-reference|Reference]] §Permanent auto-start migration). |
+| Management tooling | `systemctl` and `service` both work — systemd has been PID 1 since the 2026-09-15 migration (reconciled 2026-09-28 by the memory-system-diagnostic §2 live check; see [[[mybizz-config-docs:postgresql/postgresql-reference\|Reference]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md) §Management). `pg_ctlcluster` remains the cluster-level start/stop tool. |
+| Boot config | Since the 2026-09-28 boot-command retirement, `/etc/wsl.conf` no longer invokes `start-memory-system.sh`: under systemd, `postgresql.service` (enabled) owns the cluster and the two governor user units own the memory processes; the script remains on disk as a manual fallback only. Historical: the 2026-09-09 full-restart test proved the old boot command; both 2026-09-28 boots proved it now fights `memory-governor-api.service` for port 8321 (see [[[mybizz-config-docs:memory-governor/memory-governor-reference\|Reference]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-reference.md) §Permanent auto-start migration). |
 | Autovacuum posture | `on` (cluster-wide). Hot-table recency is the health signal: `content_chunks` and `pages` vacuum within days of writes (last: 2026-09-11 / 2026-09-13). The `facts` table showing `last_autovacuum = never` is **normal** — it is low-write; flag only if a *hot* table stops vacuuming. |
 
 ### Role-isolation test method (authoritative, verified 2026-09-13)
@@ -103,14 +104,14 @@ proves nothing about the role's own privileges). Verified: `memory_governor_svc`
 |---|---|
 | `postgres` | Owns `gbrain`. Password: held only in `~/.pgpass` and `~/.gbrain/config.json` (`database_url`) — never quoted in corpus documents (rotated 2026-09-28) |
 | `memory_governor_svc` | Owns `memory_governor` (all 5 tables). Scoped — cannot connect to `gbrain`. Password in `memory_governor`'s own `.env` (`MEMORY_GOVERNOR_DATABASE_URL`). |
-| `ledger_writer` / `ledger_approver` | Login-capable test roles from the memory governor's own RLS live-testing — cited as the verified precedent in [[sec-database-access-control|Database Access Control]] ("live-tested, correctly blocked the `ledger_writer` role from inserting override-type events it wasn't scoped for"). Own nothing (`gbrain`'s 62 tables are all owned by `postgres`). Documented here 2026-09-09 — the existing suite never mentioned them. |
+| `ledger_writer` / `ledger_approver` | Login-capable test roles from the memory governor's own RLS live-testing — cited as the verified precedent in [[[default:security-global/infrastructure/sec-database-access-control\|Database Access Control]]](C:/dev/project-library-global/security-global/infrastructure/sec-database-access-control.md) ("live-tested, correctly blocked the `ledger_writer` role from inserting override-type events it wasn't scoped for"). Own nothing (`gbrain`'s 62 tables are all owned by `postgres`). Documented here 2026-09-09 — the existing suite never mentioned them. |
 
 ### Databases (verified live 2026-09-13)
 
 | Database | Owner | Size | Notes |
 |---|---|---|---|
 | `gbrain` | `postgres` | 164 MB | GBrain's memory/vector store. **1,824 pages, 5,529 chunks, 5,529 embedded (100%)** — verified live 2026-09-13 (point-in-time at exam; grows with every sync — exams check coverage % + growth explainability, never exact equality). 62 tables, all with RLS enabled, all owned by `postgres`. Schema v128, embedding `openai:text-embedding-3-large` (1536d). Extensions: `plpgsql` 1.0, `vector` 0.6.0, `pg_trgm` 1.6, `pgcrypto` 1.3 |
-| `memory_governor` | `memory_governor_svc` | 8,167 kB | 5 tables (all owned by `memory_governor_svc`): `projects`, `memory_candidates` (5 real rows), `policy_versions`, `memory_events`, `audit_log`. See [[memory-governor-config|Memory Governor Configuration]]. |
+| `memory_governor` | `memory_governor_svc` | 8,167 kB | 5 tables (all owned by `memory_governor_svc`): `projects`, `memory_candidates` (5 real rows), `policy_versions`, `memory_events`, `audit_log`. See [[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md). |
 | `postgres` (admin) | `postgres` | 7,503 kB | Standard, unremarkable. |
 | `template0` / `template1` | `postgres` | ~7.3–7.6 MB each | Standard, unmodified. |
 

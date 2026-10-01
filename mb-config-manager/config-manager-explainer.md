@@ -1,16 +1,17 @@
 ---
 title: "config-manager-explainer"
 doc-id: "mb-c28cb8f9"
+updated: "2026-10-01"
 ---
 # mb-config-manager — Explainer
 
 The authoritative narrative of the configuration-management system: what it is,
 why it exists, how it works, everything about it. Multi-audience — written for the
 human developer, a visiting technical consultant, and the agent. Companion files:
-[[config-manager-config|Configuration]] (its own configurations), [[config-manager-register|Register: Managed Systems]]
-(what it manages, current state), [[config-manager-reference|Reference: Commands, Procedures]] (agent-facing
-procedures), [[config-manager-agent|Orchestrator Agent]] (the orchestrator itself — exempt from docs
-governance), [[config-manager-log|Log]] (notable events), [[config-manager-learnings|Learnings]]
+[[[mybizz-config-docs:mb-config-manager/config-manager-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-config.md) (its own configurations), [[[mybizz-config-docs:mb-config-manager/config-manager-register|Register: Managed Systems]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md)
+(what it manages, current state), [[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md) (agent-facing
+procedures), [[[mybizz-config-docs:mb-config-manager/config-manager-agent|Orchestrator Agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) (the orchestrator itself — exempt from docs
+governance), [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) (notable events), [[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md)
 (transient knowledge).
 
 ---
@@ -44,7 +45,7 @@ docs skills keep the *paperwork* truthful; this keeps the *systems* healthy.
 ## 3. What it consists of
 
 - **The orchestrator agent** — `mb-config-manager`. An agent, not a skill (hence
-  [[config-manager-agent|Orchestrator Agent]], no skill file in its own suite). It routes exams,
+  [[[mybizz-config-docs:mb-config-manager/config-manager-agent|Orchestrator Agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md), no skill file in its own suite). It routes exams,
   synthesizes each system's exam-plan, aggregates findings, runs the approval
   gate, owns the standards (verdict classes, heal classes, safety invariants).
   It owns no system. Its draft lives here; it moves to its install location when
@@ -81,7 +82,7 @@ only.
    (Section 9). Inconsistency = architecture defect → its own log/learnings →
    developer.
 2. **Synthesize the exam-plan** for each target system — read that system's
-   [[config|Config]] (the spec), last `exam-report.md` (deferred **and erred** items),
+   [[[makepdlf-project-library:docs-local/config|Config]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/config.md) (the spec), last `exam-report.md` (deferred **and erred** items),
    `log.md` (events since last run, including crashes and error reports), and
    `learnings.md` (lessons not yet graduated). Write the `exam-plan.md`: the
    synthesis that pulls all the loose ends together — a job-spec added to the
@@ -214,11 +215,11 @@ The design:
   files; every register spec-doc path exists; the target system's last log
   run-row has a disposition (an open run blocks a new one). This is a check,
   not an exam — no findings cycle, no self-directed heals. Result recorded in
-  [[config-manager-log|Log]].
+  [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md).
 - Its register deliberately does **not** list the config-manager as a managed
   system — the exception is documented here, not silent.
-- Defects it finds in itself route to its own [[config-manager-log|Log]] and
-  [[config-manager-learnings|Learnings]], and architecture-level fixes go to the
+- Defects it finds in itself route to its own [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) and
+  [[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md), and architecture-level fixes go to the
   developer.
 
 ## 10. Scaffold
@@ -259,7 +260,7 @@ out keep their existing files until their build-out pass.
 Installed: `mb-config-postgresql` (pilot — the architecture was tuned here),
 `mb-config-cupcake`, `mb-config-gbrain`. The architecture is now being refined and
 stabilized on PostgreSQL as the learning ground; emulation across other systems
-comes only after this stage. [[config-manager-register|Register: Managed Systems]] is the authority for
+comes only after this stage. [[[mybizz-config-docs:mb-config-manager/config-manager-register|Register: Managed Systems]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md) is the authority for
 what runs.
 
 ## 12. S.W.O.T.
@@ -286,9 +287,9 @@ developer-run items immediately); circular self-exam (designed out, Section 9).
 
 ## 13. Source links
 
-- Governing philosophy and standing principles: [[standing-instruction|Engineering Principles]] (supersedes the retired session-start-checklist document, 2026-09-17)
+- Governing philosophy and standing principles: [[[mybizz-os-docs:operating-procedures/standing-instruction|Engineering Principles]]](C:/mybizz/mybizz-os-docs/operating-procedures/standing-instruction.md) (supersedes the retired session-start-checklist document, 2026-09-17)
 - Global behavior rules: `~/.config/opencode/AGENTS.md`
-- Cupcake (the guard layer that shapes developer-run classes): [[cupcake-config|Cupcake Configuration]], [[cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]
+- Cupcake (the guard layer that shapes developer-run classes): [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md), [[[mybizz-config-docs:cupcake/cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md)
 - Grant mechanism: `mg-grant` / `mg-revoke` (cupcake-config.md §Cross-project access grants)
 - Division docmap: `C:\dev\dev-root\docmap.md`; projects register: `projects-config-register.md` (repo root)
 - The pilot suite where this architecture was tuned: `postgresql/` (all seven files)

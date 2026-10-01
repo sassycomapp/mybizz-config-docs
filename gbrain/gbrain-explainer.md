@@ -1,17 +1,18 @@
 ---
 title: "gbrain-explainer"
 doc-id: "mb-3187a352"
+updated: "2026-10-01"
 ---
 # GBrain — Explainer
 
 *Companion note: for current confirmed state (version, sources, credentials,
-open items) see [[gbrain-config|Configuration]]. For commands, incidents, and
-troubleshooting, see [[gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]]. For how the memory components fit
-together, see [[memory-master-explainer|Master Explainer]]. Exam companions:
-[[gbrain-exam-plan|Exam Plan]] (next run's job-spec), [[gbrain-exam-report|Exam Report]] (current
-verified state), [[gbrain-log|Log]] (notable events), [[gbrain-learnings|Learnings]]
+open items) see [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md). For commands, incidents, and
+troubleshooting, see [[[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md). For how the memory components fit
+together, see [[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md). Exam companions:
+[[[mybizz-config-docs:gbrain/gbrain-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-exam-plan.md) (next run's job-spec), [[[mybizz-config-docs:gbrain/gbrain-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-exam-report.md) (current
+verified state), [[[mybizz-config-docs:gbrain/gbrain-log|Log]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-log.md) (notable events), [[[mybizz-config-docs:gbrain/gbrain-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-learnings.md)
 (transient exam knowledge). The architecture standard:
-[[config-manager-explainer|Explainer]].*
+[[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md).*
 
 ---
 
@@ -223,7 +224,7 @@ error, when changed mid-process.
 **Dream Cycle failures can be silent** — provider-dependent phases can fail
 while GBrain remains healthy, and "completed successfully" means the sequence
 ended, not that every phase did meaningful work. See
-[[gbrain-dream-cycle-explainer|Explainer]].
+[[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-explainer.md).
 
 **The brain's mirror can lag its sources** — sync is commit-based; content is
 current only as of the last synced commit. The file wins.
@@ -231,7 +232,7 @@ current only as of the last synced commit. The file wins.
 **Facts are stored per source.** `remember` writes into the source that the call
 selects, and `recall` reads it (0.59.18.0: also every federated source, unless a
 source is given). The memory governor's facts therefore sit in
-`memory-governor-code` — see [[memory-governor-explainer|Explainer]] §5.
+`memory-governor-code` — see [[[mybizz-config-docs:memory-governor/memory-governor-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-explainer.md) §5.
 
 **A stale brain default stops sync.** The memory governor changes the brain-level
 default source with every write. In 0.59.18.0 a default that names a deleted
@@ -241,11 +242,11 @@ source makes every sync end with an error (incident 2026-09-30, in the reference
 
 This suite participates in the config-management system (`mb-config-manager`).
 The roles of the seven suite files, and the exam cycle that runs them, are the
-architecture described in [[config-manager-explainer|Explainer]] — emulated from the
+architecture described in [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md) — emulated from the
 PostgreSQL pilot. The short local version:
 
-- [[gbrain-config|Configuration]] is the **spec** — the ideal state every exam checks against.
-- Before each exam run, the config-manager synthesizes [[gbrain-exam-plan|Exam Plan]]:
+- [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md) is the **spec** — the ideal state every exam checks against.
+- Before each exam run, the config-manager synthesizes [[[mybizz-config-docs:gbrain/gbrain-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-exam-plan.md):
   a fresh job-spec built from this spec, the last report, the log, and the
   learnings — carrying forward what was deferred, addressing what erred,
   deriving probes from new log events, and folding in lessons not yet graduated.
@@ -261,8 +262,8 @@ PostgreSQL pilot. The short local version:
 - Several checks are permanently **developer-run**: config.json content (the
   sensitive-data guard blocks agent reads — proven), full sync samples
   (content-changing), MCP restart behavior, and any upgrade decision.
-- The run rewrites [[gbrain-exam-report|Exam Report]] (current state, no history), appends
-  one row to [[gbrain-log|Log]], files new learnings, and prunes absorbed entries.
+- The run rewrites [[[mybizz-config-docs:gbrain/gbrain-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-exam-report.md) (current state, no history), appends
+  one row to [[[mybizz-config-docs:gbrain/gbrain-log|Log]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-log.md), files new learnings, and prunes absorbed entries.
 
 ## 13. S.W.O.T.
 
@@ -297,11 +298,11 @@ stops every sync.
 
 ---
 
-*Suite: [[gbrain-config|Configuration]] (spec), [[gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]] (commands, incidents),
-[[gbrain-exam-plan|Exam Plan]] / [[gbrain-exam-report|Exam Report]] / [[gbrain-log|Log]] /
-[[gbrain-learnings|Learnings]] (config-management set), [[gbrain-skill|Gbrain Skill]] (exam skill
-canonical source). Architecture: [[config-manager-explainer|Explainer]].
-Related: [[gbrain-dream-cycle-explainer|Explainer]] (the autonomous mechanism),
-[[memory-master-explainer|Master Explainer]] (the cross-component system).*
+*Suite: [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md) (spec), [[[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md) (commands, incidents),
+[[[mybizz-config-docs:gbrain/gbrain-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-exam-plan.md) / [[[mybizz-config-docs:gbrain/gbrain-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-exam-report.md) / [[[mybizz-config-docs:gbrain/gbrain-log|Log]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-log.md) /
+[[[mybizz-config-docs:gbrain/gbrain-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-learnings.md) (config-management set), [[[mybizz-config-docs:gbrain/gbrain-skill|Gbrain Skill]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-skill.md) (exam skill
+canonical source). Architecture: [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md).
+Related: [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-explainer.md) (the autonomous mechanism),
+[[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md) (the cross-component system).*
 
 *End of document*
