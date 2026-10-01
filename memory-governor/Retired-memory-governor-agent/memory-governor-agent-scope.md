@@ -1,6 +1,7 @@
 ---
 title: "memory-governor-agent-scope"
 doc-id: "mb-10605846"
+updated: "2026-10-01"
 ---
 # Memory Governor Agent — Scope Document
 
@@ -113,12 +114,12 @@ Framework) work only**:
   `tenant_global` visibility tiers) is removed.
 - **Graphify as a write target.** Graphify's content is entirely
   deterministic, AST-derived from real source code via Tree-sitter (see
-  [[graphify-reference|Graphify Reference]]). It is not a destination for arbitrary
+  [[[mybizz-config-docs:graphify/graphify-reference|Graphify Reference]]](C:/mybizz/mybizz-config-docs/graphify/graphify-reference.md)). It is not a destination for arbitrary
   governor-approved facts. All governed, approved memory writes to
   **GBrain**, not Graphify.
 - **Retrieval/search.** This governor controls what enters durable memory.
   It does not implement search or retrieval — that remains GBrain's
-  existing job, exactly as already documented in [[mb-submit-memory-explainer|Explainer]].
+  existing job, exactly as already documented in [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-explainer.md).
 - **`anvil-agent-references` and any other official, direct-from-vendor
   reference material.** Confirmed as a deliberate, permanent exception,
   not an oversight: this is Anvil's own documentation about how their own
@@ -145,7 +146,7 @@ not fully isolated:
   the default), `["all"]` (globally visible — for conventions used by every
   PDLF project), or an explicit list of named project IDs.
 - This directly mirrors GBrain's own existing `default`-federated-source
-  pattern (see [[gbrain-config|Configuration]]), applied one level below the source
+  pattern (see [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md)), applied one level below the source
   level.
 
 ## 7. New-Project Onboarding
@@ -181,7 +182,7 @@ hasn't been revisited remains exactly as valid as the day it was written,
 until something explicitly contradicts or replaces it.
 
 - **No blanket calendar-based TTL expiry.** `fact`, `policy`,
-  [[architecture|Architecture]], `procedural`, `preference` memory never expires from age
+  [[[mb-3-cs-project-library:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md), `procedural`, `preference` memory never expires from age
   alone.
 - **Supersession is the primary retirement mechanism.** A newer fact
   explicitly replaces an older one; the old record's `valid_until` is set
@@ -325,7 +326,7 @@ not batched as one candidate.
 The concrete mechanics of this writer — its place in the five-point due
 diligence sequence, and the two questions still open about how it
 interacts with an in-progress PDLF step — are recorded in the companion
-[[system-description|System Description]] and Implementation Workflow, not duplicated here.
+[[[makepdlf-project-library:docs-local/system-description|System Description]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/system-description.md) and Implementation Workflow, not duplicated here.
 
 ## 14. Self-Healing / Iterative Learning
 
@@ -348,7 +349,7 @@ autonomously applies.
 - **Git-tracked backup, living inside the memory-governor application's own
   repository** (resolved: not a separate external location — see
   Architecture §8 for the reasoning). Every promoted memory produces two
-  things, committed together: a row in [[register-memory-governor|Register Memory Governor]]
+  things, committed together: a row in Register Memory Governor
   (the same append-only, never-delete register schema already used
   throughout this environment — see `register-global.md`,
   `register-local.md`) acting as a human-readable index, and a full JSON
@@ -375,7 +376,7 @@ autonomously applies.
 - **GBrain's `MEMORY_VERBS` MCP surface** (`recall`/`remember`/`entity`/
   `synthesize`/`forget`) must be enabled (`gbrain config set mcp_surface
   verbs`) before the governor can write approved memory into GBrain. Per
-  [[gbrain-config|Configuration]], this is currently **disabled** in this environment.
+  [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md), this is currently **disabled** in this environment.
   This is a concrete, outstanding prerequisite, not yet resolved.
 - A dedicated Postgres database and role must be provisioned (§15).
 - The memory-governor application's own git repository must have a remote

@@ -1,6 +1,7 @@
 ---
 title: "21-task-report"
 doc-id: "mb-6b7cd63b"
+updated: "2026-10-01"
 ---
 # Work Package 21 — Final GBrain–Graphify–OpenCode Acceptance
 
@@ -220,7 +221,7 @@ component, in the same OpenCode session:
    item there); `encryption_service.py` (encrypt/decrypt), `vault_service.py`
    (CRUD), `vault_totp_service.py` (step-up); payment config reads secrets from
    the Vault with `'***'` masking; governed by the
-   [[adr-payment-security-boundary-vault|Payment Security Boundary: Secret Keys Deferred to the Vault]] ADR and payment-gateway RBAC ADR.
+   [[[default:adr-global/adr-payment-security-boundary-vault|Payment Security Boundary: Secret Keys Deferred to the Vault]]](C:/dev/project-library-global/adr-global/adr-payment-security-boundary-vault.md) ADR and payment-gateway RBAC ADR.
 2. **Graphify (current implementation/dependency facts — the "where/how"):**
    `encrypt()` defined at `encryption_service.py:13` (degree 8); called by
    `save_vault_secret()` (`vault_service.py:82`) and four tests; imported by
@@ -248,10 +249,10 @@ component, in the same OpenCode session:
   frontmatter value-quoting edits + the pre-existing ` M agents.md` (12-line
   "Anvil Agent References" addition):
   - `adr-local/blank-client-template.md` (1-line `document:` quote)
-  - [[crm-package-replaces-marketing|Package Name: crm/ Replaces marketing/]] (1-line `document:` quote)
+  - [[[mb-3-cs-project-library:adr-local/crm-package-replaces-marketing|Package Name: crm/ Replaces marketing/]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/adr-local/crm-package-replaces-marketing.md) (1-line `document:` quote)
   - `docs/agents/issue-tracker.md` (1-line `document:` quote)
   - `obsolete/issue-tracker.md` (1-line `document:` quote)
-  - [[agents|mb-3-cs]] (pre-existing, untouched by this package)
+  - mb-3-cs (pre-existing, untouched by this package)
   ✓ No other change.
 - No files outside the expected gitignored local integration dirs
   (`.opencode/`, `graphify-out/`) changed ✓
@@ -275,7 +276,7 @@ component, in the same OpenCode session:
 
 Net: no tracked-file changes in `mb-3-cs`; the project-library still carries
 only the 4 authorized WP16.5.1 frontmatter edits + the pre-existing
-[[agents|mb-3-cs]] modification (all uncommitted, per instruction).
+mb-3-cs modification (all uncommitted, per instruction).
 
 ---
 
@@ -310,7 +311,7 @@ sync-failure record for `obsolete/issue-tracker.md`.
   and `/mnt/c/mybizz/gstack/`) is untouched.
 - **Revert the WP16.5.1 frontmatter edits (project-library, uncommitted):**
   `cd /mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library && git checkout -- adr-local/blank-client-template.md adr-local/crm-package-replaces-marketing.md docs/agents/issue-tracker.md obsolete/issue-tracker.md`
-  (do **not** checkout [[agents|mb-3-cs]] — its modification is pre-existing and
+  (do **not** checkout mb-3-cs — its modification is pre-existing and
   intentionally preserved). Backups: `/tmp/opencode/wp165-backup/`.
 - **This package:** no recovery needed (read-only). The report file can simply
   be deleted.

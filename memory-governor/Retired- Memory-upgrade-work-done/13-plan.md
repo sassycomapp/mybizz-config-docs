@@ -1,6 +1,7 @@
 ---
 title: "13-plan"
 doc-id: "mb-e628633b"
+updated: "2026-10-01"
 ---
 # Work Package 13 — Graphify Git Hook Evaluation
 
@@ -56,7 +57,7 @@ split them):
 | `graphify-out/…` (at rebuild time) | `graph.json`, `graph.html`, `GRAPH_REPORT.md`, `manifest.json`, `.graphify_analysis.json`, `.graphify_labels.json`, `.graphify_labels.json.sig`, `.graphify_build.json` (+ `memory/reflections/LESSONS.md` best-effort) |
 | `~/.cache/graphify-rebuild.log` | detached rebuild log (outside repo) |
 
-It does **not** touch source files, `AGENTS.md`/[[agents|mb-3-cs]], `.gitignore`,
+It does **not** touch source files, `AGENTS.md`/mb-3-cs, `.gitignore`,
 GBrain, or `opencode.json`.
 
 ## 3. Are existing hooks preserved?
