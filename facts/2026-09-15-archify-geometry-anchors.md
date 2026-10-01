@@ -1,6 +1,7 @@
 ---
 title: "2026-09-15-archify-geometry-anchors"
 doc-id: "mb-8a204f34"
+updated: "2026-10-01"
 ---
 # Durable fact — Archify explicit geometry anchors and repair order
 

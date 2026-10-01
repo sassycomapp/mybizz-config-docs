@@ -1,6 +1,7 @@
 ---
 title: "2026-09-15-archify-learnings-closeout"
 doc-id: "mb-2bfedf6f"
+updated: "2026-10-01"
 ---
 # Durable fact — Archify learnings close-out trigger
 

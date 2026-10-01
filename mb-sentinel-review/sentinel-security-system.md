@@ -1,6 +1,7 @@
 ---
 title: "sentinel-security-system"
 doc-id: "mb-9e02a9c8"
+updated: "2026-10-01"
 ---
 # SSS - sentinel Security System
 

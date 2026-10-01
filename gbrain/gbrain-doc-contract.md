@@ -1,6 +1,7 @@
 ---
 title: "gbrain-doc-contract"
 doc-id: "mb-33c1a0cb"
+updated: "2026-10-01"
 ---
 # gbrain-doc-contract
 

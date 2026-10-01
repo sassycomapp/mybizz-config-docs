@@ -1,6 +1,7 @@
 ---
 title: "6-plan"
 doc-id: "mb-bf35d73f"
+updated: "2026-10-01"
 ---
 # Work Package 6 — Read-only Review of the Completed Graphify Graph
 

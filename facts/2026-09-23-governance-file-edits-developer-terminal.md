@@ -1,6 +1,7 @@
 ---
 title: "2026-09-23-governance-file-edits-developer-terminal"
 doc-id: "mb-9761b711"
+updated: "2026-10-01"
 ---
 # Fact — governance-file edits are developer-terminal even under group approval
 

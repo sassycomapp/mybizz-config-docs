@@ -1,6 +1,7 @@
 ---
 title: "i-have-adhd-intro"
 doc-id: "mb-9939e85b"
+updated: "2026-10-01"
 ---
 This skill is very likely to **improve** your day‑to‑day work with GLM‑5.3 Flash in OpenCode, especially if you often feel the model “buries the answer” in long, chatty explanations.[[github](https://github.com/ayghri/i-have-adhd)] https://github.com/ayghri/i-have-adhd
 

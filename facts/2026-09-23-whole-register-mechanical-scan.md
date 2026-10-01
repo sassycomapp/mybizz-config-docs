@@ -1,6 +1,7 @@
 ---
 title: "2026-09-23-whole-register-mechanical-scan"
 doc-id: "mb-02e7c1b0"
+updated: "2026-10-01"
 ---
 # Fact — register field checks must scan every row mechanically
 

@@ -1,6 +1,7 @@
 ---
 title: "17-task-report"
 doc-id: "mb-059bdd99"
+updated: "2026-10-01"
 ---
 # Work Package 17 — Credentials, Runtime Dependencies, and OpenCode Inheritance
 

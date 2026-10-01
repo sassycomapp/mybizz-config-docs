@@ -1,6 +1,7 @@
 ---
 title: "3-plan"
 doc-id: "mb-52a9ab7c"
+updated: "2026-10-01"
 ---
 # Work Package 3 — Cross-file Graphify Adequacy Test
 

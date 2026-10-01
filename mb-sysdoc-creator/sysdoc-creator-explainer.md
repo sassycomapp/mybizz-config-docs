@@ -1,6 +1,7 @@
 ---
 title: "sysdoc-creator-explainer"
 doc-id: "mb-1b1e5218"
+updated: "2026-10-01"
 ---
 # sysdoc-creator — Explainer
 

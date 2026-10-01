@@ -1,6 +1,7 @@
 ---
 title: "2026-09-20-doc-skills-charter"
 doc-id: "mb-28a3abc2"
+updated: "2026-10-01"
 ---
 # Durable fact — The three documentation skills' charter
 

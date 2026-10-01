@@ -1,6 +1,7 @@
 ---
 title: "2026-09-22-regrant-replaces-count"
 doc-id: "mb-bfda00e3"
+updated: "2026-10-01"
 ---
 # Fact — re-granting a path replaces the entry count
 

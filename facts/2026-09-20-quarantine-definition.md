@@ -1,6 +1,7 @@
 ---
 title: "2026-09-20-quarantine-definition"
 doc-id: "mb-f1e3a76e"
+updated: "2026-10-01"
 ---
 # Durable fact — Quarantine definition
 

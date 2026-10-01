@@ -1,6 +1,7 @@
 ---
 title: "gbrain-frontmatter-requirements-and-custom-fields"
 doc-id: "mb-07b00e74"
+updated: "2026-10-01"
 ---
 # GBrain Frontmatter Requirements and Custom Fields
 

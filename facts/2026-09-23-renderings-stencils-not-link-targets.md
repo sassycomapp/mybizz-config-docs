@@ -1,6 +1,7 @@
 ---
 title: "2026-09-23-renderings-stencils-not-link-targets"
 doc-id: "mb-9716cdd8"
+updated: "2026-10-01"
 ---
 # Fact — renderings and stencils are not resolvable link targets
 

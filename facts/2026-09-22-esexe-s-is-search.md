@@ -1,6 +1,7 @@
 ---
 title: "2026-09-22-esexe-s-is-search"
 doc-id: "mb-7350ec4c"
+updated: "2026-10-01"
 ---
 # Fact — es.exe `-s` is the search flag, not sort
 

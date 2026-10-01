@@ -1,6 +1,7 @@
 ---
 title: "2026-09-15-mg-grant-lowercase-paths"
 doc-id: "mb-f3d58551"
+updated: "2026-10-01"
 ---
 # Fact — mg-grant lowercases the granted path
 

@@ -1,6 +1,7 @@
 ---
 title: "config-setup-prompt"
 doc-id: "mb-68a57783"
+updated: "2026-10-01"
 ---
 # Config Manager — Setup Prompt
 

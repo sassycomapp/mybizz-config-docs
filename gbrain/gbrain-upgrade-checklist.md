@@ -1,6 +1,7 @@
 ---
 title: "gbrain-upgrade-checklist"
 doc-id: "mb-47fa9b6f"
+updated: "2026-10-01"
 ---
 # GBrain upgrade checklist
 

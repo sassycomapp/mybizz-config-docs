@@ -1,6 +1,7 @@
 ---
 title: "2026-09-20-cross-corpus-referencing-permitted"
 doc-id: "mb-197d9020"
+updated: "2026-10-01"
 ---
 # Durable fact — Cross-corpus referencing is permitted
 

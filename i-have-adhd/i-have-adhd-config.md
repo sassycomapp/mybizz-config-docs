@@ -1,6 +1,7 @@
 ---
 title: "i-have-adhd-config"
 doc-id: "mb-ba0e811b"
+updated: "2026-10-01"
 ---
 # i-have-adhd — Configuration
 

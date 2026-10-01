@@ -1,6 +1,7 @@
 ---
 title: "Gbrain & Graphifyy implementation remediation"
 doc-id: "mb-4ad8b2c4"
+updated: "2026-10-01"
 ---
 Compliance Remediation Strategy — GBrain and Graphify
 Purpose

@@ -1,6 +1,7 @@
 ---
 title: "2026-09-16-config-manager-close-items-directly"
 doc-id: "mb-7610cde8"
+updated: "2026-10-01"
 ---
 # Durable fact — Config-manager open items are closed directly when the developer asks
 

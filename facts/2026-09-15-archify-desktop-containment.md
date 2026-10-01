@@ -1,6 +1,7 @@
 ---
 title: "2026-09-15-archify-desktop-containment"
 doc-id: "mb-6a22e43a"
+updated: "2026-10-01"
 ---
 # Durable fact — Archify desktop containment is viewer-inherent for card-bearing artifacts
 

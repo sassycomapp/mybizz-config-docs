@@ -1,6 +1,7 @@
 ---
 title: "2026-09-20-mb-wikilinks-conversion-rules"
 doc-id: "mb-34ce0a4e"
+updated: "2026-10-01"
 ---
 # Durable fact — mb-wikilinks conversion rules
 

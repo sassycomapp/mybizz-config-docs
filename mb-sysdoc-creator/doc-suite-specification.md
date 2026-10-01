@@ -1,6 +1,7 @@
 ---
 title: "doc-suite-specification"
 doc-id: "mb-f4adba8c"
+updated: "2026-10-01"
 ---
 # Doc Suite Specification — config / reference / explainer
 

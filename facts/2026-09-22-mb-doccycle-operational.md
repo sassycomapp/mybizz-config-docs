@@ -1,6 +1,7 @@
 ---
 title: "2026-09-22-mb-doccycle-operational"
 doc-id: "mb-3ab2acd5"
+updated: "2026-10-01"
 ---
 # Fact — mb-doccycle is operational (2026-09-22)
 

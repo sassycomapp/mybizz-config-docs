@@ -1,6 +1,7 @@
 ---
 title: "2026-09-23-grant-cli-flag-syntax"
 doc-id: "mb-d5eaec92"
+updated: "2026-10-01"
 ---
 # Fact — grant CLI syntax is flag-based
 

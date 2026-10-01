@@ -1,6 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-skill"
 doc-id: "mb-44b26864"
+updated: "2026-10-01"
 ---
 
 # Memory Diagnostic

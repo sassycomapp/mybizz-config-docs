@@ -1,6 +1,7 @@
 ---
 title: "config-manager-learnings"
 doc-id: "mb-8c382f68"
+updated: "2026-10-01"
 ---
 # Config Manager — Learnings
 

@@ -1,6 +1,7 @@
 ---
 title: "2026-09-23-grant-decrement-per-edit-op"
 doc-id: "mb-d805bc18"
+updated: "2026-10-01"
 ---
 # Fact — grant decrements fire per edit operation, not per file
 

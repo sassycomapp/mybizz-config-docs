@@ -1,6 +1,7 @@
 ---
 title: "2026-09-14-002-graphify-config-mgmt"
 doc-id: "mb-2bb59395"
+updated: "2026-10-01"
 ---
 # Session 2026-09-14 — Configuration Management: graphify
 

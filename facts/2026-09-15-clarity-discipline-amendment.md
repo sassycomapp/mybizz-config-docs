@@ -1,6 +1,7 @@
 ---
 title: "2026-09-15-clarity-discipline-amendment"
 doc-id: "mb-b90f73cd"
+updated: "2026-10-01"
 ---
 # Fact — clarity-discipline amendment (config-setup-prompt.md)
 

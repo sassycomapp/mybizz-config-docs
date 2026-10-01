@@ -1,6 +1,7 @@
 ---
 title: "2026-09-15-session-numbers-from-sessions-log"
 doc-id: "mb-e50db53b"
+updated: "2026-10-01"
 ---
 # Fact — session numbers come from the sessions log
 
