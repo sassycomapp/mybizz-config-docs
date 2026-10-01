@@ -11,7 +11,7 @@ system component. Agent-facing. Reflects the live-verified state as of
 sections that changed carry that date; the rest was not re-measured). States
 facts, not history — where the reasoning matters, see
 [[[mybizz-config-docs:gbrain/gbrain-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-explainer.md) and [[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md); for commands and
-procedures, see [[[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md).
+procedures, see [[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]].
 
 **System context (developer-stated, 2026-09-06; architecture context unchanged):** GBrain is one of six
 closely-related components — GBrain, gbrain-dream-cycle, gstack,
@@ -27,8 +27,8 @@ together layer; this suite owns GBrain-specific state, commands, and incidents.
 | Item | Value |
 |---|---|
 | Version | `0.59.18.0` (tag `v0.59.18.0`, commit `045a6138`) — upgraded 2026-09-30 from `0.46.1.0`; database schema **169** (was 128) |
-| Version drift | `0.60.11.0` exists upstream (tags fetched 2026-09-30; not installed). An upgrade is a developer decision, made with the procedure in [[[mybizz-config-docs:gbrain/gbrain-reference\|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md) §Upgrading — never on version-newness alone |
-| Upstream | `github.com/garrytan/gbrain` — MIT; by Garry Tan; 29.6k stars / 1,061 commits (verified 2026-09-06). **Not distributed on npm** — the npm `gbrain` package is unrelated and shadows the binary (upstream warning; see [[[mybizz-config-docs:gbrain/gbrain-reference\|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md) Do-not) |
+| Version drift | `0.60.25.0` is the newest release (update banner 2026-10-01; not installed). An upgrade is a developer decision, made with the procedure in [[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]] §Upgrading — never on version-newness alone |
+| Upstream | `github.com/garrytan/gbrain` — MIT; by Garry Tan; 29.6k stars / 1,061 commits (verified 2026-09-06). **Not distributed on npm** — the npm `gbrain` package is unrelated and shadows the binary (upstream warning; see [[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]] Do-not) |
 | Engine | PostgreSQL 16.14, self-hosted, WSL-native; pgvector 0.6.0 |
 | Connection | `postgresql://postgres:***@localhost:5432/gbrain` |
 | Boot behavior | Auto-starts on WSL boot (`service postgresql start` in `/etc/wsl.conf`) |
@@ -65,7 +65,7 @@ cycle, delivered to `/home/dev-p/backup-gbrain/` (default) and
 Known permanent limitation: no bundled pack extracts code-symbol call-graph
 edges (`code` type is `extractable: false` in every pack); `code-callers`/
 `code-callees` cannot resolve to defining chunks. Graphify's `get_neighbors`
-is the correct tool — full account in [[[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md) and
+is the correct tool — full account in [[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]] and
 [[[mybizz-config-docs:gbrain/gbrain-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-explainer.md).
 
 ## Models
@@ -122,7 +122,7 @@ user-chosen name; do not rename.
 
 | Path | Mechanism | GBrain layer written | Carries | Real usage |
 |---|---|---|---|---|
-| **Sync path** | Standing script (`sync-gbrain.sh`: enumerates every registered source, runs `gbrain sync --source <id> --no-pull` for each, then `extract --stale` and `embed --stale`; run it with `bash /mnt/c/mybizz/scripts/sync-gbrain.sh`); daily-ops.md documents per-repo sync as the standing after-work workflow | **Pages/corpus** | Whole repos: vendor bypass sources (anvil-agent-references, magdoub-wireframe — permanent governor bypasses), developer doc repos, project code+library sources | 18+ logged runs (2026-07-28 → 2026-09-13), then the script runs of 2026-09-30; every registered source; the dominant path by volume |
+| **Sync path** | Standing script (`sync-gbrain.sh`: enumerates every registered source, runs `gbrain sync --source <id> --no-pull` for each, then `extract links --source db` and `embed --stale`; run it with `bash /mnt/c/mybizz/scripts/sync-gbrain.sh`); daily-ops.md documents per-repo sync as the standing after-work workflow | **Pages/corpus** | Whole repos: vendor bypass sources (anvil-agent-references, magdoub-wireframe — permanent governor bypasses), developer doc repos, project code+library sources | 18+ logged runs (2026-07-28 → 2026-09-13), then the script runs of 2026-09-30; every registered source; the dominant path by volume |
 | **Governed path** | Developer or PDLF step → `mb-submit-memory` → governor API → promote → async `gbrain_write` → `remember` (MEMORY_VERBS) | **Facts layer** (hot memory) | Individual judgment-bearing content meant to be checked before becoming durable | Real runs: 2026-08-27 (promoted; its `gbrain_write` initially queued pending the dev-makepdlf source rename, since resolved), 2026-09-14 (logged), and 2026-09-30 (proof after the GBrain upgrade: `environment-explainer.md` from `mybizz-os-docs` promoted, memory_id `2cb82774-957c-4772-be3e-8d421f030c4a`; the fact landed in `memory-governor-code`); `pdlf_step_sync` writer parked pending PDLF go-live |
 
 **The boundary (by design, from [[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md)):** sync must
@@ -147,7 +147,7 @@ environment's operational path; the custom script is (verified against
 |---|---|
 | Crontab | A `gbrain autopilot` entry (every 5 minutes, targeting `--repo '/mnt/c/projects'`) was found **doubly inert** — cron daemon not running, target path from the pre-`C:\dev` layout no longer existing, log file never created — and was **deliberately removed 2026-09-06** |
 | Design consequence | The Dream Cycle runs on-demand only; nothing GBrain-related is scheduled (see [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-config\|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-config.md)) |
-| Sync | Manual: `bash /mnt/c/mybizz/scripts/sync-gbrain.sh` (about two minutes; log in `C:\mybizz\logs\gbrain-logs\sync-<timestamp>.log`) |
+| Sync | Manual: `bash /mnt/c/mybizz/scripts/sync-gbrain.sh`, or as part of `commit-all.sh` (about two minutes, longer after many changes; log in `C:\mybizz\logs\gbrain-logs\sync-<timestamp>.log`) |
 | GBrain job queue | No GBrain worker runs, so the `extract` and `facts-absorb` jobs created by syncs wait unprocessed (34 waiting jobs were cancelled 2026-09-30 before the upgrade). Under 0.59.18.0 every waiting job must be authorized or cancelled before a worker starts |
 
 ## Health baseline (2026-09-30, after the upgrade and a clean sync)
@@ -156,7 +156,7 @@ environment's operational path; the custom script is (verified against
 |---|---|
 | `gbrain doctor` | Overall **30/100**. The only FAIL is `cycle_freshness` (most sources have never completed a dream cycle — accepted, by design). Scoring: minus 20 per FAIL, minus 5 per WARN. Saved as `~/backups/doctor-after-sync2.txt` |
 | Embedding provider | `openai:text-embedding-3-large`, 1536 dimensions, database aligned (probe OK; one probe failed and one took 20 seconds earlier the same day — a network problem that cleared) |
-| Known warnings, not upgrade faults | atoms with stale source hashes (the permanent-code migration changed page contents; a dream cycle rebuilds them); links not yet collected until `extract --stale` runs; `extract_atoms` backlog (no cycle has run); `backup_coverage` (new check, see `gbrain backup status`) |
+| Known warnings, not upgrade faults | atoms with stale source hashes (the permanent-code migration changed page contents; a dream cycle rebuilds them); links between repositories are collected only by `extract links --source db`, which the sync script runs; `extract_atoms` backlog (no cycle has run); `backup_coverage` (new check, see `gbrain backup status`) |
 
 ## OpenCode MCP integration
 
@@ -207,11 +207,11 @@ re-decided per run.
 
 | # | Item | Status |
 |---|---|---|
-| 1 | Upgrade decided by the developer and executed 2026-09-30: `0.46.1.0` → `0.59.18.0` (schema 128 → 169), for source-qualified cross-repository links. Backups first, services stopped in order, waiting jobs cancelled, schema-only migration; proof by a per-source fact comparison, a clean sync and a governed write. Procedure: [[[mybizz-config-docs:gbrain/gbrain-reference\|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md) §Upgrading. Standing rule for future upgrades: a developer decision, never version-newness alone. | Resolved 2026-09-30 |
+| 1 | Upgrade decided by the developer and executed 2026-09-30: `0.46.1.0` → `0.59.18.0` (schema 128 → 169), for source-qualified cross-repository links. Backups first, services stopped in order, waiting jobs cancelled, schema-only migration; proof by a per-source fact comparison, a clean sync and a governed write. Procedure: [[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]] §Upgrading. Standing rule for future upgrades: a developer decision, never version-newness alone. | Resolved 2026-09-30 |
 | 2 | MEMORY_VERBS premise reconciled: [[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) records `mcp_surface: verbs` enabled as its Step 0.2 build prerequisite, while current `~/.gbrain/config.json` carries no `mcp_surface` key (re-verified 2026-09-13, masked jq) and the current version's default MCP surface includes the memory verbs (observed 2026-09-06). Both records stated with provenance; the verbs-only surface (`gbrain config set mcp_surface verbs`) remains available as a config choice. **Resolved 2026-09-30:** `gbrain config get mcp_surface` prints `verbs` with `[config] source: db plane` — the setting lives in the database config plane, not in `config.json`. | Resolved 2026-09-30 |
 | 3 | Source clone at `/mnt/c/mybizz/gbrain` (v0.25.0) **deleted 2026-09-13** per developer decision — verified not implemented (running code is the bun-global install; zero references in any config/script) and not pristine (local debris only: auto-managed `.gitignore` lines + a stray `pnpm-lock.yaml`; nothing unique — upstream public, re-clonable). | Resolved |
 | 4 | Project mb-3-cs managed-block decisions: whether to fold the Access Model bullets into the Graph Memory Guidance block, and whether the block should ever be committed — raised, never decided; do not act without explicit direction. | Open |
 | 5 | Governed facts land in `memory-governor-code`, not in the owning project's source (verified 2026-09-30). Options are recorded in [[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) (Pending developer execution item 6). | Open |
-| 6 | Link rollout: a link that should cross repositories must be written `[[source-id:page-name]]` (page name = GBrain slug), and only pages in federated sources write them. Verified on a sandbox copy of 0.59.18.0 only — not yet on this brain. | Open |
+| 6 | Link rollout: every link in the eight documentation repositories is stored as `[[[source-id:page-name]]](C:/full/path.md)` (page name = GBrain slug). GBrain follows it across federated sources when links are collected with `gbrain extract links --source db`. Rolled out and verified on this brain 2026-10-01 (`operating-procedures/daily-ops` → 7 links into `mybizz-config-docs`). | Resolved 2026-10-01 |
 | 7 | Retention of `~/backups` (the settings archive holds keys), and the parked commit `b6250c43` on `master` / `pre-upgrade-backup`. | Open |
 | 8 | Code sources: the developer's view is that code does not belong in GBrain; removal deferred together with the Graphify question. `memory-governor-code` must not be removed before the facts stored in it are understood. | Open |

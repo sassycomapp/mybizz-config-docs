@@ -7,7 +7,7 @@ updated: "2026-10-01"
 
 *Companion note: for current confirmed state (version, sources, credentials,
 open items) see [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md). For commands, incidents, and
-troubleshooting, see [[[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md). For how the memory components fit
+troubleshooting, see [[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]]. For how the memory components fit
 together, see [[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md). Exam companions:
 [[[mybizz-config-docs:gbrain/gbrain-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-exam-plan.md) (next run's job-spec), [[[mybizz-config-docs:gbrain/gbrain-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-exam-report.md) (current
 verified state), [[[mybizz-config-docs:gbrain/gbrain-log|Log]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-log.md) (notable events), [[[mybizz-config-docs:gbrain/gbrain-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-learnings.md)
@@ -53,10 +53,16 @@ to that page in the named source, provided the page holding the link is in a
 federated source. Bare names and ordinary markdown links still cannot cross
 sources, and a wrong page name is dropped. The page name is GBrain's slug:
 lowercase, spaces as hyphens, no `.md`, the path counted from the root of the
-target repository. These links are written only when links are collected from the
-database (`gbrain extract --stale`), never by a plain sync. This was tested on a
-sandbox copy of 0.59.18.0 and is the reason for the upgrade; it has not yet been
-exercised on this brain.
+target repository. These links are written only by a full read of the database
+(`gbrain extract links --source db`) — never by a plain sync, and not by
+`gbrain extract --stale`, because the sync has already marked its pages as done.
+This was the reason for the upgrade and was verified on this brain on 2026-10-01:
+a page in `mybizz-os-docs` now has 7 links into `mybizz-config-docs`.
+
+In the documents themselves every link is stored as
+`[[[source-id:page-name]]](C:/full/path.md)`: GBrain reads the part inside the
+brackets, MarkText opens the path. A link with only a bare name inside the
+wrapper is not followed by this version.
 
 Search is hybrid: exact keyword matching combined with vector-based semantic
 matching (content embedded via an external model, so meaning-similar text is
@@ -282,7 +288,7 @@ tag, with a local commit parked on `master` (the stale source clone was deleted
 at pilot (273 pages — on 2026-09-30 the doctor reported 273 database pages with no
 backing file before the upgrade and 30 after); several checks are permanently
 developer-run (config.json content, sync samples); the version lags upstream
-(0.59.18.0 installed, 0.60.11.0 exists) by deliberate policy; the dream cycle has
+(0.59.18.0 installed, 0.60.25.0 is the newest) by deliberate policy; the dream cycle has
 not run for most sources (an accepted `cycle_freshness` FAIL).
 
 **Opportunities.** The config-management exam makes silent memory degradation —
@@ -298,7 +304,7 @@ stops every sync.
 
 ---
 
-*Suite: [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md) (spec), [[[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md) (commands, incidents),
+*Suite: [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md) (spec), [[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]] (commands, incidents),
 [[[mybizz-config-docs:gbrain/gbrain-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-exam-plan.md) / [[[mybizz-config-docs:gbrain/gbrain-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-exam-report.md) / [[[mybizz-config-docs:gbrain/gbrain-log|Log]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-log.md) /
 [[[mybizz-config-docs:gbrain/gbrain-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-learnings.md) (config-management set), [[[mybizz-config-docs:gbrain/gbrain-skill|Gbrain Skill]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-skill.md) (exam skill
 canonical source). Architecture: [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md).
