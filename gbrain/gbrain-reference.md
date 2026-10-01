@@ -1,6 +1,6 @@
 ---
 title: "gbrain-reference"
-doc-id: "mb-55906d51"
+doc-id: "mb-bb4cbd8d"
 updated: "2026-10-01"
 ---
 # GBrain — Reference: Commands, Mechanics, Incidents, Troubleshooting
@@ -21,7 +21,7 @@ and code as searchable vector memories. GBrain does not override repo files,
 ADRs, or OpenCode rules — files are always authoritative.
 
 **Engine:** PostgreSQL 16 + pgvector (WSL-native) | **Version:** `0.59.18.0`
-(upgraded 2026-09-30 from 0.46.1.0; `0.60.11.0` exists upstream) | **Schema:** v169 | **Pack:** gbrain-everything
+(upgraded 2026-09-30 from 0.46.1.0; `0.60.25.0` is the newest release) | **Schema:** v169 | **Pack:** gbrain-everything
 **Connection:** `postgresql://postgres:***@localhost:5432/gbrain`
 
 Current sources, credentials, and MCP entry: [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md). Cross-
@@ -82,7 +82,8 @@ containment relationships use Graphify's `get_neighbors`.
 | `gbrain sync --all` | Sync all registered sources |
 | `gbrain sync --break-lock` | Break a stale sync lock |
 | `gbrain embed --stale` | Embed chunks missing embeddings |
-| `gbrain extract --stale` | Extract links/timelines from stale pages |
+| `gbrain extract --stale` | Extract links/timelines from stale pages — **misses links into other sources** (the sync already marks its pages as done) |
+| `gbrain extract links --source db` | Read every page from the database and write all its links, including links into other sources. The standing sync script uses this form |
 
 **`--strategy` is a sync-time flag, not a stored setting** — every sync that
 needs code files must pass `--strategy code` explicitly, or code files are
@@ -108,9 +109,12 @@ commit hasn't changed — clear `last_commit` first to force a full walk.
 **The standing sync script enumerates every registered source** (`gbrain
 sources list --json | jq`; since 2026-09-28) and runs `gbrain sync --source <id>
 --no-pull --exclude 'obsolete/**' --exclude '**/obsolete/**'` for each, then
-`gbrain extract --stale` and `gbrain embed --stale`. Run it with `bash
+`gbrain extract links --source db` and `gbrain embed --stale`. Run it with `bash
 /mnt/c/mybizz/scripts/sync-gbrain.sh`; it logs to `C:\mybizz\logs\gbrain-logs\`
-and exits with an error if any step fails. A bare `gbrain sync` syncs only the
+and exits with an error if any step fails. The link step must be the full
+database read: a sync already marks the pages it imported as done, so
+`gbrain extract --stale` finds nothing and links between repositories stay
+missing (verified 2026-10-01). A bare `gbrain sync` syncs only the
 source of the current folder. (The 2026-09-06 statement — the script covered the
 repo source only — was true then and is superseded.) `--no-pull` was added
 2026-09-30: the repositories are edited and committed only in WSL, so there is
@@ -310,6 +314,21 @@ files without changing anything.
 Harmless: the floating tag moved upstream. Fetch only the release tag instead
 (see §Upgrading).
 
+### The sync finished, but links between repositories are missing (2026-10-01)
+
+Symptom: `gbrain backlinks <page> --source <id>` lists no page from another source,
+and `GBRAIN_SOURCE=<id> gbrain call get_links '{"slug":"<page>"}'` shows no link into
+another source, although the documents contain `[[[source-id:slug]]](path)` links.
+`gbrain extract --stale` answers "No stale pages". Cause: the sync marks the pages it
+imports as already extracted, and that step cannot resolve links into other sources, so
+the later `--stale` pass skips them. Fix:
+```bash
+gbrain extract links --source db
+```
+Result: `operating-procedures/daily-ops` went from 0 to 7 links into
+`mybizz-config-docs`. The setting `link_resolution.cross_source` was not needed (the
+linking sources are federated). The full read takes longer than `--stale`.
+
 ### A credentials-looking file describes a superseded setup
 
 Check any credentials-looking file against the *actual* live configuration
@@ -375,6 +394,8 @@ directly instead.
 
 **Stale sync lock:** `gbrain sync --break-lock`.
 
+**Links between repositories are missing after a sync:** run `gbrain extract links --source db` (see the incident of 2026-10-01).
+
 **Embedding fails (API key error):** source `~/.bashrc`, retry; see the
 Dream Cycle reference if unresolved.
 
@@ -406,6 +427,7 @@ opencode web --hostname 0.0.0.0
 - Do not treat an offline test pass as live verification for anything GBrain-adjacent — the same evidence-not-proof standard as everywhere else.
 - Do not upgrade GBrain on version-newness alone — an upgrade is a developer decision (the one of 2026-09-30 is recorded in config.md) and follows the procedure above.
 - Do not run a bare `gbrain sync` — it syncs only the source of the current folder; use `bash /mnt/c/mybizz/scripts/sync-gbrain.sh`.
+- Do not rely on `gbrain extract --stale` for links between repositories — use `gbrain extract links --source db`.
 - Do not use `gbrain upgrade`, `gbrain self-upgrade` or plain `gbrain apply-migrations --yes` for this install — use the procedure above.
 - Do not leave `sources.default` naming a source that does not exist — under 0.59.18.0 every sync then fails.
 - Do not remove `memory-governor-code`, or any code source, before the facts stored in it are understood.

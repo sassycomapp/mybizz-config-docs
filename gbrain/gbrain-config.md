@@ -11,7 +11,7 @@ system component. Agent-facing. Reflects the live-verified state as of
 sections that changed carry that date; the rest was not re-measured). States
 facts, not history — where the reasoning matters, see
 [[[mybizz-config-docs:gbrain/gbrain-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-explainer.md) and [[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md); for commands and
-procedures, see [[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]].
+procedures, see [[[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md).
 
 **System context (developer-stated, 2026-09-06; architecture context unchanged):** GBrain is one of six
 closely-related components — GBrain, gbrain-dream-cycle, gstack,
@@ -27,8 +27,8 @@ together layer; this suite owns GBrain-specific state, commands, and incidents.
 | Item | Value |
 |---|---|
 | Version | `0.59.18.0` (tag `v0.59.18.0`, commit `045a6138`) — upgraded 2026-09-30 from `0.46.1.0`; database schema **169** (was 128) |
-| Version drift | `0.60.25.0` is the newest release (update banner 2026-10-01; not installed). An upgrade is a developer decision, made with the procedure in [[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]] §Upgrading — never on version-newness alone |
-| Upstream | `github.com/garrytan/gbrain` — MIT; by Garry Tan; 29.6k stars / 1,061 commits (verified 2026-09-06). **Not distributed on npm** — the npm `gbrain` package is unrelated and shadows the binary (upstream warning; see [[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]] Do-not) |
+| Version drift | `0.60.25.0` is the newest release (update banner 2026-10-01; not installed). An upgrade is a developer decision, made with the procedure in [[[mybizz-config-docs:gbrain/gbrain-reference\|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md) §Upgrading — never on version-newness alone |
+| Upstream | `github.com/garrytan/gbrain` — MIT; by Garry Tan; 29.6k stars / 1,061 commits (verified 2026-09-06). **Not distributed on npm** — the npm `gbrain` package is unrelated and shadows the binary (upstream warning; see [[[mybizz-config-docs:gbrain/gbrain-reference\|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md) Do-not) |
 | Engine | PostgreSQL 16.14, self-hosted, WSL-native; pgvector 0.6.0 |
 | Connection | `postgresql://postgres:***@localhost:5432/gbrain` |
 | Boot behavior | Auto-starts on WSL boot (`service postgresql start` in `/etc/wsl.conf`) |
@@ -65,7 +65,7 @@ cycle, delivered to `/home/dev-p/backup-gbrain/` (default) and
 Known permanent limitation: no bundled pack extracts code-symbol call-graph
 edges (`code` type is `extractable: false` in every pack); `code-callers`/
 `code-callees` cannot resolve to defining chunks. Graphify's `get_neighbors`
-is the correct tool — full account in [[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]] and
+is the correct tool — full account in [[[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md) and
 [[[mybizz-config-docs:gbrain/gbrain-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-explainer.md).
 
 ## Models
@@ -207,7 +207,7 @@ re-decided per run.
 
 | # | Item | Status |
 |---|---|---|
-| 1 | Upgrade decided by the developer and executed 2026-09-30: `0.46.1.0` → `0.59.18.0` (schema 128 → 169), for source-qualified cross-repository links. Backups first, services stopped in order, waiting jobs cancelled, schema-only migration; proof by a per-source fact comparison, a clean sync and a governed write. Procedure: [[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]] §Upgrading. Standing rule for future upgrades: a developer decision, never version-newness alone. | Resolved 2026-09-30 |
+| 1 | Upgrade decided by the developer and executed 2026-09-30: `0.46.1.0` → `0.59.18.0` (schema 128 → 169), for source-qualified cross-repository links. Backups first, services stopped in order, waiting jobs cancelled, schema-only migration; proof by a per-source fact comparison, a clean sync and a governed write. Procedure: [[[mybizz-config-docs:gbrain/gbrain-reference\|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md) §Upgrading. Standing rule for future upgrades: a developer decision, never version-newness alone. | Resolved 2026-09-30 |
 | 2 | MEMORY_VERBS premise reconciled: [[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) records `mcp_surface: verbs` enabled as its Step 0.2 build prerequisite, while current `~/.gbrain/config.json` carries no `mcp_surface` key (re-verified 2026-09-13, masked jq) and the current version's default MCP surface includes the memory verbs (observed 2026-09-06). Both records stated with provenance; the verbs-only surface (`gbrain config set mcp_surface verbs`) remains available as a config choice. **Resolved 2026-09-30:** `gbrain config get mcp_surface` prints `verbs` with `[config] source: db plane` — the setting lives in the database config plane, not in `config.json`. | Resolved 2026-09-30 |
 | 3 | Source clone at `/mnt/c/mybizz/gbrain` (v0.25.0) **deleted 2026-09-13** per developer decision — verified not implemented (running code is the bun-global install; zero references in any config/script) and not pristine (local debris only: auto-managed `.gitignore` lines + a stray `pnpm-lock.yaml`; nothing unique — upstream public, re-clonable). | Resolved |
 | 4 | Project mb-3-cs managed-block decisions: whether to fold the Access Model bullets into the Graph Memory Guidance block, and whether the block should ever be committed — raised, never decided; do not act without explicit direction. | Open |
