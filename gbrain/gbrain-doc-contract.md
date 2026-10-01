@@ -21,7 +21,7 @@ numbers were removed.
 
 ## MyBizz convention (developer-owned; GBrain does not require it)
 
-- **C1** — Every documentation file, including documentation skills (on C:\, not installed): frontmatter `title: "filename-stem"`, `doc-id: "mb-xxxxxxxx"` and `updated: "YYYY-MM-DD"`. The `doc-id` is a permanent random code and never changes. `updated` is the date of the last real change. The commit hook `mb-doc-check` adds and keeps all three; nobody writes `doc-id` or `updated` by hand.
+- **C1** — Every documentation file, including documentation skills (on C:\, not installed): frontmatter `title: "filename-stem"`, `doc-id: "mb-xxxxxxxx"` and `updated: "YYYY-MM-DD"`. The `doc-id` is a permanent random code and never changes. `updated` is the date of the last real change. The commit hook `mb-doc-check` adds and keeps all three; nobody writes `doc-id` or `updated` by hand. The files and folders the program skips are listed in [[[mybizz-config-docs:mb-doc-check/doc-check-config]]](C:/mybizz/mybizz-config-docs/mb-doc-check/doc-check-config.md).
 - **C2** — Installed skills (WSL): frontmatter `name` and `description`, both YAML strings. Out of scope for this contract; documentation skills never modify them.
 - **C3** — Documents are stored with LF line endings (GBrain also reads CRLF). The commit hook converts.
 - **C4** — `SKILL.md` files and `obsolete` folders are never touched by the commit hook.
