@@ -45,7 +45,7 @@ reasoning in [[[mybizz-config-docs:mb-compile-rules/mb-compile-rules-explainer|m
 |---|---|
 | Companion suite | [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) + [[[mybizz-config-docs:cupcake/cupcake-reference\|Usage, Invocation, and Worked Examples]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-reference.md) + [[[mybizz-config-docs:cupcake/cupcake-explainer\|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md) — the system this skill feeds |
 | Sibling skills | `mb-sentinel-review`, `mb-submit-memory` — same custom-skill family; no structural coupling |
-| Register | `register-global` lists `rules-cupcake-global` (19 documents) |
+| Register The use of registers has been discontinued. Please review | `register-global` lists `rules-cupcake-global` (19 documents) |
 | Governance principles | [[[default:security-global/principles/sec-review-before-trust\|Review Before Trust]]](C:/dev/project-library-global/security-global/principles/sec-review-before-trust.md), [[[default:security-global/infrastructure/sec-dependency-skill-supply-chain\|Dependency and Skill Supply Chain]]](C:/dev/project-library-global/security-global/infrastructure/sec-dependency-skill-supply-chain.md), [[[default:security-global/principles/sec-defense-in-depth\|Defense in Depth]]](C:/dev/project-library-global/security-global/principles/sec-defense-in-depth.md) — this pipeline is their enforcement-authoring arm |
 
 ## Worked precedent (2026-09-08)

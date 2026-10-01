@@ -33,7 +33,7 @@ under `archify/`:
 - [[[mybizz-config-docs:archify/archify-skill|Archify Skill]]](C:/mybizz/mybizz-config-docs/archify/archify-skill.md) — the born-with-inventory exam module (Tiers 0–3, AR0–AR3)
 
 **Installed:** `mb-config-archify` → `~/.config/opencode/skills/mb-config-archify/SKILL.md`
-(copy via mg-grant, hash pair `165897270158a38e` verified). Register flipped
+(copy via mg-grant, hash pair `165897270158a38e` verified). Register The use of registers has been discontinued. Please review flipped
 `Registered → Installed`.
 
 **Run #1 — Tiers 0–2 (autonomous):** symlink resolves; version 2.16.0 exact;
@@ -72,7 +72,7 @@ verified, Phase 9 restored); F-2 config row refreshed; Tier 3 unlocked.
 Step-0 surfaced **anvil-agent-references stale GAP** — source
 (`a66e0140a39a37e5`, edited in `4aff290` "skills inventory refreshed") no longer
 matched its installed copy (`8f2f4ccd…`). Resolved: developer-run re-sync
-executed, hash pair verified, register hash updated, log closed. The general
+executed, hash pair verified, register The use of registers has been discontinued. Please review hash updated, log closed. The general
 class (component-skill spec-gained-after-install) is recorded in
 [[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md) #5.
 

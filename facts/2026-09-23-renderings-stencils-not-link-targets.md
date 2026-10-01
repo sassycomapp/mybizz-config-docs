@@ -6,7 +6,7 @@ updated: "2026-10-01"
 # Fact — renderings and stencils are not resolvable link targets
 
 Registered html renderings, .json manifests, and retired stencils are
-register rows but not brain pages — GBrain never ingests them as pages —
+register The use of registers has been discontinued. Please review rows but not brain pages — GBrain never ingests them as pages —
 so their `[[...]]` references cannot resolve and must NOT convert. The
 Phase-C unresolvable-target rule applies: "an unresolvable proposed target
 is a finding, not a link." (4 pairs dropped on 2026-09-23: a stencil cheat-

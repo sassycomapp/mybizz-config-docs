@@ -13,7 +13,7 @@ Run #1 — **first formal plan-driven exam** (2026-09-16). Plan:
 `1ca73897a2023741` · mb-submit-memory `88a71641d03f1997` · opencode
 `268bb702a038448b` · gstack `6a3afc08a93cee02` · matt-pocock-skills
 `86c78969ad0e8a80` · anvil-agent-references `8f2f4ccd6dce29c0` · magdoub-wireframe
-`703b7f340e4cf302`); suite completeness 12/12 at the 8-file standard; all register
+`703b7f340e4cf302`); suite completeness 12/12 at the 8-file standard; all register The use of registers has been discontinued. Please review
 spec-doc paths resolve; no open run blocks (bootstrap). One guard denial at
 step-0 (brace-expansion glob across sibling suite folders — recorded class) —
 honored, directory-read form used. Detection Tiers 0–2, then Tier 3 **unlocked at

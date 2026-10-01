@@ -19,7 +19,7 @@ run #1 is HEALTHY. The canonical Phase-C detector stands at v0.1.1
 (29/29 tests) after the CY3-2 gate amendment.
 
 References to the three retired skills anywhere in the corpus are stale;
-mb-doccycle owns document management (register membership,
+mb-doccycle owns document management (register The use of registers has been discontinued. Please review membership,
 cross-references, wikilinks). Context: session 014
 (`sessions/2026-09-22-014-mb-doccycle-wp2-wp8`). Confidence 1.0 (developer
 acceptance statement). Approved at the 2026-09-22 close-out gate.

@@ -23,7 +23,7 @@ steady-state functional reference only.
 | `magdoub-wireframe/` | [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-reference\|Reference: Invocation, Operation, Update]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-reference.md) |
 | `graphify/` | [[[mybizz-config-docs:graphify/graphify-reference\|Graphify Reference]]](C:/mybizz/mybizz-config-docs/graphify/graphify-reference.md) |
 
-Plus, directly in this folder: `projects-config-register.md` — the register of every
+Plus, directly in this folder: `projects-config-register.md` The use of registers has been discontinued. Please review — the register of every
 project's `{slug}-config.yaml` (see below).
 
 **Not here, despite an earlier plan to place it here:** individual projects' `{slug}-config.yaml`
@@ -44,7 +44,7 @@ of sync. Concretely, this shows up as:
   wireframe skill all follow this pattern. `~/.config/opencode/skills/` (WSL) is the
   browsable runtime surface of these symlinks, not a second copy of anything.
 - **Each project's configuration lives in exactly one file** — its own `{slug}-config.yaml`,
-  registered in `projects-config-register.md` — not duplicated in `docmap.md`, not
+  registered in `projects-config-register.md` The use of registers has been discontinued. Please review — not duplicated in `docmap.md`, not
   scattered across skill definitions.
 - **Reference documents point at each other instead of repeating content.** [[[mybizz-config-docs:gbrain/gbrain-reference|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md)
   defers to [[[mybizz-config-docs:postgresql/postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md) for database operational detail rather than duplicating
@@ -56,10 +56,10 @@ of sync. Concretely, this shows up as:
 ## Kept fresh by
 
 `mb-doccycle` (the documentation-management workflow, installed 2026-09-22 —
-register verification is defined in its phase specs and run frame) — reads
-`projects-config-register.md` and cross-checks it against the real
+register The use of registers has been discontinued. Please review verification is defined in its phase specs and run frame) — reads
+`projects-config-register.md` The use of registers has been discontinued. Please review and cross-checks it against the real
 filesystem, flagging missing or orphaned entries. Registering a new
 project's config YAML here is a required step in the "start a project"
 protocol, checked by mb-doccycle runs rather than after the fact. (The
 retired `mb-docs-manager` was superseded 2026-09-22; its suite folder was
-removed and its register rows retired.)
+removed and its register The use of registers has been discontinued. Please review rows retired.)

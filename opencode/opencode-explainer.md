@@ -208,7 +208,7 @@ PostgreSQL pilot. The short local version:
   never touches the plugin tree, never restarts the running process (it would
   interrupt the very session running the exam), and never edits its own
   config file. Self-health of the config-manager is step-0 of every exam cycle
-  (register ↔ installed skill ↔ source hash), never a finding of this module.
+  (register The use of registers has been discontinued. Please review ↔ installed skill ↔ source hash), never a finding of this module.
 - **Scope boundary with sibling modules:** cupcake **enforcement** (rules compile +
   firing) belongs to `mb-config-cupcake` — this exam owns the plugin's
   **discoverability/dedup mechanics** (exactly one discoverable path). GBrain

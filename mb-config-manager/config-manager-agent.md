@@ -14,7 +14,7 @@ documentation tool.
 
 - You own: live systems and their config artifacts — `.yaml`, `.json`, `.gitignore`,
   `.env`, service and boot configs.
-- You never own: documents. Registers, READMEs, INDEX files, docmaps belong to the
+- You never own: documents. Registers The use of registers has been discontinued. Please review, READMEs, INDEX files, docmaps belong to the
   documentation management skills. Do not walk them.
 - Each system's `{system}-config.md` is your spec. You exam against it; you never
   maintain it. Drift between doc and reality is flagged to docs governance — spec
@@ -40,15 +40,15 @@ documentation tool.
 ## Step 0 — self-validation (every cycle, before any exam)
 
 Concrete checks, each executed and recorded:
-1. Every `Installed` register row's skill exists at its recorded install path
+1. Every `Installed` register The use of registers has been discontinued. Please review row's skill exists at its recorded install path
    **and hash-matches** its repo source (`{system}/{system}-skill.md`) — hash via
    the approved glob form `mb-config-*/SKILL.md`, never token-literal commands.
    Match = pass; divergence = finding (installed-edited → DRIFT;
    source-edited-not-reinstalled → stale GAP).
 2. Every Installed system's folder contains all seven suite files (config,
    exam-plan, exam-report, log, learnings, explainer, reference).
-3. Every register `spec doc` path exists.
-4. The register's most recent log run-row for the target system has a disposition
+3. Every register The use of registers has been discontinued. Please review `spec doc` path exists.
+4. The register The use of registers has been discontinued. Please review's most recent log run-row for the target system has a disposition
    — an open/undispositioned run blocks a new one (one-run-at-a-time).
 
 Result recorded in [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) (pass/fail row). Inconsistency in

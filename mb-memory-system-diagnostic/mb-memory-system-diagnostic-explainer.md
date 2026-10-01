@@ -109,7 +109,7 @@ is invocation-only by design.
 
 A finding's context decays. At the moment §3 finds a stuck outbox, the
 evidence for the right remediation is in the run's own hands — the API
-response, the worker state, the register diff. Banked into an end-of-run
+response, the worker state, the register The use of registers has been discontinued. Please review diff. Banked into an end-of-run
 report, the same finding becomes a backlog item that outlives its context and
 invites a decision made from a summary instead of live evidence. The
 per-section loop keeps diagnosis and decision adjacent, and it has a second,
@@ -167,7 +167,7 @@ skip.
 ## Why Both Positive and Negative Governed-Write Tests
 
 §4 alone proves the gate can say yes: a candidate flows submit → worker →
-GBrain `private` fact → register. But a gate that had silently lost its
+GBrain `private` fact → register The use of registers has been discontinued. Please review. But a gate that had silently lost its
 ability to say no would pass §4 perfectly while every fact in the system
 flowed straight to the durable layer unreviewed — the exact failure the gate
 exists to prevent. §5 manufactures a must-review candidate (`policy` is one

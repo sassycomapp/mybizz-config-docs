@@ -53,7 +53,7 @@ references instead.
 
 | # | Event (log) | Check |
 |---|---|---|
-| LG-1 | 2026-09-13 copy-install backfill + register hash recorded | Step-0 hash check covers the cupcake skill pair |
+| LG-1 | 2026-09-13 copy-install backfill + register The use of registers has been discontinued. Please review hash recorded | Step-0 hash check covers the cupcake skill pair |
 | LG-2 | No crashes/incidents since 2026-09-12 fixes | If a new log row exists at synthesis time, derive a targeted probe from it |
 
 ## 5. Learnings-driven items

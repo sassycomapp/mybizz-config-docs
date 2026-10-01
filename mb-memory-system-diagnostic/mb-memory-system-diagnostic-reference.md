@@ -163,7 +163,7 @@ git -C /home/dev-p/memory-governor status --porcelain registers/ | head -5
 systemctl --user status memory-governor-api memory-governor-worker --no-pager 2>&1 | head -6
 ```
 
-Pass: 422; worker alive; `permanently_failed` = 0; register clean; both units
+Pass: 422; worker alive; `permanently_failed` = 0; register The use of registers has been discontinued. Please review clean; both units
 `active (running)`.
 
 ## Section 4 — Governed write, positive path (heavyweight — always gated)
@@ -184,7 +184,7 @@ POST /memory/candidate        # disposable candidate via the real API
 Cleanup is in `try`/`finally` — never omitted, including mid-run failure.
 
 Pass: submit `201 promoted`; worker processed ≥ 1; GBrain presence true;
-`private` visibility true; register written true; cleanup confirmed complete.
+`private` visibility true; register The use of registers has been discontinued. Please review written true; cleanup confirmed complete.
 
 ## Section 5 — Governed write, negative path (heavyweight — always gated)
 

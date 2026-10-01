@@ -97,7 +97,7 @@ the Active Project Standard; the deny-list applies when they start).
 Full path: `~/.config/opencode/opencode.jsonc` (WSL path). Verified
 key-by-key against [[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md)'s table — exact match. The
 `instructions` array points at
-`C:/dev/project-library-global/register-global/register-global.md`
+`C:/dev/project-library-global/register-global/register-global.md` The use of registers has been discontinued. Please review
 (resolves; corrected 2026-09-01 from four deleted index files).
 
 ## Problem / remedy reference

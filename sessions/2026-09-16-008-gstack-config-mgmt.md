@@ -28,11 +28,11 @@ localized explainer (§Config maintenance, S.W.O.T., companion footer) and
 reference (exam-set pointers). Suite at the 8-file standard.
 
 **Phase 2 — install.** `mg-grant` requested (developer-granted); `mb-config-gstack`
-copied (never moved), hash pair `eeed4ef037c0f44f` verified; register flipped
+copied (never moved), hash pair `eeed4ef037c0f44f` verified; register The use of registers has been discontinued. Please review flipped
 WIP → Installed.
 
 **Phase 3 — formal run #1.** Step-0 PASS: hash pairs 9/9 MATCH (glob form),
-suite completeness 9/9, register spec-doc paths 18/18, no prior run row
+suite completeness 9/9, register The use of registers has been discontinued. Please review spec-doc paths 18/18, no prior run row
 (bootstrap). Tiers 0–2 all PASS. Two guard denials honored (.env-content read +
 one compound loop text) → developer-run classes.
 
@@ -45,7 +45,7 @@ newness.
 **Phase 5 / post-gate corrections (developer instructions):**
 - **GStack is NOT a memory-family member** — related to the memory ecosystem
   only through its close relation to GBrain. Corrected [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md)
-  §Integration facts, skill scope boundary, log, register. No master-explainer
+  §Integration facts, skill scope boundary, log, register The use of registers has been discontinued. Please review. No master-explainer
   edit (fact-54 never listed GStack; consistent).
 - **`gstack-outputs/` copy lane does not exist on this system** outside backups
   (out of scope) — convention only, not live state. `~/.gstack/projects/$SLUG/`
@@ -61,13 +61,13 @@ newness.
   toward [[[mybizz-config-docs:gstack/gstack-reference|GStack Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-reference.md); LE-3 (output-location fact) resolved — permanent
   home exists.
 - Skill re-installed by copy twice after corrections; final hash pair
-  `6a3afc08a93cee02`; register updated.
+  `6a3afc08a93cee02`; register The use of registers has been discontinued. Please review updated.
 - Output-location fact: [[[mybizz-config-docs:gstack/gstack-reference|GStack Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-reference.md) §Artifact locations — skill save
   home `~/.gstack/projects/$SLUG/`, deterministic slug via `gstack-slug` (this
   repo: `sassycomapp-mybizz-config-docs`), discovery via same slug + known
   sub-dir + `/context-restore` + project-keyed learnings/timeline; repo-visible
   copy lane = convention only, does not exist.
-- config-manager-log: step-0 row, gate row, correction rows; register flipped
+- config-manager-log: step-0 row, gate row, correction rows; register The use of registers has been discontinued. Please review flipped
   and re-hashed (N-3 resolved).
 
 ## Quirks and dispositions
@@ -90,7 +90,7 @@ newness.
 
 ## Artifacts
 
-- Register: gstack Installed, hash `6a3afc08a93cee02`, verified live 2026-09-16.
+- Register The use of registers has been discontinued. Please review: gstack Installed, hash `6a3afc08a93cee02`, verified live 2026-09-16.
 - Suite: `mybizz-config-docs/gstack/` — 8 standard files + skills-reference
   catalog; skill installed at
   `~/.config/opencode/skills/mb-config-gstack/SKILL.md`.
@@ -98,7 +98,7 @@ newness.
 
 ## Open / next
 
-- Developer: commit + push `mybizz-config-docs` (suite + register + spec +
+- Developer: commit + push `mybizz-config-docs` (suite + register The use of registers has been discontinued. Please review + spec +
   config-manager records; agent blocked by guard). Then agent runs gbrain sync.
 - N-1 governance flag pending docs-governance pickup (wording nit).
 - W-1 upgrade decision (`1.58.1.0` → 1.81.0.0, Aside-first) remains developer

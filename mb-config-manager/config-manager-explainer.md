@@ -77,7 +77,7 @@ only.
 
 ## 5. The exam cycle (one run — plan-driven)
 
-1. **Self-validation (step 0)** — verify its own functional consistency: register
+1. **Self-validation (step 0)** — verify its own functional consistency: register The use of registers has been discontinued. Please review
    rows ↔ installed skills ↔ suite files agree. A self-check, never a self-exam
    (Section 9). Inconsistency = architecture defect → its own log/learnings →
    developer.
@@ -212,11 +212,11 @@ The design:
   concrete checks: every `Installed` row's skill exists at its recorded path and
   **hash-matches** its repo source (via the approved glob form
   `mb-config-*/SKILL.md`); every Installed system's folder holds all seven suite
-  files; every register spec-doc path exists; the target system's last log
+  files; every register The use of registers has been discontinued. Please review spec-doc path exists; the target system's last log
   run-row has a disposition (an open run blocks a new one). This is a check,
   not an exam — no findings cycle, no self-directed heals. Result recorded in
   [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md).
-- Its register deliberately does **not** list the config-manager as a managed
+- Its register The use of registers has been discontinued. Please review deliberately does **not** list the config-manager as a managed
   system — the exception is documented here, not silent.
 - Defects it finds in itself route to its own [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) and
   [[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md), and architecture-level fixes go to the
@@ -291,5 +291,5 @@ developer-run items immediately); circular self-exam (designed out, Section 9).
 - Global behavior rules: `~/.config/opencode/AGENTS.md`
 - Cupcake (the guard layer that shapes developer-run classes): [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md), [[[mybizz-config-docs:cupcake/cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md)
 - Grant mechanism: `mg-grant` / `mg-revoke` (cupcake-config.md §Cross-project access grants)
-- Division docmap: `C:\dev\dev-root\docmap.md`; projects register: `projects-config-register.md` (repo root)
+- Division docmap: `C:\dev\dev-root\docmap.md`; projects register The use of registers has been discontinued. Please review: `projects-config-register.md` (repo root)
 - The pilot suite where this architecture was tuned: `postgresql/` (all seven files)

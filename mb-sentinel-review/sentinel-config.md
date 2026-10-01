@@ -106,7 +106,7 @@ Steps not in this table: no material security scrutiny by default.
   intensity numbers remain provisional until each is built and checked.
 - **`finding_id` has no companion table** — free-standing text identifier.
 - **The methodology skill was installed 2026-09-09 without a restart** —
-  OpenCode may need a session restart before the skill registers in its own
+  OpenCode may need a session restart before the skill registers The use of registers has been discontinued. Please review in its own
   catalog; the reference files are readable from disk regardless, which is
   what the review step uses.
 

@@ -294,4 +294,4 @@ Facts to record: GBrain 0.59.18.0 (tag v0.59.18.0, commit 045a6138), schema 169 
 10. `mybizz-os-docs\os-reference-docs\frontmatter conventions.md`: `doc-id` is a permanent code `mb-xxxxxxxx`, added by the commit hook.
 11. `mybizz-os-docs\os-reference-docs\wsl-path-references.md`: location of the scripts in `C:\mybizz\scripts`.
 
-Still open, not caused by the upgrade: docmap references to `projects-config-register` and to the config YAML rule; the two ADRs that define `doc-id`; the retirement of the exam suites of `mb-doc-maintainer` and `mb-doc-auditor`; a documentation suite for `mb-doc-check`; the AGENTS.md pointer in `makepdlf`; the 114 older broken links; the code sources and Graphify; the link rollout.
+Still open, not caused by the upgrade: docmap references to `projects-config-register` The use of registers has been discontinued. Please review and to the config YAML rule; the two ADRs that define `doc-id`; the retirement of the exam suites of `mb-doc-maintainer` and `mb-doc-auditor`; a documentation suite for `mb-doc-check`; the AGENTS.md pointer in `makepdlf`; the 114 older broken links; the code sources and Graphify; the link rollout.

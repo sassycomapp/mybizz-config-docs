@@ -139,7 +139,7 @@ graphify hook install | hook uninstall | hook status
 post-commit hook (detached background rebuild; skips rebase/merge/cherry-pick,
 linked worktrees; honors `GRAPHIFY_SKIP_HOOK=1`), post-checkout hook (full
 rebuild on branch switches, only if `graphify-out/` exists), and a `graph.json`
-union merge driver (registers `merge.graphify.*` in local git config and
+union merge driver (registers The use of registers has been discontinued. Please review `merge.graphify.*` in local git config and
 creates/appends `.gitattributes`). The merge driver only ever matters if
 `graph.json` is tracked — here it never is. Standing decision: not installed.
 

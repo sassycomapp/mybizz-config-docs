@@ -54,7 +54,7 @@ PATH="$HOME/.bun/bin:$PATH" setsid .venv/bin/python -m app.worker >> /tmp/memory
 - `setsid` + full redirection is required: a plain `nohup &` child dies
   when the launching shell's process group is terminated (confirmed live).
 - **Both processes are required.** The API decides; the worker delivers
-  (GBrain writes + register/payload writes). An API without a worker means
+  (GBrain writes + register/payload The use of registers has been discontinued. Please review writes). An API without a worker means
   promoted candidates silently never leave the outbox.
 - Health checks: `ss -tlnp | grep 8321` (API listening); `ps aux | grep
   app.worker` (worker alive); unauthenticated `curl

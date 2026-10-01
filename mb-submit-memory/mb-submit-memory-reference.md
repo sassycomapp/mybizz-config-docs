@@ -28,7 +28,7 @@ developer — never inferred or guessed.
    ```bash
    gbrain sources list
    ```
-   If not, STOP and report. This skill never registers a source itself.
+   If not, STOP and report. This skill never registers The use of registers has been discontinued. Please review a source itself.
 2. **The memory governor must be running** — both processes, API and worker
    (verified by a live check first; since 2026-09-15 they run as systemd user
    services, so they normally start by themselves):

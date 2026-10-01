@@ -16,7 +16,7 @@ Concept: [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explai
 | Orchestrator | an **agent**, not a skill — draft: [[[mybizz-config-docs:mb-config-manager/config-manager-agent\|Orchestrator Agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) |
 | Exam modules | per-system skills — draft: `{system}/{system}-skill.md` |
 | Routing table | [[[mybizz-config-docs:mb-config-manager/config-manager-register\|Register: Managed Systems]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md) — authoritative for Enabled systems |
-| Separation | config skills never touch docs registers; docs skills never probe live systems |
+| Separation | config skills never touch docs registers The use of registers has been discontinued. Please review; docs skills never probe live systems |
 
 ## Settings
 
@@ -43,11 +43,11 @@ Concept: [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explai
 | System exam skills | `{system}/{system}-skill.md` — canonical, git-versioned | `~/.config/opencode/skills/<skill-name>/SKILL.md` — installed **copy** (only executing copy) |
 
 The skill file is **copied** at install, never moved — the suite folder keeps the
-canonical source as backup and step-0 drift anchor. The register records each
+canonical source as backup and step-0 drift anchor. The register The use of registers has been discontinued. Please review records each
 Installed skill's sha256 (first 16 hex) and install date. Source files (agent +
 skill files) are exempt from docs-management governance; everything else in every
 suite is subject to it.
 
 ## Verification
 
-Verified live through formal plan-driven exam runs: `mb-config-postgresql` (pilot), `mb-config-cupcake`, `mb-config-gbrain`, `mb-config-memory-governor`, and `mb-config-gbrain-dream-cycle` (2026-09-14 — including a developer-unlocked full DC3-1 dream cycle, all green). Each Installed and verified (see each system's exam report). The plan-driven cycle is proven across five systems; emulation continues across the WIP queue per the register.
+Verified live through formal plan-driven exam runs: `mb-config-postgresql` (pilot), `mb-config-cupcake`, `mb-config-gbrain`, `mb-config-memory-governor`, and `mb-config-gbrain-dream-cycle` (2026-09-14 — including a developer-unlocked full DC3-1 dream cycle, all green). Each Installed and verified (see each system's exam report). The plan-driven cycle is proven across five systems; emulation continues across the WIP queue per the register The use of registers has been discontinued. Please review.

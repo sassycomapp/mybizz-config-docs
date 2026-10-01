@@ -19,7 +19,7 @@ adds nothing new — it packages the proven method.
 
 > Read `mybizz-config-docs/mb-config-manager/config-manager-explainer.md` (the
 > authoritative architecture), `config-manager-reference.md` (procedures), and
-> `config-manager-register.md` (current state). Then build and run the
+> `config-manager-register.md` The use of registers has been discontinued. Please review (current state). Then build and run the
 > configuration-management suite for `{system}` against its spec
 > `{system}/{system}-config.md`, exactly per
 > `mb-config-manager/config-setup-prompt.md`. The system is
@@ -34,7 +34,7 @@ adds nothing new — it packages the proven method.
   (`gbrain-dream-cycle/`).
 - Check live state of the target (read-only probes matching the spec's tables).
 - `git status` — tree should be clean or carry only known pending edits; report.
-- Confirm the register row exists (state `WIP`). If no register row or no spec
+- Confirm the register The use of registers has been discontinued. Please review row exists (state `WIP`). If no register row or no spec
   doc exists → stop, report: the system is not yet examinable.
 
 ## Phase 1 — Suite build-out (8 files total: 7-file standard + skill source)
@@ -81,15 +81,15 @@ adds nothing new — it packages the proven method.
   (any guard denial honored → hand the developer exact commands, never work around).
 - `mkdir -p` + `cp` source → `SKILL.md` (**copy, never move**; one skill per
   completion, never batch).
-- `sha256sum` both files — record first 16 hex in the register + install date;
-  flip register row WIP → Installed.
+- `sha256sum` both files — record first 16 hex in the register The use of registers has been discontinued. Please review + install date;
+  flip register The use of registers has been discontinued. Please review row WIP → Installed.
 
 ## Phase 3 — Formal run #1
 
 - **Step 0 self-validation** (record in `config-manager-log.md`): hash pairs for
   every Installed skill via the approved glob form (`mb-config-*/SKILL.md` —
   **never a token-literal command naming a sibling guard's name**; proven denial
-  class); suite completeness; register spec-doc paths exist; target's last log
+  class); suite completeness; register The use of registers has been discontinued. Please review spec-doc paths exist; target's last log
   run-row has a disposition.
 - Execute the plan: Tiers 0–2, fully autonomous — no questions until the gate.
 - Guard denials: honored absolutely; blocked checks bundle into ONE developer
@@ -115,14 +115,14 @@ adds nothing new — it packages the proven method.
 ## Phase 5 — Close-out
 
 - Graduated refinements → into the skill (agent-applied), re-copy, re-hash,
-  update register hash.
+  update register The use of registers has been discontinued. Please review hash.
 - Learnings graduated → delete entries (permanent home exists first).
 - Spec-doc corrections → flagged to docs governance; applied only with explicit
   developer approval (the gbrain precedent).
 - If the system belongs to the memory family: update
   `mybizz-os-docs/memory-master-explainer.md` to current verified state (standing
   rule — its own commit).
-- Register notes updated (verified-live date). Completion report; then the two
+- Register The use of registers has been discontinued. Please review notes updated (verified-live date). Completion report; then the two
   standard asks: developer commit+push; agent runs
   `setsid bash /mnt/c/mybizz/scripts/sync-gbrain.sh > /tmp/sync-output.txt 2>&1 &`.
 
@@ -151,11 +151,11 @@ talking itself into confusion — re-deriving a settled task, re-asking what the
 prompt already answers, manufacturing ambiguity — and wrecking the run.
 
 - **The prompt is the task definition.** Scope is never re-confirmed, re-derived,
-  or re-asked. If scope seems unclear, re-read this prompt, the register row, and
+  or re-asked. If scope seems unclear, re-read this prompt, the register The use of registers has been discontinued. Please review row, and
   the developer's instruction first — the answer is in those files in all but the
   rarest cases.
-- **Procedural conflicts are stated, not asked.** Where a register state, file,
-  or fact does not match what a phase expects (e.g. a register row in state
+- **Procedural conflicts are stated, not asked.** Where a register The use of registers has been discontinued. Please review state, file,
+  or fact does not match what a phase expects (e.g. a register The use of registers has been discontinued. Please review row in state
   `Deferred` where `WIP` is required), the resolution is an explicit named step
   in the plan — dated, with the developer's instruction cited — not a question.
   The developer's explicit instruction to run this prompt IS the authority to

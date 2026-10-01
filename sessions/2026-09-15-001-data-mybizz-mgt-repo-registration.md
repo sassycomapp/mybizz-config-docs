@@ -33,7 +33,7 @@ updated: "2026-10-01"
    developer) → [[[mybizz-os-docs:os-reference-docs/repo-organization|Repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md), built from the developer's
    image of the sheet; the new repo row appended (13 rows total).
 6. **Root files created** in data-mybizz-mgt: `README.md` (structure, key
-   documents, naming note) and `register-local.md` (append-only; _desktop
+   documents, naming note) and `register-local.md` The use of registers has been discontinued. Please review (append-only; _desktop
    docs registered provisionally; Budget/Models/prompts membership left open
    for mb-align-docs).
 7. **Scope scaffold updated** ([[[mybizz-os-docs:os-reference-docs/mybizz-scope-list|Mybizz Scope List]]](C:/mybizz/mybizz-os-docs/os-reference-docs/mybizz-scope-list.md)): in-scope root
@@ -90,7 +90,7 @@ updated: "2026-10-01"
 - GitHub: `sassycomapp/data-mybizz-mgt` (private, master, 2 commits)
 - GBrain source: `data-mybizz-mgt` (federated), 23 pages, synced to `f38b285`
 - `opencode.jsonc` external_directory entry (restart pending)
-- [[[mybizz-os-docs:os-reference-docs/repo-organization|Repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md), `README.md`, `register-local.md`
+- [[[mybizz-os-docs:os-reference-docs/repo-organization|Repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md), `README.md`, `register-local.md` The use of registers has been discontinued. Please review
 - Fixed: scope scaffold, 4 mb-docs-manager skill files, global AGENTS.md
   (developer-run), master-task-list.md frontmatter
 
@@ -98,7 +98,7 @@ updated: "2026-10-01"
 
 - **Docs corpus sweep (assigned to the docs skills, not done here)**: old-path
   references remain in `dev-root/docmap.md`, `mybizz-config-docs` (
-  `projects-config-register.md`, [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md), gstack references,
+  `projects-config-register.md` The use of registers has been discontinued. Please review, [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md), gstack references,
   [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md), Config, one sessions page),
   `mybizz-os-docs` ([[[mybizz-os-docs:operating-procedures/fact-save-and-recall|Operating Procedure]]](C:/mybizz/mybizz-os-docs/operating-procedures/fact-save-and-recall.md), [[[mybizz-os-docs:operating-procedures/opening-and-closing|Operating Procedure]]](C:/mybizz/mybizz-os-docs/operating-procedures/opening-and-closing.md)), and
   pdlf docs (2 files).
@@ -111,6 +111,6 @@ updated: "2026-10-01"
   file deleted — `sessions/2026-09-14-001-dream-cycle-config-mgmt.md` (` D`);
   untracked artifact dir `.sources/`. Developer decides; nothing committed.
 - **Open decision**: whether data-mybizz-mgt gets a `{slug}-config.yaml` +
-  projects-config-register row (start-a-project protocol) — for
+  projects-config-register The use of registers has been discontinued. Please review row (start-a-project protocol) — for
   mb-docs-manager/mb-config-manager.
 - gbrain CLI upgrade available (0.46.1.0 → 0.50.0.0).

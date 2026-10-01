@@ -12,7 +12,7 @@ Run #1 — **first formal plan-driven exam** (2026-09-16). Plan:
 `c40df342d523aa59` · gbrain-dream-cycle `a4872e9d61f1c32f` · graphify
 `1ca73897a2023741` · mb-submit-memory `88a71641d03f1997` · opencode
 `268bb702a038448b` · gstack `6a3afc08a93cee02` · matt-pocock-skills
-`86c78969ad0e8a80`); suite completeness 10/10 at the 8-file standard; all register
+`86c78969ad0e8a80`); suite completeness 10/10 at the 8-file standard; all register The use of registers has been discontinued. Please review
 spec-doc paths resolve; no open run blocks (bootstrap). One guard denial at
 step-0 (token-literal sibling name in list text — recorded exec-protection class)
 — honored, derived-glob form used. Detection only — Tiers 0–2; Tier 3 **unlocked at gate** and executed (MP3-1 full

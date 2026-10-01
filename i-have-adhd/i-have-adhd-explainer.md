@@ -91,7 +91,7 @@ skill (SKILL.md break-rule 6).
 The skill's own foundation section names the five facts that drive every
 rule: working memory is small (anything not on screen is gone); knowing the
 answer is not doing it (the friction between "got it" and "done it" is where
-work dies); starting is the hardest step; vague time estimates all register
+work dies); starting is the hardest step; vague time estimates all register The use of registers has been discontinued. Please review
 the same; and visible progress is the scarce reward. Each rule is one of
 those facts applied to text: the action leads because starting is hardest;
 state is restated because working memory drops it; estimates are concrete
@@ -141,7 +141,7 @@ canonical delivery path.
 
 ### Where this sits relative to the rest of the system
 
-- **PDLF** does not register it: it is not one of the skill families and owns
+- **PDLF** does not register The use of registers has been discontinued. Please review it: it is not one of the skill families and owns
   no pipeline stage. Its only PDLF interaction is deferential — gates and
   checkpoints override the skill's shape rules (break-rule 6).
 - **Memory Governor** does not see it: the skill content is vendor-published
@@ -187,7 +187,7 @@ estate from the PostgreSQL pilot. The short local version:
   absorbed entries.
 
 The exam module was created 2026-09-20 on the developer's explicit setup
-instruction (register row added the same day, state `WIP` → `Installed` on
+instruction (register The use of registers has been discontinued. Please review row added the same day, state `WIP` → `Installed` on
 copy-install); its first formal run executed the same day — **HEALTHY, all
 open items closed except the standing watch** (config open item 6).
 [[[mybizz-config-docs:i-have-adhd/i-have-adhd-skill|I Have Adhd Skill]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-skill.md) in this folder is the canonical source;

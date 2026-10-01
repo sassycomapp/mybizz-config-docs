@@ -58,9 +58,9 @@ printed — only keyword presence, SET/ABSENT, and safe metadata.
 ## Part D — global `~/.config/opencode/AGENTS.md`
 
 - Lines 116–117: line 116 `docmap.md` (unchanged), line 117
-  `C:\mybizz\config\projects-config-register.md`.
+  `C:\mybizz\config\projects-config-register.md` The use of registers has been discontinued. Please review.
 - Old `project-inventory.md` reference: **absent**.
-- `projects-config-register.md`: **exists and readable** (2825 B).
+- `projects-config-register.md` The use of registers has been discontinued. Please review: **exists and readable** (2825 B).
 - No unrelated change in the section; **no commit/push applicable** (not a Git repo).
 
 ---

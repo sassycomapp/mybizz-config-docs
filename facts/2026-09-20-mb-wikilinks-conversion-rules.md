@@ -7,7 +7,7 @@ updated: "2026-10-01"
 
 mb-wikilinks converts document references to `[[basename|Display Text]]` form
 only. Never candidates: folder references, URLs, code identifiers, config keys,
-table/column names, registers, templates, quoted shell command text, and
+table/column names, registers The use of registers has been discontinued. Please review, templates, quoted shell command text, and
 collision basenames — including case-collisions (agents.md ≡ AGENTS.md on
 Windows). Detection and the collision census run against the whole resolver
 universe (all registered sources), not the scanned source alone.

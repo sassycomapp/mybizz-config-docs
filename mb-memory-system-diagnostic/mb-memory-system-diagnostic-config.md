@@ -31,7 +31,7 @@ not history — reasoning in
 
 | Class | Members |
 |---|---|
-| In scope | GBrain; PostgreSQL Instance B (WSL PG16 — `gbrain` + `memory_governor` databases only); Memory Governor (API `:8321` + worker + registers); mb-submit-memory (prerequisite state only); Graphify (read-only); GBrain Dream Cycle (state report + gated run); Cupcake (its effect on §1–§6 of the run only — never the binary) |
+| In scope | GBrain; PostgreSQL Instance B (WSL PG16 — `gbrain` + `memory_governor` databases only); Memory Governor (API `:8321` + worker + registers The use of registers has been discontinued. Please review); mb-submit-memory (prerequisite state only); Graphify (read-only); GBrain Dream Cycle (state report + gated run); Cupcake (its effect on §1–§6 of the run only — never the binary) |
 | Out of scope | PostgreSQL Instance A (Windows PG15, `pdlf` ledger); Cupcake internals and any Cupcake rule execution (developer-only, permanent); everything outside the memory ecosystem |
 
 ## Section inventory
@@ -41,8 +41,8 @@ not history — reasoning in
 | 0 | Principles | run rules — never invent a result; per-section loop; two distinct gates; credential rule; drift rule | — |
 | 1 | GBrain core | version, `doctor --fast`, sources, stats, per-source GitHub remote check | trouble; remediation heavyweight |
 | 2 | PostgreSQL Instance B | live init-model check, cluster, RLS coverage, role isolation | trouble |
-| 3 | Memory Governor | API + auth gate, worker, outbox, registers, systemd units | trouble |
-| 4 | Governed write — positive path | submit → worker → GBrain `private` fact → register → cleanup | heavyweight (always) |
+| 3 | Memory Governor | API + auth gate, worker, outbox, registers The use of registers has been discontinued. Please review, systemd units | trouble |
+| 4 | Governed write — positive path | submit → worker → GBrain `private` fact → register The use of registers has been discontinued. Please review → cleanup | heavyweight (always) |
 | 5 | Governed write — negative path | `policy`-type submit must not promote → reject → cleanup | heavyweight (always) |
 | 6 | Graphify | version, graph freshness (`built_at_commit` vs HEAD), one live query | trouble; remediation heavyweight |
 | 7 | Cupcake interaction | denial/block lines in this run's logs, loopback exemption, developer's direct answer | trouble; no in-skill remediation |
@@ -94,11 +94,11 @@ component's own config suite (`gbrain-config.md`, `memory-governor-config.md`,
 | Ingest state | ingested 2026-09-28 by targeted `gbrain sync --source mybizz-config-docs` at commit `c0570db` — 4 pages, 45 chunks, 13 links extracted; source now 266 pages |
 | Next sync | standing `sync-gbrain` script (or targeted `gbrain sync --source mybizz-config-docs`) picks up future changes |
 
-## Register usage
+## Register The use of registers has been discontinued. Please review usage
 
-| Register | State |
+| Register The use of registers has been discontinued. Please review | State |
 |---|---|
-| `C:\mybizz\mybizz-config-docs\register-local.md` | no rows for this suite as of 2026-09-28; registration is creation-event work for mb-doc-maintainer — the pending-events queue holds no events for these files as of 2026-09-28 |
+| `C:\mybizz\mybizz-config-docs\register-local.md` The use of registers has been discontinued. Please review | no rows for this suite as of 2026-09-28; registration is creation-event work for mb-doc-maintainer — the pending-events queue holds no events for these files as of 2026-09-28 |
 
 ## Recorded decisions (developer)
 
@@ -111,9 +111,9 @@ component's own config suite (`gbrain-config.md`, `memory-governor-config.md`,
 
 | # | Item | Status |
 |---|---|---|
-| 1 | Register rows for the suite's four documents — pending a mb-doc-maintainer run; creation events for the folder's files are absent from the queue (folder created 2026-09-27 evening) | Open |
+| 1 | Register The use of registers has been discontinued. Please review rows for the suite's four documents — pending a mb-doc-maintainer run; creation events for the folder's files are absent from the queue (folder created 2026-09-27 evening) | Open |
 | 2 | GBrain ingest of the suite — closed 2026-09-28 (targeted sync ingested 4 pages at commit `c0570db`) | Closed |
 | 3 | Report folder `C:\mybizz\memory-diagnostic-reports\` — closed 2026-09-28: created by the first live run; holds `memory-diagnostic-2026-09-28.md` | Closed |
 | 4 | First live run — closed 2026-09-28: executed full §1–§11, 10/10 sections completed, 7 PASS + 3 REMEDIATED in-run, zero aborts/skips; report at `C:\mybizz\memory-diagnostic-reports\memory-diagnostic-2026-09-28.md`; follow-up item 4 (skill-recipe currency) resolved same day by config-exam F-3 | Closed |
-| 5 | No `mb-config-*` config-exam module — closed 2026-09-28: `mb-config-mb-memory-system-diagnostic` built by config-exam run #1 (register row Installed, hash pair `d3975df16f28c2f9` / `4418e09f0c07ee23` at build) | Closed |
+| 5 | No `mb-config-*` config-exam module — closed 2026-09-28: `mb-config-mb-memory-system-diagnostic` built by config-exam run #1 (register The use of registers has been discontinued. Please review row Installed, hash pair `d3975df16f28c2f9` / `4418e09f0c07ee23` at build) | Closed |
 | 6 | Frontmatter-format conflict at the maintainer's repair surface — closed 2026-09-28: corpus copy renamed to `memory-system-diagnostic-skill.md` and converted to the two-field documentation-skill format (survey: 20/21 corpus skill files conform); `SKILL.md` with `name`/`description` exists only at the install location | Closed |

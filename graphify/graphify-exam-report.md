@@ -7,7 +7,7 @@ updated: "2026-10-01"
 
 **Final verdict: HEALTHY** — all tiers 0–3 formally executed including the full Tier 3 realistic run (complete documented rebuild), every check PASS, one genuine tool defect found and fixed in-run (F-4, cwd provenance stamping), zero open findings.
 
-Run #1 — first formal plan-driven run (bootstrap). Plan: [[[mybizz-config-docs:graphify/graphify-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/graphify/graphify-exam-plan.md) (hand-written bootstrap). Step-0: PASS (6/6 hash pairs via the approved glob form, suite completeness 6/6 at 8/8 files, register spec-doc paths 19/19 — recorded in [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md)).
+Run #1 — first formal plan-driven run (bootstrap). Plan: [[[mybizz-config-docs:graphify/graphify-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/graphify/graphify-exam-plan.md) (hand-written bootstrap). Step-0: PASS (6/6 hash pairs via the approved glob form, suite completeness 6/6 at 8/8 files, register The use of registers has been discontinued. Please review spec-doc paths 19/19 — recorded in [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md)).
 
 **Execution standard applied (developer directive):** an honoured guard denial never substitutes for a formal execution — every denied check was re-executed as a clean single-purpose command in this run (write grants requested via mg-grant where required). Tier 3 ran **in full** (developer direction: "tier 3 has got to be run in full — the big run, the realistic run").
 
@@ -70,7 +70,7 @@ Run #1 — first formal plan-driven run (bootstrap). Plan: [[[mybizz-config-docs
 
 ## Graduations applied (2026-09-14, dual track — permanent homes exist, transient entries deleted)
 
-- **Skill** (agent-applied): cwd-provenance hard rule + "Run #1 lessons graduated" section (F-4 confirmation discipline, check-update semantics, count-delta discipline). Re-installed by copy; re-hash `1ca73897a2023741`; register updated.
+- **Skill** (agent-applied): cwd-provenance hard rule + "Run #1 lessons graduated" section (F-4 confirmation discipline, check-update semantics, count-delta discipline). Re-installed by copy; re-hash `1ca73897a2023741`; register The use of registers has been discontinued. Please review updated.
 - **Reference** (developer-approved under the finalize directive): §Graph build procedures — mandatory from-repo-root discipline + step-4 confirmation; §Work memory — check-update silence semantics.
 - [[[mybizz-config-docs:graphify/graphify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/graphify/graphify-learnings.md) is empty again — nothing transient remains.
 

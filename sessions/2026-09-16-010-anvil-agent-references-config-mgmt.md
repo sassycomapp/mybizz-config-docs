@@ -8,7 +8,7 @@ updated: "2026-10-01"
 ## What happened
 
 The developer ran `config-setup-prompt.md` for the next system in the config-manager
-emulation queue: **anvil-agent-references** (register state was **WIP**, emulation
+emulation queue: **anvil-agent-references** (register The use of registers has been discontinued. Please review state was **WIP**, emulation
 queued). The full suite was built to the 8-file standard, the exam skill installed,
 formal run #1 executed with verdict **HEALTHY**, and — after the developer rejected
 the initial "flag to docs governance" dispositions — all five open items were
@@ -39,11 +39,11 @@ closed **by direct resolution**, not left as governance flags.
 - Copy-install (never move) to
   `~/.config/opencode/skills/mb-config-anvil-agent-references/SKILL.md`.
 - Hash pair `8f2f4ccd6dce29c0` source ↔ installed, byte-identical.
-- Register row flipped WIP → Installed.
+- Register The use of registers has been discontinued. Please review row flipped WIP → Installed.
 
 ### Phase 3 — Formal run #1
 - Step-0 PASS: 11/11 hash pairs (approved glob form), suite completeness 11/11
-  at 8-file standard, register spec-doc paths 19/19.
+  at 8-file standard, register The use of registers has been discontinued. Please review spec-doc paths 19/19.
 - Tier 0 PASS: clone `7c9b0a7` @ master; 5 symlinks resolve.
 - Tier 1 PASS: 40-symlink shared root (5 Anvil + 35 matt, 0 broken); discovery
   discipline clean; structure conforms (stubs 63); per-project setup
@@ -63,7 +63,7 @@ closed **by direct resolution**, not left as governance flags.
 ### Phase 5 — Close-out (normal)
 - Learnings AAR-1/AAR-2 filed then graduated (content already lived in the
   born-with skill — permanent home existed, entries deleted).
-- Register row updated with verified-live date + run result.
+- Register The use of registers has been discontinued. Please review row updated with verified-live date + run result.
 - Commit `48b212e` (suite build) + push; gbrain sync + embed verified.
 - Then commit `4aff290` (W-1..W-5 closure) + push; gbrain sync + embed verified.
 
