@@ -6,7 +6,7 @@ updated: "2026-10-01"
 # anvil-agent-references — Configuration
 
 Canonical current-state configuration record. Agent-facing. Reflects the
-live-verified state as of 2026-09-06. This document states facts, not history —
+live-verified state as of 2026-09-16 (the GBrain source rows: 2026-09-30). This document states facts, not history —
 where a decision was made and the reasoning matters, see
 [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-explainer.md); for exact commands and per-skill
 technical detail, see [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-reference|Reference: Install, Skills, and Technical Detail]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-reference.md).
@@ -32,10 +32,11 @@ technical detail, see [[[mybizz-config-docs:anvil-agent-references/anvil-agent-r
 | Item | Value |
 |---|---|
 | Source ID | `anvil-agent-references-code` |
+| Why `-code` | Tells the source apart from the developer's own documentation folder `anvil-agent-references/` in `mybizz-config-docs` (the developer's stated reason). It is a read-only clone of Anvil's repository, not one of the developer's repositories |
 | Registered | 2026-09-06, via host CLI `gbrain sources add` (MCP path registration is security-confined and refused) |
 | Path | `/mnt/c/mybizz/anvil-agent-references` |
-| Federated | `false` — only searched when explicitly named via `--source` (mirrors `mb-3-cs-code`, `mb4ecom-code`, `mb5pdlf-code`, `memory-governor-code`) |
-| Index state | First sync executed — 34 pages indexed, last sync 2026-09-06 (verified live 2026-09-16); content will re-index on the next ordinary `gbrain sync` run |
+| Federation | **isolated** — set explicitly with `gbrain sources unfederate` (2026-09-30): searched only when named with `--source`, and cut off from the other sources in both directions. The four code sources are `unset` instead; all states are in [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) |
+| Index state | 34 pages (listed 2026-09-30). Re-read by every `sync-gbrain.sh` run, which never pulls; the clone itself is updated by hand |
 
 ## Install architecture
 
@@ -113,7 +114,7 @@ Current Operational Status for the live state.
 | Policy | Detail |
 |---|---|
 | Memory Governor bypass | Permanent — this source syncs into GBrain by ordinary `gbrain sync`, never through the governor's API. Vendor-published reference material: no genuine confidence/contradiction judgment to make ([[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md)). Keeping the source current is the developer's own responsibility. |
-| Update command execution | `git pull` in the clone is developer-run only, never AI-invoked — the clone sits outside every project root; an AI-run write there is a cross-project write, which is the discipline Cupcake's cross-project-write rule enforces when active (status per the note above). |
+| Update command execution | `git pull` in the clone is developer-run only, never AI-invoked — the clone sits outside every project root; an AI-run write there is a cross-project write, which is the discipline Cupcake's cross-project-write rule enforces when active (status per the note above). After a pull, run `bash /mnt/c/mybizz/scripts/sync-gbrain.sh` so GBrain re-reads the clone; `commit-all.sh` does not cover it, because the clone is not one of the eight documentation repositories. |
 
 ## Known stale external references (state, 2026-09-06)
 

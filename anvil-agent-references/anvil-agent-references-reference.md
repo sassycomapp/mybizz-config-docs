@@ -383,7 +383,7 @@ ln -s /mnt/c/mybizz/anvil-agent-references/skills/<new-name> ~/.agents/skills/<n
 
 ## GBrain sync
 
-The clone is registered as GBrain source `anvil-agent-references-code` (non-federated). Content reaches GBrain by ordinary `gbrain sync` only — **never through Memory Governor's API** (permanent vendor-material bypass). Keeping the source current is the developer's own responsibility, alongside the update above.
+The clone is registered as GBrain source `anvil-agent-references-code` (isolated: searched only when named). Content reaches GBrain by ordinary `gbrain sync` only — **never through Memory Governor's API** (permanent vendor-material bypass). Keeping the source current is the developer's own responsibility, alongside the update above: after a `git pull`, run `bash /mnt/c/mybizz/scripts/sync-gbrain.sh`, which re-reads every source and never pulls.
 
 ---
 

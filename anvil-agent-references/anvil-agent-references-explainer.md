@@ -203,11 +203,12 @@ the Rail; nested admin-style navigation genuinely wants the Drawer.
 ## 8. Where this component sits relative to the rest of the system
 
 - **Relative to GBrain:** a content source, now formally one — registered
-  2026-09-06 as `anvil-agent-references-code` (non-federated, mirroring the
-  `-code` pattern), so the ordinary-sync path that feeds it has a real
+  2026-09-06 as `anvil-agent-references-code` (isolated: searched only when named,
+  and cut off from the other sources), so the ordinary-sync path that feeds it has a real
   registered target instead of being a policy with nothing attached. It remains
   a permanent Memory Governor bypass: vendor-published reference material with
-  no genuine confidence/contradiction judgment to make about it.
+  no genuine confidence/contradiction judgment to make about it. The `-code` ending only
+  tells the source apart from the developer's own documentation folder `anvil-agent-references/`.
 - **Relative to Cupcake:** two rules bear on it directly, and both express in
   enforcement what the skills express as discipline. One standing caveat governs
   everything Cupcake-related in this suite: Cupcake's enforcement status is not
