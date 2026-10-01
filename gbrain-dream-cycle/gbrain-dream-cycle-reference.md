@@ -75,7 +75,7 @@ Verified end-to-end on the 2026-09-06 acceptance run. Verify in this order:
    ```
    After a dream: `cycle_freshness` improves for sources that had new
    content; `sync_freshness` is **expected to be unchanged** — if sources
-   need syncing, that is a separate `gbrain sync` run, not a dream failure.
+   need syncing, that is a separate `gbrain sync` run, not a dream failure. Baseline since 2026-09-30: `gbrain doctor` shows 30/100 with `cycle_freshness` as the only FAIL, which is the accepted state until dream cycles run.
 
 4. **The governor discipline — immediately, every time.** The dream cycle is
    structurally ungovernable (Memory Governor cannot intercept it — permanent
@@ -114,6 +114,7 @@ Verified end-to-end on the 2026-09-06 acceptance run. Verify in this order:
 | Phase | Verified-success looks like |
 |---|---|
 | `extract_atoms` | Success status AND no bare-failure count — a silent zero here is the confirmed historical failure mode (2026-09-06: ok, 182s) |
+| `extract` | Success status. It writes links within each source only; links between repositories come from the full read at the end of `sync-gbrain.sh` (`gbrain extract links --source db`) |
 | `resolve_symbol_edges` | Success status. **Zero edges resolved is EXPECTED** (pack limitation, permanent) — treat a phase *error* as the failure, never the 0 |
 | `synthesize_concepts` / emotional-weight recompute | Success status; concept/atom counters may move (+89 pages on the verified run) |
 | `purge` | Success status; page count may *decrease* — a decrease is work done, not damage |

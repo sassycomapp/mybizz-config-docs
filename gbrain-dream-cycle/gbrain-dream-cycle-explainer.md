@@ -177,8 +177,15 @@ and the autopilot finding adds the corollary: an unattended cycle cannot be
 verified at all, which is why there are none.
 
 **The orphan backlog is real.** 1,177 of 1,755 pages have no inbound links
-(verified 2026-09-06) — the deepening passes create content faster than
-linking covers it. Recorded as an open item, not a failure of the mechanism.
+(verified 2026-09-06; not re-measured since, the brain now holds about 2,450
+pages) — the deepening passes create content faster than linking covers it.
+Recorded as an open item, not a failure of the mechanism.
+
+**Links between repositories are not its job.** The cycle's `extract` phase reads
+one source at a time, so it cannot resolve a link that points into another
+source. Those links are written by the full read at the end of the sync script
+(`gbrain extract links --source db`). A dream run therefore neither creates nor
+replaces them; if they are missing after a run, that command restores them.
 
 ## 8. Config maintenance — how this system is examined and kept healthy
 

@@ -6,7 +6,7 @@ updated: "2026-10-01"
 # GBrain Dream Cycle — Configuration
 
 Canonical current-state configuration record. Agent-facing. Reflects the
-live-verified state as of 2026-09-06. States facts, not history — see
+live-verified state as of 2026-09-06; the GBrain version, queue, links and doctor rows were updated 2026-09-30. States facts, not history — see
 [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-explainer.md) for the reasoning and the incident whose
 detail is operationally relevant; for commands and the post-run verification
 procedure, see [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-reference|Reference: Invocation, Verification, Diagnostics]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-reference.md).
@@ -22,11 +22,14 @@ which also owns the confirmed full phase sequence.
 
 | Item | Value |
 |---|---|
-| Parent system | GBrain `0.46.1.0` (upgrade available: 0.48.2.0 — see [[[mybizz-config-docs:gbrain/gbrain-config\|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md) open items) |
+| Parent system | GBrain `0.59.18.0` (upgraded 2026-09-30 from 0.46.1.0; 0.60.25.0 is the newest release — see [[[mybizz-config-docs:gbrain/gbrain-config\|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md) open items) |
 | Schema pack coupling | `gbrain-everything@1.0.0` (sha8 `7021205a`) — the only installed pack; dream phases operate within its extractability rules |
 | Invocation model | **Manual, on-demand only — deliberate design choice, confirmed 2026-09-06.** No schedule exists or is wanted |
 | Trigger surfaces | `gbrain dream` (full), `gbrain dream --phase <name>` (single phase), `gbrain dream --source <id>` (source-scoped), `/sync-gbrain --dream` (gstack skill — see overlap trap, reference.md) |
 | Phases most operationally relevant here | `extract_atoms` (Anthropic-dependent), `resolve_symbol_edges` (call-graph attempt) |
+| Job queue | No GBrain worker runs, so the `extract` and `facts-absorb` jobs that syncs create wait unprocessed (34 waiting jobs were cancelled 2026-09-30). Under 0.59.18.0, every waiting job must be authorized or cancelled before a worker is started |
+| Links between repositories | The cycle's own `extract` phase reads one source at a time and cannot resolve a link into another source (from GBrain's source code; not yet seen in a run). Those links are written by the full read at the end of `sync-gbrain.sh` (`gbrain extract links --source db`); run that command after a dream if they are missing |
+| Doctor baseline | 30/100 since 2026-09-30. The only FAIL is `cycle_freshness`, accepted because dream cycles have not run for most sources (open item 3) |
 
 ## Autopilot — found inert, deliberately removed (2026-09-06)
 
@@ -84,6 +87,6 @@ contradictions, 7 findings (supersession/regression/evolution).
 
 | # | Item | Status |
 |---|---|---|
-| 1 | Upstream `dream.*` config surface (triage cascade, oneshot synthesis, spend telemetry — current-HEAD docs) unverified against 0.46.1.0; no such keys exist in local config. | Open |
-| 2 | Orphan population: 1,177 of 1,755 pages have no inbound links (orphans phase `warn`) — content-hygiene backlog for future enrich/consolidate passes or manual linking. | Open |
+| 1 | Upstream `dream.*` config surface (triage cascade, oneshot synthesis, spend telemetry — current-HEAD docs) unverified against the installed 0.59.18.0; no such keys exist in local config. | Open |
+| 2 | Orphan population: 1,177 of 1,755 pages have no inbound links (orphans phase `warn`) — content-hygiene backlog for future enrich/consolidate passes or manual linking. Figures are from 2026-09-06; the brain now holds about 2,450 pages and the count was not re-measured. | Open |
 | 3 | Doctor `cycle_freshness` remains FAIL on a freshly-synced, just-dreamed brain — the stamp updates only when the cycle's sync phase processes real new commits. Verified mechanism, documented in reference.md; recorded here so the FAIL is read correctly rather than "fixed." | Open |

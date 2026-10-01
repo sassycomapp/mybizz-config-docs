@@ -5,32 +5,33 @@ updated: "2026-10-01"
 ---
 # GBrain upgrade checklist
 
-Current version: 0.46.1.0.
-Target: 0.59.18.0 (tested end to end in a sandbox). The newest release is 0.60.11.0 (link parser tested only).
-Authority: David decides. No agent starts this. Decision made by David on 2026-09-30: upgrade to 0.59.18.0.
-Sources: upstream CHANGELOG (v0.50.0.0), upstream `docs/guides/authorization-upgrade.md`, GBrain source code at tags v0.46.1.0 and v0.59.18.0.
+Procedure for upgrading GBrain on this computer. GBrain is a linked Git checkout at `/home/dev-p/gbrain`, so an upgrade is a checkout of a release tag plus a database migration. The target release is chosen in step 2.
+Authority: David decides. No agent starts this.
+Sources: the upstream CHANGELOG, upstream `docs/guides/authorization-upgrade.md`, and the GBrain source code at the old and the new tag.
 
 ## Rules
 
-1. Upgrade only after David has recorded the decision and the reason in `gbrain-config.md` open item 1.
+1. Upgrade only after David has recorded the decision and the reason in the open items of `gbrain-config.md`. Never on newness alone.
 2. Never run `gbrain upgrade`, `gbrain self-upgrade`, `gbrain post-upgrade` or `gbrain apply-migrations --yes` for this upgrade. They can run setup phases that start autopilot.
 3. Never install from the npm registry. The only source is `github.com/garrytan/gbrain`.
 4. Never run old and new workers together.
 5. Never start any service while an old queued job is neither authorized nor cancelled.
 6. If any step prints something this list does not describe, stop and paste the output to Claude.
 7. Keep backups and job previews private. They can contain secrets and job payloads.
+8. Never remove `memory-governor-code`, or any code source, before the facts stored in it are understood.
 
 ## Facts that shape the steps
 
 - Bun 1.3.11 or newer is required.
-- The `gbrain` command is a link to `~/.bun/install/global/node_modules/gbrain/src/cli.ts` (seen 2026-09-30). The Git checkout at `/home/dev-p/gbrain` is clean at commit `b6250c43`. Step 3 finds out whether the global entry is a link to that checkout (variant B in step 10) or a separate Bun package (variant A).
-- Old queued jobs become untrusted after the upgrade. Each one must be reviewed and authorized, or cancelled.
-- Rollback means restoring the database and the application version together.
-- Cross-repository links need version 0.51.8.0 or newer. A plain sync does not write them. `gbrain extract --stale` does.
-- Compared in a sandbox: no command and no agent tool that exists in 0.46.1.0 is removed in 0.59.18.0. No tool loses a parameter or gains a required one. This covers names and inputs only. It does not cover behavior, permissions, queued jobs or database layout.
-- Federating a source makes it part of default search. In 0.59.18.0 it also lets that source write cross-repository links.
-- Read from GBrain's code (both versions): every `gbrain call` picks its source in this order: the `--source` flag, then the `GBRAIN_SOURCE` environment variable, then a `.gbrain-source` file, then the registered source whose folder contains the current folder, then the brain default set by `gbrain sources default`. `remember` writes the fact into that source. In 0.46.1.0, `recall` reads facts from that one source only. In 0.59.18.0, `recall` reads facts from that source and from every federated source, unless `source_id` is given.
-- The governor's worker runs in `/home/dev-p/memory-governor`, which is the registered source `memory-governor-code`. Which source its writes really reach is not yet verified. Steps 6 and 19 check where the facts live.
+- The `gbrain` command is a link to `~/.bun/install/global/node_modules/gbrain/src/cli.ts`, and that global entry is a link to the Git checkout. The checkout stays in detached HEAD on the release tag in use.
+- Old queued jobs become untrusted after an upgrade. Each one must be reviewed and authorized, or cancelled. No GBrain worker runs here, so the jobs that syncs create wait unprocessed; cancelling them before the upgrade is the normal case.
+- Rollback means restoring the databases and the application version together.
+- Links between repositories need version 0.51.8.0 or newer. A plain sync does not write them, and neither does `gbrain extract --stale`, because the sync has already marked its pages as done. Only the full read `gbrain extract links --source db` writes them; `sync-gbrain.sh` ends with it.
+- Before upgrading, compare the old and the new release in a sandbox: the names and inputs of commands and agent tools. This does not cover behavior, permissions, queued jobs or database layout.
+- Federating a source makes it part of default search and lets that source write links to other sources.
+- Read from GBrain's code: every `gbrain call` picks its source in this order: the `--source` flag, then the `GBRAIN_SOURCE` environment variable, then a `.gbrain-source` file, then the registered source whose folder contains the current folder, then the brain default set by `gbrain sources default`. `remember` writes the fact into that source. `recall` reads facts from that source and from every federated source, unless `source_id` is given.
+- The governor's worker runs in `/home/dev-p/memory-governor`, which is the source `memory-governor-code`. That folder outranks the brain default, so governed facts land in that source. The worker also sets the brain default to the owning project before each write; a default that names a source that does not exist stops every sync.
+- The page-name rule of `mb-doc-check` must equal GBrain's own. After every upgrade, `mb-doc-check.py slug-selftest` must report 0 differences.
 - Behavior changes in the release notes that touch memory writes (not exhaustive): fact writes and page writes now resolve to the same target file (0.46.25.0); a forgotten fact stays forgotten after a reconcile, and a reconcile no longer deletes facts while the file on disk is newer than the database (0.48.5.0); `recall <entity> --since` now returns only the facts in that window (0.48.5.0); queued background jobs need authorization after the upgrade (0.50.0.0).
 
 ## The plan
@@ -39,10 +40,15 @@ Sources: upstream CHANGELOG (v0.50.0.0), upstream `docs/guides/authorization-upg
 
 1. Record the decision and the reason.
 
-[Write it in `C:\mybizz\mybizz-config-docs\gbrain\gbrain-config.md`, open item 1. Suggested wording: "Decision 2026-09-30 (David): upgrade GBrain from 0.46.1.0 to 0.59.18.0. Reason: cross-repository links need source-qualified wikilinks, which need version 0.51.8.0 or newer. This is a developer decision that overrides the standing rule to upgrade only on check failure."]
+[Write it in `C:\mybizz\mybizz-config-docs\gbrain\gbrain-config.md`, in the open items: the date, the old and the new version, and the reason.]
 [Do not go on until this is done.]
 
-2. Check Bun.
+2. Choose the release and write it down.
+
+[Release tag chosen by David: v____________. Its commit id, from `git ls-remote` in step 4: ____________]
+[In every terminal you use for this procedure, first run `TAG=` followed by the tag, for example `TAG=v0.60.25.0`. The commands below use `$TAG`.]
+
+3. Check Bun.
 
 ```
 bun --version
@@ -50,37 +56,37 @@ bun --version
 
 [If the version is below 1.3.11, stop.]
 
-3. Confirm the install type and record the current version.
+4. Confirm the install.
 
 ```
 ls -ld ~/.bun/install/global/node_modules/gbrain
 readlink -f ~/.bun/install/global/node_modules/gbrain
-cat ~/.bun/install/global/package.json
 git -C /home/dev-p/gbrain rev-parse HEAD
 git -C /home/dev-p/gbrain describe --tags --always
 git -C /home/dev-p/gbrain status --short
 git -C /home/dev-p/gbrain remote -v
-git -C /home/dev-p/gbrain ls-remote --tags origin v0.59.18.0
+git -C /home/dev-p/gbrain ls-remote --tags origin "$TAG"
 ```
 
-[Variant B (linked checkout): the first line shows a link, `readlink` prints `/home/dev-p/gbrain`, and `package.json` contains `link:gbrain` or a path to the checkout.]
-[Variant A (Bun package): the first line shows a plain folder, and `package.json` contains `github:garrytan/gbrain`.]
+[The first line shows a link, and `readlink` prints `/home/dev-p/gbrain`.]
+[`status` must print nothing, the remote must be `github.com/garrytan/gbrain`, and the last line must end with `refs/tags/` and your tag.]
 [Anything else: stop and paste the output to Claude.]
-[The checkout must be clean, the remote must be `github.com/garrytan/gbrain`, and the tag line must end with `refs/tags/v0.59.18.0`.]
-[Write the commit id here for rollback: ____________________]
+[Write the commit id of the tag in step 2. The rollback commit of the old version is saved by the stop-and-back-up step.]
 
-4. Commit and push all eight document repositories.
+5. Commit and push all eight documentation repositories, so that nothing is lost.
 
-[Use the status block and the commit block from Claude's message. A clean start avoids losing work.]
+```
+bash /mnt/c/mybizz/scripts/commit-all.sh "Before the GBrain upgrade"
+```
 
-5. Save the health report from before.
+6. Save the health report from before.
 
 ```
 mkdir -p ~/backups
 gbrain doctor > ~/backups/doctor-before.txt 2>&1
 ```
 
-6. Save a before-snapshot of the facts in every source.
+7. Save a before-snapshot of the facts in every source.
 
 [Why: `recall` reads facts from the source that the current folder or environment selects. A snapshot per source shows where the governed facts live and proves nothing is lost.]
 [Run it from your home folder, so that the current folder does not select a source.]
@@ -96,10 +102,6 @@ wc -c ~/backups/recall-before-*.json
 
 [The first command must print `verbs`.]
 [Paste the byte counts to Claude. A source with a large count holds facts. Claude uses the counts to see where the governor's facts go.]
-
-7. Choose the release.
-
-[Chosen tag: v0.59.18.0. Write a different tag here only if David decides so: ____________]
 
 ### B. Cutover
 
@@ -132,25 +134,23 @@ ls -l ~/backups
 [If pg_dump cannot connect, stop. Use the backup procedure in `gbrain-config.md`.]
 [All three files must be listed and not empty.]
 
-10. Install the release. Do not run any setup helper. Use only the variant that step 3 found.
-
-Variant B, linked checkout:
+10. Install the release. Do not run any setup helper.
 
 ```
-git -C /home/dev-p/gbrain fetch --tags
-git -C /home/dev-p/gbrain checkout v0.59.18.0
+git -C /home/dev-p/gbrain fetch origin "refs/tags/$TAG:refs/tags/$TAG"
+git -C /home/dev-p/gbrain rev-parse "$TAG^{commit}"
+```
+
+[A plain `git fetch --tags` returns an error when the floating tag `latest-stable` has moved. Fetch only the release tag.]
+[The commit id printed must equal the one you wrote in step 2. If it differs, stop.]
+
+```
+git -C /home/dev-p/gbrain checkout "$TAG"
 cd /home/dev-p/gbrain && bun install --ignore-scripts
 gbrain --version
 ```
 
-Variant A, Bun package:
-
-```
-bun install --global --ignore-scripts github:garrytan/gbrain#v0.59.18.0
-gbrain --version
-```
-
-[The version must print 0.59.18.0. If it does not, stop.]
+[The version printed must be the one you chose. If it does not, stop and go to Rollback.]
 [Never use `gbrain upgrade --swap-only` for this. It can still run install scripts.]
 
 11. Apply the database changes only.
@@ -167,7 +167,7 @@ gbrain apply-migrations --force-schema --yes
 gbrain jobs list --json
 ```
 
-[If nothing is unfinished, go to step 12.]
+[If nothing is unfinished, go to step 13.]
 [For each unfinished job, either cancel it, or preview it and authorize it.]
 
 ```
@@ -202,33 +202,32 @@ curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:8321/memory/review-que
 
 15. Federation state.
 
-[Checked against `gbrain sources list` on 2026-09-30: federated are `default`, `anvil-agent-references-code`, `data-mybizz-mgt`, `dev-root-hub`, `makepdlf-project-library`, `mb-3-cs-project-library`, `mybizz-config-docs`, `mybizz-os-docs`, `pdlf`.]
-[Shown as `unset` (not part of default search): `mb-3-cs-code`, `mb4ecom-code`, `mb4ecom-project-library`, `mb5pdlf-code`, `mb5pdlf-project-library`, `memory-governor-code`. Leave them as they are unless David decides otherwise.]
+[Run the list again. The states must be unchanged from before the upgrade. The expected states are in `repo-organization.md`.]
 [Only the source that holds a link needs to be federated for that link to reach another source. The target can be in any source.]
-[After the upgrade, run the same list again. The states must be unchanged.]
 
 ```
 gbrain sources list
 ```
 
-16. Add one step to `C:\mybizz\scripts\sync-gbrain.sh`, after the loop and before the embed step.
+16. Check that the sync script still ends with the full link read.
 
 ```
-echo "[2b/3] Collecting links across sources..."
-if ! gbrain extract --stale; then
-  echo "ERROR: gbrain extract --stale failed" >&2
-  FAILED=$((FAILED + 1))
-fi
+grep -n "extract links --source db" /mnt/c/mybizz/scripts/sync-gbrain.sh
 ```
 
-[A plain sync does not write cross-repository links. This step does.]
+[It must print one line. If it prints nothing, the script is wrong: links between repositories will stop being written.]
 
-17. Run the sync script once, then check health again.
+17. Run the sync, then check health, the page-name rule and the links between repositories.
 
 ```
 setsid bash /mnt/c/mybizz/scripts/sync-gbrain.sh > /tmp/sync-output.txt 2>&1 &
 gbrain doctor
+python3 /mnt/c/mybizz/scripts/mb-doc-check.py slug-selftest
+python3 /mnt/c/mybizz/scripts/mb-doc-check.py sources-check
+GBRAIN_SOURCE=mybizz-os-docs gbrain call get_links '{"slug":"operating-procedures/daily-ops"}' | grep -c '"to_source_id": "mybizz-config-docs"'
 ```
+
+[Wait for the sync to finish first (it can take several minutes). `slug-selftest` must report 0 differences, `sources-check` must say "everything matches", and the last command must print a number above 0.]
 
 18. Prove that the memory components still work.
 
@@ -243,55 +242,29 @@ for s in $(gbrain sources list --json | jq -r '.sources[].id'); do echo "== $s";
 
 [`mcp_surface` must still print `verbs`.]
 [The differences may show only new facts. A fact that disappeared is a failure. Stop and paste it to Claude.]
-[The governor test suite must report 304 passed and 0 failed. It writes test facts into the live brain and expires them itself, as designed.]
+[The governor test suite must report the same passed count as the last run and 0 failed. It writes test facts into the live brain and expires them itself, as designed.]
 [Then run `/mb-submit-memory` on one small file, when David is ready. Approve it only if the report shows the same kind of related facts as before.]
 
-19. Write the result in `gbrain-config.md` and in the GBrain version records.
+19. Update the records.
 
-[Update in the governor reference and configuration documents the statement that no GBrain mechanism scopes recall to a source. In 0.59.18.0 `recall` accepts an optional `source_id`.]
-[Update the recorded GBrain version in the documents that state 0.46.1.0.]
+[The documents that state the GBrain version or describe behavior that changed: `gbrain-config.md` (version, schema, install, date, the resolved decision, backups), `gbrain-reference.md` and `gbrain-explainer.md` (the version line and any changed behavior), the GBrain dream cycle documents (parent system row), the memory governor and `mb-submit-memory` documents, `memory-master-explainer.md`, and `repo-organization.md` if the sources changed. The four GBrain exam files are rewritten by the next exam run.]
+[Commit with `commit-all.sh`.]
 
 ### D. Rollback
 
 Stop all services first. Then restore both together.
 
 ```
-# variant B (linked checkout):
 git -C /home/dev-p/gbrain checkout COMMIT
 cd /home/dev-p/gbrain && bun install --ignore-scripts
-# variant A (Bun package): use instead
-# bun install --global --ignore-scripts github:garrytan/gbrain#v0.46.1.0
 pg_restore --clean --if-exists -d gbrain ~/backups/gbrain-before-upgrade.dump
 pg_restore --clean --if-exists -d memory_governor ~/backups/memory-governor-before-upgrade.dump
 gbrain --version
 ```
 
-[Replace COMMIT with the commit id from step 3.]
+[Replace COMMIT with the commit id of the old version, saved in `~/backups/rollback-commit.txt` or noted before the upgrade.]
 [An old worker must never run against the upgraded database.]
 
-### E. Not yet decided
+### E. Tested shortcuts
 
-- A rehearsal on a copy of the database. It needs a scratch database. The commands are not written.
-- Whether `recall` in 0.59.18.0 returns the same facts as before for the memory components. Steps 6 and 18 prove it. Not yet proven.
-- Where the governed facts live. The per-source snapshot shows the largest set of facts in `memory-governor-code`. The worker sets only the brain default before each write, and the worker runs inside the memory-governor folder, which outranks the default. The governor documents say facts are brain-global. The code shows they are per source. Review after the upgrade.
-- Never remove `memory-governor-code`, or any code source, before the facts stored in it are understood.
-- Optional after the upgrade: the governor could pass `source_id` to `remember` instead of switching the global default source before every write. Not needed for the upgrade.
-- The link change for all repositories: `[[[source-id:page-name]]](relative/path.md)`. This starts only after section C has passed.
-
-### F. Records to update after the upgrade (upgrade done 2026-09-30)
-
-Facts to record: GBrain 0.59.18.0 (tag v0.59.18.0, commit 045a6138), schema 169 (was 128), install = linked checkout `/home/dev-p/gbrain` in detached HEAD on the tag; branch `master` still holds the local diagnostic commit `b6250c43`, also on `pre-upgrade-backup`; backups in `~/backups`; new doctor baseline `~/backups/doctor-after-sync2.txt` (score 30/100, only FAIL: `cycle_freshness`).
-
-1. `mybizz-config-docs\gbrain\gbrain-config.md`: version, schema, install type, upgrade date, the closed decision (open item 1) with its reason, federation states, sync script changes (`--no-pull`, `extract --stale`), doctor baseline, backup location.
-2. `gbrain-reference.md`: upgrade procedure for this install type (git checkout of the tag, `bun install --ignore-scripts`, never `gbrain upgrade` or `self-upgrade`); cutover scripts and rollback; incidents: stale brain default `diag-mg-sec4` (detect: `gbrain config get sources.default`; fix: `gbrain sources default default`), and the `latest-stable` tag that a plain `git fetch --tags` refuses to overwrite.
-3. `gbrain-explainer.md`: why the upgrade was made (source-qualified links across repositories), and how sources, federation and facts work.
-4. `gbrain-exam-plan.md`, `gbrain-exam-report.md`, `gbrain-log.md`, `gbrain-learnings.md`: expected version, one log entry for the upgrade.
-5. `memory-governor\memory-governor-config.md`, `-reference.md`, `-explainer.md`: facts are stored per source and are not brain-global; governed facts land in `memory-governor-code`, because the worker runs inside that folder and the folder outranks the brain default (proven 2026-09-30: 49 to 50); the worker leaves the brain default set to the last owning project; the test runner is not aware of the systemd services; verified 2026-09-30: services active, 422, 85 facts before and after; new optional `source_id` on `remember` and `recall`.
-6. `mb-submit-memory\mb-submit-memory-config.md`, `-reference.md`, `-explainer.md`, `submit-memory-learnings.md`, `-log.md`: the recall gap is explained (governed facts sit in the source `memory-governor-code`, which is not federated); the governor project `mybizz-os-docs` was registered on 2026-09-30; proven end to end on 0.59.18.0.
-7. `mybizz-os-docs\os-reference-docs\repo-organization.md`: row for `anvil-agent-references-code` with its note; `mb4ecom-project-library` and `mb5pdlf-project-library` federated; `anvil-agent-references-code` isolated; 15 sources; `-code` is only part of some source ids.
-8. `mybizz-os-docs\os-reference-docs\memory-master-explainer.md`: version, per-source facts, federation, the recall gap.
-9. `mybizz-os-docs\operating-procedures\daily-ops.md`: how to run the sync (`bash /mnt/c/mybizz/scripts/sync-gbrain.sh`), what it does, `--no-pull`, updating the Anvil clone by hand.
-10. `mybizz-os-docs\os-reference-docs\frontmatter conventions.md`: `doc-id` is a permanent code `mb-xxxxxxxx`, added by the commit hook.
-11. `mybizz-os-docs\os-reference-docs\wsl-path-references.md`: location of the scripts in `C:\mybizz\scripts`.
-
-Still open, not caused by the upgrade: docmap references to `projects-config-register` The use of registers has been discontinued. Please review and to the config YAML rule; the two ADRs that define `doc-id`; the retirement of the exam suites of `mb-doc-maintainer` and `mb-doc-auditor`; a documentation suite for `mb-doc-check`; the AGENTS.md pointer in `makepdlf`; the 114 older broken links; the code sources and Graphify; the link rollout.
+The cutover scripts in `C:\mybizz\scripts\` run steps 8 to 14 and the rollback with checks at every stage: `cutover-block1.sh` (record, stop, back up), `cutover-block2.sh` (install and migrate), `cutover-block3.sh` (start and prove), `cutover-rollback.sh`. They were written for one specific upgrade. Before reuse, change the tag, the expected commit and the version text at the top of `cutover-block2.sh`, and read the rollback script, which returns to the saved commit and prints the version it expects.
