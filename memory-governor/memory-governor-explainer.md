@@ -300,8 +300,7 @@ green at last full run.
 
 **Weaknesses.** The deterministic test runner is not aware of the systemd
 units (it stops the worker with `kill` and starts an unmanaged copy afterwards);
-governed facts land in a single source and are invisible to
-`mb-submit-memory`'s fact searches; the brain default source is changed by
+the brain default source is changed by
 every write and can go stale; several checks are
 permanently developer-run (credentialed checks, full test suite); row counts
 are live and drift continuously (point-in-time assertions only).

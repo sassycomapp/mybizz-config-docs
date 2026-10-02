@@ -44,7 +44,7 @@ A source is `federated`, `unset` or `isolated`. `unset` (never set) keeps a
 source out of other sources' searches, while a session working inside it can still
 read the federated sources — the state of the four code sources. `isolated` (set
 explicitly with `sources unfederate`) cuts a source off in both directions — the
-state of `anvil-agent-references-code`.
+state of `anvil-agent-references-code`. The code sources and the Anvil clone are kept out of the search on purpose: Graphify handles code, and every other source is federated.
 
 **Links between sources (2026-09-30).** In 0.46.1.0 a link connected only to pages
 of its own source (or of the source named `default`). From 0.51.8.0 on — the

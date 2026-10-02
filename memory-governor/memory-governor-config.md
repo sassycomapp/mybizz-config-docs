@@ -21,7 +21,7 @@ resolved) and re-verified 2026-09-30 after the GBrain upgrade (see
 | Application | FastAPI (Python), `app/main.py`, version `0.1.0` (pyproject) |
 | Decision engine | Two-outcome model (`auto_promote` / `needs_review`) — live since Phase 6.5, commit `c4df67d` |
 | HIGH_RISK_TYPES | **RESOLVED 2026-09-08** (developer decision): `policy`, `credential`, `identity`, [[[mb-3-cs-project-library:docs-local/architecture\|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md), [[[makepdlf-project-library:docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security\|Security Check]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security.md) — all five spec categories are now representable (`MemoryType` enum extended) and governed |
-| Test suite | **304 passed, 0 failed** (2026-09-08, post-resolution run; build record was 296); not re-run after the GBrain upgrade of 2026-09-30 — see Pending developer execution item 7 |
+| Test suite | **304 passed, 0 failed** (2026-09-08, post-resolution run; build record was 296); not re-run after the GBrain upgrade of 2026-09-30 or after the change to `app/gbrain.py` of 2026-10-01 — see Pending developer execution item 7 |
 | Operational status | **ACTIVE** — API + worker both running under their systemd user units (permanent auto-start executed + verified 2026-09-15; boot-command retirement decided 2026-09-28 — see Pending developer execution item 4) |
 
 ## Processes (two, by design)
@@ -135,6 +135,7 @@ Every write path goes through transition validation — creation included.
 | Write timing | Asynchronous, via the `gbrain_write` outbox event — ~0.15s in practice |
 | Source switching | `gbrain sources default <owning_project>` before every write — fails loudly on an unknown source (the coupling defect guard). The write itself names the owning project's source (`GBRAIN_SOURCE` on the `gbrain remember` call), so the fact lands in that source whatever folder the worker runs in |
 | Where governed facts land | The owning project's own documentation source (federated). A fact written before 2026-10-01 may still sit in `memory-governor-code` |
+| Code of the write | `app/gbrain.py`, `remember_candidate`: the `gbrain remember` call runs with the environment variable `GBRAIN_SOURCE` set to the candidate's owning project (changed 2026-10-01; the original is saved as `~/backups/gbrain.py.before-source-fix`) |
 | Brain default after a write | `sources.default` = the last owning project (`mybizz-os-docs` on 2026-09-30). A default that names a deleted source stops `gbrain sync` under 0.59.18.0 — see the reference, incident 2026-09-30 |
 | GBrain version | 0.59.18.0, schema 169 (upgraded 2026-09-30 from 0.46.1.0). `remember`, `recall`, `forget`: no input removed, none newly required. New optional inputs: `source_id`, `expected_revision`, `force`, `request_id` (`remember`); `source_id`, `budget_policy` (`recall`); `request_id` (`forget`) |
 | MEMORY_VERBS surface | Enabled (`mcp_surface: verbs`, verified 2026-09-08; still `verbs` on 2026-09-30) |
@@ -146,7 +147,7 @@ Every write path goes through transition validation — creation included.
 | Services after the upgrade | `memory-governor-api` and `memory-governor-worker` both active; port 8321 held by one listener; unauthenticated `GET /memory/review-queue` answers 422; the worker unit still carries the `~/.bun/bin` PATH line |
 | Stop and start order used | API stopped first, 60 seconds wait so the worker delivers what is already promoted, then the worker; started together with `systemctl --user start` |
 | Facts before and after | 85 facts in 5 sources, none missing: `memory-governor-code` 49, `mybizz-config-docs` 22, `default` 12, `makepdlf-project-library` 1, `mb-3-cs-code` 1. Every other source holds none |
-| Governed write, end to end | `/mb-submit-memory` on `environment-explainer.md` (source `mybizz-os-docs`) → `promoted`, memory_id `2cb82774-957c-4772-be3e-8d421f030c4a`; the fact landed in `memory-governor-code` (49 → 50) |
+| Governed write, end to end | `/mb-submit-memory` on `environment-explainer.md` (source `mybizz-os-docs`) → `promoted`, memory_id `2cb82774-957c-4772-be3e-8d421f030c4a`; that fact landed in `memory-governor-code` (49 → 50), before the change of 2026-10-01 |
 | Worker's source step | `gbrain sources default mybizz-os-docs` succeeded under 0.59.18.0; `sources.default` printed `mybizz-os-docs` afterwards |
 | Interface comparison | 114 agent tools present in both versions: no input removed, none newly required (names and inputs only — behavior was not compared) |
 | Database dump before the upgrade | `~/backups/db-memory_governor-before-upgrade.dump` (readable, 2026-09-30) |
@@ -189,5 +190,6 @@ Every write path goes through transition validation — creation included.
 4. ~~Permanent auto-start: WSL systemd migration + the two service units~~ **EXECUTED + VERIFIED 2026-09-15 (session 005):** systemd enabled (`systemd=true` under `[boot]`, boot command preserved — PostgreSQL auto-started); both units enabled and active under the user manager (`memory-governor-api`, `memory-governor-worker`, Restart=on-failure); auth-gate 422; port 8321 held by the service. The system is restart-independent. (At the migration boot the boot script started the API but not the worker. The expected idempotent skip never materialized: at BOTH 2026-09-28 boots the boot script's API won the port-8321 bind race and the api unit crash-looped until the duplicate was killed — full boot-command retirement decided 2026-09-28, see [[[mybizz-config-docs:memory-governor/memory-governor-reference|Reference]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-reference.md) §Permanent auto-start migration.)
 5. gbrain sync of the documentation commits.
 6. Where governed facts live — decided 2026-10-01: in the owning project's own documentation source. The worker's `remember` call names it. Done.
-7. Re-run the full test suite after the GBrain upgrade (stop the systemd worker first — procedure in the reference).
+7. Re-run the full test suite after the GBrain upgrade and the `app/gbrain.py` change of 2026-10-01 (stop the systemd worker first — procedure in the reference).
+8. Commit the `app/gbrain.py` change in the governor's own repository: `cd /home/dev-p/memory-governor && git add app/gbrain.py && git commit -m "The governed write names the owning project's source"`. Developer-run: agents never use Git.
 ```
