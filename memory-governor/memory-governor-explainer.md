@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-explainer"
 doc-id: "mb-47216ab9"
-updated: "2026-10-01"
+updated: "2026-10-02"
 ---
 # Memory Governor — Explainer
 
@@ -118,24 +118,7 @@ governed fact is stamped with its owning project (`entity`), and
 visibility is mapped from declared scope (`shared_all` → world; everything
 else → private). Project-scoped recall is entity-scoped recall.
 
-**Correction 2026-09-30 — facts are stored per source, not brain-globally.**
-Reading GBrain's code (0.46.1.0 and 0.59.18.0) and the per-source recall
-snapshot taken before the GBrain upgrade showed that every fact belongs to a
-source. `recall` reads the facts of the selected source (0.59.18.0: also of
-every federated source for a local call without an explicit source, unless
-a `source_id` is given). The worker sets the brain default to the owning
-project before each write, but GBrain ranks the registered source whose
-folder contains the current folder above the brain default, and the worker
-runs inside `/home/dev-p/memory-governor` — the source `memory-governor-code`.
-So governed facts land in `memory-governor-code` whatever the owning project
-(verified 2026-09-30: 49 → 50 facts after a governed submission for
-`mybizz-os-docs`). That source is not federated, which is why
-`mb-submit-memory`'s fact searches from a documentation session cannot see
-governed facts. Isolation between projects is still enforced by the governor
-itself (entity stamping, visibility mapping, read-time resolution); it does
-not come from GBrain's sources. This is not an effect of the GBrain upgrade —
-the same rule applies in both versions. The options for changing it are
-recorded as an open decision in the configuration.
+**Facts are stored per source.** Every fact belongs to a source, and `recall` reads the facts of one source. The worker names the owning project's own documentation source on every write, so a governed fact lands with the documents it belongs to, in a federated source, and an ordinary search finds its fact file. Isolation between projects is enforced by the governor itself (entity stamping, visibility mapping, read-time resolution); it does not come from GBrain's sources. A fact written before 2026-10-01 may still sit in `memory-governor-code`.
 
 ## 6. Backup and Disaster Recovery — Why Two Writes, Not One
 
@@ -254,8 +237,7 @@ API** — covered in §10. Its content reaches GBrain through a real,
 deliberate, always-applied manual discipline. A permanent property of the
 third-party tool, reported per the no-discrepancies requirement.
 
-**Governed facts are stored in one source, `memory-governor-code`** —
-covered in §5 (corrected 2026-09-30). Governed-memory isolation is enforced
+**Governed facts are stored in the owning project's own source** — covered in §5. Governed-memory isolation is enforced
 by the governor (API-level visibility resolution + write-path stamping), not
 by GBrain's sources. Reported.
 

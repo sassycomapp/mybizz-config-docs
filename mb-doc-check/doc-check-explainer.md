@@ -1,7 +1,7 @@
 ---
 title: "doc-check-explainer"
 doc-id: "mb-632b78c3"
-updated: "2026-10-01"
+updated: "2026-10-02"
 ---
 # mb-doc-check — Explainer
 
@@ -74,7 +74,7 @@ At every commit the program looks at two pictures of the repository: the committ
 
 **Strengths.** Documents are correct as they enter history. Renames and moves never break links. Identical behavior in all eight repositories. The program is deterministic and has no dependency on anything running.
 
-**Weaknesses.** It only protects commits made in WSL. A failure of the program lets one commit through unchecked. The stored link form is noisy to read in raw text and ties documents to this computer's folder layout. The automated tests are not yet stored on this computer.
+**Weaknesses.** It only protects commits made in WSL. A failure of the program lets one commit through unchecked. The stored link form is noisy to read in raw text and ties documents to this computer's folder layout.
 
 **Opportunities.** Bringing the two dormant libraries under the same rules. Using the stable `doc-id` for further automatic checks, such as detecting duplicated documents.
 

@@ -1,7 +1,7 @@
 ---
 title: "gbrain-explainer"
 doc-id: "mb-3187a352"
-updated: "2026-10-01"
+updated: "2026-10-02"
 ---
 # GBrain — Explainer
 
@@ -235,10 +235,7 @@ ended, not that every phase did meaningful work. See
 **The brain's mirror can lag its sources** — sync is commit-based; content is
 current only as of the last synced commit. The file wins.
 
-**Facts are stored per source.** `remember` writes into the source that the call
-selects, and `recall` reads it (0.59.18.0: also every federated source, unless a
-source is given). The memory governor's facts therefore sit in
-`memory-governor-code` — see [[[mybizz-config-docs:memory-governor/memory-governor-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-explainer.md) §5.
+**Facts are stored per source.** `remember` writes into the source that the call selects, and `recall` reads the facts of that one source. The memory governor names the owning project's own documentation source on every write, so its facts sit with the documents they belong to (see the governor explainer, §5).
 
 **A stale brain default stops sync.** The memory governor changes the brain-level
 default source with every write. In 0.59.18.0 a default that names a deleted

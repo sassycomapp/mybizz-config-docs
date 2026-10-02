@@ -1,7 +1,7 @@
 ---
 title: "gbrain-upgrade-checklist"
 doc-id: "mb-47fa9b6f"
-updated: "2026-10-01"
+updated: "2026-10-02"
 ---
 # GBrain upgrade checklist
 
@@ -29,8 +29,8 @@ Sources: the upstream CHANGELOG, upstream `docs/guides/authorization-upgrade.md`
 - Links between repositories need version 0.51.8.0 or newer. A plain sync does not write them, and neither does `gbrain extract --stale`, because the sync has already marked its pages as done. Only the full read `gbrain extract links --source db` writes them; `sync-gbrain.sh` ends with it.
 - Before upgrading, compare the old and the new release in a sandbox: the names and inputs of commands and agent tools. This does not cover behavior, permissions, queued jobs or database layout.
 - Federating a source makes it part of default search and lets that source write links to other sources.
-- Read from GBrain's code: every `gbrain call` picks its source in this order: the `--source` flag, then the `GBRAIN_SOURCE` environment variable, then a `.gbrain-source` file, then the registered source whose folder contains the current folder, then the brain default set by `gbrain sources default`. `remember` writes the fact into that source. `recall` reads facts from that source and from every federated source, unless `source_id` is given.
-- The governor's worker runs in `/home/dev-p/memory-governor`, which is the source `memory-governor-code`. That folder outranks the brain default, so governed facts land in that source. The worker also sets the brain default to the owning project before each write; a default that names a source that does not exist stops every sync.
+- Read from GBrain's code: every `gbrain call` picks its source in this order: the `--source` flag, then the `GBRAIN_SOURCE` environment variable, then a `.gbrain-source` file, then the registered source whose folder contains the current folder, then the brain default set by `gbrain sources default`. `remember` writes the fact into that source. `recall` reads the facts of that one source (`source_id` names another single source).
+- The governor's worker names the owning project's own documentation source on every write (`GBRAIN_SOURCE` on the `gbrain remember` call), so governed facts land there. The worker also sets the brain default to the owning project before each write; a default that names a source that does not exist stops every sync.
 - The page-name rule of `mb-doc-check` must equal GBrain's own. After every upgrade, `mb-doc-check.py slug-selftest` must report 0 differences.
 - Behavior changes in the release notes that touch memory writes (not exhaustive): fact writes and page writes now resolve to the same target file (0.46.25.0); a forgotten fact stays forgotten after a reconcile, and a reconcile no longer deletes facts while the file on disk is newer than the database (0.48.5.0); `recall <entity> --since` now returns only the facts in that window (0.48.5.0); queued background jobs need authorization after the upgrade (0.50.0.0).
 

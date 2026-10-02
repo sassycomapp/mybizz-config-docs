@@ -1,7 +1,7 @@
 ---
 title: "doc-check-config"
 doc-id: "mb-e7e60242"
-updated: "2026-10-01"
+updated: "2026-10-02"
 ---
 # mb-doc-check — Configuration
 
@@ -20,7 +20,7 @@ Canonical current-state record of the `mb-doc-check` program. Agent-facing. Refl
 | How it runs | As a git `pre-commit` hook in each of the eight repositories: `python3 /mnt/c/mybizz/scripts/mb-doc-check.py hook`. A commit made in WSL runs it; a commit made from a Windows program does not |
 | Failure behavior | If the program itself fails with an internal error, it prints "skipped because of an internal problem" and lets the commit through. A bug never blocks work. The skipped documents are corrected at their next commit |
 | Network and GBrain | None, except two commands: `sources-check` calls the `gbrain` command, and `slug-selftest` runs GBrain's own page-name function with `bun` |
-| Tests | 143 automated tests (Python `unittest`) |
+| Tests | 143 automated tests (Python `unittest`), stored in `mybizz-config-docs\gbrain\tests` and run with `bash /mnt/c/mybizz/mybizz-config-docs/gbrain/tests/run-tests.sh` |
 
 ## Covered repositories
 
@@ -96,6 +96,5 @@ Problems that already existed before the commit are reported but never stop it.
 
 | # | Item | Status |
 |---|---|---|
-| 1 | The automated tests are not stored on this computer | Open |
-| 2 | The two dormant libraries are not covered; adding one needs the steps in [[[mybizz-config-docs:mb-doc-check/doc-check-reference]]](C:/mybizz/mybizz-config-docs/mb-doc-check/doc-check-reference.md) | Open |
-| 3 | The program's built-in help text still shows a relative-path example; the stored form follows `@paths` | Open |
+| 1 | The two dormant libraries are not covered; adding one needs the steps in [[[mybizz-config-docs:mb-doc-check/doc-check-reference]]](C:/mybizz/mybizz-config-docs/mb-doc-check/doc-check-reference.md) | Open |
+| 2 | The program's built-in help text still shows a relative-path example; the stored form follows `@paths` | Open |

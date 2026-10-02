@@ -1,7 +1,7 @@
 ---
 title: "mb-submit-memory-reference"
 doc-id: "mb-c96f4742"
-updated: "2026-10-01"
+updated: "2026-10-02"
 ---
 # mb-submit-memory — Reference: Usage, Invocation, and the Full Cycle
 
@@ -61,16 +61,7 @@ developer — never inferred or guessed.
    ```bash
    gbrain call recall '{"grep": "<a real, specific phrase from the content>"}'
    ```
-   More than one query if the content spans more than one topic.
-   **Known recall gap (2026-09-30).** This search reads the source selected by
-   the current folder (in GBrain 0.59.18.0 also every federated source). Governed
-   facts are stored in the source `memory-governor-code`, which is not federated,
-   so a zero result does not prove that no governed fact exists — the 2026-09-30
-   run reported exactly this. A possible remedy, not adopted and not yet
-   exercised: a second search restricted with `"source_id": "memory-governor-code"`
-   (an input added in 0.59.18.0). The decision sits with the developer (governor
-   configuration, Pending developer execution item 6); a change to the procedure
-   belongs in the skill's own `SKILL.md`. Then form:
+   More than one query if the content spans more than one topic. Then form:
    - **Confidence** (`method: "model_based"`): 0.85+ clearly stated and
      nothing related found, or found content squarely agrees · 0.5–0.85
      understandable but genuinely ambiguous or partial unconfirmed overlap ·
@@ -144,6 +135,6 @@ Step 6 without an explicit approval on record from within the same run.
   resubmit with a different confidence to force promotion.
 - Do not auto-trigger this skill — invocation is always explicit.
 - Do not read, print, or copy `.env` or any credential value.
-- Do not treat a zero result from the fact search as proof that no governed fact exists — governed facts sit in `memory-governor-code`, which that search does not read (Step 3).
+- Do not treat a zero result from the fact search as proof that no governed fact exists — `recall` reads the facts of one source, and a fact written before 2026-10-01 may sit in `memory-governor-code` (Step 3).
 - Do not conflate `mg-grant`/`mg-revoke` (Cupcake's cross-project grant
   tools) with anything in the memory-governor system.

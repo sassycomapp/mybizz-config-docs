@@ -1,7 +1,7 @@
 ---
 title: "mb-submit-memory-explainer"
 doc-id: "mb-91eb637f"
-updated: "2026-10-01"
+updated: "2026-10-02"
 ---
 # mb-submit-memory — Explainer
 
@@ -72,9 +72,7 @@ Three couplings make the system genuinely complex, and all three have bitten:
   worker sets GBrain's brain-level default source to the submission's project. A
   default that names a source that no longer exists stops `gbrain sync` under
   GBrain 0.59.18.0 — as happened on 2026-09-30 (`diag-mg-sec4`) — until it is
-  reset (`gbrain sources default default`). And because GBrain ranks the worker's
-  own folder above that default, governed facts land in the source
-  `memory-governor-code`, not in the project's source.
+  reset (`gbrain sources default default`). The write itself names the owning project's source, so the fact lands there whatever folder the worker runs in.
 
 One more living reality: the quick, ungoverned path is not hypothetical —
 the tool surface that carries it is explicitly enabled and sits in every
@@ -133,20 +131,10 @@ system whose gate is closed. It was brought up live and verified end-to-end
 installation was recommended, approved and executed (systemd user units,
 verified 2026-09-15) so "the gate was closed" stops being a possible state.
 
-**Why a search for related facts can come back empty (2026-09-30).** The skill
-searches GBrain's facts before it forms a judgment. That search reads the source
-selected by the current folder (in GBrain 0.59.18.0 also every federated source).
-Governed facts are stored in `memory-governor-code`, which is not federated, so
-the search does not see them: the run of 2026-09-30 reported three fact searches
-with zero results while the page search found the document already indexed. A
-zero result is therefore not proof that nothing governed exists. The remedy is an
-open developer decision (configuration, open items).
-
 **Open questions.** The permanent auto-start installation was executed and
 verified on 2026-09-15; the skill file has a single installed copy since
 2026-09-15; the governor's own records of past submissions' project names were
-partly verified on 2026-09-15 (no endpoint lists all project rows); the recall gap
-above awaits a developer decision; and the gate-vs-quick-path tension is
+partly verified on 2026-09-15 (no endpoint lists all project rows); and the gate-vs-quick-path tension is
 managed by documented discipline rather than mechanics — the honest,
 currently-accepted state.
 
@@ -194,8 +182,7 @@ end again on GBrain 0.59.18.0 (2026-09-30: promoted, nothing left in review).
 
 **Weaknesses.** The governor was found down once (2026-09-08) — since
 2026-09-15 it runs under systemd, which removes that failure mode but not a
-stopped unit; the detect step cannot see governed facts (recall gap, 2026-09-30);
-several checks are permanently developer-run (anything credentialed);
+stopped unit; several checks are permanently developer-run (anything credentialed);
 the subject skill has no repo-side source copy since the mirror slot was
 repurposed (2026-09-15) — the spec's recorded fingerprint is its only anchor.
 

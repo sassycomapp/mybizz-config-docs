@@ -1,7 +1,7 @@
 ---
 title: "gbrain-reference"
 doc-id: "mb-bb4cbd8d"
-updated: "2026-10-01"
+updated: "2026-10-02"
 ---
 # GBrain — Reference: Commands, Mechanics, Incidents, Troubleshooting
 
@@ -172,9 +172,7 @@ WHICH BRAIN (DB)?                    WHICH SOURCE (repo in DB)?
 ```
 
 Facts follow the same order: `remember` writes into the selected source and
-`recall` reads it. In 0.59.18.0 a call whose source came from the current
-folder or from the default also reads every federated source; `--source`,
-`GBRAIN_SOURCE` or `source_id` read one source only. The fact snapshot of
+`recall` reads the facts of that one source. The fact snapshot of
 2026-09-30 was taken with `GBRAIN_SOURCE=<id>` for that reason. Details for the
 memory governor: [[[mybizz-config-docs:memory-governor/memory-governor-reference|Usage, Invocation, and Incident Response]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-reference.md).
 

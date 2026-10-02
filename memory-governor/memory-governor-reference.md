@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-reference"
 doc-id: "mb-38660a2f"
-updated: "2026-10-01"
+updated: "2026-10-02"
 ---
 # Memory Governor Reference — Usage, Invocation, and Incident Response
 
@@ -354,9 +354,9 @@ The second command must show that the named source exists. If it does not, the t
 
 **Correction 2026-09-30:** the earlier statement that GBrain's facts layer is brain-global is wrong. Reading GBrain's code (0.46.1.0 and 0.59.18.0) and the per-source recall snapshot of 2026-09-30 show that every fact belongs to a source. In 0.46.1.0, `recall` reads the facts of the selected source. In 0.59.18.0, a local call without an explicit source also reads the facts of every federated source, and `source_id` narrows it to one source.
 
-Where governed facts land: the worker sets the brain default to the owning project, but GBrain ranks the source whose folder contains the current folder above the brain default. The worker runs inside `/home/dev-p/memory-governor`, which is the source `memory-governor-code`. So governed facts land in `memory-governor-code` (verified 2026-09-30: 49 → 50 after a governed submission for `mybizz-os-docs`). That source is not federated, so `mb-submit-memory`'s fact searches from a documentation session cannot see them.
+Where governed facts land: the owning project's own documentation source. The worker names that source on every `gbrain remember` call (`GBRAIN_SOURCE`), so the fact lands there whatever folder the worker runs in. A fact written before 2026-10-01 may still sit in `memory-governor-code`.
 
-Project isolation for governed memories is enforced by (a) the governor's own API (read-time visibility resolution against the requesting project) and (b) the write-path stamping added 2026-09-08 (entity = owning_project; visibility mapped from declared scope). It does not come from GBrain's sources. Open decision: see the configuration, Pending developer execution item 6.
+Project isolation for governed memories is enforced by (a) the governor's own API (read-time visibility resolution against the requesting project) and (b) the write-path stamping added 2026-09-08 (entity = owning_project; visibility mapped from declared scope). It does not come from GBrain's sources.
 
 ## Do not
 

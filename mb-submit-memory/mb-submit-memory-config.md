@@ -1,7 +1,7 @@
 ---
 title: "mb-submit-memory-config"
 doc-id: "mb-e76d96dd"
-updated: "2026-10-01"
+updated: "2026-10-02"
 ---
 # mb-submit-memory — Configuration
 
@@ -39,7 +39,7 @@ path. Never calls `gbrain remember` or `gbrain sync` directly.
 | Permanent auto-start | **Installed and verified 2026-09-15 (session 005):** systemd enabled in WSL; the governor runs as two auto-start, auto-restart user services (`memory-governor-api`, `memory-governor-worker`) |
 | Stop and start | `systemctl --user stop memory-governor-api`, wait 60 seconds, `systemctl --user stop memory-governor-worker`; start both with `systemctl --user start memory-governor-api memory-governor-worker` (the order used for the GBrain upgrade, 2026-09-30). Re-verified 2026-09-30: both units active, port 8321 held by one listener, an unauthenticated `GET /memory/review-queue` answers 422 |
 | Database | `memory_governor` on WSL-native PostgreSQL 16 (server verified up today). DB-level state (5 tables, 5 real candidate rows, owner `memory_governor_svc`) verified 2026-09-05 by [[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md); re-check requires the service credential (not accessed) |
-| Its own GBrain source | `memory-governor-code` — registered (46 pages listed 2026-09-30, 53 in early September); the 2026-09-05 recommendation was actioned. Governed facts are stored in this source (49 → 50 after the run of 2026-09-30); it is not federated |
+| Its own GBrain source | `memory-governor-code` — registered (46 pages listed 2026-09-30, 53 in early September); the 2026-09-05 recommendation was actioned. Facts written before 2026-10-01 may still sit in it; new governed facts go to the owning project's source |
 | Past-run evidence | `/tmp/memory-governor.log` — clean startup + `POST /memory/projects` 201 + `POST /memory/candidate` 201; `registers/candidates/` The use of registers has been discontinued. Please review holds the real candidate records |
 
 ## Governance chain state (all verified 2026-09-08)
@@ -57,8 +57,7 @@ path. Never calls `gbrain remember` or `gbrain sync` directly.
 |---|---|
 | Commands this skill uses | `gbrain sources list` (same JSON keys in both versions) and `gbrain call recall '{"grep": …}'` (inputs unchanged; new optional `source_id`). The governor API path does not depend on GBrain's version |
 | End-to-end proof | `/mb-submit-memory` on `os-reference-docs/environment-explainer.md` (source `mybizz-os-docs`) → `promoted`, memory_id `2cb82774-957c-4772-be3e-8d421f030c4a`; nothing left in review, nothing rejected. Step 4 report: confidence 0.85 (`model_based`), contradiction none (field omitted). Log: `/mnt/c/mybizz/logs/mb-submit-memory/2026-09-30T165533+0200.md` |
-| Where the fact landed | `memory-governor-code` (49 → 50 facts), not the project's source. The worker leaves the brain default set to the project (`sources.default` = `mybizz-os-docs` afterwards) |
-| Recall gap (reported by the skill in Step 4) | The three fact searches returned zero because governed facts sit in `memory-governor-code`, which the search does not read. The page search found the document already indexed in its source, a near-identical duplicate copy in the `pdlf` source, and consistent references from other documents |
+| Where the fact lands | The owning project's documentation source (the worker names it on every write since 2026-10-01). The run of 2026-09-30, before that change, landed in `memory-governor-code` |
 | Governor project registry | The run registered the governor project `mybizz-os-docs` (learning recorded), so later submissions to that source do not 404 |
 
 ## Naming drift — RESOLVED (source-side)
@@ -78,5 +77,4 @@ pending a credentialed API check (needs the `manual_submission` credential).
 - Permanent auto-start installation (systemd migration) — **executed and verified 2026-09-15** (see Downstream system); closed.
 - Stray `0.48.2.0` file deletion — pending developer (restricted folder).
 - Dual SKILL.md copies — dissolved 2026-09-15 (exam run #1 gate): the mirror slot was repurposed as the exam-skill source; the subject skill has a single installed copy.
-- Recall gap (2026-09-30): the detect step cannot see governed facts, which are stored in `memory-governor-code`. Options are recorded in [[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) (Pending developer execution item 6); the reference notes a possible second search with `source_id` — not adopted, not yet exercised. Any change to the procedure belongs in the skill's own `SKILL.md`.
 - Near-identical duplicate copy of `environment-explainer.md` in the `pdlf` source (found by the 2026-09-30 run) — developer decision whether to keep both.

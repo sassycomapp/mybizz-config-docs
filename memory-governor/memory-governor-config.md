@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-config"
 doc-id: "mb-63bdf286"
-updated: "2026-10-01"
+updated: "2026-10-02"
 ---
 # Memory Governor Configuration
 
@@ -133,8 +133,8 @@ Every write path goes through transition validation — creation included.
 | Write mechanism | `remember` (MEMORY_VERBS) — never `gbrain sync`; each fact stamped `entity = owning_project` |
 | Visibility mapping | `shared_all` → world; `project_local` / `shared_specific` → private |
 | Write timing | Asynchronous, via the `gbrain_write` outbox event — ~0.15s in practice |
-| Source switching | `gbrain sources default <owning_project>` before every write — fails loudly on an unknown source (the coupling defect guard). This sets only the brain-level default: GBrain ranks the registered source whose folder contains the current folder above it, and the worker runs inside `/home/dev-p/memory-governor` (source `memory-governor-code`) |
-| Where governed facts land | Source `memory-governor-code`, not the owning project's source (verified 2026-09-30: 49 → 50 facts after a governed submission for `mybizz-os-docs`). That source is not federated |
+| Source switching | `gbrain sources default <owning_project>` before every write — fails loudly on an unknown source (the coupling defect guard). The write itself names the owning project's source (`GBRAIN_SOURCE` on the `gbrain remember` call), so the fact lands in that source whatever folder the worker runs in |
+| Where governed facts land | The owning project's own documentation source (federated). A fact written before 2026-10-01 may still sit in `memory-governor-code` |
 | Brain default after a write | `sources.default` = the last owning project (`mybizz-os-docs` on 2026-09-30). A default that names a deleted source stops `gbrain sync` under 0.59.18.0 — see the reference, incident 2026-09-30 |
 | GBrain version | 0.59.18.0, schema 169 (upgraded 2026-09-30 from 0.46.1.0). `remember`, `recall`, `forget`: no input removed, none newly required. New optional inputs: `source_id`, `expected_revision`, `force`, `request_id` (`remember`); `source_id`, `budget_policy` (`recall`); `request_id` (`forget`) |
 | MEMORY_VERBS surface | Enabled (`mcp_surface: verbs`, verified 2026-09-08; still `verbs` on 2026-09-30) |
@@ -166,7 +166,7 @@ Every write path goes through transition validation — creation included.
 - **GBrain's dream cycle cannot be routed through the governor's API** — confirmed permanent structural limit (no interception point in GBrain's `dream`; forking GBrain was considered and rejected). Governed by the documented manual discipline. This is the one honestly-documented exception to "every writer routes through the same API" — an architectural boundary of the third-party tool, reported as such per the standing no-discrepancies requirement.
 - **Phase 13.4 / 16.2 / 16.3 are explicitly parked** (a real PDLF step end-to-end; repeated real dream cycles under ordinary use) — they require real PDLF activity that cannot exist before PDLF's go-live. Deliberately parked working infrastructure, not incomplete builds. Reported separately, per the no-open-defects requirement, as scheduled-pending-external-dependency, not defects.
 - **A `GBrain-dreaming` credential may exist from early provisioning but is functionally unused** — dreaming never presents a credential.
-- **Governed facts land in one source, `memory-governor-code`, not in the owning project's source** (2026-09-30). `mb-submit-memory`'s fact searches from a documentation session cannot see them, because that source is not federated. The isolation between projects is enforced by the governor (entity stamping, visibility mapping, read-time resolution), not by GBrain's sources.
+- **Governed facts land in the owning project's own documentation source** (since 2026-10-01; before that they landed in `memory-governor-code`). A search from a documentation session sees them. The isolation between projects is enforced by the governor (entity stamping, visibility mapping, read-time resolution), not by GBrain's sources.
 - **The brain-level default source is changed by every governed write.** A default that names a source that no longer exists stops `gbrain sync` under 0.59.18.0 (incident 2026-09-30: `diag-mg-sec4`).
 - **`scripts/run-tests-deterministic.sh` is not aware of the systemd units.** It stops the worker with `kill` and afterwards starts an unmanaged copy, which leaves the unit stopped.
 
@@ -188,6 +188,6 @@ Every write path goes through transition validation — creation included.
 3. Commit + push of the governor repository's resolution changes.
 4. ~~Permanent auto-start: WSL systemd migration + the two service units~~ **EXECUTED + VERIFIED 2026-09-15 (session 005):** systemd enabled (`systemd=true` under `[boot]`, boot command preserved — PostgreSQL auto-started); both units enabled and active under the user manager (`memory-governor-api`, `memory-governor-worker`, Restart=on-failure); auth-gate 422; port 8321 held by the service. The system is restart-independent. (At the migration boot the boot script started the API but not the worker. The expected idempotent skip never materialized: at BOTH 2026-09-28 boots the boot script's API won the port-8321 bind race and the api unit crash-looped until the duplicate was killed — full boot-command retirement decided 2026-09-28, see [[[mybizz-config-docs:memory-governor/memory-governor-reference|Reference]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-reference.md) §Permanent auto-start migration.)
 5. gbrain sync of the documentation commits.
-6. Decide where governed facts should live. Options: (a) leave them in `memory-governor-code`; (b) pass `source_id` = the owning project in the worker's `remember` call (new optional input in 0.59.18.0); (c) federate `memory-governor-code`. No change made.
+6. Where governed facts live — decided 2026-10-01: in the owning project's own documentation source. The worker's `remember` call names it. Done.
 7. Re-run the full test suite after the GBrain upgrade (stop the systemd worker first — procedure in the reference).
 ```
