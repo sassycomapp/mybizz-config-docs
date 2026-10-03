@@ -1,7 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-config"
 doc-id: "mb-2b9404b5"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # mb-memory-system-diagnostic — Configuration
 
@@ -98,7 +98,7 @@ component's own config suite (`gbrain-config.md`, `memory-governor-config.md`,
 
 | Register The use of registers has been discontinued. Please review | State |
 |---|---|
-| `C:\mybizz\mybizz-config-docs\register-local.md` The use of registers has been discontinued. Please review | no rows for this suite as of 2026-09-28; registration is creation-event work for mb-doc-maintainer — the pending-events queue holds no events for these files as of 2026-09-28 |
+| `C:\mybizz\mybizz-config-docs\register-local.md` The use of registers has been discontinued. Please review | no rows for this suite as of 2026-09-28 |
 
 ## Recorded decisions (developer)
 

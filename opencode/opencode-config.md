@@ -42,7 +42,6 @@ five-part OpenCode suite; each file owns one scope:
 | `permission.bash` | `ask` by default; explicit `deny` on destructive git operations, `DROP`/`TRUNCATE` SQL patterns, and `curl`/`wget` piped directly to a shell (13 patterns in the live map — verified 2026-09-15) |
 | `permission.external_directory` | `allow` for `C:\mybizz\**`, `C:\dev\**`, `C:\pdlf\**`, `C:\data-mybizz-mgt\**` (4th root added to spec 2026-09-15 — developer-approved F-4 correction) |
 | `agent.plan.permission.edit` | `deny` — Plan agent cannot write, by design |
-| `agent.docs-manager` | Read-only subagent (mode `subagent`, model `openrouter/qwen/qwen3.6-plus`): `permission.edit` deny, `permission.bash` deny — the docs-manager Phase-1 scan role. Added to spec 2026-09-15 — developer-approved F-5 correction |
 | `mcp.gbrain` | Local MCP server, `gbrain serve`, real API keys passed via environment (`{env:...}` placeholders — no literals in config, verified 2026-09-15) |
 
 ## The global `AGENTS.md`
@@ -68,7 +67,7 @@ verified 2026-09-09; re-verified 2026-09-15.
 | Magdoub wireframe skill | Two-hop — empty intermediate folder pointing to real content in `~/.claude/skills/` |
 | `secure-software-engineering` | Plain, real folder (installed 2026-09-09 from `github.com/magnus919/agent-skills`) |
 
-Full, current skill inventory by owner: [[mybizz-os-docs:skills-reference/skills-register|Skill Register]]. Full GStack-specific detail: [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md).
+Full, current skill inventory by owner: [[[mybizz-os-docs:os-reference-docs/skills-catalog|Skills Catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md). Full GStack-specific detail: [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md).
 
 ## Active Project Standard
 

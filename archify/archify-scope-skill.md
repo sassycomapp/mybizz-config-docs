@@ -1,7 +1,7 @@
 ---
 title: "archify-scope-skill"
 doc-id: "mb-99f24066"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # mb-archify-scope — Front-of-pipe scoping for /archify
 
@@ -187,7 +187,7 @@ byte-for-byte; the header is schema-valid; the Archify run is handed the header.
 
 After the authoring run finishes, **ask** — never assume — whether to record
 learnings for this run in `output/learnings/{YYYY-MM-DD}-{subject}.md`. This is
-the ecosystem's close-out pattern (mirrors `mb-align-docs`'s logger write-back):
+the ecosystem's close-out pattern:
 a run produces judgment calls worth keeping, and nothing in the stack records
 them unattended. On approval, write a run learnings file in the suite's
 transient table format (learning | right action | destination), so notable
@@ -281,7 +281,7 @@ not hand-route around them.
   restate the Archify skill's authoring procedure, command reference, checker
   workflow, or update-notice contract — those live in the Archify skill itself
   and in [[[mybizz-config-docs:archify/archify-reference|Reference]]](C:/mybizz/mybizz-config-docs/archify/archify-reference.md). It does not restate this repo's
-  docs-management rules (own your commits, learnings, docs-manager cycle):
+  docs-management rules (own your commits, learnings):
   this skill is deliberately lightweight, front-of-pipe, and produces no log
   and no governance loop of its own beyond the Phase 9 close-out learnings
   file, which is the one documented output the skill itself owns.

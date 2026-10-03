@@ -39,7 +39,7 @@ repairs nothing.
 - **Session database** and its cleanup belong to
   [[[mybizz-config-docs:opencode/opencode-project-session-data-integrity|Project & Session Data Integrity]]](C:/mybizz/mybizz-config-docs/opencode/opencode-project-session-data-integrity.md) — agent content reads are
   guard-denied; this exam checks presence only (directory listing), never content.
-- **Full skill inventory** belongs to [[mybizz-os-docs:skills-reference/skills-register|Skill Register]] (docs-managed) — this exam
+- **Full skill inventory** belongs to [[[mybizz-os-docs:os-reference-docs/skills-catalog|Skills Catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) — this exam
   checks discovery **mechanics** (that the documented real install methods still
   resolve for the installed `mb-config-*` set), never re-audits the inventory.
 - **PostgreSQL/data-model state** belongs to `mb-config-postgresql` — OpenCode's

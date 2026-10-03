@@ -1,7 +1,7 @@
 ---
 title: "mb-submit-memory-config"
 doc-id: "mb-e76d96dd"
-updated: "2026-10-02"
+updated: "2026-10-03"
 ---
 # mb-submit-memory — Configuration
 
@@ -20,7 +20,7 @@ the GBrain upgrade to 0.59.18.0.
 | Location | `~/.config/opencode/skills/mb-submit-memory/SKILL.md` (real file, 2026-08-25) — the sole copy; no repo-side mirror since 2026-09-15 (the folder's skill slot now holds the `mb-config-mb-submit-memory` exam-skill source per developer instruction; the 13,502 B fingerprint above is the repo-side anchor). The exam-skill source↔installed pair is hash-verified each cycle |
 | Invocation | `/mb-submit-memory (path)` — path always given explicitly by the developer, never inferred; never auto-triggered |
 | Structure | Single file (13,502 B). A 25-byte `Zone.Identifier` sidecar in the installed dir was removed 2026-09-08 |
-| Modus operandi | learnings → backup (none needed) → detect → report → **pause for inline approval** → apply → verify → log → learnings — one continuous run, same as Docs Manager and mb-wikilinks |
+| Modus operandi | learnings → backup (none needed) → detect → report → **pause for inline approval** → apply → verify → log → learnings — one continuous run |
 
 ## What it does — one line
 

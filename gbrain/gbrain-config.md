@@ -1,7 +1,7 @@
 ---
 title: "gbrain-config"
 doc-id: "mb-b677b7b4"
-updated: "2026-10-02"
+updated: "2026-10-03"
 ---
 # GBrain — Configuration
 
@@ -134,7 +134,7 @@ for each other. Since 2026-09-28 the script enumerates every registered source i
 `C:\mybizz\mybizz-os-docs\operating-procedures\daily-ops.md`) documents the
 sync path as the standing after-work workflow and predates the governed
 path — its repo table was reconciled against the current source list
-2026-09-18 (align-docs).
+2026-09-18.
 
 **GStack integration flow** (`/setup-gbrain`, 3-stage `/sync-gbrain`):
 installed skills per upstream `USING_GBRAIN_WITH_GSTACK.md` — not this

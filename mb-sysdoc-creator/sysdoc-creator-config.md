@@ -80,7 +80,7 @@ verified live this date unless noted.
 | Cupcake | No component-specific rule found (rule inventory checked 2026-09-09). The skill's own Hard Rule 7 defines its block-handling discipline; enforcement status of any Cupcake rule is not fixed — live status lives in [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)'s Current Operational Status |
 | Memory Governor | None found — not a governed writer; its outputs are developer-authored docs synced ordinarily |
 | security-global | None found — no principles bear directly on this component's defaults |
-| Related skills | mb-docs-manager (structural/navigational docs), mb-align-docs (cross-document consistency), mb-wikilinks (cross-reference conversion), mb-compile-rules (Cupcake rule pipeline), mb-submit-memory (memory submission) — see explainer for the division of labor |
+| Related skills | mb-compile-rules (Cupcake rule pipeline), mb-submit-memory (memory submission) |
 
 ## Suites produced (proven by run logs)
 
@@ -94,6 +94,6 @@ verified live this date unless noted.
 
 ## Open items
 
-1. [[mybizz-os-docs:skills-reference/skills-register|Skill Register]] (`mybizz-os-docs`) lists six mb-* siblings as working — `mb-sysdoc-creator` is absent. Correct the register The use of registers has been discontinued. Please review if it is meant to be complete.
+1. The [[[mybizz-os-docs:os-reference-docs/skills-catalog|Skills Catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) (`mybizz-os-docs`) records `mb-sysdoc-creator` as installed.
 2. No version field in SKILL.md — currency between the two copies is provable only by diff.
 3. This suite's file prefix (`sysdoc-creator-`) differs from the folder/skill name (`mb-sysdoc-creator`) — developer-stated naming for this suite; sibling suites use the folder name as prefix.

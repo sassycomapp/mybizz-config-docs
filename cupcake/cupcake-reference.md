@@ -1,7 +1,7 @@
 ---
 title: "cupcake-reference"
 doc-id: "mb-e79d3d01"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # Cupcake Reference — Usage, Invocation, and Worked Examples
 
@@ -141,9 +141,9 @@ every git commit/push/merge denies (fail-closed).
 
 **Worked example — full cycle:**
 ```
-git-grant --repo /mnt/c/mybizz/mb-doccycle --count 2 --minutes 30
+git-grant --repo /mnt/c/mybizz/mybizz-config-docs --count 2 --minutes 30
 cat ~/.config/cupcake/policies/opencode/cup-git-grants-data.rego
-# grants := { "/mnt/c/mybizz/mb-doccycle": {"count": 2, "expires_at_ns": ...} }
+# grants := { "/mnt/c/mybizz/mybizz-config-docs": {"count": 2, "expires_at_ns": ...} }
 
 # — a real `git commit -m "..."` in that repo (through the plugin) —
 # count now 1 — decremented by the plugin's tool.execute.after hook

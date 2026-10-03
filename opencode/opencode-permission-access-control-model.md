@@ -1,7 +1,7 @@
 ---
 title: "opencode-permission-access-control-model"
 doc-id: "mb-cefaa6e8"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # OpenCode — Permission & Access Control Model
 
@@ -53,11 +53,7 @@ Each `opencode.json` (one global, one per project) can set:
 - **`external_directory`** — grants a session access to read/write
   outside its own project folder, per path glob, `"allow"`/`"ask"`/`"deny"`.
 - **`agent`** — per-agent overrides. The `plan` agent has `edit: "deny"`
-  globally, enforcing the plan/build split. A second configured agent exists:
-  `agent.docs-manager`, a read-only docs-scan subagent (mode `subagent`, model
-  `openrouter/qwen/qwen3.6-plus`) with `permission.edit: deny` and
-  `permission.bash: deny` — it scans, never writes (added to the spec 2026-09-15;
-  developer-approved F-5 correction).
+  globally, enforcing the plan/build split.
 
 ## Config precedence — VERIFIED 2026-09-09 (the caveat is closed)
 

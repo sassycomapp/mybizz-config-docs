@@ -1,7 +1,7 @@
 ---
 title: "sysdoc-creator-explainer"
 doc-id: "mb-1b1e5218"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # sysdoc-creator — Explainer
 
@@ -59,11 +59,9 @@ dream-cycle acceptance test that caught two broken commands before
 publication).
 
 **Not good for:** one-off documents outside the three-doc pattern
-(right tool: write it directly); navigational and structural documents
-that index the filesystem (right tool: mb-docs-manager); checking
-existing documents against each other for drift (right tool:
-mb-align-docs); converting cross-references to wikilinks (right tool:
-mb-wikilinks); submitting content into governed memory (right tool:
+(right tool: write it directly); converting cross-references into
+resolvable links (mb-doc-check writes every link in the stored form at
+every commit, [[[mybizz-config-docs:mb-doc-check/doc-check-explainer]]](C:/mybizz/mybizz-config-docs/mb-doc-check/doc-check-explainer.md)); submitting content into governed memory (right tool:
 mb-submit-memory). Also wrong for casual use: it is expensive by
 design — every run does real research and demands two human gates — so
 invoking it for a quick note wastes its whole apparatus.
@@ -104,11 +102,8 @@ before the developer ever sees it. This mirrors the whole
 **Where it sits.** It is the producer of most of this repo's content and
 a consumer of the rest: every suite it writes becomes GBrain-indexed
 corpus via the ordinary host-source sync, and every run it closes feeds
-its own learnings file, which shapes the next run's research pattern. It
-is the doc-producing member of the mb-* family — mb-docs-manager owns
-structure and navigation, mb-align-docs owns agreement between documents,
-mb-wikilinks owns cross-reference form, and this skill owns whether the
-content was true when it was written.
+its own learnings file, which shapes the next run's research pattern. This
+skill owns whether the content was true when it was written.
 
 **Open questions.** The skill-index register The use of registers has been discontinued. Please review's missing entry (open item
 in the config doc) matters because that register The use of registers has been discontinued. Please review is the environment's

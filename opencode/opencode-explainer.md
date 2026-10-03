@@ -75,10 +75,10 @@ point at identical content.**
 Skills reach OpenCode through more than one real pathway, and they are not
 all installed the same way — confirmed directly by a full, real audit of
 every skill on this machine (2026-09-08, the full inventory is
-[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]):
+[[[mybizz-os-docs:os-reference-docs/skills-catalog|Skills Catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md)):
 
 - **Plain, real folders** — no symlink at all. This project's own custom
-  skills (`mb-align-docs`, `mb-docs-manager`, etc.) work this way.
+  skills (`mb-project-docs`, `mb-submit-memory`, etc.) work this way.
 - **Symlinks to a real folder elsewhere on the same drive** — most
   third-party skills (Anvil, GStack's individual skills, Archify).
 - **A hybrid pattern** — GStack's own top-level entry is a real folder,
@@ -216,7 +216,7 @@ PostgreSQL pilot. The short local version:
   `mcp.gbrain` **config entry**. The **session database** and its cleanup belong
   to [[[mybizz-config-docs:opencode/opencode-project-session-data-integrity|Project & Session Data Integrity]]](C:/mybizz/mybizz-config-docs/opencode/opencode-project-session-data-integrity.md) (agent content reads
   guard-denied — the exam checks presence only, via directory listing). Full skill
-  **inventory** belongs to [[mybizz-os-docs:skills-reference/skills-register|Skill Register]] (docs-managed) — this exam checks
+  **inventory** belongs to [[[mybizz-os-docs:os-reference-docs/skills-catalog|Skills Catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) — this exam checks
   discovery **mechanics**, never re-audits the inventory.
 - Several checks are permanently **developer-run**: `opencode.jsonc` content
   (sensitive-data guard class), the session-data doc content (proven denial), and

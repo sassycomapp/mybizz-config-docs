@@ -1,7 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-explainer"
 doc-id: "mb-dd98962e"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # mb-memory-system-diagnostic — What It Is, What It Does, and Why It Is Built This Way
 
@@ -101,8 +101,7 @@ suites and live reality (the init-model check is the built-in example).
 config-management cycle); Cupcake policy or security posture — the cupcake
 exam and the cso review own that, and this skill may never execute Cupcake
 anyway; PostgreSQL Instance A / the `pdlf` ledger — outside the memory
-ecosystem by definition; documentation-corpus health — mb-doc-maintainer
-and mb-doc-auditor; scheduled monitoring — the skill
+ecosystem by definition; scheduled monitoring — the skill
 is invocation-only by design.
 
 ## Why Diagnose–Remediate–Report Per Section, Not Audit-Then-Fix

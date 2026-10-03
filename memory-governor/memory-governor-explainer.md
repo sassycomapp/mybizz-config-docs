@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-explainer"
 doc-id: "mb-47216ab9"
-updated: "2026-10-02"
+updated: "2026-10-03"
 ---
 # Memory Governor — Explainer
 
@@ -163,14 +163,11 @@ running state independent of anyone remembering to start them.
 ## 9. `mb-submit-memory` — The Real Front End for Manual Submission
 
 The developer's actual way of submitting material for governance is
-`mb-submit-memory`, an OpenCode skill — deliberately its own skill, not
-folded into `docs-manager`, `mb-align-docs`, or `mb-wikilinks` (each owns
-exactly one job and interoperates with nothing else by design). It follows
-the same single-continuous-run rhythm as those skills and carries the full
+`mb-submit-memory`, an OpenCode skill — deliberately its own skill. It follows
+a single-continuous-run rhythm and carries the full
 judgment obligation directly: query GBrain for related content, read it,
 supply genuinely reasoned confidence and contradiction values — never a
-placeholder. It was proven end-to-end with a real document through the
-full documentation-skills pipeline.
+placeholder. It was proven end-to-end with a real document.
 
 ## 10. The Writer GBrain's Dream Cycle Cannot Actually Be, and Why
 

@@ -1,7 +1,7 @@
 ---
 title: "anvil-agent-references-config"
 doc-id: "mb-87d907ea"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # anvil-agent-references — Configuration
 
@@ -98,7 +98,7 @@ technical detail, see [[[mybizz-config-docs:anvil-agent-references/anvil-agent-r
 
 | Item | Value |
 |---|---|
-| PDLF | Supplies platform-specific ground truth "underneath every single one of these steps" ([[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-system-explainer\|The Project Development Lifecycle Framework]]](C:/pdlf/pdlf-library/pdlf-explainer-docs/pdlf-system-explainer.md)); one of five skill families' supporting sources |
+| PDLF | Supplies platform-specific ground truth "underneath every single one of these steps" ([[[mybizz-os-docs:os-reference-docs/pdlf-system-explainer\|The Project Development Lifecycle Framework]]](C:/mybizz/mybizz-os-docs/os-reference-docs/pdlf-system-explainer.md)); one of five skill families' supporting sources |
 | Environment standards | Anvil.works working methods + Material 3 theme + M3 dependency + MUI overlay are prescribed standards (global AGENTS.md); this skill set is the agent-facing reference for them |
 | Governing ADRs (project-library-global) | [[[default:adr-global/adr-anvil-extras-exclusion\|Anvil Extras Exclusion]]](C:/dev/project-library-global/adr-global/adr-anvil-extras-exclusion.md) (M3-only components), [[[default:adr-global/adr-htmltemplate-use\|HTMLTemplate Use]]](C:/dev/project-library-global/adr-global/adr-htmltemplate-use.md) (HTMLTemplate banned), [[[default:adr-global/adr-material-3-theme-component-scope\|Material 3 Theme Component Scope]]](C:/dev/project-library-global/adr-global/adr-material-3-theme-component-scope.md), [[[default:adr-global/adr-anvil-platform-constraints\|Anvil Platform Constraints and Design Boundaries]]](C:/dev/project-library-global/adr-global/adr-anvil-platform-constraints.md) |
 | Cupcake rules bearing on this component | `cup-block-anvil-yaml-writes.rego` (AI writes to `anvil.yaml`); `cup-protected_ai_governance_files_may_not_be_modified.rego` (AI writes to `AGENTS.md`/`CLAUDE.md`); `cup-no_cross_project_filesystem_access_by_default.rego` (AI writes outside the project root). Standing policy regardless; mechanically enforced only when Cupcake enforcement is active — status: [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) Current Operational Status |
