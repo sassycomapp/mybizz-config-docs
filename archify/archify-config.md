@@ -1,7 +1,7 @@
 ---
 title: "archify-config"
 doc-id: "mb-61a8f528"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # Archify — Configuration
 
@@ -35,7 +35,7 @@ and why, [[[mybizz-config-docs:archify/archify-reference|Reference]]](C:/mybizz/
 |---|---|
 | Install method | WSL symlink from OpenCode's global skill discovery path to the real Windows-drive folder |
 | Discovery path | `~/.config/opencode/skills/archify` → `/mnt/c/mybizz/archify/archify` |
-| Skill status | Working (per [[[mybizz-os-docs:skills-reference/skills-register\|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md); confirmed by successful doctor run) |
+| Skill status | Working (per [[mybizz-os-docs:skills-reference/skills-register\|Skill Register]]; confirmed by successful doctor run) |
 | Update check | Notification-only; never downloads, installs, or executes an update |
 | Update-check disable | `ARCHIFY_UPDATE_CHECK_DISABLED=1` (disables networking and reminder-state writes) |
 
@@ -71,7 +71,7 @@ begins; it scopes, it never draws.
 |---|---|
 | OpenCode | Skill discovered via symlink in the global skills folder; invoked as `/archify` |
 | Scoping skill | `mb-archify-scope` is the documented front-of-pipe component — see the "Scoping skill component" section above; invoked before `/archify`, never instead of it |
-| GBrain | No dedicated GBrain knowledge page exists for archify (all searches return unrelated content); install facts live in [[[mybizz-os-docs:skills-reference/skills-register\|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md) and [[[mybizz-config-docs:opencode/opencode-config\|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md) |
+| GBrain | No dedicated GBrain knowledge page exists for archify (all searches return unrelated content); install facts live in [[mybizz-os-docs:skills-reference/skills-register\|Skill Register]] and [[[mybizz-config-docs:opencode/opencode-config\|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md) |
 | Memory Governor | No treatment — archify produces HTML artifacts, not memory submissions; not a governed writer |
 | Cupcake | No archify-specific rule in the global policy folder (re-verified 2026-09-16 — the only archify mention is the mg-grant access entry for `mb-config-archify`, an access grant, not an enforcement rule). Cupcake is **ACTIVE and enforcing** per [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) §Current operational status (verified live 2026-09-12). Enforcement status is not fixed and should not be assumed current — re-check [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) whenever enforcement state changes |
 | security-global | No principle bears directly; the only network surface is the optional update check (IP + timestamp to one fixed manifest URL, nothing else transmitted, disableable) |

@@ -1,7 +1,7 @@
 ---
 title: "magdoub-wireframe-config"
 doc-id: "mb-3f021bf2"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # magdoub-wireframe — Configuration
 
@@ -73,7 +73,7 @@ Folder naming is DDMM — day-then-month, zero-padded, per SKILL.md (see known s
 |---|---|
 | PDLF registration | Step 22 — Phase 1, structural B&W wireframes; Step 26 — Phase 2 + gate `wireframes-approved` |
 | PDLF skill-family role | "Magdoub owns visual iteration" — one of five skill families |
-| [[[mybizz-os-docs:skills-reference/skills-register\|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md) status | `wireframe` — working (discoverability status, not run evidence) |
+| [[mybizz-os-docs:skills-reference/skills-register\|Skill Register]] status | `wireframe` — working (discoverability status, not run evidence) |
 | Confirmed real runs in this environment | None found — no `wireframe/` output dirs in mb-3-cs, project-library, or makepdlf; no run logs in GBrain |
 | Pre-existing single-file reference | `~/.config/opencode/skills/wireframe/magdoub-claude-wireframe-skill-reference.md` (2026-08-12), inside the OpenCode discovery folder; two of its claims now stale (below) |
 

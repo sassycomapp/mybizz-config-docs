@@ -1,7 +1,7 @@
 ---
 title: "gstack-skill"
 doc-id: "mb-d542b185"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # mb-config-gstack — Exam Skill
 
@@ -29,7 +29,8 @@ repairs nothing.
 ## Scope boundary (anti-duplication)
 
 - This module exams **GStack itself**: clone version/HEAD, discovery topology
-  (both link generations + aggregate + legacy path), `GSTACK_BIN`, the
+  (the per-skill shortcut set — one shortcut per installed skill, named by
+  its declared `name:` — + aggregate + legacy path), `GSTACK_BIN`, the
   `~/.gstack` config files, the binary tree, generation discipline, and the
   integration facts (skill-index cross-link, outputs convention — recorded
   convention only, the `gstack-outputs/` copy lane does not exist on this
@@ -45,7 +46,8 @@ repairs nothing.
 - **OpenCode structure rows** (symlink + hybrid rows) belong to
   `mb-config-opencode` — this exam confirms the rows' targets exist, never
   re-audits OpenCode's config.
-- **Cross-tool skill enumeration** belongs to [[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md) (docs-managed) —
+- **Installed-skill record** (which skills are installed and why the others
+  are not) belongs to [[[mybizz-os-docs:os-reference-docs/skills-catalog|Skills Catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) —
   this exam checks the discovery **mechanics** (that the documented link
   topology resolves), never re-audits the inventory.
 
@@ -67,8 +69,10 @@ verification (the "one template line" claim) is classified developer-run (D).
   silently overwritten on the next generation.
 - Never delete `~/.config/opencode/skills/gstack/bin` — actively managed by
   setup, regenerated every run; not leftover.
-- Never assume the folder name is the command — the frontmatter `name:` field
-  decides the command; bare names except `/gstack-upgrade` and `/gstack`.
+- Never assume the folder name is the command — OpenCode loads a skill only
+  when the frontmatter `name:` matches the folder containing it; shortcuts
+  carry the declared name (bare names, except `gstack-upgrade`, plus the
+  `/gstack` aggregate).
 - Never run `/sync-gbrain --dream` against a manually-registered GBrain source —
   source-overlap trap; the honest bypass is `gbrain dream --source <id>`.
 - Never trust `/setup-gbrain`'s own GBrain backend description — this
@@ -85,7 +89,7 @@ verification (the "one template line" claim) is classified developer-run (D).
 | ID | Runner | Check | Expected (source: config §) |
 |---|---|---|---|
 | GS0-1 | A | Clone version/HEAD: `git -C /mnt/c/mybizz/gstack rev-parse --short HEAD` + `VERSION` + `package.json` version | HEAD `c7ae632`; `VERSION` = `1.58.1.0` = `package.json` version (config §Identity). The available upgrade is a recorded open decision — **never upgraded on newness**; upgrade only on check failure (GS3-2) |
-| GS0-2 | A | Discovery topology resolves: per-host tree `/mnt/c/mybizz/gstack/.opencode/skills/` exists; `~/.config/opencode/skills/gstack-<name>` prefixed links and bare-name links present; aggregate `~/.config/opencode/skills/gstack/` hybrid entry exists | Both link generations + aggregate present (config §Install topology) |
+| GS0-2 | A | Discovery topology resolves: per-host tree `/mnt/c/mybizz/gstack/.opencode/skills/` exists; `~/.config/opencode/skills/` holds one shortcut per installed gstack skill, named by the skill's declared frontmatter `name:` (plain names + `gstack-upgrade`); no `gstack-`-prefixed shortcut other than `gstack-upgrade`; aggregate `~/.config/opencode/skills/gstack/` exists | One shortcut per installed skill, named by its declared `name:`; no `gstack-`-prefixed shortcut other than `gstack-upgrade`; `skill_prefix` false; aggregate present (config §Install topology) |
 | GS0-3 | A | `GSTACK_BIN` resolves: `~/.config/opencode/skills/gstack/bin` → `/mnt/c/mybizz/gstack/bin`; legacy `~/.claude/skills/gstack` → `/mnt/c/mybizz/gstack` | Symlinks point into the clone (config §Install topology) |
 
 ## Tier 1 — State conformance (each probe compared to the spec's current expected value; any mismatch = DRIFT finding)
@@ -94,7 +98,7 @@ verification (the "one template line" claim) is classified developer-run (D).
 |---|---|---|---|
 | GS1-1 | A | Per-host skill tree count: `ls /mnt/c/mybizz/gstack/.opencode/skills/` | 54 entries (53 `gstack-<name>` + aggregate `gstack`) (config §Install topology). Count change = DRIFT (inventory change, not necessarily a defect — record the delta) |
 | GS1-2 | A | Binary tree: `ls /mnt/c/mybizz/gstack/bin/` | 74 scripts (config §Install topology) |
-| GS1-3 | A | Broken discovery entries: `codex`, `connect-chrome`, `hackernews-frontpage` resolve targets | Targets `/mnt/c/mybizz/skills/` (retired folder — absent) — **dead is the expected state**; inert, OpenCode skips them (config §Install topology). A *live* target here would be the finding |
+| GS1-3 | A | Discovery shortcuts in `~/.config/opencode/skills/` for `codex`, `connect-chrome`, `hackernews-frontpage`, and any dead-target discovery shortcut | None exist — no `codex`/`connect-chrome`/`hackernews-frontpage` shortcut and no broken discovery shortcut of any kind (config §Install topology). A present entry or a dead target here would be the finding |
 | GS1-4 | A | `~/.gstack/config.yaml` live values (read — guard denial = D) | `artifacts_sync_mode: full` · `telemetry: community` · `question_tuning: true` · `user_slug_at_local: dev-p`; all other keys commented defaults (config §Config files) |
 | GS1-5 | A | `~/.gstack/gbrain-detection.json` + `~/.gstack/gbrain-repo-policy.json` (read — guard denial = D) | Detection: engine `postgres`, doctor ok, `gbrain_mcp_mode: none`, sync `full`, remote `""`; policy: 8 repos, all `read-write`, all `github.com/sassycomapp/*` (config §Config files) |
 | GS1-6 | A | GBrain worktree: `~/.gstack-brain-worktree/` exists, git-backed; `~/.gstack-brain-remote.txt` absent | Worktree present with `.brain-allowlist`/`.brain-privacy-map.json`/analytics/sessions; remote file **absent** — local-only sync is the design (config §Config files) |
@@ -108,7 +112,7 @@ verification (the "one template line" claim) is classified developer-run (D).
 | ID | Runner | Check | Expected |
 |---|---|---|---|
 | GS2-1 | A | Deterministic bin invocation: run one read-only bin script to completion (e.g. `bash /mnt/c/mybizz/gstack/bin/gstack-gbrain-detect` or `gstack-brain-sync --status`) | Script executes and exits 0 with sane JSON/status output. Proves the documented binary tree is live, not just present. Guard denial → D |
-| GS2-2 | A | Discipline probe — generation rule holds: read one generated `SKILL.md` from `/mnt/c/mybizz/gstack/.opencode/skills/<name>/` and verify its frontmatter `name:` matches the command convention (bare name, or `gstack-upgrade`/`gstack` for the two exceptions) | Frontmatter `name:` present and matches the command rule (config §SKILL.md generation + skills-reference §Invocation rules). Confirms no drift toward folder-name-command assumptions |
+| GS2-2 | A | Discipline probe — generation rule holds: read one generated `SKILL.md` from `/mnt/c/mybizz/gstack/.opencode/skills/<name>/` and verify its frontmatter `name:` follows the declared-name rule — every `gstack-<name>` tree skill declares its bare name; `gstack-upgrade` declares `gstack-upgrade`; the aggregate declares `gstack` | Frontmatter `name:` present and matches the declared-name rule (config §SKILL.md generation + skills-reference §Invocation rules). Confirms the name–folder match OpenCode loads on, and no drift toward folder-name-command assumptions |
 
 ## Tier 3 — Deep pass (developer-run; executes only if the developer unlocks this tier)
 
@@ -137,8 +141,7 @@ appended to [[[mybizz-config-docs:gstack/gstack-log|Log]]](C:/mybizz/mybizz-conf
 - Spec-doc corrections → flagged to docs governance, never applied here
 - Deny-list (never heal, never touch): generated `SKILL.md` files in the clone
   (regenerate, never hand-edit) · `~/.gstack` credential-bearing file content
-  (never read by the agent, never printed) · the retired `/mnt/c/mybizz/skills/`
-  folder and its dead links (deletion is cleanup decision, developer-owned) ·
+  (never read by the agent, never printed) ·
   the upgrade decision itself (GS3-2, developer-owned) · any `./setup` re-run
   (GS3-2 — changes the discovery tree; gated)
 - Credentials: variable names only, never printed

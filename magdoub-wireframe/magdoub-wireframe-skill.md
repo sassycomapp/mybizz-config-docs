@@ -1,7 +1,7 @@
 ---
 title: "magdoub-wireframe-skill"
 doc-id: "mb-dd11c72e"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # mb-config-magdoub-wireframe — Exam Skill
 
@@ -70,7 +70,7 @@ copied into reports, outputs, or learnings.
   bypass; ordinary `gbrain sync` only (settled policy 2026-09-06).
 - **Never create a second discovery path** for this skill — a duplicate
   double-loads it (dedup is by discovery path).
-- **Never treat [[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md) "working" as run evidence** — no confirmed
+- **Never treat [[mybizz-os-docs:skills-reference/skills-register|Skill Register]] "working" as run evidence** — no confirmed
   real run exists (config §Integration facts).
 
 ## Tier 0 — Invocability (run first; failure = report `DOWN`, stop; remaining tiers skipped)

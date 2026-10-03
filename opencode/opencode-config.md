@@ -1,7 +1,7 @@
 ---
 title: "opencode-config"
 doc-id: "mb-c7616d53"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # OpenCode Configuration
 
@@ -68,7 +68,7 @@ verified 2026-09-09; re-verified 2026-09-15.
 | Magdoub wireframe skill | Two-hop — empty intermediate folder pointing to real content in `~/.claude/skills/` |
 | `secure-software-engineering` | Plain, real folder (installed 2026-09-09 from `github.com/magnus919/agent-skills`) |
 
-Full, current skill inventory by owner: [[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md). Full GStack-specific detail: [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md).
+Full, current skill inventory by owner: [[mybizz-os-docs:skills-reference/skills-register|Skill Register]]. Full GStack-specific detail: [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md).
 
 ## Active Project Standard
 

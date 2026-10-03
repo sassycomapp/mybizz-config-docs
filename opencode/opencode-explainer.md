@@ -1,7 +1,7 @@
 ---
 title: "opencode-explainer"
 doc-id: "mb-4e022a9c"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # OpenCode Explainer
 
@@ -75,7 +75,7 @@ point at identical content.**
 Skills reach OpenCode through more than one real pathway, and they are not
 all installed the same way — confirmed directly by a full, real audit of
 every skill on this machine (2026-09-08, the full inventory is
-[[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md)):
+[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]):
 
 - **Plain, real folders** — no symlink at all. This project's own custom
   skills (`mb-align-docs`, `mb-docs-manager`, etc.) work this way.
@@ -216,7 +216,7 @@ PostgreSQL pilot. The short local version:
   `mcp.gbrain` **config entry**. The **session database** and its cleanup belong
   to [[[mybizz-config-docs:opencode/opencode-project-session-data-integrity|Project & Session Data Integrity]]](C:/mybizz/mybizz-config-docs/opencode/opencode-project-session-data-integrity.md) (agent content reads
   guard-denied — the exam checks presence only, via directory listing). Full skill
-  **inventory** belongs to [[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md) (docs-managed) — this exam checks
+  **inventory** belongs to [[mybizz-os-docs:skills-reference/skills-register|Skill Register]] (docs-managed) — this exam checks
   discovery **mechanics**, never re-audits the inventory.
 - Several checks are permanently **developer-run**: `opencode.jsonc` content
   (sensitive-data guard class), the session-data doc content (proven denial), and

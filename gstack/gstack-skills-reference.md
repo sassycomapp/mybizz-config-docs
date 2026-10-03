@@ -1,25 +1,27 @@
 ---
 title: "gstack-skills-reference"
 doc-id: "mb-ac92bf3c"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # GStack Skills Reference
 
-Catalog of invocable GStack commands, verified live 2026-09-08 against the
+Catalog of invocable GStack commands, verified live 2026-10-03 against the
 installed `1.58.1.0` set. Topology and versions: [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md).
 Workflows and authority: [[[mybizz-config-docs:gstack/gstack-reference|GStack Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-reference.md).
 
 ## Invocation rules — read before typing a command
 
-- The slash command is the `name:` field in the skill's SKILL.md frontmatter
-  — not the folder name. In current practice that is the bare skill name
-  with the `gstack-` prefix dropped: the folder is `gstack-qa/`, the command
-  is **`/qa`**. The prefixed form (`/gstack-qa`) returns nothing.
-- **Exceptions that keep their full name:** `/gstack-upgrade` (frontmatter
-  `name: gstack-upgrade`) and the aggregate `/gstack` router entry
-  (frontmatter `name: gstack`).
-- The `skill_prefix: true` option in `~/.gstack/config.yaml` would namespace
-  all commands as `/gstack-<name>` — it is unset (default bare) here.
+- The slash command is the skill's frontmatter `name:` field. OpenCode
+  loads a skill only when its `name:` matches the folder that contains it,
+  so the discovery shortcut in `~/.config/opencode/skills/` carries exactly
+  the declared name: the per-host tree folder is `gstack-qa/`, the shortcut
+  is `qa`, the command is **`/qa`**. Every gstack skill declares its bare
+  name, so the shortcuts are plain names.
+- **The one prefixed command:** `/gstack-upgrade` — its frontmatter declares
+  `name: gstack-upgrade`, so its shortcut is named `gstack-upgrade`. The
+  aggregate `/gstack` router entry declares `name: gstack`.
+- `skill_prefix` is false; gstack's setup, upgrade and relink tools read
+  this setting and therefore create plain (unprefixed) shortcuts only.
 - If a known skill is missing or broken in OpenCode, re-run the installer:
   `cd /mnt/c/mybizz/gstack && ./setup --host opencode` — see
   `C:\mybizz\mybizz-os-docs\operating-procedures\daily-ops.md`, "FIX: GSTACK SKILLS
@@ -27,8 +29,8 @@ Workflows and authority: [[[mybizz-config-docs:gstack/gstack-reference|GStack Re
 - SKILL.md files are auto-generated — never edit one directly (see
   [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md) for regeneration).
 
-**Count: 53 invocable skills + the aggregate `/gstack` entry = 54** (verified
-live 2026-09-08; supersedes all earlier counts of 52).
+**Count: 47 invocable skills (46 bare names + `/gstack-upgrade`) + the
+aggregate `/gstack` entry = 48** (verified live 2026-10-03).
 
 ## Planning
 
@@ -130,13 +132,15 @@ WON'T LAUNCH".
 
 ## iOS
 
-| Command | What it does |
-|---|---|
-| `/ios-qa` | Live-device iOS QA — connects to a real iPhone via USB, screenshots every screen. |
-| `/ios-fix` | Autonomous iOS bug fixer — finds bug, writes fix, rebuilds, verifies on device. |
-| `/ios-design-review` | Visual design audit for iOS apps on real hardware. |
-| `/ios-sync` | Regenerates the iOS debug bridge against latest gstack templates. |
-| `/ios-clean` | Removes the DebugBridge SPM package and `#if DEBUG` wiring. |
+No iOS skill is installed (verified 2026-10-03):
+
+- `/ios-qa`, `/ios-fix`, `/ios-design-review` — not installed: they need a
+  Mac with Xcode and a paired iPhone.
+- `/ios-clean`, `/ios-sync` — not installed: they only remove or regenerate
+  the debug bridge `/ios-qa` installs into an iOS app, so without `/ios-qa`
+  they have nothing to work on.
+
+Which skills are installed and why the others are not: [[[mybizz-os-docs:os-reference-docs/skills-catalog|Skills Catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md).
 
 ## Documentation
 
@@ -148,10 +152,13 @@ WON'T LAUNCH".
 
 ## CLI wrappers
 
-| Command | What it does |
-|---|---|
-| `/codex` | OpenAI Codex CLI wrapper — Review, Challenge, Consult modes. |
-| `/claude` | Claude Code CLI wrapper — Review, Challenge, Consult modes. |
+Neither CLI wrapper is installed on this PC (verified 2026-10-03):
+
+- `/claude` — not installed: it calls the Claude Code program, which this
+  PC does not run.
+- `/codex` — not installed: it has no discovery shortcut.
+
+Which skills are installed and why the others are not: [[[mybizz-os-docs:os-reference-docs/skills-catalog|Skills Catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md).
 
 ## Aggregate
 
@@ -191,15 +198,17 @@ Or run everything at once: `/autoplan`
 
 - **`/handoff`** — no corresponding folder anywhere in the source repo.
 - **`hackernews-frontpage`** — exists only as a sub-skill under
-  `/mnt/c/mybizz/gstack/browser-skills/hackernews-frontpage/`; its discovery
-  symlink is broken (dead target) and it is not a standalone command.
+  `/mnt/c/mybizz/gstack/browser-skills/hackernews-frontpage/`; it has no
+  discovery shortcut and is not a standalone command.
 
 ## Separate, unrelated set
 
-Four `gstack-openclaw-*` folders ([[[makepdlf-project-library:stepwise/step-14-plan-ceo-review|Step 14 Plan Ceo Review]]](C:/dev/dev-makepdlf/makepdlf-project-library/stepwise/step-14-plan-ceo-review.md), `investigate`,
-[[[makepdlf-project-library:stepwise/step-12-office-hours|Step 12 Office Hours]]](C:/dev/dev-makepdlf/makepdlf-project-library/stepwise/step-12-office-hours.md), `retro`) exist in the discovery path — installed via
+Four `gstack-openclaw-*` skills ([[[makepdlf-project-library:stepwise/step-14-plan-ceo-review|Step 14 Plan Ceo Review]]](C:/dev/dev-makepdlf/makepdlf-project-library/stepwise/step-14-plan-ceo-review.md), `investigate`,
+[[[makepdlf-project-library:stepwise/step-12-office-hours|Step 12 Office Hours]]](C:/dev/dev-makepdlf/makepdlf-project-library/stepwise/step-12-office-hours.md), `retro`) live in the clone's `openclaw/skills/` subtree — installed via
 `clawhub install` for OpenClaw, which is not used in this environment.
-Not part of this catalog; deliberately not removed (an update recreates them).
+They have no discovery shortcut in `~/.config/opencode/skills/` and are not
+part of this catalog; deliberately left in the clone (an update recreates
+them).
 
 ## Do not
 

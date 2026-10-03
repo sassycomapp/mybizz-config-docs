@@ -1,7 +1,7 @@
 ---
 title: "opencode-skill"
 doc-id: "mb-c861757a"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # mb-config-opencode — Exam Skill
 
@@ -39,7 +39,7 @@ repairs nothing.
 - **Session database** and its cleanup belong to
   [[[mybizz-config-docs:opencode/opencode-project-session-data-integrity|Project & Session Data Integrity]]](C:/mybizz/mybizz-config-docs/opencode/opencode-project-session-data-integrity.md) — agent content reads are
   guard-denied; this exam checks presence only (directory listing), never content.
-- **Full skill inventory** belongs to [[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md) (docs-managed) — this exam
+- **Full skill inventory** belongs to [[mybizz-os-docs:skills-reference/skills-register|Skill Register]] (docs-managed) — this exam
   checks discovery **mechanics** (that the documented real install methods still
   resolve for the installed `mb-config-*` set), never re-audits the inventory.
 - **PostgreSQL/data-model state** belongs to `mb-config-postgresql` — OpenCode's

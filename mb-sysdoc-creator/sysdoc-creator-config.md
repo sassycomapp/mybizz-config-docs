@@ -1,7 +1,7 @@
 ---
 title: "sysdoc-creator-config"
 doc-id: "mb-7688c176"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # sysdoc-creator — Config
 
@@ -94,6 +94,6 @@ verified live this date unless noted.
 
 ## Open items
 
-1. [[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md) (`mybizz-os-docs`) lists six mb-* siblings as working — `mb-sysdoc-creator` is absent. Correct the register The use of registers has been discontinued. Please review if it is meant to be complete.
+1. [[mybizz-os-docs:skills-reference/skills-register|Skill Register]] (`mybizz-os-docs`) lists six mb-* siblings as working — `mb-sysdoc-creator` is absent. Correct the register The use of registers has been discontinued. Please review if it is meant to be complete.
 2. No version field in SKILL.md — currency between the two copies is provable only by diff.
 3. This suite's file prefix (`sysdoc-creator-`) differs from the folder/skill name (`mb-sysdoc-creator`) — developer-stated naming for this suite; sibling suites use the folder name as prefix.

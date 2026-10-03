@@ -1,7 +1,7 @@
 ---
 title: "gstack-explainer"
 doc-id: "mb-b80e9856"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # GStack Explainer
 
@@ -59,10 +59,8 @@ in what order).** Neither replaces reading the actual code.
   session context save/restore.
 - **Safety modes.** Destructive-command warnings, edit scoping, combined
   guard mode.
-- **Platform-specific loops.** Live-device iOS QA through a real iPhone.
 - **Documentation.** Diataxis-structured doc generation and post-ship doc
   syncing.
-- **Second opinions.** Cross-model review through Codex and Claude wrappers.
 - **GBrain upkeep.** Per-repo brain sync and setup skills (with known
   caveats — see suitability).
 
@@ -79,7 +77,7 @@ clone's `bin/` — deterministic scripts the skills call, not chat.
   docs-plan workflow); security audits on any repo; PDF and diagram
   generation; keeping GBrain synced per repo.
 - **Not good for:** trivial one-line tasks — the ceremony costs more than
-  it catches; iOS work without a connected iPhone; `/land-and-deploy`
+  it catches; `/land-and-deploy`
   before `/setup-deploy` has been configured; trusting `/setup-gbrain`'s
   own description of GBrain's backend (it describes PGLite/Supabase — this
   environment runs self-hosted PostgreSQL); replacing the authority model —
@@ -96,10 +94,12 @@ file would be silently overwritten on the next generation — the doc rule
 **Why the install is a symlink web instead of copies.** One real clone,
 one real per-host skill tree, and discovery links pointing into it — so an
 upgrade touches one place, and `GSTACK_BIN`-style paths stay stable across
-it. The bare-named and `gstack-` prefixed discovery links are two
-generations of the same installer pointing at the same files; the
-frontmatter `name:` field, not either folder naming, decides the command —
-which is why both link generations can coexist without ambiguity.
+it. OpenCode loads a skill only when the skill's frontmatter `name:` field
+matches the folder that contains it, so each discovery shortcut carries
+exactly the skill's declared name — the plain names plus `gstack-upgrade`,
+the one skill whose frontmatter declares the prefixed name. `skill_prefix`
+is false, and gstack's setup, upgrade and relink tools read that setting,
+creating plain shortcuts only.
 
 **Why the authority model is ordered that way.** A workflow layer's
 greatest risk is quietly outranking reality: a skill's convention is
@@ -129,11 +129,8 @@ existing source. The refusal is correct behavior; the bypass
 
 **Open questions.** The `1.81.0.0` upgrade (Aside-first browser, team mode,
 prune-on-setup) — a deliberate re-decision, not a routine bump, and the
-reason this suite pins to installed behavior. Whether to clean up the three
-broken discovery symlinks (inert; cosmetic only). Whether to configure a
-brain-sync remote (artifact sync is currently local-only). Which setup
-version produced the July bare-name links (provenance only, no rule
-depends on it).
+reason this suite pins to installed behavior. Whether to configure a
+brain-sync remote (artifact sync is currently local-only).
 
 *Companion documents: [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md) (state), [[[mybizz-config-docs:gstack/gstack-reference|GStack Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-reference.md)
 (workflows and commands), [[[mybizz-config-docs:gstack/gstack-skills-reference|GStack Skills Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-skills-reference.md) (catalog).
@@ -160,7 +157,7 @@ PostgreSQL pilot and the gbrain-dream-cycle precedent. The short local version:
   (this exam reads `~/.gstack/*.json` records only); the dream cycle belongs to
   `mb-config-gbrain-dream-cycle` (`/sync-gbrain` is a knowledge check only);
   OpenCode structure rows belong to `mb-config-opencode`; cross-tool skill
-  enumeration belongs to [[[mybizz-os-docs:skills-reference/skills-register|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md) (docs-managed). This exam owns the
+  enumeration belongs to [[[mybizz-os-docs:os-reference-docs/skills-catalog|Skills Catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md). This exam owns the
   discovery **mechanics** — that the documented clone, links, binaries, and
   config files resolve and are consistent.
 - Several checks are permanently **developer-run**: `~/.gstack` credential-
@@ -173,21 +170,22 @@ PostgreSQL pilot and the gbrain-dream-cycle precedent. The short local version:
 ## 8. S.W.O.T.
 
 **Strengths.** The installed-and-pinned model with every file links into one real
-clone removes the multi-copy drift class entirely; the frontmatter `name:` field
-(not folder names) resolves command ambiguity across two installer generations;
-every known quirk — the broken discovery entries, the stale update-check, the
+clone removes the multi-copy drift class entirely; each discovery shortcut
+carries exactly the skill's declared frontmatter `name:` (OpenCode loads a
+skill only on a name–folder match), so command resolution is unambiguous;
+every known quirk — the stale update-check, the
 source-overlap trap — is documented with its correct handling rather than left a
 surprise.
 
 **Weaknesses.** The environment sits 23 minor versions behind upstream
 (`1.58.1.0` vs `1.81.0.0`), and the upgrade decision is a genuine re-design that
 cannot be rushed; several checks are permanently developer-run (guard-denied file
-content); the bare-name discovery links' setup provenance is unidentified
-(cosmetic only).
+content).
 
 **Opportunities.** The config-management exam adds standing verification that
-never existed: clone/version conformance, topology resolution (both link
-generations + aggregate + legacy path), config-file conformance, a deterministic
+never existed: clone/version conformance, topology resolution (one shortcut
+per installed skill, named by its declared name + aggregate + legacy path),
+config-file conformance, a deterministic
 bin invocation, and the generation-discipline probe — so the silent-failure class
 (a symlink web that looks right but resolves dead) is caught before it compounds.
 

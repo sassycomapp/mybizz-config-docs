@@ -1,7 +1,7 @@
 ---
 title: "opencode-log"
 doc-id: "mb-70bf28c0"
-updated: "2026-10-01"
+updated: "2026-10-03"
 ---
 # OpenCode — Log
 
@@ -16,7 +16,7 @@ working data; content beyond eventness is not the point.)
 | 2026-09-01 | Global config folder briefly carried two files at once — `opencode.json` and `opencode.jsonc`, both real, both loaded, ambiguous precedence | Consolidated into a single `opencode.jsonc`; stray file deleted; the `instructions` pointer fixed away from four deleted `INDEX.md` files toward `register-global.md` The use of registers has been discontinued. Please review (see [[[mybizz-config-docs:opencode/opencode-config\|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md)) |
 | 2026-09-05 | Core suite created (config, reference, explainer, permission model, session-data docs) | Five-document suite stood up for the harness |
 | 2026-09-06 | Cupcake suspension (2026-09-06) required a **full process restart** to take effect — plugin loaded exactly once, at process start, never per-session | Mechanism verified live for the first time ([[[mybizz-config-docs:opencode/opencode-explainer\|OpenCode Explainer]]](C:/mybizz/mybizz-config-docs/opencode/opencode-explainer.md) §2); restart is the only reload path, permanently |
-| 2026-09-08 | Full real audit of every skill on the machine (2026-09-08) | Skill discovery is **not** a single mechanism — 4 confirmed real methods (plain folders, same-drive symlinks, hybrid, two-hop); inventory captured in [[[mybizz-os-docs:skills-reference/skills-register\|Skill Register]]](C:/mybizz/mybizz-os-docs/skills-reference/skills-register.md); taxonomy in [[[mybizz-config-docs:opencode/opencode-explainer\|OpenCode Explainer]]](C:/mybizz/mybizz-config-docs/opencode/opencode-explainer.md) §3 |
+| 2026-09-08 | Full real audit of every skill on the machine (2026-09-08) | Skill discovery is **not** a single mechanism — 4 confirmed real methods (plain folders, same-drive symlinks, hybrid, two-hop); inventory captured in [[mybizz-os-docs:skills-reference/skills-register\|Skill Register]]; taxonomy in [[[mybizz-config-docs:opencode/opencode-explainer\|OpenCode Explainer]]](C:/mybizz/mybizz-config-docs/opencode/opencode-explainer.md) §3 |
 | 2026-09-08 | Cupcake reactivation (2026-09-08) — a second full restart required | Load-once confirmed a second, independent time — the finding generalizes to plugins, skills, MCP entries |
 | 2026-09-09 | Config **merge semantics verified empirically** via `opencode debug config` — project config overrides global only on conflicting keys; nested permission maps merge deeply; a project `permission.bash: {"*": "allow"}` retained **all 13 global deny patterns** | The precedence caveat closed (was unverified); deep-merge is now a verified behavior, not an inference ([[[mybizz-config-docs:opencode/opencode-permission-access-control-model\|Permission & Access Control Model]]](C:/mybizz/mybizz-config-docs/opencode/opencode-permission-access-control-model.md)) |
 | 2026-09-09 | Live verification day: everything in [[[mybizz-config-docs:opencode/opencode-config\|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md) verified key-by-key; bash deny-list proven live (a command matching `rm -rf *` was refused before execution, the target file survived); both WSL distros and the real (non-default) working distro confirmed | Config doc now reflects verified live state, dated; deny patterns match command **text**, not intent — rephrase only when the match is incidental |
