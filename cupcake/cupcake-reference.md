@@ -1,7 +1,7 @@
 ---
 title: "cupcake-reference"
 doc-id: "mb-e79d3d01"
-updated: "2026-10-03"
+updated: "2026-10-04"
 ---
 # Cupcake Reference — Usage, Invocation, and Worked Examples
 
@@ -156,6 +156,48 @@ git-revoke: none — allowances expire; re-granting a repo updates the entry in 
 **Important: a raw `cupcake eval` pipe exercises the allow/deny decision
 but not the decrement**, exactly as for path grants — the count moves
 only through genuine plugin-governed tool calls.
+
+## `net-grant` / `net-revoke` — network grants (2026-09-13)
+
+```
+net-grant --domain <domain> --count N
+net-revoke --domain <domain>
+```
+
+Issues a bounded fetch allowance for one domain: webfetches to that host are
+allowed while the entry is live, and the count decreases by one per allowed
+fetch — decremented by the plugin's `tool.execute.after` hook. Expiry is
+fixed at 30 minutes — hardcoded, no `--minutes` flag (matching `mg-grant`'s
+fixed expiry), pruned by the plugin's `tool.execute.before` hook. Domains
+are stored lowercase and exact — no wildcards, no scheme or port (a URL
+pasted as the domain is normalized to its bare host). Re-granting an
+already-granted domain updates that entry in place. Writes the same
+generated-file discipline as `mg-grant`:
+`~/.config/cupcake/policies/opencode/cup-network-grants-data.rego`, package
+`cupcake.global.policies.network_grants_data` — never hand-edited.
+
+**Real worked example — full cycle (live-verified 2026-10-04):**
+```
+net-grant --domain example.com --count 1
+cat ~/.config/cupcake/policies/opencode/cup-network-grants-data.rego
+# grants := { "example.com": {"count": 1, "expires_at_ns": ...} }
+
+# — a real webfetch to https://example.com — allowed, count now 0
+# — a second fetch attempt — ❌ Policy Violation (count exhausted, or expiry prunes the entry)
+
+net-revoke --domain example.com
+# entry removed entirely
+```
+
+**The agent does not run these tools itself.** The grant tools are
+developer-terminal only — the agent asks the developer to run `net-grant`,
+stating the domain and the count it needs; the control-plane rule denies
+agent invocation of the grant tools by name in bash, and the outbound-network
+deny message itself instructs the agent to ask.
+
+**Important: a raw `cupcake eval` pipe exercises the allow/deny decision
+but not the decrement**, exactly as for path grants — the count moves only
+through genuine plugin-governed tool calls.
 
 ## Confirming the plugin is loaded exactly once
 
