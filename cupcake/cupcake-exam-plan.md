@@ -1,130 +1,112 @@
 ---
 title: "cupcake-exam-plan"
 doc-id: "mb-cd94d069"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Cupcake — Exam Plan
 
-Transient job-spec for the next exam run. Synthesized by the config-manager before
-each run from: [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) (spec), the last [[[mybizz-config-docs:cupcake/cupcake-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-report.md),
-[[[mybizz-config-docs:cupcake/cupcake-log|Log]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-log.md) (events since last run), [[[mybizz-config-docs:cupcake/cupcake-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-learnings.md). Consumed by
-the skill at run time; rewritten at the start of the following cycle. The file is
-live; its contents are transient.
-
-**This first plan is hand-written** (emulation of the PostgreSQL architecture): it
-also served as the format template — the standing-checks section below was the
-complete, authoritative enumeration of every check the exam performs. It
-**graduated into the skill on 2026-09-13** (after run #1 verified it); this plan
-is retained as the format template, and future plans carry run-specifics +
-references instead.
-
----
+Transient job-spec for this run. Synthesized 2026-10-04 by the config-manager from
+[[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) (spec — read fresh at run start), the last
+[[[mybizz-config-docs:cupcake/cupcake-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-report.md) (run #1, 2026-09-13), the
+[[[mybizz-config-docs:cupcake/cupcake-log|Log]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-log.md) (events since last run), and the
+[[[mybizz-config-docs:cupcake/cupcake-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-learnings.md). The standing check inventory (Tiers 0–3, C0-1…C3-4)
+lives in the skill ([[[mybizz-config-docs:cupcake/cupcake-skill|Cupcake Skill]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-skill.md) / installed copy); this plan
+carries run-specifics, deltas, and the developer-requested item only. Consumed by
+the skill at run time; rewritten at the start of the following cycle.
 
 ## 1. Run header
 
 | Item | Value |
 |---|---|
-| Plan for run | #1 — first formal plan-driven run (pilot 2026-09-12 was detection-only, pre-architecture) |
-| Run date | set at execution |
-| Prior report | [[[mybizz-config-docs:cupcake/cupcake-exam-report\|Exam Report]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-report.md) (2026-09-12, pilot) |
-| Step-0 result | recorded at execution |
-| Tier 3 unlock state | **Locked** — Tier 3 rows execute only if the developer unlocks this run (Tier 3 items are inherently developer-run: the exec-protection guard forbids agents from executing the cupcake binary) |
-| Developer-run requests this run (bundled into ONE request) | (a) authoritative live eval health check (reference-doc invocation); (b) any check whose command text the guards deny |
+| Plan for run | #2 — second formal plan-driven run (run #1: 2026-09-13) |
+| Run date | 2026-10-04 |
+| Invocation | single-system cycle per developer instruction: step 0 → plan → skill run → aggregate → report → **STOP at the gate; apply no repair** |
+| Prior report | [[[mybizz-config-docs:cupcake/cupcake-exam-report\|Exam Report]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-report.md) (run #1, 2026-09-13) |
+| Step-0 result | PASS with estate finding F-S0-1 — recorded in the [[[mybizz-config-docs:mb-config-manager/config-manager-log\|Config Manager Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) 2026-10-04 (15/15 source↔installed body MATCH; register body-hash columns stale ×15 → DRIFT, gate item) |
+| Tier 3 unlock state | **Locked** — Tier 3 rows execute only if the developer unlocks this run |
+| Developer-run requests this run (bundled into ONE request) | (a) grant-enforcement write-probes (GR-6) — required by the developer-requested item regardless of Tier 3; (b) any check whose command text a guard denies; (c) Tier-3 items (C3-1…C3-4) only if unlocked |
+| Read approvals pending | `C:\dev\project-library-global\rules-cupcake-global\` read (C2-4 source leg) — requested; C2-4 executes deployed-side only until approved |
 | Expected-value source of truth | [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) — read fresh at run start; never rely on remembered values |
-| Structural constraint | the agent never executes the cupcake binary, never reads/edits anything inside `.cupcake/` or `~/.config/cupcake/` beyond read-only inventory, never touches policy or plugin files |
+| Structural constraint | per the skill's structural rule: never execute the enforcement binary; read-only inventory only inside `~/.config/cupcake/`; never write to policy or plugin files; never work around a denial |
 
-## 2. Carried-forward items (from pilot report, 2026-09-12)
+## 2. Carried-forward items (from run #1 + log)
 
-| # | Item | Why deferred | This run's action |
+| # | Item | Status going in | This run's action |
 |---|---|---|---|
-| CF-1 | Finding 2 — backup inventory vs spec (2 plugin backups + 5 rego `.bak-*` files exist; spec documents one) | docs-governance flag | Verify whether governance approved + applied the spec refresh; re-inventory and compare |
-| CF-2 | Finding 3 — config filename drift (spec says `opencode.json`, live file is `opencode.jsonc`) | docs-governance flag | Verify whether governance applied; re-check task-deny against the actual file |
-| CF-3 | Finding 0 — guard false-positive class (token `cupcake` in command text is denied even for non-execution) | reclassified operations developer-run | Confirm the class still holds; any new denial = further evidence, never worked around |
-| CF-4 | Tier 3 deep pass (developer eval + test sheets + grant lifecycle + version corroboration) | unlock not given; inherently developer-run | List as available; execute only on unlock |
+| CF-1 | Run #1 open question — bash-mediated writes do not decrement grant counts | Resolved 2026-09-13: developer-accepted as intended design; recorded in the spec's grant-mechanics section; skill C3-3 expected cell updated | Verify spec ↔ skill wording agree; no re-test |
+| CF-2 | Guard token class — the token `cupcake` denied in non-execution command text | Standing class, honored | Any new denial recorded as liveness evidence, never worked around |
+| CF-3 | Version gap — upstream v0.5.1 vs installed 0.3.0 | Recorded 2026-09-13; policy: upgrade only on check failure | No action unless a check fails (then Tier-3 C3-4, developer-run) |
+| CF-4 | Run #1 report closing line stale ("Tier 3 partially open") vs log (C3-3 completed) | Doc artifact | Overwritten by this run's report — no separate action |
 
-## 3. Erred last run (distinct from deferred)
+## 3. Log-driven items (events since run #1: 2026-09-13 → 2026-10-04)
 
-| # | What erred | This run's action |
+| # | Event | Check |
 |---|---|---|
-| ER-1 | `which cupcake` denied by exec-protection (binary-name resolution) | Binary resolution via filesystem listing only (`ls` on bin dirs); never name the binary in a command |
-| ER-2 | Skill-install `mkdir`/`mv` denied (token in path args) | Install operations touching cupcake-named paths are developer-run — standing rule, confirmed 2026-09-12 |
+| LG-1 | 2026-09-22 set-and-forget amendment — second total-evaluation crash fixed permanently (`failMode: open` environment default; skeleton-less sessions fall back to `~/.config/cupcake/fallback`; input-gated placeholder guarantees boot safety; live-verified 10 consecutive clean calls) | Verify live: fallback home exists with the expected skeleton (input-gated `cup-noop-fallback.rego`, `system/evaluate.rego`, `helpers/commands.rego`, `rulebook.yml`, `opencode.json`); placeholder opa-checks clean; plugin backup `.bak-20260922-pre-amendment` present; spec §Identity rows (fallback home, plugin amendment, project-init status) match live state |
+| LG-2 | 2026-09-22 WP3 commit-allowance channel (decision G1): amended rules committed to source (24985a3), compiled, deployed; plugin prunes and decrements BOTH grants files; `git-grant` placed by developer; live-verified same day (allow with live grant; publish deny; data-mybizz-mgt write deny) | Verify live: `cup-git-grants-data.rego` present, generated-form, opa-checks clean; `git-grant` on PATH; deployed git rule carries the allowance clause and publish/deploy stay absolute-deny; deployed cross-project rule carries no `skills-collective` always-open entry; plugin backup `.bak-20260922-pre-wp3` present; spec §Commit-allowance rows match live |
+| LG-3 | 2026-10-04 developer-reported grant-enforcement evidence — over-writes vs counts (~27 write ops against a count-22 slip on `mybizz-config-docs`; 4 against count 3 on `/mnt/c/mybizz/scripts`) and two ungranted successful writes to `~/.config/opencode/skills`. Free row appended to the [[[mybizz-config-docs:cupcake/cupcake-log\|Log]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-log.md) at plan-synthesis time this run | **Developer-requested item — the GR investigation (§5)** |
+| LG-4 | Spec refreshed 2026-10-01 (grant counts row dated 2026-09-21: four active grants — data-mybizz-mgt, dev, pdlf, memory-governor — counts 40–60; WP3 rows added) | Verify the live grants file against the spec's dated statement; flag only structural mismatch, not evolution |
 
-## 4. Log-driven items
-
-| # | Event (log) | Check |
-|---|---|---|
-| LG-1 | 2026-09-13 copy-install backfill + register The use of registers has been discontinued. Please review hash recorded | Step-0 hash check covers the cupcake skill pair |
-| LG-2 | No crashes/incidents since 2026-09-12 fixes | If a new log row exists at synthesis time, derive a targeted probe from it |
-
-## 5. Learnings-driven items
+## 4. Learnings-driven items
 
 | # | Learning | Check |
 |---|---|---|
-| LE-1 | Source↔deployed correspondence: 20 sources, 19 deployed files — bash-write-shapes are folded into `cup-no_cross_project_filesystem_access_by_default.rego` (verified: 4 bash-shape indicator groups) | Count correspondence with the fold-in expected; a "missing" bash-governance deployment is NOT a finding |
+| LE-1 | Source↔deployed fold-in: 20 sources ↔ 19 deployed — bash-governance compiled into the cross-project rule (same file/package, own rule id, 4 bash-shape indicator groups) | C2-4 as written; a "missing" bash-governance deployment is NOT a finding. Source leg pending read approval; deployed leg executes regardless |
+| LE-2 | `.bak-*` files accumulate by design | C1-3 checks suffix discipline, never backup absence |
+| LE-3 | Guard denials are dual-purpose: enforcement proof + reclassification signal | Denied checks → developer-run bundle; the denial logged as liveness evidence |
 
-## 6. Standing checks — the complete enumeration (Tiers 0-3)
+## 5. Developer-requested item — grant-enforcement investigation
 
-Every check: id, runner (A=agent, D=developer), probe, expected source, pass rule.
-This enumeration graduates into the skill after a verified run; future plans carry
-run-specific deltas only.
+Evidence (2026-10-04, developer report): writes exceeded granted counts (~27 write
+ops against a count-22 slip on `mybizz-config-docs`; 4 against count 3 on
+`/mnt/c/mybizz/scripts`), and two writes to `~/.config/opencode/skills` succeeded
+although no grant for that folder was issued in the session. **Read-only first.**
+Checks needing a write, or denied by a guard, are bundled as a developer-run
+request with exact commands. Every finding classified DOWN / UNHEALTHY / DRIFT /
+GAP.
 
-### Tier 0 — Liveness (run first; any failure = report `DOWN`, stop; remaining tiers skipped)
+Recorded facts feeding this item: re-granting a path REPLACES the count
+([[[mybizz-config-docs:facts/2026-09-22-regrant-replaces-count]]](C:/mybizz/mybizz-config-docs/facts/2026-09-22-regrant-replaces-count.md)); decrements fire per successful edit op —
+a count-26 slip was exhausted across 32 edit ops in the makepdlf run, the same
+under-decrement class as today's evidence ([[[mybizz-config-docs:facts/2026-09-23-grant-decrement-per-edit-op]]](C:/mybizz/mybizz-config-docs/facts/2026-09-23-grant-decrement-per-edit-op.md));
+`mg-grant` lowercases the granted path ([[[mybizz-config-docs:facts/2026-09-15-mg-grant-lowercase-paths]]](C:/mybizz/mybizz-config-docs/facts/2026-09-15-mg-grant-lowercase-paths.md));
+CLI syntax is flag-based, failed attempts consume nothing
+([[[mybizz-config-docs:facts/2026-09-23-grant-cli-flag-syntax]]](C:/mybizz/mybizz-config-docs/facts/2026-09-23-grant-cli-flag-syntax.md)).
 
-| ID | Runner | Check | Expected (source: config §) |
-|---|---|---|---|
-| C0-1 | A | Binaries resolve by filesystem listing: `~/.cupcake/bin/` real binary + `/usr/local/bin/` symlink; `opa` real file — **never name the cupcake binary in a command** | Matches spec identity rows |
-| C0-2 | A | Enforcement firing: one harmless known-blocked probe (e.g. `curl` to a non-allowlisted domain — harmless whether denied or allowed) OR denies naturally received during the run | Deny received = liveness confirmed; allow received = fail-open/crash finding → `UNHEALTHY`, hand to developer |
-| C0-3 | A | Plugin: exactly one live `cupcake.js` in `~/.config/opencode/plugin/` | One live copy (loader does not deduplicate — a second copy double-fires) |
+| ID | Question | Method (read-only unless noted) |
+|---|---|---|
+| GR-1 | How does `mg-grant` record grants? | Read `~/.config/cupcake/bin/mg-grant` (and `mg-revoke`, `git-grant`): where state lives, full-regeneration vs in-place semantics, path canonicalization (the lowercase fact), count/expiry field handling, opa-check-before-overwrite discipline |
+| GR-2 | Do counts decrease, and is the count enforced? | Read the plugin's decrement hook: which tools decrement, how the path key is matched (allow-check vs decrement — same canonicalization?), behavior on lookup miss or write failure (silent skip?), concurrency between simultaneous sessions; correlate with the live grants file, the 2026-10-04 evidence, and the 2026-09-23 under-decrement fact |
+| GR-3 | Do grants expire? | Schema `expires_at_ns`; the plugin's before-hook prune; verify live entries' expiry stamps are structurally sane and actually compared against wall-clock |
+| GR-4 | Does `mg-revoke` remove entries? | Read `mg-revoke`: what it removes, regeneration safety, behavior on an absent entry |
+| GR-5 | Why did ungranted writes to `~/.config/opencode/skills` succeed? | Read the deployed cross-project rule: the always-open list (is `~/.config/opencode/skills` on it?), the project-boundary and grant checks for write-shaped ops; classify: documented always-open (spec GAP) vs allow-check defect (UNHEALTHY/DRIFT) |
+| GR-6 | Live probes (write-needing) | Agent-executed only where harmless and clearly permitted; otherwise developer-run bundle with exact commands: issue a test grant → file-tool write → verify decrement → revoke → verify removal; expiry probe via a short-`--minutes` grant if supported |
 
-### Tier 1 — Health (compile + structural integrity)
+## 6. Standing checks this run
 
-| ID | Runner | Check | Expected |
-|---|---|---|---|
-| C1-1 | A | `opa check` every `.rego` in `~/.config/cupcake/policies/opencode/` (deployed + builtins + system) | Zero failures — one failed file = the 7F crash pattern → `UNHEALTHY` |
-| C1-2 | A | Scaffold absence: no `example.rego`, no non-`cup-`/non-builtin `.rego` in the policy folder; project `.cupcake/` skeletons intact | None (inventory from outside; never modify) |
-| C1-3 | A | Backup discipline: all `.bak-*` files carry non-`.rego`/non-`.js` suffixes | All correctly suffixed (never loaded) |
-| C1-4 | A | `cup-grants-data.rego` present, generated-form header | `GLOBAL-GRANTS-DATA` header; never hand-edited |
+Full ID'd inventory in the skill (Tiers 0–3, C0-1…C3-4). Execute Tier 0 → Tier 2 in
+full, expected values from the spec read fresh. Run-specific deltas:
 
-### Tier 2 — State conformance (each probe compared to the spec's current expected value; any mismatch = DRIFT finding)
-
-| ID | Runner | Check | Expected |
-|---|---|---|---|
-| C2-1 | A | Policy inventory | 19 custom + 3 builtins + `system/evaluate.rego` aggregator — file names matched against the spec's rule tables |
-| C2-2 | A | Task-denial layer 1 | `"task": "deny"` in `~/.config/opencode/opencode.jsonc` (note: `.jsonc`, not `.json`) |
-| C2-3 | A | `spawn-tools-denylist.json` | exactly: task, delegate, call_omo_agent, agent_session_create |
-| C2-4 | A | Source↔deployed correspondence | 20 sources ↔ 19 deployed; [[[default:rules-cupcake-global/no_bash_mediated_file_writes_without_grant\|Rule: No Bash-Mediated File Writes Without Grant]]](C:/dev/project-library-global/rules-cupcake-global/no_bash_mediated_file_writes_without_grant.md) folded into the cross-project rule (expected — see LE-1); verify bash-shape indicators still present in that rego |
-| C2-5 | A | Grant tooling | `mg-grant`, `mg-revoke` present on PATH |
-| C2-6 | A | Plugin backup set | inventoried vs spec (CF-1) |
-| C2-7 | A | Grants data file | present, generated-form |
-
-### Tier 3 — Deep pass (all developer-run; executes only if the developer unlocks this tier)
-
-| ID | Runner | Check | Expected |
-|---|---|---|---|
-| C3-1 | D | Authoritative live eval: the reference doc's health-check invocation, run by the developer | Clean `{"decision":"allow"}` — anything else is a live incident |
-| C3-2 | D | Real block/allow test sheet for representative rules (the 13/13 / 35/35 pattern) | All pass |
-| C3-3 | D | Grant lifecycle live test | grant → write attempt → decrement → expiry |
-| C3-4 | D | Version corroboration | spec open item 3 — upstream release listing vs installed 0.3.0 |
+- C0-1: filesystem listing only, glob forms — never the enforcement binary's name in command text.
+- C0-2: one harmless probe — curl to a non-allowlisted `.invalid` hostname; a received deny = liveness confirmed; an executed allow = `UNHEALTHY`, hand to developer.
+- C2-4: deployed leg only until the rules-cupcake-global read approval lands.
+- GR-1…GR-5 run alongside Tiers 1–2 (same inventory reads).
 
 ## 7. Report requirements
 
-The run writes [[[mybizz-config-docs:cupcake/cupcake-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-report.md): verdict line; per-tier tables (check ID,
-expected, actual, result); findings with class + evidence + recommended repair;
-runner attribution for every deferred item (guard-forbidden vs unlock-gated);
-liveness evidence (which denial proved firing); overwritten in full each run
-(write-then-replace: failed runs never touch the prior report). Then: one run row
-appended to [[[mybizz-config-docs:cupcake/cupcake-log|Log]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-log.md) (run-row format per [[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md));
-new learnings filed.
+Per the skill and the orchestrator MO: verdict line; per-tier tables (check ID,
+expected, actual, result); findings with class + evidence + recommended repair +
+rollback + risk; runner attribution for every deferred item; liveness evidence
+(which denial proved firing); every GR finding classified. **This run stops at the
+gate:** the structured report is presented in-chat; the report-file write, the run
+row, and any new learnings happen after the gate (per the developer's
+stop-at-gate instruction; write-then-replace discipline still applies when the run
+resumes).
 
 ## 8. Gate protocol
 
-- Findings → classify → present with evidence + recommended repair + risk
-- **This module has no agent-healable items by design** — Cupcake is the
-  governance layer itself; the agent never edits its policies, plugin, or grants
-  file. All repairs are developer-run, or proposed through the report
-- Spec-doc corrections → flagged to docs governance, never applied here
-- Deny-list (never touch): anything inside `~/.config/cupcake/` or any `.cupcake/`
-  · `cupcake.js` (live copy and backups) · the binaries · `opencode.jsonc`
-  permission section · `spawn-tools-denylist.json` · rule sources in
-  `rules-cupcake-global/`
-- Credentials: variable names only, never printed
+- No agent-healable items by design — all repairs developer-run or proposed through the report.
+- Spec-doc corrections → flagged to docs governance, never applied here.
+- Deny-list honored absolutely: anything inside `~/.config/cupcake/` or any `.cupcake/`; the plugin (live copy and backups); the binaries; `opencode.jsonc` permission section; `spawn-tools-denylist.json`; rule sources in `rules-cupcake-global/`.
+- Every gate outcome recorded per-item (item id → approve/reject/defer) in the run row's disposition field when the run resumes past the gate.
+- Credentials by variable name only, never printed.

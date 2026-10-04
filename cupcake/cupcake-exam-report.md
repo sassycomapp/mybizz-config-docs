@@ -1,91 +1,102 @@
 ---
 title: "cupcake-exam-report"
 doc-id: "mb-19213c10"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Cupcake — Exam Report
 
-Run #1 — **first formal plan-driven run** (2026-09-13). Plan:
-[[[mybizz-config-docs:cupcake/cupcake-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-plan.md) (step-0 self-validation: PASS — 8 suite files, hash pair
-MATCH ff34de94c7edd6df, spec present, no open run). Detection only — Tiers 0–2
-executed; Tier 3 locked (inherently developer-run). Spec: [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)
-(refreshed pre-run per developer approval — backup inventory + jsonc naming).
+Run #2 — second formal plan-driven run (2026-10-04). Plan:
+[[[mybizz-config-docs:cupcake/cupcake-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-plan.md) (step-0: PASS with estate finding F-S0-1 —
+register body-hash columns stale ×15, re-recorded this run under F-8 with the
+method pinned in the register notes). Spec: [[cupcake-config|Cupcake
+Configuration]] (re-baselined this run under F-3/F-5). Detection only for the
+live system; approved doc-side repairs applied in-run; deny-listed code repairs
+staged for developer application.
 
-## Verdict: ACTIVE & HEALTHY — enforcement proven live; zero compile failures; inventory exact
+## Verdict: HEALTHY+FLAGS — enforcement proven live; 27/27 files compile; two grant-machinery defects found, staged fixes approved
 
 ## Tier 0 — Liveness: PASS
 
 | ID | Check | Expected | Actual | Result |
 |---|---|---|---|---|
-| C0-1 | Binaries resolve (fs listing) | real binary + symlinks per spec | exact match; opa 1.19.1 | PASS |
-| C0-2 | Enforcement firing | deny on harmless known-blocked probe | **outbound-network deny received** (curl to non-allowlisted domain) | PASS |
-| C0-3 | Plugin single live copy | one `cupcake.js` | one live copy + 2 correctly-suffixed backups | PASS |
+| C0-1 | Binaries resolve (fs listing) | real binary + symlinks per spec | exact match; opa real file via symlink chain | PASS |
+| C0-2 | Enforcement firing | deny on harmless known-blocked probe | **outbound-network deny received** (curl to a non-allowlisted `.invalid` host) | PASS |
+| C0-3 | Plugin single live copy | one live plugin | one live copy + 4 correctly-suffixed backups | PASS |
 
 ## Tier 1 — Health: PASS
 
 | ID | Check | Expected | Actual | Result |
 |---|---|---|---|---|
-| C1-1 | `opa check` all deployed + builtins + system | 0 failures | **24 files checked, 0 failures** | PASS |
-| C1-2 | Scaffold absence | no `example.rego`/non-conforming files | none | PASS |
-| C1-3 | Backup suffix discipline | all `.bak-*` non-`.rego`/non-`.js` | all 8 correct | PASS |
-| C1-4 | Grants data file | generated-form | `GLOBAL-GRANTS-DATA` header | PASS |
+| C1-1 | `opa check` all deployed + builtins + system + fallback skeleton | 0 failures | **27 files checked, 0 failures** | PASS |
+| C1-2 | Scaffold absence; repo skeleton intact | none; placeholder present | no scaffold files; repo `.cupcake/` carries the input-gated placeholder (`failMode: open` in its opencode.json) | PASS |
+| C1-3 | Backup suffix discipline | nothing loadable among backups/cruft | all `.bak`/`.bak2`/`:Zone.Identifier` artifacts non-loadable (cruft recorded → F-4) | PASS |
+| C1-4 | Grants data files generated-form | generated markers present | all three files carry METADATA + `custom.id` (`GLOBAL-GRANTS-DATA`, `GLOBAL-GIT-GRANTS-DATA`, `GLOBAL-NETWORK-GRANTS-DATA`) | PASS |
 
-## Tier 2 — State conformance: PASS
+## Tier 2 — State conformance: PASS with F-3/F-4 drift (spec corrected this run)
 
 | ID | Expected | Actual | Result |
 |---|---|---|---|
-| C2-1 | 19 custom + 3 builtins + aggregator | exact match | PASS |
-| C2-2 | `"task": "deny"` in `opencode.jsonc` | present | PASS |
-| C2-3 | denylist: task, delegate, call_omo_agent, agent_session_create | exact | PASS |
-| C2-4 | 20 sources ↔ 19 deployed; bash-governance folded into cross-project rule | correspondence verified; 4 bash-shape indicators present; sole NO-DEPLOY = expected fold-in | PASS |
-| C2-5 | mg-grant, mg-revoke on PATH | present | PASS |
-| C2-6 | Backup set vs refreshed spec | full set inventoried, matches (8 `.bak-*` files) | PASS |
-| C2-7 | Grants file generated-form | confirmed | PASS |
+| C2-1 | Inventory vs spec | live: 20 custom + 3 builtins + 3 grants-data + aggregator (spec said 19 + 2 data files) | DRIFT → F-3; spec re-baselined |
+| C2-2 | `"task": "deny"` in opencode.jsonc | present (line 11) | PASS |
+| C2-3 | spawn-tools-denylist exact | exactly task, delegate, call_omo_agent, agent_session_create | PASS |
+| C2-4 | 20 sources ↔ 19 deployed; fold-in; bash-shape indicators | correspondence verified both legs (source read approved mid-run); allowance clauses present in both amended sources; 4+ bash-shape indicator groups live; `skills-collective` absent from the deployed rule (a historical mention in the source doc's amendment note is prose, not an entry); **new finding F-11**: deployed exempt list is `/tmp/`-only while the source doc documents an 8-entry always-open list | PASS with F-11 |
+| C2-5 | Grant tooling present on PATH | all five tools present (`mg-grant`, `mg-revoke`, `git-grant`, `net-grant`, `net-revoke` — the latter two undocumented → F-3); PATH carries both homes; verified via Read-tool inventory after the name-matcher denial (F-10) | PASS |
+| C2-6 | Backup set vs spec | spec stale (dated cross-project backups gone; undated `.bak`/`.bak2` + Zone.Identifier cruft live) | DRIFT → F-4; spec refreshed to post-cleanup state |
+| C2-7 | Grants files present, generated-form | all three, generated-form | PASS |
+
+## LG items — both 2026-09-22 amendments verified live
+
+- **LG-1 set-and-forget:** `failMode: open` default + fallback-home logic in the
+  live plugin; fallback skeleton = exactly the five expected files, all compile;
+  `.bak-20260922-pre-amendment` present.
+- **LG-2 WP3 commit-allowance:** allowance clause live (commit/push/merge
+  grantable; publish/deploy absolute); exclusive `-C` resolution; empty
+  git-grants file fails closed; `.bak-20260922-pre-wp3` present; `git-grant` on
+  PATH.
+
+## Grant-enforcement investigation (developer-requested item)
+
+| # | Question | Answer |
+|---|---|---|
+| GR-1 | How grants are recorded | `mg-grant` reads the live file via `opa eval`, merges via jq, regenerates the whole file through a `.rego` temp + `opa check` before mv. No separate state store — **decrements persist across re-grants**. Paths canonicalized to lowercase WSL form. Path/network grants: hardcoded +30 min expiry; `git-grant`: `--minutes` (default 30) |
+| GR-2 | Counts decrease / enforced? | Yes, sequentially — decrement per successful write-type tool call (write/edit/patch/multiedit/notebookedit), longest-prefix match, count>0 gate. Proven live twice this run (developer's count-1 grant 1→0; the two mb-config-manager writes 2→0). Bash-mediated writes never decrement (accepted design, 2026-09-13). **Defect F-2: the read-modify-write is unserialized — parallel tool calls race and lose decrements** |
+| GR-3 | Expiry? | Enforced by the plugin's before-hook prune for path + git files (BigInt ns, fail-safe). **Not for network grants — the plugin never touches that file (F-1)** |
+| GR-4 | `mg-revoke`? | Exact canonical entry `del()`, same opa-check safety; silent no-op on absent entry |
+| GR-5 | Ungranted skills-dir writes? | The cross-project rule blocks only writes outside the session cwd tree; the control-plane rule covers the plugin but not the skills dir. A session launched from an ancestor of `~/.config/opencode/skills/` sees those writes as in-project (→ F-7) |
+| GR-6 | Live probes | **Pre-fix probe executed with developer-issued grant:** two parallel Write calls against a count-2 grant → count fell only 2→1 (one decrement lost); a third write was then ALLOWED at count 1 and decremented to 0. **Three successful writes against a two-write grant — the race and the over-allowance proven live.** Post-fix re-probe owed after the staged amendment lands |
 
 ## Findings
 
-1. **CF-1/CF-2 verified APPLIED.** The spec refresh (backup inventory full set;
-   `opencode.jsonc` naming) was approved pre-run and applied — this run re-checked
-   against the corrected spec and matched. Prior flags closed.
-2. **CF-3 verified:** the guard token-match class held — two build-phase commands
-   containing the token `cupcake` were denied (honored, rerouted via approved glob
-   form); one relative-path command containing the same token later passed,
-   reconfirming the nondeterminism documented in [[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md).
-   Denials recorded as liveness evidence per the standing doctrine.
-3. **CF-5-class verification:** the ID'd check inventory (C0-1…C2-7, 17
-   agent-runnable checks) executed correctly from this plan — the template format
-   is proven. Eligible for graduation into the skill.
+| # | Class | Finding | Disposition (gate 2026-10-04) |
+|---|---|---|---|
+| F-1 | UNHEALTHY | Network-grant channel has no enforcement legs: no prune, no decrement for `cup-network-grants-data.rego`; the rule allows on existence+count with no time check. Live proof: `opencode.ai count=3` issued 2026-09-13, expired ~3 weeks, still granting | **Approved:** extend the plugin's prune + decrement to the network file — staged in `/tmp/cupcake-staging/cupcake.js`; developer applies + restarts |
+| F-2 | UNHEALTHY | Grant decrement/prune is a non-atomic read-modify-write; parallel tool calls lose decrements (proven live in GR-6; consistent with the developer's 2026-10-04 numbers: ~27 writes vs count 22; 4 vs 3) | **Approved:** serialize every grants-file RMW with a mkdir-lock in the plugin and all five grant tools — staged; re-probe after application |
+| F-3 | DRIFT | Spec inventory stale: 20th custom rule (`cup-protect-cupcake-control-plane.rego`, no source document), third grants file + `net-grant`/`net-revoke`, allowlist 11 not 10 | **Approved + applied:** spec re-baselined this run |
+| F-4 | DRIFT | Backup inventory stale + cruft: five `:Zone.Identifier` artifacts, `system_protection.rego (2).bak`, undated `.bak`/`.bak2` where the spec listed dated ones | **Approved:** removal commands handed to the developer; spec refreshed to post-cleanup state |
+| F-5 | DRIFT | Spec promised an always-open shared-library tier; live exempt list is `/tmp/` only; 2026-09-24 broadening→revert episode unrecorded in the spec | **Approved + applied:** spec states current exempt list; episode recorded in the log (F-6), not the spec |
+| F-6 | GAP | Log silence 2026-09-22 → 2026-10-04 despite real events (net-grant creation 2026-09-13; control-plane rule creation + broadening/revert 2026-09-24) | **Approved + applied:** backfill row appended to the log this run |
+| F-7 | GAP | `~/.config/opencode/skills/` protected only cwd-relatively | **Approved:** grant-required from every session — staged rule amendment (`needs_grant_check`); not absolute; skill installs use grants |
+| F-8 | DRIFT | Register body-hash columns stale ×15; method undocumented (step-0 F-S0-1) | **Approved + applied:** all 15 rows re-recorded; method + reference command pinned in the register notes |
+| F-9 | GAP | config-manager-log carried a duplicated S-4 row | **Approved + applied:** duplicate removed this run |
+| F-10 | GAP | New guard-denial class: the control-plane rule denies bash command text that merely NAMES the grant tools (caught a `command -v` probe); plus 4 exec-protection token/path false-positives this run — including a `sed -n` READ of a control-plane path treated as a sed write | Recorded; learning filed; C2-5 verifies via Read-tool inventory + PATH |
+| F-11 | DRIFT | Deployed cross-project exempt list (`/tmp/` only) diverges from its source doc's 8-entry always-open list (incl. `mybizz-config-docs`, `logs`, both config homes) — live consequence: writes to those folders currently require grants (this session's own grant corroborates). **Raised after the gate (emerged from the approved C2-4 source read) — developer decision pending:** re-add entries to the rule vs update the source doc | Open — new gate item |
 
-4. **SCOPED FINDING (new, real): bash-mediated writes do not decrement grant counts.** The plugin's decrement hook fires for file-tool writes (proven: 2→1→0) but not for Bash-tool writes (three bash redirects left count untouched while all were allowed). Consequence: a grant with count N permits **unlimited bash-mediated writes** to the granted path until grant expiry — the bash-governance amendment made bash writes *deniable* under the boundary, but the decrement mechanism was not extended to them. All checks otherwise pass, so no upgrade/unlock pressure — but this is a genuine present-≠-fully-working finding in the grant mechanism. → learning filed; **developer decision required** (see open question).
-5. **Version corroboration (C3-4):** upstream latest **v0.5.1** vs installed **0.3.0** — gap recorded; per standing policy, upgrade only on check failure (none observed). Spec open item 3 updatable.
+## Liveness evidence
 
-## Open question for the developer (C3-3 finding 4)
+Outbound-network deny received on the C0-2 probe (rule
+`GLOBAL-POLICY-OUTBOUND-NETWORK-ACCESS-IS-ALLOWLIST-ONLY`); five guard denials
+honored during the run (four exec-protection token/path matches, one
+control-plane grant-tool name match) — all recorded, none worked around; two
+clean decrement sequences observed in the grants file.
 
-The decrement gap on bash writes: is **file-tool-only decrement the intended design** (bash shapes enforce the boundary via denial instead — which they do: ungranted bash writes ARE blocked), or should bash writes decrement too? **My recommendation:** accept file-tool-only decrement as intended design, and record it in [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)'s grant mechanics section (one sentence: "count decrement fires for file-tool writes; Bash-mediated writes within a granted path are permitted without decrement until grant expiry"). Rationale: bash writes inside a *granted* folder are already inside a developer-approved slip; expiry bounds exposure; extending decrement to bash shapes would be a plugin code change for marginal gain — "never change what is working well without a sound justified reason."
+## Runner attribution / deferred
 
-## Guard layers
+- Tier 3 (C3-1…C3-4): **locked** per developer instruction — remains
+  developer-run if unlocked later.
+- Deny-listed code repairs (F-1/F-2/F-7): staged, developer-applied; post-fix
+  re-probe owed.
+- F-4 cleanup + network revoke: developer-run commands handed over.
+- F-11: developer decision pending.
 
-One outbound-network denial received this run (C0-2 probe) + two build-phase
-token-match denials — all honored, all recorded. Enforcement is live, mechanical,
-and now exam-verified.
-
-## Tier 3 — deep pass (developer-verified 2026-09-13)
-
-| ID | Check | Result |
-|---|---|---|
-| C3-1 | Authoritative live eval (allow case) | **PASS (D)** — clean `{"decision":"allow"}`; 23 policies matched, WASM compiled from all 24 files, project-local scan correctly empty (global-only deployment) |
-| C3-2 | Block case | **PASS (D)** — `deny` with the exact outbound-network reason (rule `GLOBAL-POLICY-OUTBOUND-NETWORK-ACCESS-IS-ALLOWLIST-ONLY`), consistent across two runs |
-| C3-3 | Grant lifecycle | **PASS for file tools — with a scoped finding (see 5).** Agent-executed: grant count=2 → Write-tool write allowed (2→1, decrement verified in the grants file) → Write-tool write allowed (1→0) → third Write-tool write **DENIED** (count exhausted). Bash-mediated writes: **no decrement fires** (three bash redirects left the count untouched; count=0 denial still applies to both tool types). Cleanup: grant revoked |
-
-## C3-3 the corrected test — how it actually had to run
-
-Two design errors were caught and corrected during this check, each instructive:
-
-1. First attempt (`/tmp`): always-open path — grant never exercised. 
-2. Second attempt (developer's bare terminal): writes bypass Cupcake entirely — the plugin's hooks fire only on *agent* tool calls, so no decrement can ever occur there.
-3. Final design (agent-executed): grant as agent → file-tool writes from this session → decrements observed → exhaustion denial received. This is the only valid test path: **the enforcement point lives inside agent sessions.**
-| C3-4 | Version corroboration | **CORROBORATED (D)** — upstream publishes releases: latest **v0.5.1**; installed **0.3.0**. Gap recorded; no upgrade action (all checks pass — upgrade only on check failure, per policy). Spec open item 3 updatable |
-
-**Bonus evidence from the eval output (developer-verified):** all 24 policy files parsed successfully by name (19 custom + grants-data + 3 builtins + evaluate.rego — matches inventory exactly); unified WASM module compiled (466,125 bytes); project-local scan found 0 policies as expected (global-only deployment — the `WARN No valid policies found` line for the empty project skeleton is expected behavior, not a fault).
-
-*End of report — Tier 3 partially open (C3-3 corrected test pending; C3-1/2/4 complete).*
+*End of report — run #2 closes pending the post-fix re-probe and the F-11
+decision.*

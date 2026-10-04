@@ -1,7 +1,7 @@
 ---
 title: "cupcake-learnings"
 doc-id: "mb-a3fa7539"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Cupcake — Learnings
 
@@ -16,6 +16,6 @@ graduation rules) live in the orchestrator's own
 
 | # | learning | right action | destination |
 |---|---|---|---|
-| 1 | Source↔deployed correspondence: 20 rule sources, 19 deployed files — the bash-governance source ([[[default:rules-cupcake-global/no_bash_mediated_file_writes_without_grant\|Rule: No Bash-Mediated File Writes Without Grant]]](C:/dev/project-library-global/rules-cupcake-global/no_bash_mediated_file_writes_without_grant.md)) is compiled into `cup-no_cross_project_filesystem_access_by_default.rego` (same file/package, own rule id; 4 bash-shape indicator groups verified) | Expect the fold-in in every correspondence check; a "missing" bash-governance deployment is NOT a finding | config.md (source-inventory note — via governance) |
-| 2 | `.bak-*` files accumulate by design (plugin ×2, rego ×5 as of 2026-09-12) — the spec documents only one | Check suffix discipline (non-`.rego`/non-`.js` = never loaded), not backup absence; spec's backup list needs a full-set refresh | config.md (backup inventory — via governance) — **APPLIED 2026-09-13** |
-| 3 | Guard denials during an exam run are dual-purpose: enforcement proof AND a reclassification signal. The token-`cupcake` class denies even non-execution commands (proven: `which`, `mkdir`, `mv`); binary-path checks work via filesystem `ls` only | Route denied checks to the developer-run list; log the denial as liveness evidence | skill (graduated into exam-plan C0-1/C0-2 design 2026-09-13) |
+| 1 | The control-plane rule denies bash command TEXT that merely NAMES the grant tools — even read-only resolution such as `command -v` (proven live 2026-10-04, run #2). The exec-protection matcher additionally fires on read-shaped `sed` whose operand is a control-plane path, and on listings of the tools' bin dir | Verify grant tooling via filesystem listing + Read-tool inventory, never by naming the tools in bash; hand anything execution-shaped to the developer; every denial recorded as liveness evidence | skill (C2-5 runner note) — via next skill amendment |
+| 2 | Grant decrements race under parallel tool calls: the read-modify-write span is unserialized, so concurrent writers lose decrements (proven live 2026-10-04: three writes succeeded against a count-2 grant — two parallel writes lost one decrement, the third was allowed at count 1) | Standing verification probe: issue a count-2 grant on a restricted scratch path → two Write calls in ONE parallel batch → read the grants file (pre-fix: count 1; post-fix: count 0 exactly) → third write (pre-fix: allowed; post-fix: denied). Run it after any lock or decrement change | skill (C3-3 post-fix re-probe step) — via next skill amendment |
+| 3 | The deployed cross-project rule's exempt list is `/tmp/`-only while its source doc documents an 8-entry always-open list (incl. `mybizz-config-docs`, `logs`, both config homes) — live consequence: writes to those documented folders currently require grants. The control-plane rule, added 2026-09-24, has no source document at all | Flag the divergence at every C2-4 until the developer reconciles (re-add entries vs update the source doc); treat the compiled rule as the enforcement truth | config open item / F-11 gate decision — via governance |
