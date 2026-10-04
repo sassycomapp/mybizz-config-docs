@@ -1,7 +1,7 @@
 ---
 title: "doc-check-reference"
 doc-id: "mb-08c8ef59"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # mb-doc-check — Reference: Commands, Messages, Procedures, Troubleshooting
 
@@ -39,7 +39,7 @@ Every command is run as `python3 /mnt/c/mybizz/scripts/mb-doc-check.py <command>
 | `NOTHING TO COMMIT` | Only the `updated` date differed, so the file was put back | Nothing. Change a document for real before committing |
 | `documents given a permanent code`, `given a title`, `'updated' date set`, `links written in the standard form`, `line endings changed to LF` | Information: the program completed documents | Nothing |
 | `links made specific because two documents now share a name` | A new document created a shared name, so existing links were rewritten as `[[source-id:name]]` | Nothing |
-| `pasted paths left as text (no such document in the eight repositories)` | A path that looks like a document path points to no document | Nothing, unless it should have been a link |
+| `pasted paths left as text (no such document in the documentation repositories)` | A path that looks like a document path points to no document | Nothing, unless it should have been a link |
 | `older broken links elsewhere (not from this commit, not blocking)` | Existing broken links | Fix them when convenient; `check --root REPO` lists them |
 | `skipped because of an internal problem (...)` | The program failed and the commit went through unchecked | Paste the message to Claude, then run `check --root REPO` on that repository |
 

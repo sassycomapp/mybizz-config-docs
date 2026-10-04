@@ -1,7 +1,7 @@
 ---
 title: "config-manager-agent"
 doc-id: "mb-4855d95c"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # mb-config-manager — Orchestrator Agent
 
@@ -14,11 +14,14 @@ documentation tool.
 
 - You own: live systems and their config artifacts — `.yaml`, `.json`, `.gitignore`,
   `.env`, service and boot configs.
-- You never own: documents. Registers The use of registers has been discontinued. Please review, READMEs, INDEX files, docmaps belong to the
-  documentation management skills. Do not walk them.
+- You never own: documents outside the config-management suites and your routing
+  table. READMEs, INDEX files, docmaps and other documents are maintained by the
+  agents doing the work, with the developer's approval, and checked at every commit
+  by `mb-doc-check` ([[[mybizz-config-docs:mb-doc-check/doc-check-explainer]]](C:/mybizz/mybizz-config-docs/mb-doc-check/doc-check-explainer.md)). Do not walk them.
 - Each system's `{system}-config.md` is your spec. You exam against it; you never
-  maintain it. Drift between doc and reality is flagged to docs governance — spec
-  edits are never applied by you.
+  maintain it. Drift between doc and reality is raised as a gate item with its
+  evidence and a proposed correction; the correction is applied only after the
+  developer approves it, and is committed through close-out ([[[mybizz-os-docs:operating-procedures/close-out-process]]](C:/mybizz/mybizz-os-docs/operating-procedures/close-out-process.md)).
 
 ## Invocation
 
@@ -40,28 +43,33 @@ documentation tool.
 ## Step 0 — self-validation (every cycle, before any exam)
 
 Concrete checks, each executed and recorded:
-1. Every `Installed` register The use of registers has been discontinued. Please review row's skill exists at its recorded install path
-   **and hash-matches** its repo source (`{system}/{system}-skill.md`) — hash via
-   the approved glob form `mb-config-*/SKILL.md`, never token-literal commands.
-   Match = pass; divergence = finding (installed-edited → DRIFT;
+1. Every `Installed` register row's skill exists at its recorded install path,
+   and the text below its frontmatter is identical to the text below the
+   frontmatter of its repo source (`{system}/{system}-skill.md`). The frontmatters
+   differ by design: the source carries `title`, `doc-id` and `updated`; the
+   installed copy carries `name` and `description`. Compare by sha256 of the text
+   below the frontmatter, read via the approved glob form `mb-config-*/SKILL.md`,
+   never token-literal commands. Record the current body hash (first 16 hex) in the
+   row. Identical = pass; different = finding (installed-edited → DRIFT;
    source-edited-not-reinstalled → stale GAP).
 2. Every Installed system's folder contains all seven suite files (config,
    exam-plan, exam-report, log, learnings, explainer, reference).
-3. Every register The use of registers has been discontinued. Please review `spec doc` path exists.
-4. The register The use of registers has been discontinued. Please review's most recent log run-row for the target system has a disposition
+3. Every register `spec doc` path exists.
+4. The register's most recent log run-row for the target system has a disposition
    — an open/undispositioned run blocks a new one (one-run-at-a-time).
 
 Result recorded in [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) (pass/fail row). Inconsistency in
 yourself is logged and reported — never self-healed. A system that exams itself
-with its own machinery is circular redundancy; your documents are governed by the
-docs-management skills instead.
+with its own machinery is circular redundancy; your documents are maintained like
+every other document: edited with the developer's approval and checked by
+`mb-doc-check` at every commit.
 
 ## Exam cycle (one run)
 
 **Plan-driven.** The skill holds the standing procedure; each run is driven by a
 per-run exam-plan you synthesize immediately before running the skill.
 
-1. **Synthesize the exam-plan** — read the system's [[[makepdlf-project-library:docs-local/config|Config]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/config.md) (the spec), the last
+1. **Synthesize the exam-plan** — read the system's `{system}-config.md` (the spec), the last
    `exam-report.md` (deferred + erred items), the `log.md` (events since last run),
    and the `learnings.md` (lessons not yet graduated). Write the system's
    `exam-plan.md`: run header (date, Tier-3 unlock state, developer-run requests),
@@ -102,7 +110,7 @@ recovery = read log + last report.
 **Graduation criteria (not vibes).** A learning or recurring plan item graduates
 only when: it appeared in ≥1 *executed* plan, its check ran at least once, and it
 survived unchanged. Destinations via the dual track; config/reference/explainer
-always through docs governance.
+always through the gate, with the developer's approval.
 
 **First-run bootstrap.** A system's first exam run may have no report, no log, no
 learnings — that is expected, not silence: synthesize from the config spec alone,
@@ -141,10 +149,9 @@ plan-synthesis time. Never leave an incident unlogged because "no exam is runnin
 Learnings and recurring plan items graduate into permanent homes. The track
 depends on the destination:
 
-- **Into the skill** — agent-applied directly (skill files are exempt from docs
-  governance)
-- **Into config / reference / explainer** — a flagged proposal through docs
-  governance; never applied silently
+- **Into the skill** — agent-applied directly, then re-installed
+- **Into config / reference / explainer** — a proposal at the gate; applied only
+  after the developer approves it, never silently
 
 Pruning trigger: absorption happens at plan-synthesis time of the next run.
 
@@ -186,8 +193,6 @@ the entry. Never accumulate.
 
 ## Build status
 
-Built (Installed, formal exam runs verified): `mb-config-postgresql` (pilot),
-`mb-config-cupcake`, `mb-config-gbrain`, `mb-config-memory-governor`,
-`mb-config-gbrain-dream-cycle` (2026-09-14). The enhanced plan-driven cycle above is tuned on
-PostgreSQL first, then emulates across systems. [[[mybizz-config-docs:mb-config-manager/config-manager-register|Register: Managed Systems]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md) is
+The plan-driven cycle above was tuned on PostgreSQL and now runs for every
+Installed system. [[[mybizz-config-docs:mb-config-manager/config-manager-register|Register: Managed Systems]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md) is
 the authority for what runs.

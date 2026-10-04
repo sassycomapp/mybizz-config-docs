@@ -1,7 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-exam-plan"
 doc-id: "mb-5d565c27"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # mb-memory-system-diagnostic — Exam Plan
 
@@ -16,7 +16,7 @@ contents are transient.
 
 **This first plan is hand-written** (emulation of the proven cycle): it also
 serves as the format template. The **standing check inventory lives in the
-skill** ([[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-skill|Exam Skill source]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-skill.md),
+skill** ([[[mb-memory-system-diagnostic:mb-memory-system-diagnostic|Exam Skill source]]](C:/mybizz/mb-memory-system-diagnostic/mb-memory-system-diagnostic.md),
 born-with-inventory); this plan carries run-specifics and references.
 
 ---
@@ -66,7 +66,7 @@ None — bootstrap (the learnings table is empty at first plan synthesis).
 ## 6. Standing checks — summary (the complete enumeration lives in the skill)
 
 Every check: id, runner (A=agent, D=developer), probe, expected source, pass
-rule — full tables in the [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-skill|exam skill source]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-skill.md)
+rule — full tables in the [[[mb-memory-system-diagnostic:mb-memory-system-diagnostic|exam skill source]]](C:/mybizz/mb-memory-system-diagnostic/mb-memory-system-diagnostic.md)
 (Tiers 0–3). Summary:
 
 - **Tier 0 (A) — invocability:** MS0-1 installed subject skill present with functional frontmatter (`name: mb-memory-system-diagnostic` + description) · MS0-2 skill discoverable in the OpenCode skill surface (name listed)

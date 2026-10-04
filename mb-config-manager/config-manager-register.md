@@ -3,11 +3,11 @@ title: "config-manager-register"
 doc-id: "mb-6ce71949"
 updated: "2026-10-04"
 ---
-# mb-config-manager — Register The use of registers has been discontinued. Please review: Managed Systems
+# mb-config-manager — Register: Managed Systems
 
 The routing table. One row per system the config-manager manages. A row is added when
 the system first becomes examinable (a config doc exists); `state` updates in place.
-**A register The use of registers has been discontinued. Please review is the current state, not a log** — no historical information is kept
+**A register is the current state, not a log** — no historical information is kept
 here; superseded states simply change.
 
 **States:** `Installed` (installed at the runtime location — the authoritative
@@ -16,16 +16,12 @@ runnable state) · `WIP` (emulation in progress — suite being built to the
 decision) · `Registered` (examinable, module pending) · `Placeholder`
 (folder reserved, no config doc yet) · `Retired` (no longer managed).
 
-**Emulation queue (developer-set order, 2026-09-13):** gbrain-dream-cycle →
-graphify → gstack → opencode → anvil-agent-references → matt-pocock-skills →
-magdoub-wireframe. Completed pilots: postgresql, cupcake, gbrain.
-
-| system | exam skill | spec doc | state | sha256 (source) | install date | notes |
+| system | exam skill | spec doc | state | body sha256 | install date | notes |
 |---|---|---|---|---|---|---|
 | postgresql | mb-config-postgresql | `postgresql/postgresql-config.md` | Installed | e789fea8bdb5f834 | 2026-09-12 | pilot — verified live 2026-09-12; source [[[mybizz-config-docs:postgresql/postgresql-skill\|Postgresql Skill]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-skill.md); installed `~/.config/opencode/skills/mb-config-postgresql/SKILL.md` |
 | cupcake | mb-config-cupcake | `cupcake/cupcake-config.md` | Installed | ea825f1f0efe534b | 2026-09-12 | verified live 2026-09-12; source [[[mybizz-config-docs:cupcake/cupcake-skill\|Cupcake Skill]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-skill.md) (backfill developer-run 2026-09-12, hash-verified); installed `~/.config/opencode/skills/mb-config-cupcake/SKILL.md` (developer-run install) |
 | gbrain | mb-config-gbrain | `gbrain/gbrain-config.md` | Installed | e21fda6d89e18fea | 2026-09-12 | verified live 2026-09-12; source [[[mybizz-config-docs:gbrain/gbrain-skill\|Gbrain Skill]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-skill.md); installed `~/.config/opencode/skills/mb-config-gbrain/SKILL.md` |
-| gstack | mb-config-gstack | `gstack/gstack-config.md` | Installed | 494ae610a515ed15 | 2026-09-16 | run #1 formal 2026-09-16: HEALTHY (Tiers 0–2 all PASS, zero live defects; Tier 3 GS3-1 executed developer-unlocked, GS3-2 policy stay-on-`1.58.1.0`); N-1 flagged to docs governance (spec wording nit); N-3 resolved by developer correction — GStack is NOT a memory-system component, related to the ecosystem only via GBrain (spec row corrected in-suite); output-location fact recorded 2026-09-16 (sole live location `~/.gstack/projects/$SLUG/`; `gstack-outputs/` copy lane = convention only, does not exist on this system — developer-confirmed); LE-1/LE-2/LE-3 filed (bin-tree mixed-interpreter; preamble host-path; output-location fact); skill re-installed twice after corrections (re-hash `6a3afc08a93cee02`); verified live 2026-09-16; source [[[mybizz-config-docs:gstack/gstack-skill\|Gstack Skill]]](C:/mybizz/mybizz-config-docs/gstack/gstack-skill.md); installed `~/.config/opencode/skills/mb-config-gstack/SKILL.md` (copy-install, grant via mg-grant) |
+| gstack | mb-config-gstack | `gstack/gstack-config.md` | Installed | 494ae610a515ed15 | 2026-09-16 | run #1 formal 2026-09-16: HEALTHY (Tiers 0–2 all PASS, zero live defects; Tier 3 GS3-1 executed developer-unlocked, GS3-2 policy stay-on-`1.58.1.0`); N-1 raised at the gate (spec wording nit); N-3 resolved by developer correction — GStack is NOT a memory-system component, related to the ecosystem only via GBrain (spec row corrected in-suite); output-location fact recorded 2026-09-16 (sole live location `~/.gstack/projects/$SLUG/`; `gstack-outputs/` copy lane = convention only, does not exist on this system — developer-confirmed); LE-1/LE-2/LE-3 filed (bin-tree mixed-interpreter; preamble host-path; output-location fact); skill re-installed twice after corrections (re-hash `6a3afc08a93cee02`); verified live 2026-09-16; source [[[mybizz-config-docs:gstack/gstack-skill\|Gstack Skill]]](C:/mybizz/mybizz-config-docs/gstack/gstack-skill.md); installed `~/.config/opencode/skills/mb-config-gstack/SKILL.md` (copy-install, grant via mg-grant) |
 | opencode | mb-config-opencode | `opencode/opencode-config.md` | Installed | 48a0ca04f4080e6f | 2026-09-15 | run #1 formal 2026-09-15: HEALTHY (all checks PASS, zero live defects); config-content field bundle closed developer-verified (all PASS); F-4/F-5 spec omissions approved at gate and applied to spec + permission-model doc; plugin load-once + single discoverable path + Active Project Standard verified live; Tier 3 locked, stay-on-1.15.12 (no check failed); learnings graduated into skill (config-content = runner D; token-in-argument guard class), re-installed (re-hash `268bb702a038448b`); verified live 2026-09-15; source [[[mybizz-config-docs:opencode/opencode-skill\|Opencode Skill]]](C:/mybizz/mybizz-config-docs/opencode/opencode-skill.md); installed `~/.config/opencode/skills/mb-config-opencode/SKILL.md` |
 | memory-governor | mb-config-memory-governor | `memory-governor/memory-governor-config.md` | Installed | 826f250abce3c81f | 2026-09-13 | run #1 formal: HEALTHY+FLAGS; verified live 2026-09-13; source [[[mybizz-config-docs:memory-governor/memory-governor-skill\|Memory Governor Skill]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-skill.md); installed `~/.config/opencode/skills/mb-config-memory-governor/SKILL.md` |
 | archify | mb-config-archify | `archify/archify-config.md` | Installed | a1b4c0306a14bacb | 2026-09-16 | run #1 formal 2026-09-16: HEALTHY (Tiers 0–3 all executed, zero open findings at close); scoping skill `mb-archify-scope` retained and documented as a permanent suite component (config §Scoping skill component); F-1 scope-skill re-sync applied at gate (installed copy had drifted — missing Phase 9; re-copy + hash pair `0e40e984ba82a5f6` verified); F-2 config Cupcake-status row refreshed (Cupcake ACTIVE per cupcake-config 2026-09-12, no archify rule re-confirmed); Tier 3 executed — AR3-1 mechanical audit PASS, AR3-2 functional-ability acceptance PASS (showcase validate 9/9, 0 errors, 0 warnings), AR3-3 open items recorded (W-1/W-2 retained — Windows-side readability unprovable from WSL; W-3 out of scope), AR3-4 adoption review benign all axes, AR3-5 policy re-confirmed; run-learnings facts graduated into explainer/reference (type-choice leverage, probe-before-connect, viewBox constraint, exact-port anchoring, corridor separation, visual-review-by-human); verified live 2026-09-16; source [[[mybizz-config-docs:archify/archify-skill\|Archify Skill]]](C:/mybizz/mybizz-config-docs/archify/archify-skill.md); installed `~/.config/opencode/skills/mb-config-archify/SKILL.md` (copy-install, hash pair `165897270158a38e` verified) |
@@ -35,50 +31,43 @@ magdoub-wireframe. Completed pilots: postgresql, cupcake, gbrain.
 | gbrain-dream-cycle | mb-config-gbrain-dream-cycle | `gbrain-dream-cycle/gbrain-dream-cycle-config.md` | Installed | f81314843d041660 | 2026-09-14 | run #1 formal + DC3-1 full cycle: HEALTHY, all PASS end-to-end (detection + functional probes + live deepening pass); verified live 2026-09-14; F-1 hardening graduated (re-hash a4872e9d61f1c32f); F-2 export lane approved (C:\backup-dream-cycle); DC3-2 policy: stay 0.46.1.0 (no check failed) |
 | anvil-agent-references | mb-config-anvil-agent-references | `anvil-agent-references/anvil-agent-references-config.md` | Installed | c44ca3842f953a48 | 2026-09-16 | run #1 formal 2026-09-16: HEALTHY (Tiers 0–3 all PASS, zero live defects); Tier 3 executed (AR3-1 full audit PASS — 5/5 links + 5/5 SKILL.md byte-identity, structure conforms; AR3-2 stay-current-with-upstream, license no action; AR3-3 per-project setup remains developer-run pending, open item 3); **all five open items closed 2026-09-16** (direct spec corrections — HEAD `7c9b0a7`, stubs 63, refreshed inventory; adoption review recorded, license axis documented accepted risk; per-project setup = deliberate trigger-bound deferral per cupcake project-init status; Tier-2/3 verification record = confirmed skill verification; index-state corrected); two guard denials recorded class, honored; learnings graduated (content already in born-with skill); verified live 2026-09-16; source [[[mybizz-config-docs:anvil-agent-references/anvil-agent-skill\|Anvil Agent Skill]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-skill.md); installed `~/.config/opencode/skills/mb-config-anvil-agent-references/SKILL.md` (copy-install, hash pair `a66e0140a39a37e5` verified 2026-09-16 — re-synced by developer after source edited in `4aff290`) |
 | i-have-adhd | mb-config-i-have-adhd | `i-have-adhd/i-have-adhd-config.md` | Installed | 61e31297fd5616fd | 2026-09-20 | copy-install 2026-09-20 (developer authorized proceed-without-grant — Cupcake disabled); source [[[mybizz-config-docs:i-have-adhd/i-have-adhd-skill\|I Have Adhd Skill]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-skill.md); installed `~/.config/opencode/skills/mb-config-i-have-adhd/SKILL.md`; born-with-inventory; run #1 formal 2026-09-20: HEALTHY — F-1 DRIFT (installer dual-write, registry primary `~/.agents/skills/` + CLI-derived OpenCode copy, dedup verified) resolved by gate-approved re-baseline + dual-path byte-identity check in skill (re-install, re-hash `1669db5ef2192a0d`); Tier 3 unlocked all PASS (IA3-1 upstream verified live 48.7k stars, HEAD pin `839872f9d1cd…`, bundle byte-identical to upstream main; IA3-2 update mechanism verified byte-idempotent; IA3-3 supply-chain review recorded benign — Gen Safe/Socket 0/Snyk Low); spec open items 1–5 closed, item 6 standing watch; verified live 2026-09-20 |
-| mb-doccycle | mb-config-doccycle | `mb-doccycle/doccycle-config.md` | Retired | deleted per developer instruction 2026-09-27 (suite folder removed, installed exam skill already absent, gbrain source removed with 24 pages, GitHub repo sassycomapp/mb-doccycle deleted — verified 404); doc-maintainer covers save-time maintenance, doc-auditor covers periodic/on-demand audits; register-local The use of registers has been discontinued. Please review rows retired |
-| doc-maintainer | mb-config-doc-maintainer | `mb-doc-maintainer/doc-maintainer-config.md` | Retired | retired 2026-09-30 (developer decision); suite folder removed from the repository and its gbrain source removed |
-| mb-doc-auditor | mb-config-doc-auditor | `mb-doc-auditor/doc-auditor-config.md` | Retired | retired 2026-09-30 (developer decision); suite folder removed from the repository and its gbrain source removed |
-| mb-align-docs | mb-config-mb-align-docs | `mb-align-docs/align-docs-config.md` | Retired | superseded by mb-doccycle; suite folder + installed skill removed 2026-09-22 (WP7); register-local The use of registers has been discontinued. Please review rows retired |
-| mb-compile-rules | mb-config-mb-compile-rules | `mb-compile-rules/mb-compile-rules-config.md` | Deferred | deliberately postponed (developer decision 2026-09-13) |
-| mb-docs-manager | mb-config-mb-docs-manager | `mb-docs-manager/docs-manager-config.md` | Retired | superseded by mb-doccycle; suite folder + installed skill removed 2026-09-22 (WP7, developer-confirmed) |
-| mb-sentinel-review | mb-config-mb-sentinel-review | `mb-sentinel-review/sentinel-config.md` | Deferred | deliberately postponed (developer decision 2026-09-13) |
+| mb-doccycle | mb-config-doccycle | `mb-doccycle/doccycle-config.md` | Retired | — | — | suite folder and installed exam skill removed |
+| doc-maintainer | mb-config-doc-maintainer | `mb-doc-maintainer/doc-maintainer-config.md` | Retired | — | — | suite folder and installed exam skill removed |
+| mb-doc-auditor | mb-config-doc-auditor | `mb-doc-auditor/doc-auditor-config.md` | Retired | — | — | suite folder and installed exam skill removed |
+| mb-align-docs | mb-config-mb-align-docs | `mb-align-docs/align-docs-config.md` | Retired | — | — | suite folder and installed exam skill removed |
+| mb-compile-rules | mb-config-mb-compile-rules | `mb-compile-rules/mb-compile-rules-config.md` | Deferred | — | — | deliberately postponed (developer decision 2026-09-13) |
+| mb-docs-manager | mb-config-mb-docs-manager | `mb-docs-manager/docs-manager-config.md` | Retired | — | — | suite folder and installed exam skill removed |
+| mb-sentinel-review | mb-config-mb-sentinel-review | `mb-sentinel-review/sentinel-config.md` | Deferred | — | — | deliberately postponed (developer decision 2026-09-13) |
 | mb-submit-memory | mb-config-mb-submit-memory | `mb-submit-memory/mb-submit-memory-config.md` | Installed | 81ecf1543deed7c8 | 2026-09-15 | run #1 formal 2026-09-15: HEALTHY (Tiers 0–2 all PASS, zero live defects); Tier 3 executed (SM3-1 credential accepted/queue empty — evidenced owning_project ↔ gbrain sources all match; SM3-3 stray file verified absent; SM3-2 auto-start executed+verified, systemd units active, session 005); F-A/F-B/F-C spec corrections applied at gate; learnings graduated, re-hash `88a71641d03f1997`; verified live 2026-09-15; zero open items; source [[[mybizz-config-docs:mb-submit-memory/submit-memory-skill\|Submit Memory Skill]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/submit-memory-skill.md); installed `~/.config/opencode/skills/mb-config-mb-submit-memory/SKILL.md` |
-| mb-sysdoc-creator | mb-config-mb-sysdoc-creator | `mb-sysdoc-creator/sysdoc-creator-config.md` | Deferred | deliberately postponed (developer decision 2026-09-13) |
-| mb-memory-system-diagnostic | mb-config-mb-memory-system-diagnostic | `mb-memory-system-diagnostic/mb-memory-system-diagnostic-config.md` | Installed | d3975df16f28c2f9 | 2026-09-28 | S-1 2026-09-28: row added by named plan step (developer instruction "Run mb-config-manager on mb-memory-system-diagnostic"; doc-maintainer/doc-auditor S-1 precedent); suite build-out — 4 pre-existing docs + exam set (exam-plan, exam-report, log, learnings, exam-skill source) joined at build; copy-install dual-format per F-2(a) — source corpus frontmatter, installed functional frontmatter `name: mb-config-mb-memory-system-diagnostic`, body byte-identical from H1 (11,668 bytes); run #1 formal 2026-09-28: HEALTHY (Tiers 0–2 all PASS, 3 findings all APPROVED + applied at gate — F-1 subject pair byte-exact after F-3 re-copy, F-2 spec open items #3/#4/#5 closed, F-3 skill-source recipe currency + re-install); Tier 3 stayed locked; step-0 PASS (17 installed pairs probed); three mg-grants issued (12/3/4+2 — counts consumed by suite + register The use of registers has been discontinued. Please review writes); verified live 2026-09-28; subject hash pair after F-3 `b90ec20c33bf4272` / `b90ec20c33bf4272`; exam-skill pair unchanged `d3975df16f28c2f9` / `4418e09f0c07ee23`; skill source [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-skill\|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-skill.md); installed `~/.config/opencode/skills/mb-config-mb-memory-system-diagnostic/SKILL.md` |
-| mb-wikilinks | mb-config-mb-wikilinks | `mb-wikilinks/wikilinks-config.md` | Retired | superseded by mb-doccycle; suite folder + installed skill removed 2026-09-22 (WP7, developer-confirmed) |
-| cloudflare | — | — | Placeholder | no config doc yet |
-| namecheap | — | — | Placeholder | no config doc yet |
+| mb-sysdoc-creator | mb-config-mb-sysdoc-creator | `mb-sysdoc-creator/sysdoc-creator-config.md` | Deferred | — | — | deliberately postponed (developer decision 2026-09-13) |
+| mb-memory-system-diagnostic | mb-config-mb-memory-system-diagnostic | `mb-memory-system-diagnostic/mb-memory-system-diagnostic-config.md` | Installed | d3975df16f28c2f9 | 2026-09-28 | suite build-out — 4 pre-existing docs + exam set (exam-plan, exam-report, log, learnings, exam-skill source) joined at build; copy-install dual-format per F-2(a) — source corpus frontmatter, installed functional frontmatter `name: mb-config-mb-memory-system-diagnostic`, body byte-identical from H1 (11,668 bytes); run #1 formal 2026-09-28: HEALTHY (Tiers 0–2 all PASS, 3 findings all APPROVED + applied at gate — F-1 subject pair byte-exact after F-3 re-copy, F-2 spec open items #3/#4/#5 closed, F-3 skill-source recipe currency + re-install); Tier 3 stayed locked; step-0 PASS (17 installed pairs probed); three mg-grants issued (12/3/4+2 — counts consumed by suite + register writes); verified live 2026-09-28; subject hash pair after F-3 `b90ec20c33bf4272` / `b90ec20c33bf4272`; exam-skill pair unchanged `d3975df16f28c2f9` / `4418e09f0c07ee23`; skill source [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-skill\|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-skill.md); installed `~/.config/opencode/skills/mb-config-mb-memory-system-diagnostic/SKILL.md` |
+| mb-wikilinks | mb-config-mb-wikilinks | `mb-wikilinks/wikilinks-config.md` | Retired | — | — | suite folder and installed exam skill removed |
+| cloudflare | — | — | Placeholder | — | — | no config doc yet |
+| namecheap | — | — | Placeholder | — | — | no config doc yet |
 
 Notes:
 
-- **The config-manager does not list itself in this register The use of registers has been discontinued. Please review** — a system that
+- **The config-manager does not list itself in this register** — a system that
   exams itself with its own machinery is circular redundancy; its health is
-  maintained per [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md) §9 (docs governance + step-0
-  self-validation).
+  maintained per [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md) §9 (step-0 self-validation; its
+  documents follow the normal documentation process).
 - **Install discipline:** install = **copy, never move** — the suite folder keeps
   the canonical source (`{system}-skill.md`, versioned in this repo); the
   installed copy at `~/.config/opencode/skills/<name>/SKILL.md` is the only
   *executing* copy (the suite folder is not skill-scanned — no double-load).
-  The sha256 column records the source's first 16 hex chars; step-0 verification
-  compares source ↔ installed every cycle (hash check via the approved glob form
-  `mb-config-*/SKILL.md`, never token-literal commands). Divergence = finding:
-  installed-edited → DRIFT; source-edited-not-reinstalled → stale GAP.
-  **Dual-format convention (developer decision F-2(a), 2026-09-25):** suite
-  skill-sources carry corpus two-field frontmatter (`title`/`doc-id`, post-
-  retrofit normalization) while installed copies carry functional frontmatter
-  (`name`/`description`) — the hash column baselines the SOURCE; step-0 source↔
-  installed comparisons treat the frontmatter block as the expected difference
-   and verify body-identity beyond it. Register The use of registers has been discontinued. Please review hashes re-baselined to post-
-   retrofit sources 2026-09-25. **Estate body-drift disposition (F-4, developer
-   decision 2026-09-27, doc-auditor run #1 gate):** post-retrofit body changes
-   (wikilink conversions) in suite sources vs installed copies are accepted
-   known drift — step-0 comparisons report body diffs factually without
-   re-flagging; each system's next exam cycle re-syncs its own pair (one skill
-   per completion, never batched).
+  The source is a document (frontmatter `title`, `doc-id`, `updated`); the
+  installed copy is a skill (frontmatter `name`, `description`, written at first
+  install and kept unchanged on re-install). Install copies only the text below
+  the frontmatter, so the two are identical below it when in sync. The body
+  sha256 column records the first 16 hex of the sha256 of that text; step 0
+  compares source ↔ installed every cycle (read via the approved glob form
+  `mb-config-*/SKILL.md`, never token-literal commands) and re-records the
+  column. Divergence = finding: installed-edited → DRIFT;
+  source-edited-not-reinstalled → stale GAP.
 - `spec doc` is the single file the exam runs against; the exam also verifies the
   suite's other documents as part of the GAP class.
-- Filename conventions differ per suite (e.g. `align-docs-config.md`,
-  `docs-manager-config.md`) — the spec doc column is authoritative, never guessed.
+- Filename conventions differ per suite (e.g. `sentinel-config.md`,
+  `sysdoc-creator-config.md`) — the spec doc column is authoritative, never guessed.
 - `mb-*` skills are themselves examinable systems: an installed skill can drift from
   its suite docs exactly like any tool.
 - Every Installed system's folder carries the seven-file suite (config,

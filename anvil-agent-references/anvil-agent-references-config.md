@@ -114,7 +114,7 @@ Current Operational Status for the live state.
 | Policy | Detail |
 |---|---|
 | Memory Governor bypass | Permanent — this source syncs into GBrain by ordinary `gbrain sync`, never through the governor's API. Vendor-published reference material: no genuine confidence/contradiction judgment to make ([[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md)). Keeping the source current is the developer's own responsibility. |
-| Update command execution | `git pull` in the clone is developer-run only, never AI-invoked — the clone sits outside every project root; an AI-run write there is a cross-project write, which is the discipline Cupcake's cross-project-write rule enforces when active (status per the note above). After a pull, run `bash /mnt/c/mybizz/scripts/sync-gbrain.sh` so GBrain re-reads the clone; `commit-all.sh` does not cover it, because the clone is not one of the eight documentation repositories. |
+| Update command execution | `git pull` in the clone is developer-run only, never AI-invoked — the clone sits outside every project root; an AI-run write there is a cross-project write, which is the discipline Cupcake's cross-project-write rule enforces when active (status per the note above). After a pull, run `bash /mnt/c/mybizz/scripts/sync-gbrain.sh` so GBrain re-reads the clone; `commit-all.sh` does not cover it, because the clone is not one of the documentation repositories listed in [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md). |
 
 ## Known stale external references (state, 2026-09-06)
 

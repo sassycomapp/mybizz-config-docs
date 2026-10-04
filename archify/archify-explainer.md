@@ -64,7 +64,7 @@ The person it serves is the developer or reviewer who needs to read a system —
 
 Archify makes a promise: *the picture is only as viable as its scope.* That
 promise is enforced by a permanent front-of-pipe skill, `mb-archify-scope`
-(canonical spec [[[mybizz-config-docs:archify/archify-scope-skill|Scoping Skill Specification]]](C:/mybizz/mybizz-config-docs/archify/archify-scope-skill.md); installed at
+(canonical spec [[[mb-archify-scope:mb-archify-scope|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md); installed at
 `~/.config/opencode/skills/mb-archify-scope/SKILL.md`). It runs before `/archify`,
 never instead of it, and it changes the authoring pipeline into two stages:
 
@@ -95,7 +95,7 @@ system exams each live system against its `{system}-config.md` spec. For Archify
   fresh at every run start.
 - **Scope of the exam:** the discovery symlink, the clone/package identity, the
   schemas/references/renderers inventory, the update-notice contract, the installed
-  scope-skill copy (kept byte-identical to [[[mybizz-config-docs:archify/archify-scope-skill|Scoping Skill Specification]]](C:/mybizz/mybizz-config-docs/archify/archify-scope-skill.md)), and the runtime
+  scope-skill copy (kept byte-identical to [[[mb-archify-scope:mb-archify-scope|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md)), and the runtime
   output convention (one folder per project slug under `output/<slug>/`).
 - **Philosophy:** the tool is working well — detection and verification only;
   the exam catches silent failures (present ≠ working) and repairs nothing without
@@ -133,7 +133,7 @@ or verified — a standing, documented out-of-scope item.
 |---|---|
 | [[[mybizz-config-docs:archify/archify-config\|Configuration]]](C:/mybizz/mybizz-config-docs/archify/archify-config.md) | Canonical current-state configuration — the spec the exam runs against |
 | [[[mybizz-config-docs:archify/archify-reference\|Reference]]](C:/mybizz/mybizz-config-docs/archify/archify-reference.md) | Invocation, commands, authoring procedure, failure rules |
-| [[[mybizz-config-docs:archify/archify-scope-skill\|Scoping Skill Specification]]](C:/mybizz/mybizz-config-docs/archify/archify-scope-skill.md) | The scoping skill's canonical specification (installed as `mb-archify-scope`) |
+| [[[mb-archify-scope:mb-archify-scope\|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md) | The scoping skill's canonical specification (installed as `mb-archify-scope`) |
 | [[[mybizz-config-docs:archify/archify-skill\|Archify Skill]]](C:/mybizz/mybizz-config-docs/archify/archify-skill.md) | The config-management exam skill (standing check inventory) |
 | [[[mybizz-config-docs:archify/archify-exam-plan\|Exam Plan]]](C:/mybizz/mybizz-config-docs/archify/archify-exam-plan.md) | Transient job-spec for the latest exam run |
 | [[[mybizz-config-docs:archify/archify-exam-report\|Exam Report]]](C:/mybizz/mybizz-config-docs/archify/archify-exam-report.md) | Verified current state after each exam run |

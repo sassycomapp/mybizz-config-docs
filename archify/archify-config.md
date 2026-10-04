@@ -47,7 +47,7 @@ begins; it scopes, it never draws.
 
 | Item | Value |
 |---|---|
-| Spec (canonical) | [[[mybizz-config-docs:archify/archify-scope-skill\|Scoping Skill Specification]]](C:/mybizz/mybizz-config-docs/archify/archify-scope-skill.md) (this repo, git-versioned) |
+| Spec (canonical) | [[[mb-archify-scope:mb-archify-scope\|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md) (this repo, git-versioned) |
 | Installed copy | `~/.config/opencode/skills/mb-archify-scope/SKILL.md` (kept byte-identical to the spec — same install pattern as the exam skills) |
 | Trigger | Model-invoked — a drawing request routes through scoping first; also fires on recovery after dense-route/corridor failures |
 | Invocation order | `/mb-archify-scope` **before** `/archify`, never instead of it |

@@ -1,7 +1,7 @@
 ---
 title: "doc-check-explainer"
 doc-id: "mb-632b78c3"
-updated: "2026-10-02"
+updated: "2026-10-04"
 ---
 # mb-doc-check — Explainer
 
@@ -9,7 +9,7 @@ updated: "2026-10-02"
 
 ## 1. What this actually is
 
-`mb-doc-check` is a small program that runs at the moment you commit documents. Its job is to make sure that every document entering the history of the eight documentation repositories is correct: it has its frontmatter, every link in it is in one standard form and points to a document that exists, and links elsewhere that point to a document you just renamed or moved are repaired. It does this by editing the text of the documents themselves, and nothing else.
+`mb-doc-check` is a small program that runs at the moment you commit documents. Its job is to make sure that every document entering the history of the documentation repositories listed in [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md) is correct: it has its frontmatter, every link in it is in one standard form and points to a document that exists, and links elsewhere that point to a document you just renamed or moved are repaired. It does this by editing the text of the documents themselves, and nothing else.
 
 It is not an AI. It makes no judgments. For the same documents it always produces the same result, and that is deliberate: the documents are written by AI agents, and the checker must not be a second source of variation.
 
@@ -58,9 +58,9 @@ At every commit the program looks at two pictures of the repository: the committ
 
 **Exemptions are by name and by folder, never by judgment.** Files named `tmp-...`, folders such as `stencils`, `quarantine`, `backups`, `catalogue` and `logs`, Anvil app roots, `obsolete` folders and `SKILL.md` files are not part of the documentation to be kept consistent: they are scratch or generated material, retired material, or installed skills with their own format. Because the program applies the list mechanically, nobody has to decide case by case.
 
-**Repaired files join the same commit.** When a rename in one repository makes a link in another repository wrong, the program corrects that file. The correction stays uncommitted in the other repository until that repository is committed, which is why one command commits all eight together.
+**Repaired files join the same commit.** When a rename in one repository makes a link in another repository wrong, the program corrects that file. The correction stays uncommitted in the other repository until that repository is committed, which is why one command commits all of them together.
 
-**One program, one settings file, eight repositories.** Every repository behaves identically, because there is nothing local to configure and nothing to drift.
+**One program, one settings file, the repositories listed in [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md).** Every repository behaves identically, because there is nothing local to configure and nothing to drift.
 
 ## 5. What has to happen
 
@@ -72,7 +72,7 @@ At every commit the program looks at two pictures of the repository: the committ
 
 ## 6. S.W.O.T.
 
-**Strengths.** Documents are correct as they enter history. Renames and moves never break links. Identical behavior in all eight repositories. The program is deterministic and has no dependency on anything running.
+**Strengths.** Documents are correct as they enter history. Renames and moves never break links. Identical behavior in every repository listed in [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md). The program is deterministic and has no dependency on anything running.
 
 **Weaknesses.** It only protects commits made in WSL. A failure of the program lets one commit through unchecked. The stored link form is noisy to read in raw text and ties documents to this computer's folder layout.
 

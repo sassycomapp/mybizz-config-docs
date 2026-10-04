@@ -1,7 +1,7 @@
 ---
 title: "gbrain-config"
 doc-id: "mb-b677b7b4"
-updated: "2026-10-03"
+updated: "2026-10-04"
 ---
 # GBrain — Configuration
 
@@ -212,6 +212,6 @@ re-decided per run.
 | 3 | Source clone at `/mnt/c/mybizz/gbrain` (v0.25.0) **deleted 2026-09-13** per developer decision — verified not implemented (running code is the bun-global install; zero references in any config/script) and not pristine (local debris only: auto-managed `.gitignore` lines + a stray `pnpm-lock.yaml`; nothing unique — upstream public, re-clonable). | Resolved |
 | 4 | Project mb-3-cs managed-block decisions: whether to fold the Access Model bullets into the Graph Memory Guidance block, and whether the block should ever be committed — raised, never decided; do not act without explicit direction. | Open |
 | 5 | Governed facts land in the owning project's own documentation source (the worker names it on every write since 2026-10-01). Facts written before that date may still sit in `memory-governor-code`. | Resolved 2026-10-01 |
-| 6 | Link rollout: every link in the eight documentation repositories is stored as `[[[source-id:page-name]]](C:/full/path.md)` (page name = GBrain slug). GBrain follows it across federated sources when links are collected with `gbrain extract links --source db`. Rolled out and verified on this brain 2026-10-01 (`operating-procedures/daily-ops` → 7 links into `mybizz-config-docs`). | Resolved 2026-10-01 |
+| 6 | Link rollout: every link in the documentation repositories listed in [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md) is stored as `[[[source-id:page-name]]](C:/full/path.md)` (page name = GBrain slug). GBrain follows it across federated sources when links are collected with `gbrain extract links --source db`. Rolled out and verified on this brain 2026-10-01 (`operating-procedures/daily-ops` → 7 links into `mybizz-config-docs`). | Resolved 2026-10-01 |
 | 7 | Retention of `~/backups` (the settings archive holds keys), and the parked commit `b6250c43` on `master` / `pre-upgrade-backup`. | Open |
 | 8 | Code sources: decided 2026-10-01 — the four code sources and the Anvil clone stay outside the federated search, and Graphify handles code. `memory-governor-code` holds governed facts written before 2026-10-01 and stays. | Closed 2026-10-01 |

@@ -1,7 +1,7 @@
 ---
 title: "config-manager-explainer"
 doc-id: "mb-c28cb8f9"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # mb-config-manager — Explainer
 
@@ -10,8 +10,7 @@ why it exists, how it works, everything about it. Multi-audience — written for
 human developer, a visiting technical consultant, and the agent. Companion files:
 [[[mybizz-config-docs:mb-config-manager/config-manager-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-config.md) (its own configurations), [[[mybizz-config-docs:mb-config-manager/config-manager-register|Register: Managed Systems]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md)
 (what it manages, current state), [[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md) (agent-facing
-procedures), [[[mybizz-config-docs:mb-config-manager/config-manager-agent|Orchestrator Agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) (the orchestrator itself — exempt from docs
-governance), [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) (notable events), [[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md)
+procedures), [[[mybizz-config-docs:mb-config-manager/config-manager-agent|Orchestrator Agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) (the orchestrator itself), [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) (notable events), [[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md)
 (transient knowledge).
 
 ---
@@ -37,10 +36,11 @@ on PDLF; this system watches the estate and presents findings for gated repair.
 Configuration management for the live systems this machine runs. It exams each
 system's actual state against its config artifacts (`.yaml`, `.json`, `.gitignore`,
 `.env`, service/boot configs), catches silent failures, and heals only through a
-developer gate. It runs **on demand** — never scheduled, never background. It is
-totally separate from the document management skills: docs skills own documents;
-this owns live systems and their config artifacts. The boundary in one line: the
-docs skills keep the *paperwork* truthful; this keeps the *systems* healthy.
+developer gate. It runs **on demand** — never scheduled, never background. It owns
+live systems and their config artifacts, not documents: documents are maintained
+by the agents doing the work, with the developer's approval, and checked at every
+commit by `mb-doc-check`. The boundary in one line: the documentation process
+keeps the *paperwork* truthful; this keeps the *systems* healthy.
 
 ## 3. What it consists of
 
@@ -54,14 +54,18 @@ docs skills keep the *paperwork* truthful; this keeps the *systems* healthy.
   (`mb-config-postgresql`, `mb-config-cupcake`, ...). Each holds the standing exam
   procedure for that system (static, growing only by graduation), its heal
   allowlist, and its deny-list. Each lives as a canonical, git-versioned source
-  at `{system}/{system}-skill.md` in its system folder; at install it is
-  **copied** (never moved) to `~/.config/opencode/skills/<skill-name>/SKILL.md` —
-  the installed copy is the only *executing* copy (the suite folder is not
-  skill-scanned, so no double-load), while the source stays in the repo as
-  backup and drift-detection anchor (step-0 hash check).
+  at `{system}/{system}-skill.md` in its system folder; at install its text below
+  the frontmatter is **copied** (never moved) to
+  `~/.config/opencode/skills/<skill-name>/SKILL.md` — the installed copy is the
+  only *executing* copy (the suite folder is not skill-scanned, so no
+  double-load), while the source stays in the repo as backup and drift-detection
+  anchor (step-0 check). The two differ only in frontmatter, by design: the source
+  is a document and carries `title`, `doc-id` and `updated`; the installed copy is
+  a skill and carries `name` and `description`, which OpenCode needs to load it.
 - **System config docs** — each system's `{system}-config.md` is the spec its exam
-  runs against. Examined, never maintained, by this system: drift is flagged to
-  docs governance; spec edits are never applied by the config-manager.
+  runs against. Examined, never maintained, by this system: drift is raised as a
+  gate item with a proposed correction, and the correction is applied only after
+  the developer approves it.
 
 ## 4. Invocation
 
@@ -77,12 +81,12 @@ only.
 
 ## 5. The exam cycle (one run — plan-driven)
 
-1. **Self-validation (step 0)** — verify its own functional consistency: register The use of registers has been discontinued. Please review
+1. **Self-validation (step 0)** — verify its own functional consistency: register
    rows ↔ installed skills ↔ suite files agree. A self-check, never a self-exam
    (Section 9). Inconsistency = architecture defect → its own log/learnings →
    developer.
 2. **Synthesize the exam-plan** for each target system — read that system's
-   [[[makepdlf-project-library:docs-local/config|Config]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/config.md) (the spec), last `exam-report.md` (deferred **and erred** items),
+   `{system}-config.md` (the spec), last `exam-report.md` (deferred **and erred** items),
    `log.md` (events since last run, including crashes and error reports), and
    `learnings.md` (lessons not yet graduated). Write the `exam-plan.md`: the
    synthesis that pulls all the loose ends together — a job-spec added to the
@@ -150,9 +154,9 @@ never duplicates the learnings file, and vice versa.
 
 **Graduation — the dual track.** When a learning or a recurring plan item becomes
 a permanent occurrence, it is written into a permanent home and deleted from the
-transient file. Into the **skill**: agent-applied directly (skill files are exempt
-from docs governance). Into **config / reference / explainer**: a flagged proposal
-through docs governance — never applied silently. **Graduation criteria (not
+transient file. Into the **skill**: agent-applied directly, then re-installed.
+Into **config / reference / explainer**: a proposal at the gate, applied only after
+the developer approves it — never silently. **Graduation criteria (not
 vibes):** the item must have appeared in ≥1 *executed* plan, its check must have
 run at least once, and it must have survived unchanged. **The plan is never an
 absorption destination** — it is transient; absorbing into a plan destroys the
@@ -161,9 +165,12 @@ first, and happens at plan-synthesis time of the next run.
 
 ## 7. Governance
 
-- **All documents under `mybizz-config-docs` are subject to the document
-  management skills and processes** (`mb-docs-manager`, `mb-align-docs`,
-  `mb-wikilinks`) — no exceptions for this suite.
+- **Every document under `mybizz-config-docs` follows the normal documentation
+  process** — no exceptions for this suite. A document changes only with the
+  developer's approval; the developer commits through close-out
+  ([[[mybizz-os-docs:operating-procedures/close-out-process]]](C:/mybizz/mybizz-os-docs/operating-procedures/close-out-process.md)), which runs `commit-all.sh`
+  ([[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md)); and `mb-doc-check` ([[[mybizz-config-docs:mb-doc-check/doc-check-explainer]]](C:/mybizz/mybizz-config-docs/mb-doc-check/doc-check-explainer.md))
+  checks every document at every commit.
 - **Cupcake rules and methods apply to the config-manager itself.** It is not
   above governance. If grants are required for cross-project operations (e.g.
   installing a skill into `~/.config/opencode/skills/`), the config-manager
@@ -172,9 +179,10 @@ first, and happens at plan-synthesis time of the next run.
   exec-protection guard blocks any command text containing the token
   `cupcake` — such operations are handed to the developer verbatim; a denial is
   never worked around, never token-dodged).
-- The agent file and all `-skill.md` files are **outside** docs-management
-  governance (they are source, moved out at install time). Every other file in
-  every suite is subject to it.
+- The agent file and all `-skill.md` files are documents like every other and
+  follow the same process. Changes to a skill source reach the executing copy only
+  through re-install, which keeps source and installed copy identical below the
+  frontmatter.
 
 ## 8. Safety invariants (enforced in the orchestrator agent)
 
@@ -193,7 +201,8 @@ first, and happens at plan-synthesis time of the next run.
   touches the previous report; the report is written before any pruning
 - **Install discipline:** skills install by **copy, never move** — the suite
   folder keeps the canonical, git-versioned source; the installed copy is the
-  only executing copy; step-0 hash verification (source ↔ installed) every cycle
+  only executing copy; step 0 verifies every cycle that source and installed copy
+  are identical below the frontmatter
 - **One-run-at-a-time:** a new exam run is blocked while the target system's last
   log run-row lacks a disposition
 - Diligence standard: no shortcuts, no partial solutions for speed, do exactly
@@ -206,17 +215,17 @@ and healthy at all times. But a system that exams itself with its own exam
 machinery enters **circular redundancy** — it would be grading its own paper.
 The design:
 
-- Its **documents** are governed like every suite's — by `mb-docs-manager`,
-  `mb-align-docs`, `mb-wikilinks` (the normal docs processes).
+- Its **documents** follow the same documentation process as every suite's
+  (Section 7).
 - Its **functional health** is validated at step 0 of every exam cycle, by
   concrete checks: every `Installed` row's skill exists at its recorded path and
-  **hash-matches** its repo source (via the approved glob form
-  `mb-config-*/SKILL.md`); every Installed system's folder holds all seven suite
-  files; every register The use of registers has been discontinued. Please review spec-doc path exists; the target system's last log
+  its text below the frontmatter is identical to its repo source's (compared by
+  sha256, read via the approved glob form `mb-config-*/SKILL.md`); every Installed system's folder holds all seven suite
+  files; every register spec-doc path exists; the target system's last log
   run-row has a disposition (an open run blocks a new one). This is a check,
   not an exam — no findings cycle, no self-directed heals. Result recorded in
   [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md).
-- Its register The use of registers has been discontinued. Please review deliberately does **not** list the config-manager as a managed
+- Its register deliberately does **not** list the config-manager as a managed
   system — the exception is documented here, not silent.
 - Defects it finds in itself route to its own [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) and
   [[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md), and architecture-level fixes go to the
@@ -247,7 +256,7 @@ mybizz-config-docs/{system}/                ← every managed system's suite
 install location
 ├── agent: mb-config-manager                ← when built (location developer-set)
 └── skills: ~/.config/opencode/skills/mb-config-{system}/SKILL.md
-    (installed: mb-config-postgresql, mb-config-cupcake, mb-config-gbrain)
+    (one per Installed row in the register)
 ```
 
 Notes: the config-manager's own suite intentionally has no `-exam-plan` or
@@ -257,11 +266,9 @@ out keep their existing files until their build-out pass.
 
 ## 11. Build status
 
-Installed: `mb-config-postgresql` (pilot — the architecture was tuned here),
-`mb-config-cupcake`, `mb-config-gbrain`. The architecture is now being refined and
-stabilized on PostgreSQL as the learning ground; emulation across other systems
-comes only after this stage. [[[mybizz-config-docs:mb-config-manager/config-manager-register|Register: Managed Systems]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md) is the authority for
-what runs.
+The architecture was tuned on PostgreSQL and now runs for every system the
+[[[mybizz-config-docs:mb-config-manager/config-manager-register|Register: Managed Systems]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md) lists as `Installed`; each has completed a formal
+plan-driven exam run. The register is the authority for what runs.
 
 ## 12. S.W.O.T.
 
@@ -272,11 +279,9 @@ guards rightly forbid agents; a self-consistent seven-file information model
 with distinct file jobs.
 
 **Weaknesses.** Full exam coverage needs developer participation (guard-forbidden
-probes); the architecture is young — only one cycle run; the orchestrator agent
-is not yet installed (draft only).
+probes); the orchestrator agent is not yet installed (draft only).
 
-**Opportunities.** One exam discipline across every system in the estate once
-emulated; the transient→permanent graduation flow keeps procedures improving
+**Opportunities.** One exam discipline across every system in the estate; the transient→permanent graduation flow keeps procedures improving
 without archives; the log/learnings split gives both event memory and knowledge
 without posterity.
 
@@ -287,9 +292,9 @@ developer-run items immediately); circular self-exam (designed out, Section 9).
 
 ## 13. Source links
 
-- Governing philosophy and standing principles: [[[mybizz-os-docs:operating-procedures/standing-instruction|Engineering Principles]]](C:/mybizz/mybizz-os-docs/operating-procedures/standing-instruction.md) (supersedes the retired session-start-checklist document, 2026-09-17)
+- Governing philosophy and standing principles: [[[mybizz-os-docs:operating-procedures/standing-instruction|Engineering Principles]]](C:/mybizz/mybizz-os-docs/operating-procedures/standing-instruction.md)
 - Global behavior rules: `~/.config/opencode/AGENTS.md`
 - Cupcake (the guard layer that shapes developer-run classes): [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md), [[[mybizz-config-docs:cupcake/cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md)
 - Grant mechanism: `mg-grant` / `mg-revoke` (cupcake-config.md §Cross-project access grants)
-- Division docmap: `C:\dev\dev-root\docmap.md`; projects register The use of registers has been discontinued. Please review: `projects-config-register.md` (repo root)
+- Division docmap: `C:\dev\dev-root\docmap.md`
 - The pilot suite where this architecture was tuned: `postgresql/` (all seven files)

@@ -1,7 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-explainer"
 doc-id: "mb-dd98962e"
-updated: "2026-10-03"
+updated: "2026-10-04"
 ---
 # mb-memory-system-diagnostic — What It Is, What It Does, and Why It Is Built This Way
 
@@ -220,7 +220,7 @@ reporting (the report file is metrics and verdicts, not prose).
 
 *Suite: [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-config.md) (spec),
 [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-reference.md) (commands and report
-formats), [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-skill|Skill]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-skill.md) (the procedure — canonical
+formats), [[[mb-memory-system-diagnostic:mb-memory-system-diagnostic|Skill]]](C:/mybizz/mb-memory-system-diagnostic/mb-memory-system-diagnostic.md) (the procedure — canonical
 artifact in this folder, installed copy at
 `~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md`),
 [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-plan.md) / 

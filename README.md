@@ -1,7 +1,7 @@
 ---
 title: "README"
 doc-id: "mb-46a3cb92"
-updated: "2026-10-03"
+updated: "2026-10-04"
 ---
 # mybizz-config-docs — README
 
@@ -53,5 +53,5 @@ of sync. Concretely, this shows up as:
 ## Kept fresh by
 
 The repository's documents are kept accurate by /mb-project-docs during
-close-out ([[[mybizz-os-docs:operating-procedures/close-out-process]]](C:/mybizz/mybizz-os-docs/operating-procedures/close-out-process.md)); the eight repositories are committed,
+close-out ([[[mybizz-os-docs:operating-procedures/close-out-process]]](C:/mybizz/mybizz-os-docs/operating-procedures/close-out-process.md)); the documentation repositories listed in [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md) are committed,
 GBrain-updated and pushed by commit-all.sh ([[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md)).

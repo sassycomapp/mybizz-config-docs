@@ -1,11 +1,11 @@
 ---
 title: "project-docs-reference"
 doc-id: "mb-6950e749"
-updated: "2026-10-02"
+updated: "2026-10-04"
 ---
 # mb-project-docs — Reference
 
-Usage and execution for the `mb-project-docs` skill. `skill.md` in this folder is the authoritative definition; this document is the operational form. Why it works this way: [[[mybizz-config-docs:mb-project-docs/project-docs-explainer]]](C:/mybizz/mybizz-config-docs/mb-project-docs/project-docs-explainer.md). Current state: [[[mybizz-config-docs:mb-project-docs/project-docs-config]]](C:/mybizz/mybizz-config-docs/mb-project-docs/project-docs-config.md).
+Usage and execution for the `mb-project-docs` skill. the skill's source, `mb-project-docs.md` in `C:\mybizz\mb-project-docs\`, is the authoritative definition; this document is the operational form. Why it works this way: [[[mybizz-config-docs:mb-project-docs/project-docs-explainer]]](C:/mybizz/mybizz-config-docs/mb-project-docs/project-docs-explainer.md). Current state: [[[mybizz-config-docs:mb-project-docs/project-docs-config]]](C:/mybizz/mybizz-config-docs/mb-project-docs/project-docs-config.md).
 
 ## Usage
 

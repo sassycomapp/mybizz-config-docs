@@ -1,7 +1,7 @@
 ---
 title: "archify-exam-report"
 doc-id: "mb-3f68fb7d"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Archify — Exam Report
 
@@ -28,7 +28,7 @@ Tier 3 **unlocked at the gate** (developer-approved 2026-09-16).
 | AR1-1 | Version identity | package.json `2.16.0`; SKILL.md `version: "2.16"` | `2.16.0`; frontmatter contains `version: "2.16"` | PASS |
 | AR1-2 | Install architecture — single discovery path | exactly one `archify` entry resolving to the clone | one symlink entry; no duplicate path elsewhere | PASS |
 | AR1-3 | Package structure | schemas/ 6 `.schema.json` + README; references/ 4; renderers per-type + shared; `bin/archify.mjs` | schemas 6 + README (1); references 4 (authoring-contract, brand-marks, delivery-contract, viewer-runtime); renderers architecture/dataflow/lifecycle/sequence/shared/workflow; bin present | PASS |
-| AR1-4 | Suite completeness | 8 regular files + scope-skill spec | 8/8 present + [[[mybizz-config-docs:archify/archify-scope-skill\|Scoping Skill Specification]]](C:/mybizz/mybizz-config-docs/archify/archify-scope-skill.md) | PASS |
+| AR1-4 | Suite completeness | 8 regular files + scope-skill spec | 8/8 present + [[[mb-archify-scope:mb-archify-scope\|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md) | PASS |
 | AR1-5 | Update-notice contract | notification-only; `ARCHIFY_UPDATE_CHECK_DISABLED=1` documented | contract text present in SKILL.md; env unset live (disable is optional); manifest URL not fetched (deliberately out of scope) | PASS |
 | AR1-6 | Integration facts | OpenCode `/archify`; GBrain no page; not a memory writer; Cupcake provisional | OpenCode recorded; GBrain no-page recorded; no Memory-Governor treatment recorded; **Cupcake re-verified live: no archify-specific rule (only the mg-grant access entry exists); Cupcake status ACTIVE (verified 2026-09-12)** | PASS w/ F-2 sub-note |
 
@@ -38,7 +38,7 @@ Tier 3 **unlocked at the gate** (developer-approved 2026-09-16).
 |---|---|---|---|---|
 | AR2-1 | Doctor probe | 15/15 checks, "Archify is ready" | 15/15 `[ok]`, final line "Archify is ready", exit 0 | PASS |
 | AR2-2 | Skill invocability via discovery | real `name: archify` frontmatter resolves | `name: archify` + description resolve through the symlink | PASS |
-| AR2-3 | Scoping-skill component integrity | installed copy byte-identical to [[[mybizz-config-docs:archify/archify-scope-skill\|Scoping Skill Specification]]](C:/mybizz/mybizz-config-docs/archify/archify-scope-skill.md) | **FOUND DRIFT** (installed 278 l vs spec 292 l, missing Phase 9). **Closed this run** — re-copy applied (gate F-1 approved), hash pair now identical `0e40e984ba82a5f6`, "nine phases" present | PASS (after repair) |
+| AR2-3 | Scoping-skill component integrity | installed copy byte-identical to [[[mb-archify-scope:mb-archify-scope\|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md) | **FOUND DRIFT** (installed 278 l vs spec 292 l, missing Phase 9). **Closed this run** — re-copy applied (gate F-1 approved), hash pair now identical `0e40e984ba82a5f6`, "nine phases" present | PASS (after repair) |
 
 ## Tier 3 — Deep pass (unlocked; safe rows agent-run with evidence below)
 

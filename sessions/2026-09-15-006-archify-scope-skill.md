@@ -21,7 +21,7 @@ plus the Archify authoring learnings gained from the Run Learnings (memory-ecosy
    with the developer (Intent, ASK, Context, Preliminary scope, Scope the source,
    Feasibility probe, Report and gate, Handoff contract) plus a Phase 9
    close-out (learnings) added during the run. Deliverables:
-   - Repo spec: [[[mybizz-config-docs:archify/archify-scope-skill|Scoping Skill Specification]]](C:/mybizz/mybizz-config-docs/archify/archify-scope-skill.md)
+   - Repo spec: [[[mb-archify-scope:mb-archify-scope|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md)
    - Installed skill: `~/.config/opencode/skills/mb-archify-scope/SKILL.md`
      (invoked as `/mb-archify-scope`; rename from `mb-archify-scoping`)
    - Output folder: `C:\mybizz\mybizz-config-docs\archify\output\`
@@ -80,7 +80,7 @@ plus the Archify authoring learnings gained from the Run Learnings (memory-ecosy
   developer's `cp /tmp/opencode/installed-SKILL.md
   ~/.config/opencode/skills/mb-archify-scope/SKILL.md` to land (skill-directory
   writes are blocked for the agent by policy)
-- **Git**: [[[mybizz-config-docs:archify/archify-scope-skill|Scoping Skill Specification]]](C:/mybizz/mybizz-config-docs/archify/archify-scope-skill.md) and `archify/output/` are new/untracked in
+- **Git**: [[[mb-archify-scope:mb-archify-scope|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md) and `archify/output/` are new/untracked in
   `mybizz-config-docs`; also a pre-existing modification to
   [[[mybizz-config-docs:gbrain/gbrain-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-explainer.md) (not from this session) — commit/push pending
   developer instruction

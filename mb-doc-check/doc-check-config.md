@@ -17,7 +17,7 @@ Canonical current-state record of the `mb-doc-check` program. Agent-facing. Refl
 | Purpose | At every commit: completes each committed document's frontmatter, writes every link in the standard form, repairs links after a rename, move or deletion, and stops the commit on a link that points to nothing |
 | Location | `C:\\mybizz\\scripts\\mb-doc-check.py` (WSL: `/mnt/c/mybizz/scripts/mb-doc-check.py`), 88,758 bytes |
 | Settings files | `mb-doc-check.sources` (789 bytes) and `mb-doc-check.roots`, in the same folder |
-| How it runs | As a git `pre-commit` hook in each of the eight repositories: `python3 /mnt/c/mybizz/scripts/mb-doc-check.py hook`. A commit made in WSL runs it; a commit made from a Windows program does not |
+| How it runs | As a git `pre-commit` hook in each of the documentation repositories listed in [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md): `python3 /mnt/c/mybizz/scripts/mb-doc-check.py hook`. A commit made in WSL runs it; a commit made from a Windows program does not |
 | Failure behavior | If the program itself fails with an internal error, it prints "skipped because of an internal problem" and lets the commit through. A bug never blocks work. The skipped documents are corrected at their next commit |
 | Network and GBrain | None, except two commands: `sources-check` calls the `gbrain` command, and `slug-selftest` runs GBrain's own page-name function with `bun` |
 | Tests | 149 automated tests (Python `unittest`), stored in `mybizz-config-docs\gbrain\tests` and run with `bash /mnt/c/mybizz/mybizz-config-docs/gbrain/tests/run-tests.sh` |
@@ -34,6 +34,13 @@ Canonical current-state record of the `mb-doc-check` program. Agent-facing. Refl
 | `mybizz-os-docs` | `/mnt/c/mybizz/mybizz-os-docs` |
 | `data-mybizz-mgt` | `/mnt/c/data-mybizz-mgt` |
 | `pdlf` | `/mnt/c/pdlf` |
+| `mb-project-docs` | `/mnt/c/mybizz/mb-project-docs` |
+| `mb-memory-system-diagnostic` | `/mnt/c/mybizz/mb-memory-system-diagnostic` |
+| `mb-compile-rules` | `/mnt/c/mybizz/mb-compile-rules` |
+| `mb-sentinel-review` | `/mnt/c/mybizz/mb-sentinel-review` |
+| `mb-sysdoc-creator` | `/mnt/c/mybizz/mb-sysdoc-creator` |
+| `mb-submit-memory` | `/mnt/c/mybizz/mb-submit-memory` |
+| `mb-archify-scope` | `/mnt/c/mybizz/mb-archify-scope` |
 
 Not covered: the two dormant libraries (`mb4ecom-project-library`, `mb5pdlf-project-library`), the code repositories, the Anvil clone and the memory governor's folder. The full list of repositories and sources is in [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md).
 

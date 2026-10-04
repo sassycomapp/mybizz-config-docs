@@ -20,7 +20,7 @@ verifies that and repairs nothing.
   authoring invariants, do-not list
 - Explainer: [[[mybizz-config-docs:archify/archify-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/archify/archify-explainer.md) — what Archify is, why scoping comes
   first, config-maintenance model, S.W.O.T.
-- Scoping component: [[[mybizz-config-docs:archify/archify-scope-skill|Scoping Skill Specification]]](C:/mybizz/mybizz-config-docs/archify/archify-scope-skill.md) — the front-of-pipe spec
+- Scoping component: [[[mb-archify-scope:mb-archify-scope|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md) — the front-of-pipe spec
   whose installed copy this exam verifies (AR2-3)
 - Report: [[[mybizz-config-docs:archify/archify-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/archify/archify-exam-report.md) — one file, overwritten each run
   (write-then-replace)
@@ -62,7 +62,7 @@ into reports, outputs, or learnings.
   downloads/installs/executes anything. A version drift is a finding to report,
   never a reason to mutate the clone.
 - **Never modify `~/.config/opencode/skills/mb-archify-scope/SKILL.md`** — if it
-  drifts from [[[mybizz-config-docs:archify/archify-scope-skill|Scoping Skill Specification]]](C:/mybizz/mybizz-config-docs/archify/archify-scope-skill.md), report the gap; re-sync is a developer/gated
+  drifts from [[[mb-archify-scope:mb-archify-scope|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md), report the gap; re-sync is a developer/gated
   action with the spec as source of truth. Never create a second discovery path for
   the scope skill or the tool (double-load).
 - **Never submit skill content through the Memory Governor** — ordinary `gbrain
@@ -98,7 +98,7 @@ into reports, outputs, or learnings.
 |---|---|---|---|
 | AR2-1 | A | Doctor probe: `node bin/archify.mjs doctor` (read-only; verifies runtime + all five renderer/schema/example triads) | 15/15 checks pass, final line "Archify is ready" (config §Identity — Doctor status). Any check fail = finding; capture output to a file, never pipe live output to a truncating consumer |
 | AR2-2 | A | Skill invocability through discovery: `head -5 ~/.config/opencode/skills/archify/SKILL.md` | Real `name: archify` frontmatter + description resolve through the symlink; skill invocable as `/archify` (config §Identity — Invocation). Empty/None = finding |
-| AR2-3 | A | Scoping-skill component integrity: `sha256sum archify/archify-scope-skill.md ~/.config/opencode/skills/mb-archify-scope/SKILL.md` | Two hashes identical (config §Scoping skill component — "kept byte-identical to the spec"). Divergence = DRIFT finding (spec edited without re-copy, or installed copy edited) |
+| AR2-3 | A | Scoping-skill component integrity: `sha256sum /mnt/c/mybizz/mb-archify-scope/mb-archify-scope.md ~/.config/opencode/skills/mb-archify-scope/SKILL.md` | Two hashes identical (config §Scoping skill component — "kept byte-identical to the spec"). Divergence = DRIFT finding (spec edited without re-copy, or installed copy edited) |
 
 ## Tier 3 — Deep pass (developer-run; executes only if the developer unlocks this tier)
 

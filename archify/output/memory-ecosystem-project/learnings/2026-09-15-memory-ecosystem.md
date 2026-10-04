@@ -7,7 +7,7 @@ updated: "2026-10-04"
 
 Transient way-station for learnings gained from the first real `/mb-archify-scope`
 run and its Archify authoring. Model-inferred; each entry is either dropped or
-graduated into a permanent home (`mb-archify-scope` skill → [[[mybizz-config-docs:archify/archify-scope-skill|Scoping Skill Specification]]](C:/mybizz/mybizz-config-docs/archify/archify-scope-skill.md),
+graduated into a permanent home (`mb-archify-scope` skill → [[[mb-archify-scope:mb-archify-scope|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md),
 or [[[mybizz-config-docs:archify/archify-reference|Reference]]](C:/mybizz/mybizz-config-docs/archify/archify-reference.md) / [[[mybizz-config-docs:archify/archify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/archify/archify-learnings.md) suite file) — then deleted.
 
 | # | learning | right action | destination |

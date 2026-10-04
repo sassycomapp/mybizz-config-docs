@@ -20,5 +20,5 @@ failed earlier with 42→21→12 route/corridor diagnostics; re-scoped as
 `architecture` via the guide, the same subject validated clean in two repair
 rounds (17→0 diagnostics).
 
-Canonical spec: [[[mybizz-config-docs:archify/archify-scope-skill|Scoping Skill Specification]]](C:/mybizz/mybizz-config-docs/archify/archify-scope-skill.md) —
+Canonical spec: [[[mb-archify-scope:mb-archify-scope|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md) —
 installed copy `~/.config/opencode/skills/mb-archify-scope/SKILL.md`.

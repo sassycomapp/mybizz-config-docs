@@ -1,14 +1,13 @@
 ---
 title: "config-setup-prompt"
 doc-id: "mb-68a57783"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Config Manager — Setup Prompt
 
 Generic task instruction / specification / prompt for a fresh session to build the
-configuration-management suite for the next skill/system. Proven across five
-systems (postgresql → cupcake → gbrain → memory-governor → gbrain-dream-cycle;
-the last run 2026-09-14 is the freshest precedent). Use verbatim: replace
+configuration-management suite for the next skill/system. Proven on every
+system the register lists as `Installed`. Use verbatim: replace
 `{system}` with the target's name and follow in order. The architecture is
 authoritative in `mb-config-manager/config-manager-explainer.md`; this file
 adds nothing new — it packages the proven method.
@@ -19,7 +18,7 @@ adds nothing new — it packages the proven method.
 
 > Read `mybizz-config-docs/mb-config-manager/config-manager-explainer.md` (the
 > authoritative architecture), `config-manager-reference.md` (procedures), and
-> `config-manager-register.md` The use of registers has been discontinued. Please review (current state). Then build and run the
+> `config-manager-register.md` (current state). Then build and run the
 > configuration-management suite for `{system}` against its spec
 > `{system}/{system}-config.md`, exactly per
 > `mb-config-manager/config-setup-prompt.md`. The system is
@@ -30,11 +29,11 @@ adds nothing new — it packages the proven method.
 
 - Read the target's three existing docs: `{system}-config.md` (the spec — the
   single source of expected values), `-reference.md`, `-explainer.md`.
-- Read one completed suite as format template — prefer the most recent
-  (`gbrain-dream-cycle/`).
+- Read one completed suite as format template — the most recently installed one
+  (latest install date in the register).
 - Check live state of the target (read-only probes matching the spec's tables).
 - `git status` — tree should be clean or carry only known pending edits; report.
-- Confirm the register The use of registers has been discontinued. Please review row exists (state `WIP`). If no register row or no spec
+- Confirm the register row exists (state `WIP`). If no register row or no spec
   doc exists → stop, report: the system is not yet examinable.
 
 ## Phase 1 — Suite build-out (8 files total: 7-file standard + skill source)
@@ -60,8 +59,9 @@ adds nothing new — it packages the proven method.
   add companion-documents footer.
 - `reference.md` — add exam-plan/report/log/learnings pointers to the header.
 - `skill.md` — born-with-inventory (the standing check inventory lives HERE,
-  never in plans): frontmatter (name `mb-config-{system}`, description with
-  triggers); file-pointer list (spec first, exam-plan second); scope boundary
+  never in plans): document frontmatter like every other document (`title`;
+  `doc-id` and `updated` are set by `mb-doc-check` at commit — never `name` or
+  `description`, which belong only to the installed copy); file-pointer list (spec first, exam-plan second); scope boundary
   (anti-duplication); credential discipline (variable names only); hard
   behavioral rules (from the spec's own Do-not list); then the tiers:
   - **Tier 0 — liveness/invocability** (agent-runnable; failure = DOWN, stop)
@@ -79,17 +79,20 @@ adds nothing new — it packages the proven method.
 
 - Request grant: `mg-grant --path ~/.config/opencode/skills/mb-config-{system} --count 3`
   (any guard denial honored → hand the developer exact commands, never work around).
-- `mkdir -p` + `cp` source → `SKILL.md` (**copy, never move**; one skill per
-  completion, never batch).
-- `sha256sum` both files — record first 16 hex in the register The use of registers has been discontinued. Please review + install date;
-  flip register The use of registers has been discontinued. Please review row WIP → Installed.
+- Create `~/.config/opencode/skills/mb-config-{system}/SKILL.md` with the
+  installed frontmatter — `name: mb-config-{system}` and a `description` stating
+  what the skill exams and when to use it — followed by the source's text below
+  its frontmatter (**copy, never move**; one skill per completion, never batch).
+- sha256 of the text below the frontmatter in both files — they must match; record
+  the first 16 hex in the register + install date; flip register row WIP →
+  Installed.
 
 ## Phase 3 — Formal run #1
 
-- **Step 0 self-validation** (record in `config-manager-log.md`): hash pairs for
-  every Installed skill via the approved glob form (`mb-config-*/SKILL.md` —
+- **Step 0 self-validation** (record in `config-manager-log.md`): body-hash pairs
+  (text below the frontmatter) for every Installed skill via the approved glob form (`mb-config-*/SKILL.md` —
   **never a token-literal command naming a sibling guard's name**; proven denial
-  class); suite completeness; register The use of registers has been discontinued. Please review spec-doc paths exist; target's last log
+  class); suite completeness; register spec-doc paths exist; target's last log
   run-row has a disposition.
 - Execute the plan: Tiers 0–2, fully autonomous — no questions until the gate.
 - Guard denials: honored absolutely; blocked checks bundle into ONE developer
@@ -114,34 +117,35 @@ adds nothing new — it packages the proven method.
 
 ## Phase 5 — Close-out
 
-- Graduated refinements → into the skill (agent-applied), re-copy, re-hash,
-  update register The use of registers has been discontinued. Please review hash.
+- Graduated refinements → into the skill (agent-applied); re-install (installed
+  frontmatter kept, text below it replaced); re-hash; update the register body
+  hash.
 - Learnings graduated → delete entries (permanent home exists first).
-- Spec-doc corrections → flagged to docs governance; applied only with explicit
-  developer approval (the gbrain precedent).
+- Spec-doc corrections → raised at the gate with a proposed correction; applied
+  only with explicit developer approval.
 - If the system belongs to the memory family: update
   `mybizz-os-docs/memory-master-explainer.md` to current verified state (standing
   rule — its own commit).
-- Register The use of registers has been discontinued. Please review notes updated (verified-live date). Completion report; then the two
-  standard asks: developer commit+push; agent runs
-  `setsid bash /mnt/c/mybizz/scripts/sync-gbrain.sh > /tmp/sync-output.txt 2>&1 &`.
+- Register notes updated (verified-live date). Completion report; then the
+  standard ask: the developer runs close-out ([[[mybizz-os-docs:operating-procedures/close-out-process]]](C:/mybizz/mybizz-os-docs/operating-procedures/close-out-process.md)), which ends
+  with `commit-all.sh` — it commits, syncs GBrain and pushes.
 
 ## Standing rules (violation = escalation)
 
 - DO NO DAMAGE — detection and verification only; the system is working well.
 - Guards' denials never worked around (sensitive-data: `.env`, `config.json`,
   `opencode.jsonc` reads; `/proc`; critical paths; token-literal command text).
-- Copy-install, never move; hash pair verified each cycle.
+- Copy-install, never move; body-hash pair (text below the frontmatter) verified
+  each cycle.
 - Spec docs are flagged, never edited, by the exam.
 - Learnings transient; the plan is never an absorption destination.
-- The agent never commits — the developer runs commit+push; then the agent runs
-  sync+embed.
+- The agent never commits — the developer runs `commit-all.sh`, which commits,
+  syncs GBrain and pushes.
 - Expected values are read fresh from the spec every run — never from memory.
 
-## Amendment 2026-09-15 — clarity discipline (developer instruction, session 003)
+## Clarity discipline
 
-Appended verbatim per developer instruction; nothing above is altered. A
-violation of any rule in this section = escalation, same as the standing rules.
+A violation of any rule in this section = escalation, same as the standing rules.
 
 **Purpose.** This prompt defines the task completely: replace `{system}`, follow
 the phases in order. The subject system is the developer's working system,
@@ -151,11 +155,11 @@ talking itself into confusion — re-deriving a settled task, re-asking what the
 prompt already answers, manufacturing ambiguity — and wrecking the run.
 
 - **The prompt is the task definition.** Scope is never re-confirmed, re-derived,
-  or re-asked. If scope seems unclear, re-read this prompt, the register The use of registers has been discontinued. Please review row, and
+  or re-asked. If scope seems unclear, re-read this prompt, the register row, and
   the developer's instruction first — the answer is in those files in all but the
   rarest cases.
-- **Procedural conflicts are stated, not asked.** Where a register The use of registers has been discontinued. Please review state, file,
-  or fact does not match what a phase expects (e.g. a register The use of registers has been discontinued. Please review row in state
+- **Procedural conflicts are stated, not asked.** Where a register state, file,
+  or fact does not match what a phase expects (e.g. a register row in state
   `Deferred` where `WIP` is required), the resolution is an explicit named step
   in the plan — dated, with the developer's instruction cited — not a question.
   The developer's explicit instruction to run this prompt IS the authority to

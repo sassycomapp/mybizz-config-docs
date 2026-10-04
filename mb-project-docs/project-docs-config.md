@@ -1,7 +1,7 @@
 ---
 title: "project-docs-config"
 doc-id: "mb-f7c435e5"
-updated: "2026-10-02"
+updated: "2026-10-04"
 ---
 # mb-project-docs — Config
 
@@ -22,7 +22,7 @@ State of the `mb-project-docs` skill as of 2026-10-02.
 | Item | Value |
 |---|---|
 | Installed copy | `~/.config/opencode/skills/mb-project-docs/SKILL.md` |
-| Authoritative copy | `skill.md` in this folder |
+| Authoritative copy | `mb-project-docs.md` in `C:\mybizz\mb-project-docs\` (the skill's source repository) |
 | Drift detection | Diff of the two copies — no version field exists |
 | Helper script | `C:\mybizz\scripts\agents-from-reference.sh` |
 
@@ -30,7 +30,6 @@ State of the `mb-project-docs` skill as of 2026-10-02.
 
 | File | Role |
 |---|---|
-| `skill.md` | Skill definition — authoritative copy |
 | `project-docs-config.md` | This document |
 | `project-docs-reference.md` | Companion — usage and execution |
 | `project-docs-explainer.md` | Companion — orientation and reasoning |

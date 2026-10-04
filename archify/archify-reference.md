@@ -9,7 +9,7 @@ Invocation, commands, authoring procedure, and failure rules. Mid-task lookup.
 For what Archify is and why it works this way: [[[mybizz-config-docs:archify/archify-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/archify/archify-explainer.md).
 Config-management exam set: [[[mybizz-config-docs:archify/archify-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/archify/archify-exam-plan.md) (run job-spec),
 [[[mybizz-config-docs:archify/archify-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/archify/archify-exam-report.md) (current verified state), [[[mybizz-config-docs:archify/archify-log|Log]]](C:/mybizz/mybizz-config-docs/archify/archify-log.md) (events),
-[[[mybizz-config-docs:archify/archify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/archify/archify-learnings.md) (transient lessons). Scoping: [[[mybizz-config-docs:archify/archify-scope-skill|Scoping Skill Specification]]](C:/mybizz/mybizz-config-docs/archify/archify-scope-skill.md)
+[[[mybizz-config-docs:archify/archify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/archify/archify-learnings.md) (transient lessons). Scoping: [[[mb-archify-scope:mb-archify-scope|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md)
 (the scoping skill's canonical spec).
 
 ---
@@ -19,7 +19,7 @@ Config-management exam set: [[[mybizz-config-docs:archify/archify-exam-plan|Exam
 `/archify`
 
 **Front-of-pipe:** any drawing request routes through `/mb-archify-scope` first
-(canonical spec [[[mybizz-config-docs:archify/archify-scope-skill|Scoping Skill Specification]]](C:/mybizz/mybizz-config-docs/archify/archify-scope-skill.md)) — it produces the approved Scope Card +
+(canonical spec [[[mb-archify-scope:mb-archify-scope|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md)) — it produces the approved Scope Card +
 machine header that the Archify run consumes. Invoke `/mb-archify-scope` **before**
 `/archify`, never instead of it.
 

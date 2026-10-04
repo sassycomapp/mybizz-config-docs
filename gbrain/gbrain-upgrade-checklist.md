@@ -1,7 +1,7 @@
 ---
 title: "gbrain-upgrade-checklist"
 doc-id: "mb-47fa9b6f"
-updated: "2026-10-02"
+updated: "2026-10-04"
 ---
 # GBrain upgrade checklist
 
@@ -73,7 +73,7 @@ git -C /home/dev-p/gbrain ls-remote --tags origin "$TAG"
 [Anything else: stop and paste the output to Claude.]
 [Write the commit id of the tag in step 2. The rollback commit of the old version is saved by the stop-and-back-up step.]
 
-5. Commit and push all eight documentation repositories, so that nothing is lost.
+5. Commit and push the documentation repositories listed in [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md), so that nothing is lost.
 
 ```
 bash /mnt/c/mybizz/scripts/commit-all.sh "Before the GBrain upgrade"
