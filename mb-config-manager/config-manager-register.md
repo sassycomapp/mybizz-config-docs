@@ -1,7 +1,7 @@
 ---
 title: "config-manager-register"
 doc-id: "mb-6ce71949"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # mb-config-manager — Register The use of registers has been discontinued. Please review: Managed Systems
 
@@ -77,8 +77,8 @@ Notes:
    per completion, never batched).
 - `spec doc` is the single file the exam runs against; the exam also verifies the
   suite's other documents as part of the GAP class.
-- Filename conventions differ per suite (e.g. Config,
-  Config) — the spec doc column is authoritative, never guessed.
+- Filename conventions differ per suite (e.g. `align-docs-config.md`,
+  `docs-manager-config.md`) — the spec doc column is authoritative, never guessed.
 - `mb-*` skills are themselves examinable systems: an installed skill can drift from
   its suite docs exactly like any tool.
 - Every Installed system's folder carries the seven-file suite (config,

@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-skill"
 doc-id: "mb-386cddb3"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # mb-config-memory-governor — Exam Skill
 
@@ -51,7 +51,7 @@ the start of every run.
 | M1-1 | A | Repo integrity at `/home/dev-p/memory-governor`: `git status --short` | Only expected dirt: `registers/` changes (worker auto-commits+pushes) — anything else uncommitted = finding |
 | M1-2 | A | Venv present: `.venv/bin/python` | Exists, executable |
 | M1-3 | A | DB quick sanity (single count query via the postgres module's established connection pattern) | 5 tables; row counts sane vs last recorded (projects 3, candidates 5, events 7, audit 5, policy 0 at 2026-09-13) |
-| M1-4 | A | Register integrity: index rows in Register Memory Governor ↔ payload files in `registers/candidates/*.json` | 1:1 correspondence (read-only) |
+| M1-4 | A | Register integrity: index rows in `registers/register-memory-governor.md` ↔ payload files in `registers/candidates/*.json` | 1:1 correspondence (read-only) |
 | M1-5 | A | Log/error scan: application logs at `/tmp/memory-governor.log` + `/tmp/memory-governor-worker.log` — **the worker log carries no timestamps and retry warnings show only "attempt 1/5" with no resolution lines** (run #1 finding): failed-event fate requires developer verification via DB event status + worker PATH check. **Outbox semantics (run #1):** events absent from `memory_events` + `unprocessed=0` = delivered-and-purged (the outbox deletes on delivery) — absence is NOT loss; per-source attribution of old IDs requires comparing against the sequence | No unexpected errors; governor dev-testing errors (2026-09-09) are historical |
 
 ## Tier 2 — State conformance (each probe compared to the spec's current expected value; any mismatch = DRIFT finding)

@@ -1,7 +1,7 @@
 ---
 title: "graphify-exam-report"
 doc-id: "mb-b5af758f"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Graphify — Exam Report
 
@@ -26,7 +26,7 @@ Run #1 — first formal plan-driven run (bootstrap). Plan: [[[mybizz-config-docs
 |---|---|---|---|
 | GF1-1 | Installed behind latest; spec records upstream `0.9.56` @2026-09-08 | Upstream latest `0.9.61` (live PyPI); installed `0.9.40` — lag state holds; spec row was stale → corrected (D-2) | PASS |
 | GF1-2 | `.graphifyignore` exactly 2 lines; `.graphify_build.json` `{"gitignore": false}`; `.graphify_root` exact | All exact | PASS |
-| GF1-3 | `.gitignore` carries `graphify-out/`, `.opencode/`, mb-3-cs, `opencode.json`, `tests/` | 5/5 present | PASS |
+| GF1-3 | `.gitignore` carries `graphify-out/`, `.opencode/`, `agents.md`, `opencode.json`, `tests/` | 5/5 present | PASS |
 | GF1-4 | `built_at_commit` == live HEAD; counts point-in-time; `directed` false | Pre-heal: `5ce243e1…` vs HEAD `59175d9e…` → **DRIFT (F-1)**. Healed by GF3-1; final state after the full rebuild: `built_at_commit` == HEAD; 537 nodes / 434 edges / 155 communities; 417 EXTRACTED + 17 INFERRED + 0 AMBIGUOUS; 95 ghosts; `directed: false` | PASS (post-rebuild) |
 | GF1-5 | `mcp.graphify` type `local`, enabled `true`, command exact, no API-key field (project-root `opencode.json`) | Keys exactly `command`/`enabled`/`type` (no credential field); type `local`, enabled `true`, command exact | PASS |
 | GF1-6 | AGENTS.md block markers present | `BEGIN` line 102, `END` line 126 | PASS |

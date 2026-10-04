@@ -1,7 +1,7 @@
 ---
 title: "anvil-agent-references-reference"
 doc-id: "mb-99b48631"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # anvil-agent-references — Reference: Install, Skills, and Technical Detail
 
@@ -110,7 +110,7 @@ discipline regardless of enforcement status.
 - New `/runtime/services/tables.yml` entries should set `client_config.enable_v2: true`.
 - Preserve an existing table's `client_config` unless the user explicitly asks to migrate.
 - Default new tables to `client: none`. Use `search` only for intentional direct client searches; `full` only when the user explicitly requests unrestricted client table writes.
-- Preserve non-empty `db_schema.*.indexes`; don't add new indexes unless explicitly asked and the plan supports them. New tables: omit [[[default:anvil-docs/data-tables/indexes|Indexes]]](C:/dev/project-library-global/anvil-docs/data-tables/indexes.md) or use `indexes: []`.
+- Preserve non-empty `db_schema.*.indexes`; don't add new indexes unless explicitly asked and the plan supports them. New tables: omit `indexes` or use `indexes: []`.
 
 **Users table specifics:**
 - Adding the Users service requires a matching `db_schema` Users table if `server_config.user_table` is set to a string key.
@@ -161,19 +161,19 @@ Before behavior changes, inspect enough of `anvil.yaml` to identify `startup_for
 |---|---|
 | New or simple container Form | Basic Container Form |
 | Existing button/input handler edit | stay in the skill file; load Dom Event Vs Component Event only if event source is unclear |
-| No root `<anvil-form>` / implicit `HtmlComponent` container | Template Shapes, then Htmlcomponent Container |
-| Form using a layout with `<anvil-block>` | Template Shapes, then Layout Using Form |
-| Form defining slots with `<anvil-slot>` | Layout Defining Html Form, plus Html Frontmatter if custom properties/events are involved |
+| No root `<anvil-form>` / implicit `HtmlComponent` container | `references/template-shapes.md`, then `examples/htmlcomponent-container.md` |
+| Form using a layout with `<anvil-block>` | `references/template-shapes.md`, then `examples/layout-using-form.md` |
+| Form defining slots with `<anvil-slot>` | `examples/layout-defining-html-form.md`, plus `references/html-frontmatter.md` if custom properties/events are involved |
 | Root shape, attribute prefixes, bindings, blocks, slots, dropzones, or event signature lookup | Cheat Sheet |
 | `anvil:name`, `anvil:dom-node`, native DOM events, direct DOM access, runtime class/style helpers on plain HTML | Html Dom; use Dom Event Vs Component Event for a concrete recipe |
 | RepeatingPanel item templates, `writeback:`, or item refresh behavior | Repeating Panel Item Template |
-| Reusable component Form | Custom Component; also Html Frontmatter for custom API metadata |
-| Custom component container or `<anvil-dropzone>` | Custom Component Container and Html Frontmatter |
-| Legacy YAML template or converted `HtmlTemplate` | Yaml Template, Template Shapes, then Yaml Htmltemplate Conversion |
+| Reusable component Form | `examples/custom-component.md`; also `references/html-frontmatter.md` for custom API metadata |
+| Custom component container or `<anvil-dropzone>` | `examples/custom-component-container.md` and `references/html-frontmatter.md` |
+| Legacy YAML template or converted `HtmlTemplate` | `references/yaml-template.md`, `references/template-shapes.md`, then `examples/yaml-htmltemplate-conversion.md` |
 | M3 or dependency component specs | inspect `anvil.yaml` and dependency docs/files first, then Dependency Component |
 | Form Python class shape, handler signatures, lifecycle, client runtime caveats, dynamic updates | Python |
 | `anvil.js`, `anvil.js.window`, browser APIs, JS proxies, Promises | the Javascript Interop reference (below) |
-| Roles, theme CSS, generated component DOM, dependency styling internals | Styling, Styling Examples, Component Dom |
+| Roles, theme CSS, generated component DOM, dependency styling internals | `references/styling.md`, `references/styling-examples.md`, `references/component-dom.md` |
 
 **Simple event edits stay on the normal path** — adding/changing simple event wiring, matching handlers, fixed button/input behavior, or item-template bindings doesn't need the table, unless the task expands into layout restructuring, new Forms, YAML conversion, frontmatter, custom components, styling, data modeling, dependency APIs, reusable Forms, or raw DOM work. For newly added component events, prefer `@handle(...)`; use `on:<event>` only when preserving/extending existing markup-wired events.
 

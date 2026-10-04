@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-agent-implementation-workflow"
 doc-id: "mb-aa9bfa8d"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Memory Governor Agent — Stepwise Implementation Workflow
 
@@ -257,7 +257,7 @@ referenced sections.
 
 **Step 7.1 — `registers.py` The use of registers has been discontinued. Please review**
 - Action: implement the writer that, given a promoted candidate, produces
-  both the register The use of registers has been discontinued. Please review row (Register Memory Governor) and the full JSON
+  both the register The use of registers has been discontinued. Please review row (`register-memory-governor.md`) and the full JSON
   payload (`registers/candidates/ The use of registers has been discontinued. Please review<memory_id>.json`), and commits both
   together in the app repo (Architecture §8.1, §8.2).
 

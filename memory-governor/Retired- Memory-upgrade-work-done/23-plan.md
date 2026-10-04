@@ -1,7 +1,7 @@
 ---
 title: "23-plan"
 doc-id: "mb-25db78fa"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Work Package 23 — Resolve Remaining Open Items (Plan)
 
@@ -65,7 +65,7 @@ printed — only keyword presence, SET/ABSENT, and safe metadata.
 
 ---
 
-## Part E — mb-3-cs (Access Model + GRAPH MEMORY GUIDANCE)
+## Part E — `mb-3-cs/agents.md` (Access Model + GRAPH MEMORY GUIDANCE)
 
 - **Overlap:** `## Access Model` (GBrain semantic search available; Graphify installed, "Task
   3.7" ref) and the `GRAPH MEMORY GUIDANCE` managed block (Graphify = code structure, GBrain =
@@ -76,7 +76,7 @@ printed — only keyword presence, SET/ABSENT, and safe metadata.
 - **Managed block:** **remain local-only and managed** — `<!-- BEGIN/END GRAPH MEMORY GUIDANCE
   -->` delimiters mark a sync-gbrain-owned block; do not hand-edit.
 - **Exact proposed edit:** **none required.**
-- **Gitignored:** **yes** — mb-3-cs (lowercase) is listed in `.gitignore` line 6.
+- **Gitignored:** **yes** — `agents.md` (lowercase) is listed in `.gitignore` line 6.
 
 ---
 
@@ -138,7 +138,7 @@ optional commits are approved, a single small Build package can execute them (ex
   decision, never reactively.
 - **Graphify hooks:** remain disabled; on-demand rebuild with `built_at_commit == HEAD`
   verification.
-- **Local-only integration:** `.opencode/skills/`, `graphify-out/`, and lowercase mb-3-cs
+- **Local-only integration:** `.opencode/skills/`, `graphify-out/`, and lowercase `agents.md`
   stay gitignored/local; the two managed blocks (`GRAPH MEMORY GUIDANCE`, gbrain search
   guidance) remain managed by their owning tools.
 - **Deferred sources:** `mb4ecom-*`, `mb5pdlf-*`, `pdlf` remain registered and untouched; their

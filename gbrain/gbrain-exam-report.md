@@ -1,7 +1,7 @@
 ---
 title: "gbrain-exam-report"
 doc-id: "mb-0192f9b2"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # GBrain — Exam Report
 
@@ -38,7 +38,7 @@ facts cross-referenced from the postgres module's run-#2 report, not re-probed.
 | G2-1 | 0.46.1.0 live; upgrade only on check failure | 0.46.1.0; upstream latest 0.50.0.0 (banner) | PASS (policy holds) |
 | G2-2 | `gbrain-everything@1.0.0+7021205a`, 30/12 | exact match (MCP) | PASS |
 | G2-3 | MCP entry exact | **guard-denied this run** → developer bundle | DEFERRED |
-| G2-4 | embedding 3-large 1536d | [[[makepdlf-project-library:docs-local/config\|Config]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/config.md) table: model + dims + chunk_strategy=semantic | PASS |
+| G2-4 | embedding 3-large 1536d | `config` table: model + dims + chunk_strategy=semantic | PASS |
 | G2-5 | bundle per spec | 65 entries + 4 underscore metadata files (matches evolved state; spec stale — CF-4) | DRIFT (carried) |
 | G2-6 | Page accounting reconciles | **RESOLVED: per-source DB attribution sums to exactly 1,880 = identity; zero unattributed pages** — see finding 2 | PASS |
 | G2-7 | All source paths exist | 14/14 | PASS |

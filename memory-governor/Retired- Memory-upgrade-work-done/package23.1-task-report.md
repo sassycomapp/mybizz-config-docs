@@ -1,7 +1,7 @@
 ---
 title: "package23.1-task-report"
 doc-id: "mb-95badffe"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Work Package 23.1 — Commit Final Optional Documentation and Template Fixes
 
@@ -35,7 +35,7 @@ dream.
 
 ## GBrain synchronization
 
-- Dry-run `4502201f..0eed7505` — Modified: mb-3-cs (correct source ID/path, no
+- Dry-run `4502201f..0eed7505` — Modified: `agents.md` (correct source ID/path, no
   `git pull`, no parse failures).
 - Live sync `Synced 4502201f..0eed7505: +0/~1/-0` — 0 chunks created, no errors, no
   `--skip-failed`, no dream (documentation-only change).

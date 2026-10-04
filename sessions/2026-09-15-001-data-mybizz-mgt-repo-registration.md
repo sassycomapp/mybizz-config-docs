@@ -1,7 +1,7 @@
 ---
 title: "2026-09-15-001-data-mybizz-mgt-repo-registration"
 doc-id: "mb-7c925181"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Session 2026-09-15 — data-mybizz-mgt repo + GBrain + opencode registration
 
@@ -74,7 +74,7 @@ updated: "2026-10-01"
 
 - **mg-grant lowercases paths** (`to_wsl()`): granting
   `/home/dev-p/.config/opencode/AGENTS.md` recorded the grant as
-  mb-3-cs — on a case-sensitive FS a file-level grant for an uppercase
+  `.../agents.md` — on a case-sensitive FS a file-level grant for an uppercase
   filename may not match. Prefer folder-level grants for uppercase paths.
   (Moot here: the protected-files policy blocks agent edits regardless.)
 - **Permission-denied rename** on DrvFs was an OS-level handle, not a grants
@@ -99,14 +99,14 @@ updated: "2026-10-01"
 - **Docs corpus sweep (assigned to the docs skills, not done here)**: old-path
   references remain in `dev-root/docmap.md`, `mybizz-config-docs` (
   `projects-config-register.md` The use of registers has been discontinued. Please review, [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md), gstack references,
-  [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md), Config, one sessions page),
+  [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md), `docs-manager-config.md`, one sessions page),
   `mybizz-os-docs` ([[[mybizz-os-docs:operating-procedures/fact-save-and-recall|Operating Procedure]]](C:/mybizz/mybizz-os-docs/operating-procedures/fact-save-and-recall.md), [[[mybizz-os-docs:operating-procedures/opening-and-closing|Operating Procedure]]](C:/mybizz/mybizz-os-docs/operating-procedures/opening-and-closing.md)), and
   pdlf docs (2 files).
 - **Restart opencode** — `external_directory` + AGENTS.md + skill files load
   at process start.
 - **Grants active, left un-revoked** per developer instruction: the obsolete
   `/mnt/c/_data-mybizz-mgt` grant (dead path), `/mnt/c/data-mybizz-mgt`,
-  `opencode.jsonc`, mb-3-cs (lowercased), `skills/mb-docs-manager`.
+  `opencode.jsonc`, `agents.md` (lowercased), `skills/mb-docs-manager`.
 - **Flagged in mybizz-config-docs working tree** (Phase F, not handled): tracked
   file deleted — `sessions/2026-09-14-001-dream-cycle-config-mgmt.md` (` D`);
   untracked artifact dir `.sources/`. Developer decides; nothing committed.

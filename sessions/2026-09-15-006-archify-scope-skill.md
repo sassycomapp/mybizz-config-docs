@@ -1,7 +1,7 @@
 ---
 title: "2026-09-15-006-archify-scope-skill"
 doc-id: "mb-6c56787b"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Session 006 — mb-archify-scope
 
@@ -48,7 +48,7 @@ plus the Archify authoring learnings gained from the Run Learnings (memory-ecosy
      `image input not supported`)
 
 5. **Output artifacts.**
-   - memory-ecosystem (Scope Card)
+   - [[[mybizz-config-docs:archify/output/memory-ecosystem-project/memory-ecosystem-scope]]](C:/mybizz/mybizz-config-docs/archify/output/memory-ecosystem-project/memory-ecosystem-scope.md) (Scope Card)
    - `output/memory-ecosystem-header.json` (machine contract)
    - `output/memory-ecosystem-probe.json` (stub probe — passes)
    - `output/memory-ecosystem-draft.json` (frozen candidate)

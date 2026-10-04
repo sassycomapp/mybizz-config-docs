@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-config"
 doc-id: "mb-63bdf286"
-updated: "2026-10-02"
+updated: "2026-10-04"
 ---
 # Memory Governor Configuration
 
@@ -20,7 +20,7 @@ resolved) and re-verified 2026-09-30 after the GBrain upgrade (see
 | Repository | `github.com/sassycomapp/memory-governor` (local clone `/home/dev-p/memory-governor`, WSL-native — do not relocate) |
 | Application | FastAPI (Python), `app/main.py`, version `0.1.0` (pyproject) |
 | Decision engine | Two-outcome model (`auto_promote` / `needs_review`) — live since Phase 6.5, commit `c4df67d` |
-| HIGH_RISK_TYPES | **RESOLVED 2026-09-08** (developer decision): `policy`, `credential`, `identity`, [[[mb-3-cs-project-library:docs-local/architecture\|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md), [[[makepdlf-project-library:docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security\|Security Check]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security.md) — all five spec categories are now representable (`MemoryType` enum extended) and governed |
+| HIGH_RISK_TYPES | **RESOLVED 2026-09-08** (developer decision): `policy`, `credential`, `identity`, `architecture`, `security` — all five spec categories are now representable (`MemoryType` enum extended) and governed |
 | Test suite | **304 passed, 0 failed** (2026-09-08, post-resolution run; build record was 296); not re-run after the GBrain upgrade of 2026-09-30 or after the change to `app/gbrain.py` of 2026-10-01 — see Pending developer execution item 7 |
 | Operational status | **ACTIVE** — API + worker both running under their systemd user units (permanent auto-start executed + verified 2026-09-15; boot-command retirement decided 2026-09-28 — see Pending developer execution item 4) |
 
@@ -54,7 +54,7 @@ the script remains a manual fallback only.
 
 | Defect resolved | Fix |
 |---|---|
-| HIGH_RISK_TYPES spec inconsistency (only `policy` was representable; four spec categories were unimplementable) | `MemoryType` enum extended with `credential`, `identity`, [[[mb-3-cs-project-library:docs-local/architecture\|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md), [[[makepdlf-project-library:docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security\|Security Check]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security.md); `HIGH_RISK_TYPES` now covers all five spec categories; tests added — the architectural intent is now truly implemented |
+| HIGH_RISK_TYPES spec inconsistency (only `policy` was representable; four spec categories were unimplementable) | `MemoryType` enum extended with `credential`, `identity`, `architecture`, `security`; `HIGH_RISK_TYPES` now covers all five spec categories; tests added — the architectural intent is now truly implemented |
 | Project-isolation defect (every governed memory was written **world-visible** regardless of declared scope — caught by the system's own Step 12.2 isolation test) | Visibility mapping: `shared_all` → world; `project_local` / `shared_specific` → private. Project-local memories are no longer world-readable |
 | Facts carried no project identity (project-scoped recall impossible) | Every governed fact is now stamped with `entity = owning_project` — entity-scoped recall is the project-scoped read |
 | Worker had no production entry point (the documented "dedicated worker process" was unstartable outside tests) | `python -m app.worker` entry point added; worker running |
@@ -157,7 +157,7 @@ Every write path goes through transition validation — creation included.
 
 | Item | Value |
 |---|---|
-| Register The use of registers has been discontinued. Please review location | Inside this repository, `registers/` — Register Memory Governor (candidate index) + `registers/candidates/<memory_id>.json` (full payload per candidate) |
+| Register The use of registers has been discontinued. Please review location | Inside this repository, `registers/` — `register-memory-governor.md` (candidate index) + `registers/candidates/<memory_id>.json` (full payload per candidate) |
 | Write mechanism | Asynchronous outbox/worker; retries with backoff; surfaces failure after 5 consecutive attempts. The worker git-commits AND pushes register The use of registers has been discontinued. Please review changes |
 | Register The use of registers has been discontinued. Please review integrity | Index rows correspond to real payload files (verified 2026-09-08); real promoted candidates present, including a supersession pair |
 | Recovery proven | Twice — Phase 7.5 isolated drill and Phase 15.2 full-system drill |

@@ -429,5 +429,67 @@ class RealGitCommit(unittest.TestCase):
         self.assertIn("nope", r.stdout + r.stderr)
 
 
+
+class CodeProtection(unittest.TestCase):
+    """The five confirmed damage shapes plus a multi-line inline span: text inside
+    inline code must never be converted, even when it names a document or a path."""
+
+    def setUp(self):
+        self.d = repo()
+        doc(self.d, "agents.md", "a\n", "mb-aaaaaaa1")
+        doc(self.d, "architecture.md", "a\n", "mb-aaaaaaa2")
+        doc(self.d, "config.md", "c\n", "mb-aaaaaaa3")
+        doc(self.d, "anvil.md", "v\n", "mb-aaaaaaa4")
+        os.makedirs(os.path.join(self.d, "registers"))
+        doc(self.d, "registers/register-memory-governor.md", "r\n", "mb-aaaaaaa5")
+        m.SOURCES = m.SourceMap({"r": self.d})
+
+    def tearDown(self):
+        m.SOURCES = m.SourceMap()
+
+    def _ref(self, body):
+        ref = doc(self.d, "ref.md", body, "mb-aaaaaaa6")
+        git(self.d, "add", "-A")
+        hook(self.d)
+        return read(ref)
+
+    def test_gitignore_style_inline_path_stays_code(self):
+        out = self._ref("lines: `graphify-out/`, `.opencode/`, `agents.md`, `opencode.json`\n")
+        self.assertIn("`agents.md`", out)
+        self.assertNotIn("[[", out)
+
+    def test_bare_schema_name_stays_code(self):
+        out = self._ref("schemas: (`common`, `architecture`, `workflow`)\n")
+        self.assertIn("`architecture`", out)
+        self.assertNotIn("[[", out)
+
+    def test_bare_table_name_stays_code(self):
+        out = self._ref("via DB `config` table, unlike `config.json`\n")
+        self.assertIn("`config`", out)
+        self.assertNotIn("[[", out)
+
+    def test_bare_plugin_name_stays_code(self):
+        out = self._ref("plugin name `anvil`, version `1.0.0`\n")
+        self.assertIn("`anvil`", out)
+        self.assertNotIn("[[", out)
+
+    def test_inline_path_survives_even_when_target_is_deleted(self):
+        ref = doc(self.d, "ref.md", "rows in `registers/register-memory-governor.md` ↔ files\n", "mb-aaaaaaa6")
+        git(self.d, "add", "-A")
+        hook(self.d)
+        self.assertIn("`registers/register-memory-governor.md`", read(ref))
+        os.remove(os.path.join(self.d, "registers", "register-memory-governor.md"))
+        git(self.d, "add", "-A")
+        hook(self.d)
+        self.assertIn("`registers/register-memory-governor.md`", read(ref))
+        self.assertNotIn("register-memory-governor", read(ref).replace("`registers/register-memory-governor.md`", ""))
+
+    def test_multiline_inline_span_stays_code(self):
+        out = self._ref("see `gbrain/\nconfig.md` here\n")
+        self.assertIn("`gbrain/", out)
+        self.assertNotIn("[[", out)
+
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=1)

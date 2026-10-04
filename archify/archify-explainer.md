@@ -1,7 +1,7 @@
 ---
 title: "archify-explainer"
 doc-id: "mb-7923ad74"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Archify — Explainer
 
@@ -78,7 +78,7 @@ never instead of it, and it changes the authoring pipeline into two stages:
 
 Verified live on the memory-ecosystem subject (2026-09-15): the scoping skill's
 type decision upgraded a keyword-driven `dataflow` choice (which had produced
-repeated corridor-wall failures) to [[[mb-3-cs-project-library:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md) — the guide-consistent type —
+repeated corridor-wall failures) to `architecture` — the guide-consistent type —
 and the same subject then validated clean in two repair rounds. The scoping skill
 exists because a dense, card-bearing subject cannot be authored well without
 deciding, in advance, what the eye must follow.

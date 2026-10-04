@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-reference"
 doc-id: "mb-38660a2f"
-updated: "2026-10-02"
+updated: "2026-10-04"
 ---
 # Memory Governor Reference — Usage, Invocation, and Incident Response
 
@@ -115,7 +115,7 @@ Evaluated in order; `auto_promote` only if nothing triggers:
 3. `unresolved_contradiction` — cross-project, unresolved, or
    `manual_review` (recommended action: none — never auto-decided)
 4. `high_risk_type` — memory type is one of the five spec categories:
-   `policy`, `credential`, `identity`, [[[mb-3-cs-project-library:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md), [[[makepdlf-project-library:docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security|Security Check]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security.md)
+   `policy`, `credential`, `identity`, `architecture`, `security`
 5. `low_confidence` — confidence below the review threshold (default 0.65)
 6. `medium_risk_moderate_confidence` — any sharing, or confidence < 0.5,
    with confidence below the auto-promote threshold (default 0.85)

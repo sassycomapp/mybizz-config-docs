@@ -1,7 +1,7 @@
 ---
 title: "anvil-agent-references-config"
 doc-id: "mb-87d907ea"
-updated: "2026-10-03"
+updated: "2026-10-04"
 ---
 # anvil-agent-references — Configuration
 
@@ -57,7 +57,7 @@ technical detail, see [[[mybizz-config-docs:anvil-agent-references/anvil-agent-r
 | `CLAUDE.md` | Same guidance for Claude Code-style agents; imports `AGENTS.md` via `@./AGENTS.md` |
 | `README.md` | Install instructions (Codex plugin, Claude Code plugin, manual symlinks) |
 | `skills/` | 5 skill folders — see Skills inventory |
-| `stubs/` | 63 `.pyi` files — `stubs/client/` (31) and `stubs/server/` (32), covering **[[[default:anvil-docs/api/anvil\|anvil]]](C:/dev/project-library-global/anvil-docs/api/anvil.md) and `stripe`** APIs |
+| `stubs/` | 63 `.pyi` files — `stubs/client/` (31) and `stubs/server/` (32), covering **`anvil` and `stripe`** APIs |
 | `reference/types/` | `anvil-yaml.d.ts`, `form-yaml.d.ts`, `index.d.ts` — generated `.d.ts` material for `anvil.yaml` and form templates |
 | `docs/m3/` | Material 3 theme reference — Api (generated API/attrs reference), `components/` (`_index.md`, `components.md`, `layouts.md`, `colour-schemes.md`, `img/`), `layouts.md` |
 | `.codex-plugin/` | Codex plugin metadata (`plugin.json`) |
@@ -77,7 +77,7 @@ technical detail, see [[[mybizz-config-docs:anvil-agent-references/anvil-agent-r
 
 | Item | Codex (`.codex-plugin/plugin.json`) | Claude Code (`.claude-plugin/plugin.json`) |
 |---|---|---|
-| Plugin name | [[[default:anvil-docs/api/anvil\|anvil]]](C:/dev/project-library-global/anvil-docs/api/anvil.md) | [[[default:anvil-docs/api/anvil\|anvil]]](C:/dev/project-library-global/anvil-docs/api/anvil.md) |
+| Plugin name | [[[default:anvil-docs/api/anvil\|anvil]]](C:/dev/project-library-global/anvil-docs/api/anvil.md) | `anvil` |
 | Version | `1.0.0` | `1.0.0` |
 | Description | "Anvil app editing workflows and reference material for AI agents." | "Anvil app editing workflows and reference material for Claude Code." |
 | Skills path | `./skills/` | — (plugin dir structure) |

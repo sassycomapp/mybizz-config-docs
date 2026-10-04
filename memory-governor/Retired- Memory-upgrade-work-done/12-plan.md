@@ -1,7 +1,7 @@
 ---
 title: "12-plan"
 doc-id: "mb-790ba1ca"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Work Package 12 — Graph Artifact and Git Suitability Review
 
@@ -66,7 +66,7 @@ only in the narrow sense that the MCP serves from it.
   So a rebuild would produce identical nodes/edges; only the `built_at_commit`
   label lags.
 - **`.graphifyignore`** (committed at HEAD) lists `.opencode/` and
-  `opencode.json`. It does **not** list mb-3-cs, which is `.gitignore`d but
+  `opencode.json`. It does **not** list `agents.md`, which is `.gitignore`d but
   not `.graphifyignore`d — a minor inconsistency, harmless because Markdown
   isn't a code-extraction target (and the graph's `manifest.json` contains only
   `.py`/`__init__.py` paths anyway).

@@ -1,7 +1,7 @@
 ---
 title: "anvil-agent-skill"
 doc-id: "mb-c6a3ff36"
-updated: "2026-10-03"
+updated: "2026-10-04"
 ---
 # mb-config-anvil-agent-references — Exam Skill
 
@@ -114,7 +114,7 @@ ordinary `gbrain sync` only).
 
 | ID | Runner | Check | Expected |
 |---|---|---|---|
-| AR3-1 | D | Full mechanical integrity audit: all 5 symlinks resolve to their intended clone targets; every SKILL.md present + byte-identical to its vendor source; exhaustive stub/type/doc/plugin counts vs the spec's recorded structure; plugin JSON contents verified against recorded values (name [[[default:anvil-docs/api/anvil\|anvil]]](C:/dev/project-library-global/anvil-docs/api/anvil.md), version `1.0.0`, documented descriptions) | Every link correct, all SKILL.md match vendor bytes, structure counts exact. Cost: ~15 reads incl. 5 SKILL.md hashes; 0 writes. This is the exhaustive sweep that Tier 2 samples |
+| AR3-1 | D | Full mechanical integrity audit: all 5 symlinks resolve to their intended clone targets; every SKILL.md present + byte-identical to its vendor source; exhaustive stub/type/doc/plugin counts vs the spec's recorded structure; plugin JSON contents verified against recorded values (name `anvil`, version `1.0.0`, documented descriptions) | Every link correct, all SKILL.md match vendor bytes, structure counts exact. Cost: ~15 reads incl. 5 SKILL.md hashes; 0 writes. This is the exhaustive sweep that Tier 2 samples |
 | AR3-2 | D | Deliberate update + license decision: record the observed clone-update delta (installed HEAD moved to upstream `7c9b0a7`; stub count 63 at orientation) — decide whether the spec's Identity/Repository-structure rows get refreshed via docs governance, and re-confirm the no-license open item posture | Decision recorded; any spec refresh routed through docs governance, never self-applied. Stay-current-with-upstream is the expected default (generated checkout — update cadence is an operational habit, not a no-upgrade pin) |
 | AR3-3 | D | Per-project setup closure decision: for the 3 Not-done app roots (`mb-3-cs`, `mb4ecom`, `mb5pdlf`), confirm whether the developer will run the setup step (AI writes to project `AGENTS.md` are prohibited either way) | Decision recorded (done-later / declined / scheduled); open item carried until the developer acts |
 

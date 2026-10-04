@@ -1,7 +1,7 @@
 ---
 title: "gbrain-dream-cycle-explainer"
 doc-id: "mb-957d54e7"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # GBrain Dream Cycle — Explainer
 
@@ -54,7 +54,7 @@ removed. On-demand invocation is the intended design, not a gap.
 - **Fact extraction** (`extract_facts`, `extract_atoms`) — pull discrete, structured facts out of stored documents; `extract_atoms` makes its own Anthropic calls and is the phase most exposed to credential failure.
 - **Code-symbol relationship resolution** (`resolve_symbol_edges`) — GBrain's own attempt at the call graph, permanently partial (see Limitations).
 - **Contradiction surface** — the cycle's output feeds the suspected-contradictions evaluation that follows every run.
-- **Concept synthesis and pattern-finding** ([[[default:anvil-docs/data-tables/model-classes/patterns|Best Practices]]](C:/dev/project-library-global/anvil-docs/data-tables/model-classes/patterns.md), `synthesize_concepts`, `consolidate`) — higher-level concept pages summarizing many individual facts; near-duplicate consolidation. The verified acceptance run produced +89 synthesized concept pages.
+- **Concept synthesis and pattern-finding** (`patterns`, `synthesize_concepts`, `consolidate`) — higher-level concept pages summarizing many individual facts; near-duplicate consolidation. The verified acceptance run produced +89 synthesized concept pages.
 - **Self-judgment and calibration** (`propose_takes`, `grade_takes`, `calibration_profile`, `drift`) — the system proposing interpretive conclusions, grading its own confidence, and tracking drift.
 - **Maintenance and closure** (`enrich_thin`, `embed`, `orphans`, `schema-suggest`, `purge`) — filling thin pages, embedding new content, disconnecting orphans, suggesting schema improvements, removing what is genuinely no longer needed.
 

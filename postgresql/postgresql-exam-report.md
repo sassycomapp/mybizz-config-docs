@@ -1,7 +1,7 @@
 ---
 title: "postgresql-exam-report"
 doc-id: "mb-758f50e9"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # PostgreSQL — Exam Report
 
@@ -43,7 +43,7 @@ probes: developer-run request issued (secrets guard on bridge `.env` — per pla
 | P2-8 | 16.14 | 16.14 (Ubuntu 24.04 pkg) | PASS |
 | P2-9 | gbrain, memory_governor, postgres (+templates) | exact | PASS |
 | P2-9b | `compliance_ledger` absent | count 0 | PASS |
-| P2-10 | 62 tables / 62 RLS / owner postgres / schema v128 / embedding 3-large 1536d | 62/62, model + dims + schema_version=128 from [[[makepdlf-project-library:docs-local/config\|Config]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/config.md) table | PASS |
+| P2-10 | 62 tables / 62 RLS / owner postgres / schema v128 / embedding 3-large 1536d | 62/62, model + dims + schema_version=128 from `config` table | PASS |
 | P2-11 | plpgsql, vector 0.6.0, pg_trgm 1.6, pgcrypto 1.3 | exact | PASS |
 | P2-12 | governor: 5 tables, all owned by svc | 5 tables, owner `memory_governor_svc` only | PASS |
 | P2-13 | svc cannot connect gbrain; roles exact | `has_database_privilege(svc→gbrain)=false`; svc→govdb=true; writer→gbrain=false; role set exact | PASS |

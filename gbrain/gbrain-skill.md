@@ -1,7 +1,7 @@
 ---
 title: "gbrain-skill"
 doc-id: "mb-0bfb2a59"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # mb-config-gbrain — Exam Skill
 
@@ -63,7 +63,7 @@ keys appear in the environment only; verify **presence**, never value.
 | G2-1 | A | Version | live 0.46.1.0; upstream gap recorded, **never upgraded on newness** (upgrade only on check failure) |
 | G2-2 | A | Schema pack (MCP) | `gbrain-everything@1.0.0+7021205a`, 30 page types / 12 link types |
 | G2-3 | A | MCP integration entry | `opencode.jsonc` → `mcp.gbrain`: local, `["/home/dev-p/.bun/bin/gbrain", "serve"]`, enabled true, env names OPENAI_API_KEY + ZEROENTROPY_API_KEY |
-| G2-4 | A | Models (via DB [[[makepdlf-project-library:docs-local/config\|Config]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/config.md) table — agent-safe, unlike `config.json`) | embedding `openai:text-embedding-3-large`, dims 1536 |
+| G2-4 | A | Models (via DB `config` table — agent-safe, unlike `config.json`) | embedding `openai:text-embedding-3-large`, dims 1536 |
 | G2-5 | A | Skills bundle at `/mnt/c/dev/dev-mb-3-cs/mb-3-cs/.opencode/skills/` | re-inventory vs last recorded state (bundle evolves with CLI — flag divergence from last recorded, not older snapshots) |
 | G2-6 | A | Page accounting — **per-source DB query** (`GROUP BY source_id`), not cross-snapshot sums: the MCP sources list reports per-source counts as-of last sync and can lag the identity total | sums reconcile exactly; unattributed pages = real finding |
 | G2-7 | A | Registered source paths all exist | all present on disk |

@@ -1,7 +1,7 @@
 ---
 title: "archify-reference"
 doc-id: "mb-c9f14557"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Archify — Reference
 
@@ -147,13 +147,13 @@ minimum, then stop.
 - Preserve exact product names, code identifiers, commands, protocols, API paths, and environment names inside localized copy.
 - Brand identity is optional and explicit: use built-in IDs discovered via `brands "<name>" --json`; for unknown official URLs supplied by the user, run `brands capture "<url>" --json` and author the returned digest-pinned object. Never infer a brand from a vague role such as "database"; never let a badge replace the semantic type, label, or relationship facts.
 - Sequence diagrams: omit `meta.column_fit` for the stable `fixed` layout; set `"spread"` only when a wide viewBox would otherwise leave unused space or labels do not fit — never shorten semantic labels before trying `spread`.
-- Component types: `frontend`, `backend`, `database`, `cloud`, [[[makepdlf-project-library:docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security|Security Check]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security.md), `messagebus`, `external`; variants: `default`, `emphasis`, [[[makepdlf-project-library:docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security|Security Check]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security.md), `dashed`.
+- Component types: `frontend`, `backend`, `database`, `cloud`, [[[makepdlf-project-library:docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security|Security Check]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security.md), `messagebus`, `external`; variants: `default`, `emphasis`, `security`, `dashed`.
 - Relationship labels are semantic data. On collision: move the label, adjust route or spacing, then shorten wording while preserving meaning. Omit only wording already fully implied by both endpoints and containing no protocol, action, direction, sync/async behavior, or cross-boundary mechanism. Deleting a meaningful label is not a geometry repair.
 - Omit `meta.engineering_profile` by default. Enable `deployment-ownership` only when the user explicitly asks for a production deployment topology, ownership handoff, or fail-closed deployment review and the source facts are known. Never remove the profile merely to pass validation — repair the facts or report the diagnostics truthfully.
 - Spacing means clear gap, not center distance. A relationship label's clear gap must exceed its measured mask width; follow the label-preserving repair order.
 - Automatic routes own their endpoint sides: the first and final segment must leave/enter perpendicular to that side. Never accept an edge crossing an unrelated opaque node, an ambiguous shared corridor, or a relationship label masking another route.
 - Lifecycle: event/terminal column `N` in `0..2` aligns exactly beneath main column `N + 2`. A recoverable state uses `type: "failure"` plus a real transition back to the active state.
-- Update awareness: after the first candidate exists, run `node scripts/check-update.mjs` once. `silent` → continue without mentioning it. `update_available` → show one compact notice (installed version, latest, the checker's fixed local summary, release-notes link; label [[[makepdlf-project-library:docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security|Security Check]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security.md) severity as a security update), then acknowledge by running the checker again with `--ack "<eventKey>"`. Never quote, summarize, or translate the remote manifest's summary; never download, install, or execute an update; silence is never consent.
+- Update awareness: after the first candidate exists, run `node scripts/check-update.mjs` once. `silent` → continue without mentioning it. `update_available` → show one compact notice (installed version, latest, the checker's fixed local summary, release-notes link; label `security` severity as a security update), then acknowledge by running the checker again with `--ack "<eventKey>"`. Never quote, summarize, or translate the remote manifest's summary; never download, install, or execute an update; silence is never consent.
 - Do not read `renderers/shared/geometry.mjs`, renderer source, validator source, tests, or benchmarks before the first candidate exists. Inspect implementation only for an unsupported internal diagnostic or after two focused repairs fail.
 - When shell access is unavailable: hand-place architecture SVG into `assets/template.html` using CSS semantic classes, and follow the visual review contract in `references/delivery-contract.md`.
 

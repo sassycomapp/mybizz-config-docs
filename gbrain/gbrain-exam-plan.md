@@ -1,7 +1,7 @@
 ---
 title: "gbrain-exam-plan"
 doc-id: "mb-85164f9c"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # GBrain — Exam Plan
 
@@ -93,7 +93,7 @@ run-specific deltas only.
 | G2-1 | A | Version | live 0.46.1.0; upstream gap recorded, **never upgraded on newness** (upgrade only on check failure) |
 | G2-2 | A | Schema pack (MCP) | `gbrain-everything@1.0.0+7021205a`, 30 page types / 12 link types |
 | G2-3 | A | MCP integration entry | `opencode.jsonc` → `mcp.gbrain`: local, `["/home/dev-p/.bun/bin/gbrain", "serve"]`, enabled true, env names OPENAI_API_KEY + ZEROENTROPY_API_KEY |
-| G2-4 | A | Models (via DB [[[makepdlf-project-library:docs-local/config\|Config]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/config.md) table — agent-safe, unlike `config.json`) | embedding `openai:text-embedding-3-large`, dims 1536 |
+| G2-4 | A | Models (via DB `config` table — agent-safe, unlike `config.json`) | embedding `openai:text-embedding-3-large`, dims 1536 |
 | G2-5 | A | Skills bundle at `/mnt/c/dev/dev-mb-3-cs/mb-3-cs/.opencode/skills/` | re-inventory vs spec (bundle-evolved drift class — flag until spec refreshed) |
 | G2-6 | A | Page accounting — identity total vs sources-list sum | sums reconcile or the gap is explained (the 273 question, CF-2) |
 | G2-7 | A | Registered source paths all exist | 14/14 present on disk |

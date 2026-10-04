@@ -1,7 +1,7 @@
 ---
 title: "archify-skill"
 doc-id: "mb-4db6df85"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # mb-config-archify — Exam Skill
 
@@ -87,7 +87,7 @@ into reports, outputs, or learnings.
 |---|---|---|---|
 | AR1-1 | A | Version identity: `node -p "require('./archify/package.json').version"` in `/mnt/c/mybizz/archify` + `head -5 archify/SKILL.md` | package.json `2.16.0`; SKILL.md frontmatter `version: "2.16"` (config §Identity — Version). Divergence = DRIFT |
 | AR1-2 | A | Install architecture: symlink topology — `ls -la ~/.config/opencode/skills/archify` one entry (the tool package via symlink); discovery path resolves to the clone | Exactly one discovery entry; path `~/.config/opencode/skills/archify` → `/mnt/c/mybizz/archify/archify` (config §Install on this machine). Duplicate/broken = DRIFT/UNHEALTHY |
-| AR1-3 | A | Package structure live-counted (config §Package structure): `schemas/` = 6 `.schema.json` (`common`, [[[mb-3-cs-project-library:docs-local/architecture\|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md), `workflow`, `sequence`, `dataflow`, `lifecycle`) + `README.md`; `references/` = 4 files (`authoring-contract`, `brand-marks`, `delivery-contract`, `viewer-runtime`); `renderers/` per-type + `shared/`; `bin/archify.mjs` present | Counts and paths match config §Package structure. Missing/moved/changed = DRIFT |
+| AR1-3 | A | Package structure live-counted (config §Package structure): `schemas/` = 6 `.schema.json` (`common`, `architecture`, `workflow`, `sequence`, `dataflow`, `lifecycle`) + `README.md`; `references/` = 4 files (`authoring-contract`, `brand-marks`, `delivery-contract`, `viewer-runtime`); `renderers/` per-type + `shared/`; `bin/archify.mjs` present | Counts and paths match config §Package structure. Missing/moved/changed = DRIFT |
 | AR1-4 | A | Suite completeness: the eight regular files in `archify/` (config, exam-plan, exam-report, log, learnings, explainer, reference, skill) + the scope-skill spec | All present (missing file = GAP) |
 | AR1-5 | A | Update-notice contract: `grep -c "ARCHIFY_UPDATE_CHECK_DISABLED\|notification" archify/SKILL.md` + env check `echo "${ARCHIFY_UPDATE_CHECK_DISABLED:-unset}"` | Config §Install on this machine — update check is notification-only, never downloads/installs/executes; `ARCHIFY_UPDATE_CHECK_DISABLED=1` is the documented disable. Env present-or-unset recorded; contract text present = pass. Manifest URL NOT fetched (out of scope, W-3) |
 | AR1-6 | A | Integration facts (config §Integration with other system parts): OpenCode `/archify` invocation recorded; GBrain "no dedicated page" finding still plausible (does not require a search — recorded fact); Memory Governor "no treatment — not a governed writer" recorded; Cupcake "no archify-specific rule" — provisional, re-qualified against [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)'s Current Operational Status at run time | Recorded facts unchanged; Cupcake provisional wording honored (no assumption of current enforcement) |

@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-agent-architecture-and-specification"
 doc-id: "mb-6e1b2b63"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Memory Governor Agent — Architecture & Specification
 
@@ -317,7 +317,7 @@ Implementation Workflow rather than left to be discovered by surprise when
 the build resumes.
 
 **High-risk types**, unchanged in substance from v1: `policy`, `credential`,
-`identity`, [[[mb-3-cs-project-library:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md), [[[makepdlf-project-library:docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security|Security Check]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security.md). Scope changes that add or remove a
+`identity`, `architecture`, `security`. Scope changes that add or remove a
 `shared_with` project are also treated as high risk automatically —
 cross-project visibility changes are a blast-radius action.
 
@@ -517,7 +517,7 @@ the system's suggestion is never applied automatically.
    threshold, the worker submits a `procedural`-type candidate describing
    the observation and a suggested policy adjustment — through
    `POST /memory/candidate`, the same endpoint any other writer uses.
-3. Because `policy` and [[[mb-3-cs-project-library:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md)-adjacent candidates are
+3. Because `policy` and `architecture`-adjacent candidates are
    `high_risk_types`, this candidate is guaranteed `needs_review` — it
    cannot skip review by virtue of being self-generated.
 4. Only on explicit developer approval via `POST /memory/{memory_id}/review`
@@ -675,7 +675,7 @@ must have a regression test from day one:
 4. `POST /memory/{id}/supersede` sets `valid_until` and `valid_until_reason`
    on the old record in the same transaction as the status change.
 5. A `trace`/`episode` past its TTL is quarantined, never deleted.
-6. A `fact`/`policy`/[[[mb-3-cs-project-library:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md) candidate is never auto-expired by age
+6. A `fact`/`policy`/`architecture` candidate is never auto-expired by age
    alone, regardless of how long it sits untouched.
 7. A cross-project contradiction always produces `needs_review`, regardless
    of confidence score.

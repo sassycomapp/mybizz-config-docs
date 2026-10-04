@@ -1,7 +1,7 @@
 ---
 title: "postgresql-reference"
 doc-id: "mb-5bad908d"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # PostgreSQL — Reference: Commands, Procedures, and Troubleshooting
 
@@ -218,7 +218,7 @@ primary interface and should be preferred for anything it already reports
 on. Direct `psql` access is appropriate specifically when:
 - Cross-checking a CLI-reported fact independently (confirming a fact two
   ways, not trusting one report alone)
-- The CLI doesn't expose a needed field (e.g. a source's raw [[[makepdlf-project-library:docs-local/config|Config]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/config.md)
+- The CLI doesn't expose a needed field (e.g. a source's raw `config`
   JSON — no dedicated subcommand for arbitrary key inspection)
 - Diagnosing something the CLI's own error messages don't surface clearly
   enough

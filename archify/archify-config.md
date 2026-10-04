@@ -1,7 +1,7 @@
 ---
 title: "archify-config"
 doc-id: "mb-61a8f528"
-updated: "2026-10-03"
+updated: "2026-10-04"
 ---
 # Archify — Configuration
 
@@ -60,7 +60,7 @@ begins; it scopes, it never draws.
 |---|---|
 | `SKILL.md` | The skill instruction file OpenCode reads (frontmatter `name: archify`, version 2.16) |
 | `bin/archify.mjs` | CLI entry point |
-| `schemas/` | 6 files: `common`, [[[mb-3-cs-project-library:docs-local/architecture\|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md), `workflow`, `sequence`, `dataflow`, `lifecycle` (each `.schema.json`; `schemas/README.md` also present) |
+| `schemas/` | 6 files: `common`, `architecture`, `workflow`, `sequence`, `dataflow`, `lifecycle` (each `.schema.json`; `schemas/README.md` also present) |
 | `references/` | 4 files: `authoring-contract.md`, `brand-marks.md`, `delivery-contract.md`, `viewer-runtime.md` |
 | `renderers/` | Per-type renderers (one per diagram type, plus `shared/`) |
 | `recipes/`, `examples/`, `test/`, `migrations/`, `delta/`, `assets/`, `brand-marks/`, `scripts/` | Supporting package content |

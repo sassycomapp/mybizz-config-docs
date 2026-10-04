@@ -1,7 +1,7 @@
 ---
 title: "15-task-report"
 doc-id: "mb-1e255994"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Work Package 15 — Authoritative Environment Inventory
 
@@ -152,11 +152,11 @@ Present (values never printed):
 | root `opencode.json` (gitignored) | `mcp.graphify`, graphify plugin, permissions |
 | `.opencode/plugins/graphify.js` | bash-reminder plugin (no file writes) |
 | `.graphifyignore` | `.opencode/`, `opencode.json` |
-| `.gitignore` | ignores `graphify-out/`, mb-3-cs, `opencode.json`, `.opencode/`, `tests/`, `__pycache__`, etc. |
+| `.gitignore` | ignores `graphify-out/`, `agents.md`, `opencode.json`, `.opencode/`, `tests/`, `__pycache__`, etc. |
 | Global `~/.config/opencode/opencode.jsonc` + `AGENTS.md` | `mcp.gbrain`, global instructions |
 | Git hooks | none active (only `.sample` files) |
 
-**Conflicts:** none blocking. Note mb-3-cs/`opencode.json`/`graphify-out/`
+**Conflicts:** none blocking. Note `agents.md`/`opencode.json`/`graphify-out/`
 are all local-only (gitignored), so Graphify config travels with neither repo;
 this is intentional per WP11/WP12/WP13.
 

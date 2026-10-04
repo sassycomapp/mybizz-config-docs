@@ -1,7 +1,7 @@
 ---
 title: "anvil-agent-references-exam-report"
 doc-id: "mb-86200112"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # anvil-agent-references — Exam Report
 
@@ -107,7 +107,7 @@ precedent for applied spec corrections), not left as governance flags:
 | Stub counts | 31 client + 31 server (config §Repository structure) | 31 client + **32 server** (total 63 — delta, flag W-1) |
 | reference/types | 3 `.d.ts` | 3 |
 | docs/m3 | per config | 49 files, layout per spec |
-| Plugin metadata | codex + claude: name [[[default:anvil-docs/api/anvil\|anvil]]](C:/dev/project-library-global/anvil-docs/api/anvil.md), version `1.0.0`, recorded descriptions | Both verified from disk — name [[[default:anvil-docs/api/anvil\|anvil]]](C:/dev/project-library-global/anvil-docs/api/anvil.md), version `1.0.0`, descriptions match config §Plugin metadata |
+| Plugin metadata | codex + claude: name [[[default:anvil-docs/api/anvil\|anvil]]](C:/dev/project-library-global/anvil-docs/api/anvil.md), version `1.0.0`, recorded descriptions | Both verified from disk — name `anvil`, version `1.0.0`, descriptions match config §Plugin metadata |
 
 Exhaustive sweep complete — every link resolves to its intended vendor target,
 every SKILL.md byte-identical, structure conforms (server stub delta carried as

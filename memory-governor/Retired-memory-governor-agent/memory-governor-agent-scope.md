@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-agent-scope"
 doc-id: "mb-10605846"
-updated: "2026-10-01"
+updated: "2026-10-04"
 ---
 # Memory Governor Agent — Scope Document
 
@@ -182,7 +182,7 @@ hasn't been revisited remains exactly as valid as the day it was written,
 until something explicitly contradicts or replaces it.
 
 - **No blanket calendar-based TTL expiry.** `fact`, `policy`,
-  [[[mb-3-cs-project-library:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md), `procedural`, `preference` memory never expires from age
+  `architecture`, `procedural`, `preference` memory never expires from age
   alone.
 - **Supersession is the primary retirement mechanism.** A newer fact
   explicitly replaces an older one; the old record's `valid_until` is set

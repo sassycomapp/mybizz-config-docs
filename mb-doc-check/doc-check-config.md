@@ -1,7 +1,7 @@
 ---
 title: "doc-check-config"
 doc-id: "mb-e7e60242"
-updated: "2026-10-02"
+updated: "2026-10-04"
 ---
 # mb-doc-check — Configuration
 
@@ -15,12 +15,12 @@ Canonical current-state record of the `mb-doc-check` program. Agent-facing. Refl
 |---|---|
 | Name | `mb-doc-check` — a Python program (standard library only). It is not an OpenCode skill |
 | Purpose | At every commit: completes each committed document's frontmatter, writes every link in the standard form, repairs links after a rename, move or deletion, and stops the commit on a link that points to nothing |
-| Location | `C:\mybizz\scripts\mb-doc-check.py` (WSL: `/mnt/c/mybizz/scripts/mb-doc-check.py`), 88,031 bytes |
+| Location | `C:\\mybizz\\scripts\\mb-doc-check.py` (WSL: `/mnt/c/mybizz/scripts/mb-doc-check.py`), 88,758 bytes |
 | Settings files | `mb-doc-check.sources` (789 bytes) and `mb-doc-check.roots`, in the same folder |
 | How it runs | As a git `pre-commit` hook in each of the eight repositories: `python3 /mnt/c/mybizz/scripts/mb-doc-check.py hook`. A commit made in WSL runs it; a commit made from a Windows program does not |
 | Failure behavior | If the program itself fails with an internal error, it prints "skipped because of an internal problem" and lets the commit through. A bug never blocks work. The skipped documents are corrected at their next commit |
 | Network and GBrain | None, except two commands: `sources-check` calls the `gbrain` command, and `slug-selftest` runs GBrain's own page-name function with `bun` |
-| Tests | 143 automated tests (Python `unittest`), stored in `mybizz-config-docs\gbrain\tests` and run with `bash /mnt/c/mybizz/mybizz-config-docs/gbrain/tests/run-tests.sh` |
+| Tests | 149 automated tests (Python `unittest`), stored in `mybizz-config-docs\gbrain\tests` and run with `bash /mnt/c/mybizz/mybizz-config-docs/gbrain/tests/run-tests.sh` |
 
 ## Covered repositories
 
