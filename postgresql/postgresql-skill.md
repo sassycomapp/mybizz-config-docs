@@ -1,7 +1,7 @@
 ---
 title: "postgresql-skill"
 doc-id: "mb-ef9195fc"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # mb-config-postgresql — Exam Skill
 
@@ -25,18 +25,20 @@ run. Never rely on remembered values.
 
 ## Instance map — never confuse them
 
-- **Instance A** — Windows PostgreSQL 15, the `pdlf` ledger. Reachable **only** via the
-  PowerShell bridge (see reference doc). A direct WSL `psql` to `localhost:5432` hits
-  Instance B silently — this is the system's most dangerous pitfall.
-- **Instance B** — WSL PostgreSQL 16, hosts `gbrain` + `memory_governor`. Direct `psql`
-  from WSL.
+- **Instance A** — Windows PostgreSQL 15, the `pdlf` ledger, **port 5433**. Reachable
+  **only** via the PowerShell bridge (see reference doc), always with `-p 5433`. A direct
+  WSL `psql` to `localhost:5432` hits Instance B silently — and from Windows a bare
+  connection to 5432 also reaches Instance B (WSL's port relay). This is the system's
+  most dangerous pitfall.
+- **Instance B** — WSL PostgreSQL 16, hosts `gbrain` + `memory_governor`, port 5432.
+  Direct `psql` from WSL.
 
 ## Tier 0 — Liveness (run first; any failure = report `DOWN`, stop; remaining tiers skipped)
 
 | ID | Runner | Check | Expected (source: config §) |
 |---|---|---|---|
 | P0-1 | A | `Get-Service -Name '*postgresql*'` (PowerShell) | `postgresql-x64-15` Running/Automatic; dead duplicate `PostgreSQL` Stopped |
-| P0-2 | A | Bridge `SELECT version();` as `pdlf_agent` on `pdlf` | Connects; version matches spec. The bridge sources `.env`, which the secrets guard has blocked for agents (the same command form passed and was blocked the same day, 2026-09-12 — treat as unreliable). If denied: no retry, no workaround — hand to the developer request; P0-1 still proves Instance A liveness |
+| P0-2 | A | Bridge `SELECT version();` as `pdlf_agent` on `pdlf` (`-p 5433`) | Connects; version matches spec. The bridge sources `.env`, which the secrets guard has blocked for agents (the same command form passed and was blocked the same day, 2026-09-12 — treat as unreliable). If denied: no retry, no workaround — hand to the developer request; P0-1 still proves Instance A liveness |
 | P0-3 | A | `pg_lsclusters` | `16 main 5432 online` |
 | P0-4 | A | `psql ... -tAc "SELECT 1;"` on `gbrain` | Returns 1 |
 | P0-5 | A | `ss -tln \| grep 8321` + `pgrep -f app.worker` | Port listening; worker PID present |
@@ -62,8 +64,8 @@ developer request; never source `.env` as agent; never construct a workaround.
 | P1-6 | A | B: embedding coverage — independent count | 100% of `content_chunks` (never trust `gbrain doctor` alone) |
 | P1-7 | A | B: governor table row-count sanity | 5 tables; counts sane; `audit_log` growing not exploding |
 | P1-11 | A | **DB backup freshness — estate-wide** (developer default 2026-09-13: all 5 data-bearing DBs across both instances, weekly cycle, exam-enforced): newest `<db>-db-backup-*.dump` per database in `/home/dev-p/backup-gbrain/` covers `pdlf`, `postgres-a`, `gbrain`, `memory_governor`, `postgres-b`, dated ≤ 7 days; matching copies exist in `/mnt/c/backup-gbrain/` (hash pairs verified). Older than 7 days = finding that forces a fresh cycle (Instance-B dumps agent-runnable; Instance-A dumps via bridge = developer-run) | All 5 fresh ≤7 days; 5/5 hash pairs match |
-| P1-8 | D | B: log scan, last 7 days (`/var/log/postgresql/`) | No ERROR/FATAL/PANIC; no recurring stale-pid-file |
-| P1-9 | D | A: log scan (`data\log\`) | No ERROR/FATAL/PANIC beyond documented noise |
+| P1-8 | D | B: log scan, last 7 days (`/var/log/postgresql/`) | No ERROR/FATAL/PANIC; no recurring stale-pid-file. **Rate watch (graduated 2026-10-05):** count ERROR/FATAL/PANIC lines newer than the prior run's scan horizon and compare against the prior count — an escalation with no attributable cause = finding (run #2 baseline: 409 lifetime at 2026-09-13, none newer than 2026-09-13 10:25) |
+| P1-9 | D | A: log scan | Instance A writes **no log files** while `logging_collector` = off (verified 2026-10-05) — this check is a no-op and monitors nothing; faults surface via SCM/Event Viewer and probe errors. If the collector is ever enabled, resume file scans of the configured `log_directory` |
 | P1-10 | D | A: locks / autovacuum / idle-in-txn / C: disk | 0 waiting; autovacuum on; no stale idle-in-txn; disk adequate |
 
 ## Tier 2 — State conformance (each probe compared to the spec's current expected value; any mismatch = DRIFT finding)
@@ -77,14 +79,14 @@ developer request; never source `.env` as agent; never construct a workaround.
 | P2-5 | A | `pdlf` extensions | `plpgsql` only |
 | P2-6 | A | `postgres` admin DB | zero user tables, no `vecs` schema |
 | P2-7 | A | A role set | exactly `postgres`, `pdlf_agent` |
-| P2-8 | A | B version | 16.14 |
+| P2-8 | A | B version | 16.15 |
 | P2-9 | A | B database set | exactly `gbrain`, `memory_governor`, `postgres` (+templates); `compliance_ledger` absent |
-| P2-10 | A | `gbrain` conformance | owner `postgres`; 62 tables; all RLS; schema v128; embedding `openai:text-embedding-3-large` (1536d) |
+| P2-10 | A | `gbrain` conformance | owner `postgres`; all tables RLS (93 at 2026-10-05 — the count is point-in-time, grows with schema evolution; coverage is the durable check); schema v169; embedding `openai:text-embedding-3-large` (1536d) |
 | P2-11 | A | `gbrain` extensions | plpgsql, vector 0.6.0, pg_trgm 1.6, pgcrypto 1.3 |
 | P2-12 | A | `memory_governor` conformance | owner `memory_governor_svc`; 5 tables, all owned by it |
 | P2-13 | A | B role set | exactly `postgres`, `memory_governor_svc`, `ledger_writer`, `ledger_approver`; svc cannot connect to `gbrain` — **tested via `has_database_privilege(role, db, 'CONNECT')`, never via `SET ROLE`** (superuser impersonation always succeeds and proves nothing) |
-| P2-14 | D | Boot config | `/etc/wsl.conf` `[boot]` command intact |
-| P2-15 | D | `.env` integrity | sources cleanly; `PGPASSWORD`, `PGADMIN_USER`, `PGADMIN_PASSWORD` present by name |
+| P2-14 | D | Boot config | `/etc/wsl.conf` carries **no** `[boot]` command (boot-command retired 2026-09-28); `postgresql.service` and both governor user units enabled |
+| P2-15 | D | `.env` integrity | sources cleanly; `PGPASSWORD`, `PGADMIN_USER`, `PGADMIN_PASSWORD`, `PGPORT` present by name |
 
 Removed items stay removed: `compliance_ledger`, `pgvector_user`,
 `pgvector_readonly` confirmed absent — a reappearance is a finding.
@@ -96,7 +98,7 @@ Removed items stay removed: `compliance_ledger`, `pgvector_user`,
 | P3-1 | D | Auth posture A: `pg_hba.conf` | scram-sha-256 only, no trust paths |
 | P3-2 | D | Auth posture B: file unreadable to `dev-p` as documented | As spec |
 | P3-3 | D | Boot durability | `wsl --shutdown` → fresh boot → PostgreSQL + memory chain alive, zero intervention |
-| P3-4 | A | No third instance | One Windows product; one WSL cluster; no other 543x listeners |
+| P3-4 | A | No third instance | One Windows product; one WSL cluster; no other 543x listeners (Instance A's 5433 listener is the documented second registration) |
 | P3-5 | A | Guard layers armed | OpenCode deny patterns + Cupcake destructive-SQL rule present (read-only) |
 | P3-6 | A | Backups exist + sized | `postgres_admin_backup_2026-09-05.dump` (194,019 B); `compliance_ledger_backup_2026-09-05.dump` (6,149 B) |
 

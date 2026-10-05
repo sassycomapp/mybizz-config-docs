@@ -1,7 +1,7 @@
 ---
 title: "postgresql-explainer"
 doc-id: "mb-e4410ed0"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # PostgreSQL — Explainer
 
@@ -55,11 +55,15 @@ arrangement as its verified precedent).
 **Instance B**, inside WSL, runs PostgreSQL 16 and hosts `gbrain` and
 `memory_governor`.
 
-Both happen to listen on the same port, 5432 — one from the Windows side,
-one from the WSL side. That's a coincidence of default configuration, not a
-relationship between them — and it is the single most operationally
+The two servers listen on different ports by design: Instance B (WSL) keeps
+the default 5432, and Instance A (Windows) listens on **5433**. The reason
+is this machine's port topology: Windows port 5432 is WSL's localhost relay
+to Instance B, so 5432 serves Instance B from *both* sides of the WSL
+boundary — a bare connection to it reaches the memory system's server
+whether it comes from WSL or Windows. That is the single most operationally
 dangerous fact about this arrangement: a database call made from the wrong
-side connects to the wrong server *silently*. See
+side — or to the ledger without its port — connects to the wrong server
+*silently*. See
 [[[mybizz-config-docs:postgresql/postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md) for the rules that prevent it.
 
 ---
@@ -169,9 +173,10 @@ service. The real operational cost of that choice is that reaching it from
 WSL requires a PowerShell bridge rather than a direct connection — covered
 fully in [[[mybizz-config-docs:postgresql/postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md). That cost is worth stating plainly:
 the bridge exists because WSL cannot pass environment variables to Windows
-programs, and because `localhost:5432` is a different server on each side
-— the same fact that makes the memory system's own database calls safe
-from accidental cross-connection.
+programs, and because the ledger's port must always be named explicitly —
+`localhost:5432` serves Instance B from both sides of the boundary, so only
+`-p 5433` reaches the ledger. The same fact that makes the memory system's
+own database calls safe from accidental cross-connection.
 
 ---
 
@@ -249,27 +254,25 @@ from a second database). The removal closes the suite's last open item.
 
 ---
 
-## 8. The two-databases trap — why the same port means different servers
+## 8. The two-databases trap — why the ledger's port must be explicit
 
-The single most operationally dangerous fact about this arrangement:
-`localhost:5432` is a **different server** depending on which side of the
-WSL boundary the call is made from. WSL's PostgreSQL 16 and Windows'
-PostgreSQL 15 both bind port 5432 on their own side of the boundary, and
-neither can see the other.
+Port 5432 serves **one** server everywhere: Instance B. WSL's PostgreSQL 16
+listens on 5432 natively, and WSL's localhost relay binds Windows' 5432 to
+that same Instance B — so from either side of the WSL boundary, a bare
+connection to 5432 reaches `gbrain`'s cluster. The PDLF ledger (Instance A)
+therefore listens on **5433** from the Windows side, and every ledger
+command names that port explicitly.
 
-This has bitten twice in this project's history. The PDLF ledger's own
-specification documents both reasons the bridge exists: WSL cannot pass
-Linux environment variables to Windows programs (a password exported in
-WSL never reaches a Windows-side client), and a direct WSL-side database
-call **does not fail visibly** — it silently connects to whatever is
-listening on that side. The memory system's own database checks have the
-same property in reverse.
+The trap this prevents is a silent one: a database call made without the
+bridge (from WSL) or without `-p 5433` (from Windows) does not fail
+visibly — it connects to Instance B. The memory system's own database
+checks have the same property in reverse, which is why every database
+check names its instance and its port explicitly.
 
 The working rules that prevent it (enforced in
 [[[mybizz-config-docs:postgresql/postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md)): all `pdlf` access goes through the PowerShell
-bridge; all GBrain/governor access runs inside WSL; and any database check
-names its instance explicitly. The 2026-09-09 audits of both instances
-were run under exactly those rules.
+bridge with `-p 5433`; all GBrain/governor access runs inside WSL; and any
+database check names its instance explicitly.
 
 ---
 
@@ -326,11 +329,12 @@ servers, layered placement); verified 100% embedding coverage; strict role
 scoping per instance (`pdlf_agent`, `memory_governor_svc` cannot cross); proven
 boot durability; two independent guard layers against destructive SQL.
 
-**Weaknesses.** The silent cross-connection trap (same port both sides of the
-WSL boundary) is permanent and relies on discipline + bridge rules; several
-checks are permanently developer-run (guard-forbidden to agents), so full
-examination coverage requires developer participation; the dead duplicate
-Windows service remains registered (cosmetic, but a permanent confusion risk).
+**Weaknesses.** The silent cross-connection trap (a bare port resolves to
+Instance B from both sides of the WSL boundary) is permanent and relies on
+discipline + bridge rules; several checks are permanently developer-run
+(guard-forbidden to agents), so full examination coverage requires developer
+participation; the dead duplicate Windows service remains registered
+(cosmetic, but a permanent confusion risk).
 
 **Opportunities.** The plan-driven exam cycle is new — tuning it here then
 emulating across every system gives the whole estate one exam discipline;

@@ -1,7 +1,7 @@
 ---
 title: "postgresql-reference"
 doc-id: "mb-5bad908d"
-updated: "2026-10-04"
+updated: "2026-10-05"
 ---
 # PostgreSQL — Reference: Commands, Procedures, and Troubleshooting
 
@@ -15,27 +15,29 @@ troubleshoot each instance safely.
 
 **Two entirely separate instances exist — every procedure below is scoped
 to one or the other. Using the wrong one connects silently to the wrong
-database; see the cross-instance rules.**
+database; see the cross-instance rules. Port map: 5432 is Instance B from
+both sides (WSL native, and Windows via WSL's port relay); the ledger
+(Instance A) is on 5433 from Windows.**
 
 ---
 
-## Instance A — Windows PostgreSQL 15 (`pdlf` ledger)
+## Instance A — Windows PostgreSQL 15 (`pdlf` ledger) — port 5433
 
 ### Connecting — the only correct method from WSL
 
 WSL's binfmt does not pass Linux environment variables to Windows
 executables, so a bridge through PowerShell is required — and separately,
-a direct WSL-side `psql` call to `localhost:5432` would silently hit the
-*wrong* database (Instance B, not this one). Never attempt a direct WSL
-`psql` connection to reach `pdlf`.
+a connection without the ledger's port (`-p 5433`) would silently hit the
+*wrong* database (Instance B, reachable from Windows too via WSL's port
+relay on 5432). Never omit `-p 5433` for the ledger.
 
 ```bash
 cd <the PDLF project folder> && set -a && source .env && set +a
-powershell.exe -NoProfile -Command "\$env:PGPASSWORD='$PGPASSWORD'; & 'C:\Program Files\PostgreSQL\15\bin\psql.exe' -h localhost -U pdlf_agent -d pdlf -c '<SQL>'"
+powershell.exe -NoProfile -Command "\$env:PGPASSWORD='$PGPASSWORD'; & 'C:\Program Files\PostgreSQL\15\bin\psql.exe' -h localhost -p 5433 -U pdlf_agent -d pdlf -c '<SQL>'"
 ```
 
-This is the exact pattern verified live 2026-09-09 (queries, inserts, role
-management all executed through it).
+This is the exact pattern verified live (queries, inserts, role
+management all executed through it; re-verified 2026-10-05 on port 5433).
 
 ### Superuser connection (Instance A) — for role management
 
@@ -45,7 +47,7 @@ never printed):
 
 ```bash
 cd <the PDLF project folder> && set -a && source .env && set +a
-powershell.exe -NoProfile -Command "\$env:PGPASSWORD='$PGADMIN_PASSWORD'; & 'C:\Program Files\PostgreSQL\15\bin\psql.exe' -h localhost -U postgres -d postgres -c '<SQL>'"
+powershell.exe -NoProfile -Command "\$env:PGPASSWORD='$PGADMIN_PASSWORD'; & 'C:\Program Files\PostgreSQL\15\bin\psql.exe' -h localhost -p 5433 -U postgres -d postgres -c '<SQL>'"
 ```
 
 **Role management requires `DROP OWNED` first.** A role holding privileges
@@ -65,7 +67,7 @@ A developer running commands directly in a Windows PowerShell terminal
 
 ```powershell
 $env:PGPASSWORD = "<value from .env>"
-& "C:\Program Files\PostgreSQL\15\bin\psql.exe" -U pdlf_agent -d pdlf -h 127.0.0.1 -c "<SQL>"
+& "C:\Program Files\PostgreSQL\15\bin\psql.exe" -U pdlf_agent -d pdlf -h 127.0.0.1 -p 5433 -c "<SQL>"
 ```
 
 **Reading the password without pasting it anywhere:**
@@ -81,24 +83,25 @@ $env:PGPASSWORD = ($pgLine -split "=", 2)[1]
 - **`-h localhost` vs `-h 127.0.0.1` are equivalent here** — an earlier documentation version incorrectly blamed a connection failure on IPv6 resolution; a live four-test matrix (2026-08-26) confirmed the real cause was always a wrong password, not the address form.
 - **The `.env` sourcing failure — FIXED 2026-09-09.** Line 16 held an unquoted Windows path (`PSQL_WIN_PATH=C:\Program Files\...`), which bash word-split on `source`. The value is now quoted and the file sources cleanly (verified live). Keep Windows-path values quoted if ever re-added.
 - **An unquoted path in a `.env` breaks bash `source`-ing but not line-by-line parsing** — the OpenCode permission model's bridge pattern parses line-by-line and is unaffected. The distinction matters when choosing a fix.
+- **`SHOW log_directory` is superuser-only** — `pdlf_agent` is correctly refused (`pg_read_all_settings` boundary). Instance A's `logging_collector` is off, so no log files are written while it stays off; faults surface via SCM/Event Viewer and probe errors (verified 2026-10-05).
 
-### Useful live queries (verified live 2026-09-09)
+### Useful live queries (verified live 2026-09-09; port 5433 verified 2026-10-05)
 
 ```powershell
 # Server version
-& "C:\Program Files\PostgreSQL\15\bin\psql.exe" -U pdlf_agent -d pdlf -h 127.0.0.1 -c "SELECT version();"
+& "C:\Program Files\PostgreSQL\15\bin\psql.exe" -U pdlf_agent -d pdlf -h 127.0.0.1 -p 5433 -c "SELECT version();"
 
 # All real databases with sizes
-& "C:\Program Files\PostgreSQL\15\bin\psql.exe" -U pdlf_agent -d pdlf -h 127.0.0.1 -c "SELECT datname, pg_size_pretty(pg_database_size(datname)) FROM pg_database;"
+& "C:\Program Files\PostgreSQL\15\bin\psql.exe" -U pdlf_agent -d pdlf -h 127.0.0.1 -p 5433 -c "SELECT datname, pg_size_pretty(pg_database_size(datname)) FROM pg_database;"
 
 # Full role inventory
-& "C:\Program Files\PostgreSQL\15\bin\psql.exe" -U pdlf_agent -d pdlf -h 127.0.0.1 -c "SELECT rolname, rolcanlogin FROM pg_roles ORDER BY rolname;"
+& "C:\Program Files\PostgreSQL\15\bin\psql.exe" -U pdlf_agent -d pdlf -h 127.0.0.1 -p 5433 -c "SELECT rolname, rolcanlogin FROM pg_roles ORDER BY rolname;"
 
 # Table inventory
-& "C:\Program Files\PostgreSQL\15\bin\psql.exe" -U pdlf_agent -d pdlf -h 127.0.0.1 -c "\dt"
+& "C:\Program Files\PostgreSQL\15\bin\psql.exe" -U pdlf_agent -d pdlf -h 127.0.0.1 -p 5433 -c "\dt"
 
 # Row counts across all 7 ledger tables
-& "C:\Program Files\PostgreSQL\15\bin\psql.exe" -U pdlf_agent -d pdlf -h 127.0.0.1 -c "SELECT 'projects', count(*) FROM projects UNION ALL SELECT 'steps', count(*) FROM steps UNION ALL SELECT 'gates', count(*) FROM gates UNION ALL SELECT 'deviations', count(*) FROM deviations UNION ALL SELECT 'bft_records', count(*) FROM bft_records UNION ALL SELECT 'isc', count(*) FROM isc UNION ALL SELECT 'triage_findings', count(*) FROM triage_findings;"
+& "C:\Program Files\PostgreSQL\15\bin\psql.exe" -U pdlf_agent -d pdlf -h 127.0.0.1 -p 5433 -c "SELECT 'projects', count(*) FROM projects UNION ALL SELECT 'steps', count(*) FROM steps UNION ALL SELECT 'gates', count(*) FROM gates UNION ALL SELECT 'deviations', count(*) FROM deviations UNION ALL SELECT 'bft_records', count(*) FROM bft_records UNION ALL SELECT 'isc', count(*) FROM isc UNION ALL SELECT 'triage_findings', count(*) FROM triage_findings;"
 ```
 
 ### Service management (Windows) — verified live 2026-09-09
@@ -108,9 +111,17 @@ Get-Service -Name "*postgresql*" | Format-Table Name, Status, StartType
 ```
 Only `postgresql-x64-15` should ever be Running. A second registration, plain `PostgreSQL`, exists pointing at the same data directory — leave it Stopped; do not start it (see [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md)).
 
+### Dumping Instance A (backup cycle, developer-run)
+
+```powershell
+& "C:\Program Files\PostgreSQL\15\bin\pg_dump.exe" -U pdlf_agent -d pdlf -h 127.0.0.1 -p 5433 -Fc -f "C:\backup-gbrain\pdlf-db-backup-<DATE>.dump"
+& "C:\Program Files\PostgreSQL\15\bin\pg_dump.exe" -U postgres -d postgres -h 127.0.0.1 -p 5433 -Fc -f "C:\backup-gbrain\postgres-a-admin-db-backup-<DATE>.dump"
+```
+Dump once to `C:\backup-gbrain\` (the direct Windows target), then copy to the WSL location and hash-verify the pair — never re-dump one side of a live pair.
+
 ---
 
-## Instance B — WSL PostgreSQL 16 (`gbrain` + `memory_governor` host)
+## Instance B — WSL PostgreSQL 16 (`gbrain` + `memory_governor` host) — port 5432
 
 ### Connecting
 
@@ -227,14 +238,15 @@ on. Direct `psql` access is appropriate specifically when:
 
 ## Cross-instance rules
 
-- **Never assume `localhost:5432` means the same thing on both sides.** From WSL it's Instance B (`gbrain`, `memory_governor`). From Windows it's Instance A (`pdlf`). They share a port number and nothing else — genuinely independent servers.
-- **A raw WSL `psql` call intended for `pdlf` will not fail — it will silently connect to `gbrain`'s cluster instead**, since both listen on `localhost:5432` from their own side. This is more dangerous than an outright connection failure; always use the PowerShell bridge for `pdlf`.
+- **Port 5432 is Instance B from both sides.** WSL's PostgreSQL 16 listens on 5432 natively, and WSL's localhost relay binds Windows' 5432 to that same Instance B. The ledger (Instance A, Windows PostgreSQL 15) listens on **5433** — every ledger command carries `-p 5433`, always.
+- **A raw WSL `psql` call intended for `pdlf` will not fail — it will silently connect to `gbrain`'s cluster instead**, and a bare Windows-side `psql` without `-p 5433` does the same through the relay. This is more dangerous than an outright connection failure; always use the PowerShell bridge with `-p 5433` for `pdlf`.
 - **`compliance_ledger` no longer exists** (removed 2026-09-05, backed up first — see [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md)). It was never the real ledger — that's `pdlf` on Instance A — noted here in case an older reference to it is still found anywhere.
 - **Destructive SQL from an agent is blocked by two layers** — the OpenCode permission deny patterns (`*DROP TABLE*`, `*DROP DATABASE*`, `*TRUNCATE*` in the global config) and Cupcake's own destructive-SQL rule. A denied database command should never be worked around; the denial is the system working.
 
 ## Do not
 
-- Do not attempt a direct WSL `psql` connection to reach `pdlf` — use the PowerShell bridge.
+- Do not attempt a direct WSL `psql` connection to reach `pdlf` — use the PowerShell bridge with `-p 5433`.
+- Do not omit `-p 5433` on any Instance A connection — a bare connection (from either side of the WSL boundary) reaches Instance B.
 - Do not build a `.sql` file with PowerShell `Out-File` and pass it to `psql -f` without confirming it's BOM-free.
 - Since the 2026-09-15 migration systemd is PID 1 in WSL — `systemctl` is a valid PostgreSQL management path (reconciled 2026-09-28, see Management above); `pg_ctlcluster` remains the cluster-level start/stop tool. Do not assume either the pre- or post-migration init model without a live check.
 - Do not start the dead duplicate `PostgreSQL` Windows service.

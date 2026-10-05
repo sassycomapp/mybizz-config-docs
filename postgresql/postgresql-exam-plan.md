@@ -1,19 +1,17 @@
 ---
 title: "postgresql-exam-plan"
 doc-id: "mb-c446fbf2"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # PostgreSQL — Exam Plan
 
-Transient job-spec for the next exam run. Synthesized by the config-manager before
-each run from: [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md) (spec), the last [[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md),
-[[[mybizz-config-docs:postgresql/postgresql-log|Log]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-log.md) (events since last run), [[[mybizz-config-docs:postgresql/postgresql-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-learnings.md). Consumed by
-the skill at run time; rewritten at the start of the following cycle. The file is
-live; its contents are transient.
-
-The standing check inventory (P0-1…P3-6) **lives in the installed skill** — it
-graduated there 2026-09-12. This plan carries run-specifics only (see §6). This
-edition is the first hand-written plan and the format template.
+Transient job-spec for the current exam run. Synthesized by the config-manager
+from: [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md) (spec), the last
+[[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md), the [[[mybizz-config-docs:postgresql/postgresql-log|Log]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-log.md),
+and [[[mybizz-config-docs:postgresql/postgresql-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-learnings.md). Consumed by the skill at run
+time; rewritten at the start of the following cycle. The standing check inventory
+(P0-1…P3-6) lives in the installed skill; this plan carries run-specifics and
+deltas only.
 
 ---
 
@@ -21,69 +19,87 @@ edition is the first hand-written plan and the format template.
 
 | Item | Value |
 |---|---|
-| Plan for run | #2 — **first formal plan-driven run** |
-| Run date | 2026-09-13 |
-| Prior report | [[[mybizz-config-docs:postgresql/postgresql-exam-report\|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md) (2026-09-12, detection-only pilot) |
-| Step-0 result | PASS (3/3 hash pairs match; suite files present; spec doc exists; no open run) |
-| Tier 3 unlock state | **Locked** — Tier 3 rows execute only if the developer unlocks this run |
-| Developer-run requests this run (bundled into ONE request) | (a) Instance A log scan; (b) Instance A operational probes via bridge (`.env` sourcing is agent-forbidden); (c) Instance B log scan (system path — agent-forbidden); (d) boot-config check `/etc/wsl.conf` (system path — agent-forbidden); (e) `.env` integrity check (secrets guard); (f) `pg_hba` posture checks — only if Tier 3 unlocked |
+| Plan for run | #3 — single-system cycle, explicit developer instruction (2026-10-05) |
+| Run date | 2026-10-05 |
+| Prior report | [[[mybizz-config-docs:postgresql/postgresql-exam-report\|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md) (run #2, 2026-09-13) |
+| Step-0 result | PASS with one estate finding **S0-F1** (register body-hash column stale ×1 — `mb-memory-system-diagnostic`; config-manager's own doc, gate item there; not this system's). 15/15 source↔installed body match; suite 15/15; spec-doc paths 15/15; one-run-at-a-time holds |
+| Tier 3 unlock state | **Locked** — Tier 3 rows execute only on developer unlock at the gate |
+| Developer-run requests this run (bundled) | (a) Instance A ops bundle: P0-2, P1-10, P2-1…P2-7 (incl. carried P2-6 corrected command), P1-9 A log scan; (b) B log scan P1-8 with rate-watch delta; (c) boot config P2-14 (per the retired-boot posture); (d) `.env` integrity P2-15; (e) if P1-11 finds stale dumps: Instance A dump commands for the fresh cycle (listed at the gate) |
 | Expected-value source of truth | [[[mybizz-config-docs:postgresql/postgresql-config\|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md) — read fresh at run start; never rely on remembered values |
 
-## 2. Carried-forward items (from last report)
+## 2. Carried-forward items (from run #2 report)
 
-| # | Item | Why deferred | This run's action |
+| # | Item | Why carried | This run's action |
 |---|---|---|---|
-| CF-1 | Instance A log scan | agent-forbidden (secrets guard on bridge `.env` sourcing) | Request developer run; record result |
-| CF-2 | Instance A locks / autovacuum / idle-in-txn / disk | agent-forbidden (same guard) | Bundle into the same developer request |
-| CF-3 | Tier 3 full pass | unlock not given | List as available; execute only on unlock |
-| CF-4 | Findings 1 (spec counts stale: pages/chunks/size) | docs-governance flag | Verify whether governance approved + applied the refresh; if applied, re-probe counts and re-compare |
-| CF-5 | Graduated check inventory (P0-1…P3-6 now lives in the skill) | graduation 2026-09-12 | Verify the skill's inventory executes correctly; report any drift between plan references and skill rows |
+| CF-1 | P2-6 corrected command (A `postgres` admin-DB table count — the one open evidence item) | Returned output last run covered the wrong DB | Bundle exact command (in run #2 report §Not run this cycle) into the Instance A developer request |
+| CF-2 | P1-8 log-rate watch (run #2 finding 4: watch the *rate*, not just presence) | Note not yet absorbed into the skill's P1-8 row | Developer B-log scan counts ERROR/FATAL/PANIC lines dated after 2026-09-13 10:25; expected: zero, or only this exam's own probes; lifetime baseline 409 at 2026-09-13 |
+| CF-3 | Tier 3 | Unlock not given last run beyond P3-4/5/6; P3-1/2/3 deferred-documented | List as available; execute only on unlock |
+| CF-4 | **Backup freshness + fresh-cycle preparation** (developer-requested item 1) | Last full cycle 2026-09-13; standing cadence 7 days | Determine the actual age of every dump in both locations; if any older than 7 days, prepare at the gate the complete fresh cycle for all five databases (Instance B agent-runnable; Instance A developer-run bridge commands) — dump once, copy to both, hash-verify each pair |
+| CF-5 | **Spec-currency sweep** (developer-requested item 2) | Spec carries dated history passages | List every dated history passage in the spec (removed roles, resolved records, "verified" dates in narrative) and propose present-state wording, so the spec states the current state only |
 
-## 3. Erred last run (distinct from deferred)
+## 3. Erred last run
 
-| # | What erred | This run's action |
-|---|---|---|
-| ER-1 | Bundled probe command killed whole batch (critical-path guard) | Batch rule: psql probes one batch; system-path reads never bundled; split isolated |
-| ER-2 | Instance A bridge probe passed then blocked same day (nondeterministic guard posture) | Treat class as unreliable; P0-2 carries the denial fallback; on denial hand to developer |
+None erred in run #2. Standing execution rules remain in force (from the
+2026-09-12 stabilization): psql probes run as one batch; system-path reads
+(`/etc/…`, `/var/log/…`) never bundled into a probe command; the Instance A
+bridge is never sourced by the agent (execution boundary) — Instance A probes go
+straight into the developer request.
 
-## 4. Log-driven items
+## 4. Log-driven items (after the 2026-10-05 sweep appends)
 
 | # | Event (log) | Check |
 |---|---|---|
-| LG-1 | 2026-09-12 development-period guard denials recorded | Confirm guard classes still armed (implicitly proven by any denial this run) |
-| LG-2 | No crashes/incidents logged for either instance | No specific check; if a new log row exists at synthesis time, derive a targeted probe from it |
+| LG-1 | 2026-09-15 systemd migration | PID 1 is systemd; `systemctl status postgresql` works; cluster online (P0-3) |
+| LG-2 | 2026-09-28 credential rotation | The documented variable-form connection (`~/.gbrain/config.json` `database_url`) works — P0-4 exercises exactly that path |
+| LG-3 | 2026-09-28 boot-command retirement | `postgresql.service` enabled (agent-checkable); `/etc/wsl.conf` carries no `[boot]` command (P2-14, developer-run, spec-governed expectation) |
+| LG-4 | No other notable unlogged events found at sweep time | — |
 
 ## 5. Learnings-driven items
 
-| # | Learning | Check |
-|---|---|---|
-| LE-1 | `facts` table never autovacuumed (low-write) | Repeat last_autovacuum probe; flag only if a *hot* table also stops vacuuming |
+None — the learnings file is empty (both run-#2 learnings graduated 2026-09-13).
 
-## 6. Standing checks
+## 6. Standing checks + run-specific deltas
 
-The complete, authoritative check inventory — **P0-1…P3-6, with runner (A=agent /
-D=developer), probe, and pass rule per check — lives in the installed skill**
-(`mb-config-postgresql/SKILL.md`, Tiers 0–3). It graduated there 2026-09-12; this
-plan no longer duplicates it. Expected values for every check come from
-[[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md), read fresh at run start. This section carries only
-run-specific deltas to that inventory — this run: none.
+The complete inventory (P0-1…P3-6, runner per check, pass rules) lives in the
+installed skill; expected values come from the spec, read fresh at run start.
+Deltas this run:
+
+- **P1-11 (CF-4, item 1):** not just newest-per-DB — list **every** dump in
+  `/home/dev-p/backup-gbrain/` and `/mnt/c/backup-gbrain/` with mtime, compute
+  age against 2026-10-05, and hash-verify each location-pair (`cmp` + sha256).
+  Spec cadence: 7 days, exam-enforced. Any dump older than 7 days → finding →
+  prepare the fresh cycle at the gate (all five DBs; Instance B part
+  agent-runnable post-approval; Instance A part developer-run `pg_dump.exe`
+  commands via the bridge, dump once → copy to both → hash-verify each pair;
+  naming `<db>-db-backup-YYYY-MM-DD.dump`, admin DBs disambiguated `-a-`/`-b-`;
+  live-database rule: never re-dump one side of a pair).
+- **P1-8 (CF-2):** rate-watch delta as in §2.
+- **P2-14:** the skill's expected cell ("`[boot]` command intact") is
+  superseded by the spec's current boot posture (boot-command retirement,
+  2026-09-28): expected = `/etc/wsl.conf` carries **no** `[boot]` command;
+  `postgresql.service` enabled; governor user units enabled. Spec governs; the
+  skill's cell is flagged for its next revision (gate item, not applied here).
 
 ## 7. Report requirements
 
-The run writes [[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md): verdict line; per-tier tables (check
-ID, expected, actual, result); findings with class + evidence + recommended repair
-+ rollback; runner attribution for every deferred item (guard-forbidden vs
-unlock-gated); overwritten in full each run. Then: one run row appended to
-[[[mybizz-config-docs:postgresql/postgresql-log|Log]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-log.md) (run-row format per [[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md)); new
-learnings filed.
+Write [[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md)
+(write-then-replace): verdict line; per-tier tables (ID, expected, actual,
+result, runner attribution); findings with class (DOWN/UNHEALTHY/DRIFT/GAP),
+evidence, recommended repair (allowlist only), rollback, risk; developer-returned
+results recorded verbatim, tagged developer-verified, with exact commands.
+This run additionally: (i) a **backup-cycle findings section** with the full
+prepared fresh-cycle command set; (ii) a **spec-currency section** listing every
+dated history passage with proposed present-state wording. Then: one run row
+appended to the log; new learnings filed; prune only absorbed entries whose
+permanent home exists. The report is written before any pruning.
 
-## 8. Gate protocol
+## 8. Gate protocol — hard stop, nothing applies without approval
 
-- Findings → classify → present with evidence + recommended repair + rollback + risk
-- Allowlist repairs (gate-gated): `.env` line-quoting fix (pattern per reference);
-  documented real-service start; memory-system worker restart
-- Flagged, never healed: spec-doc corrections (docs governance)
-- Deny-list (never heal, proposal only): `pg_hba` edits, role/database drops,
-  service deletion, dead-duplicate start, `wsl.conf`/boot edits, superuser-requiring
-  operations, any data mutation
-- Credentials: variable names only, never printed
+Expected gate items: (G1) fresh backup cycle execution; (G2) spec present-state
+rewording (docs governance — spec corrections only on approval); (G3) S0-F1
+register column refresh (config-manager's own doc — proposal only); (G4) skill
+deltas P1-8 rate rule + P2-14 expected cell (graduation into the skill +
+re-install, on approval). Allowlist repairs only; deny-list never healed
+(`pg_hba`, role/database drops, service deletion, dead-duplicate start,
+`wsl.conf`/boot edits, superuser operations, any data mutation). Credentials by
+variable name only, never printed. This run stops at the gate — no repair.
