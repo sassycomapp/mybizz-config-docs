@@ -1,7 +1,7 @@
 ---
 title: "postgresql-config"
 doc-id: "mb-a8b414df"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # PostgreSQL — Configuration
 
@@ -88,7 +88,7 @@ The variable itself has zero consumers — kept for future use.
 | Connection string (gbrain DB) | `postgresql://postgres:<password>@localhost:5432/gbrain` — the password lives only in `~/.gbrain/config.json` (`database_url`) and `~/.pgpass`; reference by variable name in every command (rotated 2026-09-28; the previously-documented literal is retired — never re-quote it) |
 | Connection string (governor DB) | In `memory_governor`'s own `.env` as `MEMORY_GOVERNOR_DATABASE_URL` (referenced by name only) |
 | Management tooling | `systemctl` and `service` both work — systemd has been PID 1 since the 2026-09-15 migration (reconciled 2026-09-28 by the memory-system-diagnostic §2 live check; see [[[mybizz-config-docs:postgresql/postgresql-reference\|Reference]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md) §Management). `pg_ctlcluster` remains the cluster-level start/stop tool. |
-| Boot config | Since the 2026-09-28 boot-command retirement, `/etc/wsl.conf` no longer invokes `start-memory-system.sh`: under systemd, `postgresql.service` (enabled) owns the cluster and the two governor user units own the memory processes; the script remains on disk as a manual fallback only. Historical: the 2026-09-09 full-restart test proved the old boot command; both 2026-09-28 boots proved it now fights `memory-governor-api.service` for port 8321 (see [[[mybizz-config-docs:memory-governor/memory-governor-reference\|Reference]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-reference.md) §Permanent auto-start migration). |
+| Boot config | Since the 2026-09-28 boot-command retirement, `/etc/wsl.conf` no longer invokes `start-memory-system.sh`: under systemd, `postgresql.service` (enabled) owns the cluster and the two governor user units own the memory processes; the script remains on disk as a manual fallback only. |
 | Autovacuum posture | `on` (cluster-wide). Hot-table recency is the health signal: `content_chunks` and `pages` vacuum within days of writes (last: 2026-09-11 / 2026-09-13). The `facts` table showing `last_autovacuum = never` is **normal** — it is low-write; flag only if a *hot* table stops vacuuming. |
 
 ### Role-isolation test method (authoritative, verified 2026-09-13)
@@ -143,7 +143,6 @@ of one exists.
 | `pgvector_user` + `pgvector_readonly` on Instance A | **Removed 2026-09-09** — the investigation closed the loose end: no grants except pgvector-function EXECUTE in `postgres`, no owned objects, no existence on Instance B. `DROP OWNED` in `postgres`, then dropped; verified gone cluster-wide. |
 | The `pdlf`-schema/spec drift | The spec was corrected 2026-09-05 (commit `fae811c`); the spec is now authoritative. |
 | The `.env` line-16 sourcing failure | Fixed 2026-09-09 (the value quoted); the file sources cleanly. |
-| The boot-durability fix | Extended 2026-09-09: the boot command now also starts the memory-system processes; the whole chain proven across a real WSL restart. |
 
 ## Backups (estate-wide — established 2026-09-13)
 

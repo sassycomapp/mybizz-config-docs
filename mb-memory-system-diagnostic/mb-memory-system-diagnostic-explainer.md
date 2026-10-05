@@ -1,7 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-explainer"
 doc-id: "mb-dd98962e"
-updated: "2026-10-04"
+updated: "2026-10-05"
 ---
 # mb-memory-system-diagnostic — What It Is, What It Does, and Why It Is Built This Way
 
@@ -35,17 +35,20 @@ move.
 
 One procedure document, materialized in three layers:
 
-1. **The source artifact** — `mb-memory-system-diagnostic-skill.md` in this
-   suite folder; the canonical procedure, in the corpus's documentation-skill
-   format (`title`/`doc-id` = filename stem).
+1. **The source artifact** — `mb-memory-system-diagnostic.md` in the skill's
+   own repository (`C:\mybizz\mb-memory-system-diagnostic\`, GitHub-backed and
+   registered as the federated GBrain source `mb-memory-system-diagnostic`);
+   the canonical procedure, in the documentation-skill frontmatter format
+   (`title`/`doc-id`/`updated`, title/doc-id = filename stem).
 2. **The installed skill** — a copy at
    `~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md`, carrying the
    skill-discovery frontmatter (`name`/`description`) — the only copy that
    does — which is what makes `/mb-memory-system-diagnostic` invocable in
    OpenCode.
-3. **Run reports** — one file per run at
-   `C:\mybizz\memory-diagnostic-reports\`, appended section by section as
-   each closes, ending in an aggregate roll-up.
+3. **Run report** — one file in the suite folder
+   (`mb-memory-system-diagnostic-run-report.md`), replaced at the start of
+   every run, appended section by section as each closes, ending in an
+   aggregate roll-up.
 
 The unit of work is the **section** — eleven of them: ten diagnostic sections
 across the ecosystem (GBrain, PostgreSQL Instance B, Memory Governor,
@@ -108,7 +111,7 @@ is invocation-only by design.
 
 A finding's context decays. At the moment §3 finds a stuck outbox, the
 evidence for the right remediation is in the run's own hands — the API
-response, the worker state, the register The use of registers has been discontinued. Please review diff. Banked into an end-of-run
+response, the worker state, the register diff. Banked into an end-of-run
 report, the same finding becomes a backlog item that outlives its context and
 invites a decision made from a summary instead of live evidence. The
 per-section loop keeps diagnosis and decision adjacent, and it has a second,
@@ -166,7 +169,7 @@ skip.
 ## Why Both Positive and Negative Governed-Write Tests
 
 §4 alone proves the gate can say yes: a candidate flows submit → worker →
-GBrain `private` fact → register The use of registers has been discontinued. Please review. But a gate that had silently lost its
+GBrain `private` fact → register. But a gate that had silently lost its
 ability to say no would pass §4 perfectly while every fact in the system
 flowed straight to the durable layer unreviewed — the exact failure the gate
 exists to prevent. §5 manufactures a must-review candidate (`policy` is one
@@ -185,8 +188,9 @@ sequence) instead of re-deriving them — and upstream of nothing: no build,
 deploy, or enforcement consumes its output. It complements the `mb-config-*`
 exams rather than duplicating them: those are per-component, detection-only,
 and gate-resolving; this is cross-component, interactive, and treats defects
-in place. It does not yet participate in the config-management exam cycle (no
-`mb-config-*` module exists for it — an open item). It depends on the gbrain
+in place. It participates in the config-management exam cycle via
+`mb-config-mb-memory-system-diagnostic` (detection-only — the exam verifies
+this suite's state and never runs the diagnostic). It depends on the gbrain
 CLI, the Governor's API and environment, the graphify CLI, the two backup
 locations, and a developer present at the gates. Invocation is explicit-only;
 nothing schedules it, and no skill chains into it without the developer
@@ -194,9 +198,6 @@ naming it.
 
 ## Honest Limits
 
-- The skill has never run — every runtime claim (RLS counts, unit states,
-  outbox counts, dump ages, graph freshness) is recorded procedure, not
-  verified state, until a first live run executes.
 - §7's developer question is subjective by design; a "felt slow" answer is
   logged verbatim as a metric, not adjudicated by the skill.
 - The heavyweight sections cost real things — two disposable governed-write
@@ -221,7 +222,7 @@ reporting (the report file is metrics and verdicts, not prose).
 *Suite: [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-config.md) (spec),
 [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-reference.md) (commands and report
 formats), [[[mb-memory-system-diagnostic:mb-memory-system-diagnostic|Skill]]](C:/mybizz/mb-memory-system-diagnostic/mb-memory-system-diagnostic.md) (the procedure — canonical
-artifact in this folder, installed copy at
+artifact in its own repository `C:\mybizz\mb-memory-system-diagnostic\mb-memory-system-diagnostic.md`, installed copy at
 `~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md`),
 [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-plan.md) / 
 [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-exam-report.md) /

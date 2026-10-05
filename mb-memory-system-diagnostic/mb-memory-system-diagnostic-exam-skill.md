@@ -1,7 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-exam-skill"
 doc-id: "mb-aabce08d"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 
 # mb-config-mb-memory-system-diagnostic — Exam Skill
@@ -21,7 +21,7 @@ working well; this exam verifies that and repairs nothing.
 
 ## Scope boundary (anti-duplication)
 
-- This module exams **the diagnostic skill itself**: source artifact, installed copy, suite documents, register rows, recorded constants, invocation surface.
+- This module exams **the diagnostic skill itself**: source artifact, installed copy, suite documents, recorded constants, invocation surface.
 - **The six memory-ecosystem components** (GBrain, PostgreSQL Instance B, Memory Governor, mb-submit-memory, Graphify, GBrain Dream Cycle) are owned by their own exam modules (`mb-config-gbrain`, `mb-config-postgresql`, `mb-config-memory-governor`, `mb-config-mb-submit-memory`, `mb-config-graphify`, `mb-config-gbrain-dream-cycle`). This exam never live-tests a component; the deepest permitted probe is `--version`-class existence (Tier 2 MS2-2) and recorded-constant comparison against sibling suites' documents.
 - **Running the diagnostic itself is out of exam scope** — it is heavyweight, developer-invoked, and carries real-write sections (§4/§5/§10). The exam verifies install and state; it never executes the subject.
 - **Cupcake internals are out of scope entirely** — same rule that binds the subject skill binds this exam.
@@ -57,14 +57,14 @@ quoted verbatim including its `***` / variable-name placeholders.
 
 | ID | Runner | Check | Expected |
 |---|---|---|---|
-| MS1-1 | A | Source artifact format: two-field corpus frontmatter (`title`/`doc-id` = `mb-memory-system-diagnostic-skill`), lowercase `-skill.md` suffix, filename stem = doc-id | All three (config §Identity — skill frontmatter row + §Recorded decisions) |
-| MS1-2 | A | Hash pair: installed copy vs source `mb-memory-system-diagnostic-skill.md` (sha256 first 16 hex) + body-identity from H1 (dual-format: frontmatter block = expected difference per the register's install-discipline note) | Hashes recorded at Phase 2 install; body byte-identical from H1. Installed-edited → DRIFT; source-edited-not-reinstalled → stale GAP |
-| MS1-3 | A | Suite completeness — read the spec's tables, never a bare count: config, reference, explainer, skill source (4 pre-existing) + the exam set (exam-plan, exam-report, log, learnings, exam-skill source) joined at this build | All present; missing file = GAP |
+| MS1-1 | A | Source artifact format: three-field corpus frontmatter (`title`/`doc-id`/`updated`; `title`/`doc-id` = `mb-memory-system-diagnostic`, the filename stem), file `mb-memory-system-diagnostic.md` in its own repository `C:\mybizz\mb-memory-system-diagnostic\` | All present (config §Identity — skill frontmatter row + §Recorded decisions) |
+| MS1-2 | A | Hash pair: installed copy vs source `C:\mybizz\mb-memory-system-diagnostic\mb-memory-system-diagnostic.md` (sha256 first 16 hex) + body-identity below the frontmatter (the frontmatter block is the expected difference — the installed copy keeps `name`/`description`) | Body byte-identical below the frontmatter. Installed-edited → DRIFT; source-edited-not-reinstalled → stale GAP |
+| MS1-3 | A | Suite completeness — read the spec's tables, never a bare count: config, reference, explainer (3 pre-existing in the suite folder) + the exam set (exam-plan, exam-report, log, learnings, exam-skill source) + the run report; the skill source lives in its own repository `C:\mybizz\mb-memory-system-diagnostic\` (verified there, not in the suite folder) | All present; missing file = GAP |
 | MS1-4 | A | Scope conformance: the source artifact's §Scope matches the spec's §Scope table (in-scope six components; out-of-scope Instance A, Cupcake internals, everything outside the memory ecosystem) | Tables agree (config §Scope) |
 | MS1-5 | A | Section inventory conformance: the source artifact carries the 11 sections with the gate classes recorded in the spec's §Section inventory (§4/§5/§10 heavyweight-always; §1/§6 trouble+heavyweight remediation; §2/§3/§7/§8/§9 trouble) | All 11 present, classes match (config §Section inventory) |
 | MS1-6 | A | Recorded constants present in the source artifact verbatim: RLS coverage 62/62 · HIGH_RISK_TYPES includes the five categories with `policy` in them · §3 curl pass value HTTP 422 · §9 backup age ≤ 7 days · role-isolation via `has_database_privilege` (never `SET ROLE`) · §10 cycle_freshness + `.phase` (never `.name`) | All present (config §Scope + sibling-suite recorded constants as cited in the skill text) |
-| MS1-7 | A | Register-local recorded absence: no rows for the suite's documents in `register-local.md`; pending-events queue holds no events for these files (open item #1 state) | Both absences confirmed (config §Register usage). Registration is doc-maintainer's work, never the exam's |
-| MS1-8 | A | GBrain ingest state: the spec's §GBrain integration row (source `mybizz-config-docs`, ingest 2026-09-28 at commit `c0570db`, 4 pages) matches the live gbrain pages for the suite (read-only `gbrain search`/`get_page`-class probes) | Matches (config §GBrain integration). Post-commit sync already ran — a higher page/chunk count than recorded is expected drift, reported factually not re-flagged |
+| MS1-7 | A | No document-register dependency: the spec carries no register-usage section and no suite check reads `register-local.md` (the document register is retired) | Confirmed absent (config has no §Register usage) |
+| MS1-8 | A | GBrain integration state: the spec's §GBrain integration rows (suite documents in `mybizz-config-docs`; skill source in its own repository as the federated source `mb-memory-system-diagnostic`) match the live gbrain sources/pages (read-only `gbrain sources list`/`search`-class probes) | Matches (config §GBrain integration). Page/chunk counts above any recorded snapshot are expected drift, reported factually not re-flagged |
 
 ## Tier 2 — Functional proof (present ≠ working; read-only probes only)
 
@@ -72,14 +72,14 @@ quoted verbatim including its `***` / variable-name placeholders.
 |---|---|---|---|
 | MS2-1 | A | Installed copy machine-parsable: frontmatter block parses as YAML with exactly `name` + `description` keys; body intact from H1 | Parses; two keys; body intact (config §Identity). Failure here is the doc-auditor F-1 defect class |
 | MS2-2 | A | Command inventory executability *in form*: for each binary the skill's sections invoke (gbrain, psql, jq, sha256sum, ss, curl, git, journalctl, graphify), confirm presence on PATH — `command -v` only; no skill command executed beyond this | All present (config §Live-verified component presence + reference §Run flow). Absent binary = finding (the section that needs it cannot run) |
-| MS2-3 | A | Report-path parent viability: `C:\mybizz\` (= `/mnt/c/mybizz/`) exists and is writable-by-developer convention; the reports folder `memory-diagnostic-reports/` is absent per open item #3 | Parent present; folder absent (config §Report storage + §Open items #3). Folder present before a first run = spec-staleness flag, not a defect |
+| MS2-3 | A | Run report present in the suite folder: `C:\mybizz\mybizz-config-docs\mb-memory-system-diagnostic\mb-memory-system-diagnostic-run-report.md` | File present (config §Report storage); one run report, replaced by every run. Absent file = GAP |
 | MS2-4 | A | Cross-suite recorded-constant spot-check (read-only document comparison): postgresql-config's RLS row still records 62/62; memory-governor-config still records the high-risk classification the skill cites; the spec's Gates table matches the skill's heavyweight-action list (§4/§5/§10 + §1's `gh repo create` + §6's `graphify update`) | Constants agree (config §Section inventory + §Gates). Divergence = DRIFT in whichever document moved — flagged, never edited here |
 
 ## Tier 3 — Deep pass (developer-run; executes only if the developer unlocks this tier. Not skimped: every sub-check executes, evidence captured to files — a summary verdict without per-item evidence is a failed Tier 3)
 
 | ID | Runner | Check | Expected |
 |---|---|---|---|
-| MS3-1 | D | **Full source-vs-spec conformance walk:** paragraph-level comparison of the skill source against every spec table (Identity, Scope, Section inventory, Gates, Report storage, GBrain integration, Register usage, Open items) — every claim in the spec located in the artifact, every artifact command traced to a spec row | Complete mapping recorded; every mismatch itemized with class + recommended resolution (spec-edit proposals go to docs governance) |
+| MS3-1 | D | **Full source-vs-spec conformance walk:** paragraph-level comparison of the skill source against every spec table (Identity, Scope, Section inventory, Gates, Report storage, GBrain integration, Open items) — every claim in the spec located in the artifact, every artifact command traced to a spec row | Complete mapping recorded; every mismatch itemized with class + recommended resolution (spec-edit proposals go to docs governance) |
 | MS3-2 | D | **Cross-suite constant verification:** each recorded constant the skill cites (RLS 62/62; HIGH_RISK_TYPES; HTTP 422; cycle_freshness semantics; backup locations/age; ADR remediation sequence) verified against the *current* recorded state of all five sibling suites (gbrain, postgresql, memory-governor, graphify, gbrain-dream-cycle) — the trust relationship the explainer documents, proven rather than assumed | Every constant current; stale constants itemized for the owning suite's docs governance |
 
 ## Report

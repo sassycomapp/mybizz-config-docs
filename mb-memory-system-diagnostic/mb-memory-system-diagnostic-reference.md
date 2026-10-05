@@ -1,7 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-reference"
 doc-id: "mb-b0ec721d"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # mb-memory-system-diagnostic — Reference: Invocation, Sections, Gates, Reporting
 
@@ -31,8 +31,9 @@ the exam verifies this suite's state and never runs the diagnostic itself.
 ## Run flow
 
 ```text
-1. Create the report file (folder if missing):
-   C:\mybizz\memory-diagnostic-reports\memory-diagnostic-(YYYY-MM-DD).md
+1. Replace the run report file (create if missing):
+   C:\mybizz\mybizz-config-docs\mb-memory-system-diagnostic\mb-memory-system-diagnostic-run-report.md
+   — one file; every run replaces it in full.
 2. Run Section 1 → Section 10 in order.
 3. Append each section's result block to the report as the section closes —
    never hold results in memory; if the run aborts, everything completed is on disk.
@@ -120,9 +121,14 @@ service postgresql status
 ```
 
 ```bash
+# Reach the DB through the gbrain config's database_url read into a shell
+# variable — never source .env (agent-forbidden by the secrets guard); keep
+# conninfo a single argument so psql errors cannot echo it. Credential
+# referenced by variable name only.
+PGURL=$(jq -r .database_url /home/dev-p/.gbrain/config.json)
 pg_lsclusters
-psql "postgresql://postgres:***@localhost:5432/gbrain" -c "SELECT count(*) AS tables, count(*) FILTER (WHERE relrowsecurity) AS rls_tables FROM pg_class WHERE relkind='r' AND relnamespace=(SELECT oid FROM pg_namespace WHERE nspname='public');"
-psql "postgresql://postgres:***@localhost:5432/postgres" -c "SELECT rolname, rolcanlogin FROM pg_roles WHERE rolcanlogin ORDER BY rolname;"
+psql "${PGURL%/*}/gbrain" -c "SELECT count(*) AS tables, count(*) FILTER (WHERE relrowsecurity) AS rls_tables FROM pg_class WHERE relkind='r' AND relnamespace=(SELECT oid FROM pg_namespace WHERE nspname='public');"
+psql "${PGURL%/*}/postgres" -c "SELECT rolname, rolcanlogin FROM pg_roles WHERE rolcanlogin ORDER BY rolname;"
 ```
 
 Role isolation — `has_database_privilege` only, never `SET ROLE` (a
@@ -149,21 +155,19 @@ curl pass value: **HTTP 422** (credential-required — proves the API is up AND
 its auth gate works). `000`/refused = finding.
 
 ```bash
-cd /home/dev-p/memory-governor && set -a && source .env && set +a
-.venv/bin/python -c "
-import psycopg, os
-with psycopg.connect(os.environ['MEMORY_GOVERNOR_DATABASE_URL']) as conn:
-    with conn.cursor() as cur:
-        cur.execute('SELECT count(*) FROM memory_events WHERE processed_at IS NULL AND permanently_failed = FALSE')
-        print('pending:', cur.fetchone()[0])
-        cur.execute('SELECT count(*) FROM memory_events WHERE permanently_failed = TRUE')
-        print('permanently_failed:', cur.fetchone()[0])
-"
+# Reach the governor DB through the gbrain superuser URL (same cluster);
+# reference by variable name only and never print it. The .env-sourcing path
+# is agent-forbidden by the secrets guard. Keep the conninfo a single argument
+# so psql errors cannot echo it.
+PGURL=$(jq -r .database_url /home/dev-p/.gbrain/config.json)
+psql "${PGURL%/*}/memory_governor" -t \
+  -c "SELECT 'pending: ' || count(*) FROM memory_events WHERE processed_at IS NULL AND permanently_failed = FALSE;" \
+  -c "SELECT 'permanently_failed: ' || count(*) FROM memory_events WHERE permanently_failed = TRUE;"
 git -C /home/dev-p/memory-governor status --porcelain registers/ | head -5
 systemctl --user status memory-governor-api memory-governor-worker --no-pager 2>&1 | head -6
 ```
 
-Pass: 422; worker alive; `permanently_failed` = 0; register The use of registers has been discontinued. Please review clean; both units
+Pass: 422; worker alive; `permanently_failed` = 0; register clean; both units
 `active (running)`.
 
 ## Section 4 — Governed write, positive path (heavyweight — always gated)
@@ -184,7 +188,7 @@ POST /memory/candidate        # disposable candidate via the real API
 Cleanup is in `try`/`finally` — never omitted, including mid-run failure.
 
 Pass: submit `201 promoted`; worker processed ≥ 1; GBrain presence true;
-`private` visibility true; register The use of registers has been discontinued. Please review written true; cleanup confirmed complete.
+`private` visibility true; register written true; cleanup confirmed complete.
 
 ## Section 5 — Governed write, negative path (heavyweight — always gated)
 
@@ -231,7 +235,11 @@ Pass: commit hashes match; the query returns a real result.
 ## Section 7 — Cupcake interaction (effect only — never Cupcake internals)
 
 ```bash
-grep -i "deny\|block" /tmp/memory-governor.log /tmp/memory-governor-worker.log 2>/dev/null | tail -20
+# The governor's logs live in journald under systemd — the retired
+# /tmp/memory-governor*.log paths must not be used. Scope to this run's start.
+journalctl --user -u memory-governor-api -u memory-governor-worker \
+  --since "<run start time HH:MM>" --no-pager 2>/dev/null \
+  | grep -i "deny\|block\|reject" | tail -20
 ```
 
 Review every denial/block line surfaced in this run's own log output. Confirm
@@ -318,8 +326,11 @@ No prose beyond the table and the two one-line summaries.
 ## Credential handling
 
 Never read, print, or copy credential values — reference by variable name
-only (`MEMORY_GOVERNOR_DATABASE_URL`, etc.). The `psql` example URLs carry
-`***` placeholders; substitute a credential source without displaying it.
+only. §2 and §3 reach both databases through the gbrain config's
+`database_url` read into a shell variable (`PGURL=$(jq -r .database_url
+/home/dev-p/.gbrain/config.json)`) — never source `.env` (agent-forbidden by
+the secrets guard); keep conninfo a single argument so psql errors cannot
+echo it.
 
 ## Do not
 

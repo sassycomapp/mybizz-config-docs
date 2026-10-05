@@ -1,7 +1,7 @@
 ---
 title: "gbrain-reference"
 doc-id: "mb-bb4cbd8d"
-updated: "2026-10-02"
+updated: "2026-10-05"
 ---
 # GBrain — Reference: Commands, Mechanics, Incidents, Troubleshooting
 
@@ -158,6 +158,10 @@ with `--strategy code`.
 Overlapping source paths are refused (child under a registered parent or vice
 versa). Inactive projects' sources stay registered — searchable history from
 an inactive project retains value; remove only content-free scaffolds.
+`gbrain sources add --path` requires the target to be a git repository with
+at least one committed (tracked) file — an empty commit is refused by design
+(write a placeholder file and commit first). `--force` skips that check and
+registers a folder before its first commit.
 
 **Source resolution precedence** (upstream `docs/architecture/brains-and-sources.md`):
 

@@ -1,15 +1,13 @@
 ---
 title: "mb-memory-system-diagnostic-config"
 doc-id: "mb-2b9404b5"
-updated: "2026-10-03"
+updated: "2026-10-05"
 ---
 # mb-memory-system-diagnostic — Configuration
 
 Canonical current-state configuration record for `mb-memory-system-diagnostic`
-as a system component. Agent-facing. Reflects the live-verified state as of
-2026-09-28. Formerly named `memory-system-diagnostic`; renamed 2026-09-28
-(naming convention — homegrown skills carry the `mb-` prefix). States facts,
-not history — reasoning in
+as a system component. Agent-facing. Reflects the live-verified current state.
+States facts, not history — reasoning in
 [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-explainer.md); commands and procedures in
 [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-reference.md).
 
@@ -21,9 +19,9 @@ not history — reasoning in
 |---|---|
 | Component | `mb-memory-system-diagnostic` — gated, stepwise health-check skill for the memory ecosystem |
 | Run surface | OpenCode agent procedure; invoked explicitly as `/mb-memory-system-diagnostic` |
-| Source artifact | `C:\mybizz\mybizz-config-docs\mb-memory-system-diagnostic\mb-memory-system-diagnostic-skill.md` (authored 2026-09-27; renamed from the `-SKILL` suffix and converted to the documentation-skill frontmatter 2026-09-28; suite folder and files renamed to the `mb-` prefix 2026-09-28; §0 principle 8 + §2 recipe updated to the verified variable-name/journald pattern 2026-09-28 by config-exam F-3) |
-| Installed skill | `~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md` — copy of the source artifact body; installed 2026-09-28, re-installed under the new name 2026-09-28, re-installed byte-exact after the F-3 edits (hash pair `b90ec20c33bf4272` / `b90ec20c33bf4272`, 2026-09-28) |
-| Skill frontmatter | corpus copy: documentation-skill format — `title`/`doc-id` = `mb-memory-system-diagnostic-skill`; installed copy: `name`/`description` (developer convention, 2026-09-28: documentation skills on C:\ carry `title`/`doc-id`; installed skills in WSL carry `name`/`description`) |
+| Source artifact | `C:\mybizz\mb-memory-system-diagnostic\mb-memory-system-diagnostic.md` — the skill's own repository (GitHub-backed: `sassycomapp/mb-memory-system-diagnostic`; registered as the federated GBrain source `mb-memory-system-diagnostic`) |
+| Installed skill | `~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md` — copy of the source artifact body; the installed frontmatter (`name`/`description`) is kept exactly on every refresh |
+| Skill frontmatter | source: `title`/`doc-id`/`updated` (`title`/`doc-id` = `mb-memory-system-diagnostic`, the filename stem); installed copy: `name`/`description` |
 | Ecosystem boundary | `archify/output/memory-ecosystem-project/memory-ecosystem-scope.md` (scope card) |
 | Standing references | `postgresql/postgresql-reference.md`; `gbrain/gbrain-reference.md`; `gbrain-dream-cycle/gbrain-dream-cycle-reference.md` + `-log.md`; `memory-governor/memory-governor-reference.md`; ADR `dev-tooling-source-repos-must-be-github-backed` (`C:\dev\project-library-global\adr-global\`) |
 
@@ -31,7 +29,7 @@ not history — reasoning in
 
 | Class | Members |
 |---|---|
-| In scope | GBrain; PostgreSQL Instance B (WSL PG16 — `gbrain` + `memory_governor` databases only); Memory Governor (API `:8321` + worker + registers The use of registers has been discontinued. Please review); mb-submit-memory (prerequisite state only); Graphify (read-only); GBrain Dream Cycle (state report + gated run); Cupcake (its effect on §1–§6 of the run only — never the binary) |
+| In scope | GBrain; PostgreSQL Instance B (WSL PG16 — `gbrain` + `memory_governor` databases only); Memory Governor (API `:8321` + worker + registers); mb-submit-memory (prerequisite state only); Graphify (read-only); GBrain Dream Cycle (state report + gated run); Cupcake (its effect on §1–§6 of the run only — never the binary) |
 | Out of scope | PostgreSQL Instance A (Windows PG15, `pdlf` ledger); Cupcake internals and any Cupcake rule execution (developer-only, permanent); everything outside the memory ecosystem |
 
 ## Section inventory
@@ -41,8 +39,8 @@ not history — reasoning in
 | 0 | Principles | run rules — never invent a result; per-section loop; two distinct gates; credential rule; drift rule | — |
 | 1 | GBrain core | version, `doctor --fast`, sources, stats, per-source GitHub remote check | trouble; remediation heavyweight |
 | 2 | PostgreSQL Instance B | live init-model check, cluster, RLS coverage, role isolation | trouble |
-| 3 | Memory Governor | API + auth gate, worker, outbox, registers The use of registers has been discontinued. Please review, systemd units | trouble |
-| 4 | Governed write — positive path | submit → worker → GBrain `private` fact → register The use of registers has been discontinued. Please review → cleanup | heavyweight (always) |
+| 3 | Memory Governor | API + auth gate, worker, outbox, registers, systemd units | trouble |
+| 4 | Governed write — positive path | submit → worker → GBrain `private` fact → register → cleanup | heavyweight (always) |
 | 5 | Governed write — negative path | `policy`-type submit must not promote → reject → cleanup | heavyweight (always) |
 | 6 | Graphify | version, graph freshness (`built_at_commit` vs HEAD), one live query | trouble; remediation heavyweight |
 | 7 | Cupcake interaction | denial/block lines in this run's logs, loopback exemption, developer's direct answer | trouble; no in-skill remediation |
@@ -66,10 +64,7 @@ governed write; §10 real Dream Cycle run; §1's `gh repo create` remediation;
 
 | Item | Path | Character |
 |---|---|---|
-| Run report | `C:\mybizz\memory-diagnostic-reports\memory-diagnostic-(YYYY-MM-DD).md` | append-only during the run — one result block per section as it closes, then the §11 roll-up |
-
-The folder was created by the first live run (2026-09-28); it holds one report
-per run, appended section by section.
+| Run report | `C:\mybizz\mybizz-config-docs\mb-memory-system-diagnostic\mb-memory-system-diagnostic-run-report.md` | one file, replaced at the start of every run; one result block appended per section as it closes during the run, then the §11 roll-up |
 
 ## Live-verified component presence (2026-09-28)
 
@@ -90,30 +85,16 @@ component's own config suite (`gbrain-config.md`, `memory-governor-config.md`,
 
 | Item | Value |
 |---|---|
-| Source | `mybizz-config-docs` (federated; corpus-wide) — no dedicated source for this suite |
-| Ingest state | ingested 2026-09-28 by targeted `gbrain sync --source mybizz-config-docs` at commit `c0570db` — 4 pages, 45 chunks, 13 links extracted; source now 266 pages |
-| Next sync | standing `sync-gbrain` script (or targeted `gbrain sync --source mybizz-config-docs`) picks up future changes |
-
-## Register The use of registers has been discontinued. Please review usage
-
-| Register The use of registers has been discontinued. Please review | State |
-|---|---|
-| `C:\mybizz\mybizz-config-docs\register-local.md` The use of registers has been discontinued. Please review | no rows for this suite as of 2026-09-28 |
+| Source | suite documents: `mybizz-config-docs` (federated; corpus-wide); skill source: its own repository, the federated GBrain source `mb-memory-system-diagnostic` |
+| Sync | standing `sync-gbrain` script (or targeted `gbrain sync --source <id>`) picks up changes in both sources |
 
 ## Recorded decisions (developer)
 
 | Decision | Value |
 |---|---|
-| Skill artifact format | documentation-skill convention on the corpus copy — `title`/`doc-id` = filename stem, lowercase `-skill.md` suffix, `SKILL.md` reserved for the install location (developer convention, 2026-09-28; survey: 20/21 corpus skill files conform) |
+| Skill artifact format | source `<skill>.md` carries the documentation-skill frontmatter (`title`/`doc-id`/`updated`; title/doc-id = filename stem) in its own repository; `SKILL.md` with `name`/`description` exists only at the install location |
 | Invocation | explicit only — never auto-triggered, never scheduled |
 
 ## Open items
 
-| # | Item | Status |
-|---|---|---|
-| 1 | Register The use of registers has been discontinued. Please review rows for the suite's four documents — pending a mb-doc-maintainer run; creation events for the folder's files are absent from the queue (folder created 2026-09-27 evening) | Open |
-| 2 | GBrain ingest of the suite — closed 2026-09-28 (targeted sync ingested 4 pages at commit `c0570db`) | Closed |
-| 3 | Report folder `C:\mybizz\memory-diagnostic-reports\` — closed 2026-09-28: created by the first live run; holds `memory-diagnostic-2026-09-28.md` | Closed |
-| 4 | First live run — closed 2026-09-28: executed full §1–§11, 10/10 sections completed, 7 PASS + 3 REMEDIATED in-run, zero aborts/skips; report at `C:\mybizz\memory-diagnostic-reports\memory-diagnostic-2026-09-28.md`; follow-up item 4 (skill-recipe currency) resolved same day by config-exam F-3 | Closed |
-| 5 | No `mb-config-*` config-exam module — closed 2026-09-28: `mb-config-mb-memory-system-diagnostic` built by config-exam run #1 (register The use of registers has been discontinued. Please review row Installed, hash pair `d3975df16f28c2f9` / `4418e09f0c07ee23` at build) | Closed |
-| 6 | Frontmatter-format conflict at the maintainer's repair surface — closed 2026-09-28: corpus copy renamed to `memory-system-diagnostic-skill.md` and converted to the two-field documentation-skill format (survey: 20/21 corpus skill files conform); `SKILL.md` with `name`/`description` exists only at the install location | Closed |
+(none currently)
