@@ -15,10 +15,26 @@ placement: Instance B hosts the pre-makePDLF layer's memory; Instance A
 hosts the PDLF layer's ledger (see
 [[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]](C:/pdlf/pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer.md) for the layer map).
 
-**Port map:** 5432 is Instance B from both sides — WSL-native, and on Windows
-via WSL's localhost port relay. 5433 is Instance A (Windows). Every Instance A
-command carries `-p 5433`; a bare connection to 5432 from either side reaches
-Instance B silently.
+## The two PostgreSQL installations at a glance
+
+This machine runs **two separate PostgreSQL installations. Both are installed,
+running and needed; neither replaces the other.** Each serves a different part
+of the system:
+
+| | Instance A | Instance B |
+|---|---|---|
+| Program | PostgreSQL 15 | PostgreSQL 16 |
+| Runs on | Windows | WSL (Ubuntu 24.04) |
+| Serves | PDLF and makePDLF — the `pdlf` build ledger | GBrain (`gbrain`) and the Memory Governor (`memory_governor`) |
+| Port | `5433` | `5432` |
+| Reached from WSL | PowerShell bridge, always with `-p 5433` | directly, `localhost:5432` |
+| Starts | automatically with Windows (service `postgresql-x64-15`) | automatically with WSL (systemd, `postgresql.service`) |
+| Current use | running; the ledger's tables stay empty until PDLF runs a real project | running; holds GBrain's memory and the governor's records |
+
+**The rule that follows:** every database command names its instance and its
+port. Port 5432 reaches Instance B from both sides of the WSL boundary, so a
+command meant for the ledger that omits `-p 5433` reaches GBrain's server
+instead, without any error.
 
 ---
 
@@ -71,7 +87,7 @@ column-level detail (including `resolution_note`/`resolved_at` on
 ### Project `.env` integrity
 
 The project `.env` sources cleanly; Windows-path values are quoted. It carries
-`PGPORT=5433` (the ledger's port since the 2026-10-05 port move). `PSQL_WIN_PATH`
+`PGPORT=5433` (the ledger's port). `PSQL_WIN_PATH`
 has zero consumers — kept for future use.
 
 ---

@@ -13,8 +13,30 @@ Companion to [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]]
 reader — human developer, visiting technical consultant, or agent: what
 PostgreSQL is doing across this whole system, database by database — what each
 one is, what component of Mybizz actually uses it, and why it exists at all.
-Counts verified live 2026-09-12 (a partial refresh of the 2026-09-09 figures;
-the config spec's own refresh is pending docs-governance approval).
+Current figures (sizes, counts, versions) live in the configuration, not here.
+
+---
+
+## The two PostgreSQL installations at a glance
+
+This machine runs **two separate PostgreSQL installations. Both are installed,
+running and needed; neither replaces the other.** Each serves a different part
+of the system:
+
+| | Instance A | Instance B |
+|---|---|---|
+| Program | PostgreSQL 15 | PostgreSQL 16 |
+| Runs on | Windows | WSL (Ubuntu 24.04) |
+| Serves | PDLF and makePDLF — the `pdlf` build ledger | GBrain (`gbrain`) and the Memory Governor (`memory_governor`) |
+| Port | `5433` | `5432` |
+| Reached from WSL | PowerShell bridge, always with `-p 5433` | directly, `localhost:5432` |
+| Starts | automatically with Windows (service `postgresql-x64-15`) | automatically with WSL (systemd, `postgresql.service`) |
+| Current use | running; the ledger's tables stay empty until PDLF runs a real project | running; holds GBrain's memory and the governor's records |
+
+**The rule that follows:** every database command names its instance and its
+port. Port 5432 reaches Instance B from both sides of the WSL boundary, so a
+command meant for the ledger that omits `-p 5433` reaches GBrain's server
+instead, without any error.
 
 ---
 
@@ -76,18 +98,14 @@ documentation and code. When you run `gbrain sync`, this is where the
 content ends up. When an agent runs `gbrain search` or `gbrain think`, this
 is what's being queried.
 
-**What's inside (verified live 2026-09-12):** 1,824 pages from every
-registered source — chunked into 5,529 pieces, every single one carrying a
-1,536-dimension vector embedding (100% embedding coverage, verified
-independently of GBrain's own doctor report). Sixty-two tables, all with
-row-level security enabled. The database is 164 MB and growing as sources
-are added — it has grown steadily all week as the documentation suites
-were built.
+**What's inside:** every page from every registered GBrain source, split
+into chunks, each carrying a 1,536-dimension vector embedding, so that
+searches can match meaning as well as words. Every table has row-level
+security enabled. It grows with every sync; the current page, chunk and
+table counts are in the configuration.
 
-**Who uses it:** every GBrain source registered on this machine —
-`default`, `dev-root-hub`, `makepdlf-project-library`, the `mb-*` code/docs
-pairs, `mybizz-config-docs`, `mybizz-os-docs`, and `memory-governor-code`
-all write into and are read out of this one database. It's the shared
+**Who uses it:** every GBrain source registered on this machine (listed in
+`repo-organization.md`) writes into and is read out of this one database. It's the shared
 memory layer underneath the entire Mybizz system, not scoped to any single
 project.
 
@@ -109,9 +127,7 @@ durable memory without passing through here first.
 with the governor), `memory_candidates` (every piece of content that's ever
 been submitted for review, with its confidence score and contradiction
 assessment), `policy_versions`, `memory_events` (the async write queue that
-actually pushes approved content into GBrain), and `audit_log`. Five real
-candidate rows exist — small, but genuinely live, not just schema with
-nothing in it.
+actually pushes approved content into GBrain), and `audit_log`.
 
 **Who uses it:** the `mb-submit-memory` skill (the only sanctioned,
 developer-facing way to submit content into memory), PDLF's own
@@ -156,10 +172,8 @@ reflection that the orchestrator hasn't yet run against a real project.
 Once it does, this is where that entire history will live — including the
 security findings Sentinel writes.
 
-**The schema is now verified against the spec.** The column-level drift
-noted on 2026-09-05 (6 of 7 tables) was corrected in the specification the
-same day (commit `fae811c`); the spec and the live schema now agree, and
-the spec is authoritative.
+**The schema matches its specification**, and the specification is
+authoritative for column-level detail.
 
 **Who uses it:** the PDLF orchestrator itself, and nothing else. This
 database isn't meant to be touched directly by any other part of the
@@ -180,81 +194,25 @@ own database calls safe from accidental cross-connection.
 
 ---
 
-## 5. `compliance_ledger` — removed 2026-09-05
+## 5. Objects that must stay absent
 
-**What it was:** a small database that sat alongside `gbrain` in the WSL
-cluster, with two tables — `ledger_events` (completely empty) and `tasks`
-(exactly one row: `test-task-1`, created 2026-08-06, every other field
-blank). Nothing read from or wrote to it, and nothing in GBrain's own
-memory, across all twelve registered sources, ever mentioned it. It shared
-no schema, no table names, and no real content with `pdlf` — despite the
-similar-sounding name, it was never a copy or alternate version of the
-real ledger.
+Three things that once existed on these servers must not come back, and every
+exam checks that they have not:
 
-**Most likely explanation:** a one-off smoke test — someone stood up a
-`tasks` table, inserted a single placeholder row to confirm the mechanism
-worked, and never returned to it.
+- **The `compliance_ledger` database (Instance B).** Despite its name, it was
+  never the real ledger; the real ledger is `pdlf` on Instance A.
+- **User tables and the `vecs` schema in Instance A's `postgres` admin
+  database.** The admin database holds PostgreSQL's own catalogs only.
+- **The `pgvector_user` and `pgvector_readonly` roles (Instance A).** They
+  belonged to earlier memory experiments that GBrain replaced.
 
-**Disposition:** backed up in full
-(`/home/dev-p/compliance_ledger_backup_2026-09-05.dump` — location
-verified live 2026-09-09) and then dropped. The misleading name — close
-enough to "the real ledger" to warrant a full investigation once already —
-was reason enough to remove it rather than leave it as a permanent source
-of confusion for any future database sweep.
+They were leftovers of early experiments, and each was backed up before
+removal; the backups are listed in the configuration. If any reappears, it
+means something is recreating it, and that is a finding to investigate.
 
 ---
 
-## 6. The Windows `postgres` admin database — cleaned up 2026-09-05 (Instance A, Windows)
-
-**What it should be:** PostgreSQL's own default administrative database —
-normally just system catalogs, nothing of yours.
-
-**What was actually inside it, until this cleanup:** roughly 28 real,
-user-created tables — `episodic_memory`, `semantic_memory`,
-`working_memory`, several `test_vector_*` tables, a `mem0` schema
-(`mem0_memories`, `mem0migrations`). Unrelated to PDLF's `pdlf` database
-sitting on the very same server.
-
-**Best available explanation:** this looked like the remains of an
-earlier phase of experimenting with AI-agent memory architecture — likely
-using the open-source `mem0` framework directly against Postgres with the
-`pgvector` extension — before the current GBrain-based approach was
-adopted instead. Nearly everything in it was empty or held only a handful
-of test rows; nothing suggested recent or ongoing use.
-
-**Disposition:** backed up in full
-(`C:\Users\dev-p\postgres_admin_backup_2026-09-05.dump` — location
-verified live 2026-09-09, via the `postgres` superuser role, since the
-`pdlf_agent` account lacked read permission on several of the tables — a
-sign in itself that these tables belonged to a different, earlier setup).
-All 28 tables and the `vecs` schema were then dropped; confirmed clean
-afterward. The `vector` extension was deliberately left untouched.
-
----
-
-## 7. The pgvector roles — investigated and removed 2026-09-09
-
-Two roles on Instance A — `pgvector_user` (login-capable) and
-`pgvector_readonly` (a no-login group) — existed with no documented
-origin, flagged as the suite's open item since 2026-09-05.
-
-**The investigation (2026-09-09, closed):** `pgvector_user` held CONNECT
-on every Instance-A database and EXECUTE on 30 pgvector extension
-functions (in the `postgres` database); `pgvector_readonly` was a
-no-login group alongside it; neither owned a single object; neither exists
-on Instance B. This is the fingerprint of the mem0/vector experiments that
-produced the admin-database graveyard: the roles were the experiment's
-own access pair, left behind when the experiments ended. The hypothesis
-recorded on 2026-09-05 — "possibly a leftover from whatever built the
-graveyard" — is confirmed by the fingerprint.
-
-**Disposition:** both roles removed 2026-09-09 (`DROP OWNED` in
-`postgres` first, then `DROP ROLE` for each; verified gone cluster-wide
-from a second database). The removal closes the suite's last open item.
-
----
-
-## 8. The two-databases trap — why the ledger's port must be explicit
+## 6. The two-databases trap — why the ledger's port must be explicit
 
 Port 5432 serves **one** server everywhere: Instance B. WSL's PostgreSQL 16
 listens on 5432 natively, and WSL's localhost relay binds Windows' 5432 to
@@ -276,7 +234,7 @@ database check names its instance explicitly.
 
 ---
 
-## 9. The layer placement — where each database sits in the environment
+## 7. The layer placement — where each database sits in the environment
 
 Per [[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]](C:/pdlf/pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer.md) (the pre-makePDLF, makePDLF,
 PDLF, and shipped layers):
@@ -300,7 +258,7 @@ boundary without the bridge silently lands in the wrong one.
 
 ---
 
-## 10. Config maintenance — how this system is examined and kept healthy
+## 8. Config maintenance — how this system is examined and kept healthy
 
 This suite participates in the config-management system (`mb-config-manager`).
 The roles of the seven suite files, and the exam cycle that runs them, are the
@@ -319,10 +277,10 @@ first. The short local version:
 - The run rewrites [[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md) (current state, no history),
   appends one row to [[[mybizz-config-docs:postgresql/postgresql-log|Log]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-log.md), files new learnings, and prunes
   absorbed log/learning entries.
-- What may be healed is allowlisted in the plan; spec-doc corrections are
-  flagged to docs governance, never applied by the exam itself.
+- What may be healed is allowlisted in the plan; a spec correction is
+  proposed at the gate and applied only after the developer approves it.
 
-## 11. S.W.O.T.
+## 9. S.W.O.T.
 
 **Strengths.** Physical isolation of high-stakes from high-churn data (two
 servers, layered placement); verified 100% embedding coverage; strict role
@@ -336,10 +294,9 @@ discipline + bridge rules; several checks are permanently developer-run
 participation; the dead duplicate Windows service remains registered
 (cosmetic, but a permanent confusion risk).
 
-**Opportunities.** The plan-driven exam cycle is new — tuning it here then
-emulating across every system gives the whole estate one exam discipline;
-Tier-3 automation (backups existence, third-instance sweep) can become routine;
-the spec-count refresh (pending governance) establishes the doc-refresh loop.
+**Opportunities.** The plan-driven exam cycle gives every system the same
+exam discipline; Tier-3 checks (backup existence, a third-instance sweep) can
+become routine.
 
 **Threats.** A WSL unclean shutdown can leave a stale pid file (documented,
 self-resolving); unvalidated policy/scaffold content elsewhere in the system
@@ -348,17 +305,16 @@ class of risk applies to any future extension or role added carelessly;
 spec-doc drift between runs would silently weaken the exam (mitigated: the
 exam flags spec drift itself).
 
-## 12. Closing
+## 10. Closing
 
 PostgreSQL's job across this environment is narrow: hold the records that
 must survive — GBrain's memory, the governor's bookkeeping, PDLF's build
 ledger — in two deliberately separate servers, each scoped to its own
-consumers, each with its own roles. Every real correction described here —
-the graveyard cleanup, the compliance_ledger removal, the pgvector role
-investigation and removal, and the boot-durability fix that now starts
-both servers' workloads automatically — came from the same discipline:
-check directly, verify at each step, and never let a database you didn't
-create remain a mystery.
+consumers, each with its own roles, and each starting automatically: Instance
+A with Windows, Instance B with WSL. The discipline that keeps them healthy is
+the same everywhere: check directly, verify at each step, name the instance
+and port in every command, and never let a database you did not create remain
+a mystery.
 
 ---
 
