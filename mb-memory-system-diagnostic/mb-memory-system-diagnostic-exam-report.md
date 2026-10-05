@@ -1,7 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-exam-report"
 doc-id: "mb-201231c2"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # mb-memory-system-diagnostic — Exam Report
 
@@ -23,19 +23,19 @@ run start. Evidence: `/tmp/opencode/mbmsd-run1/`.
 
 - Hash pairs probed for 17 installed `mb-config-*` skills via the approved glob
   form (`mb-config-*/SKILL.md`). This system's pair: source
-  `d3975df16f28c2f9` / installed `4418e09f0c07ee23` — matches the S-1 register The use of registers has been discontinued. Please review
+  `d3975df16f28c2f9` / installed `4418e09f0c07ee23` — matches the S-1 register
   row; body-identity from H1 verified at install (11,668 bytes). Other pairs
   recorded factually per the F-4 estate body-drift disposition (2026-09-27):
   per-system re-sync at each system's next exam cycle, not re-flagged.
 - Suite completeness: 9/9 files (4 pre-existing + 5 exam set) — all carry
   two-field frontmatter with `doc-id`.
-- Register The use of registers has been discontinued. Please review spec-doc paths: all Installed rows resolve; the 4 non-resolving
+- Register spec-doc paths: all Installed rows resolve; the 4 non-resolving
   cells are Retired rows (mb-align-docs, mb-doccycle, mb-docs-manager,
   mb-wikilinks) — expected.
 - One-run-at-a-time: no undispositioned run rows for this system.
 - Two guard denials recorded class, honored: suite-folder writes (mg-grant
-  count 12 issued by developer) and register-folder The use of registers has been discontinued. Please review writes (mg-grant count 3).
-- S-1 executed: register The use of registers has been discontinued. Please review row added by named plan step (precedent:
+  count 12 issued by developer) and register-folder writes (mg-grant count 3).
+- S-1 executed: register row added by named plan step (precedent:
   doc-maintainer 2026-09-25, doc-auditor 2026-09-26); state WIP → Installed at
   Phase 2.
 
@@ -56,7 +56,7 @@ run start. Evidence: `/tmp/opencode/mbmsd-run1/`.
 | MS1-4 | §Scope of artifact matches spec §Scope | In-scope six components; out-of-scope Instance A / Cupcake internals / outside-ecosystem — tables agree | PASS |
 | MS1-5 | 11 sections, gate classes per spec §Section inventory | Sections 0–11 present (13 `##` headings incl. template + summary scaffolding); heavyweight-always §4/§5/§10; trouble-class §1/§2/§3/§6–§9 — matches | PASS |
 | MS1-6 | Recorded constants verbatim | 62/62 ✓ · HIGH_RISK_TYPES + `policy` ✓ · HTTP 422 ✓ · has_database_privilege ✓ / SET ROLE prohibition ✓ · cycle_freshness ×4 + `.phase` ✓ · ≤7-day backups ✓ · `gh repo create` heavyweight ✓ · `graphify update` ✓ · journald + /tmp/opencode + tracked-file live notes ✓ | PASS |
-| MS1-7 | Register-local The use of registers has been discontinued. Please review absence (open item #1) | No rows for the suite in `register-local.md`; pending-events queue holds no events for these files (43 events, none matching) — matches spec | PASS |
+| MS1-7 | Register-local absence (open item #1) | No rows for the suite in `register-local.md`; pending-events queue holds no events for these files (43 events, none matching) — matches spec | PASS |
 | MS1-8 | GBrain ingest state per spec §GBrain integration | Suite pages live under `mb-memory-system-diagnostic/*` at the new paths; old paths deleted (2026-09-28 sync, 49 chunks). Page/chunk counts exceed the recorded 4 pages/45 chunks — expected post-sync drift (the rename commit + this build), reported factually per the exam discipline | PASS |
 
 ## Tier 2 — Functional proof (runner A; read-only)
@@ -73,7 +73,7 @@ run start. Evidence: `/tmp/opencode/mbmsd-run1/`.
 | # | Class | Evidence | Recommended repair | Risk | Status |
 |---|---|---|---|---|---|
 | F-1 | GAP (benign install-discipline deviation) | Installed subject `SKILL.md` body differed from source by exactly one leading blank line (19,680 vs 19,681 chars; identical modulo whitespace). Harmless to parsing and discovery (MS0-2 proves discovery). Artifact of the re-install copy step | Re-copy source→installed | None | **APPROVED + applied 2026-09-28 (gate)** — supersedes itself: F-3's source edits were applied first, then the pair re-copied byte-exact (hash pair `b90ec20c33bf4272` / `b90ec20c33bf4272`, byte-identical); re-exam MS1-2/MS2-1 re-run: PASS |
-| F-2 | GAP (spec staleness ×3) | Spec open item #3 (report folder absent) — folder created by the 2026-09-28 live run; open item #4 (first live run not executed) — run executed 2026-09-28, full §1–§11, 10/10 sections, 7 PASS + 3 REMEDIATED; open item #5 (no `mb-config-*` module) — closed by this build's register The use of registers has been discontinued. Please review row | Spec corrections to the open-items table | None live — the spec under-stated reality | **APPROVED + applied 2026-09-28 (gate):** items #3/#4/#5 closed with event records; spec §Identity updated (source-artifact + installed-skill rows reflect the F-3 edits + re-install hash) |
+| F-2 | GAP (spec staleness ×3) | Spec open item #3 (report folder absent) — folder created by the 2026-09-28 live run; open item #4 (first live run not executed) — run executed 2026-09-28, full §1–§11, 10/10 sections, 7 PASS + 3 REMEDIATED; open item #5 (no `mb-config-*` module) — closed by this build's register row | Spec corrections to the open-items table | None live — the spec under-stated reality | **APPROVED + applied 2026-09-28 (gate):** items #3/#4/#5 closed with event records; spec §Identity updated (source-artifact + installed-skill rows reflect the F-3 edits + re-install hash) |
 | F-3 | Observation (skill-recipe currency) | The diagnostic's own 2026-09-28 run report follow-up item 4: §2's prescribed .env-sourcing diagnostic and retired /tmp log paths no longer match the systemd/journald environment — the verified alternates were present in §3/§4 but §2's recipe block still showed the .env path | Update the skill source (§0 principle 8 added — environment currency; §2 recipe switched to the verified PGURL variable-name pattern), re-install, re-hash | Low | **APPROVED + applied 2026-09-28 (gate):** source edited, installed copy re-copied byte-exact, hash pair `b90ec20c33bf4272` both sides verified |
 
 ## Tier 3 — Deep pass (developer-unlocked 2026-09-28, "Run tier three now"; runner A executing D-tier items on explicit unlock; evidence to files)

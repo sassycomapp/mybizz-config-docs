@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-agent-architecture-and-specification"
 doc-id: "mb-6e1b2b63"
-updated: "2026-10-04"
+updated: "2026-10-05"
 ---
 # Memory Governor Agent — Architecture & Specification
 
@@ -349,7 +349,7 @@ never the source of truth.
 | `POST /memory/{memory_id}/supersede` | Supersede with a new record. **Must atomically set `valid_until`/`valid_until_reason=superseded` on the old record** — a v1 defect (the field existed but was never actually set by this operation) is fixed here explicitly. |
 | `GET /memory/{memory_id}/provenance` | Full audit/decision history for a candidate. |
 | `POST /memory/quarantine` | Manual quarantine of an existing candidate. |
-| `POST /memory/projects` | Register The use of registers has been discontinued. Please review a new PDLF project (`project_id`, `display_name`) — the onboarding mechanism (Scope Doc §7). |
+| `POST /memory/projects` | Register a new PDLF project (`project_id`, `display_name`) — the onboarding mechanism (Scope Doc §7). |
 | `PATCH /memory/projects/{project_id}` | Toggle `dormant` true/false (Scope Doc §8). |
 | `POST /memory/policy` | Propose a new policy version. **Always routes through the standard candidate pipeline as a `policy`-type, `high_risk_types` candidate** — never applies directly (§7). |
 
@@ -374,7 +374,7 @@ worker process.**
 
 1. Any state change that should trigger downstream processing (a new
    candidate, a detected contradiction, an expiry becoming due, a scheduled
-   consolidation window, a promotion needing a register The use of registers has been discontinued. Please review write or a GBrain
+   consolidation window, a promotion needing a register write or a GBrain
    write) inserts a row into `memory_events` in the same transaction as the
    state change itself — this is what makes it a true outbox, not a
    best-effort side-channel.
@@ -387,7 +387,7 @@ worker process.**
 5. This single mechanism satisfies both the "immutable event log" and the
    "queue" pieces of the original concept — one piece of infrastructure,
    not two. It is also what resolves the Postgres/git dual-write problem in
-   §8: the register The use of registers has been discontinued. Please review write is just another queued, retryable consumer of
+   §8: the register write is just another queued, retryable consumer of
    this same event stream, never a synchronous call inside a request.
 
 **Triggers the worker acts on** (unchanged in substance from the original
@@ -399,7 +399,7 @@ concept, now concretely wired):
 - `expiry_due` — only fires for opt-in TTL types (`trace`/`episode`); moves
   the record to quarantine, never deletes.
 - `scheduled_consolidation_window` — periodic self-observation pass (§7).
-- `register_write` — write the register The use of registers has been discontinued. Please review row + JSON payload for a promoted
+- `register_write` — write the register row + JSON payload for a promoted
   candidate (§8).
 - `gbrain_write` — write a promoted candidate into GBrain via
   `MEMORY_VERBS` (Scope Doc §16).
@@ -523,7 +523,7 @@ the system's suggestion is never applied automatically.
 4. Only on explicit developer approval via `POST /memory/{memory_id}/review`
    does a corresponding new row get written to `policy_versions`
    (§1.2), with the previous version's `active` flag cleared and the change
-   mirrored into `register-memory-governor-policy.md` The use of registers has been discontinued. Please review (§8).
+   mirrored into `register-memory-governor-policy.md` (§8).
 
 The governor is permitted to notice things about itself. It is never
 permitted to act on that noticing without the same human gate every other
@@ -531,35 +531,35 @@ high-risk candidate goes through.
 
 ---
 
-## 8. Backup / Disaster Recovery — Register The use of registers has been discontinued. Please review + Payload Mirroring (Resolved)
+## 8. Backup / Disaster Recovery — Register + Payload Mirroring (Resolved)
 
 Three design questions were open in the prior revision of this document.
 All three are resolved here.
 
-### 8.1 Where the register The use of registers has been discontinued. Please review lives
+### 8.1 Where the register lives
 
 **Inside the memory-governor application's own git repository**, at
-`registers/` The use of registers has been discontinued. Please review, not a separately managed external location. This follows the
-existing pattern in this environment exactly: a register The use of registers has been discontinued. Please review lives inside the
-repo of the thing it describes (`register-global` The use of registers has been discontinued. Please review inside
-`project-library-global`, `register-local` The use of registers has been discontinued. Please review inside each project-library).
+`registers/`, not a separately managed external location. This follows the
+existing pattern in this environment exactly: a register lives inside the
+repo of the thing it describes (`register-global` inside
+`project-library-global`, `register-local` inside each project-library).
 The memory-governor already has its own repository as a normal consequence
-of being a real codebase (§9); putting the register The use of registers has been discontinued. Please review there costs nothing
+of being a real codebase (§9); putting the register there costs nothing
 additional and avoids a second remote, a second credential, and
 cross-repo coordination. It also means code changes and governed-memory
 changes share one commit history.
 
-### 8.2 The register The use of registers has been discontinued. Please review alone is not sufficient for recovery — fixed
+### 8.2 The register alone is not sufficient for recovery — fixed
 
-The register The use of registers has been discontinued. Please review's nine columns (`doc-id`/`filename`/`folder`/`type`/`state`/
+The register's nine columns (`doc-id`/`filename`/`folder`/`type`/`state`/
 `date-registered`/`date-state-changed`/`superseded-by`/`notes`) were
 designed for tracking documents that live elsewhere on disk. A
 `GovernedMemoryCandidate` is not a file living elsewhere — it *is* the
 content, and critically `content.text` has no column to occupy in that
-schema. Recovery from the register The use of registers has been discontinued. Please review alone would tell you a memory existed
+schema. Recovery from the register alone would tell you a memory existed
 and what happened to it, but not what it said.
 
-**Fix:** keep the register The use of registers has been discontinued. Please review exactly as-is — it remains genuinely useful as a
+**Fix:** keep the register exactly as-is — it remains genuinely useful as a
 human-readable index — and add a full JSON payload alongside it:
 
 ```
@@ -570,13 +570,13 @@ registers/
     └── <memory_id>.json                # full GovernedMemoryCandidate, every field
 ```
 
-Both the register The use of registers has been discontinued. Please review row and the corresponding JSON payload are written and
+Both the register row and the corresponding JSON payload are written and
 committed together, in the same commit. Together they fully reconstruct a
-lost Postgres record; the register The use of registers has been discontinued. Please review alone does not.
+lost Postgres record; the register alone does not.
 
 ### 8.3 Postgres and git cannot commit atomically — resolved via the outbox
 
-Rather than write the register/payload The use of registers has been discontinued. Please review synchronously inside the promotion
+Rather than write the register/payload synchronously inside the promotion
 request (coupling Postgres availability to git remote availability, and
 making the request path slower and less robust), the write is a queued,
 retryable consumer of the `register_write` event already defined in §4 —
@@ -585,7 +585,7 @@ effect in this system, not a new mechanism invented for this case.
 
 - On a `promoted` transition, `apply_decision()` inserts a `register_write`
   event in the same transaction as the status change.
-- The worker processes it: writes the register The use of registers has been discontinued. Please review row + JSON payload, commits,
+- The worker processes it: writes the register row + JSON payload, commits,
   pushes.
 - On failure (disk full, remote unreachable, etc.), `attempt_count`
   increments and `last_error` is recorded (§1.2); the worker retries with
@@ -595,14 +595,14 @@ effect in this system, not a new mechanism invented for this case.
   surfaces in this project — as a line in the next task report — rather
   than retrying silently forever or blocking the promotion itself.
 
-This keeps Postgres and the register The use of registers has been discontinued. Please review mirror eventually consistent without
+This keeps Postgres and the register mirror eventually consistent without
 making one system's availability depend on the other's, and without adding
 any new infrastructure beyond the outbox table already required for other
 reasons.
 
-### 8.4 Policy version register The use of registers has been discontinued. Please review
+### 8.4 Policy version register
 
-Unchanged in substance: `register-memory-governor-policy.md` The use of registers has been discontinued. Please review, one row per
+Unchanged in substance: `register-memory-governor-policy.md`, one row per
 policy version, previous version's row set to `Retired` with
 `superseded-by` pointing at the new version, written via the same
 `register_write` event mechanism.
@@ -654,7 +654,7 @@ memory-governor/
 4. `storage.py` (Postgres wiring)
 5. `provenance.py` + `audit.py`
 6. `outbox.py` + `worker.py`
-7. `registers.py` The use of registers has been discontinued. Please review
+7. `registers.py`
 8. `api.py` + `main.py`
 9. Tests throughout, not deferred to the end — each module above gets its
    corresponding test file before the next module starts.
@@ -683,6 +683,6 @@ must have a regression test from day one:
    a recorded human `reviewer`.
 9. A `register_write` event that fails is retried with backoff, and the
    original promotion is unaffected by the failure (the candidate remains
-   `promoted` in Postgres regardless of register-write The use of registers has been discontinued. Please review status).
-10. Reconstructing a candidate from `registers/candidates/ The use of registers has been discontinued. Please review<memory_id>.json`
+   `promoted` in Postgres regardless of register-write status).
+10. Reconstructing a candidate from `registers/candidates/<memory_id>.json`
     alone (no Postgres) reproduces every field of the original.

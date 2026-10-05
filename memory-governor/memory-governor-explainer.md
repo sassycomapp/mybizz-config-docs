@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-explainer"
 doc-id: "mb-47216ab9"
-updated: "2026-10-04"
+updated: "2026-10-05"
 ---
 # Memory Governor — Explainer
 
@@ -126,12 +126,12 @@ Every promoted memory produces two things, committed together: a
 human-readable index row, and a full JSON payload of the complete
 candidate. The index alone cannot reconstruct a lost Postgres record — it
 has no column for the content text. Postgres and git cannot be committed
-atomically together, so the register-and-payload The use of registers has been discontinued. Please review write is asynchronous —
+atomically together, so the register-and-payload write is asynchronous —
 a queued, retryable consumer of the same outbox mechanism as every other
 downstream effect. On failure it retries with backoff; after five
 consecutive failures it surfaces the failure rather than blocking the
 promotion or retrying silently forever. The worker git-commits AND pushes
-the register The use of registers has been discontinued. Please review changes. Proven twice by real disaster-recovery drills,
+the register changes. Proven twice by real disaster-recovery drills,
 including once with GBrain writes in the picture.
 
 ## 7. The Event Backbone, and Why There's No Message Broker
@@ -150,7 +150,7 @@ notify-driven wake measured at ~0.15 seconds.
 
 The deciding and the delivering are deliberately separate: the API makes
 the governed decision; the worker performs every downstream effect (the
-GBrain write, the register/payload The use of registers has been discontinued. Please review write). Both consume the same
+GBrain write, the register/payload write). Both consume the same
 `MEMORY_GOVERNOR_DATABASE_URL` and both read their configuration from the
 environment at start — the startup coupling documented in
 `mb-submit-memory`'s explainer. Until 2026-09-08 the worker had no
@@ -277,7 +277,7 @@ PostgreSQL pilot. The short local version:
 - The exam runs the installed skill (`mb-config-memory-governor`) with the plan
   in hand — detection fully autonomous; healing gated. **This module has no
   agent-healable items**: the worker and API are the only writers to
-  `registers/` The use of registers has been discontinued. Please review and the database; every repair is developer-run or proposed.
+  `registers/` and the database; every repair is developer-run or proposed.
 - **Scope boundary with the postgres module:** database conformance (tables,
   ownership) and the estate backup convention belong to `mb-config-postgresql`
   (this exam cross-references; quick row counts permitted).
@@ -291,7 +291,7 @@ PostgreSQL pilot. The short local version:
 
 **Strengths.** Mechanical two-outcome gating of everything entering permanent
 memory; the decision engine is source-verified with all five high-risk types
-governed; the register The use of registers has been discontinued. Please review is a git-committed second write (disaster recovery
+governed; the register is a git-committed second write (disaster recovery
 proven twice); the event backbone needs no message broker; 304-test suite
 green at last full run.
 
@@ -303,7 +303,7 @@ permanently developer-run (credentialed checks, full test suite); row counts
 are live and drift continuously (point-in-time assertions only).
 
 **Opportunities.** The config-management exam adds standing liveness + auth-gate
-verification that never existed for the governor; the register/DB The use of registers has been discontinued. Please review dual-write
+verification that never existed for the governor; the register/DB dual-write
 gives the exam a second consistency surface to check (index ↔ payload).
 
 **Threats.** An accidental write into live memory is the recorded real incident

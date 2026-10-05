@@ -1,7 +1,7 @@
 ---
 title: "opencode-log"
 doc-id: "mb-70bf28c0"
-updated: "2026-10-03"
+updated: "2026-10-05"
 ---
 # OpenCode — Log
 
@@ -13,7 +13,7 @@ working data; content beyond eventness is not the point.)
 
 | date | event | outcome / disposition |
 |---|---|---|
-| 2026-09-01 | Global config folder briefly carried two files at once — `opencode.json` and `opencode.jsonc`, both real, both loaded, ambiguous precedence | Consolidated into a single `opencode.jsonc`; stray file deleted; the `instructions` pointer fixed away from four deleted `INDEX.md` files toward `register-global.md` The use of registers has been discontinued. Please review (see [[[mybizz-config-docs:opencode/opencode-config\|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md)) |
+| 2026-09-01 | Global config folder briefly carried two files at once — `opencode.json` and `opencode.jsonc`, both real, both loaded, ambiguous precedence | Consolidated into a single `opencode.jsonc`; stray file deleted; the `instructions` pointer fixed away from four deleted `INDEX.md` files toward `register-global.md` (see [[[mybizz-config-docs:opencode/opencode-config\|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md)) |
 | 2026-09-05 | Core suite created (config, reference, explainer, permission model, session-data docs) | Five-document suite stood up for the harness |
 | 2026-09-06 | Cupcake suspension (2026-09-06) required a **full process restart** to take effect — plugin loaded exactly once, at process start, never per-session | Mechanism verified live for the first time ([[[mybizz-config-docs:opencode/opencode-explainer\|OpenCode Explainer]]](C:/mybizz/mybizz-config-docs/opencode/opencode-explainer.md) §2); restart is the only reload path, permanently |
 | 2026-09-08 | Full real audit of every skill on the machine (2026-09-08) | Skill discovery is **not** a single mechanism — 4 confirmed real methods (plain folders, same-drive symlinks, hybrid, two-hop); inventory recorded in [[[mybizz-os-docs:os-reference-docs/skills-catalog\|Skills Catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md); taxonomy in [[[mybizz-config-docs:opencode/opencode-explainer\|OpenCode Explainer]]](C:/mybizz/mybizz-config-docs/opencode/opencode-explainer.md) §3 |

@@ -1,7 +1,7 @@
 ---
 title: "gbrain-dream-cycle-exam-report"
 doc-id: "mb-08bd55a5"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # GBrain Dream Cycle — Exam Report
 
@@ -10,7 +10,7 @@ Run #1 — **first formal plan-driven exam** (2026-09-14). Plan:
 — 5/5 hash pairs match via the approved glob form (`cupcake` f5e8489cf60a8abc ·
 `dream-cycle` 3573929bebb1b92e · `gbrain` 58dc0b52cbc86d72 · `memory-governor`
 c40df342d523aa59 · `postgresql` b41a3e117dee1809); all five Installed suites carry
-the seven files; all register The use of registers has been discontinued. Please review spec docs exist; no open run blocks. One guard
+the seven files; all register spec docs exist; no open run blocks. One guard
 denial at step-0 (token-literal command form — known class, learning #1) —
 honored; re-run in the approved glob form. Detection only — Tiers 0–2; Tier 3
 locked. Scope boundary honored (parent gbrain / postgresql / Graphify domains

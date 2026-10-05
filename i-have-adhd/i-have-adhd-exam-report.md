@@ -1,7 +1,7 @@
 ---
 title: "i-have-adhd-exam-report"
 doc-id: "mb-36562066"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # i-have-adhd — Exam Report
 
@@ -9,9 +9,9 @@ Run #1 — **first formal plan-driven exam, gate closed** (2026-09-20). Plan:
 [[[mybizz-config-docs:i-have-adhd/i-have-adhd-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-exam-plan.md) (bootstrap — no prior report). Install: copy-install
 executed 2026-09-20 without `mg-grant` (Cupcake disabled; developer authorized
 proceed-without-grant in chat) — hash pair identical `b27623b6faf7ebe8`;
-register The use of registers has been discontinued. Please review flipped `WIP` → `Installed`; re-installed once after the gate-approved
+register flipped `WIP` → `Installed`; re-installed once after the gate-approved
 IA1-4 amendment (re-hash `1669db5ef2192a0d`). Step-0: **PASS** — 14/14 installed
-hash pairs match the register The use of registers has been discontinued. Please review via the approved glob form (`postgresql`
+hash pairs match the register via the approved glob form (`postgresql`
 b41a3e117dee1809 · `cupcake` f5e8489cf60a8abc · `gbrain` 58dc0b52cbc86d72 ·
 `memory-governor` c40df342d523aa59 · `gbrain-dream-cycle` a4872e9d61f1c32f ·
 `graphify` 1ca73897a2023741 · `gstack` 6a3afc08a93cee02 · `opencode`
@@ -19,7 +19,7 @@ b41a3e117dee1809 · `cupcake` f5e8489cf60a8abc · `gbrain` 58dc0b52cbc86d72 ·
 `anvil-agent-references` a66e0140a39a37e5 · `magdoub-wireframe`
 c570e38d0b490808 · `archify` 165897270158a38e · `mb-submit-memory`
 88a71641d03f1997 · `i-have-adhd` b27623b6faf7ebe8); suite completeness 14/14 at
-the 8-file standard; register The use of registers has been discontinued. Please review spec-doc paths 20/20 exist; i-have-adhd carries no
+the 8-file standard; register spec-doc paths 20/20 exist; i-have-adhd carries no
 prior run row (bootstrap — one-run-at-a-time not triggered). No guard denials
 (Cupcake disabled) — the sensitive-data/outbound-network classes stay
 developer-bundled by spec design regardless. Tier 3 **unlocked at the gate** —

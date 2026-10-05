@@ -149,7 +149,7 @@ with `--strategy code`.
 
 | Command | Description |
 |---|---|
-| `gbrain sources add <id> --path <dir>` | Register The use of registers has been discontinued. Please review a local source |
+| `gbrain sources add <id> --path <dir>` | Register a local source |
 | `gbrain sources remove <id> --confirm-destructive` | Remove source and data |
 | `gbrain sources status <id>` | Per-source diagnostic |
 | `gbrain sources default <id>` | Set the brain-level default source (`sources.default`). The id must exist — under 0.59.18.0 a default that names a deleted source stops every sync |

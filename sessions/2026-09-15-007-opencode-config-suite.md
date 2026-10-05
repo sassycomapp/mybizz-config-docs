@@ -1,7 +1,7 @@
 ---
 title: "2026-09-15-007-opencode-config-suite"
 doc-id: "mb-9c2693c3"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # Session 007 — mb-config-opencode config-management suite built, installed, run #1 HEALTHY
 
@@ -22,12 +22,12 @@ updated: "2026-10-01"
    ~/.config/opencode/skills/mb-config-opencode --count 3` (developer-run,
    granted). Copy-installed the skill (copy, never move) to
    `~/.config/opencode/skills/mb-config-opencode/SKILL.md`; hash pair verified
-   (`039b28e46b276834` initial). Register The use of registers has been discontinued. Please review row flipped WIP → Installed. After
+   (`039b28e46b276834` initial). Register row flipped WIP → Installed. After
    run #1 learnings graduation, the skill was re-copied and re-hashed
-   (final `268bb702a038448b`), register The use of registers has been discontinued. Please review updated.
+   (final `268bb702a038448b`), register updated.
 3. **Formal run #1 (Phase 3).** Step-0 self-validation PASS: 8/8 hash pairs via
    the approved glob form, suite completeness 7/7 on all eight Installed suites
-   (mb-submit-memory naming variance register-documented The use of registers has been discontinued. Please review), register spec-doc
+   (mb-submit-memory naming variance register-documented), register spec-doc
    paths 8/8, no open run blocks. Tiers 0–2: version 1.15.12 exact; single
    global `.jsonc` (no sibling); global AGENTS.md present (~16.2 KB, moved from
    the spec's 14.4 KB figure — size drift, not a defect); resolved-config
@@ -67,7 +67,7 @@ updated: "2026-10-01"
    newness). Two run learnings **graduated into the skill** (config-content
    field extraction = permanently developer-run; exec-protection guard matches
    tokens in argument literals), learnings entries deleted.
-7. **Register The use of registers has been discontinued. Please review + logs updated.** Register row carries final hash/install/run
+7. **Register + logs updated.** Register row carries final hash/install/run
    facts; [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) records step-0 PASS + run closure;
    [[[mybizz-config-docs:opencode/opencode-log|Log]]](C:/mybizz/mybizz-config-docs/opencode/opencode-log.md) records the run row with the full gate disposition.
 
@@ -80,7 +80,7 @@ updated: "2026-10-01"
 - **Config-content field extraction is guard-denied by class** — the executable
   config command runs, but extracting fields from a capture is blocked. All such
   checks are permanently developer-run (runner D).
-- **A transcription slip caught and corrected:** the register The use of registers has been discontinued. Please review initially recorded
+- **A transcription slip caught and corrected:** the register initially recorded
   the re-installed hash as `268bb702a0384482`; the true first-16 is
   `268bb702a038448b` (b, not 2). Corrected in all three files.
 - **A log-row editing slip caught and corrected:** an edit on
@@ -100,7 +100,7 @@ updated: "2026-10-01"
 
 - Suite: `opencode/opencode-{config,exam-plan,exam-report,log,learnings,explainer,reference,skill}.md` (10 files incl. the two sister scope docs).
 - Installed skill: `~/.config/opencode/skills/mb-config-opencode/SKILL.md` (hash `268bb702a038448b`).
-- Modified: `mb-config-manager/config-manager-{log,register The use of registers has been discontinued. Please review}.md`.
+- Modified: `mb-config-manager/config-manager-{log,register}.md`.
 
 ## Open / next
 

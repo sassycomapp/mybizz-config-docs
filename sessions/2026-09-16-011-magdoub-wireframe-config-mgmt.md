@@ -1,7 +1,7 @@
 ---
 title: "2026-09-16-011-magdoub-wireframe-config-mgmt"
 doc-id: "mb-c10b1e79"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # Session 011 — magdoub-wireframe config-management suite
 
@@ -21,11 +21,11 @@ reconciled, skill re-installed (re-hash `c570e38d0b490808`).
 ## What was done (with evidence)
 
 1. **Orientation (Phase 0)** — read `config-setup-prompt.md` (the generic method),
-   the config-manager explainer/reference/register The use of registers has been discontinued. Please review, the target's three existing
+   the config-manager explainer/reference/register, the target's three existing
    docs ([[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-config|Configuration]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-config.md), `-reference.md`, `-explainer.md`, all Live
    2026-09-06), and the fresh `matt-pocock-skills/` suite as format template
    (the freshest completed suite — the prompt's own pointer to `gbrain-dream-cycle/`
-   was noted as superseded by three newer suites). Register The use of registers has been discontinued. Please review row existed at `WIP`:
+   was noted as superseded by three newer suites). Register row existed at `WIP`:
    system examinable. Live probes matched the spec: clone at
    `~/.claude/skills/wireframe/` at HEAD `44a5814d1583c4dc7cafa36611838669f0895af9`,
    clean tree; OpenCode symlink intact; templates present; `brain/` held only
@@ -44,13 +44,13 @@ reconciled, skill re-installed (re-hash `c570e38d0b490808`).
    ~/.config/opencode/skills/mb-config-magdoub-wireframe --count 3`
    (developer-executed); **copy-install** (never move) of
    [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-skill|Magdoub Wireframe Skill]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-skill.md) → installed `SKILL.md`; hash pair verified
-   `703b7f340e4cf302`; register The use of registers has been discontinued. Please review flipped `WIP → Installed`.
+   `703b7f340e4cf302`; register flipped `WIP → Installed`.
 
 4. **Formal run #1 (Phase 3)** — step-0 self-validation **PASS**: 12/12 hash
-   pairs via the approved glob form `mb-config-*/SKILL.md` (all match register The use of registers has been discontinued. Please review);
+   pairs via the approved glob form `mb-config-*/SKILL.md` (all match register);
    suite completeness 12/12 at 8-file standard (gstack +1 extra reference,
    opencode +2 extra docs, memory-governor +2 Retired dirs — prior conventions,
-   core files present); register The use of registers has been discontinued. Please review spec-doc paths all resolve; magdoub-wireframe
+   core files present); register spec-doc paths all resolve; magdoub-wireframe
    carried no prior run row (bootstrap — no one-run-at-a-time block). One guard
    denial at step-0 (brace-expansion cross-project glob) — honored, class
    recorded, directory-read form used.
@@ -91,7 +91,7 @@ reconciled, skill re-installed (re-hash `c570e38d0b490808`).
 6. **Close-out of the run (Phase 5)** — exam-report written current state
    (write-then-replace); run row appended to suite log + config-manager log;
    learning L-1 (Zone.Identifier sibling of the old reference) filed then pruned
-   to its permanent home (spec open item 5); register The use of registers has been discontinued. Please review row finalized (verified
+   to its permanent home (spec open item 5); register row finalized (verified
    live 2026-09-16); hash re-verified (`703b7f340e4cf302`, no re-install needed).
 
 7. **Git + sync** — staged 10 files (explicit paths, never `-A`); the
@@ -132,7 +132,7 @@ reconciled, skill re-installed (re-hash `c570e38d0b490808`).
 
 - Suite: `magdoub-wireframe/` (8 files) in `mybizz-config-docs`.
 - Installed skill: `~/.config/opencode/skills/mb-config-magdoub-wireframe/SKILL.md`.
-- Register The use of registers has been discontinued. Please review row finalized: sha256 `703b7f340e4cf302`, verified live 2026-09-16.
+- Register row finalized: sha256 `703b7f340e4cf302`, verified live 2026-09-16.
 - Commit `7977eb4` pushed to `main`.
 - GBrain sync verified 2026-09-16T15-15-25.
 
@@ -148,7 +148,7 @@ reconciled, skill re-installed (re-hash `c570e38d0b490808`).
   not an escape hatch — an ADR-conforming deliverable still needs a conformance
   pass (A3). Suite reconciled (config open item 4 closed, explainer, reference,
   exam-report, exam-plan); skill source re-edited and re-installed (re-hash
-  `c570e38d0b490808`); register The use of registers has been discontinued. Please review hash + notes updated.
+  `c570e38d0b490808`); register hash + notes updated.
 - **Open item 1** — Phase-2 mechanism decision (deferred to a deliberate
   session; candidates recorded in the spec).
 - **Open items 2/5** — no-confirmed-run state (recorded); old reference doc

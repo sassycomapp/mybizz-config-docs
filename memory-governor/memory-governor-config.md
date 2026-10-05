@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-config"
 doc-id: "mb-63bdf286"
-updated: "2026-10-04"
+updated: "2026-10-05"
 ---
 # Memory Governor Configuration
 
@@ -32,7 +32,7 @@ resolved) and re-verified 2026-09-30 after the GBrain upgrade (see
 | Worker | `.venv/bin/python -m app.worker` (persistent LISTEN loop; NOTIFY wake + 60s poll safety net) | Running — **first persistent run in the system's history** (an entry-point defect prevented this before 2026-09-08; fixed same day) |
 
 Both must run for the system to function: the API decides, the worker
-delivers (GBrain writes + register/payload The use of registers has been discontinued. Please review writes). Start procedure in
+delivers (GBrain writes + register/payload writes). Start procedure in
 [[[mybizz-config-docs:memory-governor/memory-governor-reference|Usage, Invocation, and Incident Response]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-reference.md). Permanent auto-start: two systemd user
 units (`memory-governor-api`, `memory-governor-worker`) — enabled + verified
 2026-09-15. Boot-command retirement (2026-09-28): the `[boot]` command no
@@ -89,7 +89,7 @@ own responsibility.
 | `POST /memory/{memory_id}/supersede` | Supersede with a new record; atomically sets `valid_until` on the old one |
 | `GET /memory/{memory_id}/provenance` | Full audit/decision history |
 | `POST /memory/quarantine` | Manual quarantine of an existing candidate |
-| `POST /memory/projects` | Register The use of registers has been discontinued. Please review a new project |
+| `POST /memory/projects` | Register a new project |
 | `PATCH /memory/projects/{project_id}` | Toggle a project's `dormant` flag |
 | `POST /memory/policy` | Propose a new policy version — routes through the standard high-risk pipeline |
 
@@ -157,9 +157,9 @@ Every write path goes through transition validation — creation included.
 
 | Item | Value |
 |---|---|
-| Register The use of registers has been discontinued. Please review location | Inside this repository, `registers/` — `register-memory-governor.md` (candidate index) + `registers/candidates/<memory_id>.json` (full payload per candidate) |
-| Write mechanism | Asynchronous outbox/worker; retries with backoff; surfaces failure after 5 consecutive attempts. The worker git-commits AND pushes register The use of registers has been discontinued. Please review changes |
-| Register The use of registers has been discontinued. Please review integrity | Index rows correspond to real payload files (verified 2026-09-08); real promoted candidates present, including a supersession pair |
+| Register location | Inside this repository, `registers/` — `register-memory-governor.md` (candidate index) + `registers/candidates/<memory_id>.json` (full payload per candidate) |
+| Write mechanism | Asynchronous outbox/worker; retries with backoff; surfaces failure after 5 consecutive attempts. The worker git-commits AND pushes register changes |
+| Register integrity | Index rows correspond to real payload files (verified 2026-09-08); real promoted candidates present, including a supersession pair |
 | Recovery proven | Twice — Phase 7.5 isolated drill and Phase 15.2 full-system drill |
 
 ## Known scope limitations (honest, structural)
@@ -178,7 +178,7 @@ Every write path goes through transition validation — creation included.
 - Do not call `gbrain sync` to move governed content into GBrain — only `remember` via the governor's async path counts as governed.
 - Do not chain shell commands without verifying each result — the recorded real cost of this mistake is an accidental write into live memory.
 - Do not assume test fixtures are shared across test files — `api_client`/`real_credential_headers` exist only in `test_api.py`.
-- Do not hand-edit `registers/` The use of registers has been discontinued. Please review or the database — the worker and API are the writers.
+- Do not hand-edit `registers/` or the database — the worker and API are the writers.
 - Do not run `scripts/run-tests-deterministic.sh` while `memory-governor-worker.service` is active — it would leave an unmanaged second worker (procedure in the reference).
 - Do not leave `sources.default` naming a source that does not exist.
 

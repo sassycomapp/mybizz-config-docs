@@ -1,7 +1,7 @@
 ---
 title: "2026-09-16-009-matt-pocock-skills-config-mgmt"
 doc-id: "mb-56eeae25"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # Session 009 — matt-pocock-skills configuration-management suite: built, installed, run #1 HEALTHY
 
@@ -9,15 +9,15 @@ updated: "2026-10-01"
 
 1. **Suite build-out (Phase 1).** Built the matt-pocock-skills configuration-management suite to the 7-file standard + skill source in `mybizz-config-docs/matt-pocock-skills/`: [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-exam-plan.md) (hand-written bootstrap 1-8 format template), [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-exam-report.md) (placeholder then write-then-replace run #1), [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-log|Log]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-log.md) (seeded: 2026-08-12 install, 2026-09-08 supersession, 2026-09-16 build-out), [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-learnings.md) (preamble + empty table), [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-skill|Matt Pocock Skills Skill]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-skill.md) (born-with-inventory, `mb-config-matt-pocock-skills`, Tiers 0-3, scope boundary vs anvil-agent-references / gstack / cupcake), localized [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-explainer|Matt Pocock Skills Explainer]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-explainer.md) (config maintenance + SWOT + companion footer) and [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-reference|Matt Pocock Skills Reference]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-reference.md) (config-management set pointers in header).
 
-2. **Install (Phase 2).** `mg-grant --path ~/.config/opencode/skills/mb-config-matt-pocock-skills --count 3` (developer-executed, granted). Copy-installed (copy, never move) to `~/.config/opencode/skills/mb-config-matt-pocock-skills/SKILL.md`; hash pair verified (`86c78969ad0e8a80`, source = installed identical). Register The use of registers has been discontinued. Please review row flipped WIP to Installed.
+2. **Install (Phase 2).** `mg-grant --path ~/.config/opencode/skills/mb-config-matt-pocock-skills --count 3` (developer-executed, granted). Copy-installed (copy, never move) to `~/.config/opencode/skills/mb-config-matt-pocock-skills/SKILL.md`; hash pair verified (`86c78969ad0e8a80`, source = installed identical). Register row flipped WIP to Installed.
 
-3. **Formal run #1 (Phase 3).** Step-0 self-validation PASS: 10/10 hash pairs via the approved glob form; suite completeness 10/10 at the 8-file standard; register The use of registers has been discontinued. Please review spec-doc paths all resolve; bootstrap (no open run block). Tiers 0-2 all PASS: clone pinned `84fdeff`; discovery root 35/40 links; 40 symlinks (35 matt + 5 anvil targets), 0 broken; 0 copied dirs; setup gate 1 Yes / 4 No; inventory 18/7/6/4 exact; no cross-target links; Zone.Identifier 25 B recorded; suite complete; frontmatter sweep 35/35; code-review / wayfinder / ask-matt resolve. Verdict: HEALTHY - zero live defects, zero open findings.
+3. **Formal run #1 (Phase 3).** Step-0 self-validation PASS: 10/10 hash pairs via the approved glob form; suite completeness 10/10 at the 8-file standard; register spec-doc paths all resolve; bootstrap (no open run block). Tiers 0-2 all PASS: clone pinned `84fdeff`; discovery root 35/40 links; 40 symlinks (35 matt + 5 anvil targets), 0 broken; 0 copied dirs; setup gate 1 Yes / 4 No; inventory 18/7/6/4 exact; no cross-target links; Zone.Identifier 25 B recorded; suite complete; frontmatter sweep 35/35; code-review / wayfinder / ask-matt resolve. Verdict: HEALTHY - zero live defects, zero open findings.
 
 4. **Tier 3 executed (gate-unlocked).** MP3-1 full mechanical integrity audit PASS - 40 links by origin (35 matt / 5 anvil / 0 other), 0 broken, category counts 18/7/6/4, 0/35 SKILL.md byte mismatches vs source. MP3-2 deliberate upgrade decision: stay pinned `84fdeff` (no check failed - never on newness). MP3-3 Zone.Identifier artifact decision: keep (25 B, inert, recorded open item).
 
 5. **Guard denials honored (1).** Step-0 token-literal sibling-name list text (exec-protection, token-in-argument class) - re-issued in the approved derived-glob form. No denial retried through an alternate path.
 
-6. **Commit + push + sync.** Developer committed and pushed `fd8cb38` (suite + register The use of registers has been discontinued. Please review + config-manager log). Agent ran `setsid bash /mnt/c/mybizz/scripts/sync-gbrain.sh` - completed: synced `2aa9a9d0..fd8cb389`, 33 chunks created, 10 pages embedded, 0 stale.
+6. **Commit + push + sync.** Developer committed and pushed `fd8cb38` (suite + register + config-manager log). Agent ran `setsid bash /mnt/c/mybizz/scripts/sync-gbrain.sh` - completed: synced `2aa9a9d0..fd8cb389`, 33 chunks created, 10 pages embedded, 0 stale.
 
 7. **Close-out (this session).** Session page written; candidate durable facts checked against GBrain (genuine contradiction check, multiple queries) and presented once for the single approval gate.
 
@@ -34,7 +34,7 @@ updated: "2026-10-01"
 
 ## Artifacts
 
-- Register The use of registers has been discontinued. Please review: matt-pocock-skills Installed, hash `86c78969ad0e8a80`, verified live 2026-09-16.
+- Register: matt-pocock-skills Installed, hash `86c78969ad0e8a80`, verified live 2026-09-16.
 - Suite: `mybizz-config-docs/matt-pocock-skills/` - 8 standard files + skill source; skill installed at `~/.config/opencode/skills/mb-config-matt-pocock-skills/SKILL.md`.
 - Commit: `fd8cb38` (10 files, +435/-11), pushed to GitHub.
 

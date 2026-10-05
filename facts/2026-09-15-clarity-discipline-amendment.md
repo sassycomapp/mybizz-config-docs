@@ -1,7 +1,7 @@
 ---
 title: "2026-09-15-clarity-discipline-amendment"
 doc-id: "mb-b90f73cd"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # Fact — clarity-discipline amendment (config-setup-prompt.md)
 
@@ -11,9 +11,9 @@ instruction, session 003–005)**. Its rules, as standing behavior for every
 suite build executed from that prompt:
 
 - The prompt is the task definition — scope is never re-confirmed, re-derived,
-  or re-asked; if scope seems unclear, re-read the prompt, the register The use of registers has been discontinued. Please review row,
+  or re-asked; if scope seems unclear, re-read the prompt, the register row,
   and the developer's instruction first.
-- Procedural conflicts (e.g. a register The use of registers has been discontinued. Please review row in `Deferred` where `WIP` is
+- Procedural conflicts (e.g. a register row in `Deferred` where `WIP` is
   required) are resolved as an explicit named step in the plan — dated, with
   the developer's instruction cited — never as a question. The developer's
   instruction to run the prompt IS the authority for the documented state

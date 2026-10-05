@@ -1,7 +1,7 @@
 ---
 title: "mb-submit-memory-exam-report"
 doc-id: "mb-aae27791"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # mb-submit-memory — Exam Report
 
@@ -16,7 +16,7 @@ gate. The system is working well; this exam changes nothing.
 |---|---|
 | Hash pairs, every Installed skill (approved glob form `mb-config-*/SKILL.md`) | **7/7 MATCH** — postgresql `b41a3e117dee1809` · cupcake `f5e8489cf60a8abc` · gbrain `58dc0b52cbc86d72` · memory-governor `c40df342d523aa59` · gbrain-dream-cycle `a4872e9d61f1c32f` · graphify `1ca73897a2023741` · mb-submit-memory `5306a5e64d43e613` |
 | Suite completeness, Installed systems | 7/7 at 8/8 files |
-| Register The use of registers has been discontinued. Please review spec-doc paths | 19/19 exist |
+| Register spec-doc paths | 19/19 exist |
 | Target's last log run-row disposition | Present (11 rows; last row disposed) |
 | Guard denials | 1 — exec-protection on token-literal step-0 command text (documented class). Honored absolutely; the approved glob form used instead. Recorded in [[[mybizz-config-docs:mb-config-manager/config-manager-log\|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) |
 

@@ -1,7 +1,7 @@
 ---
 title: "postgresql-log"
 doc-id: "mb-debae53d"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # PostgreSQL — Log
 
@@ -19,7 +19,7 @@ or governance flag, and resolved.
 | 2026-09-12 | Same-day follow-up closed coverage gaps: B autovacuum + idle-in-txn probed; cupcake/gbrain cross-checks | B green; A operational probes agent-forbidden (secrets guard on `.env` sourcing) → developer-run class |
 | 2026-09-12 | Exam architecture enhanced: plan-driven cycle adopted; exam-plan, log, learnings added to suite | First plan (this file's first run) hand-written as format template |
 | 2026-09-12 | Architecture stabilization pass: check inventory graduated plan→skill; plan restructured (erred-last-run section; standing checks by reference); graduation rule applied (learnings entry deleted on graduate); developer-run request list completed | Plan and skill now division-of-labor clean; verification duty carried forward (CF-5) |
-| 2026-09-12 | QC hardening pass: write-then-replace report discipline; pruning restricted to permanent homes (plan never an absorption destination); skill source restored to suite folder (copy-install model; hash d56843357f1bdf43 in register The use of registers has been discontinued. Please review) | Fragility points locked; report/log/learnings rules now failure-proof |
+| 2026-09-12 | QC hardening pass: write-then-replace report discipline; pruning restricted to permanent homes (plan never an absorption destination); skill source restored to suite folder (copy-install model; hash d56843357f1bdf43 in register) | Fragility points locked; report/log/learnings rules now failure-proof |
 | 2026-09-13 | Run #2 — first formal plan-driven exam (step-0 PASS; Tiers 0–2 agent-runnable complete) | Verdict: HEALTHY — B fully green (incl. connect-privilege isolation proof, schema v128 from config table); A liveness proven, ops probes developer-run; 3 findings (spec-count drift re-flagged; SET-ROLE nuance → learning; CF-5 graduation verified sound) |
 | 2026-09-13 | Developer-run blocks 1/3/4/5 returned + recorded developer-verified (A bridge ops, B log scan 409 lines examined no active fault, boot config exact, .env syntax OK 3 vars); block 2 (A log scan) mis-pasted into WSL — PowerShell rerun pending; P2-4/5/6/7 detail follow-up issued | Exam evidence now majority developer-verified; one open finding class (log-rate watch → skill revision note) |
 | 2026-09-13 | Block 2 rerun in PowerShell + recorded: A log file last written 2025-10-08 — zero log entries in ~11 months, all errors historical (incl. effective_io_concurrency tuning attempts, Windows-invalid); instance dormant-quiet, PASS. Only P2-4/5/6/7 schema detail now open | Run #2 evidence ~complete |

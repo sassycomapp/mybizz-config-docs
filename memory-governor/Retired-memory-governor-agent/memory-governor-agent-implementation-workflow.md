@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-agent-implementation-workflow"
 doc-id: "mb-aa9bfa8d"
-updated: "2026-10-04"
+updated: "2026-10-05"
 ---
 # Memory Governor Agent — Stepwise Implementation Workflow
 
@@ -39,9 +39,9 @@ phase resolves the outstanding dependencies flagged in Scope Doc §16.
   somewhere retrievable (not hardcoded into any file that will be
   committed).
 
-**Step 0.4 — Scaffold the repository, including the register The use of registers has been discontinued. Please review store**
+**Step 0.4 — Scaffold the repository, including the register store**
 - Action: create the directory structure from Architecture §9 in one pass —
-  this now includes `registers/` The use of registers has been discontinued. Please review (with an empty `candidates/` subfolder)
+  this now includes `registers/` (with an empty `candidates/` subfolder)
   as a normal part of the application repo, not a separately provisioned
   location. Initialize the repo with a remote configured.
 - Exit criteria: `pip install -e .` succeeds; empty test suite runs (0
@@ -163,7 +163,7 @@ status without a corresponding, correctly-attributed audit record.
   handler — increments `attempt_count`, records `last_error`, applies
   exponential backoff, and stops after 5 consecutive failures, surfacing
   the failure rather than retrying silently forever (Architecture §8.3).
-  Built here, generically, so Phase 7 (register The use of registers has been discontinued. Please review writes) and Phase 12
+  Built here, generically, so Phase 7 (register writes) and Phase 12
   (GBrain writes) both consume it rather than each implementing their own.
 - Exit criteria: a deliberately-failing test handler is retried with
   increasing delay and stops after the 5th failure, with the failure
@@ -249,16 +249,16 @@ against the corrected version, before Phase 7 begins.
 
 ---
 
-## Phase 7 — Register The use of registers has been discontinued. Please review + Payload Mirroring (Backup / Disaster Recovery)
+## Phase 7 — Register + Payload Mirroring (Backup / Disaster Recovery)
 
 Rebuilt against the resolved design in Architecture §8. No open questions
 remain in this phase — all three prior open items are answered by the
 referenced sections.
 
-**Step 7.1 — `registers.py` The use of registers has been discontinued. Please review**
+**Step 7.1 — `registers.py`**
 - Action: implement the writer that, given a promoted candidate, produces
-  both the register The use of registers has been discontinued. Please review row (`register-memory-governor.md`) and the full JSON
-  payload (`registers/candidates/ The use of registers has been discontinued. Please review<memory_id>.json`), and commits both
+  both the register row (`register-memory-governor.md`) and the full JSON
+  payload (`registers/candidates/<memory_id>.json`), and commits both
   together in the app repo (Architecture §8.1, §8.2).
 
 **Step 7.2 — Wire as a `register_write` event consumer**
@@ -267,27 +267,27 @@ referenced sections.
   (extending `outbox.py` from Phase 4). In `worker.py`, consume this event
   using the Phase 4.3 retry wrapper — never a synchronous call inside the
   promotion request (Architecture §8.3).
-- Exit criteria: promoting a candidate returns immediately; the register The use of registers has been discontinued. Please review
+- Exit criteria: promoting a candidate returns immediately; the register
   row and JSON payload appear shortly afterward, written by the worker, not
   the request handler.
 
 **Step 7.3 — Failure-path test**
-- Action: simulate a register-write The use of registers has been discontinued. Please review failure (e.g. temporarily point the
+- Action: simulate a register-write failure (e.g. temporarily point the
   repo remote at an unreachable location), confirm retry/backoff behavior
   from Phase 4.3 engages, and confirm the candidate's `promoted` status in
   Postgres is unaffected by the failure.
 - Exit criteria: Architecture §10 test #9 passes.
 
 **Step 7.4 — Normal-path test**
-- Action: promote a candidate under normal conditions, confirm the register The use of registers has been discontinued. Please review
+- Action: promote a candidate under normal conditions, confirm the register
   row and JSON payload both commit correctly.
 
 **Step 7.5 — Disaster-recovery drill**
 - Action: with a small set of test candidates promoted, deliberately drop
   the test Postgres database, reconstruct `memory_candidates` state from
-  `registers/candidates/ The use of registers has been discontinued. Please review*.json` alone.
+  `registers/candidates/*.json` alone.
 - Exit criteria: Architecture §10 test #10 passes — every field of the
-  original candidate is recovered, not just what the register The use of registers has been discontinued. Please review's own nine
+  original candidate is recovered, not just what the register's own nine
   columns can represent.
 
 **Phase 7 exit gate:** both the normal-path and failure-path tests pass,
@@ -307,7 +307,7 @@ JSON payload store with no data loss.
   `dormant = true`.
 
 **Step 8.3 — Onboarding test**
-- Action: register The use of registers has been discontinued. Please review a new test project end-to-end, submit a candidate
+- Action: register a new test project end-to-end, submit a candidate
   scoped to it.
 - Exit criteria: candidate correctly scoped; no code change was required to
   support the new project.
@@ -363,7 +363,7 @@ JSON payload store with no data loss.
 
 **Step 11.3 — Policy update path**
 - Action: implement the approved-change flow: new `policy_versions` row,
-  previous row's `active` flag cleared, register The use of registers has been discontinued. Please review mirror updated via the
+  previous row's `active` flag cleared, register mirror updated via the
   same `register_write` event consumer built in Phase 7.
 
 **Step 11.4 — Test**
@@ -515,7 +515,7 @@ outcome — not a synthetic test fixture with hand-typed values.
 **Step 15.1 — End-to-end scenario test**
 - Action: run one complete scenario touching every subsystem: submission →
   provenance check → scope check → contradiction check → both the
-  auto-promote path and the needs-review path → GBrain write → register The use of registers has been discontinued. Please review +
+  auto-promote path and the needs-review path → GBrain write → register +
   payload mirror → provenance/audit retrieval. Include one pass through
   `mb-submit-memory` (Phase 14) and one real PDLF step through Phase 13's
   sequence as part of this scenario, not just direct API calls, so the
@@ -523,7 +523,7 @@ outcome — not a synthetic test fixture with hand-typed values.
 
 **Step 15.2 — Second disaster-recovery drill**
 - Action: repeat Phase 7's drill, now with the full system (GBrain writes
-  included) — confirm GBrain state and the register/payload The use of registers has been discontinued. Please review store can both
+  included) — confirm GBrain state and the register/payload store can both
   be used to cross-check each other after a simulated Postgres loss.
 
 **Step 15.3 — Success-criteria sign-off**

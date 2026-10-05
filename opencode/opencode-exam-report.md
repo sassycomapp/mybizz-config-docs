@@ -1,7 +1,7 @@
 ---
 title: "opencode-exam-report"
 doc-id: "mb-f1821aef"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # OpenCode — Exam Report
 
@@ -12,7 +12,7 @@ Run #1 — **first formal plan-driven exam** (2026-09-15). Plan:
 `c40df342d523aa59` · gbrain-dream-cycle `a4872e9d61f1c32f` · graphify
 `1ca73897a2023741` · mb-submit-memory `88a71641d03f1997` · opencode
 `039b28e46b276834`); suite completeness 7/7 on all eight Installed suites
-(mb-submit-memory naming variance register-documented The use of registers has been discontinued. Please review); register spec-doc paths
+(mb-submit-memory naming variance register-documented); register spec-doc paths
 8/8 exist; no open run blocks opencode (bootstrap). One exec-protection denial at
 step-0 (compound loop text carrying the cupcake token — known class) — honored;
 re-issued via directory-glob form without the token. Detection only — Tiers 0–2;
@@ -40,7 +40,7 @@ holds across all four documented project states.
 |---|---|---|---|---|
 | OC1-1 | Resolved-config inspection runs | exits 0, non-empty | `opencode debug config` → exit 0, 83 lines resolved output — merge machinery executes | PASS |
 | OC1-2 | `default_agent` | `plan` | **developer-verified `plan`** (2026-09-15) | PASS |
-| OC1-3 | `instructions` pointer resolves | file exists | `register-global.md` The use of registers has been discontinued. Please review present under `/mnt/c/dev/project-library-global/register-global/` — resolves | PASS |
+| OC1-3 | `instructions` pointer resolves | file exists | `register-global.md` present under `/mnt/c/dev/project-library-global/register-global/` — resolves | PASS |
 | OC1-4 | `permission.edit` | ask + `**/anvil.yaml` deny | **developer-verified: `{"*":"ask","**/anvil.yaml":"deny"}`** | PASS |
 | OC1-5 | `permission.webfetch` | ask | **developer-verified `ask`** | PASS |
 | OC1-6 | `permission.bash` | ask + standard deny set | **developer-verified: `ask` + all 13 deny patterns present** | PASS |

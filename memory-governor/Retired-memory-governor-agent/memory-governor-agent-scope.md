@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-agent-scope"
 doc-id: "mb-10605846"
-updated: "2026-10-04"
+updated: "2026-10-05"
 ---
 # Memory Governor Agent — Scope Document
 
@@ -349,16 +349,16 @@ autonomously applies.
 - **Git-tracked backup, living inside the memory-governor application's own
   repository** (resolved: not a separate external location — see
   Architecture §8 for the reasoning). Every promoted memory produces two
-  things, committed together: a row in Register The use of registers has been discontinued. Please review Memory Governor
-  (the same append-only, never-delete register The use of registers has been discontinued. Please review schema already used
-  throughout this environment — see `register-global.md` The use of registers has been discontinued. Please review,
-  `register-local.md` The use of registers has been discontinued. Please review) acting as a human-readable index, and a full JSON
-  payload of the candidate at `registers/candidates/ The use of registers has been discontinued. Please review<memory_id>.json`
-  capturing every field, not just the register The use of registers has been discontinued. Please review's own columns. The register
+  things, committed together: a row in Register Memory Governor
+  (the same append-only, never-delete register schema already used
+  throughout this environment — see `register-global.md`,
+  `register-local.md`) acting as a human-readable index, and a full JSON
+  payload of the candidate at `registers/candidates/<memory_id>.json`
+  capturing every field, not just the register's own columns. The register
   alone was found insufficient for real recovery (it cannot represent
-  `content.text`); the register-plus-payload The use of registers has been discontinued. Please review pair together can fully
+  `content.text`); the register-plus-payload pair together can fully
   reconstruct a lost record.
-- **Register/payload The use of registers has been discontinued. Please review writes are asynchronous, not part of the promotion
+- **Register/payload writes are asynchronous, not part of the promotion
   request.** Postgres and git cannot commit atomically across two separate
   systems (the "dual-write problem"); rather than couple the two systems
   together in the request path, the write is driven by the same
@@ -366,8 +366,8 @@ autonomously applies.
   effects (Architecture §4), with retry-with-backoff and a failure surfaced
   to the developer after repeated attempts rather than silently dropped or
   silently retried forever.
-- `policy_version` is managed the same way: a dedicated register The use of registers has been discontinued. Please review
-  (`register-memory-governor-policy.md` The use of registers has been discontinued. Please review), one row per policy version,
+- `policy_version` is managed the same way: a dedicated register
+  (`register-memory-governor-policy.md`), one row per policy version,
   previous version retired with `superseded-by` pointing at the new one on
   every change.
 
@@ -381,7 +381,7 @@ autonomously applies.
 - A dedicated Postgres database and role must be provisioned (§15).
 - The memory-governor application's own git repository must have a remote
   configured before Phase 7 of the implementation workflow — this is now a
-  trivial requirement, since the register The use of registers has been discontinued. Please review lives inside that repo rather
+  trivial requirement, since the register lives inside that repo rather
   than a separately managed location.
 
 ## 17. Operational Footprint
@@ -398,7 +398,7 @@ adds no new class of infrastructure to the existing environment.
   the whole pipeline is upstream in GBrain dreaming, which already exists
   and is already paid for.
 - No message broker, no vector database, no GPU, no second server.
-- The git-backed register/payload The use of registers has been discontinued. Please review store is small text (JSON + markdown
+- The git-backed register/payload store is small text (JSON + markdown
   tables) — realistically low hundreds of MB even after years of sustained
   use at solo-developer volumes.
 
@@ -418,7 +418,7 @@ The governor is fit for purpose when:
 - Every high-risk or contradicted candidate produces a genuine blocking
   review with recommendation/validation/ramifications, never a silent
   auto-promotion.
-- Postgres state can be fully reconstructed from the git-tracked register The use of registers has been discontinued. Please review
+- Postgres state can be fully reconstructed from the git-tracked register
   and payload store alone, with no data loss beyond the most recent
   not-yet-committed batch.
 - A new PDLF project can be onboarded without any code change.

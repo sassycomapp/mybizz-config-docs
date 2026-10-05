@@ -1,7 +1,7 @@
 ---
 title: "sysdoc-creator-explainer"
 doc-id: "mb-1b1e5218"
-updated: "2026-10-03"
+updated: "2026-10-05"
 ---
 # sysdoc-creator — Explainer
 
@@ -87,7 +87,7 @@ independently — and run history shows both directions happening.
 **Why the cross-cutting check is unconditional.** Component-specific
 relevance judgment is exactly what produced silent gaps before the check
 became mandatory: the security-global arm was checking a nonexistent path
-for three runs, and the skill-index register The use of registers has been discontinued. Please review silently lacked this very
+for three runs, and the skill-index register silently lacked this very
 component. Requiring all four categories every run, with explicit
 "none found," converts each category into an auditable claim rather
 than an omission.
@@ -105,8 +105,8 @@ corpus via the ordinary host-source sync, and every run it closes feeds
 its own learnings file, which shapes the next run's research pattern. This
 skill owns whether the content was true when it was written.
 
-**Open questions.** The skill-index register The use of registers has been discontinued. Please review's missing entry (open item
-in the config doc) matters because that register The use of registers has been discontinued. Please review is the environment's
+**Open questions.** The skill-index register's missing entry (open item
+in the config doc) matters because that register is the environment's
 authoritative skill status list — a gap there propagates as invisibility.
 The prefix divergence in this suite (`sysdoc-creator-` vs the folder's
 `mb-sysdoc-creator`) is harmless but breaks the repo's otherwise uniform

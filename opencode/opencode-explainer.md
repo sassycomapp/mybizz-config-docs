@@ -1,7 +1,7 @@
 ---
 title: "opencode-explainer"
 doc-id: "mb-4e022a9c"
-updated: "2026-10-03"
+updated: "2026-10-05"
 ---
 # OpenCode Explainer
 
@@ -208,7 +208,7 @@ PostgreSQL pilot. The short local version:
   never touches the plugin tree, never restarts the running process (it would
   interrupt the very session running the exam), and never edits its own
   config file. Self-health of the config-manager is step-0 of every exam cycle
-  (register The use of registers has been discontinued. Please review ↔ installed skill ↔ source hash), never a finding of this module.
+  (register ↔ installed skill ↔ source hash), never a finding of this module.
 - **Scope boundary with sibling modules:** cupcake **enforcement** (rules compile +
   firing) belongs to `mb-config-cupcake` — this exam owns the plugin's
   **discoverability/dedup mechanics** (exactly one discoverable path). GBrain

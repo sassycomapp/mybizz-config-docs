@@ -1,7 +1,7 @@
 ---
 title: "magdoub-wireframe-explainer"
 doc-id: "mb-3a3e9555"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # magdoub-wireframe — Explainer
 
@@ -103,7 +103,7 @@ changed in recent upstream history.
 
 ### Where this sits relative to the rest of the system
 
-- **PDLF** registers The use of registers has been discontinued. Please review the skill as its visual-iteration stage: a structural pass between the design reviews, then a second pass with an approval gate before screen work. It is one of five deliberately narrow skill families; it owns visual iteration and nothing else.
+- **PDLF** registers the skill as its visual-iteration stage: a structural pass between the design reviews, then a second pass with an approval gate before screen work. It is one of five deliberately narrow skill families; it owns visual iteration and nothing else.
 - **Cupcake** constrains it more than any other component — with one standing caveat: enforcement status is not fixed and should not be assumed current at any given time (check [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)'s Current Operational Status). Standing policy denies sub-agent creation, enforced when active at three independent layers, and the skill's Phase 2 was written assuming sub-agents exist. The structural phase is unaffected; the color phase's mechanism on this machine is the suite's principal open question.
 - **Memory Governor** does not see it: skill content is vendor-published reference material arriving via a real git clone, so it takes the same permanent ordinary-sync bypass as Anvil's agent references. The update command, unlike the content, is confined to the developer's own terminal because it rewrites files outside every project root — a deliberate split between how the skill's content flows and who may touch the clone.
 - **security-global's review-before-trust principle** is the standard this skill was supposed to be admitted under: publisher, license, maintenance, spawn-capability. Its profile is benign on every axis, but no record of that review exists — which is itself the finding.

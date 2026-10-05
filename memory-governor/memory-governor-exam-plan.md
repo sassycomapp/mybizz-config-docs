@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-exam-plan"
 doc-id: "mb-24d4eef4"
-updated: "2026-10-01"
+updated: "2026-10-05"
 ---
 # Memory Governor — Exam Plan
 
@@ -63,7 +63,7 @@ The complete enumeration lives in the skill ([[[mybizz-config-docs:memory-govern
 Summary of the standing inventory:
 
 - **Tier 0 (A):** M0-1 API process · M0-2 worker process · M0-3 port 8321 · M0-4 HTTP auth-gate returns 422
-- **Tier 1 (A):** M1-1 repo integrity · M1-2 venv · M1-3 DB quick sanity · M1-4 register The use of registers has been discontinued. Please review index↔payload correspondence · M1-5 application error scan
+- **Tier 1 (A):** M1-1 repo integrity · M1-2 venv · M1-3 DB quick sanity · M1-4 register index↔payload correspondence · M1-5 application error scan
 - **Tier 2 (A/D):** M2-1 version 0.1.0 · M2-2 two-outcome model · M2-3 HIGH_RISK_TYPES ×5 · M2-4 thresholds 0.65/0.85 · M2-5 12 routes + NUL guard · M2-6 systemd units absent (pending) · M2-7 (D) credentialed registry check
 - **Tier 3 (D, locked):** M3-1 full test suite (304/0) · M3-2 auto-start execution · M3-3 recovery drill · M3-4 repo commit+push
 
@@ -82,7 +82,7 @@ new learnings filed.
 - **No agent-healable items** — worker/API are the only writers; every repair is
   developer-run or proposed
 - Spec-doc corrections → flagged to docs governance, never applied here
-- Deny-list: `registers/` The use of registers has been discontinued. Please review and the database (never edited by the exam) · the
+- Deny-list: `registers/` and the database (never edited by the exam) · the
   `.env` (secrets guard) · service starts/stops · any `gbrain sync` of governed
   content
 - Credentials: variable names only, never printed

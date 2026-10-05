@@ -1,7 +1,7 @@
 ---
 title: "opencode-permission-access-control-model"
 doc-id: "mb-cefaa6e8"
-updated: "2026-10-03"
+updated: "2026-10-05"
 ---
 # OpenCode — Permission & Access Control Model
 
@@ -92,9 +92,7 @@ the Active Project Standard; the deny-list applies when they start).
 
 Full path: `~/.config/opencode/opencode.jsonc` (WSL path). Verified
 key-by-key against [[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md)'s table — exact match. The
-`instructions` array points at
-`C:/dev/project-library-global/register-global/register-global.md` The use of registers has been discontinued. Please review
-(resolves; corrected 2026-09-01 from four deleted index files).
+`instructions` array does not reference any register file.
 
 ## Problem / remedy reference
 

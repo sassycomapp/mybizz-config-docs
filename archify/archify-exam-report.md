@@ -1,7 +1,7 @@
 ---
 title: "archify-exam-report"
 doc-id: "mb-3f68fb7d"
-updated: "2026-10-04"
+updated: "2026-10-05"
 ---
 # Archify — Exam Report
 
@@ -62,5 +62,5 @@ Tier 3 **unlocked at the gate** (developer-approved 2026-09-16).
 Step-0 self-validation (recorded in [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md)): 12/12 hash pairs
 MATCH. One estate-wide GAP was logged and **closed this session**: anvil-agent-
 references source (`a66e0140a39a37e5`, edited in `4aff290`) had not been
-re-installed; re-sync executed by the developer, hash pair verified, register The use of registers has been discontinued. Please review
+re-installed; re-sync executed by the developer, hash pair verified, register
 updated. No open estate items remain from this run.

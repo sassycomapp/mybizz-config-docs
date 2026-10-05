@@ -1,7 +1,7 @@
 ---
 title: "mb-submit-memory-config"
 doc-id: "mb-e76d96dd"
-updated: "2026-10-03"
+updated: "2026-10-05"
 ---
 # mb-submit-memory — Configuration
 
@@ -40,7 +40,7 @@ path. Never calls `gbrain remember` or `gbrain sync` directly.
 | Stop and start | `systemctl --user stop memory-governor-api`, wait 60 seconds, `systemctl --user stop memory-governor-worker`; start both with `systemctl --user start memory-governor-api memory-governor-worker` (the order used for the GBrain upgrade, 2026-09-30). Re-verified 2026-09-30: both units active, port 8321 held by one listener, an unauthenticated `GET /memory/review-queue` answers 422 |
 | Database | `memory_governor` on WSL-native PostgreSQL 16 (server verified up today). DB-level state (5 tables, 5 real candidate rows, owner `memory_governor_svc`) verified 2026-09-05 by [[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md); re-check requires the service credential (not accessed) |
 | Its own GBrain source | `memory-governor-code` — registered (46 pages listed 2026-09-30, 53 in early September); the 2026-09-05 recommendation was actioned. Facts written before 2026-10-01 may still sit in it; new governed facts go to the owning project's source |
-| Past-run evidence | `/tmp/memory-governor.log` — clean startup + `POST /memory/projects` 201 + `POST /memory/candidate` 201; `registers/candidates/` The use of registers has been discontinued. Please review holds the real candidate records |
+| Past-run evidence | `/tmp/memory-governor.log` — clean startup + `POST /memory/projects` 201 + `POST /memory/candidate` 201; `registers/candidates/` holds the real candidate records |
 
 ## Governance chain state (all verified 2026-09-08)
 

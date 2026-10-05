@@ -1,7 +1,7 @@
 ---
 title: "anvil-agent-references-exam-report"
 doc-id: "mb-86200112"
-updated: "2026-10-04"
+updated: "2026-10-05"
 ---
 # anvil-agent-references — Exam Report
 
@@ -13,7 +13,7 @@ Run #1 — **first formal plan-driven exam** (2026-09-16). Plan:
 `1ca73897a2023741` · mb-submit-memory `88a71641d03f1997` · opencode
 `268bb702a038448b` · gstack `6a3afc08a93cee02` · matt-pocock-skills
 `86c78969ad0e8a80` · anvil-agent-references `8f2f4ccd6dce29c0`); suite completeness
-11/11 at the 8-file standard; register The use of registers has been discontinued. Please review spec-doc paths 19/19 resolve; no open run
+11/11 at the 8-file standard; register spec-doc paths 19/19 resolve; no open run
 blocks (bootstrap). One guard denial at step-0 (literal sibling token in command
 text — recorded exec-protection class) — honored, derived-glob form used.
 Detection only — Tiers 0–2; Tier 3 **unlocked at gate** (developer decision

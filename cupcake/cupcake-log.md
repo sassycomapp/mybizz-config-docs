@@ -1,7 +1,7 @@
 ---
 title: "cupcake-log"
 doc-id: "mb-18cc8b96"
-updated: "2026-10-04"
+updated: "2026-10-05"
 ---
 # Cupcake — Log
 
@@ -20,8 +20,8 @@ data.)
 | 2026-09-12 | Plugin silent-fail root cause found: checker spawned without working directory. One-line fix (`cwd: event.cwd` in Bun.spawn); live block confirmed immediately after restart | Resolved |
 | 2026-09-12 | Bash-governance amendment: shell write channels feed the same outside-project boundary — live-tested 35/35; `system_protection` bash matcher corrected (its `/dev/` substring had halted every `/mnt/c/dev/` path and `/dev/null` redirect), offline 27/27 | Deployed + verified |
 | 2026-09-12 | Pilot exam run (detection-only, pre-architecture): 0 compile failures, inventory exact (19+3), enforcement proven by three real denials | Verdict: ACTIVE & HEALTHY; 3 minor flags (backup inventory, jsonc naming) → governance; guard false-positive class confirmed (token `cupcake` denied in non-execution command text) |
-| 2026-09-12 | Skill install blocked by exec-protection guard (token-match on `mkdir`/`mv` command text) — denial honored, never worked around | Install handed to developer; executed same day; register The use of registers has been discontinued. Please review flipped → Installed |
-| 2026-09-13 | Copy-install model adopted repo-wide: skill source backfilled to suite folder (developer-run copy; hash d5fc964cd006f283 recorded in register The use of registers has been discontinued. Please review) | Single-live-copy + versioned-source discipline in place |
+| 2026-09-12 | Skill install blocked by exec-protection guard (token-match on `mkdir`/`mv` command text) — denial honored, never worked around | Install handed to developer; executed same day; register flipped → Installed |
+| 2026-09-13 | Copy-install model adopted repo-wide: skill source backfilled to suite folder (developer-run copy; hash d5fc964cd006f283 recorded in register) | Single-live-copy + versioned-source discipline in place |
 | 2026-09-13 | Config-management architecture emulated onto this suite: exam-plan created (ID'd checks C0-1…C3-4), log created (this file), learnings filed | Suite at the 7-file standard; first formal plan-driven run pending |
 | 2026-09-13 | Config.md refresh approved in-session + applied (backup inventory full set; opencode.jsonc naming; verification date → 2026-09-13) | Spec clean before first formal run |
 | 2026-09-13 | Run #1 — first formal plan-driven exam (step-0 PASS; Tiers 0–2 complete: 17 agent-runnable checks) | Verdict: ACTIVE & HEALTHY — enforcement proven live (outbound-network denial received as designed); 0 compile failures (24 files); inventory exact; CF-1/2 verified applied; C0-1…C2-7 eligible to graduate into skill. Tier 3 developer-run request issued (eval, test sheet, grant lifecycle, version) |

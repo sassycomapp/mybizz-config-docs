@@ -1,7 +1,7 @@
 ---
 title: "memory-ecosystem-scope"
 doc-id: "mb-8f007ac3"
-updated: "2026-10-04"
+updated: "2026-10-05"
 ---
 # Scope Card — memory-ecosystem
 
@@ -41,7 +41,7 @@ punishes dense crossing flows. Guide call returned `architecture`.
 | real-files | external | Real Files | ultimate source; authority tier 1 |
 | submit-memory | backend | mb-submit-memory | front door of the gate (Path 2) |
 | governor-api | security | Memory Governor API | durability gate: auth + decide |
-| delivery-worker | backend | Delivery Worker | gate delivery: outbox + register The use of registers has been discontinued. Please review |
+| delivery-worker | backend | Delivery Worker | gate delivery: outbox + register |
 | gbrain-store | database | GBrain — mirror layer · durable layer | one store, two badges |
 | sync-task | backend | Sync | mirror refresh (Path 1) |
 | dream-cycle | backend | Dream Cycle | deepening, unreviewed exception (Path 4) |
@@ -71,7 +71,7 @@ punishes dense crossing flows. Guide call returned `architecture`.
 - Quick path (Path 5) — raw remember writes, always present; discipline documented, not mechanical
 - PostgreSQL substrate — two instances, one port trap, RLS; every check names its instance
 - Cupcake — mechanical enforcement on every tool call; loopback allowed by design
-- Transactional outbox + register The use of registers has been discontinued. Please review commit; supersession not erasure; contradiction is a flag not a verdict
+- Transactional outbox + register commit; supersession not erasure; contradiction is a flag not a verdict
 
 ## Corridor plan
 

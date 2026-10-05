@@ -1,7 +1,7 @@
 ---
 title: "postgresql-exam-report"
 doc-id: "mb-758f50e9"
-updated: "2026-10-04"
+updated: "2026-10-05"
 ---
 # PostgreSQL — Exam Report
 
@@ -58,7 +58,7 @@ probes: developer-run request issued (secrets guard on bridge `.env` — per pla
    (1,824 pages / 5,529 chunks / 164 MB), verification date → 2026-09-13,
    facts-autovacuum nuance + role-isolation test method added. Finding closed.
    Both run-#2 learnings graduated (config.md + skill) and deleted from the
-   learnings file; skill source re-synced + register The use of registers has been discontinued. Please review hash updated
+   learnings file; skill source re-synced + register hash updated
    (`9f61f34c9634b419`).
 2. **Check-method nuance (new learning).** `SET ROLE` from superuser always
    succeeds (impersonation ≠ privilege) — role isolation must be tested via

@@ -1,7 +1,7 @@
 ---
 title: "opencode-config"
 doc-id: "mb-c7616d53"
-updated: "2026-10-03"
+updated: "2026-10-05"
 ---
 # OpenCode Configuration
 
@@ -35,7 +35,7 @@ five-part OpenCode suite; each file owns one scope:
 | Key | Value |
 |---|---|
 | `default_agent` | `plan` |
-| `instructions` | `C:/dev/project-library-global/register-global/register-global.md` The use of registers has been discontinued. Please review (verified resolving; corrected 2026-09-01 — previously pointed at four deleted `INDEX.md` files) |
+| `instructions` | the instructions array does not reference any register file |
 | `permission.task` | `deny` — Layer 1 of the three-layer `task`-denial system, see [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) |
 | `permission.edit` | `ask` by default; `**/anvil.yaml` explicitly `deny` |
 | `permission.webfetch` | `ask` |
