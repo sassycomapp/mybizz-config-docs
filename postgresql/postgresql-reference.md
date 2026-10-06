@@ -1,7 +1,7 @@
 ---
 title: "postgresql-reference"
 doc-id: "mb-5bad908d"
-updated: "2026-10-05"
+updated: "2026-10-06"
 ---
 # PostgreSQL — Reference: Commands, Procedures, and Troubleshooting
 
@@ -22,7 +22,7 @@ of the system:
 | | Instance A | Instance B |
 |---|---|---|
 | Program | PostgreSQL 15 | PostgreSQL 16 |
-| Runs on | Windows | WSL (Ubuntu 24.04) |
+| Runs on | Windows | WSL installation `Ubuntu` (Ubuntu 24.04) |
 | Serves | PDLF and makePDLF — the `pdlf` build ledger | GBrain (`gbrain`) and the Memory Governor (`memory_governor`) |
 | Port | `5433` | `5432` |
 | Reached from WSL | PowerShell bridge, always with `-p 5433` | directly, `localhost:5432` |
@@ -158,6 +158,9 @@ errors cannot echo it.
 systemd is PID 1 in WSL. Both `systemctl` and `service` manage PostgreSQL;
 `pg_ctlcluster` is the cluster-level start and stop tool.
 
+`Ubuntu` is the only WSL installation and the default. Every WSL command
+names it explicitly (`wsl -d Ubuntu ...`).
+
 ```bash
 systemctl status postgresql            # systemd unit status
 service postgresql status              # service wrapper (systemd-backed)
@@ -165,6 +168,18 @@ pg_lsclusters                          # cluster list and status (expect 16/main
 sudo pg_ctlcluster 16 main start       # cluster-level manual start
 sudo pg_ctlcluster 16 main stop        # cluster-level manual stop
 ```
+
+### Clean shutdown — used every time WSL is shut down
+
+`wsl --shutdown` stops Linux instantly; PostgreSQL then has to recover on
+the next start. Stopping the services first avoids that. The sequence:
+
+1. `systemctl --user stop memory-governor-api memory-governor-worker`
+2. `sudo pg_ctlcluster 16 main stop`
+3. Confirm: `pg_lsclusters` shows the cluster `down`, and
+   `systemctl --user is-active memory-governor-api memory-governor-worker`
+   shows `inactive` for both.
+4. From PowerShell: `wsl --shutdown`.
 
 ### Boot durability
 
@@ -176,17 +191,17 @@ must not run at boot, because it competes with `memory-governor-api.service`
 for port 8321 (see
 [[[mybizz-config-docs:memory-governor/memory-governor-reference|Reference]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-reference.md)).
 
-**The only real verification method:** a full WSL shutdown from PowerShell
-(`wsl --shutdown`), then a fresh terminal, then `pg_lsclusters` (16/main
+**The only real verification method:** the clean shutdown procedure
+(above), then a fresh terminal, then `pg_lsclusters` (16/main
 online), `systemctl --user status memory-governor-api memory-governor-worker`
 (both active), `ss -tlnp | grep 8321` (held by the unit's pid) — zero
 manual intervention, zero crash-looping.
 
 **If found down unexpectedly:** check `pg_lsclusters` for a "stale pid
-file" message on manual start — indicates an unclean prior shutdown (WSL
-terminating mid-session), not necessarily a config fault. If the units are
-confirmed present and the cluster is still down after a genuine reboot,
-that's a real regression worth investigating fresh.
+file" message on manual start — a stale pid file means WSL was stopped
+without the clean shutdown procedure, not necessarily a config fault. If
+the units are confirmed present and the cluster is still down after a
+genuine reboot, that's a real regression worth investigating fresh.
 
 ### Useful live queries
 
@@ -248,6 +263,7 @@ on. Direct `psql` access is appropriate specifically when:
 - Do not build a `.sql` file with PowerShell `Out-File` and pass it to `psql -f` without confirming it's BOM-free.
 - Do not follow pre-systemd guidance: systemd is PID 1 in WSL, `systemctl` is a valid management path, and `pg_ctlcluster` remains the cluster-level tool.
 - Do not start the dead duplicate `PostgreSQL` Windows service.
-- Do not assume a "stale pid file" message on WSL cluster start indicates a config fault — it usually means an unclean prior WSL shutdown.
+- Do not assume a "stale pid file" message on WSL cluster start indicates a config fault — it means WSL was stopped without the clean shutdown procedure.
+- Do not run `wsl --shutdown` without the clean shutdown procedure first.
 - Do not drop a database role without first running `DROP OWNED BY <role>` in every database where it holds privileges.
 - Do not quote a password or path value into any command output — reference credentials by variable name only, always.

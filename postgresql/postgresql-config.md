@@ -1,7 +1,7 @@
 ---
 title: "postgresql-config"
 doc-id: "mb-a8b414df"
-updated: "2026-10-05"
+updated: "2026-10-06"
 ---
 # PostgreSQL — Configuration
 
@@ -24,7 +24,7 @@ of the system:
 | | Instance A | Instance B |
 |---|---|---|
 | Program | PostgreSQL 15 | PostgreSQL 16 |
-| Runs on | Windows | WSL (Ubuntu 24.04) |
+| Runs on | Windows | WSL installation `Ubuntu` (Ubuntu 24.04) |
 | Serves | PDLF and makePDLF — the `pdlf` build ledger | GBrain (`gbrain`) and the Memory Governor (`memory_governor`) |
 | Port | `5433` | `5432` |
 | Reached from WSL | PowerShell bridge, always with `-p 5433` | directly, `localhost:5432` |
@@ -142,12 +142,15 @@ finding. Its baseline backup: `compliance_ledger_backup_2026-09-05.dump`
 ## Instance census: exactly two instances
 
 Windows registry: one PostgreSQL product. Windows services: two registrations,
-one data directory. No `Program Files (x86)` install. WSL Ubuntu-24.04: one
-cluster. WSL Ubuntu-22.04: no PostgreSQL. Port listeners: Windows 5432 = WSL's
+one data directory. No `Program Files (x86)` install. WSL: one installation,
+`Ubuntu` (the default); one cluster. Port listeners: Windows 5432 = WSL's
 relay (to Instance B), Windows 5433 = Instance A; WSL 5432 = Instance B; no
 other listeners in the 543x range on either side. A manually-compiled,
 never-registered instance can't be mathematically excluded, but no evidence
 of one exists.
+
+`Ubuntu` is the only WSL installation and the default. Every WSL command
+names it explicitly (`wsl -d Ubuntu ...`).
 
 ## Backups (estate-wide)
 
@@ -165,7 +168,7 @@ of one exists.
 - Instance-A dumps are produced by `pg_dump.exe` on Windows (developer-run — the bridge `.env` sourcing is agent-forbidden), written directly to `C:\backup-gbrain\` on port 5433; the agent copies to the WSL location and hash-verifies the pair. Instance-B dumps are agent-runnable.
 - **Second lane — markdown export:** dream-synthesized concept pages are DB-only (no backing file); their second line of defense is `gbrain export --dir /mnt/c/backup-dream-cycle/` (`C:\backup-dream-cycle`) — developer-run, weekly, alongside the DB dumps. The PostgreSQL dump remains line one; the export adds file-lane-visible, human-readable recovery for DB-only content.
 
-## Known undocumented items (deliberately retained, each documented)
+## Items deliberately left in place
 
 - The dead duplicate `PostgreSQL` Windows service — cosmetic only, left in
   place deliberately. Removing the registration (`sc delete PostgreSQL`)

@@ -1,7 +1,7 @@
 ---
 title: "postgresql-explainer"
 doc-id: "mb-e4410ed0"
-updated: "2026-10-05"
+updated: "2026-10-06"
 ---
 # PostgreSQL — Explainer
 
@@ -26,7 +26,7 @@ of the system:
 | | Instance A | Instance B |
 |---|---|---|
 | Program | PostgreSQL 15 | PostgreSQL 16 |
-| Runs on | Windows | WSL (Ubuntu 24.04) |
+| Runs on | Windows | WSL installation `Ubuntu` (Ubuntu 24.04) |
 | Serves | PDLF and makePDLF — the `pdlf` build ledger | GBrain (`gbrain`) and the Memory Governor (`memory_governor`) |
 | Port | `5433` | `5432` |
 | Reached from WSL | PowerShell bridge, always with `-p 5433` | directly, `localhost:5432` |
@@ -298,8 +298,9 @@ participation; the dead duplicate Windows service remains registered
 exam discipline; Tier-3 checks (backup existence, a third-instance sweep) can
 become routine.
 
-**Threats.** A WSL unclean shutdown can leave a stale pid file (documented,
-self-resolving); unvalidated policy/scaffold content elsewhere in the system
+**Threats.** A WSL shutdown without the clean shutdown procedure can leave
+a stale pid file (documented, self-resolving); unvalidated policy/scaffold
+content elsewhere in the system
 has historically crashed whole subsystems (the Cupcake 7F lesson) — the same
 class of risk applies to any future extension or role added carelessly;
 spec-doc drift between runs would silently weaken the exam (mitigated: the
