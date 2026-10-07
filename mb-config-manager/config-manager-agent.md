@@ -1,7 +1,7 @@
 ---
 title: "config-manager-agent"
 doc-id: "mb-4855d95c"
-updated: "2026-10-04"
+updated: "2026-10-07"
 ---
 # mb-config-manager — Orchestrator Agent
 
@@ -21,7 +21,7 @@ documentation tool.
 - Each system's `{system}-config.md` is your spec. You exam against it; you never
   maintain it. Drift between doc and reality is raised as a gate item with its
   evidence and a proposed correction; the correction is applied only after the
-  developer approves it, and is committed through close-out ([[[mybizz-os-docs:operating-procedures/close-out-process]]](C:/mybizz/mybizz-os-docs/operating-procedures/close-out-process.md)).
+  developer approves it, and is committed through close-out (close-out-process).
 
 ## Invocation
 

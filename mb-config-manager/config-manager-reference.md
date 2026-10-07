@@ -1,7 +1,7 @@
 ---
 title: "config-manager-reference"
 doc-id: "mb-8ddcefac"
-updated: "2026-10-04"
+updated: "2026-10-07"
 ---
 # mb-config-manager — Reference
 
@@ -161,7 +161,7 @@ reports, outputs, or learning entries.
 - System config artifacts (`{system}-config.md` spec docs): **flagged, not healed** —
   drift is raised as a gate item with a proposed correction, applied only after
   the developer approves it and committed through close-out
-  ([[[mybizz-os-docs:operating-procedures/close-out-process]]](C:/mybizz/mybizz-os-docs/operating-procedures/close-out-process.md)).
+  (close-out-process).
 - Live system state: healed through the gate, allowlist repairs only.
 
 ## Guard denials

@@ -1,7 +1,7 @@
 ---
 title: "config-manager-explainer"
 doc-id: "mb-c28cb8f9"
-updated: "2026-10-04"
+updated: "2026-10-07"
 ---
 # mb-config-manager — Explainer
 
@@ -168,7 +168,7 @@ first, and happens at plan-synthesis time of the next run.
 - **Every document under `mybizz-config-docs` follows the normal documentation
   process** — no exceptions for this suite. A document changes only with the
   developer's approval; the developer commits through close-out
-  ([[[mybizz-os-docs:operating-procedures/close-out-process]]](C:/mybizz/mybizz-os-docs/operating-procedures/close-out-process.md)), which runs `commit-all.sh`
+  (close-out-process), which runs `commit-all.sh`
   ([[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md)); and `mb-doc-check` ([[[mybizz-config-docs:mb-doc-check/doc-check-explainer]]](C:/mybizz/mybizz-config-docs/mb-doc-check/doc-check-explainer.md))
   checks every document at every commit.
 - **Cupcake rules and methods apply to the config-manager itself.** It is not

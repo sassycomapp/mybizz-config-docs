@@ -1,7 +1,7 @@
 ---
 title: "config-setup-prompt"
 doc-id: "mb-68a57783"
-updated: "2026-10-04"
+updated: "2026-10-07"
 ---
 # Config Manager — Setup Prompt
 
@@ -127,7 +127,7 @@ adds nothing new — it packages the proven method.
   `mybizz-os-docs/memory-master-explainer.md` to current verified state (standing
   rule — its own commit).
 - Register notes updated (verified-live date). Completion report; then the
-  standard ask: the developer runs close-out ([[[mybizz-os-docs:operating-procedures/close-out-process]]](C:/mybizz/mybizz-os-docs/operating-procedures/close-out-process.md)), which ends
+  standard ask: the developer runs close-out (close-out-process), which ends
   with `commit-all.sh` — it commits, syncs GBrain and pushes.
 
 ## Standing rules (violation = escalation)
