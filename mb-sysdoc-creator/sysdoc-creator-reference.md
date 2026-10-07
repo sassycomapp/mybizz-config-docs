@@ -1,13 +1,20 @@
 ---
 title: "sysdoc-creator-reference"
 doc-id: "mb-04e4093c"
-updated: "2026-10-01"
+updated: "2026-10-07"
 ---
 # sysdoc-creator — Reference
 
-Execution procedure for the `mb-sysdoc-creator` skill. `skill.md` in this
+Execution procedure for the `mb-sysdoc-creator` skill. `sysdoc-creator-skill.md` in this
 folder is the authoritative definition; this document is the operational
 form. Why the rules are shaped this way: [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-explainer.md).
+The config-management exam set for this suite ([[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-exam-plan.md) ·
+[[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-exam-report.md) ·
+[[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-log|Log]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-log.md) ·
+[[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-learnings.md) ·
+[[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-exam-skill|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-exam-skill.md)) is synthesized and consumed per the
+[[[mybizz-config-docs:mb-config-manager/config-manager-agent|Config Manager]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) plan-driven cycle —
+the exam verifies this suite's state and never runs the subject skill itself.
 
 ## Invocation
 
