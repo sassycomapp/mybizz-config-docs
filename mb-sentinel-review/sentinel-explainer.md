@@ -1,9 +1,18 @@
 ---
 title: "sentinel-explainer"
 doc-id: "mb-d54f779d"
-updated: "2026-10-01"
+updated: "2026-10-07"
 ---
 # Sentinel — What It Is, What It Does, and Why It Matters
+
+Companion to [[[mybizz-config-docs:mb-sentinel-review/sentinel-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-config.md) (the spec — current state) and
+[[[mybizz-config-docs:mb-sentinel-review/sentinel-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-reference.md) (procedures and worked examples). The
+config-management exam set for this suite ([[[mybizz-config-docs:mb-sentinel-review/sentinel-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-exam-plan.md) ·
+[[[mybizz-config-docs:mb-sentinel-review/sentinel-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-exam-report.md) · [[[mybizz-config-docs:mb-sentinel-review/sentinel-log|Log]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-log.md) ·
+[[[mybizz-config-docs:mb-sentinel-review/sentinel-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-learnings.md) · [[[mybizz-config-docs:mb-sentinel-review/sentinel-skill|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-skill.md)) is
+synthesized and consumed per the [[[mybizz-config-docs:mb-config-manager/config-manager-agent|Config Manager]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md)
+plan-driven cycle — the exam verifies this suite's state and never runs the
+subject skill itself.
 
 ## The Objective, Stated Plainly
 
@@ -285,12 +294,72 @@ intensity numbers remain provisional until each real step file exists.
 through the documented PowerShell bridge** — a direct WSL database call
 silently reaches the wrong server. The bridge is the only route, always.
 
+## Config maintenance — how this system is examined and kept healthy
+
+This suite participates in the config-management system (`mb-config-manager`).
+The roles of the seven suite files, and the exam cycle that runs them, are the
+architecture described in [[config-manager-explainer|the config-manager
+explainer]] — emulated from the PostgreSQL pilot. The short local version:
+
+- [[[mybizz-config-docs:mb-sentinel-review/sentinel-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-config.md) is the **spec** — the ideal state every
+  exam checks against.
+- Before each exam run, the config-manager synthesizes
+  [[[mybizz-config-docs:mb-sentinel-review/sentinel-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-exam-plan.md): a fresh job-spec built from this spec, the
+  last report, the log, and the learnings. The plan is transient (the file is
+  live; contents rewritten each cycle).
+- The exam runs the installed skill (`mb-config-mb-sentinel-review`) with the
+  plan in hand — detection fully autonomous; healing gated.
+- **Agent-healable items are suite-file repairs only** (the exam set files).
+  The installed subject skills, the PDLF step files, the security-global
+  library, the governing ADR, and the `triage_findings` database are
+  deny-list: changes reach them only as gate proposals the developer approves
+  item by item.
+- The database route carries a credential by variable name only
+  (`PGPASSWORD`, bridge procedure); the exam never reads `.env` contents, and
+  the bridge probes are developer-run by proven guard class.
+- The run rewrites [[[mybizz-config-docs:mb-sentinel-review/sentinel-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-exam-report.md) (current state, no
+  history), appends one row to [[[mybizz-config-docs:mb-sentinel-review/sentinel-log|Log]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-log.md), files new learnings, and
+  prunes absorbed entries.
+
+## S.W.O.T.
+
+**Strengths.** A real, written authority (54 security-global documents)
+instead of ad-hoc judgment; the borrowed five-phase methodology making the
+reviewing agent better-informed at the moment of judgment; three outcomes
+with "I don't know" as a required answer; every outcome leaves a queryable
+trace (the CLEAR-row correction); the gate-proof pattern proving invocation,
+not mere instruction; deliberate non-duplication of /cso, the /review
+security specialist, and Cupcake.
+
+**Weaknesses.** Never yet run live against a real feature — the first real
+PDLF-run feature is the test that matters. The reasoning is self-review by
+the writing agent (mitigated by checkable patterns, evidence-required rows,
+and the developer's triage of every flag). Ten of the twelve intensity-table
+steps exist as files but carry no wiring yet — coverage depends on the
+makePDLF wiring work landing. The installed skill cites a plan-document
+filename that no longer exists (recovered under a different name, without
+numbered sections).
+
+**Opportunities.** The config-management exam adds standing verification this
+system never had; the intensity wiring can land step by step as PDLF builds,
+following the Step 16 pattern; learnings graduation can move settled patterns
+into the skill itself.
+
+**Threats.** Spec-doc drift between runs silently weakens exams (mitigated:
+exams flag spec drift, never edit it). An unwired built step silently skips
+its security review — the exact class of failure Sentinel exists to prevent
+(mitigated: the exam's built-status and wiring checks surface it every run).
+Citation rot — skill content pointing at renamed or restructured documents
+(observed: the `sentinel-security-system-plan.md` references).
+
 ---
 
 *Companion documents: [[[mybizz-config-docs:mb-sentinel-review/sentinel-config|dev-makepdlf]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-config.md) (current state),
 [[[mybizz-config-docs:mb-sentinel-review/sentinel-reference|Usage, Invocation, and Worked Examples]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-reference.md) (procedures and worked examples),
 [[[mybizz-config-docs:mb-sentinel-review/sentinel-scope|Scope]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-scope.md) (the agreed scope), [[[mybizz-config-docs:mb-sentinel-review/sentinel-security-system|SSS - sentinel Security System]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-security-system.md)
-(the design genesis). The reasoning methodology:
+(the design genesis), the exam set ([[[mybizz-config-docs:mb-sentinel-review/sentinel-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-exam-plan.md) ·
+[[[mybizz-config-docs:mb-sentinel-review/sentinel-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-exam-report.md) · [[[mybizz-config-docs:mb-sentinel-review/sentinel-log|Log]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-log.md) ·
+[[[mybizz-config-docs:mb-sentinel-review/sentinel-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-learnings.md) · [[[mybizz-config-docs:mb-sentinel-review/sentinel-skill|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-skill.md)). The reasoning methodology:
 `github.com/magnus919/agent-skills/tree/main/secure-software-engineering`.
 The full environment map: [[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]](C:/pdlf/pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer.md).*
 

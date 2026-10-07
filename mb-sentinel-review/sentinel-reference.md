@@ -1,13 +1,20 @@
 ---
 title: "sentinel-reference"
 doc-id: "mb-a075fac8"
-updated: "2026-10-01"
+updated: "2026-10-07"
 ---
 # Sentinel Reference — Usage, Invocation, and Worked Examples
 
 Companion to [[[mybizz-config-docs:mb-sentinel-review/sentinel-config|dev-makepdlf]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-config.md) (current state) and
 [[[mybizz-config-docs:mb-sentinel-review/sentinel-explainer|What It Is, What It Does, and Why It Matters]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-explainer.md) (design genesis and reasoning). The skill's own
 `SKILL.md` is the authoritative procedure.
+
+The config-management exam set for this suite ([[sentinel-exam-plan|Exam
+Plan]] · [[[mybizz-config-docs:mb-sentinel-review/sentinel-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-exam-report.md) · [[[mybizz-config-docs:mb-sentinel-review/sentinel-log|Log]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-log.md) ·
+[[[mybizz-config-docs:mb-sentinel-review/sentinel-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-learnings.md) · [[[mybizz-config-docs:mb-sentinel-review/sentinel-skill|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-skill.md)) is
+synthesized and consumed per the [[[mybizz-config-docs:mb-config-manager/config-manager-agent|Config Manager]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md)
+plan-driven cycle — the exam verifies this suite's state against the spec and
+never runs the subject skill itself.
 
 ---
 
@@ -79,13 +86,13 @@ If no document clearly matches: ESCALATE, not an assumed CLEAR.
 
 ## Writing the finding — the database route
 
-The `pdlf` ledger runs on **Windows** PostgreSQL 15. A direct WSL psql
+The `pdlf` ledger runs on **Windows** PostgreSQL 15, port **5433**. A direct WSL psql
 **silently connects to the wrong server** (WSL's own PostgreSQL 16 —
 GBrain's cluster). The documented bridge is the only correct route:
 
 ```bash
 cd <the PDLF project folder> && set -a && source .env && set +a
-powershell.exe -NoProfile -Command "\$env:PGPASSWORD='$PGPASSWORD'; & 'C:\Program Files\PostgreSQL\15\bin\psql.exe' -h localhost -U pdlf_agent -d pdlf -c '<the INSERT or SELECT>'"
+powershell.exe -NoProfile -Command "\$env:PGPASSWORD='$PGPASSWORD'; & 'C:\Program Files\PostgreSQL\15\bin\psql.exe' -h localhost -p 5433 -U pdlf_agent -d pdlf -c '<the INSERT or SELECT>'"
 ```
 
 Worked FLAG (the canonical example — a real broken-access-control catch):
