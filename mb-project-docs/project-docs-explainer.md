@@ -1,7 +1,7 @@
 ---
 title: "project-docs-explainer"
 doc-id: "mb-9730dd51"
-updated: "2026-10-02"
+updated: "2026-10-07"
 ---
 # mb-project-docs — Explainer
 
@@ -49,4 +49,3 @@ The skill works on one project at a time, the one you are in. It does not hold a
 
 **Where it sits.** It is a consumer of `repo-organization` for the facts about repositories and of the three-file specification for what each file holds. Its output in documentation repositories is checked and linked by the commit hook; in code repositories it is not.
 
-**Open questions.** The documentation repositories of `mb4ecom` and `mb5pdlf` are not under the commit hook yet, so their files would go unchecked. That matters because the hook is what keeps links and frontmatter correct.

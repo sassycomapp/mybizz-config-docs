@@ -74,7 +74,7 @@ Paths, GitHub repositories and GBrain sources of these repositories are in [[[my
 
 | System | State |
 |---|---|
-| Close-out | Step 2a of the close-out procedure runs the skill before the approval gate; its proposed changes are shown at that gate |
+| Close-out | Step 3 of `/mb-close-out` runs the skill before the approval gate; its proposed changes are shown at that gate |
 | Global `AGENTS.md` | Rule "Project documents": agents read the README and the three files on entering a project |
 | Commit hook | Covers documentation repositories only; code repositories are outside it |
 | Git | Documentation repositories: committed with `commit-all.sh`. Code repositories: committed by the developer. `.gitignore` is never touched |

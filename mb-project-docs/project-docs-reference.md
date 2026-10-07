@@ -1,7 +1,7 @@
 ---
 title: "project-docs-reference"
 doc-id: "mb-6950e749"
-updated: "2026-10-04"
+updated: "2026-10-07"
 ---
 # mb-project-docs — Reference
 
@@ -10,7 +10,7 @@ Usage and execution for the `mb-project-docs` skill. the skill's source, `mb-pro
 ## Usage
 
 1. Work in the project's repository (documentation or code). Run for one project at a time.
-2. Invoke `/mb-project-docs`. At close-out the close-out procedure invokes it for you (Step 2a).
+2. Invoke `/mb-project-docs`. At close-out, `/mb-close-out` invokes it for you (Step 3).
 3. First time in a repository: give the skill your own description of what the project is and why it exists, in the same message. Otherwise it asks once.
 4. Read the presentation: per file new, changed or unchanged, the lines that were no longer true, the open items, the README change, and the lines of `AGENTS.md` that will change.
 5. Approve, correct or reject. Corrections are applied exactly.
