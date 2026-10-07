@@ -1,7 +1,7 @@
 ---
 title: "doc-check-config"
 doc-id: "mb-e7e60242"
-updated: "2026-10-04"
+updated: "2026-10-07"
 ---
 # mb-doc-check — Configuration
 
@@ -16,7 +16,7 @@ Canonical current-state record of the `mb-doc-check` program. Agent-facing. Refl
 | Name | `mb-doc-check` — a Python program (standard library only). It is not an OpenCode skill |
 | Purpose | At every commit: completes each committed document's frontmatter, writes every link in the standard form, repairs links after a rename, move or deletion, and stops the commit on a link that points to nothing |
 | Location | `C:\\mybizz\\scripts\\mb-doc-check.py` (WSL: `/mnt/c/mybizz/scripts/mb-doc-check.py`), 88,758 bytes |
-| Settings files | `mb-doc-check.sources` (789 bytes) and `mb-doc-check.roots`, in the same folder |
+| Settings file | `mb-doc-check.sources`, in the same folder |
 | How it runs | As a git `pre-commit` hook in each of the documentation repositories listed in [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md): `python3 /mnt/c/mybizz/scripts/mb-doc-check.py hook`. A commit made in WSL runs it; a commit made from a Windows program does not |
 | Failure behavior | If the program itself fails with an internal error, it prints "skipped because of an internal problem" and lets the commit through. A bug never blocks work. The skipped documents are corrected at their next commit |
 | Network and GBrain | None, except two commands: `sources-check` calls the `gbrain` command, and `slug-selftest` runs GBrain's own page-name function with `bun` |
@@ -30,6 +30,8 @@ Canonical current-state record of the `mb-doc-check` program. Agent-facing. Refl
 | `dev-root-hub` | `/mnt/c/dev/dev-root` |
 | `makepdlf-project-library` | `/mnt/c/dev/dev-makepdlf/makepdlf-project-library` |
 | `mb-3-cs-project-library` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library` |
+| `mb4ecom-project-library` | `/mnt/c/dev/dev-mb4ecom/mb4ecom-project-library` |
+| `mb5pdlf-project-library` | `/mnt/c/dev/dev-mb5pdlf/mb5pdlf-project-library` |
 | `mybizz-config-docs` | `/mnt/c/mybizz/mybizz-config-docs` |
 | `mybizz-os-docs` | `/mnt/c/mybizz/mybizz-os-docs` |
 | `data-mybizz-mgt` | `/mnt/c/data-mybizz-mgt` |
@@ -42,16 +44,15 @@ Canonical current-state record of the `mb-doc-check` program. Agent-facing. Refl
 | `mb-submit-memory` | `/mnt/c/mybizz/mb-submit-memory` |
 | `mb-archify-scope` | `/mnt/c/mybizz/mb-archify-scope` |
 
-Not covered: the two dormant libraries (`mb4ecom-project-library`, `mb5pdlf-project-library`), the code repositories, the Anvil clone and the memory governor's folder. The full list of repositories and sources is in [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md).
+Not covered: the code repositories, the Anvil clone and the memory governor's folder. The full list of repositories and sources is in [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md).
 
 ## Settings
 
 | Setting | Current value | Meaning |
 |---|---|---|
-| Lines `source-id = folder` in `mb-doc-check.sources` | the eight rows above | Which folder is which GBrain source. Must equal GBrain's list (`sources-check`) |
+| Lines `source-id = folder` in `mb-doc-check.sources` | one row per repository in the table above | Which folder is which GBrain source. Must equal GBrain's list (`sources-check`) |
 | `@paths` in `mb-doc-check.sources` | `absolute` | The path part of every link is the full Windows path, for example `C:/mybizz/x/y.md`. Without the line the default is `relative` |
 | `@eol` in `mb-doc-check.sources` | `lf` | Every committed document is stored with LF line endings. Without the line the endings are left as they are |
-| `mb-doc-check.roots` | the eight folders | Folders whose documents may be linked to. One per line; a line starting with `#` is a comment |
 
 Environment variables: `MB_DELETE_OK=1` lets a commit that deletes and adds documents at once go through (see the reference); `MB_DOC_CHECK_SOURCES` and `MB_DOC_CHECK_ROOTS` replace the two settings files; `MB_GBRAIN_DIR` and `MB_GBRAIN_BIN` point `slug-selftest` and `sources-check` at a different GBrain. `MB_DOC_CHECK_TODAY`, `MB_DOC_CHECK_ANYPATH` and `MB_DOC_CHECK_KEEP_SOURCES` exist for the automated tests only.
 
@@ -103,5 +104,5 @@ Problems that already existed before the commit are reported but never stop it.
 
 | # | Item | Status |
 |---|---|---|
-| 1 | The two dormant libraries are not covered; adding one needs the steps in [[[mybizz-config-docs:mb-doc-check/doc-check-reference]]](C:/mybizz/mybizz-config-docs/mb-doc-check/doc-check-reference.md) | Open |
+| 1 | `mb4ecom-project-library` and `mb5pdlf-project-library` are covered | Closed |
 | 2 | The program's built-in help text still shows a relative-path example; the stored form follows `@paths` | Open |

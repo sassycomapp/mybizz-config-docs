@@ -1,7 +1,7 @@
 ---
 title: "gbrain-config"
 doc-id: "mb-b677b7b4"
-updated: "2026-10-04"
+updated: "2026-10-07"
 ---
 # GBrain — Configuration
 
@@ -74,6 +74,14 @@ is the correct tool — full account in [[[mybizz-config-docs:gbrain/gbrain-refe
 |---|---|
 | Embedding | `openai:text-embedding-3-large` (1536 dims) |
 | Chat / expansion | `openai:gpt-5.2` |
+
+### Providers
+
+| Role          | Provider                        | Status                           |
+| ------------- | ------------------------------- | -------------------------------- |
+| Embedding     | OpenAI (text-embedding-3-large) | ✓ active                         |
+| Chat / Expand | OpenAI (gpt-5.2)                | ✓ active, will move to Anthropic |
+| Reranker      | ZeroEntropy                     | ✓ confirmed active               |
 
 ## Live database statistics (verified 2026-09-13 — point-in-time; grows with every sync)
 

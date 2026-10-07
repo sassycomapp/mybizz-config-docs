@@ -1,7 +1,7 @@
 ---
 title: "i-have-adhd-reference"
 doc-id: "mb-0aa03044"
-updated: "2026-10-01"
+updated: "2026-10-07"
 ---
 # i-have-adhd — Reference: Invocation, Operation, Update
 
@@ -148,3 +148,46 @@ for the npx skills CLI's conventional path).
 - Do not create a second activation path for the same ruleset (a duplicate skill folder or a second slash-command file) — it would load the same instructions twice into the session prompt. The installer's own registry copy at `~/.agents/skills/i-have-adhd/` is documented state (config §Install surface), not a violation; manually created duplicates remain prohibited.
 - Do not describe the installed bundle as pinned to a specific upstream version or HEAD — no pin exists (config open item 2).
 - Do not expect the skill to change analysis depth, tool behavior, gates, or PDLF steps — it is output shaping only; break-rule 6 (harness wins) governs every collision.
+
+## Switches, update, verification and uninstall
+
+The skill enforces action-first output: it leads with the next action, numbers
+multi-step work, and suppresses tangents. Installed globally; the always-on
+flag injects the ruleset into every new session.
+
+| Action                             | Command                                                |
+| ---------------------------------- | ------------------------------------------------------ |
+| Invoke for one session             | `/i-have-adhd` in the OpenCode chat                    |
+| Turn off mid-session               | type `stop adhd mode` or `normal mode` in the chat     |
+| Turn always-on off for good        | `rm ~/.config/opencode/.i-have-adhd-always`            |
+| Turn always-on back on             | `touch ~/.config/opencode/.i-have-adhd-always`         |
+| One deep-design session without it | rename the flag file before starting, restore it after |
+| Update the skill                   | `npx skills add ayghri/i-have-adhd -a opencode -y -g`  |
+| Verify the whole wiring            | `node /mnt/c/mybizz/scripts/verify-i-have-adhd.mjs`    |
+
+Install layout (do not move one piece without the others):
+
+- Skill store: `~/.agents/skills/i-have-adhd/` (the `skills` CLI canonical copy).
+- Discovery: `~/.config/opencode/skills/i-have-adhd` is a symlink to the store.
+- Plugin: `~/.config/opencode/plugin/i-have-adhd.mjs`, registered in
+  `~/.config/opencode/opencode.jsonc` under `"plugin"`.
+- Command: `~/.config/opencode/command/i-have-adhd.md`.
+- Path fix: `~/.config/skills` is a symlink to `~/.config/opencode/skills`;
+  the plugin resolves its ruleset through it. Deleting it stops the always-on
+  injection silently.
+- Always-on flag: `~/.config/opencode/.i-have-adhd-always`.
+
+Uninstall completely:
+
+```bash
+rm ~/.config/opencode/plugin/i-have-adhd.mjs
+rm ~/.config/opencode/command/i-have-adhd.md
+rm ~/.config/opencode/skills/i-have-adhd
+rm ~/.config/skills
+rm ~/.config/opencode/.i-have-adhd-always
+rm -rf ~/.agents/skills/i-have-adhd
+```
+
+Then remove the `"plugin"` entry from `~/.config/opencode/opencode.jsonc` and
+restart OpenCode. Config loads once at startup, so any wiring change needs a
+restart to take effect.

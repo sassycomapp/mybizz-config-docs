@@ -1,7 +1,7 @@
 ---
 title: "project-docs-config"
 doc-id: "mb-f7c435e5"
-updated: "2026-10-04"
+updated: "2026-10-07"
 ---
 # mb-project-docs — Config
 
@@ -88,6 +88,6 @@ DONE, BLOCKED, PERMISSION_REQUIRED, CANCELLED.
 
 | # | Item | Status |
 |---|---|---|
-| 1 | The documentation repositories of `mb4ecom` and `mb5pdlf` are not under the commit hook yet, so their files are not checked | Open |
+| 1 | The documentation repositories of `mb4ecom` and `mb5pdlf` are under the commit hook | Closed |
 | 2 | No version field in SKILL.md; currency of the two copies is provable only by diff | Open |
 | 3 | Whether Anvil accepts and keeps an extra folder `theme\docs` has not been verified | Open |
