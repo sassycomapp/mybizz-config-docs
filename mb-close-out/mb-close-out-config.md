@@ -60,7 +60,7 @@ date unless noted. Suite structure governed by [[[mybizz-config-docs:mb-sysdoc-c
 
 | Step | Executes |
 |---|---|
-| 1 — Session page | GBrain `put_page`, slug `sessions/<YYYY-MM-DD>-<short-slug>` |
+| 1 — Session page | A file `sessions/<YYYY-MM-DD>-<short-slug>.md` in the repository; commit all imports it into GBrain |
 | 2 — Candidate facts | Advisory/governed routing; governed → fact file + mb-submit-memory Steps 1–4 |
 | 3 — Project documents | [[[mb-project-docs:mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md) Steps 1–6 (five projects only: makepdlf, mb-3-cs, mb4ecom, mb5pdlf, pdlf) |
 | 4 — Changed files | `bash /mnt/c/mybizz/scripts/commit-all.sh --status` |

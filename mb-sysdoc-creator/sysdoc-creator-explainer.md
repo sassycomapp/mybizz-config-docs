@@ -114,13 +114,9 @@ corpus via the ordinary host-source sync, and every run it closes feeds
 its own learnings file, which shapes the next run's research pattern. This
 skill owns whether the content was true when it was written.
 
-**Open questions.** The skill-index register's missing entry (open item
-in the config doc) matters because that register is the environment's
-authoritative skill status list — a gap there propagates as invisibility.
-The prefix divergence in this suite (`sysdoc-creator-` vs the folder's
-`mb-sysdoc-creator`) is harmless but breaks the repo's otherwise uniform
-folder-name-as-prefix convention; worth a decision before the next suite
-copies it.
+**Decision — the skill-index register entry.** Closed as resolved: the skills catalogue lists `mb-sysdoc-creator`.
+
+**Decision — the file prefix.** This suite keeps the prefix `sysdoc-creator-`, a deliberate exception to the convention that a suite's files use its folder name as prefix. Renaming the three files would disturb every link to them for no practical gain.
 
 ## 5. Config maintenance — how this system is examined and kept healthy
 

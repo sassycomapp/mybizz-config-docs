@@ -22,11 +22,7 @@ invocation. Why it is built this way: [[[mybizz-config-docs:mb-close-out/mb-clos
 
 ### Step 1 — Session page
 
-Write the session summary with `put_page`:
-
-- Slug: `sessions/<YYYY-MM-DD>-<short-slug>`
-- One screen: what was done and the evidence, the decisions and standards the developer set, quirks, the documents written or changed, what is open.
-- The documents hold the detail; the page says what happened and where to look.
+Write the session summary as a file, `sessions/<YYYY-MM-DD>-<short-slug>.md`: in the current repository when it is on the commit-all list, otherwise in `C:\mybizz\mybizz-config-docs\sessions\`. Body only; the commit hook adds the frontmatter, and commit all imports the page into GBrain. Never use `put_page` or `gbrain capture` for it (see the decision in the explainer).
 
 ### Step 2 — Candidate facts
 

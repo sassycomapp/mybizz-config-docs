@@ -5,6 +5,8 @@ updated: "2026-10-07"
 ---
 # GBrain — Configuration
 
+> **Decision — GBrain's writer and ownership model (2026-10-07).** Not adopted now. It is decided together with the next GBrain upgrade, as one planned change. Until then no GBrain source is claimed or activated, because claiming stops ordinary sync until activation is complete. Writes into a source's folder (`put_page`, `gbrain capture`) are refused with `owner_unavailable`, so session pages are written as files and imported by commit all. Fact writes stored in the database (`remember`, `forget`) are not affected.
+
 Canonical current-state configuration record for GBrain as a division-wide
 system component. Agent-facing. Reflects the live-verified state as of
 2026-09-13, updated 2026-09-30 for the GBrain upgrade to 0.59.18.0 (rows and

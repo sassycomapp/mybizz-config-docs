@@ -1,9 +1,11 @@
 ---
 title: "gbrain-explainer"
 doc-id: "mb-3187a352"
-updated: "2026-10-02"
+updated: "2026-10-07"
 ---
 # GBrain — Explainer
+
+> **Decision — GBrain's writer and ownership model (2026-10-07).** Not adopted now. It is decided together with the next GBrain upgrade, as one planned change. Until then no GBrain source is claimed or activated, because claiming stops ordinary sync until activation is complete. Writes into a source's folder (`put_page`, `gbrain capture`) are refused with `owner_unavailable`, so session pages are written as files and imported by commit all. Fact writes stored in the database (`remember`, `forget`) are not affected.
 
 *Companion note: for current confirmed state (version, sources, credentials,
 open items) see [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md). For commands, incidents, and

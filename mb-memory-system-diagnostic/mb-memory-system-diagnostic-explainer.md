@@ -1,7 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-explainer"
 doc-id: "mb-dd98962e"
-updated: "2026-10-05"
+updated: "2026-10-07"
 ---
 # mb-memory-system-diagnostic — What It Is, What It Does, and Why It Is Built This Way
 
@@ -154,15 +154,7 @@ and §9 so that no section can drift into it.
 
 ## Why the Init-Model Check Runs First in §2
 
-The recorded state is genuinely contradictory. `postgresql-reference.md`
-(verified 2026-09-13) documents WSL here as systemd-less — `pg_ctlcluster` /
-`service` only. Two days later, the Memory Governor's auto-start migration
-flipped `systemd=true` in `/etc/wsl.conf`, a change its own documentation
-states affects the entire WSL environment, not just the Governor's two
-processes. Rather than silently picking the newer record, §2 probes PID 1 and
-both management paths live, logs which actually work, and treats a mismatch
-as a finding routed to a documentation correction (developer-approved before
-editing) — never a live-system "fix" and never a contradiction papered over.
+WSL's service management is a fact the rest of the diagnostic depends on, so §2 probes it live first rather than trusting the record: PID 1 and both management paths are checked and the result is logged. The PostgreSQL documents record systemd as the init system; a mismatch between that record and the live probe is a finding routed to a documentation correction (developer-approved before editing) — never a live-system "fix" and never a contradiction papered over.
 The same principle generalizes: a check that cannot run is a finding, not a
 skip.
 
@@ -182,7 +174,7 @@ failure.
 ## Where It Sits in the System
 
 The diagnostic is downstream of the six components' standing config suites —
-it reads their recorded constants (the 62/62 RLS coverage, the high-risk
+it reads their recorded constants (the RLS coverage, the high-risk
 category list, the dream-cycle FAIL-expected reading, the ADR's remediation
 sequence) instead of re-deriving them — and upstream of nothing: no build,
 deploy, or enforcement consumes its output. It complements the `mb-config-*`

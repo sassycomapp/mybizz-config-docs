@@ -1,7 +1,7 @@
 ---
 title: "mb-submit-memory-config"
 doc-id: "mb-e76d96dd"
-updated: "2026-10-05"
+updated: "2026-10-07"
 ---
 # mb-submit-memory — Configuration
 
@@ -17,7 +17,7 @@ the GBrain upgrade to 0.59.18.0.
 | Item | Value |
 |---|---|
 | Skill name | `mb-submit-memory` — custom (mb-*) skill |
-| Location | `~/.config/opencode/skills/mb-submit-memory/SKILL.md` (real file, 2026-08-25) — the sole copy; no repo-side mirror since 2026-09-15 (the folder's skill slot now holds the `mb-config-mb-submit-memory` exam-skill source per developer instruction; the 13,502 B fingerprint above is the repo-side anchor). The exam-skill source↔installed pair is hash-verified each cycle |
+| Location | `~/.config/opencode/skills/mb-submit-memory/SKILL.md` (real file, 2026-08-25) — the installed copy; its source is `C:\mybizz\mb-submit-memory\mb-submit-memory.md`, kept identical (the folder's skill slot now holds the `mb-config-mb-submit-memory` exam-skill source per developer instruction; the 13,502 B fingerprint above is the repo-side anchor). The exam-skill source↔installed pair is hash-verified each cycle |
 | Invocation | `/mb-submit-memory (path)` — path always given explicitly by the developer, never inferred; never auto-triggered |
 | Structure | Single file (13,502 B). A 25-byte `Zone.Identifier` sidecar in the installed dir was removed 2026-09-08 |
 | Modus operandi | learnings → backup (none needed) → detect → report → **pause for inline approval** → apply → verify → log → learnings — one continuous run |
@@ -76,5 +76,5 @@ pending a credentialed API check (needs the `manual_submission` credential).
 - Governor-side `owning_project` verification — executed 2026-09-15 (exam run #1 Tier 3): credential accepted, review queue empty (nothing pending); every evidenced `owning_project` (`mybizz-config-docs`, `makepdlf-project-library`) matches a registered gbrain source exactly. Boundary: no documented API endpoint enumerates all project rows — full enumeration would require a new read endpoint (developer feature decision) or a credentialed DB query (developer-run).
 - Permanent auto-start installation (systemd migration) — **executed and verified 2026-09-15** (see Downstream system); closed.
 - Stray `0.48.2.0` file deletion — pending developer (restricted folder).
-- Dual SKILL.md copies — dissolved 2026-09-15 (exam run #1 gate): the mirror slot was repurposed as the exam-skill source; the subject skill has a single installed copy.
+- Dual SKILL.md copies — dissolved 2026-09-15 (exam run #1 gate): the mirror slot was repurposed as the exam-skill source; the subject skill has one installed copy, with its source in its own repository.
 - Near-identical duplicate copy of `environment-explainer.md` in the `pdlf` source (found by the 2026-09-30 run) — developer decision whether to keep both.

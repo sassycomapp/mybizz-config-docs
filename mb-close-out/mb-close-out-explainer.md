@@ -5,6 +5,8 @@ updated: "2026-10-07"
 ---
 # mb-close-out — Explainer
 
+> **Decision — GBrain's writer and ownership model (2026-10-07).** Not adopted now. It is decided together with the next GBrain upgrade, as one planned change. Until then no GBrain source is claimed or activated, because claiming stops ordinary sync until activation is complete. Writes into a source's folder (`put_page`, `gbrain capture`) are refused with `owner_unavailable`, so session pages are written as files and imported by commit all. Fact writes stored in the database (`remember`, `forget`) are not affected.
+
 ## What this actually is
 
 A long session ends with everything that matters still trapped inside the
@@ -51,7 +53,7 @@ skips what does not apply.
 
 **Not good for:** committing work — the agent never commits; the developer
 pastes the commit command. Mid-session note-keeping — capture during work
-belongs to GBrain capture, not to the close-out. Automatic end-of-session
+is not part of the close-out. Automatic end-of-session
 triggering — close-out is on demand only, by standing decision.
 
 ## Why it is built this way
@@ -105,7 +107,7 @@ since 2026-09-23. Reopening a session is now "open the last session about
 Upstream: any session in any layer. Downstream: the commit-all procedure
 (developer-run terminal block), which carries the mb-doc-check hook that
 keeps documents correct at entry. It calls: mb-submit-memory (governed
-facts), mb-project-docs (project documents), GBrain `put_page` and
+facts), mb-project-docs (project documents), a session-page file imported by commit all, and
 `remember`, and the memory-governor review endpoint (developer-run). The
 pointer documents — opening-and-closing, fact-save-and-recall, daily-ops —
 all defer to the skill's own file as the authoritative procedure.

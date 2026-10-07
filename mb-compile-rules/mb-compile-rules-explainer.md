@@ -1,7 +1,7 @@
 ---
 title: "mb-compile-rules-explainer"
 doc-id: "mb-3c93f17d"
-updated: "2026-10-01"
+updated: "2026-10-07"
 ---
 # mb-compile-rules Explainer
 
@@ -48,8 +48,7 @@ rejected is removed immediately, not left for later cleanup.
   file; amending an existing rule with minimal, fully-retested changes;
   being the *only* door through which new enforcement files enter the
   live folder.
-- **Good for:** auditing the rule estate (19 source documents, all
-  deployed globally); re-verifying a rule after a system change; onboarding
+- **Good for:** auditing the rule estate (all source documents deployed globally; counts in the configuration); re-verifying a rule after a system change; onboarding
   a new rule from a plain-language proposal.
 - **Not good for:** as proof on its own — an offline syntax pass is
   evidence, not verification; several real rules passed offline and failed
@@ -95,10 +94,7 @@ other path (a careless "add everything" save) was the recorded cause of
 the total 2026-09-06 outage. This pipeline is the sanctioned door, and
 its gates are the review.
 
-**Open questions.** The two copies of the skill file (the installed one
-and the mirror in this folder) are identical today but nothing keeps them
-synced — a divergence would mean the documentation and the behavior drift
-apart. Cupcake's reactivation completed the same day this suite was
+**Open questions.** The two copies of the skill file (the installed one and the source copy) are identical (verified live 2026-10-07), but nothing keeps them in step automatically; the configuration exam is the check. Cupcake's reactivation completed the same day this suite was
 written: the cross-folder rule went through this very pipeline, passed
 13/13 live tests, and is now enforced — the strongest possible validation
 of both the pipeline and these documents.

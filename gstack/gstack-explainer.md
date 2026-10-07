@@ -1,7 +1,7 @@
 ---
 title: "gstack-explainer"
 doc-id: "mb-b80e9856"
-updated: "2026-10-03"
+updated: "2026-10-07"
 ---
 # GStack Explainer
 
@@ -61,8 +61,7 @@ in what order).** Neither replaces reading the actual code.
   guard mode.
 - **Documentation.** Diataxis-structured doc generation and post-ship doc
   syncing.
-- **GBrain upkeep.** Per-repo brain sync and setup skills (with known
-  caveats — see suitability).
+- **GBrain upkeep.** Per-repo brain sync and setup skills. Not used in this environment: GBrain is synced by commit all.
 
 Roughly a third of the work is done by 74 standalone binaries under the
 clone's `bin/` — deterministic scripts the skills call, not chat.
@@ -75,7 +74,7 @@ clone's `bin/` — deterministic scripts the skills call, not chat.
   learnings that compound across sessions.
 - **Good for:** planning work in `-project-library` docs repos (the
   docs-plan workflow); security audits on any repo; PDF and diagram
-  generation; keeping GBrain synced per repo.
+  generation.
 - **Not good for:** trivial one-line tasks — the ceremony costs more than
   it catches; `/land-and-deploy`
   before `/setup-deploy` has been configured; trusting `/setup-gbrain`'s

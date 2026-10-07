@@ -1,7 +1,7 @@
 ---
 title: "gbrain-dream-cycle-config"
 doc-id: "mb-c6df61ed"
-updated: "2026-10-01"
+updated: "2026-10-07"
 ---
 # GBrain Dream Cycle — Configuration
 
@@ -25,7 +25,7 @@ which also owns the confirmed full phase sequence.
 | Parent system | GBrain `0.59.18.0` (upgraded 2026-09-30 from 0.46.1.0; 0.60.25.0 is the newest release — see [[[mybizz-config-docs:gbrain/gbrain-config\|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md) open items) |
 | Schema pack coupling | `gbrain-everything@1.0.0` (sha8 `7021205a`) — the only installed pack; dream phases operate within its extractability rules |
 | Invocation model | **Manual, on-demand only — deliberate design choice, confirmed 2026-09-06.** No schedule exists or is wanted |
-| Trigger surfaces | `gbrain dream` (full), `gbrain dream --phase <name>` (single phase), `gbrain dream --source <id>` (source-scoped), `/sync-gbrain --dream` (gstack skill — see overlap trap, reference.md) |
+| Trigger surfaces | `gbrain dream` (full), `gbrain dream --phase <name>` (single phase), `gbrain dream --source <id>` (source-scoped), `/sync-gbrain --dream` (gstack skill — not used in this environment: the dream cycle is run from `/mb-memory-system-diagnostic`; see the overlap trap in the reference) |
 | Phases most operationally relevant here | `extract_atoms` (Anthropic-dependent), `resolve_symbol_edges` (call-graph attempt) |
 | Job queue | No GBrain worker runs, so the `extract` and `facts-absorb` jobs that syncs create wait unprocessed (34 waiting jobs were cancelled 2026-09-30). Under 0.59.18.0, every waiting job must be authorized or cancelled before a worker is started |
 | Links between repositories | The cycle's own `extract` phase reads one source at a time and cannot resolve a link into another source (from GBrain's source code; not yet seen in a run). Those links are written by the full read at the end of `sync-gbrain.sh` (`gbrain extract links --source db`); run that command after a dream if they are missing |

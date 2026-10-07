@@ -1,7 +1,7 @@
 ---
 title: "graphify-explainer"
 doc-id: "mb-c1bcfdd3"
-updated: "2026-10-01"
+updated: "2026-10-07"
 ---
 # Graphify Explainer
 
@@ -128,8 +128,7 @@ its own tool's confidence scale — that agreement is the signal. Had either
 been low-confidence, the same agreement would have been a lead to verify
 rather than a settled answer.
 
-**Open architectural questions.** Upgrade timing: the installed 0.9.40 lags
-PyPI's 0.9.56; upstream has since added PR-triage dashboards, HTTP MCP
+**Open architectural questions.** Upgrade timing: the installed version (0.9.40, verified 2026-10-07) lags upstream; upstream has since added PR-triage dashboards, HTTP MCP
 serving, and a team-setup model that assumes a committed graph — none
 adopted here, all requiring a deliberate re-decision against the standing
 ones above. Whether the AGENTS.md guidance block should ever travel with the
@@ -167,14 +166,14 @@ and MCP frontends, so the two surfaces cannot disagree; gitignored derived
 output keeps the repo clean and provenance meaningful.
 
 **Weaknesses.** Single-project scope — the one real graph serves mb-3-cs,
-which is paused, so the tool currently has no active project to serve; the
+which is on hold until PDLF builds it, so the tool currently has no active project to serve; the
 undirected-storage vs directed-traversal default trap recurs on every path
 query; Anvil UI templates appear only as ghost name references, never
 extracted structure; community labels are deterministic representative-node
 names (no LLM labeling installed); the installed version deliberately lags
 upstream with no auto-update path.
 
-**Opportunities.** The 0.9.56 upgrade would add PR-triage dashboards, HTTP MCP
+**Opportunities.** An upgrade would add PR-triage dashboards, HTTP MCP
 transport, and multi-project serving — each requiring a deliberate re-decision
 against the standing ones; other projects' repos become graphable as they
 activate; the `--postgres` extraction path is unused and could graph database

@@ -103,4 +103,4 @@ verified live this date unless noted.
 1. ~~The Skills Catalog (`mybizz-os-docs`) records `mb-sysdoc-creator` as installed.~~ CLOSED 2026-10-07 — verified live (catalog row: `Operational` / `Both` / `OK`, source = own repository).
 2. No version field in SKILL.md — currency between the installed copy and the canonical source is provable only by the body-hash pair (repo source ↔ installed), config-manager pinned method.
 3. The canonical skill source lives in its own repository (`C:\mybizz\mb-sysdoc-creator\`, GitHub-backed) — the suite folder's former in-folder copy (82-byte stub) is gate-approved for removal 2026-10-07 (config-management run #1); the agent `rm` was guard-denied, so the file removal is developer-run pending; the exam set documents the repo source directly.
-4. This suite's file prefix (`sysdoc-creator-`) differs from the folder/skill name (`mb-sysdoc-creator`) — developer-stated naming for this suite; sibling suites use the folder name as prefix.
+4. **Decision (developer, 2026-10-07):** the file prefix `sysdoc-creator-` is kept as a deliberate exception to the folder-name-as-prefix convention. Closed.

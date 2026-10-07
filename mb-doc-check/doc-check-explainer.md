@@ -1,7 +1,7 @@
 ---
 title: "doc-check-explainer"
 doc-id: "mb-632b78c3"
-updated: "2026-10-04"
+updated: "2026-10-07"
 ---
 # mb-doc-check — Explainer
 
@@ -30,7 +30,7 @@ At every commit the program looks at two pictures of the repository: the committ
 
 **Deciding which document a link means.** A name is matched to a document's file name, ignoring upper and lower case. A name that exists in the linking document's own repository wins over the same name elsewhere. If the name still names several documents, or none, the link is not rewritten, and if you just typed it, the commit is stopped.
 
-**Where the knowledge comes from.** A small settings file lists which folder is which GBrain source, so that the program can write the source id into every link. A second file lists the folders a link may point into.
+**Where the knowledge comes from.** A small settings file lists which folder is which GBrain source, so that the program can write the source id into every link.
 
 ## 3. Suitability
 
@@ -76,6 +76,6 @@ At every commit the program looks at two pictures of the repository: the committ
 
 **Weaknesses.** It only protects commits made in WSL. A failure of the program lets one commit through unchecked. The stored link form is noisy to read in raw text and ties documents to this computer's folder layout.
 
-**Opportunities.** Bringing the two dormant libraries under the same rules. Using the stable `doc-id` for further automatic checks, such as detecting duplicated documents.
+**Opportunities.** Using the stable `doc-id` for further automatic checks, such as detecting duplicated documents.
 
 **Threats.** A commit made with `--no-verify` or from Windows leaves documents in the wrong form. A mismatch between the settings file and GBrain's sources makes links name a source that does not exist. A GBrain upgrade that changes the page-name rule would make new links wrong until the rule is updated.

@@ -1,7 +1,7 @@
 ---
 title: "mb-submit-memory-explainer"
 doc-id: "mb-91eb637f"
-updated: "2026-10-02"
+updated: "2026-10-07"
 ---
 # mb-submit-memory — Explainer
 
@@ -66,13 +66,10 @@ Three couplings make the system genuinely complex, and all three have bitten:
 - **The startup coupling.** The gate reads its configuration and database
   credentials from the environment at the moment it starts, not from files
   it hunts for. Started carelessly, it runs but cannot reach anything —
-  every submission fails authentication. It must be started the one correct
-  way (documented in the reference).
+  every submission fails authentication. Its permanent automatic start always starts it the correct way; the risk returns only if it is ever started by hand (the reference documents the one correct manual start).
 - **The default-source coupling (2026-09-30).** Before every write, the gate's
   worker sets GBrain's brain-level default source to the submission's project. A
-  default that names a source that no longer exists stops `gbrain sync` under
-  GBrain 0.59.18.0 — as happened on 2026-09-30 (`diag-mg-sec4`) — until it is
-  reset (`gbrain sources default default`). The write itself names the owning project's source, so the fact lands there whatever folder the worker runs in.
+  default that names a source that no longer exists stops `gbrain sync`; `sync-gbrain.sh` therefore resets the default before every sync, so it corrects itself. The write itself names the owning project's source, so the fact lands there whatever folder the worker runs in.
 
 One more living reality: the quick, ungoverned path is not hypothetical —
 the tool surface that carries it is explicitly enabled and sits in every
@@ -132,8 +129,7 @@ installation was recommended, approved and executed (systemd user units,
 verified 2026-09-15) so "the gate was closed" stops being a possible state.
 
 **Open questions.** The permanent auto-start installation was executed and
-verified on 2026-09-15; the skill file has a single installed copy since
-2026-09-15; the governor's own records of past submissions' project names were
+verified on 2026-09-15; the skill has a source copy in its own repository and one installed copy; the governor's own records of past submissions' project names were
 partly verified on 2026-09-15 (no endpoint lists all project rows); and the gate-vs-quick-path tension is
 managed by documented discipline rather than mechanics — the honest,
 currently-accepted state.
@@ -183,8 +179,7 @@ end again on GBrain 0.59.18.0 (2026-09-30: promoted, nothing left in review).
 **Weaknesses.** The governor was found down once (2026-09-08) — since
 2026-09-15 it runs under systemd, which removes that failure mode but not a
 stopped unit; several checks are permanently developer-run (anything credentialed);
-the subject skill has no repo-side source copy since the mirror slot was
-repurposed (2026-09-15) — the spec's recorded fingerprint is its only anchor.
+the subject skill's source copy lives in its own repository (`C:\mybizz\mb-submit-memory\mb-submit-memory.md`), and the installed copy must be kept identical to it.
 
 **Opportunities.** The config-management exam adds standing verification that
 never existed between runs: the auth-gate probe, the detect-surface probe, the
@@ -194,12 +189,9 @@ submission.
 
 **Threats.** The ungoverned quick path is real, enabled, and sits in every
 session next to this skill — the counterweight is documented discipline, not
-mechanics; the startup coupling means a carelessly started governor 401s every
-submission; project-registry and gbrain-source naming drift silently kills
+mechanics; a governor started by hand the wrong way 401s every submission (the automatic start avoids this); project-registry and gbrain-source naming drift silently kills
 flushes (operational learning #2) — the credentialed Tier 3 check is the only
-close watch on it. A stale brain default (a source that no longer exists) stops
-every sync under GBrain 0.59.18.0 — the worker changes that default with every
-write.
+close watch on it. A stale brain default would stop every sync, but `sync-gbrain.sh` resets it before each one.
 
 ---
 
