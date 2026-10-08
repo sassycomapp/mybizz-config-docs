@@ -1,14 +1,20 @@
 ---
 title: "mb-archify-scope-explainer"
 doc-id: "mb-b249e1f5"
-updated: "2026-10-07"
+updated: "2026-10-08"
 ---
 
 # mb-archify-scope — Explainer
 
 Orientation, suitability, and reasoning for the `mb-archify-scope` scoping
 skill. State: [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-config.md). Procedure:
-[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-reference.md).
+[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-reference.md). The
+config-management exam set for this suite ([[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-plan.md) ·
+[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-report.md) · [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-log|Log]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-log.md) ·
+[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-learnings.md) · [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-skill|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-skill.md)) is
+synthesized and consumed per the [[[mybizz-config-docs:mb-config-manager/config-manager-agent|Config Manager]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md)
+plan-driven cycle — the exam verifies this suite's state and never runs the
+subject skill itself.
 
 ## What this actually is
 
@@ -101,11 +107,11 @@ needs an explicit trust-boundary list; the picture never substitutes for one.
 
 ## Open architectural questions
 
-- **Two output conventions in flight.** The spec's file-conventions table still
-  shows flat output paths while the live convention nests under one folder per
-  project slug. The header is the contract the authoring run consumes; two path
-  shapes invite exactly the drift this suite exists to prevent. Resolving it is
-  a one-line spec edit — developer-owned.
+- **Two output conventions in flight — resolved 2026-10-08 (gate-approved F-1,
+  run #1).** The spec's flat file-convention paths (§File conventions table,
+  Phase 8 inline paths, Phase 9 learnings path) were corrected to the nested
+  per-slug convention in one pass, the installed copy re-synced body-to-body,
+  and the pair re-verified. The header contract now carries one path shape.
 - **Where "low technical intensity" ends.** The abort threshold is judgment,
   deliberately so — but the boundary case (a two-component flow with one label
   of consequence) will recur, and each instance either hardens the line or
@@ -114,3 +120,72 @@ needs an explicit trust-boundary list; the picture never substitutes for one.
   skills-directory writes has one unresolved probe case (sessions opened in an
   ancestor folder); until resolved, the sync procedure treats every
   installed-copy write as grant-required.
+
+## Config maintenance — how this system is examined and kept healthy
+
+This suite participates in the config-management system (`mb-config-manager`).
+The roles of the seven suite files, and the exam cycle that runs them, are the
+architecture described in [[mybizz-config-docs:mb-config-manager/config-manager-explainer|the config-manager
+explainer]] — emulated from the PostgreSQL pilot. The short local version:
+
+- [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-config.md) is the **spec** — the ideal state every
+  exam checks against.
+- Before each exam run, the config-manager synthesizes
+  [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-plan.md): a fresh job-spec built from this spec, the
+  last report, the log, and the learnings. The plan is transient (the file is
+  live; contents rewritten each cycle).
+- The exam runs the installed skill (`mb-config-mb-archify-scope`) with the
+  plan in hand — detection fully autonomous; healing gated.
+- **Agent-healable items are suite-file repairs only** (the exam set files).
+  The installed subject copy, the repo spec, the archify suite's documents,
+  GBrain's engine, Cupcake internals, and the run artifacts are deny-list:
+  changes reach them only as gate proposals the developer approves item by
+  item.
+- No credential route exists in this system — nothing to reference by name,
+  nothing to withhold.
+- The run rewrites [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-report.md) (current state, no
+  history), appends one row to [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-log|Log]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-log.md), files new learnings, and
+  prunes absorbed entries.
+
+## S.W.O.T.
+
+**Strengths.** Type, density, and corridor decisions made before any node
+exists — the lesson that created the skill; the machine header as a verbatim
+contract, so approval and execution cannot drift; read-only until the gate
+(nothing is written unasked); abort-and-reshape (never ends on a refusal);
+proven on its first real subject (corridor failures 17→0; 9/9 showcase).
+
+**Weaknesses.** Proven on a single live run; the low-intensity abort threshold
+is judgment, deliberately soft; no mechanical sync between repo spec and
+installed copy — the body change is applied by hand on both sides, and the
+2026-09-16 AR2-3 event proved the spec-edited-after-install class fires for
+real; the suite is young — its first formal exam run is pending at build-out.
+
+**Opportunities.** The config-management exam adds standing verification this
+skill never had; the W-1 spec correction (one line) removes the two
+path-shapes ambiguity; the fact-ownership reduction (W-2) simplifies
+archify-config; future runs feed Phase 9 learnings, which graduate into the
+skill or the archify reference.
+
+**Threats.** Spec-edited-after-install drift recurrence (mitigated: the hash
+pair is re-verified every run — AS1-2/AS1-3 here, AR2-3 in the archify exam);
+the two output path shapes in flight (W-1) could route a header to the wrong
+folder (mitigated: flagged every run until the developer's correction lands);
+Cupcake grant posture on installed-copy writes (mitigated: the body-to-body,
+developer-run sync discipline is documented and checked — AS2-4).
+
+---
+
+*Companion documents: [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-config.md) (current state),
+[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-reference.md) (procedures), the exam set ([[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-plan.md) ·
+[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-report.md) · [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-log|Log]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-log.md) ·
+[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-learnings.md) · [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-skill|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-skill.md)), the
+canonical spec ([[[mb-archify-scope:mb-archify-scope|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md), repo), the archify suite's component documentation
+([[[mybizz-config-docs:archify/archify-config|Archify Configuration]]](C:/mybizz/mybizz-config-docs/archify/archify-config.md) §Scoping skill component ·
+[[[mybizz-config-docs:archify/archify-reference|Archify Reference]]](C:/mybizz/mybizz-config-docs/archify/archify-reference.md) ·
+[[[mybizz-config-docs:archify/archify-explainer|Archify Explainer]]](C:/mybizz/mybizz-config-docs/archify/archify-explainer.md)), and the provenance pages
+([[[mybizz-config-docs:sessions/2026-09-15-006-archify-scope-skill|Session 006]]](C:/mybizz/mybizz-config-docs/sessions/2026-09-15-006-archify-scope-skill.md) ·
+[[[mybizz-config-docs:facts/2026-09-15-archify-scope-pre-work|durable fact]]](C:/mybizz/mybizz-config-docs/facts/2026-09-15-archify-scope-pre-work.md) ·
+[[[mybizz-config-docs:archify/output/memory-ecosystem-project/learnings/2026-09-15-memory-ecosystem|first-run learnings]]](C:/mybizz/mybizz-config-docs/archify/output/memory-ecosystem-project/learnings/2026-09-15-memory-ecosystem.md)).*
+
+*End of document*

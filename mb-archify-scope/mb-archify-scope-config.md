@@ -1,7 +1,7 @@
 ---
 title: "mb-archify-scope-config"
 doc-id: "mb-694acd5e"
-updated: "2026-10-07"
+updated: "2026-10-08"
 ---
 
 # mb-archify-scope — Configuration
@@ -26,10 +26,10 @@ unless noted.
 
 | Item | Value |
 |---|---|
-| Canonical spec (repo) | `C:\mybizz\mb-archify-scope\mb-archify-scope.md` (WSL: `/mnt/c/mybizz/mb-archify-scope/mb-archify-scope.md`), doc-id `mb-ab9e047b`, updated 2026-10-04 |
+| Canonical spec (repo) | `C:\mybizz\mb-archify-scope\mb-archify-scope.md` (WSL: `/mnt/c/mybizz/mb-archify-scope/mb-archify-scope.md`), doc-id `mb-ab9e047b`, updated 2026-10-08 (run #1 gate-approved F-1 file-convention correction) |
 | Repo contents | `.git/` + the spec file — nothing else |
-| Installed copy | `~/.config/opencode/skills/mb-archify-scope/SKILL.md` (14,356 B; spec: 14,228 B) |
-| Sync state | Bodies byte-identical (diff verified 2026-10-07); frontmatter differs by design — repo spec carries doc frontmatter (`title`/`doc-id`/`updated`), installed copy carries skill frontmatter (`name`/`description`) |
+| Installed copy | `~/.config/opencode/skills/mb-archify-scope/SKILL.md` (14,467 B; spec: 14,339 B) |
+| Sync state | Bodies byte-identical (hash pair `c22bef6a8c635424` both sides, verified 2026-10-08 after the gate-approved body-to-body re-sync); frontmatter differs by design — repo spec carries doc frontmatter (`title`/`doc-id`/`updated`), installed copy carries skill frontmatter (`name`/`description`) |
 | Sync mechanism | None mechanical — the same body change is applied to both files by hand; a plain copy of the spec over the installed copy destroys the skill frontmatter |
 
 ## GBrain registration
@@ -85,7 +85,7 @@ The skill is read-only until Phase 8.
 
 ## Open items
 
-1. Spec drift: the spec's File-conventions table reads `output/{subject}-*` (flat); the live convention since 2026-09-16 nests under `output/{slug}/`. Spec correction is developer-owned.
+1. **RESOLVED 2026-10-08** — Spec drift closed at the run #1 gate (F-1 approved): the File-conventions drift (flat vs nested) was corrected at all three recorded locations (§File conventions table, Phase 8 inline paths, Phase 9 learnings path); the installed copy was re-synced body-to-body and the hash pair `c22bef6a8c635424` verified. The header contract carries one path shape.
 2. Fact ownership: this suite now owns the skill's facts; archify-config's scoping-skill component section is to be reduced to a cross-reference pointer (developer-run edit, separate task).
 3. mybizz-config-docs has no suite register (its README structure table lists only the 8 older reference-style folders) — flagged, not created.
 4. Cupcake skills-dir ancestor-cwd case (carried in the cupcake exam report) is unresolved; installed-copy writes are treated as grant-required from every session until it is.
