@@ -260,7 +260,7 @@ designed to.
 
 The environment has four named layers — the pre-makePDLF layer, the
 makePDLF layer, the PDLF layer, and the shipped estate (full map:
-[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]). Sentinel spans three of them,
+the pre-makePDLF, makePDLF, PDLF, and shipped layers). Sentinel spans three of them,
 and the span is deliberate:
 
 - **Pre-makePDLF (now):** the skill, the security-global library, the
@@ -361,6 +361,6 @@ Citation rot — skill content pointing at renamed or restructured documents
 [[[mybizz-config-docs:mb-sentinel-review/sentinel-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-exam-report.md) · [[[mybizz-config-docs:mb-sentinel-review/sentinel-log|Log]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-log.md) ·
 [[[mybizz-config-docs:mb-sentinel-review/sentinel-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-learnings.md) · [[[mybizz-config-docs:mb-sentinel-review/sentinel-skill|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-skill.md)). The reasoning methodology:
 `github.com/magnus919/agent-skills/tree/main/secure-software-engineering`.
-The full environment map: [[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]].*
+The full environment map: the pre-makePDLF, makePDLF, PDLF, and shipped layers.*
 
 *End of document*

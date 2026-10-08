@@ -27,7 +27,7 @@ five-part OpenCode suite; each file owns one scope:
 | Upstream | `github.com/anomalyco/opencode` |
 | Global config | `~/.config/opencode/opencode.jsonc` — the only global config file (consolidated from two, 2026-09-01) |
 | Config precedence | **Verified 2026-09-09 against the upstream documentation and empirically via `opencode debug config`**: configs are **merged, not replaced** — project config overrides global only for conflicting keys, non-conflicting settings from both are preserved, and nested permission maps merge deeply (see the permission model document for the verified test). Project config has the highest precedence among standard config files. |
-| Harness role | OpenCode is the harness spanning every environment layer (see [[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer\|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]) — the pre-makePDLF supporting systems run inside or beside it, the makePDLF layer builds the PDLF application in it, and the PDLF layer builds the shipped estate through it |
+| Harness role | OpenCode is the harness spanning every environment layer (see the pre-makePDLF, makePDLF, PDLF, and shipped layers) — the pre-makePDLF supporting systems run inside or beside it, the makePDLF layer builds the PDLF application in it, and the PDLF layer builds the shipped estate through it |
 | WSL distro (real, active) | `Ubuntu` — **not** the default (`Ubuntu-22.04`, stopped). Any Windows-triggered command invoking `wsl.exe` must explicitly pass `-d Ubuntu -u dev-p` |
 
 ## Global config — real, current content (verified key-by-key 2026-09-09; re-verified via run #1 developer bundle 2026-09-15)

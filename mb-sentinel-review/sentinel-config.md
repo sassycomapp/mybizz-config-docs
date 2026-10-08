@@ -24,7 +24,7 @@ scope is [[[mybizz-config-docs:mb-sentinel-review/sentinel-scope|Scope]]](C:/myb
 | Scope | [[[mybizz-config-docs:mb-sentinel-review/sentinel-scope\|Scope]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-scope.md) (this folder) — the agreed three-layer scope |
 | Reasoning methodology | `secure-software-engineering` — **installed 2026-09-09** at `~/.config/opencode/skills/secure-software-engineering/` (SKILL.md + README + 11 methodology references + source-index.md + 3 templates + evals.json — matches upstream tree shape; registered in the session skill catalog); upstream `github.com/magnus919/agent-skills/tree/main/secure-software-engineering` (MIT — re-verified live 2026-10-07: actively maintained) |
 
-## Environment position (per [[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]])
+## Environment position (per the pre-makePDLF, makePDLF, PDLF, and shipped layers)
 
 | Layer | Sentinel's presence |
 |---|---|

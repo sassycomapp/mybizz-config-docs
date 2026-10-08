@@ -13,7 +13,7 @@ procedures, see [[[mybizz-config-docs:postgresql/postgresql-reference|Reference:
 **Two entirely separate instances exist. Do not confuse them.** The layer
 placement: Instance B hosts the pre-makePDLF layer's memory; Instance A
 hosts the PDLF layer's ledger (see
-[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]] for the layer map).
+the pre-makePDLF, makePDLF, PDLF, and shipped layers for the layer map).
 
 ## The two PostgreSQL installations at a glance
 
@@ -162,9 +162,9 @@ names it explicitly (`wsl -d Ubuntu ...`).
 - **Coverage: every data-bearing database on both instances, always** (developer default): Instance A `pdlf` + `postgres` (admin); Instance B `gbrain` + `memory_governor` + `postgres` (admin). **Templates excluded** — standard system objects, rebuildable from the install itself; `template0` is not connectable and cannot be dumped normally.
 - Format: `pg_dump -Fc` (custom, compressed); one file per database (pg_dump is per-database by design). Naming: `<db>-db-backup-YYYY-MM-DD.dump`, admin DBs disambiguated `-a-` / `-b-` by instance.
 - **Cadence: weekly (7 days), exam-enforced** — every config-management exam checks dump age; older than 7 days = finding that forces a fresh cycle. Run every Sunday at 10:00 by the Task Scheduler task `SundayBackup` (`C:\mybizz\scripts\sunday-backup.sh`); a missed start is not caught up, and a missed or failed run is reported at the next logon. Event-triggered extras: always before upgrades, schema changes, or destructive operations.
-- **Retention: the two most recent verified cycles in each location; older dumps are deleted at the cycle that supersedes them** (developer decision 2026-10-05).
+- **Retention: the two most recent verified cycles in each location; older dumps are deleted at the cycle that supersedes them**.
 - **Live-database rule:** never re-dump one side of the pair; dump once, copy to both locations immediately, then hash-verify (`cmp`/sha256). A mismatched pair means re-dump + re-copy both, never copy one way twice.
-- Latest completed cycle: 2026-10-05 — all five pairs hash-verified identical: `gbrain` 78,946,270 B · `memory_governor` 60,086 B · `postgres-b` 1,093 B · `pdlf` 21,720 B · `postgres-a` 5,179 B. The prior retained cycle is 2026-09-28 (partial — Instance B only; its governor dump uses the historical `memory-governor-…` hyphen spelling).
+- Result of each cycle: the Sunday task reports it in a pop-up and writes a log to `C:\mybizz\logs\sunday-backup\`; the latest log is the record of the latest cycle.
 - Instance-A dumps are produced by `pg_dump.exe` on Windows (run by the Sunday task, which reads the Windows password file `%APPDATA%\postgresql\pgpass.conf`), written directly to `C:\backup-gbrain\` on port 5433; the task copies each dump to the other location and hash-checks the pair. Instance-B dumps are agent-runnable.
 - **Second lane — markdown export:** dream-synthesized concept pages are DB-only (no backing file); their second line of defense is `gbrain export --dir /mnt/c/backup-dream-cycle/` (`C:\backup-dream-cycle`) — run by the Sunday task, after the DB dumps. The PostgreSQL dump remains line one; the export adds file-lane-visible, human-readable recovery for DB-only content.
 
