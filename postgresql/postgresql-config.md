@@ -1,7 +1,7 @@
 ---
 title: "postgresql-config"
 doc-id: "mb-a8b414df"
-updated: "2026-10-07"
+updated: "2026-10-08"
 ---
 # PostgreSQL — Configuration
 
@@ -13,7 +13,7 @@ procedures, see [[[mybizz-config-docs:postgresql/postgresql-reference|Reference:
 **Two entirely separate instances exist. Do not confuse them.** The layer
 placement: Instance B hosts the pre-makePDLF layer's memory; Instance A
 hosts the PDLF layer's ledger (see
-[[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]](C:/pdlf/pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer.md) for the layer map).
+[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]] for the layer map).
 
 ## The two PostgreSQL installations at a glance
 

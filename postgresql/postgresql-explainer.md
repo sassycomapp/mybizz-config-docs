@@ -1,7 +1,7 @@
 ---
 title: "postgresql-explainer"
 doc-id: "mb-e4410ed0"
-updated: "2026-10-06"
+updated: "2026-10-08"
 ---
 # PostgreSQL — Explainer
 
@@ -51,7 +51,7 @@ real, in-use components of your system** (`gbrain`, `memory_governor`,
 databases, not part of your system at all.
 
 **Where each server sits in the environment's layers** (per
-[[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]](C:/pdlf/pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer.md)): Instance B (WSL, PostgreSQL 16)
+[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]): Instance B (WSL, PostgreSQL 16)
 hosts the **pre-makePDLF layer's** memory — GBrain and the memory governor
 are supporting systems built before and beneath PDLF. Instance A (Windows,
 PostgreSQL 15) hosts the **PDLF layer's own ledger** — the record the PDLF
@@ -236,7 +236,7 @@ database check names its instance explicitly.
 
 ## 7. The layer placement — where each database sits in the environment
 
-Per [[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]](C:/pdlf/pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer.md) (the pre-makePDLF, makePDLF,
+Per [[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]] (the pre-makePDLF, makePDLF,
 PDLF, and shipped layers):
 
 - **Instance B (WSL PostgreSQL 16) is pre-makePDLF-layer infrastructure.**
@@ -324,7 +324,7 @@ a mystery.
 [[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md) (current state), [[[mybizz-config-docs:postgresql/postgresql-log|Log]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-log.md) (events),
 [[[mybizz-config-docs:postgresql/postgresql-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-learnings.md) (transient knowledge). The architecture standard:
 [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md). The layer map:
-[[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]](C:/pdlf/pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer.md). The
+[[pdlf:pdlf-library/pdlf-explainer-docs/pdlf-environment-explainer|the pre-makePDLF, makePDLF, PDLF, and shipped layers]]. The
 memory system: [[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md), `mb-submit-memory` (its own suites).
 The ledger contract: [[[makepdlf-project-library:specifications-local/spec-postgres-ledger|Spec Postgres Ledger]]](C:/dev/dev-makepdlf/makepdlf-project-library/specifications-local/spec-postgres-ledger.md) (makepdlf-project-library).*
 

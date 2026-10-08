@@ -1,7 +1,7 @@
 ---
 title: "doc-check-explainer"
 doc-id: "mb-632b78c3"
-updated: "2026-10-07"
+updated: "2026-10-08"
 ---
 # mb-doc-check — Explainer
 
@@ -17,7 +17,7 @@ It is not an AI. It makes no judgments. For the same documents it always produce
 
 At every commit the program looks at two pictures of the repository: the committed state, and the state that is about to be committed. Comparing them tells it what is new, what moved and what was deleted.
 
-**Identity comes from the `doc-id`.** Every document carries a permanent random code in its frontmatter. When a file appears under a new name or in a new folder, the program matches it to the old file by that code, not by the name and not by the content. So a document that was renamed and completely rewritten is still recognised as the same document.
+**Identity comes from the `doc-id`.** Every document carries a permanent random code in its frontmatter. When a file appears under a new name or in a new folder, the program matches it to the old file by that code, not by the name and not by the content. So a document that was renamed and completely rewritten is still recognised as the same document. This holds across repositories too: a document cut from one covered repository and pasted into another keeps its `doc-id`, and every link to it follows it.
 
 **Then, for every document in the commit,** it:
 

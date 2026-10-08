@@ -323,6 +323,30 @@ class CrossRepo(unittest.TestCase):
         self.assertFalse(blocked)
 
 
+    def test_move_to_another_repo_keeps_links(self):
+        b = repo()   # the repository the document is cut from
+        a = repo()   # the repository it is pasted into
+        c = repo()   # a third repository that links to it
+        src = doc(b, "target.md", "t\n", A1)
+        ref_b = doc(b, "ref.md", "[[target]]\n", A2)
+        ref_c = doc(c, "ref2.md", "[[target]]\n", A3)
+        commit_all(b)
+        doc(a, "other.md", "o\n", A4)
+        commit_all(a)
+        commit_all(c)
+        body = read(src)
+        os.remove(src)
+        with open(os.path.join(a, "target.md"), "w", newline="") as f:
+            f.write(body)
+        git(b, "add", "-A")
+        rep, (text, blocked) = hook(b, extra=[a, c])
+        self.assertFalse(blocked)
+        self.assertEqual(len(rep.to_words), 0)
+        self.assertGreaterEqual(len(rep.repointed), 1)
+        self.assertIn("[[target]]", read(ref_b))
+        self.assertIn("[[target]]", read(ref_c))
+
+
 class Commands(unittest.TestCase):
     def test_migrate_dry_and_real(self):
         d = repo()
