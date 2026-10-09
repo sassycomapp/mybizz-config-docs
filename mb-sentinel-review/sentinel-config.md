@@ -1,7 +1,7 @@
 ---
 title: "sentinel-config"
 doc-id: "mb-967f5148"
-updated: "2026-10-08"
+updated: "2026-10-09"
 ---
 # Sentinel Configuration — dev-makepdlf
 
@@ -60,7 +60,7 @@ access. Related ADRs: [[[default:adr-global/adr-client-instance-architecture|Cli
 | Item | Value |
 |---|---|
 | Server | **Windows** PostgreSQL 15, `pdlf` database, role `pdlf_agent` — a DIFFERENT cluster from WSL's PostgreSQL 16 (GBrain + memory governor) despite the same port |
-| Access route | The PowerShell bridge ONLY, port **5433** (`-p 5433` — the ledger's port was changed after 2026-09-09; documented 2026-10-07 after the exam's failed 5432 attempt) — direct WSL psql silently connects to the wrong server ([[[makepdlf-project-library:specifications-local/spec-postgres-ledger\|Spec Postgres Ledger]]](C:/dev/dev-makepdlf/makepdlf-project-library/specifications-local/spec-postgres-ledger.md), binding) |
+| Access route | The PowerShell bridge ONLY, port **5433** (`-p 5433` — the ledger's port was changed after 2026-09-09; documented 2026-10-07 after the exam's failed 5432 attempt) — direct WSL psql silently connects to the wrong server ([[[pdlf:makepdlf-project-library/specifications-local/spec-postgres-ledger\|Spec Postgres Ledger]]](C:/pdlf/makepdlf-project-library/specifications-local/spec-postgres-ledger.md), binding) |
 | Verified state | Table exists; **0 rows** (re-verified live 2026-10-07 via the bridge; `step_id` carries an FK to `steps(id)` — recorded 2026-10-07) |
 | Sentinel-relevant columns | `source_step` (CHECK: 16,17,19,20,21,34,35,36,37,38,39,45,46), `triage_label` (CHECK: needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix, clear), `concern`, `asset`, `threat`, `evidence`, `severity` (Low/Medium/High/Critical), `confidence` (Low/Medium/High), `recommended_control`, `verification`, `finding_id` (free-standing text, no companion table) |
 | Label mapping | FLAG → `needs-triage` · ESCALATE → `needs-info` · CLEAR (reviewed) → `clear` · a step not in the intensity table produces no row at all — not the same as `clear` |
@@ -69,7 +69,7 @@ access. Related ADRs: [[[default:adr-global/adr-client-instance-architecture|Cli
 
 | Step | Scrutiny | Built as a real PDLF step file? |
 |---|---|---|
-| 16 — Domain model | Low/Medium | Yes — [[[makepdlf-project-library:stepwise/step-16-domain-modeling\|Step 16 Domain Modeling]]](C:/dev/dev-makepdlf/makepdlf-project-library/stepwise/step-16-domain-modeling.md) (invocation at item 7, gate-proof at item 9 — verified live 2026-09-09) |
+| 16 — Domain model | Low/Medium | Yes — [[[pdlf:makepdlf-project-library/stepwise/step-16-domain-modeling\|Step 16 Domain Modeling]]](C:/pdlf/makepdlf-project-library/stepwise/step-16-domain-modeling.md) (invocation at item 7, gate-proof at item 9 — verified live 2026-09-09) |
 | 17 — Data tables | High | Yes — built 2026-10-01, not yet wired |
 | 19 — Tickets | Medium | Yes — built 2026-10-01, not yet wired |
 | 20 — Design | Medium/High | Yes — built 2026-10-04, not yet wired |
@@ -88,7 +88,7 @@ Steps not in this table: no material security scrutiny by default.
 
 | Step file | `mb-sentinel-review` invoked at | Gate-proof check at |
 |---|---|---|
-| [[[makepdlf-project-library:stepwise/step-16-domain-modeling\|Step 16 Domain Modeling]]](C:/dev/dev-makepdlf/makepdlf-project-library/stepwise/step-16-domain-modeling.md) | item 7 | item 9 |
+| [[[pdlf:makepdlf-project-library/stepwise/step-16-domain-modeling\|Step 16 Domain Modeling]]](C:/pdlf/makepdlf-project-library/stepwise/step-16-domain-modeling.md) | item 7 | item 9 |
 
 ## Related, non-duplicated tools (cross-reference only — not part of Sentinel)
 

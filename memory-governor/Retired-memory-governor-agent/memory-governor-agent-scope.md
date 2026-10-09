@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-agent-scope"
 doc-id: "mb-10605846"
-updated: "2026-10-05"
+updated: "2026-10-09"
 ---
 # Memory Governor Agent — Scope Document
 
@@ -326,7 +326,7 @@ not batched as one candidate.
 The concrete mechanics of this writer — its place in the five-point due
 diligence sequence, and the two questions still open about how it
 interacts with an in-progress PDLF step — are recorded in the companion
-[[[makepdlf-project-library:docs-local/system-description|System Description]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/system-description.md) and Implementation Workflow, not duplicated here.
+[[[pdlf:makepdlf-project-library/docs-local/system-description|System Description]]](C:/pdlf/makepdlf-project-library/docs-local/system-description.md) and Implementation Workflow, not duplicated here.
 
 ## 14. Self-Healing / Iterative Learning
 

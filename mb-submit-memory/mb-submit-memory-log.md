@@ -1,7 +1,7 @@
 ---
 title: "mb-submit-memory-log"
 doc-id: "mb-77cc21de"
-updated: "2026-10-05"
+updated: "2026-10-09"
 ---
 # mb-submit-memory — Log
 
@@ -16,7 +16,7 @@ eventness is not the point.)
 | date | event | outcome / disposition |
 |---|---|---|
 | 2026-08-25 | Skill created and installed as a real file at `~/.config/opencode/skills/mb-submit-memory/SKILL.md` (13,502 B single-file skill) | Installed; in continuous use since |
-| 2026-08-27 | First real submission run ([[[makepdlf-project-library:specifications-local/spec-postgres-ledger\|Spec Postgres Ledger]]](C:/dev/dev-makepdlf/makepdlf-project-library/specifications-local/spec-postgres-ledger.md), credential `manual_submission`): HTTP 201 → **promoted** (auto_promote, low risk), `memory_id 22e49b30-e023-4979-904a-2c1a27ec7513`, event 3497 | Promoted cleanly; downstream `gbrain_write` flush deferred by a pending gbrain source rename (resolved at the 2026-09-08 sync pass — naming drift closed source-side per spec §Naming drift) |
+| 2026-08-27 | First real submission run ([[[pdlf:makepdlf-project-library/specifications-local/spec-postgres-ledger\|Spec Postgres Ledger]]](C:/pdlf/makepdlf-project-library/specifications-local/spec-postgres-ledger.md), credential `manual_submission`): HTTP 201 → **promoted** (auto_promote, low risk), `memory_id 22e49b30-e023-4979-904a-2c1a27ec7513`, event 3497 | Promoted cleanly; downstream `gbrain_write` flush deferred by a pending gbrain source rename (resolved at the 2026-09-08 sync pass — naming drift closed source-side per spec §Naming drift) |
 | 2026-09-05 | Suite documents authored in `mybizz-config-docs/mb-submit-memory/` (config, explainer, reference); config records a byte-identical mirror of the skill in the folder (13,502 B, 2026-09-05) | Docs live; mirror recorded (claim since superseded — see 2026-09-12 and 2026-09-15 rows) |
 | 2026-09-08 | Governor found **not running** (to that date only ever hand-started) → started per the documented `.env`-first procedure, detached, log-verified; auth-gating observed live (422 credential-required); end-to-end verified | API ACTIVE; startup coupling confirmed and documented; permanent auto-start (systemd) recommended and approved — pending developer execution (open item) |
 | 2026-09-08 | Cupcake outbound-network rule **amended**: loopback destinations (`127.0.0.1`, `localhost`, `::1`) always allowed — the skill's API path permitted under ACTIVE enforcement; one real loopback call passed live; formal eval tests pending developer run | Exemption live and load-bearing; do-not-remove rule recorded in reference §Prerequisites |

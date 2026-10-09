@@ -1,7 +1,7 @@
 ---
 title: "memory-governor-agent-implementation-workflow"
 doc-id: "mb-aa9bfa8d"
-updated: "2026-10-05"
+updated: "2026-10-09"
 ---
 # Memory Governor Agent — Stepwise Implementation Workflow
 
@@ -405,7 +405,7 @@ cutover is Phase 16.
 
 **Step 13.2 — Build the governed step-completion sequence**
 - Action: implement the final step of the five-point due diligence
-  sequence ([[[makepdlf-project-library:docs-local/system-description|System Description]]](C:/dev/dev-makepdlf/makepdlf-project-library/docs-local/system-description.md), "The five-point due diligence
+  sequence ([[[pdlf:makepdlf-project-library/docs-local/system-description|System Description]]](C:/pdlf/makepdlf-project-library/docs-local/system-description.md), "The five-point due diligence
   process") — for each real artifact a finished PDLF step produced, the
   OpenCode agent queries GBrain for related content, reads it, forms a
   genuine confidence/contradiction assessment (Scope Doc §11A), and

@@ -1,7 +1,7 @@
 ---
 title: "sentinel-reference"
 doc-id: "mb-a075fac8"
-updated: "2026-10-07"
+updated: "2026-10-09"
 ---
 # Sentinel Reference — Usage, Invocation, and Worked Examples
 
@@ -136,7 +136,7 @@ WHERE source_step IN ('16','17','19','20','21','34','35','37','38','39','45','46
   AND resolved_at IS NULL;
 ```
 
-**Gate-proof check** (built into [[[makepdlf-project-library:stepwise/step-16-domain-modeling|Step 16 Domain Modeling]]](C:/dev/dev-makepdlf/makepdlf-project-library/stepwise/step-16-domain-modeling.md) item 9):
+**Gate-proof check** (built into [[[pdlf:makepdlf-project-library/stepwise/step-16-domain-modeling|Step 16 Domain Modeling]]](C:/pdlf/makepdlf-project-library/stepwise/step-16-domain-modeling.md) item 9):
 ```sql
 SELECT 1 FROM triage_findings
 WHERE step_id = (real step_id)

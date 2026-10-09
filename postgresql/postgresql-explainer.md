@@ -1,7 +1,7 @@
 ---
 title: "postgresql-explainer"
 doc-id: "mb-e4410ed0"
-updated: "2026-10-08"
+updated: "2026-10-09"
 ---
 # PostgreSQL — Explainer
 
@@ -326,6 +326,6 @@ a mystery.
 [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md). The layer map:
 the pre-makePDLF, makePDLF, PDLF, and shipped layers. The
 memory system: [[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md), `mb-submit-memory` (its own suites).
-The ledger contract: [[[makepdlf-project-library:specifications-local/spec-postgres-ledger|Spec Postgres Ledger]]](C:/dev/dev-makepdlf/makepdlf-project-library/specifications-local/spec-postgres-ledger.md) (makepdlf-project-library).*
+The ledger contract: [[[pdlf:makepdlf-project-library/specifications-local/spec-postgres-ledger|Spec Postgres Ledger]]](C:/pdlf/makepdlf-project-library/specifications-local/spec-postgres-ledger.md) (makepdlf-project-library).*
 
 *End of document*
