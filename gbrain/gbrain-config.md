@@ -1,7 +1,7 @@
 ---
 title: "gbrain-config"
 doc-id: "mb-b677b7b4"
-updated: "2026-10-07"
+updated: "2026-10-10"
 ---
 # GBrain — Configuration
 
@@ -99,7 +99,6 @@ is the correct tool — full account in [[[mybizz-config-docs:gbrain/gbrain-refe
 | `anvil-agent-references-code` | `/mnt/c/mybizz/anvil-agent-references` | 34 | isolated (explicit, set 2026-09-30) |
 | `data-mybizz-mgt` | `/mnt/c/data-mybizz-mgt` | 15 | **federated** |
 | `dev-root-hub` | `/mnt/c/dev/dev-root` | 12 | **federated** |
-| `makepdlf-project-library` | `/mnt/c/dev/dev-makepdlf/makepdlf-project-library` | 139 | **federated** |
 | `mb-3-cs-code` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs` | 262 | unset |
 | `mb-3-cs-project-library` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library` | 566 | **federated** |
 | `mb4ecom-code` | `/mnt/c/dev/dev-mb4ecom/mb4ecom` | 5 | unset |

@@ -1,7 +1,7 @@
 ---
 title: "anvil-agent-references-explainer"
 doc-id: "mb-2fd091b4"
-updated: "2026-10-01"
+updated: "2026-10-10"
 ---
 # anvil-agent-references — Explainer
 
@@ -58,7 +58,7 @@ an unfamiliar part of the framework.
 - Cross-referencing dependency component behavior — the skills point toward checking dependency docs/files but don't themselves document third-party dependencies beyond the platform's own (the Stripe stubs cover Anvil's Stripe service API surface).
 
 **Not good for / wrong tool for:**
-- Anything outside an Anvil app entirely — no relevance to `dev-makepdlf` tooling, GBrain, Memory Governor, or any non-Anvil part of this system.
+- Anything outside an Anvil app entirely — no relevance to PDLF tooling, GBrain, Memory Governor, or any non-Anvil part of this system.
 - Deciding *whether* a feature should exist or how it should behave from a product standpoint — implementation-mechanics skills, not product-design skills.
 - Actually *executing* `anvil.yaml` manifest changes in this environment — standing policy prohibits AI writes to that file, and Cupcake blocks them when active (enforcement status changeable — see §8); the skill's knowledge applies to reading, planning, and validating, while the write itself is a developer action either way.
 - Anything the `anvil-yaml` skill itself declines to do unilaterally — dependency changes are routed back to the developer in the Anvil IDE.

@@ -1,7 +1,7 @@
 ---
 title: "mb-submit-memory-config"
 doc-id: "mb-e76d96dd"
-updated: "2026-10-07"
+updated: "2026-10-10"
 ---
 # mb-submit-memory — Configuration
 
@@ -62,10 +62,8 @@ path. Never calls `gbrain remember` or `gbrain sync` directly.
 
 ## Naming drift — RESOLVED (source-side)
 
-The old open item (`dev-makepdlf` vs `makepdlf-project-library`) is resolved
-on the source side: `gbrain sources list` shows `makepdlf-project-library`
-(128 pages, synced 2026-09-08). The governor-side `owning_project` rows are
-pending a credentialed API check (needs the `manual_submission` credential).
+The old naming open item is closed: the source it concerned no longer
+exists, and its documents are now in the `pdlf` source.
 
 ## Logs
 

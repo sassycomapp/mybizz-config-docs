@@ -1,7 +1,7 @@
 ---
 title: "matt-pocock-skills-config"
 doc-id: "mb-0f9a35df"
-updated: "2026-10-01"
+updated: "2026-10-10"
 ---
 # Matt Pocock Skills Configuration
 
@@ -47,7 +47,6 @@ unless noted.
 
 | Project | Configured (4 `agents/` files present) |
 |---|---|
-| `makepdlf-project-library` | Yes |
 | `mb-3-cs-project-library` | No |
 | `mb-3-cs` | No |
 | `mb4ecom` | No |

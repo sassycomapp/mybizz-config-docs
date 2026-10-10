@@ -21,7 +21,7 @@ safe for clients and their users.
 
 ---
 
-## What it is built from (the pre-makePDLF layer — exists now)
+## What it is built from (the supporting-systems layer — exists now)
 
 | Part | State |
 |---|---|
@@ -43,7 +43,7 @@ Reference assessment (developer uncertainty resolved): the **regulatory-complian
 
 ---
 
-## What it becomes (the makePDLF layer — built as steps are built)
+## What it becomes (steps work — built as steps are built)
 
 The wiring. Twelve steps carry security scrutiny; each Sentinel-covered
 step file gets two things as it is built, following the Step 16 pattern:

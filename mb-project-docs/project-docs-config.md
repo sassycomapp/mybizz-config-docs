@@ -1,7 +1,7 @@
 ---
 title: "project-docs-config"
 doc-id: "mb-f7c435e5"
-updated: "2026-10-07"
+updated: "2026-10-10"
 ---
 # mb-project-docs — Config
 
@@ -38,7 +38,6 @@ State of the `mb-project-docs` skill as of 2026-10-02.
 
 | Project | Documentation repository | Code repository |
 |---|---|---|
-| `makepdlf` | `makepdlf-project-library` | `makepdlf` (empty shell today: no Anvil app) |
 | `mb-3-cs` | `mb-3-cs-project-library` | `mb-3-cs` |
 | `mb4ecom` | `mb4ecom-project-library` | `mb4ecom` |
 | `mb5pdlf` | `mb5pdlf-project-library` | `mb5pdlf` |

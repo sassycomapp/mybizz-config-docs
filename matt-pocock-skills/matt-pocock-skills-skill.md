@@ -1,7 +1,7 @@
 ---
 title: "matt-pocock-skills-skill"
 doc-id: "mb-0fc6bba6"
-updated: "2026-10-01"
+updated: "2026-10-10"
 ---
 # mb-config-matt-pocock-skills — Exam Skill
 
@@ -80,7 +80,7 @@ copied into reports, outputs, or learnings.
 | ID | Runner | Check | Expected |
 |---|---|---|---|
 | MP1-1 | A | Link graph: `find ~/.agents/skills/ -maxdepth 1 -type l` = 40 total, of which 35 target the matt source clone + 5 target `anvil-agent-references/skills/`; broken = 0 (`find -L ... -type l`); the only non-symlink entry is the `matt-pocock-skills-reference.md:Zone.Identifier` artifact | 40 symlinks = 35 matt + 5 anvil; 0 broken (config §Install topology — Broken links 0). Divergence in count or target = DRIFT |
-| MP1-2 | A | Per-project setup gate (reference §Mandatory per-project setup gate): for each of the 5 named projects, `ls <project>/agents/` — the four files `domain.md` `instructions.md` `issue-tracker.md` `triage-labels.md` present or absent; project paths per config §Per-project setup state | `makepdlf` = Yes (4 files), the other four = No (config §Per-project setup state table). Any flip = DRIFT (note: a project newly configured is progress, flag the spec for refresh — never auto-update) |
+| MP1-2 | A | Per-project setup gate (reference §Mandatory per-project setup gate): for each of the 4 named projects, `ls <project>/agents/` — the four files `domain.md` `instructions.md` `issue-tracker.md` `triage-labels.md` present or absent; project paths per config §Per-project setup state | all four = No (config §Per-project setup state table). Any flip = DRIFT (note: a project newly configured is progress, flag the spec for refresh — never auto-update) |
 | MP1-3 | A | Upgrade state: HEAD unchanged (already MP0-1) **and** no new install artifacts — `~/.agents/skills/` holds nothing but the recorded symlinks + the Zone.Identifier file; no `npx skills`/plugin-path install present anywhere under the root | Manual pinned clone + symlinks only (config §Identity — Install method; §Installed topology — nothing copied). A copied skill dir or plugin artifact = UNHEALTHY |
 | MP1-4 | A | Inventory conformance: the 35 matt symlink names split exactly 18 / 7 / 6 / 4 across category folders in the source clone (`engineering` 18, `productivity` 7, `in-progress` 6, `misc` 4); `deprecated/` holds a README only | 18+7+6+4 = 35, names match the catalog rows (config §Skill inventory). Member added/removed/moved between categories = DRIFT |
 | MP1-5 | A | Suite completeness: the seven files in `matt-pocock-skills/` (config, exam-plan, exam-report, log, learnings, explainer, reference) | All present (missing file = GAP) |

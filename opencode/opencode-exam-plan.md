@@ -1,7 +1,7 @@
 ---
 title: "opencode-exam-plan"
 doc-id: "mb-21046eca"
-updated: "2026-10-05"
+updated: "2026-10-10"
 ---
 # OpenCode — Exam Plan
 
@@ -69,7 +69,7 @@ Every check: id, runner (A=agent, D=developer), probe, expected source, pass
 rule — full tables in [[[mybizz-config-docs:opencode/opencode-skill|Opencode Skill]]](C:/mybizz/mybizz-config-docs/opencode/opencode-skill.md) (Tiers 0–3). Summary:
 
 - **Tier 0 (A) — invocability:** OC0-1 version 1.15.12 · OC0-2 single global config file (`.jsonc` only) · OC0-3 global `AGENTS.md` present + readable
-- **Tier 1 (A/D) — state conformance:** OC1-1 resolved `default_agent` = `plan` · OC1-2 `instructions` pointer resolves · OC1-3 permission posture (edit ask + `**/anvil.yaml` deny; webfetch ask; bash ask + standard deny set; external-directory allow on the three roots; `agent.plan` edit deny) · OC1-4 `mcp.gbrain` entry present · OC1-5 cupcake plugin active at exactly one discoverable path · OC1-6 suite completeness (seven files) · OC1-7 Active Project Standard holds (makepdlf present; mb-3-cs present/retained; mb4ecom/mb5pdlf absent; project-template literal)
+- **Tier 1 (A/D) — state conformance:** OC1-1 resolved `default_agent` = `plan` · OC1-2 `instructions` pointer resolves · OC1-3 permission posture (edit ask + `**/anvil.yaml` deny; webfetch ask; bash ask + standard deny set; external-directory allow on the three roots; `agent.plan` edit deny) · OC1-4 `mcp.gbrain` entry present · OC1-5 cupcake plugin active at exactly one discoverable path · OC1-6 suite completeness (seven files) · OC1-7 Active Project Standard holds (pdlf absent until the orchestrator is designed; mb-3-cs present/retained; mb4ecom/mb5pdlf absent; project-template literal)
 - **Tier 2 (A/D) — functional, present ≠ working:** OC2-1 `opencode debug config` executes and returns the resolved merged map · OC2-2 plugin load-once log probe (exactly one "loading plugin" line per real plugin in the latest session) · OC2-3 deny pattern **presence** in resolved config (text match; no fresh firing)
 - **Tier 3 (D, locked):** OC3-1 full restart + single-load regression (developer-run, on the developer's schedule — the exam runs inside this harness; a restart interrupts the run itself) · OC3-2 WSL default-distro confirmation (`wsl.exe -l -v` — Windows-side read) · OC3-3 upgrade-policy decision (never on newness; only on check failure)
 

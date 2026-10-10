@@ -1,7 +1,7 @@
 ---
 title: "anvil-agent-references-config"
 doc-id: "mb-87d907ea"
-updated: "2026-10-07"
+updated: "2026-10-10"
 ---
 # anvil-agent-references — Configuration
 
@@ -88,7 +88,6 @@ technical detail, see [[[mybizz-config-docs:anvil-agent-references/anvil-agent-r
 
 | Project | Status |
 |---|---|
-| `makepdlf-project-library` | Done |
 | `mb-3-cs-project-library` | Done |
 | `mb-3-cs` (app root) | Not done — deliberate; project not yet initialized (cupcake-config.md project-init status; setup runs at that project's start, developer-run) |
 | `mb4ecom` (app root) | Not done — deliberate; project not yet initialized (as above) |

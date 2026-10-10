@@ -3,7 +3,7 @@ title: "sentinel-config"
 doc-id: "mb-967f5148"
 updated: "2026-10-10"
 ---
-# Sentinel Configuration — dev-makepdlf
+# Sentinel Configuration
 
 Canonical current-state configuration record. Agent-facing. Reflects the
 verified live state as of 2026-09-09. States facts, not history — the
@@ -24,12 +24,12 @@ scope is [[[mybizz-config-docs:mb-sentinel-review/sentinel-scope|Scope]]](C:/myb
 | Scope | [[[mybizz-config-docs:mb-sentinel-review/sentinel-scope\|Scope]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-scope.md) (this folder) — the agreed three-layer scope |
 | Reasoning methodology | `secure-software-engineering` — **installed 2026-09-09** at `~/.config/opencode/skills/secure-software-engineering/` (SKILL.md + README + 11 methodology references + source-index.md + 3 templates + evals.json — matches upstream tree shape; registered in the session skill catalog); upstream `github.com/magnus919/agent-skills/tree/main/secure-software-engineering` (MIT — re-verified live 2026-10-07: actively maintained) |
 
-## Environment position (per the pre-makePDLF, makePDLF, PDLF, and shipped layers)
+## Environment position (per the supporting-systems, PDLF and shipped layers)
 
 | Layer | Sentinel's presence |
 |---|---|
-| pre-makePDLF (where we are) | The skill, the security-global library, the findings database, the methodology — all built, verified, usable |
-| makePDLF | The step-intensity wiring — built into each Sentinel-covered step file as it is developed (Step 16 wired as the pattern; all twelve step files built as of 2026-10-01/04 — Steps 17–46 exist but are not yet wired; retrofit approved as a PDLF-development work item 2026-10-07) |
+| supporting systems (where we are) | The skill, the security-global library, the findings database, the methodology — all built, verified, usable |
+| PDLF steps work | The step-intensity wiring — built into each Sentinel-covered step file as it is developed (Step 16 wired as the pattern; all twelve step files built as of 2026-10-01/04 — Steps 17–46 exist but are not yet wired; retrofit approved as a PDLF-development work item 2026-10-07) |
 | PDLF | The reviews fire during real step executions — testable against a real feature from PDLF's first run |
 | shipped estate | **Out of Sentinel's scope** — no runtime safeguards built into the applications (a different scope of work, deferred) |
 

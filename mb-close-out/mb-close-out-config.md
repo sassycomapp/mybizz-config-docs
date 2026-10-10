@@ -1,7 +1,7 @@
 ---
 title: "mb-close-out-config"
 doc-id: "mb-e1c4d0bf"
-updated: "2026-10-07"
+updated: "2026-10-10"
 ---
 # mb-close-out — Config
 
@@ -62,7 +62,7 @@ date unless noted. Suite structure governed by [[[mybizz-config-docs:mb-sysdoc-c
 |---|---|
 | 1 — Session page | A file `sessions/<YYYY-MM-DD>-<short-slug>.md` in the repository; commit all imports it into GBrain |
 | 2 — Candidate facts | Advisory/governed routing; governed → fact file + mb-submit-memory Steps 1–4 |
-| 3 — Project documents | [[[mb-project-docs:mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md) Steps 1–6 (five projects only: makepdlf, mb-3-cs, mb4ecom, mb5pdlf, pdlf) |
+| 3 — Project documents | [[[mb-project-docs:mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md) Steps 1–6 (four projects only: mb-3-cs, mb4ecom, mb5pdlf, pdlf) |
 | 4 — Changed files | `bash /mnt/c/mybizz/scripts/commit-all.sh --status` |
 | 5 — Gate | Single approval; satisfies mb-submit-memory Step 5 and mb-project-docs Step 6 |
 | 6 — After approval | GBrain `remember` (advisory); mb-submit-memory Steps 6–9; mb-project-docs Step 7 |

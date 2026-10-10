@@ -1,7 +1,7 @@
 ---
 title: "opencode-config"
 doc-id: "mb-c7616d53"
-updated: "2026-10-08"
+updated: "2026-10-10"
 ---
 # OpenCode Configuration
 
@@ -27,7 +27,7 @@ five-part OpenCode suite; each file owns one scope:
 | Upstream | `github.com/anomalyco/opencode` |
 | Global config | `~/.config/opencode/opencode.jsonc` — the only global config file (consolidated from two, 2026-09-01) |
 | Config precedence | **Verified 2026-09-09 against the upstream documentation and empirically via `opencode debug config`**: configs are **merged, not replaced** — project config overrides global only for conflicting keys, non-conflicting settings from both are preserved, and nested permission maps merge deeply (see the permission model document for the verified test). Project config has the highest precedence among standard config files. |
-| Harness role | OpenCode is the harness spanning every environment layer (see the pre-makePDLF, makePDLF, PDLF, and shipped layers) — the pre-makePDLF supporting systems run inside or beside it, the makePDLF layer builds the PDLF application in it, and the PDLF layer builds the shipped estate through it |
+| Harness role | OpenCode is the harness spanning every environment layer (see the supporting-systems, PDLF and shipped layers) — the supporting systems run inside or beside it, PDLF is built in it, and the PDLF layer builds the shipped estate through it |
 | WSL distro (real, active) | `Ubuntu` — **not** the default (`Ubuntu-22.04`, stopped). Any Windows-triggered command invoking `wsl.exe` must explicitly pass `-d Ubuntu -u dev-p` |
 
 ## Global config — real, current content (verified key-by-key 2026-09-09; re-verified via run #1 developer bundle 2026-09-15)
@@ -81,7 +81,7 @@ Full, current skill inventory by owner: [[[mybizz-os-docs:os-reference-docs/skil
 
 | Project | Status | Notes |
 |---|---|---|
-| `makepdlf-project-library` | Active | |
+| `pdlf` | Active | No `opencode.json` yet: it is written when the orchestrator is designed |
 | `mb-3-cs` / `mb-3-cs-project-library` | **Paused** | Real, deliberate — genuine prior setup exists (including a project-local Graphify MCP entry and theme/template edit protections), correctly waiting on PDLF's own completion before resuming |
 | `mb4ecom`, `mb5pdlf` | **Scaffolding only — off OpenCode's radar** | Developer-confirmed 2026-09-09: the folders exist as scaffolding, but the projects do not exist and there is not even a plan for them. No config present (verified), and none should be created until the projects become real |
 | `project-template` | Template scaffold | Contains literal, unsubstituted `{SLUG}` placeholders by design — not a real project |

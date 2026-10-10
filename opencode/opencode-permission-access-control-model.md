@@ -1,7 +1,7 @@
 ---
 title: "opencode-permission-access-control-model"
 doc-id: "mb-cefaa6e8"
-updated: "2026-10-05"
+updated: "2026-10-10"
 ---
 # OpenCode — Permission & Access Control Model
 
@@ -79,7 +79,7 @@ this (verified 2026-09-09).
 
 | Project | Status | `opencode.json` | What it carries |
 |---|---|---|---|
-| `makepdlf-project-library` | Active | Present, verified | plan default; `README.md` instructions; edit ask + anvil.yaml deny; the standard bash deny-list |
+| `pdlf` | Active | None yet — written when the orchestrator is designed | — |
 | `mb-3-cs` | **Paused** | Present, verified | build default; **project-local Graphify MCP entry**; edit rules incl. **theme/template protections** (`form_template.yaml` deny, `parameters.yaml` deny, `templates.yaml` deny, `theme.css` ask, `standard-page.html` ask); the standard bash deny-list; `external_directory` scoped to `mb-3-cs-project-library` only |
 | `mb4ecom`, `mb5pdlf` | **Scaffolding only** | **None** — correct | The folders exist as scaffolding, but the projects do not exist and there is not even a plan for them (developer-confirmed 2026-09-09). Off OpenCode's radar; config is created when a project becomes real |
 
@@ -121,7 +121,7 @@ was on the action's real substance, the refusal is correct: stop.
 shared baseline.
 **Remedy:** any new project added to this ecosystem gets the standard
 bash deny-list and external_directory scoping at creation — the
-`makepdlf-project-library` config is the working template.
+standard deny-list in this document is the template.
 
 ---
 

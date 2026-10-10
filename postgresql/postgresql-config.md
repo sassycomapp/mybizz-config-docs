@@ -11,9 +11,9 @@ rationale. For the "why," see [[[mybizz-config-docs:postgresql/postgresql-explai
 procedures, see [[[mybizz-config-docs:postgresql/postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md). Last fully verified live: 2026-10-05.
 
 **Two entirely separate instances exist. Do not confuse them.** The layer
-placement: Instance B hosts the pre-makePDLF layer's memory; Instance A
+placement: Instance B hosts the supporting-systems layer's memory; Instance A
 hosts the PDLF layer's ledger (see
-the pre-makePDLF, makePDLF, PDLF, and shipped layers for the layer map).
+the supporting-systems, PDLF and shipped layers for the layer map).
 
 ## The two PostgreSQL installations at a glance
 
@@ -25,7 +25,7 @@ of the system:
 |---|---|---|
 | Program | PostgreSQL 15 | PostgreSQL 16 |
 | Runs on | Windows | WSL installation `Ubuntu` (Ubuntu 24.04) |
-| Serves | PDLF and makePDLF — the `pdlf` build ledger | GBrain (`gbrain`) and the Memory Governor (`memory_governor`) |
+| Serves | PDLF — the `pdlf` build ledger | GBrain (`gbrain`) and the Memory Governor (`memory_governor`) |
 | Port | `5433` | `5432` |
 | Reached from WSL | PowerShell bridge, always with `-p 5433` | directly, `localhost:5432` |
 | Starts | automatically with Windows (service `postgresql-x64-15`) | automatically with WSL (systemd, `postgresql.service`) |
@@ -58,7 +58,7 @@ instead, without any error.
 
 | Role | Notes |
 |---|---|
-| `postgres` | Superuser. Credential: `PGADMIN_USER`/`PGADMIN_PASSWORD` in `C:\dev\dev-makepdlf\makepdlf-project-library\.env` (referenced by variable name only — never printed) |
+| `postgres` | Superuser. Credential: `PGADMIN_USER`/`PGADMIN_PASSWORD` in `C:\pdlf\.env` (referenced by variable name only — never printed) |
 | `pdlf_agent` | Owns the `pdlf` database. Password stored as `PGPASSWORD` in the same `.env` |
 
 Historically removed roles (`pgvector_user`, `pgvector_readonly`) must remain

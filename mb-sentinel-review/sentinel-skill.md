@@ -1,7 +1,7 @@
 ---
 title: "sentinel-skill"
 doc-id: "mb-92f85bd1"
-updated: "2026-10-07"
+updated: "2026-10-10"
 ---
 
 # mb-config-mb-sentinel-review — Exam Skill
@@ -33,7 +33,7 @@ working well; this exam verifies that and repairs nothing.
   governance).
 - **PDLF step files are read-only evidence** — the wiring checks read them
   and never edit them. Step-file wiring work belongs to PDLF development
-  (the makePDLF layer); the exam surfaces wiring gaps as findings only.
+  (steps work); the exam surfaces wiring gaps as findings only.
 - **`triage_findings` is read-only for this exam** — no INSERT/UPDATE/DELETE
   ever, by any route; the database and its ledger are deny-list.
 - **Running the subject skill is out of exam scope** — a real review writes

@@ -1,7 +1,7 @@
 ---
 title: "cupcake-config"
 doc-id: "mb-afd0ad78"
-updated: "2026-10-04"
+updated: "2026-10-10"
 ---
 # Cupcake Configuration
 Canonical current-state configuration record. Agent-facing. Reflects the
@@ -55,7 +55,7 @@ are deliberately left strict — a revisit decision, not forgotten.
 | Global plugin | `~/.config/opencode/plugin/cupcake.js` — **active**, carrying the 2026-09-22 set-and-forget amendment (`failMode: open` default; missing-skeleton fallback to `~/.config/cupcake/fallback`). Backup set (post run #2 F-4 cleanup, 2026-10-04): plugin `.bak-20260922-pre-wp3` + `.bak-20260922-pre-amendment` + `.bak-20260912` + `.bak-2026-08-31T095850+0200` (same folder); policy-folder backups: cross-project `.bak` + `.bak2`, anvil-yaml `.bak`, control-plane `.bak`, outbound-network `.bak-20260908`; builtins `system_protection.rego.bak-20260912`. All non-`.rego`/non-`.js`-suffixed — never loaded. The five `:Zone.Identifier` artifacts and `system_protection.rego (2).bak` are cruft slated for developer removal (F-4) |
 | Global policy folder | `~/.config/cupcake/policies/opencode/` |
 | Fallback home (2026-09-22) | `~/.config/cupcake/fallback/.cupcake/` — global-only skeleton (empty `policies/opencode` + input-gated `cup-noop-fallback.rego` placeholder, `system/evaluate.rego`, `helpers/commands.rego`, `rulebook.yml`, `opencode.json`), built by selective copy from the proven makepdlf scaffold after `cupcake init` stalled interactively; boot-verified live |
-| Project-init status | Eight folders initialized (makepdlf-project-library, mb-3-cs, mb-3-cs-project-library, mb4ecom, mb4ecom-project-library, mb5pdlf, mb5pdlf-project-library, mybizz-config-docs); the set-and-forget amendment makes initialization **optional everywhere** — skeleton-less folders evaluate global policies only via the fallback home. Every skeleton guaranteed boot-safe by the input-gated placeholder (an empty `policies/opencode` panics the OPA wasm compiler on the aggregator-only bundle) |
+| Project-init status | Seven folders initialized (mb-3-cs, mb-3-cs-project-library, mb4ecom, mb4ecom-project-library, mb5pdlf, mb5pdlf-project-library, mybizz-config-docs); the set-and-forget amendment makes initialization **optional everywhere** — skeleton-less folders evaluate global policies only via the fallback home. Every skeleton guaranteed boot-safe by the input-gated placeholder (an empty `policies/opencode` panics the OPA wasm compiler on the aggregator-only bundle) |
 | Rules-authoring skill | `mb-compile-rules`, corrected 2026-08-28 after live testing |
 | Rule source location | `C:\dev\project-library-global\rules-cupcake-global\` |
 | Source↔deployed correspondence | 20 sources ↔ 19 deployed rule files — the bash-governance source (`no_bash_mediated_file_writes_without_grant.md`) compiles INTO `cup-no_cross_project_filesystem_access_by_default.rego` (same file/package, own rule id). A "missing" bash-governance deployment is NOT a finding. The control-plane rule is the one deployed rule with no source document (reconciliation open). F-11 closed 2026-10-04 (developer decision; source-doc correction applied the same day): the compiled `/tmp/`-only exempt list is authoritative and the source document now matches it — the rule itself is unchanged |

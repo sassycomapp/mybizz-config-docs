@@ -5,7 +5,7 @@ updated: "2026-10-10"
 ---
 # Sentinel Reference — Usage, Invocation, and Worked Examples
 
-Companion to [[[mybizz-config-docs:mb-sentinel-review/sentinel-config|dev-makepdlf]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-config.md) (current state) and
+Companion to [[[mybizz-config-docs:mb-sentinel-review/sentinel-config|Sentinel Configuration]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-config.md) (current state) and
 [[[mybizz-config-docs:mb-sentinel-review/sentinel-explainer|What It Is, What It Does, and Why It Matters]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-explainer.md) (design genesis and reasoning). The skill's own
 `SKILL.md` is the authoritative procedure.
 
@@ -34,7 +34,7 @@ Example:
 /mb-sentinel-review 16 "New CONTEXT.md entries: Booking, Slot, Customer"
 ```
 `step-number` must be one of the values in the intensity table
-([[[mybizz-config-docs:mb-sentinel-review/sentinel-config|dev-makepdlf]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-config.md)). A step number not in that table returns `CLEAR`
+([[[mybizz-config-docs:mb-sentinel-review/sentinel-config|Sentinel Configuration]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-config.md)). A step number not in that table returns `CLEAR`
 immediately, with no analysis performed and no database row written — this
 is correct behavior, not a bug, per the skill's own Section 1.
 

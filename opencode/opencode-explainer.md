@@ -1,7 +1,7 @@
 ---
 title: "opencode-explainer"
 doc-id: "mb-4e022a9c"
-updated: "2026-10-08"
+updated: "2026-10-10"
 ---
 # OpenCode Explainer
 
@@ -27,9 +27,9 @@ OpenCode's own real behavior, including its genuine rough edges, matters
 more than any single tool built on top of it.
 
 **OpenCode spans every layer of the environment** (see
-the pre-makePDLF, makePDLF, PDLF, and shipped layers for the layer map): the
-pre-makePDLF supporting systems run inside or beside it, the makePDLF
-project builds the PDLF application in it, the PDLF layer builds the
+the supporting-systems, PDLF and shipped layers for the layer map): the
+supporting systems run inside or beside it, PDLF is built in it,
+and the PDLF layer builds the
 shipped estate through it — and nothing in it travels to the shipped
 estate. It is the harness for every layer except the one it produces.
 
@@ -262,6 +262,6 @@ inventory, active-project standard),
 [[[mybizz-config-docs:opencode/opencode-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-plan.md) / `-exam-report.md` / `-log.md` / `-learnings.md`.
 Exam skill canonical source: [[[mybizz-config-docs:opencode/opencode-skill|Opencode Skill]]](C:/mybizz/mybizz-config-docs/opencode/opencode-skill.md). Architecture:
 [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md). The environment layer map:
-the pre-makePDLF, makePDLF, PDLF, and shipped layers.*
+the supporting-systems, PDLF and shipped layers.*
 
 *End of document*

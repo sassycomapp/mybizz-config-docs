@@ -1,7 +1,7 @@
 ---
 title: "cupcake-reference"
 doc-id: "mb-e79d3d01"
-updated: "2026-10-04"
+updated: "2026-10-10"
 ---
 # Cupcake Reference — Usage, Invocation, and Worked Examples
 
@@ -317,7 +317,7 @@ action, logs it, and continues. It changes nothing about any rule's normal-
 operation behavior.
 
 **Full config file** — `.cupcake/opencode.json` in the project root
-(`makepdlf-project-library`):
+(for example `mb-3-cs-project-library`):
 ```json
 {
   "enabled": true,

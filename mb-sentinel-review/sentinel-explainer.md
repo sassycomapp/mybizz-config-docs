@@ -1,7 +1,7 @@
 ---
 title: "sentinel-explainer"
 doc-id: "mb-d54f779d"
-updated: "2026-10-08"
+updated: "2026-10-10"
 ---
 # Sentinel — What It Is, What It Does, and Why It Matters
 
@@ -258,15 +258,15 @@ designed to.
 
 ## Where Sentinel's Own Parts Live in the Layered Environment
 
-The environment has four named layers — the pre-makePDLF layer, the
-makePDLF layer, the PDLF layer, and the shipped estate (full map:
-the pre-makePDLF, makePDLF, PDLF, and shipped layers). Sentinel spans three of them,
+The environment has three named layers — the supporting-systems layer, the
+PDLF layer, and the shipped estate (full map:
+the supporting-systems, PDLF and shipped layers). Sentinel spans all three,
 and the span is deliberate:
 
-- **Pre-makePDLF (now):** the skill, the security-global library, the
+- **Supporting systems (now):** the skill, the security-global library, the
   findings database, and the installed methodology — all built, verified,
   and usable.
-- **makePDLF:** the step-intensity wiring — built into each
+- **PDLF steps work:** the step-intensity wiring — built into each
   Sentinel-covered step file as it is developed (Step 16 done as the
   pattern; Steps 17–46 pending as built).
 - **PDLF:** the reviews fire during real step executions — testable
@@ -336,7 +336,7 @@ PDLF-run feature is the test that matters. The reasoning is self-review by
 the writing agent (mitigated by checkable patterns, evidence-required rows,
 and the developer's triage of every flag). Ten of the twelve intensity-table
 steps exist as files but carry no wiring yet — coverage depends on the
-makePDLF wiring work landing. The installed skill cites a plan-document
+step-file wiring work landing. The installed skill cites a plan-document
 filename that no longer exists (recovered under a different name, without
 numbered sections).
 
@@ -354,13 +354,13 @@ Citation rot — skill content pointing at renamed or restructured documents
 
 ---
 
-*Companion documents: [[[mybizz-config-docs:mb-sentinel-review/sentinel-config|dev-makepdlf]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-config.md) (current state),
+*Companion documents: [[[mybizz-config-docs:mb-sentinel-review/sentinel-config|Sentinel Configuration]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-config.md) (current state),
 [[[mybizz-config-docs:mb-sentinel-review/sentinel-reference|Usage, Invocation, and Worked Examples]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-reference.md) (procedures and worked examples),
 [[[mybizz-config-docs:mb-sentinel-review/sentinel-scope|Scope]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-scope.md) (the agreed scope), [[[mybizz-config-docs:mb-sentinel-review/sentinel-security-system|SSS - sentinel Security System]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-security-system.md)
 (the design genesis), the exam set ([[[mybizz-config-docs:mb-sentinel-review/sentinel-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-exam-plan.md) ·
 [[[mybizz-config-docs:mb-sentinel-review/sentinel-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-exam-report.md) · [[[mybizz-config-docs:mb-sentinel-review/sentinel-log|Log]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-log.md) ·
 [[[mybizz-config-docs:mb-sentinel-review/sentinel-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-learnings.md) · [[[mybizz-config-docs:mb-sentinel-review/sentinel-skill|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-skill.md)). The reasoning methodology:
 `github.com/magnus919/agent-skills/tree/main/secure-software-engineering`.
-The full environment map: the pre-makePDLF, makePDLF, PDLF, and shipped layers.*
+The full environment map: the supporting-systems, PDLF and shipped layers.*
 
 *End of document*

@@ -1,7 +1,7 @@
 ---
 title: "opencode-skill"
 doc-id: "mb-c861757a"
-updated: "2026-10-03"
+updated: "2026-10-10"
 ---
 # mb-config-opencode — Exam Skill
 
@@ -122,7 +122,7 @@ alternate path.
 | OC1-11 | D | `opencode.jsonc` content key-by-key vs config §Global config table (raw content read — sensitive-data guard class; agent-denied) | Exact match (permission-model doc verified 2026-09-09). Guard denial → developer bundle |
 | OC1-12 | A | Plugin state: `cupcake.js` discoverable from **exactly one** path (plugin dir listing) | Active, exactly one discoverable copy (config §Plugin state; dedup by discovery path) |
 | OC1-13 | A | Suite completeness: the seven suite files in `opencode/` | All present (config, exam-plan, exam-report, log, learnings, explainer, reference — missing = GAP; skill source + the two sister scope docs extra, not required by the 7-file standard) |
-| OC1-14 | A | Active Project Standard: per-project config states per config §Active Project Standard | `makepdlf-project-library` — present (Active); `mb-3-cs` — present, retained (Paused); `mb4ecom`/`mb5pdlf` — **absent** (scaffolding-only, correct); `project-template` — literal `{SLUG}` placeholders (template, not a project). A Paused config misread as stale, or a scaffolding project gaining config, = DRIFT |
+| OC1-14 | A | Active Project Standard: per-project config states per config §Active Project Standard | `pdlf` — absent until the orchestrator is designed (Active, correct); `mb-3-cs` — present, retained (Paused); `mb4ecom`/`mb5pdlf` — **absent** (scaffolding-only, correct); `project-template` — literal `{SLUG}` placeholders (template, not a project). A Paused config misread as stale, or a scaffolding project gaining config, = DRIFT |
 | OC1-15 | A | Known scope limitations veracity | No native session-start hook · no skill-identity field reaches any plugin · plugin dedup by discovery path (config §Known scope limitations). If any limitation is found silently "fixed" without governance → DRIFT flag, never a silent acceptance |
 
 ## Tier 2 — Functional proof (present ≠ working; read-only execution probes — nothing content-changing)

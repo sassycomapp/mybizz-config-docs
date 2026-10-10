@@ -1,7 +1,7 @@
 ---
 title: "postgresql-reference"
 doc-id: "mb-5bad908d"
-updated: "2026-10-06"
+updated: "2026-10-10"
 ---
 # PostgreSQL — Reference: Commands, Procedures, and Troubleshooting
 
@@ -23,7 +23,7 @@ of the system:
 |---|---|---|
 | Program | PostgreSQL 15 | PostgreSQL 16 |
 | Runs on | Windows | WSL installation `Ubuntu` (Ubuntu 24.04) |
-| Serves | PDLF and makePDLF — the `pdlf` build ledger | GBrain (`gbrain`) and the Memory Governor (`memory_governor`) |
+| Serves | PDLF — the `pdlf` build ledger | GBrain (`gbrain`) and the Memory Governor (`memory_governor`) |
 | Port | `5433` | `5432` |
 | Reached from WSL | PowerShell bridge, always with `-p 5433` | directly, `localhost:5432` |
 | Starts | automatically with Windows (service `postgresql-x64-15`) | automatically with WSL (systemd, `postgresql.service`) |
@@ -87,7 +87,7 @@ $env:PGPASSWORD = "<value from .env>"
 
 **Reading the password without pasting it anywhere:**
 ```powershell
-$envContent = Get-Content "C:\dev\dev-makepdlf\makepdlf-project-library\.env"
+$envContent = Get-Content "C:\pdlf\.env"
 $pgLine = $envContent | Where-Object { $_ -match "^PGPASSWORD=" }
 $env:PGPASSWORD = ($pgLine -split "=", 2)[1]
 ```

@@ -1,7 +1,7 @@
 ---
 title: "doc-check-config"
 doc-id: "mb-e7e60242"
-updated: "2026-10-08"
+updated: "2026-10-10"
 ---
 # mb-doc-check — Configuration
 
@@ -28,7 +28,6 @@ Canonical current-state record of the `mb-doc-check` program. Agent-facing. Refl
 |---|---|
 | `default` | `/mnt/c/dev/project-library-global` |
 | `dev-root-hub` | `/mnt/c/dev/dev-root` |
-| `makepdlf-project-library` | `/mnt/c/dev/dev-makepdlf/makepdlf-project-library` |
 | `mb-3-cs-project-library` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library` |
 | `mb4ecom-project-library` | `/mnt/c/dev/dev-mb4ecom/mb4ecom-project-library` |
 | `mb5pdlf-project-library` | `/mnt/c/dev/dev-mb5pdlf/mb5pdlf-project-library` |

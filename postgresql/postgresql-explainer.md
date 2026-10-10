@@ -27,7 +27,7 @@ of the system:
 |---|---|---|
 | Program | PostgreSQL 15 | PostgreSQL 16 |
 | Runs on | Windows | WSL installation `Ubuntu` (Ubuntu 24.04) |
-| Serves | PDLF and makePDLF — the `pdlf` build ledger | GBrain (`gbrain`) and the Memory Governor (`memory_governor`) |
+| Serves | PDLF — the `pdlf` build ledger | GBrain (`gbrain`) and the Memory Governor (`memory_governor`) |
 | Port | `5433` | `5432` |
 | Reached from WSL | PowerShell bridge, always with `-p 5433` | directly, `localhost:5432` |
 | Starts | automatically with Windows (service `postgresql-x64-15`) | automatically with WSL (systemd, `postgresql.service`) |
@@ -51,8 +51,8 @@ real, in-use components of your system** (`gbrain`, `memory_governor`,
 databases, not part of your system at all.
 
 **Where each server sits in the environment's layers** (per
-the pre-makePDLF, makePDLF, PDLF, and shipped layers): Instance B (WSL, PostgreSQL 16)
-hosts the **pre-makePDLF layer's** memory — GBrain and the memory governor
+the supporting-systems, PDLF and shipped layers): Instance B (WSL, PostgreSQL 16)
+hosts the **supporting-systems layer's** memory — GBrain and the memory governor
 are supporting systems built before and beneath PDLF. Instance A (Windows,
 PostgreSQL 15) hosts the **PDLF layer's own ledger** — the record the PDLF
 application writes as it builds the shipped estate. The two servers serve
@@ -158,7 +158,7 @@ though both live conveniently on the same physical WSL Postgres instance.
 ## 4. `pdlf` — the PDLF build ledger (Instance A, Windows)
 
 **What it is:** the single source of truth for PDLF's own build process —
-the actual tool being built inside `dev-makepdlf`. Every step the PDLF
+the build framework at `C:\pdlf`. Every step the PDLF
 orchestrator runs, every gate it passes or fails, every deviation a
 developer approves along the way, gets written here. The project's own
 principle, stated directly in its specification: "if it's not in `pdlf`,
@@ -236,10 +236,9 @@ database check names its instance explicitly.
 
 ## 7. The layer placement — where each database sits in the environment
 
-Per the pre-makePDLF, makePDLF, PDLF, and shipped layers (the pre-makePDLF, makePDLF,
-PDLF, and shipped layers):
+Per the supporting-systems, PDLF and shipped layers:
 
-- **Instance B (WSL PostgreSQL 16) is pre-makePDLF-layer infrastructure.**
+- **Instance B (WSL PostgreSQL 16) is supporting-systems-layer infrastructure.**
   GBrain and the memory governor are supporting systems built before and
   beneath PDLF; their databases exist to serve the building of PDLF and,
   later, the building of web applications through it.
@@ -324,8 +323,8 @@ a mystery.
 [[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md) (current state), [[[mybizz-config-docs:postgresql/postgresql-log|Log]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-log.md) (events),
 [[[mybizz-config-docs:postgresql/postgresql-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-learnings.md) (transient knowledge). The architecture standard:
 [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md). The layer map:
-the pre-makePDLF, makePDLF, PDLF, and shipped layers. The
+the supporting-systems, PDLF and shipped layers. The
 memory system: [[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md), `mb-submit-memory` (its own suites).
-The ledger contract: [[[pdlf:pdlf-library/specifications-local/spec-postgres-ledger|Spec Postgres Ledger]]](C:/pdlf/pdlf-library/specifications-local/spec-postgres-ledger.md) (makepdlf-project-library).*
+The ledger contract: [[[pdlf:pdlf-library/specifications-local/spec-postgres-ledger|Spec Postgres Ledger]]](C:/pdlf/pdlf-library/specifications-local/spec-postgres-ledger.md) (PDLF).*
 
 *End of document*
