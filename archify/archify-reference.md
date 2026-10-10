@@ -1,7 +1,7 @@
 ---
 title: "archify-reference"
 doc-id: "mb-c9f14557"
-updated: "2026-10-09"
+updated: "2026-10-10"
 ---
 # Archify — Reference
 
@@ -147,7 +147,7 @@ minimum, then stop.
 - Preserve exact product names, code identifiers, commands, protocols, API paths, and environment names inside localized copy.
 - Brand identity is optional and explicit: use built-in IDs discovered via `brands "<name>" --json`; for unknown official URLs supplied by the user, run `brands capture "<url>" --json` and author the returned digest-pinned object. Never infer a brand from a vague role such as "database"; never let a badge replace the semantic type, label, or relationship facts.
 - Sequence diagrams: omit `meta.column_fit` for the stable `fixed` layout; set `"spread"` only when a wide viewBox would otherwise leave unused space or labels do not fit — never shorten semantic labels before trying `spread`.
-- Component types: `frontend`, `backend`, `database`, `cloud`, [[[pdlf:makepdlf-project-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security|Security Check]]](C:/pdlf/makepdlf-project-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security.md), `messagebus`, `external`; variants: `default`, `emphasis`, `security`, `dashed`.
+- Component types: `frontend`, `backend`, `database`, `cloud`, [[[pdlf:pdlf-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security|Security Check]]](C:/pdlf/pdlf-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security.md), `messagebus`, `external`; variants: `default`, `emphasis`, `security`, `dashed`.
 - Relationship labels are semantic data. On collision: move the label, adjust route or spacing, then shorten wording while preserving meaning. Omit only wording already fully implied by both endpoints and containing no protocol, action, direction, sync/async behavior, or cross-boundary mechanism. Deleting a meaningful label is not a geometry repair.
 - Omit `meta.engineering_profile` by default. Enable `deployment-ownership` only when the user explicitly asks for a production deployment topology, ownership handoff, or fail-closed deployment review and the source facts are known. Never remove the profile merely to pass validation — repair the facts or report the diagnostics truthfully.
 - Spacing means clear gap, not center distance. A relationship label's clear gap must exceed its measured mask width; follow the label-preserving repair order.

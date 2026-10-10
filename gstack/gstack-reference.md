@@ -1,7 +1,7 @@
 ---
 title: "gstack-reference"
 doc-id: "mb-c02446bd"
-updated: "2026-10-09"
+updated: "2026-10-10"
 ---
 # GStack Reference
 
@@ -42,7 +42,7 @@ active (see [[[mybizz-config-docs:opencode/opencode-reference|Commands, Verifica
 **Skills:** `/office-hours`, `/plan-ceo-review`, `/plan-eng-review`, `/plan-design-review`
 
 **Mandatory initial steps:**
-1. Consult [[[pdlf:makepdlf-project-library/docs-local/dev-makepdlf-todo|Active PDLF To-Do List]]](C:/pdlf/makepdlf-project-library/docs-local/dev-makepdlf-todo.md) — incorporate relevant items, mark completed as `[DONE]`
+1. Consult [[[pdlf:pdlf-library/docs-local/dev-makepdlf-todo|Active PDLF To-Do List]]](C:/pdlf/pdlf-library/docs-local/dev-makepdlf-todo.md) — incorporate relevant items, mark completed as `[DONE]`
 2. Consult ADR folder — treat as authoritative, create new ADRs for new decisions
 
 **Exit condition:** planning objective complete, OR build-ready handoff prepared, OR canonical tracking updated.
@@ -55,7 +55,7 @@ active (see [[[mybizz-config-docs:opencode/opencode-reference|Commands, Verifica
 
 **Mandatory initial steps:**
 1. Confirm repo path
-2. Consult [[[pdlf:makepdlf-project-library/docs-local/dev-makepdlf-todo|Active PDLF To-Do List]]](C:/pdlf/makepdlf-project-library/docs-local/dev-makepdlf-todo.md) for relevant items
+2. Consult [[[pdlf:pdlf-library/docs-local/dev-makepdlf-todo|Active PDLF To-Do List]]](C:/pdlf/pdlf-library/docs-local/dev-makepdlf-todo.md) for relevant items
 3. Consult ADRs for architectural baseline
 
 **Mandatory checks before edits:** repo path confirmed, protected files checked, backup rule applied, timestamp rule applied, write scope checked.

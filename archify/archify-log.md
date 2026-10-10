@@ -1,7 +1,7 @@
 ---
 title: "archify-log"
 doc-id: "mb-e7a8e8c3"
-updated: "2026-10-09"
+updated: "2026-10-10"
 ---
 # Archify — Log
 
@@ -14,7 +14,7 @@ data; content beyond eventness is not the point.)
 | date | event | outcome / disposition |
 |---|---|---|
 | 2026-09-01 | Archify tool adopted: source cloned to `C:\mybizz\archify` and the OpenCode discovery symlink `~/.config/opencode/skills/archify` → `/mnt/c/mybizz/archify/archify` created | Installed; symlink discovery pattern (the tool package is the discovery target). No security supply-chain review record at adoption (candidate Tier 3 item) |
-| 2026-09-06 | Suite created: [[[pdlf:makepdlf-project-library/docs-local/config\|Config]]](C:/pdlf/makepdlf-project-library/docs-local/config.md), `reference.md`, `explainer.md`; live-verified state recorded (doctor 15/15 "Archify is ready", version 2.16.0) | Suite live. Three open items recorded in config (symlink creation method, Windows Explorer visibility, update-check manifest URL) |
+| 2026-09-06 | Suite created: [[[pdlf:pdlf-library/docs-local/config\|Config]]](C:/pdlf/pdlf-library/docs-local/config.md), `reference.md`, `explainer.md`; live-verified state recorded (doctor 15/15 "Archify is ready", version 2.16.0) | Suite live. Three open items recorded in config (symlink creation method, Windows Explorer visibility, update-check manifest URL) |
 | 2026-09-15 | Scoping skill `mb-archify-scope` built — front-of-pipe scoping for `/archify` (restate intent → ASK → context → preliminary scope → node inventory/main path/corridor plan → probe declaration → report/gate → handoff) after a dense-subject failure made scoping a prerequisite | Skill installed as `~/.config/opencode/skills/mb-archify-scope/SKILL.md`; spec lives at [[[mb-archify-scope:mb-archify-scope\|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md) |
 | 2026-09-15 | Memory-ecosystem run completed: scope card approved → header JSON → probe → draft → render → visual-check PNGs + delivery. Successfully exercised the scoping skill end-to-end and produced the delivered artifact | Run learnings filed (Run Learnings (memory-ecosystem 2026-09-15)). Archify-canonical facts from that run graduate into explainer/reference permanent homes (this suite) |
 | 2026-09-16 | Output folder reorganized: prior run artifacts moved under `archify/output/memory-ecosystem-project/` (one folder per project slug) | Convention: each Archify project gets its own folder under `output/<slug>/` |

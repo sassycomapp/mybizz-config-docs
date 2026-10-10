@@ -1,7 +1,7 @@
 ---
 title: "postgresql-config"
 doc-id: "mb-a8b414df"
-updated: "2026-10-09"
+updated: "2026-10-10"
 ---
 # PostgreSQL — Configuration
 
@@ -79,7 +79,7 @@ absent — reappearance is a finding.
 seven currently hold 0 rows (verified live 2026-10-05).
 
 The schema documented in
-[[[pdlf:makepdlf-project-library/specifications-local/spec-postgres-ledger|Spec: Postgres Ledger]]](C:/pdlf/makepdlf-project-library/specifications-local/spec-postgres-ledger.md)
+[[[pdlf:pdlf-library/specifications-local/spec-postgres-ledger|Spec: Postgres Ledger]]](C:/pdlf/pdlf-library/specifications-local/spec-postgres-ledger.md)
 matches the live database; the specification file is authoritative for
 column-level detail (including `resolution_note`/`resolved_at` on
 `triage_findings`).

@@ -1,7 +1,7 @@
 ---
 title: "sentinel-scope"
 doc-id: "mb-401ad111"
-updated: "2026-10-09"
+updated: "2026-10-10"
 ---
 # Sentinel — Scope
 
@@ -55,7 +55,7 @@ step file gets two things as it is built, following the Step 16 pattern:
 
 | Step | Scrutiny | Status |
 |---|---|---|
-| 16 — Domain model | Low/Medium | **WIRED** — [[[pdlf:makepdlf-project-library/stepwise/step-16-domain-modeling\|Step 16 Domain Modeling]]](C:/pdlf/makepdlf-project-library/stepwise/step-16-domain-modeling.md) (invocation item 7, gate-proof item 9, verified live 2026-09-09) |
+| 16 — Domain model | Low/Medium | **WIRED** — [[[pdlf:stepwise/step-16-domain-modeling\|Step 16 Domain Modeling]]](C:/pdlf/stepwise/step-16-domain-modeling.md) (invocation item 7, gate-proof item 9, verified live 2026-09-09) |
 | 17 — Data tables | High | Pending — wired when the step file is built |
 | 19 — Tickets | Medium | Pending |
 | 20 — Design | Medium/High | Pending |
