@@ -326,7 +326,7 @@ not batched as one candidate.
 The concrete mechanics of this writer — its place in the five-point due
 diligence sequence, and the two questions still open about how it
 interacts with an in-progress PDLF step — are recorded in the companion
-[[[pdlf:pdlf-library/docs-local/system-description|System Description]]](C:/pdlf/pdlf-library/docs-local/system-description.md) and Implementation Workflow, not duplicated here.
+[[[pdlf:obsolete/system-description|System Description]]](C:/pdlf/obsolete/system-description.md) and Implementation Workflow, not duplicated here.
 
 ## 14. Self-Healing / Iterative Learning
 

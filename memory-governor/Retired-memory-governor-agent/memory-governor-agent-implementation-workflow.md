@@ -405,7 +405,7 @@ cutover is Phase 16.
 
 **Step 13.2 — Build the governed step-completion sequence**
 - Action: implement the final step of the five-point due diligence
-  sequence ([[[pdlf:pdlf-library/docs-local/system-description|System Description]]](C:/pdlf/pdlf-library/docs-local/system-description.md), "The five-point due diligence
+  sequence ([[[pdlf:obsolete/system-description|System Description]]](C:/pdlf/obsolete/system-description.md), "The five-point due diligence
   process") — for each real artifact a finished PDLF step produced, the
   OpenCode agent queries GBrain for related content, reads it, forms a
   genuine confidence/contradiction assessment (Scope Doc §11A), and
