@@ -1,7 +1,7 @@
 ---
 title: "sentinel-skill"
 doc-id: "mb-92f85bd1"
-updated: "2026-10-10"
+updated: "2026-10-11"
 ---
 
 # mb-config-mb-sentinel-review — Exam Skill
@@ -95,8 +95,8 @@ below). Direct WSL psql is never used — it silently reaches the wrong server.
 | SN1-1 | A | Skill 2 `mb-compile-rules` installed at `~/.config/opencode/skills/mb-compile-rules/SKILL.md` with functional frontmatter (`name` + `description`) | Present (config §Identity — Skill 2). Absent = DRIFT |
 | SN1-2 | A | Methodology `secure-software-engineering` installed at `~/.config/opencode/skills/secure-software-engineering/` — SKILL.md, references/, templates/, evals/ present | Present (config §Identity). Tree-shape deltas recorded factually; spec staleness flagged, never edited |
 | SN1-3 | A | Companion artifacts present: design genesis `sentinel-security-system.md` and scope `sentinel-scope.md` in this folder; governing ADR at `C:\dev\project-library-global\adr-global\adr-dependency-based-not-multi-tenant.md` | All present (config §Identity + §Governing architecture document). Missing = GAP |
-| SN1-4 | A | Step-16 wiring live in the real step file (`stepwise/step-16-domain-modeling.md`): the `mb-sentinel-review` invocation at item 7; the gate-proof check (verified `triage_findings` row before the gate proceeds) at item 9 | Both present (config §Retrofitted + §Step-intensity row 16). Missing = DRIFT |
-| SN1-5 | A | Step-intensity built-status vs live: which of the twelve intensity-table steps exist as real step files under `stepwise/` | Per the spec's built-status column, read fresh. Mismatch = DRIFT — flag which side moved (spec staleness is a live possibility; flagged, never edited) |
+| SN1-4 | A | Step-16 wiring live in the real step file (`app-factory/phase-b-discover-and-define/16-domain-modeling.md`): the `mb-sentinel-review` invocation at item 7; the gate-proof check (verified `triage_findings` row before the gate proceeds) at item 9 | Both present (config §Retrofitted + §Step-intensity row 16). Missing = DRIFT |
+| SN1-5 | A | Step-intensity built-status vs live: which of the twelve intensity-table steps exist as real step files under `app-factory/` | Per the spec's built-status column, read fresh. Mismatch = DRIFT — flag which side moved (spec staleness is a live possibility; flagged, never edited) |
 | SN1-6 | A | Unwired-built-steps evidence: intensity steps other than 16 that exist as files carry no Sentinel wiring (step 39's ordinary triage usage of the ledger is not wiring) | Recorded factually; a wiring coverage gap is surfaced as a finding — the wiring work itself belongs to PDLF development |
 | SN1-7 | A | Installed skill §1 step-intensity table vs spec §Step-intensity table: step membership and scrutiny values | Match on shared steps; any delta (e.g. an extra marker row) itemized and flagged — never edited |
 | SN1-8 | A | Suite completeness: config, exam-plan, exam-report, log, learnings, explainer, reference + exam-skill source, plus scope and design genesis | All present; missing file = GAP |

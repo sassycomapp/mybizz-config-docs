@@ -1,7 +1,7 @@
 ---
 title: "sentinel-config"
 doc-id: "mb-967f5148"
-updated: "2026-10-10"
+updated: "2026-10-11"
 ---
 # Sentinel Configuration
 
@@ -69,7 +69,7 @@ access. Related ADRs: [[[default:adr-global/adr-client-instance-architecture|Cli
 
 | Step | Scrutiny | Built as a real PDLF step file? |
 |---|---|---|
-| 16 — Domain model | Low/Medium | Yes — [[[pdlf:stepwise/step-16-domain-modeling\|Step 16 Domain Modeling]]](C:/pdlf/stepwise/step-16-domain-modeling.md) (invocation at item 7, gate-proof at item 9 — verified live 2026-09-09) |
+| 16 — Domain model | Low/Medium | Yes — [[[pdlf:app-factory/phase-b-discover-and-define/16-domain-modeling\|Step 16 Domain Modeling]]](C:/pdlf/app-factory/phase-b-discover-and-define/16-domain-modeling.md) (invocation at item 7, gate-proof at item 9 — verified live 2026-09-09) |
 | 17 — Data tables | High | Yes — built 2026-10-01, not yet wired |
 | 19 — Tickets | Medium | Yes — built 2026-10-01, not yet wired |
 | 20 — Design | Medium/High | Yes — built 2026-10-04, not yet wired |
@@ -88,7 +88,7 @@ Steps not in this table: no material security scrutiny by default.
 
 | Step file | `mb-sentinel-review` invoked at | Gate-proof check at |
 |---|---|---|
-| [[[pdlf:stepwise/step-16-domain-modeling\|Step 16 Domain Modeling]]](C:/pdlf/stepwise/step-16-domain-modeling.md) | item 7 | item 9 |
+| [[[pdlf:app-factory/phase-b-discover-and-define/16-domain-modeling\|Step 16 Domain Modeling]]](C:/pdlf/app-factory/phase-b-discover-and-define/16-domain-modeling.md) | item 7 | item 9 |
 
 ## Related, non-duplicated tools (cross-reference only — not part of Sentinel)
 

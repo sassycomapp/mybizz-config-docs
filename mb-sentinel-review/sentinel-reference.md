@@ -1,7 +1,7 @@
 ---
 title: "sentinel-reference"
 doc-id: "mb-a075fac8"
-updated: "2026-10-10"
+updated: "2026-10-11"
 ---
 # Sentinel Reference — Usage, Invocation, and Worked Examples
 
@@ -21,8 +21,8 @@ never runs the subject skill itself.
 ## Invoking `mb-sentinel-review`
 
 **From inside a retrofitted step file** (normal case): the step file's own
-numbered instruction invokes it directly — see `stepwise/
-step-16-domain-modeling.md` item 7 for the real, working example. No manual
+numbered instruction invokes it directly — see `app-factory/phase-b-discover-and-define/
+16-domain-modeling.md` item 7 for the real, working example. No manual
 invocation needed.
 
 **Manual, ad-hoc invocation:**
@@ -136,7 +136,7 @@ WHERE source_step IN ('16','17','19','20','21','34','35','37','38','39','45','46
   AND resolved_at IS NULL;
 ```
 
-**Gate-proof check** (built into [[[pdlf:stepwise/step-16-domain-modeling|Step 16 Domain Modeling]]](C:/pdlf/stepwise/step-16-domain-modeling.md) item 9):
+**Gate-proof check** (built into [[[pdlf:app-factory/phase-b-discover-and-define/16-domain-modeling|Step 16 Domain Modeling]]](C:/pdlf/app-factory/phase-b-discover-and-define/16-domain-modeling.md) item 9):
 ```sql
 SELECT 1 FROM triage_findings
 WHERE step_id = (real step_id)

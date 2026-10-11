@@ -1,7 +1,7 @@
 ---
 title: "gstack-skills-reference"
 doc-id: "mb-ac92bf3c"
-updated: "2026-10-10"
+updated: "2026-10-11"
 ---
 # GStack Skills Reference
 
@@ -203,8 +203,8 @@ Or run everything at once: `/autoplan`
 
 ## Separate, unrelated set
 
-Four `gstack-openclaw-*` skills ([[[pdlf:stepwise/step-14-plan-ceo-review|Step 14 Plan Ceo Review]]](C:/pdlf/stepwise/step-14-plan-ceo-review.md), `investigate`,
-[[[pdlf:stepwise/step-12-office-hours|Step 12 Office Hours]]](C:/pdlf/stepwise/step-12-office-hours.md), `retro`) live in the clone's `openclaw/skills/` subtree — installed via
+Four `gstack-openclaw-*` skills ([[[pdlf:app-factory/phase-b-discover-and-define/14-plan-ceo-review|Step 14 Plan Ceo Review]]](C:/pdlf/app-factory/phase-b-discover-and-define/14-plan-ceo-review.md), `investigate`,
+[[[pdlf:app-factory/phase-b-discover-and-define/12-office-hours|Step 12 Office Hours]]](C:/pdlf/app-factory/phase-b-discover-and-define/12-office-hours.md), `retro`) live in the clone's `openclaw/skills/` subtree — installed via
 `clawhub install` for OpenClaw, which is not used in this environment.
 They have no discovery shortcut in `~/.config/opencode/skills/` and are not
 part of this catalog; deliberately left in the clone (an update recreates
