@@ -1,7 +1,7 @@
 ---
 title: "matt-pocock-skills-reference"
 doc-id: "mb-f0c79098"
-updated: "2026-10-11"
+updated: "2026-10-12"
 ---
 # Matt Pocock Skills Reference
 
@@ -29,7 +29,7 @@ run), [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-exam-report|Ex
 ## Mandatory per-project setup gate
 
 `/setup-matt-pocock-skills` must have been run in a project before any other
-engineering skill from this set is used there — [[[pdlf:app-factory/phase-c-design-and-plan/19-to-tickets|Step 19 to Tickets]]](C:/pdlf/app-factory/phase-c-design-and-plan/19-to-tickets.md), `to-spec`,
+engineering skill from this set is used there — Step 19 to Tickets, `to-spec`,
 `triage`, and `code-review` depend on its output. Check:
 
 ```bash
