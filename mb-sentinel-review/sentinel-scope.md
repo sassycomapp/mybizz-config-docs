@@ -55,7 +55,7 @@ step file gets two things as it is built, following the Step 16 pattern:
 
 | Step | Scrutiny | Status |
 |---|---|---|
-| 16 — Domain model | Low/Medium | **WIRED** — Step 16 Domain Modeling (invocation item 7, gate-proof item 9, verified live 2026-09-09) |
+| 16 — Domain model | Low/Medium | **WIRED** — [[[pdlf:app-factory/phase-b-discover-and-define/b16-reference\|Step 16 Domain Modeling]]](C:/pdlf/app-factory/phase-b-discover-and-define/b16-reference.md) (invocation item 7, gate-proof item 9, verified live 2026-09-09) |
 | 17 — Data tables | High | Pending — wired when the step file is built |
 | 19 — Tickets | Medium | Pending |
 | 20 — Design | Medium/High | Pending |

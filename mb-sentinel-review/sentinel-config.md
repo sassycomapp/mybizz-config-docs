@@ -69,7 +69,7 @@ access. Related ADRs: [[[default:adr-global/adr-client-instance-architecture|Cli
 
 | Step | Scrutiny | Built as a real PDLF step file? |
 |---|---|---|
-| 16 — Domain model | Low/Medium | Yes — Step 16 Domain Modeling (invocation at item 7, gate-proof at item 9 — verified live 2026-09-09) |
+| 16 — Domain model | Low/Medium | Yes — [[[pdlf:app-factory/phase-b-discover-and-define/b16-reference\|Step 16 Domain Modeling]]](C:/pdlf/app-factory/phase-b-discover-and-define/b16-reference.md) (invocation at item 7, gate-proof at item 9 — verified live 2026-09-09) |
 | 17 — Data tables | High | Yes — built 2026-10-01, not yet wired |
 | 19 — Tickets | Medium | Yes — built 2026-10-01, not yet wired |
 | 20 — Design | Medium/High | Yes — built 2026-10-04, not yet wired |
@@ -88,7 +88,7 @@ Steps not in this table: no material security scrutiny by default.
 
 | Step file | `mb-sentinel-review` invoked at | Gate-proof check at |
 |---|---|---|
-| Step 16 Domain Modeling | item 7 | item 9 |
+| [[[pdlf:app-factory/phase-b-discover-and-define/b16-reference\|Step 16 Domain Modeling]]](C:/pdlf/app-factory/phase-b-discover-and-define/b16-reference.md) | item 7 | item 9 |
 
 ## Related, non-duplicated tools (cross-reference only — not part of Sentinel)
 

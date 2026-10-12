@@ -29,7 +29,7 @@ run), [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-exam-report|Ex
 ## Mandatory per-project setup gate
 
 `/setup-matt-pocock-skills` must have been run in a project before any other
-engineering skill from this set is used there — Step 19 to Tickets, `to-spec`,
+engineering skill from this set is used there — [[[pdlf:app-factory/phase-c-design-and-plan/c19-reference|Step 19 to Tickets]]](C:/pdlf/app-factory/phase-c-design-and-plan/c19-reference.md), `to-spec`,
 `triage`, and `code-review` depend on its output. Check:
 
 ```bash

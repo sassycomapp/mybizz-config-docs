@@ -203,8 +203,8 @@ Or run everything at once: `/autoplan`
 
 ## Separate, unrelated set
 
-Four `gstack-openclaw-*` skills (Step 14 Plan Ceo Review, `investigate`,
-Step 12 Office Hours, `retro`) live in the clone's `openclaw/skills/` subtree — installed via
+Four `gstack-openclaw-*` skills ([[[pdlf:app-factory/phase-b-discover-and-define/b14-reference|Step 14 Plan Ceo Review]]](C:/pdlf/app-factory/phase-b-discover-and-define/b14-reference.md), `investigate`,
+[[[pdlf:app-factory/phase-b-discover-and-define/b12-reference|Step 12 Office Hours]]](C:/pdlf/app-factory/phase-b-discover-and-define/b12-reference.md), `retro`) live in the clone's `openclaw/skills/` subtree — installed via
 `clawhub install` for OpenClaw, which is not used in this environment.
 They have no discovery shortcut in `~/.config/opencode/skills/` and are not
 part of this catalog; deliberately left in the clone (an update recreates

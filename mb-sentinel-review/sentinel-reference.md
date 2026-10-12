@@ -136,7 +136,7 @@ WHERE source_step IN ('16','17','19','20','21','34','35','37','38','39','45','46
   AND resolved_at IS NULL;
 ```
 
-**Gate-proof check** (built into Step 16 Domain Modeling item 9):
+**Gate-proof check** (built into [[[pdlf:app-factory/phase-b-discover-and-define/b16-reference|Step 16 Domain Modeling]]](C:/pdlf/app-factory/phase-b-discover-and-define/b16-reference.md) item 9):
 ```sql
 SELECT 1 FROM triage_findings
 WHERE step_id = (real step_id)
