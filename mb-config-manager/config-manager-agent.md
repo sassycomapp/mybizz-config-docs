@@ -68,6 +68,7 @@ A system's four documents are found by their endings: `-config.md`, `-reference.
    - **No document of the four:** run `/mb-sysdoc-creator (system-name)`, then continue.
    - **A document missing:** GAP. The correction is a mb-sysdoc-creator Refresh.
    - **Any other file in the folder:** GAP, unless the system's config lists it as a working file. The correction is a mb-sysdoc-creator Refresh, which moves anything still true into the four documents, then removal of the file.
+   - **Documents not in the specification's shape** (no identity table, no issuer-standard columns, no Authoritative sources or Checks, or a learnings table in another format): one DEVIATION. Its correction is a full mb-sysdoc-creator Refresh, and every other correction to the four documents folds into it. Propose no row-level patch to a document that is not in the specification's shape.
 4. Read the learnings in full, then the config, then the reference.
 
 ### 2. Issuer
