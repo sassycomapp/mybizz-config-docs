@@ -13,7 +13,7 @@ One row per MyBizz skill and system. Written only by mb-config-manager, with the
 | archify | skill | `archify` | | | | Active |
 | cloudflare | service | `cloudflare` | | | | Deferred |
 | commit-all | script | `commit-all` | | | | Active |
-| cupcake | plugin | `cupcake` | | | | Active |
+| cupcake | plugin | `cupcake` | 0.3.0 | 2025-11-27 | 2026-10-14 | Active |
 | gbrain | application | `gbrain` | | | | Active |
 | gbrain-dream-cycle | script | `gbrain-dream-cycle` | | | | Active |
 | graphify | skill | `graphify` | | | | Active |
