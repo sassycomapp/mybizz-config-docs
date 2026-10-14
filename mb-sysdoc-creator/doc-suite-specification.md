@@ -1,140 +1,145 @@
 ---
 title: "doc-suite-specification"
 doc-id: "mb-f4adba8c"
-updated: "2026-10-01"
+updated: "2026-10-14"
 ---
-# Doc Suite Specification — config / reference / explainer
+# Doc Suite Specification — config / reference / explainer / learnings
 
-Canonical specification for the three-document pattern used across this
-system's component documentation (memory-governor, mb-submit-memory,
-postgresql, anvil-agent-references, and future components). Defines what
-each of the three documents is for, what it must and must not contain,
-and a test for catching content that's drifted into the wrong document.
-Reference this before starting any new three-doc set.
+The one specification for the documents that describe every skill and system kept by System Integrity. mb-sysdoc-creator writes documents to it. mb-config-manager reads documents by it. Read it before writing or changing any of these documents.
 
 ---
 
-## The single fastest check across all three
+## The folder
 
-**Each fact should exist in exactly one of the three documents.** If a
-fact appears twice — once as a config table row, once as an explainer
-sentence — one of those two is in the wrong document. Neither correctly
-"reinforces" the other; it's duplication, and duplication is where
-these documents drift out of sync with each other over time.
+- Every skill or system has one folder: `C:\mybizz\mybizz-config-docs\{system}\`.
+- The folder name is the system's name. A system MyBizz built starts with `mb-`. An external system keeps its issuer's name.
+- The folder holds exactly four documents, one of each, found by the ending of the file name:
+
+| Ending | Document | Holds |
+|---|---|---|
+| `-config.md` | config | State: what exists, what it is set to, and the issuer's standard for it |
+| `-reference.md` | reference | Execution: what an agent needs while working with the system |
+| `-explainer.md` | explainer | Orientation and reasoning: what it is, whether to use it, why it works this way |
+| `-learnings.md` | learnings | What differs from, or adds to, the standard in the MyBizz setup, and why |
+
+- A document is named `{folder}{ending}` when it is created, for example `mb-doc-check-learnings.md`. A document is never renamed.
+- An integrity system's folder may also hold the working files that system needs to run, each listed in its own config. Nothing else is kept in any folder.
 
 ---
 
-## `<name>-config.md` — State
+## One fact, one home
 
-**Purpose:** a settings sheet. Answers "what exists and what is it set
-to" — nothing else.
+Every fact exists in exactly one document. A fact written twice drifts. If a fact appears in two documents, one of them is wrong about where it belongs.
+
+---
+
+## The standard
+
+- The standard is the issuer's authoritative specification for the installed version.
+- Its sources are the issuer's official documentation, source repository, release notes and configuration schema.
+- For a system MyBizz built, MyBizz is the issuer. The standard is the system's own source files.
+- Every standard value is recorded with a link to the exact source it came from. A value with no source is an open item, never a standard.
+
+---
+
+## `-config.md` — State
+
+**Purpose:** a settings sheet. It answers "what exists, what is it set to, and what does the issuer say it should be".
+
+**Contains, in this order:**
+
+1. **Identity table**, one row each:
+
+| Field | Value |
+|---|---|
+| Issuer | The issuer's name. `MyBizz` for a system MyBizz built |
+| Installed version | The version live now |
+| Standard taken from | The issuer version the standard values come from |
+| Last researched | The date of the last research run |
+
+2. **Settings tables**, one per settings area, all with these columns:
+
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+
+   - **Issuer standard:** the issuer's value for the installed version. `—` when the issuer sets none.
+   - **MyBizz value:** the value live now, as verified.
+   - **Source:** a link to the exact issuer page or file the standard came from.
+   - **Learning:** the learnings ID (`L3`) that justifies a difference. Blank when the MyBizz value equals the standard.
+   - Paths, versions, ports, files, folders and integrations are all settings, and use the same table.
+
+3. **Open items:** anything not yet verified, stated as a gap, never guessed.
+
+**Never contains:** a rule, a reason, prose, a list of sources, or history.
+
+**Placement test:** a line belongs here when it goes stale the moment a setting changes, with no reasoning changing.
+
+---
+
+## `-reference.md` — Execution
+
+**Purpose:** what an agent consults while doing the work. Every line is immediately actionable.
 
 **Contains:**
-- Identity/version/location facts (paths, versions, ports, IDs)
-- Structural inventory (file/folder layout, component lists, table lists)
-- Integration facts with other system parts (how it's registered, synced, exempted)
-- An explicit "open items" section for anything not yet verified — stated as a gap, never guessed at
 
-**Never contains:**
-- A rule ("never do X") — that's reference.md's job
-- A reason ("this exists because...") — that's explainer.md's job
-- Prose narrative of any kind — every line should be inventory-shaped: a value, a state, a fact
+- Exact commands, syntax and invocation patterns.
+- Exact rules, stated as imperatives.
+- Procedures, as numbered steps.
+- **Authoritative sources** (required):
 
-**Format:** tables and short bullet inventories throughout. If a line
-requires more than one sentence to express, it's not a config fact — it
-belongs in one of the other two docs.
+| Source | Link | Issuer version | Date checked |
+|---|---|---|---|
 
-**Test for a stray line:** *Could this line go stale the moment someone
-changes a setting, without any reasoning changing?* If yes, config.md.
-If the line would only go stale when the reasoning changes, it doesn't
-belong here.
+- **Checks** (required): how to read each config setting live, the installed version, and whether the system works.
 
----
+| Check | Method | Run by |
+|---|---|---|
 
-## `<name>-reference.md` — Execution
+   - **Check** names a config setting exactly, or `Installed version`, or `Works`.
+   - **Run by** is `agent`, or `developer` where Cupcake reserves the action.
 
-**Purpose:** what an agent (or a person) consults *while doing the
-work*, right now, mid-task. Every line should be immediately actionable.
+- A **Do not** list, at the end.
 
-**Contains:**
-- Exact commands, exact syntax, exact invocation patterns
-- Exact rules stated as imperatives ("never...", "always...", "use X when Y")
-- Procedures as ordered steps
-- Full technical detail an agent needs to act correctly — no compression, no "see elsewhere" for anything actually needed mid-task
-- A "Do not" list at the end, consolidating the sharpest failure modes
+**Never contains:** a value (values live in config), a reason beyond a one-line pointer to the explainer, architecture framing, or history.
 
-**Never contains:**
-- Why a rule exists — name the constraint, don't justify it (a one-line pointer to explainer.md is fine; a paragraph of justification is not)
-- System-wide architecture framing ("this sits between X and Y because...") — that's explainer.md's job
-- Historical/incident narrative beyond what's needed to justify a "do not" (a one-line "confirmed live, YYYY-MM-DD" is fine; a story is not)
-
-**Format:** imperative voice, tables for anything tabular (parameters,
-options, mappings), numbered steps for procedures. Density over
-readability — this doc is grepped, not read start to finish.
-
-**Test for a stray line:** *If I deleted this line, would an agent
-mid-task now do the wrong thing, or just understand less about why?* If
-the former, it belongs here. If the latter, it belongs in explainer.md.
+**Placement test:** a line belongs here when deleting it would make an agent mid-task do the wrong thing.
 
 ---
 
-## `<name>-explainer.md` — Orientation, Suitability, and Reasoning
+## `-explainer.md` — Orientation, suitability and reasoning
 
-**Purpose:** the mental model a human builds *once*, so future decisions
-about this component are made with real understanding instead of
-pattern-matching against a rule list. Required contents, in this order:
+**Purpose:** the understanding a reader builds once, so decisions about this system are made with real understanding. Required sections, in this order:
 
-**1. What this actually is — plain-terms identity.** One or two
-paragraphs, no assumed jargon: what problem does this exist to solve,
-for whom, in what situation. A reader with zero context should finish
-this section knowing what the thing *is*, before anything about why
-it's built a particular way.
+1. **What it is:** plain terms, no assumed jargon. What problem it solves, for whom, in what situation.
+2. **What it can do:** capabilities, not commands.
+3. **Suitability:** best for, good for, and not good for, naming the right tool where one exists.
+4. **Why it works this way:** the reasons behind its structure and its sharpest rules, and where it sits relative to the systems around it.
+5. **What has to happen:** what the developer and other systems must keep doing for it to keep working.
 
-**2. Feature summary — conceptual, not syntactic.** What the component
-can actually do, at the level of capability, not command. Not "run `X
---flag`" (that's reference.md) — "it validates a manifest before
-changes take effect," "it enforces a specific access default unless
-overridden." A reader should be able to list its real capabilities
-without having memorized a single command.
+**Never contains:** an exact command, a value, a citation, or history.
 
-**3. Suitability — best for / good for / not good for.** Explicit, not
-implied. Three honest categories:
-   - **Best for:** the cases this was clearly designed around — where using it is obviously the right call.
-   - **Good for / adequate for:** cases it handles acceptably but isn't its central purpose.
-   - **Not good for / wrong tool for:** cases where reaching for this component would be a mistake — name the actual right tool if one exists in this system.
+**Placement test:** a sentence belongs here when it explains a why, a trade-off or a relationship. A sentence that only states a what or a how belongs in another document.
 
-   This section is what lets a future reader *choose* whether to use
-   the thing at all — a distinct question from "how do I use this
-   correctly" (reference.md) and even from "why is it built this way"
-   (the rest of this document).
+---
 
-**4. Design reasoning.** Why the component is structured the way it is
-(why split into these parts, not others); the reasoning behind the
-sharpest or most counter-intuitive rules — not the rule itself, the
-reason it exists and what it protects against; where the component sits
-relative to other real parts of the system (what depends on it, what it
-depends on, what treats it specially and why); genuinely open
-architectural/integration questions, framed as "why this matters," not
-just restated as a to-do.
+## `-learnings.md` — What differs and why
 
-**Never contains:**
-- The exact command or exact rule syntax — name it, reference the reference doc, move on
-- A config fact restated in sentence form — if a config.md table row says it, don't also say it here in prose unless the *reasoning* genuinely needs the fact restated for context
-- Filler transitions, hedging, or "it's worth noting" — every sentence should carry a reason, a comparison, or a consequence, or it shouldn't be there
+**Purpose:** the nuances, workarounds, preferences and unique settings that make the MyBizz setup work. They are read in full before any research, examination or proposal for this system.
 
-**Format:** prose organized under reasoning-shaped headers ("why X
-instead of Y," "where this sits relative to Z"), tables only when a
-genuine reasoning comparison is tabular (e.g. risk category vs.
-consequence) — never a table that exists only to reformat facts already
-covered in config.md or rules already covered in reference.md.
+**Contains one table:**
 
-**Test for a stray line:** *Does this sentence explain a "why," a
-trade-off, or a relationship — or does it just restate a "what" or a
-"how"?* If it's a "what" or a "how" and it isn't part of the required
-orientation/suitability sections above, cut it or move it to the doc
-that owns it.
+| ID | Learning | Why it holds | Source |
+|---|---|---|---|
 
-**Revised test for the doc as a whole:** a reader should be able to
-answer, from explainer.md alone, three questions in order — *what is
-this, should I use it for my situation, and why does it work the way it
-does* — before ever needing reference.md for the how.
+- **ID:** `L1`, `L2` and so on. An ID is never reused.
+- **Learning:** one fact, stated as it is true now.
+- **Why it holds:** the reason it differs from or adds to the standard.
+- **Source:** the issuer page, file or finding it came from.
+
+**Rules:**
+
+- An entry is added or changed only with the developer's approval.
+- An entry that stops being true is removed. Any config row pointing to it is corrected in the same change.
+- No dates, no history, no narrative.
+
+**Placement test:** a line belongs here when losing it would make an agent set up or examine this system wrongly.
