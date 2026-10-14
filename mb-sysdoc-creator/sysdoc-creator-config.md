@@ -1,106 +1,60 @@
 ---
 title: "sysdoc-creator-config"
 doc-id: "mb-7688c176"
-updated: "2026-10-07"
+updated: "2026-10-14"
 ---
 # sysdoc-creator — Config
 
-State of the `mb-sysdoc-creator` skill as of 2026-10-07. All facts
-verified live this date unless noted.
+State of the `mb-sysdoc-creator` skill.
 
 ## Identity
 
 | Field | Value |
 |---|---|
-| Component | `mb-sysdoc-creator` — first-party OpenCode skill, mb-* family |
-| Invocation | `/mb-sysdoc-creator (system-name)` — explicit invocation only, never auto-trigger |
-| Version field | None declared in SKILL.md frontmatter (name + description only) |
-| Language | Natural-language procedure; no executable code, no runtime dependencies |
+| Issuer | MyBizz |
+| Installed version | Source commit `5f48c78` |
+| Standard taken from | Own repository `C:\mybizz\mb-sysdoc-creator\` (origin `sassycomapp/mb-sysdoc-creator`), commit `5f48c78` |
+| Last researched | 2026-10-14 |
 
-## File inventory (this folder)
+## Documents in this folder
 
-| File | Lines | Role |
-|---|---|---|
-| [[[mb-sysdoc-creator:mb-sysdoc-creator\|Skill source]]](C:/mybizz/mb-sysdoc-creator/mb-sysdoc-creator.md) | — | Canonical skill definition — own repository `C:\mybizz\mb-sysdoc-creator\` (GitHub-backed, origin `sassycomapp/mb-sysdoc-creator`; relocated 2026-10-04) |
-| [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|config / reference / explainer]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | 140 | Governing specification for every suite this skill produces |
-| `sysdoc-creator-config.md` | — | This document |
-| [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-reference\|Reference]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-reference.md) | — | Companion — execution |
-| [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-explainer\|Explainer]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-explainer.md) | — | Companion — orientation and reasoning |
-| `sysdoc-creator-learnings.md` | — | Exam suite — transient learnings (config-management) |
-| `sysdoc-creator-exam-plan.md` | — | Exam suite — next run's job-spec (transient contents) |
-| `sysdoc-creator-exam-report.md` | — | Exam suite — last run's verified state (no history) |
-| `sysdoc-creator-log.md` | — | Exam suite — chronological notable events |
-| `sysdoc-creator-exam-skill.md` | — | Exam suite — exam skill canonical source (installed as `mb-config-mb-sysdoc-creator`) |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Config document | Required, named `{folder}-config.md` | Present — `sysdoc-creator-config.md` | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | L3 |
+| Reference document | Required, named `{folder}-reference.md` | Present — `sysdoc-creator-reference.md` | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | L3 |
+| Explainer document | Required, named `{folder}-explainer.md` | Present — `sysdoc-creator-explainer.md` | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | L3 |
+| Learnings document | Required, named `{folder}-learnings.md` | Present — `sysdoc-creator-learnings.md` | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | L3 |
 
-## Installed surface
+## Working files
 
-| Item | Value |
-|---|---|
-| Installed copy | `~/.config/opencode/skills/mb-sysdoc-creator/SKILL.md` |
-| Size / date | 15,537 bytes, 2026-10-07 (Phase 9a correction applied, config-management run #1) |
-| Sync state | Body byte-identical to the canonical source in the own repository (hash pair `84e32c8aa0f21f9d` both sides, verified 2026-10-07) |
-| Drift detection | Body-hash pair (repo source ↔ installed copy), config-manager pinned method — no version field exists to check instead |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| doc-suite-specification.md | An integrity system's folder may hold the working files it needs, each listed in its own config | Present — the governing specification every suite this skill writes must satisfy | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md); `SKILL.md` | — |
 
-## Governing specification
+## Source and install
 
-| Item | Value |
-|---|---|
-| File | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|config / reference / explainer]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) |
-| Indexed in GBrain as | `mb-sysdoc-creator/doc-suite-specification` |
-| Defines | Per-document contents, never-contains lists, stray-line tests for all three suite documents |
-| Applies to | Every suite this skill drafts — no independent structure improvisation permitted |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Canonical skill definition | A system MyBizz built takes its standard from its own source files | `C:\mybizz\mb-sysdoc-creator\mb-sysdoc-creator.md` — own repository, origin `sassycomapp/mb-sysdoc-creator` | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md); [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | — |
+| Installed copy | An OpenCode skill installs as `~/.config/opencode/skills/{name}/SKILL.md` | `~/.config/opencode/skills/mb-sysdoc-creator/SKILL.md` | [[[mybizz-os-docs:os-reference-docs/skills-catalog\|skills-catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | — |
+| Source↔installed sync | Installed body = canonical body; only frontmatter may differ | Byte-identical (body hash `9ec6ee6edd84fd2c`) | [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-reference\|reference]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-reference.md) Checks | — |
 
-## Procedure structure (SKILL.md)
+## GBrain
 
-| Section | Contents |
-|---|---|
-| Hard rules | 7 (Section 0) |
-| Phases | 0–10 + 9a (Section 1), one continuous run — 12 phases |
-| Hard constraints | 6 (Section 2) |
-| Completion statuses | 5: DONE, BLOCKED, PERMISSION_REQUIRED, REPORT_REJECTED, DRAFT_REJECTED |
-| Log folders | 5 (see below) |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| GBrain pages | — | `mb-sysdoc-creator`; `mb-sysdoc-creator/doc-suite-specification`; `mb-sysdoc-creator/sysdoc-creator-config`; `mb-sysdoc-creator/sysdoc-creator-reference`; `mb-sysdoc-creator/sysdoc-creator-explainer` | GBrain resolve, live 2026-10-14 | — |
+| Source registration | — | Own repository registered as federated GBrain source `mb-sysdoc-creator`; suite pages on the `mybizz-config-docs` host source | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md); GBrain search | — |
+| Memory Governor treatment | — | None — outputs are developer-authored documents synced as ordinary corpus | memory-governor suite grep, 2026-10-14 | — |
 
-## Log infrastructure
+## Integrations
 
-| Path | Holds | State 2026-10-07 |
-|---|---|---|
-| `C:\mybizz\logs\mb-sysdoc-creator\` | Permanent history root | Live |
-| `...\learnings\learnings.md` | Durable cross-run patterns | 20 run sections, 2026-09-06 → 2026-10-07 |
-| `...\in-progress\` | Current run only; resume source | Empty |
-| `...\last-completed-run\` | Full detail of finished runs | 21 run logs (18 systems, incl. 2 correction runs) + 1 directory |
-| `...\abandoned-runs\` | Declined-resume runs, never deleted | Empty |
-
-## GBrain integration
-
-| Item | Value |
-|---|---|
-| GBrain pages | `mb-sysdoc-creator` (skill — served by the own-repo source), `mb-sysdoc-creator/doc-suite-specification`, `mb-sysdoc-creator/sysdoc-creator-config`, `mb-sysdoc-creator/sysdoc-creator-reference`, `mb-sysdoc-creator/sysdoc-creator-explainer` |
-| Source | Skill page: own repository, registered federated GBrain source `mb-sysdoc-creator` (synced 2026-10-07). Suite pages: `mybizz-config-docs` host source — ordinary sync |
-| Memory Governor treatment | None — no bypass exemption; settled policy from the 2026-09-06 anvil-docs run applies to the whole repo |
-
-## Cross-cutting integration
-
-| System | Finding |
-|---|---|
-| Cupcake | No component-specific rule found (rule inventory checked 2026-09-09). The skill's own Hard Rule 7 defines its block-handling discipline; enforcement status of any Cupcake rule is not fixed — live status lives in [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)'s Current Operational Status |
-| Memory Governor | None found — not a governed writer; its outputs are developer-authored docs synced ordinarily |
-| security-global | None found — no principles bear directly on this component's defaults |
-| Related skills | mb-compile-rules (Cupcake rule pipeline), mb-submit-memory (memory submission) |
-
-## Suites produced (proven by run logs)
-
-| Date | Systems |
-|---|---|
-| 2026-09-06 | archify, magdoub-wireframe, anvil-agent-references, anvil-docs, cupcake, gbrain, gbrain-dream-cycle |
-| 2026-09-08 | graphify, gstack, matt-pocock-skills, mb-compile-rules, mb-submit-memory, memory-governor |
-| 2026-09-09 | mb-sentinel-review, opencode, postgresql |
-| 2026-10-07 | mb-archify-scope, mb-close-out |
-
-18 systems, 21 run logs (2 are Cupcake-phrasing correction runs) + 1 working directory.
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Cupcake | — | No component-specific rule existed at research time (2026-10-14). Standing rules that bind the skill's operation: no cross-project filesystem writes by default (grants required); no autonomous commits. Live enforcement status: [[[mybizz-config-docs:cupcake/cupcake-config\|cupcake-config]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) Current Operational Status | policy inventory grep, 2026-10-14 | — |
+| security-global | — | None found that changes this system's defaults (2026-10-14) | grep at `C:\dev\project-library-global\security-global\`, 2026-10-14 | — |
+| Related skills | — | mb-config-manager (examines this suite, register cycle); mb-compile-rules; mb-submit-memory; mb-doc-check | [[[mybizz-config-docs:mb-config-manager/config-manager-agent\|config-manager agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) | — |
 
 ## Open items
 
-1. ~~The Skills Catalog (`mybizz-os-docs`) records `mb-sysdoc-creator` as installed.~~ CLOSED 2026-10-07 — verified live (catalog row: `Operational` / `Both` / `OK`, source = own repository).
-2. No version field in SKILL.md — currency between the installed copy and the canonical source is provable only by the body-hash pair (repo source ↔ installed), config-manager pinned method.
-3. The canonical skill source lives in its own repository (`C:\mybizz\mb-sysdoc-creator\`, GitHub-backed) — the suite folder's former in-folder copy (82-byte stub) is gate-approved for removal 2026-10-07 (config-management run #1); the agent `rm` was guard-denied, so the file removal is developer-run pending; the exam set documents the repo source directly.
-4. **Decision (developer, 2026-10-07):** the file prefix `sysdoc-creator-` is kept as a deliberate exception to the folder-name-as-prefix convention. Closed.
+1. Full GBrain source-registry row (`gbrain sources list` on the host CLI) is not confirmable from this agent's scope; registration is confirmed indirectly (repo-organization row; the skill page resolves from the federated source).

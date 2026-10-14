@@ -5,138 +5,59 @@ updated: "2026-10-14"
 ---
 # sysdoc-creator — Reference
 
-Execution procedure for the `mb-sysdoc-creator` skill. `sysdoc-creator-skill.md` in this
-folder is the authoritative definition; this document is the operational
-form. Why the rules are shaped this way: [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-explainer.md).
-The config-management exam set for this suite (Exam Plan ·
-Exam Report ·
-Log ·
-[[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-learnings.md) ·
-Exam Skill) is synthesized and consumed per the
-[[[mybizz-config-docs:mb-config-manager/config-manager-agent|Config Manager]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) plan-driven cycle —
-the exam verifies this suite's state and never runs the subject skill itself.
+Execution form for the `mb-sysdoc-creator` skill. The canonical definition is
+the source repository's `mb-sysdoc-creator.md` (see Authoritative sources); the
+installed copy must stay body-identical to it. Why the rules are shaped this
+way: [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-explainer|explainer]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-explainer.md). This suite is examined by
+mb-config-manager through the register cycle
+([[[mybizz-config-docs:mb-config-manager/config-manager-agent|config-manager agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md)) — the examination verifies this
+suite's state and never runs the subject skill itself.
 
 ## Invocation
 
-- Invoke as `/mb-sysdoc-creator (system-name)` plus whatever the
-  developer supplies: description, files, URLs, any combination.
+- Invoke as `/mb-sysdoc-creator (system-name)`, by the developer or by
+  mb-config-manager, plus whatever the developer supplies: description,
+  files, links, any combination — leads to verify, never text to copy.
 - Never auto-trigger. Explicit invocation only.
-- `system-name` becomes the file-name prefix. Confirm it matches the
-  developer's intended naming before drafting; correct with the
-  developer rather than silently normalizing.
+- `system-name` is the folder name. Confirm it matches the developer's
+  intended naming before drafting; correct with the developer rather
+  than silently normalizing.
 
-## Phase procedure (one continuous run)
+## Procedure
 
-### Phase 0 — Resume check and folder setup
-1. Run:
-   ```bash
-   mkdir -p "/mnt/c/mybizz/logs/mb-sysdoc-creator/learnings"
-   mkdir -p "/mnt/c/mybizz/logs/mb-sysdoc-creator/in-progress"
-   mkdir -p "/mnt/c/mybizz/logs/mb-sysdoc-creator/last-completed-run"
-   mkdir -p "/mnt/c/mybizz/logs/mb-sysdoc-creator/abandoned-runs"
-   ```
-2. Check `in-progress\` for an unfinished run against this exact system
-   name. Found → offer resume. Declined → move that run to
-   `abandoned-runs\` (never delete) and start fresh.
+The skill's procedure is its canonical source: phases 0–7 (Locate, Intake,
+Research, Report + first approval, Draft, Present + second approval, Apply,
+Close), one continuous run, under its hard rules. The installed SKILL.md
+auto-loads on invocation and is the operative copy — never draft from a
+restatement here.
 
-### Phase 1 — Learnings (open)
-3. Read `learnings.md`. Apply anything already-settled; do not re-derive.
+## Sync procedure (source → installed)
 
-### Phase 2 — Intake and destination check
-4. Confirm [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification|config / reference / explainer]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) exists at
-   [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification|config / reference / explainer]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md).
-   Missing → STOP and report; never draft from memory of the spec.
-5. Read every supplied file in full; fetch every provided URL.
-6. No destination path given → STOP here and ask.
+1. Edit only the canonical source, `C:\mybizz\mb-sysdoc-creator\mb-sysdoc-creator.md`. Never edit the installed copy directly.
+2. Copy the body into `~/.config/opencode/skills/mb-sysdoc-creator/SKILL.md`, keeping the installed file's own frontmatter (`name`, `description`) — never a whole-file copy.
+3. Verify: strip frontmatter from both files, hash the two bodies, and require equal hashes. A mismatch means step 2 was done wrong — repeat it; never let the copies drift silently.
 
-### Phase 3 — Research
-7. Run multiple GBrain searches — component name, function, adjacent
-   terminology separately. One vague pass is not sufficient.
-8. Run the cross-cutting check, all four categories, every run:
-   Cupcake rules/exemptions; Memory Governor treatment; security-global
-   principles; related skills and adjacent GBrain sources. Report
-   "none found" explicitly per category.
-9. Live-verify everything verifiable by file read, GBrain query, or a
-   command you can run. Anything needing a developer-only terminal
-   command: hand over the exact command and wait for real output.
-10. Track provenance per fact: confirmed-live / confirmed-via-GBrain /
-    unverified-from-source / developer-stated.
+## Authoritative sources
 
-### Phase 4 — Report
-11. Present findings organized by destination document, each material
-    fact tagged confirmed or unverified, all four cross-cutting results,
-    and any blocked point needing a developer-run command. Stop.
+| Source | Link | Issuer version | Date checked |
+|---|---|---|---|
+| Canonical skill definition (own repository) | [[[mb-sysdoc-creator:mb-sysdoc-creator\|canonical skill definition]]](C:/mybizz/mb-sysdoc-creator/mb-sysdoc-creator.md) — origin `github.com/sassycomapp/mb-sysdoc-creator` | commit `5f48c78` | 2026-10-14 |
+| Governing specification for every suite the skill writes | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | — | 2026-10-14 |
+| OpenCode skill mechanism (install location, auto-load) | `~/.config/opencode/skills/` — [[[mybizz-os-docs:os-reference-docs/skills-catalog\|skills catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | — | 2026-10-14 |
 
-### Phase 5 — Approve (research)
-12. Developer reply is one of: approval; correction (authoritative —
-    incorporate exactly); further-research request; rejection (return to
-    Phase 3 with the named gap). Never draft without this approval.
+## Checks
 
-### Phase 6 — Draft
-13. Draft all three documents bound by [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification|config / reference / explainer]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md):
-    `-config.md` = state only; `-reference.md` = execution only;
-    `-explainer.md` = orientation, suitability, reasoning, in that order.
-14. Self-check each draft against its stray-line test; move misplaced
-    content to the owning document before Phase 7.
-
-### Phase 7 — Approve (draft)
-15. Present all three drafts together. Developer reply: approval;
-    corrections (apply exactly); or rejection of specific documents
-    (redraft only those). Never write to disk without this approval,
-    separate from Phase 5's.
-
-### Phase 8 — Apply
-16. Write to the confirmed destination. Same-name document already
-    exists → confirm full replacement or merge first; never silently
-    overwrite. Write blocked by Cupcake or any policy mechanism →
-    Hard Rule 7 (below).
-
-### Phase 9 — Log
-17. Append the run record to `C:\mybizz\logs\mb-sysdoc-creator\`:
-    system, destination, sources consulted (GBrain queries, URLs,
-    files), cross-cutting findings, developer corrections from both
-    gates, real outcome.
-
-### Phase 10 — Learnings (close)
-18. Append durable patterns to `learnings.md`. Move this run's record
-    from `in-progress\` to `last-completed-run\`.
-
-## Hard rules (operational form)
-
-1. Never write a fact from provided source material alone if it can be
-   live-verified instead. Source material is a lead, never ground truth.
-2. Never guess the destination path. Not given → STOP at Phase 2.
-3. Never skip the cross-cutting check — "none found" is a real result,
-   not a skipped step.
-4. Every fact lives in exactly one of the three documents. Duplication
-   across the suite is a drafting error.
-5. Never blend confirmed and claimed-but-unverified facts silently —
-   unverified items surface as open items or flagged uncertainty.
-6. Never mark DONE without Phase 5 and Phase 7 approvals, both on
-   record from within the same run.
-7. Any Cupcake or policy block, at any phase: STOP, report the exact
-   block, state what is needed, wait for the developer's decision.
-   Never silently skip, work around, or treat as implicit n/a.
-
-## Completion status protocol
-
-| Status | When |
-|---|---|
-| DONE | Drafted, approved at both gates, written to confirmed destination |
-| BLOCKED | No destination given, or research awaits a developer-run command's real output |
-| PERMISSION_REQUIRED | A policy mechanism denied an action (Hard Rule 7) |
-| REPORT_REJECTED | Phase 4 findings rejected; name what needs further research |
-| DRAFT_REJECTED | Phase 7 rejection; name the document(s); redraft only those |
+| Check | Method | Run by |
+|---|---|---|
+| Installed version | `git -C /mnt/c/mybizz/mb-sysdoc-creator log -1 --format='%h %ci'` — no version field exists; the source commit is the version | agent |
+| Sync (source ↔ installed) | Strip frontmatter from both files, hash each body, take the first 16 hex characters; equal means current | agent |
+| Works | The installed SKILL.md is present and loadable (it appears in the harness skill list), and the specification file exists — checked at Phase 0 of every run | agent |
+| Each config setting | Read the row's Source file live | agent |
 
 ## Do not
 
-- Do not transcribe supplied material into a canonical doc as fact.
-- Do not infer a destination folder from naming convention.
-- Do not conditionally skip a cross-cutting category because it seems
-  irrelevant.
-- Do not duplicate a fact across two of the three documents.
-- Do not present unverified claims as settled.
-- Do not combine the two approval gates into one.
-- Do not work around a policy block, and never invoke `mg-grant` or any
-  permission-altering command on your own initiative.
-- Do not continue a drafting round after a rejection of that document.
+- Do not edit the installed SKILL.md directly — edit the canonical source, then run the sync procedure.
+- Do not restate the skill's procedure in this suite; the canonical source is its only home.
+- Do not rename any of the four documents.
+- Do not run the skill to examine this suite — mb-config-manager examines; the skill documents.
+- Do not commit — the developer runs commit-all.

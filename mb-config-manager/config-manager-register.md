@@ -30,7 +30,7 @@ One row per MyBizz skill and system. Written only by mb-config-manager, with the
 | mb-project-docs | skill | `mb-project-docs` | | | | Active |
 | mb-sentinel-review | skill | `mb-sentinel-review` | | | | Active |
 | mb-submit-memory | skill | `mb-submit-memory` | | | | Active |
-| mb-sysdoc-creator | skill | `mb-sysdoc-creator` | | | | Active |
+| mb-sysdoc-creator | skill | `mb-sysdoc-creator` | `5f48c78` | 2026-10-14 | 2026-10-14 | Active |
 | memory-governor | application | `memory-governor` | | | | Active |
 | namecheap | service | `namecheap` | | | | Deferred |
 | opencode | application | `opencode` | | | | Active |
