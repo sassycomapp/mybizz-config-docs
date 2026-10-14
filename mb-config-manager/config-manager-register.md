@@ -24,7 +24,7 @@ One row per MyBizz skill and system. Written only by mb-config-manager, with the
 | mb-archify-scope | skill | `mb-archify-scope` | | | | Active |
 | mb-close-out | skill | `mb-close-out` | | | | Active |
 | mb-compile-rules | skill | `mb-compile-rules` | | | | Active |
-| mb-config-manager | agent | `mb-config-manager` | | | | Active |
+| mb-config-manager | agent | `mb-config-manager` | `12ffc6d` | 2026-10-14 | 2026-10-14 | Active |
 | mb-doc-check | script | `mb-doc-check` | | | | Active |
 | mb-memory-system-diagnostic | skill | `mb-memory-system-diagnostic` | | | | Active |
 | mb-project-docs | skill | `mb-project-docs` | | | | Active |

@@ -1,58 +1,62 @@
 ---
 title: "config-manager-config"
 doc-id: "mb-48323f1a"
-updated: "2026-10-04"
+updated: "2026-10-14"
 ---
-# Config Manager — Configuration
+# mb-config-manager — Configuration
 
-Canonical current-state configuration for the config-management system itself.
-Concept: [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md); procedures: [[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md).
+State of the configuration-management agent. Standard:
+[[[mybizz-config-docs:mb-config-manager/config-manager-agent|Orchestrator Agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md).
 
 ## Identity
 
-| Item | Value |
+| Field | Value |
 |---|---|
-| System | `mb-config-manager` — configuration management for live systems |
-| Orchestrator | an **agent**, not a skill — draft: [[[mybizz-config-docs:mb-config-manager/config-manager-agent\|Orchestrator Agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) |
-| Exam modules | per-system skills — draft: `{system}/{system}-skill.md` |
-| Routing table | [[[mybizz-config-docs:mb-config-manager/config-manager-register\|Register: Managed Systems]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md) — authoritative for Enabled systems |
-| Separation | config skills examine live systems and edit no document outside the config-management suites and the routing table; other documents are maintained by the agents doing the work, with the developer's approval, and checked at every commit by `mb-doc-check` |
+| Issuer | MyBizz |
+| Installed version | `12ffc6d` (last commit of `config-manager-agent.md`) |
+| Standard taken from | `config-manager-agent.md`, commit `12ffc6d`, 2026-10-14 |
+| Last researched | 2026-10-14 |
 
-## Settings
+## Settings — behaviour
 
-| Setting | Value |
-|---|---|
-| Trigger | On demand only — developer-initiated |
-| Detection autonomy | Full — a run asks no questions until the gate |
-| Healing | Gated per item; nothing auto-approved, ever |
-| Verdict classes | `DOWN` / `UNHEALTHY` / `DRIFT` / `GAP` |
-| Exam cycle | Plan-driven — exam-plan synthesized fresh per run, skill executed with plan in hand |
-| Report convention | `{system}-exam-report.md` per system folder — one file, overwritten each run, no history |
-| Exam-plan convention | `{system}-exam-plan.md` per system — transient, rewritten at the start of each cycle |
-| Log convention | `{system}-log.md` per system — one run row per exam + free rows for notable events (crashes, incidents, upgrades, errors, significant guard denials); appended at observation time; pruned once absorbed |
-| Learnings convention | `{system}-learnings.md` per system; orchestrator's own: [[[mybizz-config-docs:mb-config-manager/config-manager-learnings\|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md). Transient — every entry eventually dropped or graduated into a permanent home |
-| Graduation | Dual track: into the skill → agent-applied, then re-installed; into config/reference/explainer → proposed at the gate, applied only after developer approval |
-| Tier 3 (deep/intrusive) | Explicit developer unlock per run; plan header carries the unlock state |
-| Credentials | Referenced by variable name only — never printed |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Trigger | On demand only | On demand only — developer-initiated | agent §Invocation | |
+| Invocation, one system | `/mb-config-manager (system-name)` | as standard | agent §Invocation | |
+| Invocation, no name | List Active systems whose Last checked is empty or earlier than Last updated; ask which | as standard | agent §Invocation | |
+| Finding kinds | DOWN, UNHEALTHY, BEHIND, DRIFT, DEVIATION, GAP — in that report order | as standard | agent §Finding kinds | |
+| Register scope | Every system, `mb-config-manager` itself included | as standard | agent §The register | |
+| Register columns | System · Kind · Docs folder · Installed version · Last updated · Last checked · State | as standard | agent §The register | |
+| Kind values | skill, agent, script, plugin, application, service | as standard | agent §The register | |
+| Register states | Active, Deferred | as standard | agent §The register | |
+| Run record | Findings in chat; the register row is the only record | as standard | agent hard rules 3, 9 | |
+| Learning writes | Config rows, learnings entries and the register row, only with developer approval | as standard | agent hard rule 3 | |
+| Change discipline | One change at a time; replace-value recorded; stop on failed check with the way back | as standard | agent hard rule 5 | |
+| On a block | Stop; give the exact grant line; never self-grant, never work around | as standard | agent hard rule 6 | |
+| Issuer research | Never — `/mb-sysdoc-creator (system-name)` does it | as standard | agent hard rule 7 | |
+| Cupcake rules | Never written — `/mb-compile-rules` does it | as standard | agent hard rule 8 | |
+| Install/upgrade | Never — a newer version is a notice and a request | as standard | agent hard rule 4 | |
+| Commit | Never — the developer runs commit-all | as standard | agent hard rule 10 | |
 
-## Install locations
+## Settings — files
 
-| Component | Source (this repo) | Installed location |
-|---|---|---|
-| Orchestrator agent | [[[mybizz-config-docs:mb-config-manager/config-manager-agent\|Orchestrator Agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) | resolved at agent install time (developer-set) |
-| System exam skills | `{system}/{system}-skill.md` — canonical, git-versioned | `~/.config/opencode/skills/<skill-name>/SKILL.md` — installed **copy** (only executing copy) |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Register | `/mnt/c/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md` | as standard | agent §Files | |
+| Own learnings | `.../mb-config-manager/config-manager-learnings.md` | as standard | agent §Files | |
+| Specification | `/mnt/c/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md` | as standard | agent §Files | |
+| Grant forms | `/mnt/c/mybizz/mybizz-os-docs/operating-procedures/grant-paths.md` | as standard | agent §Files | |
+| System folders | `/mnt/c/mybizz/mybizz-config-docs/{system}/` | as standard | agent §Files | |
+| Working files | `config-manager-agent.md`, `config-manager-register.md` | as standard | doc-suite-specification §The folder | |
 
-Install copies the source's text below its frontmatter into the installed
-`SKILL.md`, never moves it; the suite folder keeps the canonical source as backup
-and step-0 drift anchor. The two files differ only in frontmatter, by design: the
-source carries `title`, `doc-id` and `updated`, like every document; the installed
-copy carries `name` and `description`, which the agent writes at first install and
-keeps unchanged on every re-install. The register records each Installed skill's
-install date and the first 16 hex of the sha256 of the text below the frontmatter,
-which is identical for source and installed copy when they are in sync. Every file
-in every suite, including the agent and the skill sources, is a document and is
-checked by `mb-doc-check` at every commit.
+## Settings — installation
 
-## Verification
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Agent source | `config-manager-agent.md` in this folder | as standard | agent file itself | |
+| Agent installed | Developer-set agent path | `/home/dev-p/.config/opencode/agents/mb-config-manager.md` | install verified 2026-10-14 | |
+| Command wrapper | Developer-set command path | `/home/dev-p/.config/opencode/command/mb-config-manager.md` | install verified 2026-10-14 | |
 
-Every system in the [[[mybizz-config-docs:mb-config-manager/config-manager-register|Register: Managed Systems]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md) with state `Installed` has completed a formal plan-driven exam run; each system's exam report holds its verified state.
+## Open items
+
+None.
