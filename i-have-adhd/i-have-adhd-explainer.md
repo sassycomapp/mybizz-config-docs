@@ -1,17 +1,17 @@
 ---
 title: "i-have-adhd-explainer"
 doc-id: "mb-af22de69"
-updated: "2026-10-05"
+updated: "2026-10-14"
 ---
 # i-have-adhd — Explainer
 
 *Companion note: for current confirmed state (paths, versions, integration,
 open items) see [[[mybizz-config-docs:i-have-adhd/i-have-adhd-config|Configuration]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-config.md). For invocation, operation, update,
 and the do-not list, see [[[mybizz-config-docs:i-have-adhd/i-have-adhd-reference|Reference: Invocation, Operation, Update]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-reference.md). For the config-management
-set: [[[mybizz-config-docs:i-have-adhd/i-have-adhd-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-exam-plan.md) (transient job-spec — read second, every run),
-[[[mybizz-config-docs:i-have-adhd/i-have-adhd-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-exam-report.md) (last verified state), [[[mybizz-config-docs:i-have-adhd/i-have-adhd-log|Log]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-log.md)
+set: Exam Plan (transient job-spec — read second, every run),
+Exam Report (last verified state), Log
 (chronological events), [[[mybizz-config-docs:i-have-adhd/i-have-adhd-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-learnings.md) (transient knowledge), and
-[[[mybizz-config-docs:i-have-adhd/i-have-adhd-skill|I Have Adhd Skill]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-skill.md) (exam skill canonical source, installed as
+I Have Adhd Skill (exam skill canonical source, installed as
 `mb-config-i-have-adhd`). [[[mybizz-config-docs:i-have-adhd/i-have-adhd-intro|I Have Adhd Intro]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-intro.md) is research provenance (not
 state).*
 
@@ -174,7 +174,7 @@ estate from the PostgreSQL pilot. The short local version:
 - [[[mybizz-config-docs:i-have-adhd/i-have-adhd-config|Configuration]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-config.md) is the **spec** — the ideal state every exam checks
   against.
 - Before each exam run, the config-manager synthesizes
-  [[[mybizz-config-docs:i-have-adhd/i-have-adhd-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-exam-plan.md): a fresh job-spec built from this spec, the last
+  Exam Plan: a fresh job-spec built from this spec, the last
   report, the log, and the learnings. The plan is transient (the file is
   live; contents rewritten each cycle).
 - The exam runs the installed skill (`mb-config-i-have-adhd`) with the plan in
@@ -182,15 +182,15 @@ estate from the PostgreSQL pilot. The short local version:
   agent-healable items**: the bundle, the marker, the slash command, and the
   symlink are vendor/policy surfaces, and every repair is developer-run or
   proposed.
-- The run rewrites [[[mybizz-config-docs:i-have-adhd/i-have-adhd-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-exam-report.md) (current state, no history),
-  appends one row to [[[mybizz-config-docs:i-have-adhd/i-have-adhd-log|Log]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-log.md), files new learnings, and prunes
+- The run rewrites Exam Report (current state, no history),
+  appends one row to Log, files new learnings, and prunes
   absorbed entries.
 
 The exam module was created 2026-09-20 on the developer's explicit setup
 instruction (register row added the same day, state `WIP` → `Installed` on
 copy-install); its first formal run executed the same day — **HEALTHY, all
 open items closed except the standing watch** (config open item 6).
-[[[mybizz-config-docs:i-have-adhd/i-have-adhd-skill|I Have Adhd Skill]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-skill.md) in this folder is the canonical source;
+I Have Adhd Skill in this folder is the canonical source;
 the installed copy at
 `~/.config/opencode/skills/mb-config-i-have-adhd/SKILL.md` is the only
 executing one — copy, never move. The module was born-with-inventory: the
@@ -234,9 +234,9 @@ risk is bounded to the moment of change).
 
 *Companion documents: [[[mybizz-config-docs:i-have-adhd/i-have-adhd-config|Configuration]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-config.md) (state),
 [[[mybizz-config-docs:i-have-adhd/i-have-adhd-reference|Reference: Invocation, Operation, Update]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-reference.md) (commands and rules),
-[[[mybizz-config-docs:i-have-adhd/i-have-adhd-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-exam-plan.md) / [[[mybizz-config-docs:i-have-adhd/i-have-adhd-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-exam-report.md) /
-[[[mybizz-config-docs:i-have-adhd/i-have-adhd-log|Log]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-log.md) / [[[mybizz-config-docs:i-have-adhd/i-have-adhd-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-learnings.md)
-(config-management set), [[[mybizz-config-docs:i-have-adhd/i-have-adhd-skill|I Have Adhd Skill]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-skill.md) (exam skill canonical
+Exam Plan / Exam Report /
+Log / [[[mybizz-config-docs:i-have-adhd/i-have-adhd-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-learnings.md)
+(config-management set), I Have Adhd Skill (exam skill canonical
 source; the installed copy is the only executing one),
 [[[mybizz-config-docs:i-have-adhd/i-have-adhd-intro|I Have Adhd Intro]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-intro.md) (research provenance — not state). Architecture:
 the mb-config-manager pattern per [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md).*

@@ -1,7 +1,7 @@
 ---
 title: "2026-09-16-010-anvil-agent-references-config-mgmt"
 doc-id: "mb-aa0339ab"
-updated: "2026-10-05"
+updated: "2026-10-14"
 ---
 # Session 010 — anvil-agent-references config-management suite build + run #1 + W-1..W-5 closure
 
@@ -26,12 +26,12 @@ closed **by direct resolution**, not left as governance flags.
 
 ### Phase 1 — Suite build-out
 - [[[mybizz-config-docs:anvil-agent-references/anvil-agent-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-learnings.md) — preamble + table added.
-- [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-log|Log]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-log.md) — created, seeded with documented history
+- Log — created, seeded with documented history
   (install 2026-08-12, suite creation 2026-09-06, build-out, run #1).
-- [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-plan.md) — bootstrap, hand-written (format
+- Exam Plan — bootstrap, hand-written (format
   template).
-- [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-report.md) — placeholder, then full report.
-- [[[mybizz-config-docs:anvil-agent-references/anvil-agent-skill|Anvil Agent Skill]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-skill.md) — born-with check inventory, Tiers 0–3.
+- Exam Report — placeholder, then full report.
+- Anvil Agent Skill — born-with check inventory, Tiers 0–3.
 - Explainer localized (§10 config-maintenance, §11 S.W.O.T., companion footer,
   exam-set pointer); reference gained the config-management set header.
 

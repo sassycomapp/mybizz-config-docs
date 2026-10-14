@@ -1,7 +1,7 @@
 ---
 title: "i-have-adhd-reference"
 doc-id: "mb-0aa03044"
-updated: "2026-10-07"
+updated: "2026-10-14"
 ---
 # i-have-adhd — Reference: Invocation, Operation, Update
 
@@ -11,11 +11,11 @@ lives in the skill's own `SKILL.md` (loaded into the session prompt on
 invocation); this doc carries what is needed to invoke, run, constrain,
 update, and remove the skill on this machine.
 
-Config-management set: [[[mybizz-config-docs:i-have-adhd/i-have-adhd-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-exam-plan.md) (transient job-spec — read
-second, every exam run), [[[mybizz-config-docs:i-have-adhd/i-have-adhd-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-exam-report.md) (last verified state),
-[[[mybizz-config-docs:i-have-adhd/i-have-adhd-log|Log]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-log.md) (chronological events), [[[mybizz-config-docs:i-have-adhd/i-have-adhd-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-learnings.md)
+Config-management set: Exam Plan (transient job-spec — read
+second, every exam run), Exam Report (last verified state),
+Log (chronological events), [[[mybizz-config-docs:i-have-adhd/i-have-adhd-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-learnings.md)
 (transient knowledge). The exam skill's canonical source is
-[[[mybizz-config-docs:i-have-adhd/i-have-adhd-skill|I Have Adhd Skill]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-skill.md) (installed as `mb-config-i-have-adhd`; the installed
+I Have Adhd Skill (installed as `mb-config-i-have-adhd`; the installed
 copy is the only executing one — copy, never move). Research provenance:
 [[[mybizz-config-docs:i-have-adhd/i-have-adhd-intro|I Have Adhd Intro]]](C:/mybizz/mybizz-config-docs/i-have-adhd/i-have-adhd-intro.md) (third-party sources — not verified state).
 

@@ -1,16 +1,16 @@
 ---
 title: "sysdoc-creator-explainer"
 doc-id: "mb-1b1e5218"
-updated: "2026-10-07"
+updated: "2026-10-14"
 ---
 # sysdoc-creator — Explainer
 
 Companion to [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-config.md) (the spec — current
 state) and [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-reference.md) (the execution form). The
 config-management exam set for this suite ([[sysdoc-creator-exam-plan|Exam
-Plan]] · [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-exam-report.md) · [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-log|Log]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-log.md)
+Plan]] · Exam Report · Log
 · [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-learnings.md) ·
-[[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-exam-skill|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-exam-skill.md)) is synthesized and consumed per the
+Exam Skill) is synthesized and consumed per the
 [[[mybizz-config-docs:mb-config-manager/config-manager-agent|Config Manager]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) plan-driven cycle — the exam verifies
 this suite's state and never runs the subject skill itself.
 
@@ -128,7 +128,7 @@ explainer]] — emulated from the PostgreSQL pilot. The short local version:
 - [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-config.md) is the **spec** — the ideal state
   every exam checks against.
 - Before each exam run, the config-manager synthesizes
-  [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-exam-plan.md): a fresh job-spec built from this
+  Exam Plan: a fresh job-spec built from this
   spec, the last report, the log, and the learnings. The plan is transient
   (the file is live; contents rewritten each cycle).
 - The exam runs the installed skill (`mb-config-mb-sysdoc-creator`) with the
@@ -139,8 +139,8 @@ explainer]] — emulated from the PostgreSQL pilot. The short local version:
   reach them only as gate proposals the developer approves item by item.
 - The subject skill's own Hard Rule 7 binds the exam: a policy block stops
   and reports; grants are requested in chat, never self-issued.
-- The run rewrites [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-exam-report.md) (current state,
-  no history), appends one row to [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-log|Log]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-log.md), files new
+- The run rewrites Exam Report (current state,
+  no history), appends one row to Log, files new
   learnings, and prunes absorbed entries.
 
 ## 6. S.W.O.T.
@@ -174,7 +174,7 @@ is owned by its own `mb-config-*` exam module).
 **Companion documents:** [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-config.md) (state) ·
 [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-reference.md) (execution) ·
 [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) (the governing
-specification this skill enforces) · [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-exam-plan.md) ·
-[[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-exam-report.md) · [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-log|Log]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-log.md) ·
+specification this skill enforces) · Exam Plan ·
+Exam Report · Log ·
 [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-learnings.md) ·
-[[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-exam-skill|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-exam-skill.md).
+Exam Skill.

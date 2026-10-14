@@ -1,7 +1,7 @@
 ---
 title: "graphify-explainer"
 doc-id: "mb-c1bcfdd3"
-updated: "2026-10-07"
+updated: "2026-10-14"
 ---
 # Graphify Explainer
 
@@ -139,7 +139,7 @@ repo versus staying machine-local is deliberately open (tracked in
 ## 5. Config maintenance
 
 Graphify has been under standing configuration management since 2026-09-14 via
-the `mb-config-graphify` exam skill (canonical source [[[mybizz-config-docs:graphify/graphify-skill|Graphify Skill]]](C:/mybizz/mybizz-config-docs/graphify/graphify-skill.md) in
+the `mb-config-graphify` exam skill (canonical source Graphify Skill in
 this folder; the installed copy at
 `~/.config/opencode/skills/mb-config-graphify/SKILL.md` is the only executing
 one, per the mb-config-manager copy-never-move install discipline). The exam is
@@ -191,9 +191,9 @@ honored and reclassified developer-run immediately).
 
 *Companion documents: [[[mybizz-config-docs:graphify/graphify-config|Graphify Configuration]]](C:/mybizz/mybizz-config-docs/graphify/graphify-config.md) (current state — the spec the exam
 runs against), [[[mybizz-config-docs:graphify/graphify-reference|Graphify Reference]]](C:/mybizz/mybizz-config-docs/graphify/graphify-reference.md) (commands and rules),
-[[[mybizz-config-docs:graphify/graphify-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/graphify/graphify-exam-plan.md) (next run's job-spec — transient contents),
-[[[mybizz-config-docs:graphify/graphify-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/graphify/graphify-exam-report.md) (current verified state, no history),
-[[[mybizz-config-docs:graphify/graphify-log|Log]]](C:/mybizz/mybizz-config-docs/graphify/graphify-log.md) (chronological notable events), [[[mybizz-config-docs:graphify/graphify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/graphify/graphify-learnings.md)
-(transient exam knowledge), [[[mybizz-config-docs:graphify/graphify-skill|Graphify Skill]]](C:/mybizz/mybizz-config-docs/graphify/graphify-skill.md) (exam skill — canonical source;
+Exam Plan (next run's job-spec — transient contents),
+Exam Report (current verified state, no history),
+Log (chronological notable events), [[[mybizz-config-docs:graphify/graphify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/graphify/graphify-learnings.md)
+(transient exam knowledge), Graphify Skill (exam skill — canonical source;
 the installed copy is the only executing one). Cross-component reasoning:
 [[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md).*

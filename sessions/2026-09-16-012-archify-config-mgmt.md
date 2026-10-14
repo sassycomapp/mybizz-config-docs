@@ -1,7 +1,7 @@
 ---
 title: "2026-09-16-012-archify-config-mgmt"
 doc-id: "mb-872d37de"
-updated: "2026-10-05"
+updated: "2026-10-14"
 ---
 # Session 012 — Archify configuration-management suite (run #1 formal)
 
@@ -16,9 +16,9 @@ Tier 3 when the dense test subject needed a scoping skill first).
 
 **Suite built to the 7-file standard + skill source + scope-skill component**
 under `archify/`:
-- [[[mybizz-config-docs:archify/archify-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/archify/archify-exam-plan.md) — bootstrap run #1 plan (modeled on magdoub-wireframe's)
-- [[[mybizz-config-docs:archify/archify-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/archify/archify-exam-report.md) — verdict HEALTHY, all tiers, findings table
-- [[[mybizz-config-docs:archify/archify-log|Log]]](C:/mybizz/mybizz-config-docs/archify/archify-log.md) — seeded + one run row + one gate row
+- Exam Plan — bootstrap run #1 plan (modeled on magdoub-wireframe's)
+- Exam Report — verdict HEALTHY, all tiers, findings table
+- Log — seeded + one run row + one gate row
 - [[[mybizz-config-docs:archify/archify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/archify/archify-learnings.md) — transient stub
 - [[[mybizz-config-docs:archify/archify-config|Configuration]]](C:/mybizz/mybizz-config-docs/archify/archify-config.md) — **gained a §Scoping skill component** (`mb-archify-scope`
   documented as a permanent front-of-pipe component, not transient tooling);
@@ -30,7 +30,7 @@ under `archify/`:
   pointer + graduated authoring invariants (type-choice leverage,
   probe-before-connect, desktop viewBox constraint, exact-port anchoring,
   corridor separation, repair order, visual-review calibration)
-- [[[mybizz-config-docs:archify/archify-skill|Archify Skill]]](C:/mybizz/mybizz-config-docs/archify/archify-skill.md) — the born-with-inventory exam module (Tiers 0–3, AR0–AR3)
+- Archify Skill — the born-with-inventory exam module (Tiers 0–3, AR0–AR3)
 
 **Installed:** `mb-config-archify` → `~/.config/opencode/skills/mb-config-archify/SKILL.md`
 (copy via mg-grant, hash pair `165897270158a38e` verified). Register flipped

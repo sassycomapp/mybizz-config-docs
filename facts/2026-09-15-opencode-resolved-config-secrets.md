@@ -1,7 +1,7 @@
 ---
 title: "2026-09-15-opencode-resolved-config-secrets"
 doc-id: "mb-1e29eb49"
-updated: "2026-10-01"
+updated: "2026-10-14"
 ---
 # Fact — OpenCode resolved-config stdout is secret-bearing
 
@@ -29,7 +29,7 @@ Verified live 2026-09-15 (mb-config-opencode run #1): the developer's returned
 
 ## Source
 
-- [[[mybizz-config-docs:opencode/opencode-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-report.md) — run #1, finding F-6 (2026-09-15)
-- [[[mybizz-config-docs:opencode/opencode-skill|Opencode Skill]]](C:/mybizz/mybizz-config-docs/opencode/opencode-skill.md) — credential discipline + graduated lesson:
+- Exam Report — run #1, finding F-6 (2026-09-15)
+- Opencode Skill — credential discipline + graduated lesson:
   config-content field checks are runner D (developer-run)
 - Session page: `sessions/2026-09-15-007-opencode-config-suite`

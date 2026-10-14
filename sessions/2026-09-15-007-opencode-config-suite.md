@@ -1,7 +1,7 @@
 ---
 title: "2026-09-15-007-opencode-config-suite"
 doc-id: "mb-9c2693c3"
-updated: "2026-10-05"
+updated: "2026-10-14"
 ---
 # Session 007 — mb-config-opencode config-management suite built, installed, run #1 HEALTHY
 
@@ -9,12 +9,12 @@ updated: "2026-10-05"
 
 1. **Suite build-out (Phase 1).** Built the OpenCode configuration-management
    suite to the 7-file standard + skill source in `mybizz-config-docs/opencode/`:
-   [[[mybizz-config-docs:opencode/opencode-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-plan.md) (hand-written bootstrap plan, the format template),
-   [[[mybizz-config-docs:opencode/opencode-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-report.md) (placeholder), [[[mybizz-config-docs:opencode/opencode-log|Log]]](C:/mybizz/mybizz-config-docs/opencode/opencode-log.md) (seeded from the
+   Exam Plan (hand-written bootstrap plan, the format template),
+   Exam Report (placeholder), Log (seeded from the
    suite's documented history: the 2026-09-01 config consolidation, the
    2026-09-06/08 plugin-restart incidents, the 2026-09-09 merge/deny/distro
    verifications, skill discovery taxonomy), [[[mybizz-config-docs:opencode/opencode-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/opencode/opencode-learnings.md) (preamble +
-   empty table), [[[mybizz-config-docs:opencode/opencode-skill|Opencode Skill]]](C:/mybizz/mybizz-config-docs/opencode/opencode-skill.md) (born-with-inventory, `mb-config-opencode`),
+   empty table), Opencode Skill (born-with-inventory, `mb-config-opencode`),
    and localized [[[mybizz-config-docs:opencode/opencode-explainer|OpenCode Explainer]]](C:/mybizz/mybizz-config-docs/opencode/opencode-explainer.md) (top companion note, §8 Config
    maintenance, §9 S.W.O.T., footer) and [[[mybizz-config-docs:opencode/opencode-reference|Commands, Verification, Troubleshooting]]](C:/mybizz/mybizz-config-docs/opencode/opencode-reference.md) (exam-set
    pointers in the header).
@@ -68,8 +68,8 @@ updated: "2026-10-05"
    field extraction = permanently developer-run; exec-protection guard matches
    tokens in argument literals), learnings entries deleted.
 7. **Register + logs updated.** Register row carries final hash/install/run
-   facts; [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) records step-0 PASS + run closure;
-   [[[mybizz-config-docs:opencode/opencode-log|Log]]](C:/mybizz/mybizz-config-docs/opencode/opencode-log.md) records the run row with the full gate disposition.
+   facts; Log records step-0 PASS + run closure;
+   Log records the run row with the full gate disposition.
 
 ## Quirks and their dispositions
 
@@ -84,7 +84,7 @@ updated: "2026-10-05"
   the re-installed hash as `268bb702a0384482`; the true first-16 is
   `268bb702a038448b` (b, not 2). Corrected in all three files.
 - **A log-row editing slip caught and corrected:** an edit on
-  [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) briefly replaced the mb-submit-memory row instead of
+  Log briefly replaced the mb-submit-memory row instead of
   appending; restored verbatim.
 
 ## Standards the developer set

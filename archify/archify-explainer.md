@@ -1,15 +1,15 @@
 ---
 title: "archify-explainer"
 doc-id: "mb-7923ad74"
-updated: "2026-10-04"
+updated: "2026-10-14"
 ---
 # Archify — Explainer
 
 What Archify is, when to use it, and why it is built the way it is.
 Current state: [[[mybizz-config-docs:archify/archify-config|Configuration]]](C:/mybizz/mybizz-config-docs/archify/archify-config.md). Mid-task commands and rules: [[[mybizz-config-docs:archify/archify-reference|Reference]]](C:/mybizz/mybizz-config-docs/archify/archify-reference.md).
-Configuration-management exam set: [[[mybizz-config-docs:archify/archify-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/archify/archify-exam-plan.md) (run job-spec),
-[[[mybizz-config-docs:archify/archify-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/archify/archify-exam-report.md) (current verified state), [[[mybizz-config-docs:archify/archify-log|Log]]](C:/mybizz/mybizz-config-docs/archify/archify-log.md) (events),
-[[[mybizz-config-docs:archify/archify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/archify/archify-learnings.md) (transient lessons), [[[mybizz-config-docs:archify/archify-skill|Archify Skill]]](C:/mybizz/mybizz-config-docs/archify/archify-skill.md) (the exam skill).
+Configuration-management exam set: Exam Plan (run job-spec),
+Exam Report (current verified state), Log (events),
+[[[mybizz-config-docs:archify/archify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/archify/archify-learnings.md) (transient lessons), Archify Skill (the exam skill).
 
 ---
 
@@ -88,9 +88,9 @@ deciding, in advance, what the eye must follow.
 This suite participates in `mb-config-manager`: the estate's configuration-management
 system exams each live system against its `{system}-config.md` spec. For Archify:
 
-- **Exam set:** [[[mybizz-config-docs:archify/archify-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/archify/archify-exam-plan.md) (run job-spec), [[[mybizz-config-docs:archify/archify-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/archify/archify-exam-report.md)
-  (verified current state, no history), [[[mybizz-config-docs:archify/archify-log|Log]]](C:/mybizz/mybizz-config-docs/archify/archify-log.md) (events), [[[mybizz-config-docs:archify/archify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/archify/archify-learnings.md)
-  (transient), [[[mybizz-config-docs:archify/archify-skill|Archify Skill]]](C:/mybizz/mybizz-config-docs/archify/archify-skill.md) (the standing check inventory and procedure).
+- **Exam set:** Exam Plan (run job-spec), Exam Report
+  (verified current state, no history), Log (events), [[[mybizz-config-docs:archify/archify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/archify/archify-learnings.md)
+  (transient), Archify Skill (the standing check inventory and procedure).
 - **Spec doc:** [[[mybizz-config-docs:archify/archify-config|Configuration]]](C:/mybizz/mybizz-config-docs/archify/archify-config.md) — the single source of expected values; read
   fresh at every run start.
 - **Scope of the exam:** the discovery symlink, the clone/package identity, the
@@ -134,10 +134,10 @@ or verified — a standing, documented out-of-scope item.
 | [[[mybizz-config-docs:archify/archify-config\|Configuration]]](C:/mybizz/mybizz-config-docs/archify/archify-config.md) | Canonical current-state configuration — the spec the exam runs against |
 | [[[mybizz-config-docs:archify/archify-reference\|Reference]]](C:/mybizz/mybizz-config-docs/archify/archify-reference.md) | Invocation, commands, authoring procedure, failure rules |
 | [[[mb-archify-scope:mb-archify-scope\|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md) | The scoping skill's canonical specification (installed as `mb-archify-scope`) |
-| [[[mybizz-config-docs:archify/archify-skill\|Archify Skill]]](C:/mybizz/mybizz-config-docs/archify/archify-skill.md) | The config-management exam skill (standing check inventory) |
-| [[[mybizz-config-docs:archify/archify-exam-plan\|Exam Plan]]](C:/mybizz/mybizz-config-docs/archify/archify-exam-plan.md) | Transient job-spec for the latest exam run |
-| [[[mybizz-config-docs:archify/archify-exam-report\|Exam Report]]](C:/mybizz/mybizz-config-docs/archify/archify-exam-report.md) | Verified current state after each exam run |
-| [[[mybizz-config-docs:archify/archify-log\|Log]]](C:/mybizz/mybizz-config-docs/archify/archify-log.md) | Chronological record of events and exam runs |
+| Archify Skill | The config-management exam skill (standing check inventory) |
+| Exam Plan | Transient job-spec for the latest exam run |
+| Exam Report | Verified current state after each exam run |
+| Log | Chronological record of events and exam runs |
 | [[[mybizz-config-docs:archify/archify-learnings\|Learnings]]](C:/mybizz/mybizz-config-docs/archify/archify-learnings.md) | Transient lessons; entries graduate into a permanent home then delete |
 | `archify/output/` | Runtime output — one folder per project slug |
 

@@ -1,14 +1,14 @@
 ---
 title: "postgresql-explainer"
 doc-id: "mb-e4410ed0"
-updated: "2026-10-10"
+updated: "2026-10-14"
 ---
 # PostgreSQL — Explainer
 
 Companion to [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md) (every setting and value — the spec),
 [[[mybizz-config-docs:postgresql/postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md) (commands and procedures for agents),
-[[[mybizz-config-docs:postgresql/postgresql-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-plan.md) (next exam's job-spec), [[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md)
-(current verified state), [[[mybizz-config-docs:postgresql/postgresql-log|Log]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-log.md) (notable events),
+Exam Plan (next exam's job-spec), Exam Report
+(current verified state), Log (notable events),
 [[[mybizz-config-docs:postgresql/postgresql-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-learnings.md) (transient exam knowledge). This document is for any
 reader — human developer, visiting technical consultant, or agent: what
 PostgreSQL is doing across this whole system, database by database — what each
@@ -265,7 +265,7 @@ architecture described in [[[mybizz-config-docs:mb-config-manager/config-manager
 first. The short local version:
 
 - [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md) is the **spec** — the ideal state every exam checks against.
-- Before each exam run, the config-manager synthesizes [[[mybizz-config-docs:postgresql/postgresql-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-plan.md):
+- Before each exam run, the config-manager synthesizes Exam Plan:
   a fresh job-spec built from this spec, the last report, the log, and the
   learnings — carrying forward what was deferred, deriving probes from new log
   events, and folding in lessons not yet graduated. The plan is transient.
@@ -273,8 +273,8 @@ first. The short local version:
   hand — detection fully autonomous; healing only through the developer gate.
   Some checks are permanently **developer-run** (log scans, `.env`-dependent
   probes, superuser checks) — agent tooling is guard-blocked on them by design.
-- The run rewrites [[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md) (current state, no history),
-  appends one row to [[[mybizz-config-docs:postgresql/postgresql-log|Log]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-log.md), files new learnings, and prunes
+- The run rewrites Exam Report (current state, no history),
+  appends one row to Log, files new learnings, and prunes
   absorbed log/learning entries.
 - What may be healed is allowlisted in the plan; a spec correction is
   proposed at the gate and applied only after the developer approves it.
@@ -319,8 +319,8 @@ a mystery.
 ---
 
 *Companion documents: [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md) (spec),
-[[[mybizz-config-docs:postgresql/postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md) (commands), [[[mybizz-config-docs:postgresql/postgresql-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-plan.md) (next run),
-[[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md) (current state), [[[mybizz-config-docs:postgresql/postgresql-log|Log]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-log.md) (events),
+[[[mybizz-config-docs:postgresql/postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md) (commands), Exam Plan (next run),
+Exam Report (current state), Log (events),
 [[[mybizz-config-docs:postgresql/postgresql-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-learnings.md) (transient knowledge). The architecture standard:
 [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md). The layer map:
 the supporting-systems, PDLF and shipped layers. The

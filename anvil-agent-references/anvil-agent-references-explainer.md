@@ -1,7 +1,7 @@
 ---
 title: "anvil-agent-references-explainer"
 doc-id: "mb-2fd091b4"
-updated: "2026-10-10"
+updated: "2026-10-14"
 ---
 # anvil-agent-references — Explainer
 
@@ -9,9 +9,9 @@ updated: "2026-10-10"
 policies, open items) see [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-config|Configuration]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-config.md). For exact
 commands, per-skill rules, and technical detail, see
 [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-reference|Reference: Install, Skills, and Technical Detail]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-reference.md). Config-management set:
-[[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-plan.md) (transient job-spec — read second, every
-run), [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-report.md) (last verified state),
-[[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-log|Log]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-log.md) (chronological events),
+Exam Plan (transient job-spec — read second, every
+run), Exam Report (last verified state),
+Log (chronological events),
 [[[mybizz-config-docs:anvil-agent-references/anvil-agent-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-learnings.md) (transient knowledge).*
 
 ---
@@ -280,7 +280,7 @@ short local version:
 - [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-config|Configuration]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-config.md) is the **spec** — the ideal state every
   exam checks against.
 - Before each exam run, the config-manager synthesizes
-  [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-plan.md): a fresh job-spec built from this spec,
+  Exam Plan: a fresh job-spec built from this spec,
   the last report, the log, and the learnings. The plan is transient (the file
   is live; contents rewritten each cycle).
 - The exam runs the installed skill (`mb-config-anvil-agent-references`) with
@@ -293,8 +293,8 @@ short local version:
   this exam); GStack's install locations and inventory belong to
   `mb-config-gstack`; `anvil-docs/` is adjacency only; `spawn-tools-denylist`
   and Cupcake policy belong to the cupcake/opencode modules.
-- The run rewrites [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-report.md) (current state, no
-  history), appends one row to [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-log|Log]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-log.md), files new
+- The run rewrites Exam Report (current state, no
+  history), appends one row to Log, files new
   learnings, and prunes absorbed entries.
 
 ## 11. S.W.O.T.
@@ -335,7 +335,7 @@ honored, reclassified developer-run immediately).
 
 *Companion documents: [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-config|Configuration]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-config.md) (state),
 [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-reference|Reference: Install, Skills, and Technical Detail]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-reference.md) (commands and rules),
-[[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-plan.md) / [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-exam-report.md) /
-[[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-log|Log]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-log.md) / [[[mybizz-config-docs:anvil-agent-references/anvil-agent-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-learnings.md) (config-management
-set), [[[mybizz-config-docs:anvil-agent-references/anvil-agent-skill|Anvil Agent Skill]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-skill.md) (exam skill canonical source). Architecture:
+Exam Plan / Exam Report /
+Log / [[[mybizz-config-docs:anvil-agent-references/anvil-agent-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-learnings.md) (config-management
+set), Anvil Agent Skill (exam skill canonical source). Architecture:
 [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md).*

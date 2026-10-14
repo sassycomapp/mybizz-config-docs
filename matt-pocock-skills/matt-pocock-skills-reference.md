@@ -1,16 +1,16 @@
 ---
 title: "matt-pocock-skills-reference"
 doc-id: "mb-f0c79098"
-updated: "2026-10-12"
+updated: "2026-10-14"
 ---
 # Matt Pocock Skills Reference
 
 Execution reference for the 35 installed Matt Pocock skills. Current state
 values: [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-config|Matt Pocock Skills Configuration]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-config.md). Why the set is built this way:
 [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-explainer|Matt Pocock Skills Explainer]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-explainer.md). Config-management set:
-[[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-exam-plan.md) (transient job-spec — read second, every
-run), [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-exam-report.md) (last verified state),
-[[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-log|Log]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-log.md) (chronological events),
+Exam Plan (transient job-spec — read second, every
+run), Exam Report (last verified state),
+Log (chronological events),
 [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-learnings.md) (transient knowledge). Agent-facing.
 
 ## Standing rules

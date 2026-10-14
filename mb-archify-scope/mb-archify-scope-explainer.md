@@ -1,7 +1,7 @@
 ---
 title: "mb-archify-scope-explainer"
 doc-id: "mb-b249e1f5"
-updated: "2026-10-08"
+updated: "2026-10-14"
 ---
 
 # mb-archify-scope — Explainer
@@ -9,9 +9,9 @@ updated: "2026-10-08"
 Orientation, suitability, and reasoning for the `mb-archify-scope` scoping
 skill. State: [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-config.md). Procedure:
 [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-reference.md). The
-config-management exam set for this suite ([[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-plan.md) ·
-[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-report.md) · [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-log|Log]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-log.md) ·
-[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-learnings.md) · [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-skill|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-skill.md)) is
+config-management exam set for this suite (Exam Plan ·
+Exam Report · Log ·
+[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-learnings.md) · Exam Skill) is
 synthesized and consumed per the [[[mybizz-config-docs:mb-config-manager/config-manager-agent|Config Manager]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md)
 plan-driven cycle — the exam verifies this suite's state and never runs the
 subject skill itself.
@@ -131,7 +131,7 @@ explainer]] — emulated from the PostgreSQL pilot. The short local version:
 - [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-config.md) is the **spec** — the ideal state every
   exam checks against.
 - Before each exam run, the config-manager synthesizes
-  [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-plan.md): a fresh job-spec built from this spec, the
+  Exam Plan: a fresh job-spec built from this spec, the
   last report, the log, and the learnings. The plan is transient (the file is
   live; contents rewritten each cycle).
 - The exam runs the installed skill (`mb-config-mb-archify-scope`) with the
@@ -143,8 +143,8 @@ explainer]] — emulated from the PostgreSQL pilot. The short local version:
   item.
 - No credential route exists in this system — nothing to reference by name,
   nothing to withhold.
-- The run rewrites [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-report.md) (current state, no
-  history), appends one row to [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-log|Log]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-log.md), files new learnings, and
+- The run rewrites Exam Report (current state, no
+  history), appends one row to Log, files new learnings, and
   prunes absorbed entries.
 
 ## S.W.O.T.
@@ -177,9 +177,9 @@ developer-run sync discipline is documented and checked — AS2-4).
 ---
 
 *Companion documents: [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-config.md) (current state),
-[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-reference.md) (procedures), the exam set ([[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-plan.md) ·
-[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-report.md) · [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-log|Log]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-log.md) ·
-[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-learnings.md) · [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-skill|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-skill.md)), the
+[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-reference.md) (procedures), the exam set (Exam Plan ·
+Exam Report · Log ·
+[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-learnings.md) · Exam Skill), the
 canonical spec ([[[mb-archify-scope:mb-archify-scope|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md), repo), the archify suite's component documentation
 ([[[mybizz-config-docs:archify/archify-config|Archify Configuration]]](C:/mybizz/mybizz-config-docs/archify/archify-config.md) §Scoping skill component ·
 [[[mybizz-config-docs:archify/archify-reference|Archify Reference]]](C:/mybizz/mybizz-config-docs/archify/archify-reference.md) ·

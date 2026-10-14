@@ -1,7 +1,7 @@
 ---
 title: "gbrain-dream-cycle-explainer"
 doc-id: "mb-957d54e7"
-updated: "2026-10-04"
+updated: "2026-10-14"
 ---
 # GBrain Dream Cycle — Explainer
 
@@ -10,7 +10,7 @@ dependency, acceptance-test record, open items) see
 [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-config.md). For commands and the mandatory post-run
 verification procedure, see [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-reference|Reference: Invocation, Verification, Diagnostics]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-reference.md). For how this
 system is examined and kept healthy by the config-management apparatus, see
-§8 below and the suite's exam set ([[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-exam-plan.md) /
+§8 below and the suite's exam set (Exam Plan /
 `-exam-report.md` / `-log.md` / `-learnings.md`). For the full 23-phase
 sequence and the cross-component framing, see [[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md)
 §4.*
@@ -198,7 +198,7 @@ PostgreSQL pilot. The short local version:
   checks against. The dream cycle is working well; the exam verifies that and
   changes nothing.
 - Before each exam run, the config-manager synthesizes
-  [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-exam-plan.md): a fresh job-spec built from this spec,
+  Exam Plan: a fresh job-spec built from this spec,
   the last report, the log, and the learnings. The plan is transient (the file
   is live; contents rewritten each cycle).
 - The exam runs the installed skill (`mb-config-gbrain-dream-cycle`) with the
@@ -215,8 +215,8 @@ PostgreSQL pilot. The short local version:
   (sensitive-data guard — proven class), the Anthropic key-validity curl if a
   guard denies the agent attempt, and everything in Tier 3 (a full dream cycle
   is expensive and content-changing; the upgrade decision is the developer's).
-- The run rewrites [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-exam-report.md) (current state, no
-  history), appends one row to [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-log|Log]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-log.md), files new
+- The run rewrites Exam Report (current state, no
+  history), appends one row to Log, files new
   learnings, and prunes absorbed entries.
 
 ## 9. S.W.O.T.
@@ -248,7 +248,7 @@ on-demand design, whose violation the exam watches for.
 
 *Companion documents: [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-config.md) (the spec),
 [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-reference|Reference: Invocation, Verification, Diagnostics]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-reference.md) (procedures and post-run verification),
-[[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-exam-plan.md) / `-exam-report.md` / `-log.md` /
-`-learnings.md` (config-management set), [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-skill|Gbrain Dream Cycle Skill]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-skill.md) (exam
+Exam Plan / `-exam-report.md` / `-log.md` /
+`-learnings.md` (config-management set), Gbrain Dream Cycle Skill (exam
 skill canonical source). Architecture: [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md).
 Cross-component framing: [[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md) §4.*

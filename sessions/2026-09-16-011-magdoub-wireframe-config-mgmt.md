@@ -1,7 +1,7 @@
 ---
 title: "2026-09-16-011-magdoub-wireframe-config-mgmt"
 doc-id: "mb-c10b1e79"
-updated: "2026-10-05"
+updated: "2026-10-14"
 ---
 # Session 011 — magdoub-wireframe config-management suite
 
@@ -43,7 +43,7 @@ reconciled, skill re-installed (re-hash `c570e38d0b490808`).
 3. **Install (Phase 2)** — grant `mg-grant --path
    ~/.config/opencode/skills/mb-config-magdoub-wireframe --count 3`
    (developer-executed); **copy-install** (never move) of
-   [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-skill|Magdoub Wireframe Skill]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-skill.md) → installed `SKILL.md`; hash pair verified
+   Magdoub Wireframe Skill → installed `SKILL.md`; hash pair verified
    `703b7f340e4cf302`; register flipped `WIP → Installed`.
 
 4. **Formal run #1 (Phase 3)** — step-0 self-validation **PASS**: 12/12 hash

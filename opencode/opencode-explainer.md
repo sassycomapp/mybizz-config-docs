@@ -1,7 +1,7 @@
 ---
 title: "opencode-explainer"
 doc-id: "mb-4e022a9c"
-updated: "2026-10-10"
+updated: "2026-10-14"
 ---
 # OpenCode Explainer
 
@@ -11,7 +11,7 @@ For commands and the restart/verification procedures, see [[[mybizz-config-docs:
 For the permission layers and the verified merge, see
 [[[mybizz-config-docs:opencode/opencode-permission-access-control-model|Permission & Access Control Model]]](C:/mybizz/mybizz-config-docs/opencode/opencode-permission-access-control-model.md). For how this system is examined and
 kept healthy by the config-management apparatus, see §8 below and the suite's exam
-set ([[[mybizz-config-docs:opencode/opencode-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-plan.md) / `-exam-report.md` / `-log.md` / `-learnings.md`).*
+set (Exam Plan / `-exam-report.md` / `-log.md` / `-learnings.md`).*
 
 ---
 
@@ -195,7 +195,7 @@ PostgreSQL pilot. The short local version:
 
 - [[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md) is the **spec** — the ideal state every exam checks
   against. OpenCode is working well; the exam verifies that and changes nothing.
-- Before each exam run, the config-manager synthesizes [[[mybizz-config-docs:opencode/opencode-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-plan.md):
+- Before each exam run, the config-manager synthesizes Exam Plan:
   a fresh job-spec built from this spec, the last report, the log, and the
   learnings. The plan is transient (the file is live; contents rewritten each
   cycle).
@@ -222,8 +222,8 @@ PostgreSQL pilot. The short local version:
   (sensitive-data guard class), the session-data doc content (proven denial), and
   everything in Tier 3 (full restart; WSL default-distro check via `wsl.exe`;
   the upgrade decision).
-- The run rewrites [[[mybizz-config-docs:opencode/opencode-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-report.md) (current state, no history), appends
-  one row to [[[mybizz-config-docs:opencode/opencode-log|Log]]](C:/mybizz/mybizz-config-docs/opencode/opencode-log.md), files new learnings, and prunes absorbed entries.
+- The run rewrites Exam Report (current state, no history), appends
+  one row to Log, files new learnings, and prunes absorbed entries.
 
 ## 9. S.W.O.T.
 
@@ -259,8 +259,8 @@ inventory, active-project standard),
 [[[mybizz-config-docs:opencode/opencode-permission-access-control-model|Permission & Access Control Model]]](C:/mybizz/mybizz-config-docs/opencode/opencode-permission-access-control-model.md) (the permission layers),
 [[[mybizz-config-docs:opencode/opencode-project-session-data-integrity|Project & Session Data Integrity]]](C:/mybizz/mybizz-config-docs/opencode/opencode-project-session-data-integrity.md) (the session database),
 [[[mybizz-config-docs:opencode/opencode-reference|Commands, Verification, Troubleshooting]]](C:/mybizz/mybizz-config-docs/opencode/opencode-reference.md) (procedures). Config-management set:
-[[[mybizz-config-docs:opencode/opencode-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-plan.md) / `-exam-report.md` / `-log.md` / `-learnings.md`.
-Exam skill canonical source: [[[mybizz-config-docs:opencode/opencode-skill|Opencode Skill]]](C:/mybizz/mybizz-config-docs/opencode/opencode-skill.md). Architecture:
+Exam Plan / `-exam-report.md` / `-log.md` / `-learnings.md`.
+Exam skill canonical source: Opencode Skill. Architecture:
 [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md). The environment layer map:
 the supporting-systems, PDLF and shipped layers.*
 

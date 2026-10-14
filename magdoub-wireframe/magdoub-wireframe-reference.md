@@ -1,7 +1,7 @@
 ---
 title: "magdoub-wireframe-reference"
 doc-id: "mb-a5ce0ec0"
-updated: "2026-10-01"
+updated: "2026-10-14"
 ---
 # magdoub-wireframe — Reference: Invocation, Operation, Update
 
@@ -11,11 +11,11 @@ Agent-facing. The full generation procedure lives in the skill's own `SKILL.md`
 (auto-loaded on invocation); this doc carries what is needed to invoke, run,
 constrain, update, and remove the skill on this machine.
 
-Config-management set: [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-plan.md) (transient job-spec — read
-second, every run), [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-report.md) (last verified state),
-[[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-log|Log]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-log.md) (chronological events),
+Config-management set: Exam Plan (transient job-spec — read
+second, every run), Exam Report (last verified state),
+Log (chronological events),
 [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-learnings.md) (transient knowledge). The exam skill's canonical
-source is [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-skill|Magdoub Wireframe Skill]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-skill.md) (installed as `mb-config-magdoub-wireframe`).
+source is Magdoub Wireframe Skill (installed as `mb-config-magdoub-wireframe`).
 
 ---
 

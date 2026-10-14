@@ -1,7 +1,7 @@
 ---
 title: "graphify-reference"
 doc-id: "mb-eda396e1"
-updated: "2026-10-05"
+updated: "2026-10-14"
 ---
 # Graphify Reference
 
@@ -9,9 +9,9 @@ Execution reference for the installed Graphify CLI (0.9.40), verified against
 `graphify --help` and live state on 2026-09-08. Current state values:
 [[[mybizz-config-docs:graphify/graphify-config|Graphify Configuration]]](C:/mybizz/mybizz-config-docs/graphify/graphify-config.md). Why each rule exists: [[[mybizz-config-docs:graphify/graphify-explainer|Graphify Explainer]]](C:/mybizz/mybizz-config-docs/graphify/graphify-explainer.md).
 Standing configuration management (2026-09-14): exam plan
-[[[mybizz-config-docs:graphify/graphify-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/graphify/graphify-exam-plan.md), current verified state [[[mybizz-config-docs:graphify/graphify-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/graphify/graphify-exam-report.md),
-notable events [[[mybizz-config-docs:graphify/graphify-log|Log]]](C:/mybizz/mybizz-config-docs/graphify/graphify-log.md), transient exam knowledge
-[[[mybizz-config-docs:graphify/graphify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/graphify/graphify-learnings.md), exam skill source [[[mybizz-config-docs:graphify/graphify-skill|Graphify Skill]]](C:/mybizz/mybizz-config-docs/graphify/graphify-skill.md) (the installed
+Exam Plan, current verified state Exam Report,
+notable events Log, transient exam knowledge
+[[[mybizz-config-docs:graphify/graphify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/graphify/graphify-learnings.md), exam skill source Graphify Skill (the installed
 copy at `~/.config/opencode/skills/mb-config-graphify/SKILL.md` is the only
 executing one — copy, never move).
 

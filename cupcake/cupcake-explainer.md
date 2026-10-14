@@ -1,14 +1,14 @@
 ---
 title: "cupcake-explainer"
 doc-id: "mb-258b7bd2"
-updated: "2026-10-01"
+updated: "2026-10-14"
 ---
 # Cupcake — Mechanical Policy Enforcement for AI Coding Agents
 
 *Companion note: for current confirmed state see [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) (the spec).
 For operational procedures, see [[[mybizz-config-docs:cupcake/cupcake-reference|Usage, Invocation, and Worked Examples]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-reference.md). Exam companions:
-[[[mybizz-config-docs:cupcake/cupcake-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-plan.md) (next run's job-spec), [[[mybizz-config-docs:cupcake/cupcake-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-report.md) (current
-verified state), [[[mybizz-config-docs:cupcake/cupcake-log|Log]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-log.md) (notable events), [[[mybizz-config-docs:cupcake/cupcake-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-learnings.md)
+Exam Plan (next run's job-spec), Exam Report (current
+verified state), Log (notable events), [[[mybizz-config-docs:cupcake/cupcake-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-learnings.md)
 (transient exam knowledge). The architecture standard:
 [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md).*
 
@@ -386,7 +386,7 @@ architecture described in [[[mybizz-config-docs:mb-config-manager/config-manager
 PostgreSQL pilot. The short local version:
 
 - [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) is the **spec** — the ideal state every exam checks against.
-- Before each exam run, the config-manager synthesizes [[[mybizz-config-docs:cupcake/cupcake-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-plan.md):
+- Before each exam run, the config-manager synthesizes Exam Plan:
   a fresh job-spec built from this spec, the last report, the log, and the
   learnings — carrying forward what was deferred, addressing what erred,
   deriving probes from new log events, and folding in lessons not yet graduated.
@@ -400,8 +400,8 @@ PostgreSQL pilot. The short local version:
   (the exec-protection guard forbids agents from executing the cupcake binary),
   plus any check whose command text the guards deny (the token-match class).
   Denials received during a run double as liveness evidence.
-- The run rewrites [[[mybizz-config-docs:cupcake/cupcake-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-report.md) (current state, no history),
-  appends one row to [[[mybizz-config-docs:cupcake/cupcake-log|Log]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-log.md), files new learnings, and prunes absorbed
+- The run rewrites Exam Report (current state, no history),
+  appends one row to Log, files new learnings, and prunes absorbed
   entries.
 
 ## 11. S.W.O.T.
@@ -447,8 +447,8 @@ as a reference, not a current-state description.
 ---
 
 *Suite: [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) (spec), [[[mybizz-config-docs:cupcake/cupcake-reference|Usage, Invocation, and Worked Examples]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-reference.md) (procedures),
-[[[mybizz-config-docs:cupcake/cupcake-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-plan.md) / [[[mybizz-config-docs:cupcake/cupcake-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-report.md) / [[[mybizz-config-docs:cupcake/cupcake-log|Log]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-log.md) /
-[[[mybizz-config-docs:cupcake/cupcake-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-learnings.md) (config-management set), [[[mybizz-config-docs:cupcake/cupcake-skill|Cupcake Skill]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-skill.md) (exam skill
+Exam Plan / Exam Report / Log /
+[[[mybizz-config-docs:cupcake/cupcake-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-learnings.md) (config-management set), Cupcake Skill (exam skill
 canonical source). Architecture: [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md).
 Rule sources: `C:\dev\project-library-global\rules-cupcake-global\`. Test
 records: `/mnt/c/mybizz/logs/cupcake-rule-test-record-*.md`.*

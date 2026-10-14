@@ -1,16 +1,16 @@
 ---
 title: "gstack-reference"
 doc-id: "mb-c02446bd"
-updated: "2026-10-10"
+updated: "2026-10-14"
 ---
 # GStack Reference
 
 Execution reference for the installed GStack (`1.58.1.0`). What GStack is
 and why it is built this way: [[[mybizz-config-docs:gstack/gstack-explainer|GStack Explainer]]](C:/mybizz/mybizz-config-docs/gstack/gstack-explainer.md). Current state values:
 [[[mybizz-config-docs:gstack/gstack-config|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md). The invocable command catalog: [[[mybizz-config-docs:gstack/gstack-skills-reference|GStack Skills Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-skills-reference.md).
-Config-management set: [[[mybizz-config-docs:gstack/gstack-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gstack/gstack-exam-plan.md) (transient job-spec — read
-second, every run), [[[mybizz-config-docs:gstack/gstack-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gstack/gstack-exam-report.md) (last verified state),
-[[[mybizz-config-docs:gstack/gstack-log|Log]]](C:/mybizz/mybizz-config-docs/gstack/gstack-log.md) (chronological events), [[[mybizz-config-docs:gstack/gstack-learnings|GStack Learnings]]](C:/mybizz/mybizz-config-docs/gstack/gstack-learnings.md) (transient
+Config-management set: Exam Plan (transient job-spec — read
+second, every run), Exam Report (last verified state),
+Log (chronological events), [[[mybizz-config-docs:gstack/gstack-learnings|GStack Learnings]]](C:/mybizz/mybizz-config-docs/gstack/gstack-learnings.md) (transient
 knowledge). Agent-facing.
 
 ## What GStack is (one line)

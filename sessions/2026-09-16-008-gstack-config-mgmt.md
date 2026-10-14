@@ -1,7 +1,7 @@
 ---
 title: "2026-09-16-008-gstack-config-mgmt"
 doc-id: "mb-5e0b36c4"
-updated: "2026-10-05"
+updated: "2026-10-14"
 ---
 # Session 2026-09-16 — Configuration Management: gstack
 
@@ -21,9 +21,9 @@ entries (codex/connect-chrome/hackernews-frontpage → retired folder),
 `last-update-check`, `.env` absent, bin count 74, slop-scan config,
 `SKILL.md.tmpl` + `gen:skill-docs`.
 
-**Phase 1 — suite build-out.** Wrote [[[mybizz-config-docs:gstack/gstack-skill|Gstack Skill]]](C:/mybizz/mybizz-config-docs/gstack/gstack-skill.md) (born-with-inventory,
-Tiers 0–3), [[[mybizz-config-docs:gstack/gstack-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gstack/gstack-exam-plan.md) (bootstrap), [[[mybizz-config-docs:gstack/gstack-log|Log]]](C:/mybizz/mybizz-config-docs/gstack/gstack-log.md) (seeded),
-[[[mybizz-config-docs:gstack/gstack-learnings|GStack Learnings]]](C:/mybizz/mybizz-config-docs/gstack/gstack-learnings.md) (preamble), [[[mybizz-config-docs:gstack/gstack-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gstack/gstack-exam-report.md) (placeholder);
+**Phase 1 — suite build-out.** Wrote Gstack Skill (born-with-inventory,
+Tiers 0–3), Exam Plan (bootstrap), Log (seeded),
+[[[mybizz-config-docs:gstack/gstack-learnings|GStack Learnings]]](C:/mybizz/mybizz-config-docs/gstack/gstack-learnings.md) (preamble), Exam Report (placeholder);
 localized explainer (§Config maintenance, S.W.O.T., companion footer) and
 reference (exam-set pointers). Suite at the 8-file standard.
 

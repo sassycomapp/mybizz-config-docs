@@ -1,15 +1,15 @@
 ---
 title: "cupcake-reference"
 doc-id: "mb-e79d3d01"
-updated: "2026-10-10"
+updated: "2026-10-14"
 ---
 # Cupcake Reference — Usage, Invocation, and Worked Examples
 
 Companion to [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) (the spec — current installed state, operational
 status) and [[[mybizz-config-docs:cupcake/cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md) (design, history, and real incidents — the
-authoritative whole-system narrative). Exam companions: [[[mybizz-config-docs:cupcake/cupcake-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-plan.md)
-(next run's job-spec), [[[mybizz-config-docs:cupcake/cupcake-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-exam-report.md) (current verified state),
-[[[mybizz-config-docs:cupcake/cupcake-log|Log]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-log.md) (notable events), [[[mybizz-config-docs:cupcake/cupcake-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-learnings.md) (transient exam
+authoritative whole-system narrative). Exam companions: Exam Plan
+(next run's job-spec), Exam Report (current verified state),
+Log (notable events), [[[mybizz-config-docs:cupcake/cupcake-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-learnings.md) (transient exam
 knowledge). Agent-facing.
 
 **Status note:** Cupcake is **ACTIVE** as of 2026-09-12 — enforcement verified

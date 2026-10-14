@@ -1,7 +1,7 @@
 ---
 title: "opencode-reference"
 doc-id: "mb-2a5a7cdf"
-updated: "2026-10-01"
+updated: "2026-10-14"
 ---
 # OpenCode Reference — Commands, Verification, Troubleshooting
 
@@ -9,9 +9,9 @@ Companion to [[[mybizz-config-docs:opencode/opencode-config|OpenCode Configurati
 [[[mybizz-config-docs:opencode/opencode-permission-access-control-model|Permission & Access Control Model]]](C:/mybizz/mybizz-config-docs/opencode/opencode-permission-access-control-model.md) (the permission layers),
 [[[mybizz-config-docs:opencode/opencode-project-session-data-integrity|Project & Session Data Integrity]]](C:/mybizz/mybizz-config-docs/opencode/opencode-project-session-data-integrity.md) (session database
 maintenance), and [[[mybizz-config-docs:opencode/opencode-explainer|OpenCode Explainer]]](C:/mybizz/mybizz-config-docs/opencode/opencode-explainer.md) (mechanics and real incidents).
-Config-management set: [[[mybizz-config-docs:opencode/opencode-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-plan.md) (transient job-spec — read
-second, every run), [[[mybizz-config-docs:opencode/opencode-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/opencode/opencode-exam-report.md) (last verified state),
-[[[mybizz-config-docs:opencode/opencode-log|Log]]](C:/mybizz/mybizz-config-docs/opencode/opencode-log.md) (chronological events), [[[mybizz-config-docs:opencode/opencode-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/opencode/opencode-learnings.md)
+Config-management set: Exam Plan (transient job-spec — read
+second, every run), Exam Report (last verified state),
+Log (chronological events), [[[mybizz-config-docs:opencode/opencode-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/opencode/opencode-learnings.md)
 (transient knowledge). Agent-facing.
 
 ---

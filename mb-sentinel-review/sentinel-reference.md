@@ -1,7 +1,7 @@
 ---
 title: "sentinel-reference"
 doc-id: "mb-a075fac8"
-updated: "2026-10-12"
+updated: "2026-10-14"
 ---
 # Sentinel Reference — Usage, Invocation, and Worked Examples
 
@@ -10,8 +10,8 @@ Companion to [[[mybizz-config-docs:mb-sentinel-review/sentinel-config|Sentinel C
 `SKILL.md` is the authoritative procedure.
 
 The config-management exam set for this suite ([[sentinel-exam-plan|Exam
-Plan]] · [[[mybizz-config-docs:mb-sentinel-review/sentinel-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-exam-report.md) · [[[mybizz-config-docs:mb-sentinel-review/sentinel-log|Log]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-log.md) ·
-[[[mybizz-config-docs:mb-sentinel-review/sentinel-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-learnings.md) · [[[mybizz-config-docs:mb-sentinel-review/sentinel-skill|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-skill.md)) is
+Plan]] · Exam Report · Log ·
+[[[mybizz-config-docs:mb-sentinel-review/sentinel-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-sentinel-review/sentinel-learnings.md) · Exam Skill) is
 synthesized and consumed per the [[[mybizz-config-docs:mb-config-manager/config-manager-agent|Config Manager]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md)
 plan-driven cycle — the exam verifies this suite's state against the spec and
 never runs the subject skill itself.

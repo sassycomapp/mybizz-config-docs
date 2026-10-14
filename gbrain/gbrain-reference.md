@@ -1,14 +1,14 @@
 ---
 title: "gbrain-reference"
 doc-id: "mb-bb4cbd8d"
-updated: "2026-10-05"
+updated: "2026-10-14"
 ---
 # GBrain — Reference: Commands, Mechanics, Incidents, Troubleshooting
 
 Companion to [[[mybizz-config-docs:gbrain/gbrain-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md) (the spec — current state) and
 [[[mybizz-config-docs:gbrain/gbrain-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-explainer.md) (what it is and why — the authoritative whole-system
-narrative). Exam companions: [[[mybizz-config-docs:gbrain/gbrain-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-exam-plan.md) (next run's job-spec),
-[[[mybizz-config-docs:gbrain/gbrain-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-exam-report.md) (current verified state), [[[mybizz-config-docs:gbrain/gbrain-log|Log]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-log.md) (notable
+narrative). Exam companions: Exam Plan (next run's job-spec),
+Exam Report (current verified state), Log (notable
 events), [[[mybizz-config-docs:gbrain/gbrain-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-learnings.md) (transient exam knowledge). Agent-facing.
 Division-scoped — applies across all projects.
 

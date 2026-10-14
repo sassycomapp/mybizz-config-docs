@@ -1,15 +1,15 @@
 ---
 title: "postgresql-reference"
 doc-id: "mb-5bad908d"
-updated: "2026-10-10"
+updated: "2026-10-14"
 ---
 # PostgreSQL — Reference: Commands, Procedures, and Troubleshooting
 
 Companion to [[[mybizz-config-docs:postgresql/postgresql-config|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md) (the spec — every setting, path, and value) and
 [[[mybizz-config-docs:postgresql/postgresql-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-explainer.md) (the authoritative whole-system narrative — what this
-system is and why, for every reader). Exam companions: [[[mybizz-config-docs:postgresql/postgresql-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-plan.md)
-(next run's job-spec), [[[mybizz-config-docs:postgresql/postgresql-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-exam-report.md) (current verified state),
-[[[mybizz-config-docs:postgresql/postgresql-log|Log]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-log.md) (notable events), [[[mybizz-config-docs:postgresql/postgresql-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-learnings.md) (transient exam
+system is and why, for every reader). Exam companions: Exam Plan
+(next run's job-spec), Exam Report (current verified state),
+Log (notable events), [[[mybizz-config-docs:postgresql/postgresql-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-learnings.md) (transient exam
 knowledge). This document is agent-facing — how to actually connect to, query, and
 troubleshoot each instance safely.
 

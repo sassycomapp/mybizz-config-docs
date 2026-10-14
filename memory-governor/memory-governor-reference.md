@@ -1,16 +1,16 @@
 ---
 title: "memory-governor-reference"
 doc-id: "mb-38660a2f"
-updated: "2026-10-05"
+updated: "2026-10-14"
 ---
 # Memory Governor Reference — Usage, Invocation, and Incident Response
 
 Companion to [[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) (the spec — current state — ACTIVE, all
 defects resolved 2026-09-08) and [[[mybizz-config-docs:memory-governor/memory-governor-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-explainer.md) (the
 authoritative whole-system narrative — design, mechanics, and real incidents).
-Exam companions: [[[mybizz-config-docs:memory-governor/memory-governor-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-exam-plan.md) (next run's job-spec),
-[[[mybizz-config-docs:memory-governor/memory-governor-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-exam-report.md) (current verified state),
-[[[mybizz-config-docs:memory-governor/memory-governor-log|Log]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-log.md) (notable events), [[[mybizz-config-docs:memory-governor/memory-governor-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-learnings.md)
+Exam companions: Exam Plan (next run's job-spec),
+Exam Report (current verified state),
+Log (notable events), [[[mybizz-config-docs:memory-governor/memory-governor-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-learnings.md)
 (transient exam knowledge). The architecture standard:
 [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md). Agent-facing.
 

@@ -1,7 +1,7 @@
 ---
 title: "config-manager-explainer"
 doc-id: "mb-c28cb8f9"
-updated: "2026-10-07"
+updated: "2026-10-14"
 ---
 # mb-config-manager — Explainer
 
@@ -10,7 +10,7 @@ why it exists, how it works, everything about it. Multi-audience — written for
 human developer, a visiting technical consultant, and the agent. Companion files:
 [[[mybizz-config-docs:mb-config-manager/config-manager-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-config.md) (its own configurations), [[[mybizz-config-docs:mb-config-manager/config-manager-register|Register: Managed Systems]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-register.md)
 (what it manages, current state), [[[mybizz-config-docs:mb-config-manager/config-manager-reference|Reference: Commands, Procedures]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-reference.md) (agent-facing
-procedures), [[[mybizz-config-docs:mb-config-manager/config-manager-agent|Orchestrator Agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) (the orchestrator itself), [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) (notable events), [[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md)
+procedures), [[[mybizz-config-docs:mb-config-manager/config-manager-agent|Orchestrator Agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) (the orchestrator itself), Log (notable events), [[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md)
 (transient knowledge).
 
 ---
@@ -224,10 +224,10 @@ The design:
   files; every register spec-doc path exists; the target system's last log
   run-row has a disposition (an open run blocks a new one). This is a check,
   not an exam — no findings cycle, no self-directed heals. Result recorded in
-  [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md).
+  Log.
 - Its register deliberately does **not** list the config-manager as a managed
   system — the exception is documented here, not silent.
-- Defects it finds in itself route to its own [[[mybizz-config-docs:mb-config-manager/config-manager-log|Log]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-log.md) and
+- Defects it finds in itself route to its own Log and
   [[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md), and architecture-level fixes go to the
   developer.
 

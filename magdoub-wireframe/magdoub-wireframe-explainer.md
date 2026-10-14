@@ -1,18 +1,18 @@
 ---
 title: "magdoub-wireframe-explainer"
 doc-id: "mb-3a3e9555"
-updated: "2026-10-05"
+updated: "2026-10-14"
 ---
 # magdoub-wireframe — Explainer
 
 *Companion note: for current confirmed state (paths, versions, integration,
 open items) see [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-config|Configuration]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-config.md). For invocation, operation,
 update, and the do-not list, see [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-reference|Reference: Invocation, Operation, Update]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-reference.md). For the
-config-management set: [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-plan.md) (transient job-spec),
-[[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-report.md) (last verified state),
-[[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-log|Log]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-log.md) (chronological events),
+config-management set: Exam Plan (transient job-spec),
+Exam Report (last verified state),
+Log (chronological events),
 [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-learnings.md) (transient knowledge), and
-[[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-skill|Magdoub Wireframe Skill]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-skill.md) (exam skill canonical source).*
+Magdoub Wireframe Skill (exam skill canonical source).*
 
 ---
 
@@ -126,7 +126,7 @@ PostgreSQL pilot. The short local version:
 - [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-config|Configuration]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-config.md) is the **spec** — the ideal state every exam
   checks against.
 - Before each exam run, the config-manager synthesizes
-  [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-plan.md): a fresh job-spec built from this spec, the
+  Exam Plan: a fresh job-spec built from this spec, the
   last report, the log, and the learnings. The plan is transient (the file is
   live; contents rewritten each cycle).
 - The exam runs the installed skill (`mb-config-magdoub-wireframe`) with the
@@ -138,8 +138,8 @@ PostgreSQL pilot. The short local version:
   belong to the PDLF / project-library-global docs domain; the `task`-tool guard
   layer and spawn-tools policy belong to the cupcake/opencode modules; gbrain's
   sync state belongs to the gbrain module. This exam touches none of them.
-- The run rewrites [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-report.md) (current state, no
-  history), appends one row to [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-log|Log]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-log.md), files new learnings,
+- The run rewrites Exam Report (current state, no
+  history), appends one row to Log, files new learnings,
   and prunes absorbed entries.
 
 ## 6. S.W.O.T.
@@ -174,7 +174,7 @@ developer-run immediately.
 
 *Companion documents: [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-config|Configuration]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-config.md) (state),
 [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-reference|Reference: Invocation, Operation, Update]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-reference.md) (commands and rules),
-[[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-plan.md) / [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-exam-report.md) /
-[[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-log|Log]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-log.md) / [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-learnings.md)
-(config-management set), [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-skill|Magdoub Wireframe Skill]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-skill.md) (exam skill canonical
+Exam Plan / Exam Report /
+Log / [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-learnings.md)
+(config-management set), Magdoub Wireframe Skill (exam skill canonical
 source). Architecture: [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md).*

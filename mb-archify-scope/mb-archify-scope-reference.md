@@ -1,7 +1,7 @@
 ---
 title: "mb-archify-scope-reference"
 doc-id: "mb-09517645"
-updated: "2026-10-08"
+updated: "2026-10-14"
 ---
 
 # mb-archify-scope — Reference
@@ -13,10 +13,10 @@ contract is the spec itself ([[[mb-archify-scope:mb-archify-scope|Scoping Skill 
 change spec and installed copy together.
 
 The config-management exam set for this suite ([[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-plan|Exam
-Plan]]]([[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-plan]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-plan.md)) · [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-report.md) ·
-[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-log|Log]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-log.md) ·
+Plan]]](mb-archify-scope-exam-plan) · Exam Report ·
+Log ·
 [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-learnings.md) ·
-[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-skill|Exam Skill]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-exam-skill.md)) is
+Exam Skill) is
 synthesized and consumed per the [[[mybizz-config-docs:mb-config-manager/config-manager-agent|Config Manager]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md)
 plan-driven cycle — the exam verifies this suite's state against the spec and
 never runs the subject skill itself.

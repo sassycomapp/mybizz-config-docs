@@ -1,15 +1,15 @@
 ---
 title: "gbrain-dream-cycle-reference"
 doc-id: "mb-afe3a341"
-updated: "2026-10-01"
+updated: "2026-10-14"
 ---
 # GBrain Dream Cycle — Reference: Invocation, Verification, Diagnostics
 
 Companion to [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-config|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-config.md) (current state, acceptance-test
 record) and [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-explainer.md) (reasoning, incident).
-Config-management set: [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-exam-plan.md) (transient job-spec —
-read second, every run), [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-exam-report.md) (last verified
-state), [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-log|Log]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-log.md) (chronological events),
+Config-management set: Exam Plan (transient job-spec —
+read second, every run), Exam Report (last verified
+state), Log (chronological events),
 [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-learnings.md) (transient knowledge). Agent-facing.
 
 **Invocation model:** manual, on-demand only — the scheduled autopilot was

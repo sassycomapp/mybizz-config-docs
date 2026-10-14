@@ -1,16 +1,16 @@
 ---
 title: "mb-submit-memory-reference"
 doc-id: "mb-c96f4742"
-updated: "2026-10-05"
+updated: "2026-10-14"
 ---
 # mb-submit-memory — Reference: Usage, Invocation, and the Full Cycle
 
 Companion to [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-config.md) (current state) and
 [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-explainer.md) (the memory-system map and design
 reasoning). **The subject skill's own `SKILL.md` is the authoritative
-procedure.** Config-management set: [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-exam-plan|Exam Plan]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-exam-plan.md)
-(transient job-spec — read second, every run), [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-exam-report|Exam Report]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-exam-report.md)
-(last verified state), [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-log|Log]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-log.md) (chronological events),
+procedure.** Config-management set: Exam Plan
+(transient job-spec — read second, every run), Exam Report
+(last verified state), Log (chronological events),
 [[[mybizz-config-docs:mb-submit-memory/submit-memory-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/submit-memory-learnings.md) (transient knowledge). Agent-facing.
 
 ## Invocation
