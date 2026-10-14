@@ -1,279 +1,102 @@
 ---
 title: "cupcake-config"
 doc-id: "mb-afd0ad78"
-updated: "2026-10-10"
+updated: "2026-10-14"
 ---
-# Cupcake Configuration
-Canonical current-state configuration record. Agent-facing. Reflects the
-live-verified state as of 2026-10-04 (run #2, including the same-day post-fix
-verification). This document states facts, not
-history —
-where a decision was made and the reasoning matters, see
-[[[mybizz-config-docs:cupcake/cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md); for operational commands and procedures, see
-[[[mybizz-config-docs:cupcake/cupcake-reference|Usage, Invocation, and Worked Examples]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-reference.md).
+# Cupcake — Configuration
 
----
-
-## Current operational status — ACTIVE (set-and-forget amendment live-verified 2026-09-22)
-
-**Cupcake is active and enforcing everywhere, with no per-folder preparation.**
-Verified live 2026-09-22: the set-and-forget amendment (fail-open default +
-global-only fallback home) proven by ten consecutive tool calls from a
-never-initialized folder, each evaluated clean under enforcement.
-Re-verified live 2026-10-04 after the run #2 amendment application
-(F-1/F-2/F-7): an ungranted cross-project write denied; a count-1 network
-grant allowed the first fetch and denied the second; a count-2 path grant
-consumed exactly by two parallel writes with the third denied; an ungranted
-skills-dir write denied from an in-project session.
-
-**Operational history — key events:**
-
-| Date | Event |
-|---|---|
-| 2026-08-29 | 19 custom rules built, tested, and deployed in a single session |
-| 2026-09-06 | Total evaluation crash during ordinary work — every tool call failed. Root cause: an unvalidated scaffold file in the project-local policy folder. Fail-open mode applied; scaffold removed. See [[[mybizz-config-docs:cupcake/cupcake-explainer\|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md) §7F for the full account. |
-| 2026-09-08 | Cross-folder rule amended (three-tier design); full 13/13 live test passed — record: `/mnt/c/mybizz/logs/cupcake-rule-test-record-2026-09-08.md` |
-| 2026-09-12 | Root cause of silent fail-open found and fixed: the plugin was spawning the checker without a working directory, so the checker looked for its rules in OpenCode's launch folder (not the project). One-line plugin fix (`cwd: event.cwd` in Bun.spawn). Live block confirmed immediately after restart. |
-| 2026-09-12 | **Bash-governance rule placed and live-verified** — the shell write channel (python/perl heredoc and -c/-e write execution, `sed -i`, `>`/`>>` redirects, `tee`, `cp`/`mv`/`ln` destination, `rm`/`touch`/`truncate` operands, `dd of=`) now feeds the same outside-project boundary, exempt list, grant slips, and first-instance deny. Final live run 35/35 — record: `/mnt/c/mybizz/logs/cupcake-rule-test-record-2026-09-12.md` |
-| 2026-09-12 | `system_protection` builtin bash matcher corrected — its substring match on `/dev/` halted every command referencing the `/mnt/c/dev/` project tree, `/dev/null` redirects, and cross-project reads (6 false blocks proven by the same test sheet). Indicators now anchored to real path starts; `/dev/null` stream family exempted; sudo/doas and true system prefixes unchanged. Offline 27/27. |
-| 2026-09-22 | **Set-and-forget amendment — second total evaluation crash fixed permanently.** Launching from a never-initialized folder blocked every tool call (checker init failure; `failMode: closed` did not cover init). Plugin amended: `failMode: open` is the environment default; sessions in folders without a `.cupcake` skeleton fall back to the global-only home `~/.config/cupcake/fallback` (WARN-logged per call). Every skeleton guaranteed boot-safe by the input-gated `cup-noop-fallback.rego` placeholder (OPA v1.19.1 wasm compiler panics on an aggregator-only bundle — proven by controlled `opa build` tests). Live-verified: ten consecutive calls from the skeleton-less folder evaluated clean. |
-
-The protected-file rules (AGENTS.md/CLAUDE.md/opencode.json/package.json)
-are deliberately left strict — a revisit decision, not forgotten.
-
----
+Canonical current-state configuration record. Agent-facing. States facts, not
+history or rules — reasoning in [[cupcake-explainer|Mechanical Policy
+Enforcement for AI Coding Agents]]; procedures in
+[[[mybizz-config-docs:cupcake/cupcake-reference|Cupcake Reference]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-reference.md).
 
 ## Identity
 
-| Item | Value |
+| Field | Value |
 |---|---|
-| Version | `0.3.0` — recorded from the original build record; no upstream release listing is visible to corroborate it (binary installed 2026-08-27) |
-| Upstream | `github.com/eqtylab/cupcake` — "A native policy enforcement layer for AI coding agents. Built on OPA/Rego."; Apache-2.0; Trail of Bits credited for agentic safety research support; OpenCode fully supported among multi-harness integrations (all verified upstream 2026-09-06) |
-| Binary path | `/home/dev-p/.cupcake/bin/cupcake`, symlinked to `/usr/local/bin/cupcake` |
-| Underlying engine | OPA (Open Policy Agent). Canonical binary: `/usr/local/bin/opa` (v1.19.1, real file). `/home/dev-p/.cupcake/bin/opa` is a symlink to it — both resolve to the same binary. |
-| Harness | `opencode` |
-| Global plugin | `~/.config/opencode/plugin/cupcake.js` — **active**, carrying the 2026-09-22 set-and-forget amendment (`failMode: open` default; missing-skeleton fallback to `~/.config/cupcake/fallback`). Backup set (post run #2 F-4 cleanup, 2026-10-04): plugin `.bak-20260922-pre-wp3` + `.bak-20260922-pre-amendment` + `.bak-20260912` + `.bak-2026-08-31T095850+0200` (same folder); policy-folder backups: cross-project `.bak` + `.bak2`, anvil-yaml `.bak`, control-plane `.bak`, outbound-network `.bak-20260908`; builtins `system_protection.rego.bak-20260912`. All non-`.rego`/non-`.js`-suffixed — never loaded. The five `:Zone.Identifier` artifacts and `system_protection.rego (2).bak` are cruft slated for developer removal (F-4) |
-| Global policy folder | `~/.config/cupcake/policies/opencode/` |
-| Fallback home (2026-09-22) | `~/.config/cupcake/fallback/.cupcake/` — global-only skeleton (empty `policies/opencode` + input-gated `cup-noop-fallback.rego` placeholder, `system/evaluate.rego`, `helpers/commands.rego`, `rulebook.yml`, `opencode.json`), built by selective copy from the proven makepdlf scaffold after `cupcake init` stalled interactively; boot-verified live |
-| Project-init status | Seven folders initialized (mb-3-cs, mb-3-cs-project-library, mb4ecom, mb4ecom-project-library, mb5pdlf, mb5pdlf-project-library, mybizz-config-docs); the set-and-forget amendment makes initialization **optional everywhere** — skeleton-less folders evaluate global policies only via the fallback home. Every skeleton guaranteed boot-safe by the input-gated placeholder (an empty `policies/opencode` panics the OPA wasm compiler on the aggregator-only bundle) |
-| Rules-authoring skill | `mb-compile-rules`, corrected 2026-08-28 after live testing |
-| Rule source location | `C:\dev\project-library-global\rules-cupcake-global\` |
-| Source↔deployed correspondence | 20 sources ↔ 19 deployed rule files — the bash-governance source (`no_bash_mediated_file_writes_without_grant.md`) compiles INTO `cup-no_cross_project_filesystem_access_by_default.rego` (same file/package, own rule id). A "missing" bash-governance deployment is NOT a finding. The control-plane rule is the one deployed rule with no source document (reconciliation open). F-11 closed 2026-10-04 (developer decision; source-doc correction applied the same day): the compiled `/tmp/`-only exempt list is authoritative and the source document now matches it — the rule itself is unchanged |
-| Grant commands | `mg-grant`, `mg-revoke` (path slips), `git-grant` (commit allowances, WP3 2026-09-22), `net-grant`, `net-revoke` (network grants, 2026-09-13) — installed at `~/.config/cupcake/bin/`, on PATH; developer-terminal only, the agent never executes them |
-| Grants data file | `~/.config/cupcake/policies/opencode/cup-grants-data.rego` — generated, never hand-edited; entries are ephemeral: every grant expires 30 minutes after issuance (hardcoded), so the live file normally holds only same-day slips (the 2026-09-21 four-grant note described a moment, not a steady state — corrected 2026-10-04) |
-| Git grants data file (WP3 2026-09-22) | `~/.config/cupcake/policies/opencode/cup-git-grants-data.rego` — commit allowances generated by `git-grant --repo <folder> --count N --minutes M` (default 30); same generated-never-hand-edited discipline; absent file = no allowances = commits deny (fail-closed) |
-| Network grants data file (2026-09-13) | `~/.config/cupcake/policies/opencode/cup-network-grants-data.rego` — domain-keyed allowances generated by `net-grant --domain <domain> --count N` (30-minute expiry hardcoded); same generated-never-hand-edited discipline; the 2026-10-04 enforcement gap (no prune/decrement — F-1) is closed: the plugin now prunes and decrements this file like the other two (applied + live-verified 2026-10-04: a count-1 `example.com` grant allowed the first fetch and denied the second) |
-| Plugin file (single copy, required) | `~/.config/opencode/plugin/cupcake.js` only, once re-enabled — **WP3 amendment 2026-09-22; F-1/F-2 amendment 2026-10-04 (applied + live-verified):** prunes and decrements ALL THREE grants files (path slips, commit allowances, network grants), with every grants-file read-modify-write serialized by a mkdir-lock shared with the five grant tools. No project-local copy of any kind — see Known scope limitations. Backup set: `.bak-20260922-pre-wp3` (pre-G1 state), `.bak-20260922-pre-amendment`, `.bak-20260912`, `.bak-2026-08-31T095850+0200` |
+| Issuer | EQTYLab — engine, upstream documentation and releases; MyBizz — plugin amendments, custom rules, grant tools |
+| Installed version | `0.3.0` (upstream release v0.3.0; corroborated by `cupcake --version`) |
+| Standard taken from | `github.com/eqtylab/cupcake` at tag `v0.3.0` (README, LICENSE); releases page |
+| Last researched | 2026-10-14 |
 
-## Rule library location
+## Engine and install
 
-| Item | Value |
-|---|---|
-| Root | `C:\dev\project-library-global\rules-cupcake-global\` |
-| File prefix | `cup-` |
-| Deployment target (all current rules) | Global — `cupcake.global.policies.(name)` package namespace |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| License | MIT (v0.3.0 LICENSE) | MIT | github.com/eqtylab/cupcake/blob/v0.3.0/LICENSE | |
+| Binary | — | `/home/dev-p/.cupcake/bin/cupcake`, symlinked at `/usr/local/bin/cupcake` | developer terminal verification | |
+| Underlying engine | OPA/Rego, compiled to WASM | OPA `1.19.1` at `/usr/local/bin/opa` (real file); `~/.cupcake/bin/opa` symlinks to it | `opa version`; v0.3.0 README | |
+| Harness | OpenCode fully supported, alongside Claude Code, Cursor, Factory AI | `opencode` | v0.3.0 README harness table | |
+| Plugin file | — | `~/.config/opencode/plugin/cupcake.js` — exactly one copy, never a project-local copy or symlink | plugin-load log check | |
+| Global policy folder | — | `~/.config/cupcake/policies/opencode/` | live inventory | |
+| Fallback home | — | `~/.config/cupcake/fallback/.cupcake/` — global-only skeleton: `policies/opencode/cup-noop-fallback.rego` (input-gated, never fires), `system/evaluate.rego`, `helpers/commands.rego`, `rulebook.yml`, `opencode.json` | live inventory | |
+| Evaluation failure default | `failMode` configurable per project; upstream default `closed` | `open` as the environment default in the plugin; a project may opt into `closed` via its own `.cupcake/opencode.json` | plugin source; v0.3.0 README security model | L6 |
+| Skeleton initialization | optional | seven folders initialized (mb-3-cs, mb-3-cs-project-library, mb4ecom, mb4ecom-project-library, mb5pdlf, mb5pdlf-project-library, mybizz-config-docs); skeleton-less folders evaluate global policies only via the fallback home; mybizz-config-docs verified live, the rest carried from record | live skeleton spot-check | |
+| Spawn cwd | — | the checker boots from the session's `.cupcake` skeleton dir when one exists, else from the fallback home; rules evaluate against the session cwd carried in the event | plugin source (spawn call) | |
 
-## Live policy inventory — `~/.config/cupcake/policies/opencode/` (re-inventoried 2026-10-04, run #2)
+## Rule estate
 
-| Item | Count |
-|---|---|
-| Custom rules, total | 20 |
-| — Pre-existing (before 2026-08-29) | 2 |
-| — Built and deployed 2026-08-29 | 17 |
-| — Added 2026-09-24, backfilled 2026-10-04 | 1 |
-| Builtins | 3 |
-| Grants data files (data, not rules) | 3 — path, git, network |
-| Aggregator (not a rule) | `system/evaluate.rego` |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Rule source location | — | `C:\dev\project-library-global\rules-cupcake-global\` — 20 `.md` source documents | live folder listing | |
+| Deployment target | `cupcake.policies.*` for project-local | all rules global — `cupcake.global.policies.*` package namespace | v0.3.0 docs structure; live files | |
+| Source↔deployed correspondence | — | 20 sources ↔ 19 deployed rule files with sources, plus 1 deployed rule with no source (the control-plane rule — see open items); the bash-governance source compiles into the cross-project rule file | live listings, both sides | |
+| cup-block-task-tool.rego | — | blocks the `task` tool and known spawn-tool equivalents (checked against the denylist) | deployed file; source doc | |
+| cup-block-anvil-yaml-writes.rego | — | any write to `anvil.yaml`, any Anvil project | deployed file; source doc | |
+| cup-no_test_tampering.rego | — | deleting, skipping or gutting a test file | deployed file; source doc | |
+| cup-no_verification_tampering.rego | — | writes to CI/CD, test-runner, coverage-threshold config | deployed file; source doc | |
+| cup-no_disabling_security_tooling.rego | — | writes to security-tooling config (audit, SAST, secret-scan, pre-commit) | deployed file; source doc | |
+| cup-no_suppression_directives_without_approval.rego | — | adding a lint/type-check suppression directive | deployed file; source doc | |
+| cup-no_dependency_or_lockfile_changes_without_explicit_approval.rego | — | writes to known lockfiles | deployed file; source doc | |
+| cup-no_unverified_dependencies.rego | — | installing a new package via any of 10 package managers | deployed file; source doc | |
+| cup-no_autonomous_commits_pushes_merges_releases_or_deployments.rego | — | git commit/push/merge grantable through commit allowances; publish and deploy deny absolutely | deployed file; source doc | |
+| cup-no_rewriting_or_destroying_development_history.rego | — | force-push, rebase, amend, branch/tag deletion | deployed file; source doc | |
+| cup-no_destructive_database_operations.rego | — | DROP (9 object types), unconditioned DELETE, TRUNCATE | deployed file; source doc | |
+| cup-no_cross_project_filesystem_access_by_default.rego | — | writes outside the current project blocked unless `/tmp/`-exempt or granted; skills-dir writes require a grant from every session; bash-mediated write shapes feed the same boundary; reads never blocked | deployed file (read this run) | L3 |
+| cup-no_access_to_secrets_unless_explicitly_required.rego | — | reading known secret-file patterns, via Read/Grep or bash | deployed file; source doc | |
+| cup-outbound_network_access_is_allowlist_only.rego | — | fetch/curl/wget to a domain outside the allowlist, minus loopback and developer-issued network grants | deployed file (read this run) | |
+| cup-no_autonomous_installation_or_connection_of_tools.rego | — | registering a new MCP server, plugin, or skill | deployed file; source doc | |
+| cup-no_unapproved_executable_or_build_path_changes.rego | — | writes to CI workflows, Dockerfile, deploy config, `package.json` | deployed file; source doc | |
+| cup-protected_ai_governance_files_may_not_be_modified.rego | — | any write to `AGENTS.md` or `CLAUDE.md` | deployed file; source doc | |
+| cup-unexpected_instruction_shaped_files_must_be_treated_as_suspicious.rego | — | creating a new `SKILL.md` outside known skill locations | deployed file; source doc | |
+| cup-the_ai_may_never_weaken_the_controls_governing_itself.rego | — | writes to `opencode.json` permissions and `spawn-tools-denylist.json` | deployed file; source doc | |
+| cup-protect-cupcake-control-plane.rego | — | absolute, ungrantable block on the control plane: the live config folder, the plugin file, the rule-authoring source folder, any project `.cupcake/opencode.json`; denies invoking the grant tools by name in bash | deployed file | |
+| builtin — system_protection.rego | shipped builtin | blocks access to critical system paths; bash indicators anchored to real path starts, `/dev/null` stream family exempted | deployed file | |
+| builtin — sensitive_data_protection.rego | shipped builtin | blocks credential/secret-shaped files; SSH-key matching by exact basename | deployed file | |
+| builtin — cupcake_exec_protection.rego | shipped builtin | blocks direct execution of the `cupcake` binary, including relative and wrapper forms; cannot see inside a script file's contents | deployed file | |
+| Aggregator | — | `system/evaluate.rego` — not a rule | live inventory | |
 
-### Custom rules — pre-existing
+## Governance configuration
 
-| File | Blocks |
-|---|---|
-| `cup-block-task-tool.rego` | The `task` tool and known spawn-tool equivalents |
-| `cup-block-anvil-yaml-writes.rego` | Any write to `anvil.yaml`, any Anvil project |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Task tool at harness level | — | `"task": "deny"` in `~/.config/opencode/opencode.jsonc` | live config read | |
+| Spawn-tool denylist | — | `["task", "delegate", "call_omo_agent", "agent_session_create"]` at `~/.config/opencode/spawn-tools-denylist.json` | live file read | |
+| Third task-denial layer | — | standing skill-review habit in the global `AGENTS.md` — new tools checked for spawn capability before trust | `AGENTS.md` | |
 
-### Custom rules — built 2026-08-29
+## Grants
 
-| File | Blocks |
-|---|---|
-| `cup-no_test_tampering.rego` | Deleting/skipping/gutting a test file |
-| `cup-no_verification_tampering.rego` | Writes to CI/CD, test-runner, coverage-threshold config |
-| `cup-no_disabling_security_tooling.rego` | Writes to security-tooling config (audit, SAST, secret-scan, pre-commit) |
-| `cup-no_suppression_directives_without_approval.rego` | Adding a lint/type-check suppression directive |
-| `cup-no_dependency_or_lockfile_changes_without_explicit_approval.rego` | Writes to known lockfiles |
-| `cup-no_unverified_dependencies.rego` | Installing a new package via any of 10 package managers |
-| `cup-no_autonomous_commits_pushes_merges_releases_or_deployments.rego` | git commit/push/merge, publish, deploy-script execution. **Amended 2026-09-22 (G1, WP3):** git commit/push/merge are grantable through the commit-allowance channel — the policy checks `cup-git-grants-data.rego` (package `git_grants_data`) for a live, non-zero-count entry on the target repo (`git -C <path>` when named, else the session cwd) and allows when one exists; publish and deploy remain absolute deny with no allowance channel |
-| `cup-no_rewriting_or_destroying_development_history.rego` | Force-push, rebase, amend, branch/tag deletion |
-| `cup-no_destructive_database_operations.rego` | DROP, unconditioned DELETE, TRUNCATE (9 object types) |
-| `cup-no_cross_project_filesystem_access_by_default.rego` | **Current scope (re-verified 2026-10-04):** writes outside the current project are blocked unless the target is `/tmp/`-exempt or an active, non-zero-count grant exists — the always-open shared-library tier no longer exists in the compiled rule (narrowed to `/tmp/`-only during the 2026-09-24 rework; the same session's broader grants-for-all-writes scope was reverted — see the log). **Reads are never blocked by this rule.** **Amended 2026-09-12:** Bash-mediated write-shapes appended to the same file/package — same boundary, same grants, own rule id, first-instance deny. Live-tested 35/35 over three runs. **Amended 2026-09-22 (WP3):** the stale `skills-collective` always-open entry removed (folder does not exist on disk — verified); `data-mybizz-mgt` documented as restricted-with-slip (G2; compiled treatment unchanged — it was already denied as an outside-cwd path). **Amended 2026-10-04 (F-7, applied + verified in-project):** writes to `~/.config/opencode/skills/` require an active grant from every session, whatever the working directory (not absolute — skill installs use grants). Verified from a session opened in the cupcake folder; the ancestor-cwd case is unproven and carried to the next exam (open item 5) |
-| `cup-no_access_to_secrets_unless_explicitly_required.rego` | Reading known secret-file patterns, via Read/Grep or bash |
-| `cup-outbound_network_access_is_allowlist_only.rego` | Fetch/curl/wget to a domain not on the 11-domain allowlist |
-| `cup-no_autonomous_installation_or_connection_of_tools.rego` | Registering a new MCP server, plugin, or skill |
-| `cup-no_unapproved_executable_or_build_path_changes.rego` | Writes to CI workflows, Dockerfile, deploy config, `package.json` |
-| `cup-protected_ai_governance_files_may_not_be_modified.rego` | Any write to `AGENTS.md` or `CLAUDE.md` |
-| `cup-unexpected_instruction_shaped_files_must_be_treated_as_suspicious.rego` | Creating a new `SKILL.md` outside known skill locations |
-| `cup-the_ai_may_never_weaken_the_controls_governing_itself.rego` | Writes to `opencode.json` permissions, `spawn-tools-denylist.json` |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Grant tools | — | `mg-grant`, `mg-revoke`, `git-grant`, `net-grant`, `net-revoke` at `~/.config/cupcake/bin/`; developer-terminal only; the agent requests and never executes them | live folder listing | L1 |
+| Path grants | — | `mg-grant --path <folder> --count N` → `cup-grants-data.rego` (package `grants_data`); 30-minute expiry hardcoded | grant-paths procedure; live file | |
+| Commit allowances | — | `git-grant --repo <folder> --count N --minutes M` (default 30) → `cup-git-grants-data.rego` (package `git_grants_data`); publish and deploy outside the channel; absent file means commits deny | live file | |
+| Network grants | — | `net-grant --domain <domain> --count N` → `cup-network-grants-data.rego` (package `network_grants_data`); 30-minute expiry hardcoded; domains lowercase, exact, no wildcards | live file | |
+| Grants schema | — | `grants := { "<key>": {"count": N, "expires_at_ns": <epoch-ns>} }` — path grants keyed by canonical WSL path; generated in full by the tools on every call, never hand-edited; the plugin prunes expired entries and decrements on allowed actions, under a shared mkdir lock | live files | L2 |
+| Decrement scope | — | file-tool writes decrement per allowed call; git commit/push/merge decrement per allowed action; allowed fetches decrement per fetch; bash-mediated writes inside a granted path run without decrement until expiry | plugin source; developer-accepted design | |
+| Outbound allowlist | — | exactly 11 domains: `github.com`, `api.github.com`, `codeload.github.com`, `raw.githubusercontent.com`, `pypi.org`, `files.pythonhosted.org`, `npmjs.com`, `registry.npmjs.org`, `registry.yarnpkg.com`, `cupcake.eqtylab.io`, `anvil.works`; loopback always allowed | rule file (read this run) | |
+| Backup files | — | backup files present in the plugin, policy, builtins and grant-tools folders; never loaded | live inventories | |
 
-### Custom rule — added 2026-09-24 (backfilled 2026-10-04; no source document exists in `rules-cupcake-global/` — reconciliation open)
+## Operational status
 
-| File | Blocks |
-|---|---|
-| `cup-protect-cupcake-control-plane.rego` | Absolute, ungrantable block on the Cupcake control plane itself: the entire live config folder (`~/.config/cupcake/`), the OpenCode plugin (`~/.config/opencode/plugin/cupcake*`), the rule-authoring source folder, and any `.cupcake/opencode.json` in any project. Also denies the agent invoking grant-issuing tools (`mg-grant`, `git-grant`, `net-grant`) as bash commands by name — no exceptions. Proven live 2026-10-04 (denied a `command -v` probe naming the tools) |
-
-### Builtins
-
-| File | Purpose | Status |
-|---|---|---|
-| `system_protection.rego` | Blocks access to critical system paths | **Bash matcher corrected 2026-09-12** — indicators anchored to real path starts; `/dev/null` stream family exempted; the file-tool path check is unchanged. Backup `.bak-20260912` |
-| `sensitive_data_protection.rego` | Blocks access to credential/secret-shaped files | **Corrected 2026-08-29** — SSH-key matching changed from substring to exact-basename, closing a real false positive on `*.pub` public keys |
-| `cupcake_exec_protection.rego` | Blocks the agent from directly executing the `cupcake` binary | **Corrected 2026-08-29** — added relative-execution and shell-function-wrapper matching. See Known scope limitations for what remains open |
-
-## The three-layer `task` denial — with current per-layer status
-
-| Layer | Mechanism | Coverage | Status 2026-09-06 |
-|---|---|---|---|
-| 1 | OpenCode config (`~/.config/opencode/opencode.jsonc` — note `.jsonc`): `"task": "deny"` | Exact tool name `task` | **ACTIVE** (verified in config) |
-| 2 | `cup-block-task-tool.rego`, checked against `spawn-tools-denylist.json` | Maintained list of known spawn-tool names | **ACTIVE** |
-| 3 | Standing skill-review habit, `AGENTS.md` Global safety rules | New/unrecognized spawn-capable tools, human-reviewed before trust | **STANDING** |
-
-`spawn-tools-denylist.json` currently lists: `task`, `delegate`, `call_omo_agent`, `agent_session_create`.
-
-## Cross-project access grants — real mechanics
-
-The `no_cross_project_filesystem_access_by_default` rule enforces writes
-outside the project via a generated data file, `cup-grants-data.rego`,
-regenerated in full by `mg-grant`/`mg-revoke` on every call — never appended
-or patched.
-
-**Schema:**
-```rego
-grants := {
-  "<wsl-path>": {"count": N, "expires_at_ns": <epoch-ns, wall-clock>}
-}
-```
-
-**Division of responsibility, by design:**
-- The Rego rule itself does **existence and count checks only** — no time
-  comparison happens inside Rego. Reads to a granted folder are allowed
-  purely by the entry's existence; writes additionally require `count > 0`.
-- **Expiry is enforced entirely outside Rego**, in the OpenCode plugin's
-  `tool.execute.before` hook, using JavaScript's `Date.now()`. Before every
-  tool call, the plugin prunes any expired grant, regenerating the grants
-  file (with the same `opa check`-before-overwrite safety as
-  `mg-grant`/`mg-revoke`) if anything expired.
-- **Count decrement happens in the plugin's `tool.execute.after` hook**, for
-  write-type tools only, after successful execution — never on a read, never
-  outside any grant. **Scope clarified 2026-09-13, developer-accepted as intended
-  design:** decrement fires for **file-tool writes** (proven live: count 2→1→0,
-  then denial at exhaustion); **Bash-mediated writes within a granted path are
-  permitted WITHOUT decrement until grant expiry** — the bash-governance rule
-  still enforces the boundary via denial for ungranted paths, and grant expiry
-  bounds exposure. Verified live 2026-09-13 (three bash redirects left count
-  untouched; file-tool writes decremented correctly).
-
-**Safety discipline, applied identically everywhere a grant file is written:**
-write to a `.rego`-suffixed temp file, run `opa check` on it, only then move
-it into place. On failure, abort and leave the previous, known-good file
-untouched.
-
-**Network grants (added 2026-09-13, documented 2026-10-04):** `net-grant
---domain <domain> --count N` writes `cup-network-grants-data.rego` (package
-`network_grants_data`; domains stored lowercase and exact, no wildcards;
-30-minute expiry hardcoded). The outbound-network rule allows a host when an
-entry exists with count > 0 — no time comparison in Rego, mirroring the
-path-grant pattern. **Enforcement gap (F-1, found and closed 2026-10-04):**
-the plugin originally never pruned or decremented this file — an
-`opencode.ai` grant issued 2026-09-13 was still allowing fetches three weeks
-past expiry. The plugin amendment extending prune + decrement to this file
-was applied the same day and live-verified: a count-1 `example.com` grant
-allowed the first fetch and denied the second. **Decrement race (F-2, same
-date):** the read-modify-write span on every grants file was unserialized —
-parallel tool calls lost decrements (proven live pre-fix: three writes
-succeeded against a count-2 grant). The mkdir-lock amendment (plugin + the
-five grant tools) serializes every grants-file RMW; applied and live-verified
-2026-10-04 per the GR-6 re-probe protocol (count-2 grant: two parallel writes
-both decremented, third write denied).
-
-## Commit-allowance grants (WP3, 2026-09-22, decision G1)
-
-The `no_autonomous_commits_pushes_merges_releases_or_deployments` rule
-enforces git commit/push/merge through a second generated data file,
-`cup-git-grants-data.rego` (package `cupcake.global.policies.git_grants_data`),
-regenerated in full by `git-grant --repo <folder> --count N --minutes M`
-on every call — never appended or patched. Same schema as path grants,
-keyed by the repository path in canonical WSL form.
-
-- **Repo resolution:** the compiled policy takes the repo from the
-  command's `git -C <path>` argument when present (token-based; quoted
-  paths with spaces are an accepted limitation), otherwise from the
-  session working directory. A cwd inside the repo matches by prefix.
-- **Publish and deploy carry no allowance** — `npm`/`yarn`/`pnpm publish`
-  and the named deploy CLI invocations deny absolutely, with or without
-  any grant.
-- **Plugin mechanics, identical to path grants:** the plugin prunes
-  expired commit allowances in `tool.execute.before` and decrements the
-  matching repo's count in `tool.execute.after` after a successful git
-  commit/push/merge bash call.
-- **Fail-closed when absent:** before the first `git-grant` call the file
-  does not exist, the package is undefined in the policy, and every git
-  commit/push/merge denies exactly as before the amendment.
-
-## Verified real cupcake eval invocation syntax
-
-```
-echo '{"hook_event_name": "PreToolUse", "session_id": "(any)", "cwd": "(real cwd)", "tool": "(tool name, lowercase)", "args": {(camelCase fields)}}' | cupcake eval --harness opencode
-```
-
-Confirmed field names for `args`: `filePath`, `oldString`, `newString`
-(edit/write), `command` (bash), `url` (webfetch). NOT `tool_name`/`tool_input`
-— those are Cupcake's internal, post-normalization names, invalid as raw input.
-
-## Known scope limitations (accepted, not defects)
-
-- **The checker boots from the folder it is launched from — resolved 2026-09-22 by the
-  set-and-forget amendment.** The plugin spawns the checker with `cwd: event.cwd`
-  (fixed 2026-09-12). A folder without a `.cupcake` skeleton previously failed checker
-  init, which `failMode` does not cover, blocking every tool call (the 2026-09-22
-  incident). The amendment: fail-open is now the environment default, and skeleton-less
-  folders fall back to the global-only home `~/.config/cupcake/fallback` (WARN-logged
-  per call). Project folders that carry a skeleton use it — including any project-local
-  policies they define — so initialization remains an opt-in, never a requirement.
-  Every skeleton must contain at least one real local policy module (the input-gated
-  `cup-noop-fallback.rego` placeholder): OPA v1.19.1's wasm compiler panics on an
-  aggregator-only bundle.
-
-- **`cupcake_exec_protection` cannot see inside a script file's own contents.**
-  Only the outer command string is inspected. A forbidden command hidden
-  inside a script's body, invoked via `bash script.sh`, is invisible.
-  Demonstrated live, 2026-08-29. Standing rule recorded in the judgment trail:
-  when execution is blocked, stop and hand the command to the developer —
-  never construct an indirect path around it.
-- **A bare `cupcake` command, no subcommand, is not blocked.** Pre-existing
-  gap, confirmed 2026-08-29, deliberately left out of scope.
-- **`AGENTS.md`/`CLAUDE.md`/governance-config protection rules block by
-  default, unconditionally** — including a developer-approved edit made in the
-  same chat turn. Cupcake cannot verify conversational approval from a tool
-  call alone.
-- **`package.json` and `opencode.json` protections are whole-file, not
-  content-scoped**, except where a rule explicitly targets a specific key.
-- **The offline `opa eval` test harness does not always predict real
-  behavior** — `regex.replace` passed 17/17 offline and failed live. Real
-  `cupcake eval` output, run by the developer, is the only authoritative test.
-- **`opa.runtime().env` and `time.now_ns()` fail silently in the live engine**,
-  despite working in the standalone `opa` CLI. Only functions already proven
-  live elsewhere should be relied on in any new rule.
-- **The OpenCode plugin must exist in exactly one discoverable location** —
-  the loader does not deduplicate by file identity; even a symlinked second
-  copy loads independently and double-fires every hook. Confirmed live.
-- **`opa check` silently passes non-`.rego`-suffixed files** — any validation
-  temp file must end in `.rego`.
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Enforcement state | — | Active and enforcing everywhere, with no per-folder preparation — standing policy, verified at the last research run (outbound-deny probe; plugin loads from the global path only) | exam evidence | |
 
 ## Open items
 
-| # | Item | Status |
-|---|---|---|
-| 1 | Protected-file rules (AGENTS.md/CLAUDE.md/opencode.json/package.json) block by default — including developer-approved edits made in the same chat turn. Friction accepted as a deliberate revisit decision. | Partially open |
-| 2 | Plugin silent-fail root cause found and fixed 2026-09-12: checker was spawned without a working directory. Fix: `cwd: event.cwd` in Bun.spawn. Live block confirmed. | Resolved |
-| 3 | Version `0.3.0` has no visible upstream release listing to corroborate it. | Open |
-| 4 | Full uninstall prepared — superseded by the reactivation decision. Held as a record only. | Retired |
-| 5 | Skills-dir grant requirement (run #2 F-7, 2026-10-04): writes to `~/.config/opencode/skills/` require an active grant from every session, whatever the working directory (not absolute — skill installs use grants). Rule amendment applied 2026-10-04; live-verified from a session inside the project (ungranted write denied). Carried to the next exam: the ancestor-cwd case — a terminal-OpenCode session started in `/home/dev-p` wrote to the skills dir without a grant; unknown whether Cupcake loads in the terminal interface or the rule fails from an ancestor cwd (exact two-step check in the run #2 report). | Partially open — ancestor case carried |
+1. The control-plane rule is the one deployed rule with no source document in `rules-cupcake-global/` — reconciliation open.
+2. Skills-dir ancestor case: the skills-dir protection resolves scope against the session cwd, so a session started in an ancestor of the protected tree may treat writes into it as in-project. The carried two-step check runs developer-side from a session in `/home/dev-p`: first a cwd-independent liveness probe (an outbound-network deny on a non-allowlisted fetch), then an ungranted skills-dir write probe; only an allow under confirmed enforcement indicts the rule. The exact command text is recorded in the run #2 exam report, which was not found on disk under `/mnt/c/mybizz/logs/`.
+3. Grant-decrement behavior: one unproven anomaly — a grant entry reached count zero without a successful write to its folder. Two hypotheses: a write decrements every entry in the file, or a denied write consumes its unit. Needs a developer-designed live test before any record is made.
+4. Protected-file rules (`AGENTS.md`, `CLAUDE.md`, `opencode.json`, `package.json`) block by default, including a developer-approved same-turn edit — accepted friction; revisit decision pending.
+5. The deeper documentation under `docs/` at tag `v0.3.0` was not fetched this run; the standard is taken from the README, LICENSE and releases page actually fetched.
