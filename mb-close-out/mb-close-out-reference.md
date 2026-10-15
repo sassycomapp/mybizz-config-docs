@@ -1,12 +1,28 @@
 ---
 title: "mb-close-out-reference"
 doc-id: "mb-4b40508e"
-updated: "2026-10-10"
+updated: "2026-10-15"
 ---
 # mb-close-out — Reference
 
-Execution procedure for `/mb-close-out`. Run only on explicit developer
-invocation. Why it is built this way: [[[mybizz-config-docs:mb-close-out/mb-close-out-explainer]]](C:/mybizz/mybizz-config-docs/mb-close-out/mb-close-out-explainer.md).
+Execution procedure for `/mb-close-out`. Run only on explicit developer invocation. Why it is built this way: [[[mybizz-config-docs:mb-close-out/mb-close-out-explainer|explainer]]](C:/mybizz/mybizz-config-docs/mb-close-out/mb-close-out-explainer.md).
+
+## Authoritative sources
+
+| Source | Link | Issuer version | Date checked |
+|---|---|---|---|
+| Skill source (the issuer standard) | `C:\mybizz\mb-close-out\mb-close-out.md` | `5499a8f` | 2026-10-15 |
+| Installed copy | `~/.config/opencode/skills/mb-close-out/SKILL.md` | body matches `5499a8f` | 2026-10-15 |
+| Repository and catalog registers | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) · [[[mybizz-os-docs:os-reference-docs/skills-catalog\|skills catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | — | 2026-10-15 |
+
+## Checks
+
+| Check | Method | Run by |
+|---|---|---|
+| Installed version | `git -C /mnt/c/mybizz/mb-close-out log -1 --format='%h %ad %s' --date=short` | agent |
+| Copy sync | `diff <(tail -n +10 /home/dev-p/.config/opencode/skills/mb-close-out/SKILL.md) <(tail -n +6 /mnt/c/mybizz/mb-close-out/mb-close-out.md)` — no output means identical | agent |
+| Skills-catalog status | the `mb-close-out` row in [[[mybizz-os-docs:os-reference-docs/skills-catalog\|skills catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) reads OK | agent |
+| Works | Copy sync shows no output AND the catalog row reads OK | agent |
 
 ## Rules (always in force during a run)
 
@@ -22,21 +38,18 @@ invocation. Why it is built this way: [[[mybizz-config-docs:mb-close-out/mb-clos
 
 ### Step 1 — Session page
 
-Write the session summary as a file, `sessions/<YYYY-MM-DD>-<short-slug>.md`: in the current repository when it is on the commit-all list, otherwise in `C:\mybizz\mybizz-config-docs\sessions\`. Body only; the commit hook adds the frontmatter, and commit all imports the page into GBrain. Never use `put_page` or `gbrain capture` for it (see the decision in the explainer).
+Write the session summary as a file, `sessions/<YYYY-MM-DD>-<short-slug>.md`: in the current repository when it is on the commit-all list, otherwise in `C:\mybizz\mybizz-config-docs\sessions\`. Body only; the commit hook adds the frontmatter, and commit all imports the page into GBrain. Never use `put_page` or `gbrain capture` for it (the reason is in the explainer). One screen: what was done and the evidence, the decisions and standards the developer set, quirks, the documents written or changed, what is open. The documents hold the detail; the page says what happened and where to look.
 
 ### Step 2 — Candidate facts
 
-1. List durable rules, decisions and gotchas only. One claim each. Skip any fact a committed document already states. A session with no facts says so.
+1. Durable rules, decisions and gotchas only. One claim each. Skip any fact a committed document already states. A session with no facts says so.
 2. Route each fact: **advisory** (default — context, pointers, findings that only need to be found again) or **governed** (rules, decisions and procedures that must be trusted later without re-checking). When unclear, ask one focused question at the gate.
-3. For each governed fact, write one fact file named `<YYYY-MM-DD>-<slug>.md`:
-   - Current repository on the commit-all list → `<current-repo>/facts/`
-   - Otherwise → `C:\mybizz\mybizz-config-docs\facts\`
-   - Body only; the commit hook adds the frontmatter.
+3. For each governed fact, write one fact file named `<YYYY-MM-DD>-<slug>.md`: in the `facts/` folder of the current repository when it is on the commit-all list, otherwise in `C:\mybizz\mybizz-config-docs\facts\`. Body only; the commit hook adds the frontmatter.
 4. For each fact file, run `mb-submit-memory` Steps 1–4. Its reports go into the gate message.
 
 ### Step 3 — Project documents
 
-When the session worked in one of the four projects (`mb-3-cs`, `mb4ecom`, `mb5pdlf`, `pdlf`), run `/mb-project-docs` up to its Step 6. Its presentation goes into the gate message. Otherwise skip this step.
+When the session worked in one of the four projects (mb-3-cs, mb-4-ecom, mb-5-pdlf, pdlf), run `/mb-project-docs` up to its Step 6. Its presentation goes into the gate message. Otherwise skip this step.
 
 ### Step 4 — Changed files
 
@@ -64,7 +77,7 @@ Produce one fully literal block, in this order:
 
 1. The `AGENTS.md` copy line from Step 6.3, when there is one.
 2. Any line produced by Rules 1, 2 or 6.
-3. `bash /mnt/c/mybizz/scripts/commit-all.sh "close-out: <topic>"`
+3. `bash /mnt/c/mybizz/scripts/commit-all.sh "close-out: <topic>"` — commit all is the close-out's last step.
 
 The developer pastes the output back.
 
@@ -82,7 +95,7 @@ curl -s -X POST http://127.0.0.1:8321/memory/<memory-id>/review \
 
 ### Step 9 — Verify and report
 
-- Commit all: every repository `committed` or `nothing to commit`, `pushed` or `already up to date`, ending `All done.` Any "the mb-doc-check hook is not installed" warning or BLOCKED repository: STOP; the developer fixes it and runs the same command again.
+- Commit all ran as the close-out's last step (Step 7, line 3). Its expected output and its BLOCKED and FAILED handling are defined by commit-all itself: [[[mybizz-os-docs:operating-procedures/commit-all-repositories|commit all repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md) — not here.
 - Governed facts: `grep "remembered as fact" /tmp/memory-governor-worker.log | tail -10` is the record of what landed and its fact numbers. If recall shows nothing but the worker log confirms the write, the fact exists; never re-submit.
 - The governor review queue must be empty before the close-out ends.
 - Report: the session page, facts with their numbers, project documents, the commit summary, anything flagged.
@@ -109,6 +122,6 @@ Never report DONE with an unverified step.
 - Never resolve `under_review` by re-submitting with a different confidence — resolve through Step 8 only.
 - Never treat an agent-side recall miss as evidence a governed fact is lost — the worker log is the record.
 - Never end a close-out with a non-empty governor review queue.
-- Never write to the retired sessions-log or facts-log — they no longer exist (retired by decision, workflow-review Task 1.7).
+- Never write to the retired sessions-log or facts-log — they no longer exist.
 
-Sub-procedure detail is owned by its own suite: `mb-submit-memory` Steps 1–4/6–9 → [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-reference]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-reference.md); commit-all behavior → [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md); the five projects and mb-project-docs → [[[mb-project-docs:mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md).
+Sub-procedure detail is owned by its own suite: `mb-submit-memory` Steps 1–4 and 6–9 → [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-reference|mb-submit-memory reference]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-reference.md); commit-all behavior → [[[mybizz-os-docs:operating-procedures/commit-all-repositories|commit all repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md) (commit-all's own suite lands next); the four projects and `mb-project-docs` → [[[mb-project-docs:mb-project-docs|mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md).
