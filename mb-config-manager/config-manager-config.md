@@ -1,7 +1,7 @@
 ---
 title: "config-manager-config"
 doc-id: "mb-48323f1a"
-updated: "2026-10-14"
+updated: "2026-10-15"
 ---
 # mb-config-manager — Configuration
 
@@ -13,9 +13,9 @@ State of the configuration-management agent. Standard:
 | Field | Value |
 |---|---|
 | Issuer | MyBizz |
-| Installed version | `12ffc6d` (last commit of `config-manager-agent.md`) |
-| Standard taken from | `config-manager-agent.md`, commit `12ffc6d`, 2026-10-14 |
-| Last researched | 2026-10-14 |
+| Installed version | `17e9046` (last commit of `config-manager-agent.md`) |
+| Standard taken from | `config-manager-agent.md`, commit `17e9046`, 2026-10-14 |
+| Last researched | 2026-10-15 |
 
 ## Settings — behaviour
 
@@ -25,6 +25,7 @@ State of the configuration-management agent. Standard:
 | Invocation, one system | `/mb-config-manager (system-name)` | as standard | agent §Invocation | |
 | Invocation, no name | List Active systems whose Last checked is empty or earlier than Last updated; ask which | as standard | agent §Invocation | |
 | Finding kinds | DOWN, UNHEALTHY, BEHIND, DRIFT, DEVIATION, GAP — in that report order | as standard | agent §Finding kinds | |
+| Documents out of shape | One DEVIATION; its correction is a full mb-sysdoc-creator Refresh, and every other correction to the four documents folds into it | as standard | agent §1 Locate | |
 | Register scope | Every system, `mb-config-manager` itself included | as standard | agent §The register | |
 | Register columns | System · Kind · Docs folder · Installed version · Last updated · Last checked · State | as standard | agent §The register | |
 | Kind values | skill, agent, script, plugin, application, service | as standard | agent §The register | |
@@ -54,8 +55,8 @@ State of the configuration-management agent. Standard:
 | Setting | Issuer standard | MyBizz value | Source | Learning |
 |---|---|---|---|---|
 | Agent source | `config-manager-agent.md` in this folder | as standard | agent file itself | |
-| Agent installed | Developer-set agent path | `/home/dev-p/.config/opencode/agents/mb-config-manager.md` | install verified 2026-10-14 | |
-| Command wrapper | Developer-set command path | `/home/dev-p/.config/opencode/command/mb-config-manager.md` | install verified 2026-10-14 | |
+| Agent installed | Developer-set agent path | `/home/dev-p/.config/opencode/agents/mb-config-manager.md` | install verified 2026-10-15 | |
+| Command wrapper | Developer-set command path | `/home/dev-p/.config/opencode/command/mb-config-manager.md` | install verified 2026-10-15 | |
 
 ## Open items
 
