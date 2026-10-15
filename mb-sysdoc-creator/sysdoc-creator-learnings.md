@@ -1,7 +1,7 @@
 ---
 title: "sysdoc-creator-learnings"
 doc-id: "mb-ad2e912c"
-updated: "2026-10-14"
+updated: "2026-10-15"
 ---
 
 # sysdoc-creator — Learnings
@@ -13,7 +13,6 @@ in full before any research, examination or proposal for this system.
 |---|---|---|---|
 | L1 | A mb-* skill's canonical source may live in its own GitHub-backed repository rather than the suite folder; an empty or stubbed in-folder skill copy is not proof that content was lost. | Before declaring a skill source lost, check the skills catalog's source column and the registered GBrain sources. | skills-catalog source column; repo-organization |
 | L2 | An installed-copy delta against an old recorded baseline may be committed canonical change, not drift. | Baselines age; only the current canonical source defines drift. Diff against the current source before classifying any installed divergence. | reference Checks (sync) |
-| L3 | This suite's files keep the prefix `sysdoc-creator-` inside the folder `mb-sysdoc-creator/`, a deliberate exception to the folder-name-as-prefix convention. | The developer decided to keep the prefix; renaming would disturb every link to the four documents for no practical gain, and the specification forbids renaming documents. | developer decision |
 | L4 | Verify a tool live with its own version or health command; when installed, registry and upstream versions disagree, the installed one defines behaviour. | Version surfaces disagree; live output is the only one that defines what will actually run. | Developer-approved lesson |
 | L5 | A vendor's SKILL.md (the file actually executed) outranks its README; the vendor's worked examples break ties. | The executed file defines behaviour; READMEs and docs lag it. | Developer-approved lesson |
 | L6 | Upstream drift: compare the local commit with the upstream API's latest commit (one call, exact match). | Exact sha equality needs no fetch and beats sync dates and mtimes. | Developer-approved lesson |

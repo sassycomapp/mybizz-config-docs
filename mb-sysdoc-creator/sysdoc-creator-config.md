@@ -1,7 +1,7 @@
 ---
 title: "sysdoc-creator-config"
 doc-id: "mb-7688c176"
-updated: "2026-10-14"
+updated: "2026-10-15"
 ---
 # sysdoc-creator — Config
 
@@ -12,18 +12,18 @@ State of the `mb-sysdoc-creator` skill.
 | Field | Value |
 |---|---|
 | Issuer | MyBizz |
-| Installed version | Source commit `5f48c78` |
-| Standard taken from | Own repository `C:\mybizz\mb-sysdoc-creator\` (origin `sassycomapp/mb-sysdoc-creator`), commit `5f48c78` |
-| Last researched | 2026-10-14 |
+| Installed version | Source commit `61ffe23` |
+| Standard taken from | Own repository `C:\mybizz\mb-sysdoc-creator\` (origin `sassycomapp/mb-sysdoc-creator`), commit `61ffe23` |
+| Last researched | 2026-10-15 |
 
 ## Documents in this folder
 
 | Setting | Issuer standard | MyBizz value | Source | Learning |
 |---|---|---|---|---|
-| Config document | Required, named `{folder}-config.md` | Present — `sysdoc-creator-config.md` | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | L3 |
-| Reference document | Required, named `{folder}-reference.md` | Present — `sysdoc-creator-reference.md` | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | L3 |
-| Explainer document | Required, named `{folder}-explainer.md` | Present — `sysdoc-creator-explainer.md` | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | L3 |
-| Learnings document | Required, named `{folder}-learnings.md` | Present — `sysdoc-creator-learnings.md` | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | L3 |
+| Config document | Required; a new document takes the same name start as the documents already in the folder | Present — `sysdoc-creator-config.md` | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | |
+| Reference document | Required; a new document takes the same name start as the documents already in the folder | Present — `sysdoc-creator-reference.md` | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | |
+| Explainer document | Required; a new document takes the same name start as the documents already in the folder | Present — `sysdoc-creator-explainer.md` | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | |
+| Learnings document | Required; a new document takes the same name start as the documents already in the folder | Present — `sysdoc-creator-learnings.md` | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | |
 
 ## Working files
 
@@ -37,7 +37,7 @@ State of the `mb-sysdoc-creator` skill.
 |---|---|---|---|---|
 | Canonical skill definition | A system MyBizz built takes its standard from its own source files | `C:\mybizz\mb-sysdoc-creator\mb-sysdoc-creator.md` — own repository, origin `sassycomapp/mb-sysdoc-creator` | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md); [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | — |
 | Installed copy | An OpenCode skill installs as `~/.config/opencode/skills/{name}/SKILL.md` | `~/.config/opencode/skills/mb-sysdoc-creator/SKILL.md` | [[[mybizz-os-docs:os-reference-docs/skills-catalog\|skills-catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | — |
-| Source↔installed sync | Installed body = canonical body; only frontmatter may differ | Byte-identical (body hash `9ec6ee6edd84fd2c`) | [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-reference\|reference]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-reference.md) Checks | — |
+| Source↔installed sync | Installed body = canonical body; only frontmatter may differ | Byte-identical (body hash `9d53bcf94b3049e1`) | [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-reference\|reference]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-reference.md) Checks | — |
 
 ## GBrain
 
@@ -57,4 +57,4 @@ State of the `mb-sysdoc-creator` skill.
 
 ## Open items
 
-1. Full GBrain source-registry row (`gbrain sources list` on the host CLI) is not confirmable from this agent's scope; registration is confirmed indirectly (repo-organization row; the skill page resolves from the federated source).
+None.

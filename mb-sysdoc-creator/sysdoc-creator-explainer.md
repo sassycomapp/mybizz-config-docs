@@ -1,7 +1,7 @@
 ---
 title: "sysdoc-creator-explainer"
 doc-id: "mb-1b1e5218"
-updated: "2026-10-14"
+updated: "2026-10-15"
 ---
 # sysdoc-creator — Explainer
 
@@ -22,7 +22,8 @@ system and supplies whatever they have; the skill treats all of it as leads to
 investigate, never as text to transcribe. It is a prose procedure with no
 executable code and no runtime dependencies, in two modes: Create for a system
 with no suite, Refresh for a system whose folder already holds documents —
-refreshed row by row, an existing document never rewritten whole.
+refreshed row by row, an existing document rewritten whole only when it
+must be restructured to the specification.
 
 It exists because this environment repeatedly finds supplied source material
 stale or flatly wrong — versions disagree across surfaces, claimed permissions
