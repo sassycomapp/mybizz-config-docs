@@ -1,7 +1,7 @@
 ---
 title: "doc-suite-specification"
 doc-id: "mb-f4adba8c"
-updated: "2026-10-14"
+updated: "2026-10-15"
 ---
 # Doc Suite Specification — config / reference / explainer / learnings
 
@@ -22,7 +22,7 @@ The one specification for the documents that describe every skill and system kep
 | `-explainer.md` | explainer | Orientation and reasoning: what it is, whether to use it, why it works this way |
 | `-learnings.md` | learnings | What differs from, or adds to, the standard in the MyBizz setup, and why |
 
-- A document is named `{folder}{ending}` when it is created, for example `mb-doc-check-learnings.md`. A document is never renamed.
+- A new document takes the same name start as the documents already in its folder, for example `doc-check-learnings.md` beside `doc-check-config.md`. In a new or empty folder it takes the folder name, for example `commit-all-config.md`. A document is never renamed.
 - An integrity system's folder may also hold the working files that system needs to run, each listed in its own config. Nothing else is kept in any folder.
 
 ---
