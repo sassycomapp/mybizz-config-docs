@@ -1,68 +1,49 @@
 ---
 title: "mb-compile-rules-config"
 doc-id: "mb-9fcb2ee6"
-updated: "2026-10-05"
+updated: "2026-10-15"
 ---
-# mb-compile-rules Configuration
+# mb-compile-rules — Configuration
 
-Canonical current-state configuration record. Agent-facing. States facts,
-not history or rules — the procedure itself lives in the skill's own
-`SKILL.md` (same folder); commands in [[[mybizz-config-docs:mb-compile-rules/mb-compile-rules-reference|mb-compile-rules Reference]]](C:/mybizz/mybizz-config-docs/mb-compile-rules/mb-compile-rules-reference.md);
-reasoning in [[[mybizz-config-docs:mb-compile-rules/mb-compile-rules-explainer|mb-compile-rules Explainer]]](C:/mybizz/mybizz-config-docs/mb-compile-rules/mb-compile-rules-explainer.md). All values verified live
-2026-09-08 unless noted.
+State of the mb-compile-rules skill. The procedure lives in the canonical
+source (`C:\mybizz\mb-compile-rules\mb-compile-rules.md`); commands in
+[[[mybizz-config-docs:mb-compile-rules/mb-compile-rules-reference|mb-compile-rules Reference]]](C:/mybizz/mybizz-config-docs/mb-compile-rules/mb-compile-rules-reference.md); reasoning in
+[[[mybizz-config-docs:mb-compile-rules/mb-compile-rules-explainer|mb-compile-rules Explainer]]](C:/mybizz/mybizz-config-docs/mb-compile-rules/mb-compile-rules-explainer.md). All values verified
+live 2026-10-15 unless noted. The rule estate is not recorded here (see
+[[[mybizz-config-docs:mb-compile-rules/mb-compile-rules-learnings|mb-compile-rules Learnings]]](C:/mybizz/mybizz-config-docs/mb-compile-rules/mb-compile-rules-learnings.md), L1).
 
 ## Identity
 
-| Item | Value |
+| Field | Value |
 |---|---|
-| Name | `mb-compile-rules` — custom (mb-*) skill, not vendor software |
-| Purpose | Converts a Cupcake rule written in Markdown into a working, tested policy file |
-| Corrected | 2026-08-28, after live testing (two wrong assumptions fixed — see explainer) |
-| Invoked as | `/mb-compile-rules (rule-name)` |
-| Skill base directory | `~/.config/opencode/skills/mb-compile-rules/` |
+| Issuer | MyBizz |
+| Installed version | `2e2ac13` — "mb-compile-rules: correct rule-file naming", 2026-10-15 |
+| Standard taken from | Canonical source `C:\mybizz\mb-compile-rules\mb-compile-rules.md` at commit `2e2ac13` |
+| Last researched | 2026-10-15 |
 
-## Skill file copies (two real copies exist)
+## Naming convention
 
-| Copy | Path | State |
-|---|---|---|
-| Installed (what OpenCode loads) | `~/.config/opencode/skills/mb-compile-rules/SKILL.md` (real file, 2026-08-28) | Authoritative for execution |
-| Mirror (in this folder) | `C:\mybizz\mybizz-config-docs\mb-compile-rules\SKILL.md` (2026-09-05) | Byte-identical at verification; **no sync mechanism between the two** |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Source file name | The source keeps its own name: `(rule-name).md` — no forced `cup-` prefix | Same, verified against the 20 files in the estate | Canonical source, Hard Rule 3 (`2e2ac13`); live estate listing | |
+| Compiled file name | `cup-(rule-name).rego`; a rule-name already starting `cup-` is not prefixed a second time | Same | Canonical source, Hard Rule 3 | |
+| Package name | Global target `~/.config/cupcake/policies/opencode/` → `cupcake.global.policies.(name)`; project-local `./.cupcake/policies/opencode/` → `cupcake.policies.(name)`; must match the real deployment folder — a mismatch loads without error and never fires | Same | Canonical source, Hard Rule 4 | |
+| Deployment target | `cupcake.policies.*` for project-local | All rules global — `cupcake.global.policies.*` | [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md); canonical source | |
 
-## Pipeline state — the rule estate this skill manages
+## Installed copy
 
-| Item | Value |
-|---|---|
-| Rule sources | `C:\dev\project-library-global\rules-cupcake-global\` — 19 `.md` files, `cup-` prefix |
-| Live policy folder | `~/.config/cupcake/policies/opencode/` — 19 rules + grants data + `builtins/` (3) + `system/` aggregator |
-| Deployment target | All rules global (`cupcake.global.policies.*` package namespace) |
-| Rule-change method (developer-stated) | A similar rules file is created/edited in `rules-cupcake-global`; this skill compiles it; every change is thoroughly tested on implementation |
-| Binaries | `cupcake` (18.4 MB) and `opa` (47.4 MB) at `~/.cupcake/bin/`; `/usr/local/bin/cupcake` symlink. **The agent never executes `cupcake` directly — standing rule** (see reference) |
-| Downstream system | Cupcake — **ACTIVE** (reactivation completed and verified 2026-09-08, the same day this suite was written; status: [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)) |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Skill copy | One canonical source file | Single installed copy at `~/.config/opencode/skills/mb-compile-rules/SKILL.md`; body identical to canonical `2e2ac13` (frontmatter transformed to `name`/`description` by design) | Live diff against `2e2ac13`, 2026-10-15 | |
+| Invocation | — | `/mb-compile-rules (rule-name)` — `rule-name` is the source file's name without `.md` | Canonical source, User-invocable section | |
 
-## Integration facts
+## Downstream
 
-| Item | State |
-|---|---|
-| Companion suite | [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) + [[[mybizz-config-docs:cupcake/cupcake-reference\|Usage, Invocation, and Worked Examples]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-reference.md) + [[[mybizz-config-docs:cupcake/cupcake-explainer\|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md) — the system this skill feeds |
-| Sibling skills | `mb-sentinel-review`, `mb-submit-memory` — same custom-skill family; no structural coupling |
-| Governance principles | [[[default:security-global/principles/sec-review-before-trust\|Review Before Trust]]](C:/dev/project-library-global/security-global/principles/sec-review-before-trust.md), [[[default:security-global/infrastructure/sec-dependency-skill-supply-chain\|Dependency and Skill Supply Chain]]](C:/dev/project-library-global/security-global/infrastructure/sec-dependency-skill-supply-chain.md), [[[default:security-global/principles/sec-defense-in-depth\|Defense in Depth]]](C:/dev/project-library-global/security-global/principles/sec-defense-in-depth.md) — this pipeline is their enforcement-authoring arm |
-
-## Worked precedent (2026-09-08)
-
-The cross-folder rule amendment went through the full pipeline end-to-end:
-source updated in `rules-cupcake-global` (commit `fa02fbd`), compiled,
-`opa check` pass, previous version backed up with a non-`.rego` suffix,
-placed, and live-tested **13/13** by the developer
-(`/mnt/c/mybizz/logs/cupcake-rule-test-record-2026-09-08.md`). This is the
-standing pattern for any future rule change.
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Rule estate | — | Recorded in [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) — sources in `C:\dev\project-library-global\rules-cupcake-global\`, deployed files in the global policy folder; this suite carries no estate rows | [[[mybizz-os-docs:os-reference-docs/system-integrity-explainer\|System Integrity Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/system-integrity-explainer.md), section 6 | L1 |
+| Cupcake enforcement | — | Standing policy — status and current enforcement state in [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) | [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) | |
 
 ## Open items
 
-- The two SKILL.md copies have no sync mechanism — they are byte-identical
-  today (verified); a future edit to one can silently diverge from the other.
-- Cupcake reactivation completed 2026-09-08 — the pipeline and live
-  enforcement are both proven operational (the cross-folder amendment was
-  compiled, tested 13/13, and is now enforced).
-- New Cupcake requirement discovered the same day: every project folder the
-  agent works in needs the `.cupcake/policies/opencode` + `.cupcake/system`
-  skeleton, or the checker crashes on boot there (see [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)).
+None.
