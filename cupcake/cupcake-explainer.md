@@ -1,7 +1,7 @@
 ---
 title: "cupcake-explainer"
 doc-id: "mb-258b7bd2"
-updated: "2026-10-14"
+updated: "2026-10-15"
 ---
 # Cupcake — Mechanical Policy Enforcement for AI Coding Agents
 
@@ -9,7 +9,7 @@ Companions: [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]
 [[[mybizz-config-docs:cupcake/cupcake-reference|Cupcake Reference]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-reference.md) (procedures),
 [[[mybizz-config-docs:cupcake/cupcake-learnings|Cupcake Learnings]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-learnings.md) (what differs and why).
 
-## 1. What it is
+## What it is
 
 An AI agent can be told a rule, agree with it, and still not follow it — not
 out of malice, but because a written instruction is a request, not a
@@ -35,7 +35,7 @@ the agent's own governing files, ungranted access beyond the project. It is
 complementary to the security-global library and Sentinel, which protect
 client applications from attackers.
 
-## 2. What it can do
+## What it can do
 
 - Mechanical interception of every tool call, returning allow or deny before
   execution.
@@ -56,7 +56,7 @@ client applications from attackers.
   crashes is configurable, separating how strict the rules are from whether
   a broken evaluation can arrest all work.
 
-## 3. Suitability
+## Suitability
 
 **Best for:** mechanically enforcing rules an agent might otherwise reason
 around — especially high-blast-radius actions where a single violation is
@@ -78,7 +78,7 @@ block-by-default; as a substitute for live testing a rule — offline passes
 are evidence, not proof; and for rules that depend on engine builtins
 confirmed to fail silently in the compiled engine.
 
-## 4. Why it works this way
+## Why it works this way
 
 - **A machine, not a request.** The agent cannot reason around a rule it
   cannot reach.
@@ -107,7 +107,7 @@ confirmed to fail silently in the compiled engine.
   config-management exam cycle is what keeps "enforcement is live" a
   verified claim rather than an assumption.
 
-## 5. What has to happen
+## What has to happen
 
 - Every new or changed rule goes through mb-compile-rules. No rule file
   reaches a live policy folder any other way.

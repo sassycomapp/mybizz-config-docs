@@ -1,7 +1,7 @@
 ---
 title: "cupcake-config"
 doc-id: "mb-afd0ad78"
-updated: "2026-10-14"
+updated: "2026-10-15"
 ---
 # Cupcake — Configuration
 
@@ -31,7 +31,7 @@ Enforcement for AI Coding Agents]]; procedures in
 | Global policy folder | — | `~/.config/cupcake/policies/opencode/` | live inventory | |
 | Fallback home | — | `~/.config/cupcake/fallback/.cupcake/` — global-only skeleton: `policies/opencode/cup-noop-fallback.rego` (input-gated, never fires), `system/evaluate.rego`, `helpers/commands.rego`, `rulebook.yml`, `opencode.json` | live inventory | |
 | Evaluation failure default | `failMode` configurable per project; upstream default `closed` | `open` as the environment default in the plugin; a project may opt into `closed` via its own `.cupcake/opencode.json` | plugin source; v0.3.0 README security model | L6 |
-| Skeleton initialization | optional | seven folders initialized (mb-3-cs, mb-3-cs-project-library, mb4ecom, mb4ecom-project-library, mb5pdlf, mb5pdlf-project-library, mybizz-config-docs); skeleton-less folders evaluate global policies only via the fallback home; mybizz-config-docs verified live, the rest carried from record | live skeleton spot-check | |
+| Skeleton initialization | optional | 10 folders initialized (`/home/dev-p`, `/home/dev-p/memory-governor`, `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-app1`, `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library`, `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-app1`, `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-app2`, `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-project-library`, `/mnt/c/dev/dev-mb-5-pdlf/mb-5-pdlf-app1`, `/mnt/c/dev/dev-mb-5-pdlf/mb-5-pdlf-project-library`, `/mnt/c/mybizz/mybizz-config-docs`); skeleton-less folders evaluate global policies only via the fallback home; all verified live | live listing 2026-10-15 | |
 | Spawn cwd | — | the checker boots from the session's `.cupcake` skeleton dir when one exists, else from the fallback home; rules evaluate against the session cwd carried in the event | plugin source (spawn call) | |
 
 ## Rule estate
@@ -96,7 +96,7 @@ Enforcement for AI Coding Agents]]; procedures in
 ## Open items
 
 1. The control-plane rule is the one deployed rule with no source document in `rules-cupcake-global/` — reconciliation open.
-2. Skills-dir ancestor case: the skills-dir protection resolves scope against the session cwd, so a session started in an ancestor of the protected tree may treat writes into it as in-project. The carried two-step check runs developer-side from a session in `/home/dev-p`: first a cwd-independent liveness probe (an outbound-network deny on a non-allowlisted fetch), then an ungranted skills-dir write probe; only an allow under confirmed enforcement indicts the rule. The exact command text is recorded in the run #2 exam report, which was not found on disk under `/mnt/c/mybizz/logs/`.
+2. Skills-dir ancestor case: the skills-dir protection resolves scope against the session cwd, so a session started in an ancestor of the protected tree may treat writes into it as in-project. The carried two-step check runs developer-side from a session in `/home/dev-p`: first a cwd-independent liveness probe (an outbound-network deny on a non-allowlisted fetch), then an ungranted skills-dir write probe; only an allow under confirmed enforcement indicts the rule. Both probes are written as the reference's "Skills-dir ancestor case" check.
 3. Grant-decrement behavior: one unproven anomaly — a grant entry reached count zero without a successful write to its folder. Two hypotheses: a write decrements every entry in the file, or a denied write consumes its unit. Needs a developer-designed live test before any record is made.
 4. Protected-file rules (`AGENTS.md`, `CLAUDE.md`, `opencode.json`, `package.json`) block by default, including a developer-approved same-turn edit — accepted friction; revisit decision pending.
 5. The deeper documentation under `docs/` at tag `v0.3.0` was not fetched this run; the standard is taken from the README, LICENSE and releases page actually fetched.

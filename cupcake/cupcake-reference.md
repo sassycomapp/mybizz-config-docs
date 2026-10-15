@@ -1,7 +1,7 @@
 ---
 title: "cupcake-reference"
 doc-id: "mb-e79d3d01"
-updated: "2026-10-14"
+updated: "2026-10-15"
 ---
 # Cupcake — Reference
 
@@ -204,6 +204,7 @@ rebuild the rule set.
 | OPA version | `opa version` | agent |
 | Plugin loaded exactly once | the log grep above | agent |
 | Works — enforcement liveness (agent-side) | an outbound-network deny on a non-allowlisted fetch, expected to deny, plus the plugin-load grep | agent |
+| Skills-dir ancestor case | From an OpenCode session started in `/home/dev-p`: first the liveness probe, a fetch to a non-allowlisted domain, expected to deny; then an ungranted write of a test file into `~/.config/opencode/skills/`, expected to deny. An allow under confirmed liveness indicts the skills-dir rule | developer |
 | Works — authoritative | the evaluation health check: a harmless read must return a clean `allow` | developer |
 | Grant decrement serialization | the count-2 parallel-writes re-probe: two writes in one parallel batch decrement exactly, the third denies; run after any lock or decrement change | developer |
 | Denials during a run | every denial received is recorded as liveness evidence; a denied check becomes developer-run, never retried | agent |

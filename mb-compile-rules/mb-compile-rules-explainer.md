@@ -5,7 +5,7 @@ updated: "2026-10-15"
 ---
 # mb-compile-rules — Explainer
 
-## 1. What it is
+## What it is
 
 This skill is the writing desk of the security system. Cupcake — the
 mechanical checker that stands between the AI agent and its tools — can
@@ -22,7 +22,7 @@ The skill's defining property is that it refuses to confuse "written" with
 developer, against the real system — and anything that fails or is
 rejected is removed immediately, not left for later cleanup.
 
-## 2. What it can do
+## What it can do
 
 - **The full authoring cycle.** Read the plain-language source in full;
   convert it to an enforcement file in one complete, atomic write; check
@@ -43,7 +43,7 @@ rejected is removed immediately, not left for later cleanup.
   checks, places, and proposes tests — but every real test command is run
   by the developer in their own terminal, by design and by standing rule.
 
-## 3. Suitability
+## Suitability
 
 - **Best for:** turning an authored rule into a proven, live enforcement
   file; amending an existing rule with minimal, fully-retested changes;
@@ -61,7 +61,7 @@ rejected is removed immediately, not left for later cleanup.
   decision, made in the plain-language source; this skill never invents
   rules.
 
-## 4. Why it works this way
+## Why it works this way
 
 **Why placement and testing are one action.** The first live use proved
 the checker cannot evaluate a draft file in isolation — it only ever sees
@@ -111,7 +111,7 @@ unvalidated one entering the live folder by any other path (a careless
 "add everything" save) was the recorded cause of the one total outage.
 This pipeline is the sanctioned door, and its gates are the review.
 
-## 5. What has to happen
+## What has to happen
 
 - The developer invokes the skill by name, with the rule to compile, and
   decides the deployment target before drafting.
