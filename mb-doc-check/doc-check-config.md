@@ -14,20 +14,20 @@ Canonical current-state record of the `mb-doc-check` program. Agent-facing. What
 | Item | Value |
 |---|---|
 | Issuer | MyBizz. GBrain is the issuer for the page-name rule and the source-id list |
-| Installed version | commit `c344d51` (2026-10-13). The program has no release system; 89,032 bytes live |
-| Standard taken from | `mb-doc-check.py` and `mb-doc-check.sources` at commit `c344d51`; GBrain's source list and page-name rule |
+| Installed version | commit `236fdde` (2026-10-15). The program has no release system; 89,030 bytes live |
+| Standard taken from | `mb-doc-check.py` and `mb-doc-check.sources` at commit `236fdde`; GBrain's source list and page-name rule |
 | Last researched | 2026-10-15 |
 
 ## Settings — program
 
 | Setting | Issuer standard | MyBizz value | Source | Learning |
 |---|---|---|---|---|
-| Name | — | `mb-doc-check`, a Python program (standard library only). It is not an OpenCode skill | `mb-doc-check.py` at `c344d51` | |
-| Location | — | `C:\mybizz\scripts\mb-doc-check.py` (WSL: `/mnt/c/mybizz/scripts/mb-doc-check.py`), 89,032 bytes | live check 2026-10-15 | |
-| Settings file | — | `mb-doc-check.sources`, in the same folder | `mb-doc-check.py` at `c344d51` | |
+| Name | — | `mb-doc-check`, a Python program (standard library only). It is not an OpenCode skill | `mb-doc-check.py` at `236fdde` | |
+| Location | — | `C:\mybizz\scripts\mb-doc-check.py` (WSL: `/mnt/c/mybizz/scripts/mb-doc-check.py`), 89,030 bytes | live check 2026-10-15 | |
+| Settings file | — | `mb-doc-check.sources`, in the same folder | `mb-doc-check.py` at `236fdde` | |
 | How it runs | — | As a git `pre-commit` hook in each of the covered repositories listed in [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md): `python3 /mnt/c/mybizz/scripts/mb-doc-check.py hook`. A commit made in WSL runs it; a commit made from a Windows program does not | [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | |
-| Failure behavior | — | If the program itself fails with an internal error, it prints "skipped because of an internal problem" and lets the commit through. A bug never blocks work. The skipped documents are corrected at their next commit | `mb-doc-check.py` at `c344d51` | |
-| Network and GBrain | — | None, except two commands: `sources-check` calls the `gbrain` command, and `slug-selftest` runs GBrain's own page-name function with `bun` | `mb-doc-check.py` at `c344d51` | |
+| Failure behavior | — | If the program itself fails with an internal error, it prints "skipped because of an internal problem" and lets the commit through. A bug never blocks work. The skipped documents are corrected at their next commit | `mb-doc-check.py` at `236fdde` | |
+| Network and GBrain | — | None, except two commands: `sources-check` calls the `gbrain` command, and `slug-selftest` runs GBrain's own page-name function with `bun` | `mb-doc-check.py` at `236fdde` | |
 | Tests | — | 150 automated tests (Python `unittest`), stored in `mybizz-config-docs\gbrain\tests` and run with `bash /mnt/c/mybizz/mybizz-config-docs/gbrain/tests/run-tests.sh`. It ends with `OK` | live run 2026-10-15 | |
 
 ## Settings — covered repositories
@@ -65,7 +65,7 @@ Not covered: the code repositories, the Anvil clone and the memory governor's fo
 | Stored link form | — | `[[[source-id:page-name|Shown text]]](C:/full/windows/path.md)`. Without shown text, the part from the pipe to the closing brackets is absent. Inside a markdown table row, the pipe before the shown text is written with a backslash in front of it, so the table keeps its columns. A link to a document outside the C: drive has no path part: `[[source-id:page-name]]`, because no clickable path exists | [[[mybizz-os-docs:os-reference-docs/documentation-linking-explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/documentation-linking-explainer.md) | |
 | Page name | GBrain's rule | The path from the repository root in lower case, spaces as hyphens, accents removed, without `.md`. A port of GBrain's own rule | `slug-selftest` 2026-10-15 (1,404 paths, 0 differences) | |
 | Frontmatter | — | `title` (the file name without `.md`, quoted), `doc-id` (`mb-` and eight hexadecimal characters, permanent) and `updated` (`"YYYY-MM-DD"`, the date of the last real change). Other fields are left alone | [[[mybizz-os-docs:os-reference-docs/frontmatter-conventions]]](C:/mybizz/mybizz-os-docs/os-reference-docs/frontmatter%20conventions.md) | |
-| Environment variables | — | `MB_DELETE_OK=1` lets a commit that deletes and adds documents at once go through (see the reference). `MB_DOC_CHECK_SOURCES` and `MB_DOC_CHECK_ROOTS` replace the two settings files. `MB_GBRAIN_DIR` and `MB_GBRAIN_BIN` point `slug-selftest` and `sources-check` at a different GBrain. `MB_DOC_CHECK_TODAY`, `MB_DOC_CHECK_ANYPATH` and `MB_DOC_CHECK_KEEP_SOURCES` exist for the automated tests only | `mb-doc-check.py` at `c344d51` | |
+| Environment variables | — | `MB_DELETE_OK=1` lets a commit that deletes and adds documents at once go through (see the reference). `MB_DOC_CHECK_SOURCES` and `MB_DOC_CHECK_ROOTS` replace the two settings files. `MB_GBRAIN_DIR` and `MB_GBRAIN_BIN` point `slug-selftest` and `sources-check` at a different GBrain. `MB_DOC_CHECK_TODAY`, `MB_DOC_CHECK_ANYPATH` and `MB_DOC_CHECK_KEEP_SOURCES` exist for the automated tests only | `mb-doc-check.py` at `236fdde` | |
 
 ## What it reads and writes
 
@@ -104,6 +104,4 @@ Problems that already existed before the commit are reported but never stop it.
 
 ## Open items
 
-| # | Item | Status |
-|---|---|---|
-| 1 | The program's built-in help text still shows a relative-path example (`relative/path/File%20Name.md`, source lines 6 and 83); the stored form follows `@paths` | Open — verified 2026-10-15 |
+None.

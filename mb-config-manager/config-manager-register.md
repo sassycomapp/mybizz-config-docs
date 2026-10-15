@@ -25,7 +25,7 @@ One row per MyBizz skill and system. Written only by mb-config-manager, with the
 | mb-close-out | skill | `mb-close-out` | `5499a8f` | 2026-10-15 | 2026-10-15 | Active |
 | mb-compile-rules | skill | `mb-compile-rules` | `2e2ac13` | 2026-10-15 | 2026-10-15 | Active |
 | mb-config-manager | agent | `mb-config-manager` | `17e9046` | 2026-10-14 | 2026-10-15 | Active |
-| mb-doc-check | script | `mb-doc-check` | `c344d51` | 2026-10-13 | 2026-10-15 | Active |
+| mb-doc-check | script | `mb-doc-check` | `236fdde` | 2026-10-15 | 2026-10-15 | Active |
 | mb-memory-system-diagnostic | skill | `mb-memory-system-diagnostic` | | | | Active |
 | mb-project-docs | skill | `mb-project-docs` | `6835cfe` | 2026-10-15 | 2026-10-15 | Active |
 | mb-sentinel-review | skill | `mb-sentinel-review` | | | | Active |

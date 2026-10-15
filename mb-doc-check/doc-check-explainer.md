@@ -7,13 +7,13 @@ updated: "2026-10-15"
 
 *Companion note: current state in [[[mybizz-config-docs:mb-doc-check/doc-check-config]]](C:/mybizz/mybizz-config-docs/mb-doc-check/doc-check-config.md); commands, messages and procedures in [[[mybizz-config-docs:mb-doc-check/doc-check-reference]]](C:/mybizz/mybizz-config-docs/mb-doc-check/doc-check-reference.md). The link system from the author's point of view is [[[mybizz-os-docs:os-reference-docs/documentation-linking-explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/documentation-linking-explainer.md); this document explains the program behind it.*
 
-## 1. What this actually is
+## What it is
 
 `mb-doc-check` is a small program that runs at the moment you commit documents. Its job is to make sure that every document entering the history of the documentation repositories listed in [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md) is correct: it has its frontmatter, every link in it is in one standard form and points to a document that exists, and links elsewhere that point to a document you just renamed or moved are repaired. It does this by editing the text of the documents themselves, and nothing else.
 
 It is not an AI. It makes no judgments. For the same documents it always produces the same result, and that is deliberate: the documents are written by AI agents, and the checker must not be a second source of variation.
 
-## 2. What it can do
+## What it can do
 
 At every commit the program looks at two pictures of the repository: the committed state, and the state that is about to be committed. Comparing them tells it what is new, what moved and what was deleted.
 
@@ -32,13 +32,13 @@ At every commit the program looks at two pictures of the repository: the committ
 
 **Where the knowledge comes from.** A small settings file lists which folder is which GBrain source, so that the program can write the source id into every link.
 
-## 3. Suitability
+## Suitability
 
 - **Best for:** keeping a body of documentation, written mostly by AI agents across several repositories, consistent and navigable without anyone having to remember a rule.
 - **Good for:** renaming and moving documents; retiring documents into `obsolete`; bringing an existing repository under the rules in one pass; checking a repository at any time without changing it.
 - **Not good for:** documents outside the covered repositories; commits made from Windows programs (the hook only exists in WSL's Git); judging whether a document's content is right. It checks form and links, never meaning.
 
-## 4. Why it works this way
+## Why it works this way
 
 **It runs at commit, not on a schedule.** A document is correct at the moment it enters history, so errors never accumulate and no cleanup run is ever needed. A scheduled checker would find errors after the fact and leave someone to fix them.
 
@@ -62,7 +62,7 @@ At every commit the program looks at two pictures of the repository: the committ
 
 **One program, one settings file, the repositories listed in [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md).** Every repository behaves identically, because there is nothing local to configure and nothing to drift.
 
-## 5. What has to happen
+## What has to happen
 
 - Commit in WSL, with `commit-all.sh`, and never with `--no-verify`.
 - Keep `mb-doc-check.sources` true: after any change to GBrain's sources, run `sources-check`.
