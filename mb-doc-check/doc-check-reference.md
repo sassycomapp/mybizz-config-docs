@@ -1,13 +1,34 @@
 ---
 title: "doc-check-reference"
 doc-id: "mb-08c8ef59"
-updated: "2026-10-04"
+updated: "2026-10-15"
 ---
 # mb-doc-check — Reference: Commands, Messages, Procedures, Troubleshooting
 
 Companion to [[[mybizz-config-docs:mb-doc-check/doc-check-config]]](C:/mybizz/mybizz-config-docs/mb-doc-check/doc-check-config.md) (current state) and [[[mybizz-config-docs:mb-doc-check/doc-check-explainer]]](C:/mybizz/mybizz-config-docs/mb-doc-check/doc-check-explainer.md) (what it is and why). The author's view of the link system is [[[mybizz-os-docs:os-reference-docs/documentation-linking-explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/documentation-linking-explainer.md); the procedure to follow every time you finish work is [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md). Agent-facing.
 
 Every command is run as `python3 /mnt/c/mybizz/scripts/mb-doc-check.py <command>`. Day to day nothing is run by hand: the hook runs inside every commit made with `commit-all.sh`.
+
+## Authoritative sources
+
+| Source | Link | Issuer version | Date checked |
+|---|---|---|---|
+| `mb-doc-check.py` (source repo `mybizz-scripts`) | `C:\mybizz\scripts\mb-doc-check.py` | commit `c344d51` (2026-10-13) | 2026-10-15 |
+| `mb-doc-check.sources` | `C:\mybizz\scripts\mb-doc-check.sources` | current | 2026-10-15 |
+| Repository and source list | [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | current | 2026-10-15 |
+| Commit-all procedure | [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md) | current | 2026-10-15 |
+
+## Checks
+
+All are read-only; the agent runs every one.
+
+| Check | Method | Run by |
+|---|---|---|
+| Installed version | `ls -la /mnt/c/mybizz/scripts/mb-doc-check.py` (byte size) and `git -C /mnt/c/mybizz/scripts log -1 --format='%h %ad' --date=short` | agent |
+| Settings file | Read `mb-doc-check.sources`, then `python3 /mnt/c/mybizz/scripts/mb-doc-check.py sources-check`. It must say `everything matches` | agent |
+| Covered repositories vs GBrain | `sources-check`. Its `note` lines about code sources not in the file are informational | agent |
+| Page-name rule vs GBrain | `python3 /mnt/c/mybizz/scripts/mb-doc-check.py slug-selftest`. It must report `0 difference(s)` | agent |
+| Works | `check --root <repo>` must end with `all clear`; `bash /mnt/c/mybizz/mybizz-config-docs/gbrain/tests/run-tests.sh` must end with `OK` | agent |
 
 ---
 

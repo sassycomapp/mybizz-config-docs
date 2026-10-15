@@ -1,7 +1,7 @@
 ---
 title: "doc-check-explainer"
 doc-id: "mb-632b78c3"
-updated: "2026-10-08"
+updated: "2026-10-15"
 ---
 # mb-doc-check — Explainer
 
@@ -13,7 +13,7 @@ updated: "2026-10-08"
 
 It is not an AI. It makes no judgments. For the same documents it always produces the same result, and that is deliberate: the documents are written by AI agents, and the checker must not be a second source of variation.
 
-## 2. How it works in plain terms
+## 2. What it can do
 
 At every commit the program looks at two pictures of the repository: the committed state, and the state that is about to be committed. Comparing them tells it what is new, what moved and what was deleted.
 
@@ -38,7 +38,7 @@ At every commit the program looks at two pictures of the repository: the committ
 - **Good for:** renaming and moving documents; retiring documents into `obsolete`; bringing an existing repository under the rules in one pass; checking a repository at any time without changing it.
 - **Not good for:** documents outside the covered repositories; commits made from Windows programs (the hook only exists in WSL's Git); judging whether a document's content is right. It checks form and links, never meaning.
 
-## 4. Why it works the way it does
+## 4. Why it works this way
 
 **It runs at commit, not on a schedule.** A document is correct at the moment it enters history, so errors never accumulate and no cleanup run is ever needed. A scheduled checker would find errors after the fact and leave someone to fix them.
 
@@ -69,13 +69,3 @@ At every commit the program looks at two pictures of the repository: the committ
 - After every GBrain upgrade, run `slug-selftest`.
 - When a commit is stopped, read the message, fix the named line and commit again.
 - Add a new repository by following the steps in [[[mybizz-config-docs:mb-doc-check/doc-check-reference]]](C:/mybizz/mybizz-config-docs/mb-doc-check/doc-check-reference.md).
-
-## 6. S.W.O.T.
-
-**Strengths.** Documents are correct as they enter history. Renames and moves never break links. Identical behavior in every repository listed in [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md). The program is deterministic and has no dependency on anything running.
-
-**Weaknesses.** It only protects commits made in WSL. A failure of the program lets one commit through unchecked. The stored link form is noisy to read in raw text and ties documents to this computer's folder layout.
-
-**Opportunities.** Using the stable `doc-id` for further automatic checks, such as detecting duplicated documents.
-
-**Threats.** A commit made with `--no-verify` or from Windows leaves documents in the wrong form. A mismatch between the settings file and GBrain's sources makes links name a source that does not exist. A GBrain upgrade that changes the page-name rule would make new links wrong until the rule is updated.
