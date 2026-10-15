@@ -27,7 +27,7 @@ One row per MyBizz skill and system. Written only by mb-config-manager, with the
 | mb-config-manager | agent | `mb-config-manager` | `12ffc6d` | 2026-10-14 | 2026-10-14 | Active |
 | mb-doc-check | script | `mb-doc-check` | `c344d51` | 2026-10-13 | 2026-10-15 | Active |
 | mb-memory-system-diagnostic | skill | `mb-memory-system-diagnostic` | | | | Active |
-| mb-project-docs | skill | `mb-project-docs` | | | | Active |
+| mb-project-docs | skill | `mb-project-docs` | `6835cfe` | 2026-10-15 | 2026-10-15 | Active |
 | mb-sentinel-review | skill | `mb-sentinel-review` | | | | Active |
 | mb-submit-memory | skill | `mb-submit-memory` | | | | Active |
 | mb-sysdoc-creator | skill | `mb-sysdoc-creator` | `5f48c78` | 2026-10-14 | 2026-10-14 | Active |

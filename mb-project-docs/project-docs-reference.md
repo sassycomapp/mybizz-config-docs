@@ -1,11 +1,19 @@
 ---
 title: "project-docs-reference"
 doc-id: "mb-6950e749"
-updated: "2026-10-07"
+updated: "2026-10-15"
 ---
 # mb-project-docs — Reference
 
-Usage and execution for the `mb-project-docs` skill. the skill's source, `mb-project-docs.md` in `C:\mybizz\mb-project-docs\`, is the authoritative definition; this document is the operational form. Why it works this way: [[[mybizz-config-docs:mb-project-docs/project-docs-explainer]]](C:/mybizz/mybizz-config-docs/mb-project-docs/project-docs-explainer.md). Current state: [[[mybizz-config-docs:mb-project-docs/project-docs-config]]](C:/mybizz/mybizz-config-docs/mb-project-docs/project-docs-config.md).
+Usage and execution for the `mb-project-docs` skill. The skill's source, `mb-project-docs.md` in `C:\mybizz\mb-project-docs\`, is the authoritative definition; this document is the operational form. Why it works this way: [[[mybizz-config-docs:mb-project-docs/project-docs-explainer]]](C:/mybizz/mybizz-config-docs/mb-project-docs/project-docs-explainer.md). Current state: [[[mybizz-config-docs:mb-project-docs/project-docs-config]]](C:/mybizz/mybizz-config-docs/mb-project-docs/project-docs-config.md).
+
+## Authoritative sources
+
+| Source | Link | Issuer version | Date checked |
+|---|---|---|---|
+| Skill source (the issuer standard) | [[[mb-project-docs:mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md) (`C:\mybizz\mb-project-docs\mb-project-docs.md`) | `6835cfe` (2026-10-15) | 2026-10-15 |
+| Doc suite specification | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | `mb-f4adba8c` (2026-10-15) | 2026-10-15 |
+| Repository organization | [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | `mb-f38fd0aa` (2026-10-14) | 2026-10-15 |
 
 ## Usage
 
@@ -64,6 +72,18 @@ net-grant --domain <domain> --count NN
 ```
 
 Hand the exact line to the developer. Never run it. No grant exists for Git.
+
+## Checks
+
+| Check | Method | Run by |
+|---|---|---|
+| Installed version | `git -C /mnt/c/mybizz/mb-project-docs log -1 --format='%h %ad' --date=short` | developer |
+| Two copies in sync | body-diff `~/.config/opencode/skills/mb-project-docs/SKILL.md` against [[[mb-project-docs:mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md) (file tools) | agent |
+| Helper script present | read `C:\mybizz\scripts\agents-from-reference.sh` (file tools) | agent |
+| Project table matches repo-organization | compare the source's Step 1 table against [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) § Names | agent |
+| Works | the installed `SKILL.md` carries `name` and `description` frontmatter and OpenCode lists the skill as available | agent |
+
+The `Installed version` check is developer-run: bash commands naming `/mnt/c/mybizz` paths are policy-blocked for the agent (proved live 2026-10-15).
 
 ## Completion statuses
 

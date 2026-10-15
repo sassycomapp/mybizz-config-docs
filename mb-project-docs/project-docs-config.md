@@ -1,92 +1,81 @@
 ---
 title: "project-docs-config"
 doc-id: "mb-f7c435e5"
-updated: "2026-10-10"
+updated: "2026-10-15"
 ---
 # mb-project-docs — Config
-
-State of the `mb-project-docs` skill as of 2026-10-02.
 
 ## Identity
 
 | Field | Value |
 |---|---|
-| Component | `mb-project-docs` — first-party OpenCode skill, mb-* family |
-| Invocation | `/mb-project-docs` — explicit invocation only, never auto-trigger |
-| Version field | None declared in SKILL.md frontmatter (name and description only) |
-| Language | Natural-language procedure; no executable code of its own |
-| Scope of a run | The current project only |
+| Issuer | MyBizz |
+| Installed version | `6835cfe` (2026-10-15) — the skill declares no version field |
+| Standard taken from | `C:\mybizz\mb-project-docs\mb-project-docs.md` at `6835cfe` |
+| Last researched | 2026-10-15 |
 
 ## Installed surface
 
-| Item | Value |
-|---|---|
-| Installed copy | `~/.config/opencode/skills/mb-project-docs/SKILL.md` |
-| Authoritative copy | `mb-project-docs.md` in `C:\mybizz\mb-project-docs\` (the skill's source repository) |
-| Drift detection | Diff of the two copies — no version field exists |
-| Helper script | `C:\mybizz\scripts\agents-from-reference.sh` |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Installed copy | `~/.config/opencode/skills/mb-project-docs/SKILL.md` | same | [[[mybizz-os-docs:os-reference-docs/skills-catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md); verified live 2026-10-15 | — |
+| Authoritative copy | `C:\mybizz\mb-project-docs\mb-project-docs.md` (GitHub-backed public repository) | same | [[[mybizz-os-docs:os-reference-docs/skills-catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md); [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | — |
+| Currency check | diff of the two copies' bodies — no version field exists | same; bodies identical on 2026-10-15 | installed `SKILL.md`; source | — |
+| Helper script | `C:\mybizz\scripts\agents-from-reference.sh` | same; behaviour verified against its recorded description | [[[mybizz-config-docs:mb-project-docs/project-docs-reference]]](C:/mybizz/mybizz-config-docs/mb-project-docs/project-docs-reference.md) § The copy line | — |
 
-## File inventory (this folder)
+## Form
 
-| File | Role |
-|---|---|
-| `project-docs-config.md` | This document |
-| `project-docs-reference.md` | Companion — usage and execution |
-| `project-docs-explainer.md` | Companion — orientation and reasoning |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Invocation | `/mb-project-docs` — explicit invocation only, never auto-trigger | same | source frontmatter (description) | — |
+| Scope of a run | the current project only | same | source, hard rule 1 | — |
+| Language | natural-language procedure; no executable code of its own | same | source | — |
+| Version field | none — frontmatter holds `name` and `description` only | same | installed `SKILL.md`; source | — |
 
-## Projects covered
+## Project coverage
 
-| Project | Documentation repository | Code repository |
-|---|---|---|
-| `mb-3-cs` | `mb-3-cs-project-library` | `mb-3-cs` |
-| `mb4ecom` | `mb4ecom-project-library` | `mb4ecom` |
-| `mb5pdlf` | `mb5pdlf-project-library` | `mb5pdlf` |
-| `pdlf` | `pdlf` | none |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Covered projects | `mb-3-cs`, `mb-4-ecom`, `mb-5-pdlf`, `pdlf` | same | source Step 1; [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) § Names | — |
+| Documentation repositories | `{slug}-project-library` under `C:\dev\dev-{slug}\`; `pdlf` at `C:\pdlf` | same | source Step 1; [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | — |
+| Code repositories | `{slug}-app1` — the project's App 1, its development workspace; none for `pdlf` | same | source Step 1; [[[default:specifications-global/spec-five-app-architecture-model]]](C:/dev/project-library-global/specifications-global/spec-five-app-architecture-model.md) | — |
 
-Paths, GitHub repositories and GBrain sources of these repositories are in [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md).
+## Destination
+
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Documentation repository | the repository root | same | source Step 2 | — |
+| Code repository | `anvil.yaml` and `theme\` both exist → `theme\docs`, created without asking; either missing → STOP, BLOCKED, the developer creates the Anvil app first | same | source Step 2 | — |
 
 ## Files written per repository
 
-| File | Documentation repository | Code repository |
-|---|---|---|
-| `{slug}-config.md` | Repository root | `theme\docs` |
-| `{slug}-reference.md` | Repository root, then copied over the agent file and deleted | `theme\docs`, then the same |
-| `{slug}-explainer.md` | Repository root | `theme\docs` |
-| `README.md` | Repository root | Repository root |
-| `AGENTS.md` | Written by the developer's terminal line, never by the agent | Same; the file `agents.md` is used where that name exists (`mb-3-cs`) |
-
-## Destination check for a code repository
-
-| Condition | Result |
-|---|---|
-| `anvil.yaml` and `theme\` both exist | `theme\docs` is created if missing, without asking |
-| Either is missing | The run stops with status BLOCKED; the developer must create the Anvil app first |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| `{slug}-config.md` | documentation repository root; code repository `theme\docs` | same | source Steps 2, 5, 7 | — |
+| `{slug}-reference.md` | same, then its body is copied over the agent file and the file deleted | same | source Steps 5, 7 | — |
+| `{slug}-explainer.md` | documentation repository root; code repository `theme\docs` | same | source Steps 2, 5, 7 | — |
+| `README.md` | repository root, either kind | same | source Step 5 | — |
+| `AGENTS.md` / `agents.md` | written only by the developer's terminal line; never by the agent | same | source Step 7, hard rule 5 | — |
 
 ## Dependencies
 
-| Item | Value |
-|---|---|
-| Governing specification | `C:\mybizz\mybizz-config-docs\mb-sysdoc-creator\doc-suite-specification.md` |
-| Facts about repositories | `C:\mybizz\mybizz-os-docs\os-reference-docs\repo-organization.md` — pointed to, never repeated |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Governing specification | `C:\mybizz\mybizz-config-docs\mb-sysdoc-creator\doc-suite-specification.md` | same, verified present | source, preamble | — |
+| Facts about repositories | `C:\mybizz\mybizz-os-docs\os-reference-docs\repo-organization.md` — pointed to, never repeated | same, verified present | source Step 3 | — |
 
 ## Integration
 
-| System | State |
-|---|---|
-| Close-out | Step 3 of `/mb-close-out` runs the skill before the approval gate; its proposed changes are shown at that gate |
-| Global `AGENTS.md` | Rule "Project documents": agents read the README and the three files on entering a project |
-| Commit hook | Covers documentation repositories only; code repositories are outside it |
-| Git | Documentation repositories: committed with `commit-all.sh`. Code repositories: committed by the developer. `.gitignore` is never touched |
-| Grants | A policy block ends in a request for `mg-grant` or `net-grant`, run by the developer |
-
-## Completion statuses
-
-DONE, BLOCKED, PERMISSION_REQUIRED, CANCELLED.
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Close-out | Step 3 of `/mb-close-out` runs the skill to its Step 6 inside the close-out gate, then runs its Step 7 | same, verified live | `~/.config/opencode/skills/mb-close-out/SKILL.md` | — |
+| Global `AGENTS.md` | Rule "Project documents": agents read the README and the three files on entering a project | same, verified live | `~/.config/opencode/AGENTS.md` | — |
+| Commit hook | covers the documentation repositories only; code repositories are outside it | same | [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) § Commit hook | — |
+| Git | documentation repositories committed with `commit-all.sh`; code repositories committed by the developer; `.gitignore` never touched | same | source Step 7, hard rule 6; [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | — |
+| Grants | a policy block ends in a developer-run `mg-grant` or `net-grant` | same, proved live 2026-10-15 | [[[mybizz-os-docs:operating-procedures/grant-paths]]](C:/mybizz/mybizz-os-docs/operating-procedures/grant-paths.md) | — |
 
 ## Open items
 
 | # | Item | Status |
 |---|---|---|
-| 1 | The documentation repositories of `mb4ecom` and `mb5pdlf` are under the commit hook | Closed |
-| 2 | No version field in SKILL.md; currency of the two copies is provable only by diff | Open |
-| 3 | Whether Anvil accepts and keeps an extra folder `theme\docs` has not been verified | Open |
+| 1 | Whether Anvil accepts and keeps an extra folder `theme\docs` through its cloud round-trip. `theme\docs` exists and persists locally in `mb-3-cs-app1`; the cloud side is unverified | Open |
