@@ -27,7 +27,7 @@ Enforcement for AI Coding Agents]]; procedures in
 | Binary | — | `/home/dev-p/.cupcake/bin/cupcake`, symlinked at `/usr/local/bin/cupcake` | developer terminal verification | |
 | Underlying engine | OPA/Rego, compiled to WASM | OPA `1.19.1` at `/usr/local/bin/opa` (real file); `~/.cupcake/bin/opa` symlinks to it | `opa version`; v0.3.0 README | |
 | Harness | OpenCode fully supported, alongside Claude Code, Cursor, Factory AI | `opencode` | v0.3.0 README harness table | |
-| Plugin file | — | `~/.config/opencode/plugin/cupcake.js` — exactly one copy, never a project-local copy or symlink | plugin-load log check | |
+| Plugin file | `~/.config/opencode/plugins/cupcake/` (global) or `.opencode/plugins/cupcake/` (project); a project copy overrides the global one | `~/.config/opencode/plugin/cupcake.js` — exactly one copy, never a project-local copy or symlink | v0.3.0 `agents/opencode/plugin-reference.md`; plugin-load log check; liveness probe 2026-10-16 | L9 |
 | Global policy folder | — | `~/.config/cupcake/policies/opencode/` | live inventory | |
 | Fallback home | — | `~/.config/cupcake/fallback/.cupcake/` — global-only skeleton: `policies/opencode/cup-noop-fallback.rego` (input-gated, never fires), `system/evaluate.rego`, `helpers/commands.rego`, `rulebook.yml`, `opencode.json` | live inventory | |
 | Evaluation failure default | `failMode` configurable per project; upstream default `closed` | `closed`: the plugin default; `~/.cupcake/opencode.json` and the fallback home's `opencode.json` also set `closed`; no project folder carries a skeleton that could override it | plugin source; v0.3.0 README security model; live fail-closed test 2026-10-16 | |
@@ -95,6 +95,4 @@ Enforcement for AI Coding Agents]]; procedures in
 
 ## Open items
 
-1. Skills-dir ancestor case: the skills-dir protection resolves scope against the session cwd, so a session started in an ancestor of the protected tree may treat writes into it as in-project. The carried two-step check runs developer-side from a session in `/home/dev-p`: first a cwd-independent liveness probe (an outbound-network deny on a non-allowlisted fetch), then an ungranted skills-dir write probe; only an allow under confirmed enforcement indicts the rule. Both probes are written as the reference's "Skills-dir ancestor case" check.
-2. Protected-file rules (`AGENTS.md`, `CLAUDE.md`, `opencode.json`, `package.json`) block by default, including a developer-approved same-turn edit — accepted friction; revisit decision pending.
-3. The deeper documentation under `docs/` at tag `v0.3.0` was not fetched this run; the standard is taken from the README, LICENSE and releases page actually fetched.
+None.
