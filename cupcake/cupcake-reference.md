@@ -128,14 +128,15 @@ double registration.
 
 ## Recovering from a total evaluation crash
 
-Since the set-and-forget amendment this failure class cannot block the
-environment: `failMode: open` is the environment default, and skeleton-less
-folders fall back to the global-only home. A crash of this shape now means
-the plugin file itself is damaged or missing — recover by restoring a backup
-and restarting:
+`failMode` is `closed`: when the checker crashes or times out, every agent
+tool call is blocked with `Cupcake exited with code 1` or a timeout message.
+The agent stops. The developer fixes Cupcake from the terminal, which Cupcake
+does not govern. Find the cause in the known failure points below. If the
+plugin file itself is damaged or missing, restore the restore point and
+restart OpenCode fully:
 
 ```bash
-cp ~/.config/opencode/plugin/cupcake.js.bak-20260922-pre-amendment ~/.config/opencode/plugin/cupcake.js
+cp ~/.config/opencode/plugin/cupcake.js.bak-20261016-known-good ~/.config/opencode/plugin/cupcake.js
 ```
 
 The historical diagnostic sequence (developer's own terminal; valid for
@@ -183,6 +184,21 @@ nothing else depends on it. No backup is taken; the rule source documents at
 `C:\dev\project-library-global\rules-cupcake-global\` remain the only way to
 rebuild the rule set.
 
+## Known failure points and remedies
+
+| Failure | How it shows | Remedy |
+|---|---|---|
+| A skeleton holds a rule file but no evaluator | Every tool call in that folder is blocked with `Cupcake exited with code 1` | Remove the skeleton from a project folder. For `~/.cupcake`, copy in the fallback home's four evaluator files. Run the Skeletons check |
+| A rule file in the global policy folder does not compile | Every tool call everywhere is blocked with `Cupcake exited with code 1` | Run the crash diagnostic above; remove the bad file; confirm a clean `allow` with the evaluation health check |
+| The `cupcake` or `opa` binary is missing or not on the path | Every tool call is blocked | Restore the binaries in `~/.cupcake/bin/` and the `/usr/local/bin/cupcake` link; run `cupcake --version` and `opa version` |
+| Evaluation takes longer than the plugin's 5-second limit | A tool call is blocked with a timeout message | Repeat the call once. If it recurs, run the evaluation invocation by hand and time it |
+| The plugin is not loaded (damaged file, second copy, or an OpenCode version that cannot run it) | No `loading plugin` line in the log; a liveness probe fetch succeeds; nothing is blocked | Restore the restore point, keep exactly one plugin copy, keep OpenCode on version 1, restart fully, run the liveness probe |
+| A project `.cupcake/opencode.json` sets `failMode` to `open` | Nothing shows until Cupcake fails; then actions in that folder are allowed | No project carries a skeleton; the Skeletons check finds any that appears |
+| The grant lock is busy for 10 seconds | One grant decrement is skipped; the count reads one high until expiry | Revoke the grant when the work is done |
+
+After every OpenCode or Cupcake restart, upgrade or configuration change,
+run the liveness probe: a fetch to a non-allowlisted domain must be denied.
+
 ## Authoritative sources
 
 | Source | Link | Issuer version | Date checked |
@@ -206,7 +222,8 @@ rebuild the rule set.
 | Works — enforcement liveness (agent-side) | an outbound-network deny on a non-allowlisted fetch, expected to deny, plus the plugin-load grep | agent |
 | Skills-dir ancestor case | From an OpenCode session started in `/home/dev-p`: first the liveness probe, a fetch to a non-allowlisted domain, expected to deny; then an ungranted write of a test file into `~/.config/opencode/skills/`, expected to deny. An allow under confirmed liveness indicts the skills-dir rule | developer |
 | Works — authoritative | the evaluation health check: a harmless read must return a clean `allow` | developer |
-| Skeletons complete | From each folder holding a `.cupcake` skeleton, pipe a webfetch event for a non-allowlisted domain through the evaluation invocation; every folder returns `deny` | developer |
+| Skeletons | List the `.cupcake` folders under `/mnt/c/dev`, `/mnt/c/mybizz`, `/mnt/c/pdlf`, `/mnt/c/data-mybizz-mgt` and `/home/dev-p`: only `~/.cupcake` exists. Pipe a webfetch event for a non-allowlisted domain through the evaluation invocation for every OpenCode project folder, run from the fallback home, and for `/home/dev-p`, run from `~`; every one returns `deny` | developer |
+| Fail closed | Create a folder whose `.cupcake` holds only `policies/opencode/cup-noop-fallback.rego`; open it as an OpenCode project; a read by the Build agent is blocked with `Cupcake exited with code 1`; then delete the folder and its OpenCode project | developer |
 | Grant decrement serialization | the count-2 parallel-writes re-probe: two writes in one parallel batch decrement exactly, the third denies; run after any lock or decrement change | developer |
 | Denials during a run | every denial received is recorded as liveness evidence; a denied check becomes developer-run, never retried | agent |
 
@@ -240,7 +257,6 @@ developer-run; Read/Glob/Grep tools are unaffected by text-match guards.
   — remove it immediately.
 - Do not let a validation temp file carry any suffix but `.rego` — the
   syntax check silently passes other suffixes.
-- Do not empty a `.cupcake` skeleton's policy folder — the WASM compiler
-  panics on an aggregator-only bundle; the input-gated placeholder satisfies
-  the one-real-module requirement and never fires.
-- Do not create a `.cupcake` skeleton without the fallback home's evaluator files.
+- Do not create a `.cupcake` skeleton in any project folder; every project
+  evaluates through the fallback home.
+- Do not set `failMode` to `open` anywhere.

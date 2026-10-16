@@ -52,9 +52,9 @@ client applications from attackers.
   configuration files are protected from unapproved modification.
 - Redundant sub-agent denial, alongside harness-level configuration and a
   maintained denylist.
-- Availability control over its own failure mode: behavior on evaluation
-  crashes is configurable, separating how strict the rules are from whether
-  a broken evaluation can arrest all work.
+- Control over its own failure mode: on an evaluation crash it blocks the
+  tool call, so a broken guard stops the agent instead of letting it act
+  unguarded.
 
 ## Suitability
 
@@ -92,9 +92,14 @@ confirmed to fail silently in the compiled engine.
   live; some builtins fail silently in the compiled engine. Time-changing
   state therefore lives outside the engine, in the plugin, and only
   live-proven functions are trusted in new rules.
-- **It fails open on evaluation crashes.** A guard whose failure mode is
-  "blocks all work" gets switched off under pressure. Failing open keeps the
-  guard trusted and in place; a project may still opt into failing closed.
+- **It fails closed on evaluation crashes.** A guard that lets actions
+  through when it breaks gives no protection exactly when something is wrong,
+  and nobody notices. Failing closed makes a fault visible at once: the agent
+  stops, and the developer fixes Cupcake from the terminal, which Cupcake does
+  not govern.
+- **One home for evaluation.** No project carries its own skeleton. Every
+  project evaluates through the fallback home, the one place kept complete; a
+  second copy is only another thing that can break unseen.
 - **Grants make approval mechanical.** The engine cannot see conversational
   approval, so the developer's approval takes the form of a bounded,
   expiring grant that the rules themselves can read.
@@ -116,7 +121,11 @@ confirmed to fail silently in the compiled engine.
   binary.
 - The plugin exists at exactly one path; plugin or configuration changes
   take effect only after a full restart.
-- Every `.cupcake` skeleton holds the fallback home's evaluator files. A skeleton without the evaluator fails to load, and Cupcake then fails open in that folder.
+- No project folder carries a `.cupcake` skeleton. `~/.cupcake` keeps the
+  fallback home's evaluator files.
+- After any restart, upgrade or configuration change of OpenCode or Cupcake,
+  a liveness probe proves enforcement: a fetch to a non-allowlisted domain
+  must be denied.
 - The standing exam keeps the enforcement claim verified; denials received
   during work double as liveness evidence.
 - Upstream releases are recorded, not installed: the developer decides every
