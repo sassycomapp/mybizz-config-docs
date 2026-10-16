@@ -1,7 +1,7 @@
 ---
 title: "cupcake-reference"
 doc-id: "mb-e79d3d01"
-updated: "2026-10-15"
+updated: "2026-10-16"
 ---
 # Cupcake — Reference
 
@@ -206,6 +206,7 @@ rebuild the rule set.
 | Works — enforcement liveness (agent-side) | an outbound-network deny on a non-allowlisted fetch, expected to deny, plus the plugin-load grep | agent |
 | Skills-dir ancestor case | From an OpenCode session started in `/home/dev-p`: first the liveness probe, a fetch to a non-allowlisted domain, expected to deny; then an ungranted write of a test file into `~/.config/opencode/skills/`, expected to deny. An allow under confirmed liveness indicts the skills-dir rule | developer |
 | Works — authoritative | the evaluation health check: a harmless read must return a clean `allow` | developer |
+| Skeletons complete | From each folder holding a `.cupcake` skeleton, pipe a webfetch event for a non-allowlisted domain through the evaluation invocation; every folder returns `deny` | developer |
 | Grant decrement serialization | the count-2 parallel-writes re-probe: two writes in one parallel batch decrement exactly, the third denies; run after any lock or decrement change | developer |
 | Denials during a run | every denial received is recorded as liveness evidence; a denied check becomes developer-run, never retried | agent |
 
@@ -242,3 +243,4 @@ developer-run; Read/Glob/Grep tools are unaffected by text-match guards.
 - Do not empty a `.cupcake` skeleton's policy folder — the WASM compiler
   panics on an aggregator-only bundle; the input-gated placeholder satisfies
   the one-real-module requirement and never fires.
+- Do not create a `.cupcake` skeleton without the fallback home's evaluator files.

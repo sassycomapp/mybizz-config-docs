@@ -1,7 +1,7 @@
 ---
 title: "cupcake-explainer"
 doc-id: "mb-258b7bd2"
-updated: "2026-10-15"
+updated: "2026-10-16"
 ---
 # Cupcake — Mechanical Policy Enforcement for AI Coding Agents
 
@@ -116,7 +116,7 @@ confirmed to fail silently in the compiled engine.
   binary.
 - The plugin exists at exactly one path; plugin or configuration changes
   take effect only after a full restart.
-- Every project skeleton keeps at least one real local policy module.
+- Every `.cupcake` skeleton holds the fallback home's evaluator files. A skeleton without the evaluator fails to load, and Cupcake then fails open in that folder.
 - The standing exam keeps the enforcement claim verified; denials received
   during work double as liveness evidence.
 - Upstream releases are recorded, not installed: the developer decides every

@@ -1,7 +1,7 @@
 ---
 title: "cupcake-config"
 doc-id: "mb-afd0ad78"
-updated: "2026-10-15"
+updated: "2026-10-16"
 ---
 # Cupcake — Configuration
 
@@ -31,7 +31,7 @@ Enforcement for AI Coding Agents]]; procedures in
 | Global policy folder | — | `~/.config/cupcake/policies/opencode/` | live inventory | |
 | Fallback home | — | `~/.config/cupcake/fallback/.cupcake/` — global-only skeleton: `policies/opencode/cup-noop-fallback.rego` (input-gated, never fires), `system/evaluate.rego`, `helpers/commands.rego`, `rulebook.yml`, `opencode.json` | live inventory | |
 | Evaluation failure default | `failMode` configurable per project; upstream default `closed` | `open` as the environment default in the plugin; a project may opt into `closed` via its own `.cupcake/opencode.json` | plugin source; v0.3.0 README security model | L6 |
-| Skeleton initialization | optional | 10 folders initialized (`/home/dev-p`, `/home/dev-p/memory-governor`, `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-app1`, `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library`, `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-app1`, `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-app2`, `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-project-library`, `/mnt/c/dev/dev-mb-5-pdlf/mb-5-pdlf-app1`, `/mnt/c/dev/dev-mb-5-pdlf/mb-5-pdlf-project-library`, `/mnt/c/mybizz/mybizz-config-docs`); skeleton-less folders evaluate global policies only via the fallback home; all verified live | live listing 2026-10-15 | |
+| Skeleton initialization | optional | 10 folders initialized (`/home/dev-p`, `/home/dev-p/memory-governor`, `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-app1`, `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library`, `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-app1`, `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-app2`, `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-project-library`, `/mnt/c/dev/dev-mb-5-pdlf/mb-5-pdlf-app1`, `/mnt/c/dev/dev-mb-5-pdlf/mb-5-pdlf-project-library`, `/mnt/c/mybizz/mybizz-config-docs`); each holds the fallback home's four evaluator files (`system/evaluate.rego`, `helpers/commands.rego`, `rulebook.yml`, `policies/opencode/cup-noop-fallback.rego`) and the plugin setting file `opencode.json` = `{ "failMode": "open" }`; a folder without one evaluates global policies via the fallback home | live evaluation 2026-10-16: every folder denies a non-allowlisted fetch | |
 | Spawn cwd | — | the checker boots from the session's `.cupcake` skeleton dir when one exists, else from the fallback home; rules evaluate against the session cwd carried in the event | plugin source (spawn call) | |
 
 ## Rule estate
@@ -83,7 +83,7 @@ Enforcement for AI Coding Agents]]; procedures in
 | Commit allowances | — | `git-grant --repo <folder> --count N --minutes M` (default 30) → `cup-git-grants-data.rego` (package `git_grants_data`); publish and deploy outside the channel; absent file means commits deny | live file | |
 | Network grants | — | `net-grant --domain <domain> --count N` → `cup-network-grants-data.rego` (package `network_grants_data`); 30-minute expiry hardcoded; domains lowercase, exact, no wildcards | live file | |
 | Grants schema | — | `grants := { "<key>": {"count": N, "expires_at_ns": <epoch-ns>} }` — path grants keyed by canonical WSL path; generated in full by the tools on every call, never hand-edited; the plugin prunes expired entries and decrements on allowed actions, under a shared mkdir lock | live files | L2 |
-| Decrement scope | — | file-tool writes decrement per allowed call; git commit/push/merge decrement per allowed action; allowed fetches decrement per fetch; bash-mediated writes inside a granted path run without decrement until expiry | plugin source; developer-accepted design | |
+| Decrement scope | — | file-tool writes decrement per allowed call; git commit/push/merge decrement per allowed action; allowed fetches decrement per fetch; bash-mediated writes inside a granted path run without decrement until expiry; one allowed write decrements only its own path's entry; a write denied by another rule consumes no unit | plugin source; developer-accepted design; live test 2026-10-15 | |
 | Outbound allowlist | — | exactly 11 domains: `github.com`, `api.github.com`, `codeload.github.com`, `raw.githubusercontent.com`, `pypi.org`, `files.pythonhosted.org`, `npmjs.com`, `registry.npmjs.org`, `registry.yarnpkg.com`, `cupcake.eqtylab.io`, `anvil.works`; loopback always allowed | rule file (read this run) | |
 | Backup files | — | backup files present in the plugin, policy, builtins and grant-tools folders; never loaded | live inventories | |
 
@@ -97,6 +97,5 @@ Enforcement for AI Coding Agents]]; procedures in
 
 1. The control-plane rule is the one deployed rule with no source document in `rules-cupcake-global/` — reconciliation open.
 2. Skills-dir ancestor case: the skills-dir protection resolves scope against the session cwd, so a session started in an ancestor of the protected tree may treat writes into it as in-project. The carried two-step check runs developer-side from a session in `/home/dev-p`: first a cwd-independent liveness probe (an outbound-network deny on a non-allowlisted fetch), then an ungranted skills-dir write probe; only an allow under confirmed enforcement indicts the rule. Both probes are written as the reference's "Skills-dir ancestor case" check.
-3. Grant-decrement behavior: one unproven anomaly — a grant entry reached count zero without a successful write to its folder. Two hypotheses: a write decrements every entry in the file, or a denied write consumes its unit. Needs a developer-designed live test before any record is made.
-4. Protected-file rules (`AGENTS.md`, `CLAUDE.md`, `opencode.json`, `package.json`) block by default, including a developer-approved same-turn edit — accepted friction; revisit decision pending.
-5. The deeper documentation under `docs/` at tag `v0.3.0` was not fetched this run; the standard is taken from the README, LICENSE and releases page actually fetched.
+3. Protected-file rules (`AGENTS.md`, `CLAUDE.md`, `opencode.json`, `package.json`) block by default, including a developer-approved same-turn edit — accepted friction; revisit decision pending.
+4. The deeper documentation under `docs/` at tag `v0.3.0` was not fetched this run; the standard is taken from the README, LICENSE and releases page actually fetched.
