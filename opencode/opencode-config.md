@@ -1,7 +1,7 @@
 ---
 title: "opencode-config"
 doc-id: "mb-c7616d53"
-updated: "2026-10-10"
+updated: "2026-10-16"
 ---
 # OpenCode Configuration
 
@@ -109,3 +109,75 @@ Full, current skill inventory by owner: [[[mybizz-os-docs:os-reference-docs/skil
 - Do not assume project config replaces global config — they merge;
   conflicting keys go to the project, non-conflicting keys from both
   survive (verified 2026-09-09).
+
+## Facts lodged 2026-10-16 for the next mb-sysdoc-creator Refresh
+
+This section holds facts verified live on 2026-10-16. Where it disagrees with the rows above, this section is current. The Refresh through mb-config-manager moves each fact to its proper home in the four documents and removes this section.
+
+### Version
+
+- OpenCode runs version **1.19.0** (version 1). Version 2 does not run the Cupcake plugin, so OpenCode stays on version 1.
+
+### Session database
+
+- The database layout for the `workspace` table had been left in OpenCode version 2's form, so OpenCode 1.19.0 failed with `no such column: project_id` whenever a project was opened or added. The table was rebuilt in the 1.19.0 layout. The version 2 table is kept, renamed `workspace_v2_layout`. Backup: `C:\backup-wsl\opencode-db-repair\2026-10-16T065601`.
+- The stale makePDLF project and its six sessions were removed with `opencode-db-cleanup.sh`. The script accepts only `YES` in capitals.
+
+### OpenCode projects
+
+- **Rule:** every repository an agent works in is an OpenCode project.
+- **Projects (29):** for each of `mb-3-cs`, `mb-4-ecom` and `mb-5-pdlf`: `{slug}-app1`, `{slug}-app3`, `{slug}-app5` and `{slug}-project-library`; plus `dev-root`, `project-library-global`, `pdlf`, `mybizz-config-docs`, `mybizz-os-docs`, `scripts`, `data-mybizz-mgt`, `memory-governor`, the eight `mb-` skill repositories, and `/home/dev-p` (used only for Cupcake's skills-folder check).
+- **Not projects:** App 2 of each business (a release of App 1), `project-template` (only copied) and the third-party clones.
+- `/` is OpenCode's own built-in entry for folders outside any repository. It stays.
+- The full list, with paths, is in `repo-organization.md`.
+- **Registering a project from the terminal:** `cd <folder> && opencode debug config`. It opens the folder as a project and calls no AI model.
+- **Database backup taken before the project changes:** `C:\backup-wsl\opencode-db-projects\2026-10-16T101928`.
+
+### Web UI
+
+- The web UI reopens the last active project, whatever folder `opencode web` is started from.
+- The "Open project" box searches the home folder (`/home/dev-p`) only. A project elsewhere is opened by typing its full path, starting with `/`, for example `/mnt/c/pdlf/`.
+- "Recent projects" in that box is remembered by the web browser, not by OpenCode. It can list folders that no longer exist. Clearing the browser's saved site data for `localhost:4096` resets it.
+
+### Permissions (global `opencode.jsonc`)
+
+| Key | Value |
+|---|---|
+| `permission.edit` | `*`: `allow`; `**/anvil.yaml`: `deny` |
+| `permission.external_directory` | `*`: `allow` |
+| `permission.webfetch` | `ask` |
+| `permission.bash` | `*`: `ask`; 13 `deny` patterns (destructive git, `DROP`/`TRUNCATE` SQL, `curl`/`wget` piped to a shell, `rm -rf`) |
+| `permission.task` | `deny` |
+| `agent.plan.permission.edit` | `deny` |
+
+- `mb-3-cs-app1\opencode.json` and `mb-3-cs-project-library\opencode.json` carry the same `edit` and `external_directory` values.
+- `mb-3-cs-app1\opencode.json` points its graphify MCP server at `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-app1/graphify-out/graph.json`.
+- Backup of the three files before the change: `C:\backup-wsl\opencode-access-2026-10-16T110922`.
+- Verified with `opencode debug config` in `pdlf`, `mb-3-cs-app1` and `mb-3-cs-project-library`.
+
+### Access rule for agents
+
+| Action | Result | Enforced by |
+|---|---|---|
+| Read anywhere | Allowed, no prompt | OpenCode `external_directory: *: allow`; Cupcake never blocks reads |
+| Read a secret file (`.env`, keys, credentials) | Blocked | Cupcake sensitive-data builtin and the secrets rule |
+| Write inside the session's own project | Allowed, no prompt | OpenCode `edit: *: allow`; Cupcake project boundary |
+| Write anywhere else | Blocked without a grant; allowed with `mg-grant --path <folder> --count N` | Cupcake cross-project rule |
+| Write `AGENTS.md`, `CLAUDE.md`, `opencode.json`, the plugin or Cupcake's control plane | Blocked, no grant possible | Cupcake governance and control-plane rules |
+
+- Proven 2026-10-16 from a `pdlf` session: read outside the project succeeded; write inside succeeded; a granted write to `/mnt/c/temp` succeeded. Cupcake's own evaluation returned `deny` for a read of `/mnt/c/pdlf/.env` and for an ungranted write to `/mnt/c/temp`.
+- The agent also refuses secret reads and ungranted writes on its own written rules, before Cupcake is reached. A refusal by the agent is not proof of enforcement; Cupcake's evaluation is.
+
+### Cupcake inside OpenCode
+
+- The plugin defaults to `failMode: closed`: when Cupcake cannot decide, the tool call is blocked (`Cupcake exited with code 1`).
+- No project folder carries a `.cupcake` skeleton. Every project evaluates through the fallback home, `~/.config/cupcake/fallback/`. The one skeleton is `~/.cupcake`.
+- After any restart, upgrade or configuration change of OpenCode or Cupcake, a liveness probe proves enforcement: a fetch to a non-allowlisted domain must be denied.
+- Plugin restore point: `~/.config/opencode/plugin/cupcake.js.bak-20261016-known-good`.
+
+### Out of date in this suite
+
+- The version (1.15.12), the `external_directory` and `edit` rows, and the plugin state rows above.
+- The Active Project Standard: the names `mb4ecom` and `mb5pdlf` are now `mb-4-ecom` and `mb-5-pdlf`, and project status follows `repo-organization.md`.
+- Every reference to the exam set (Exam Plan, Exam Report, Log, the `mb-config-opencode` exam skill). mb-config-manager is an agent that examines through the four documents.
+- The suite holds two documents beyond the four the specification allows: `opencode-permission-access-control-model.md` and `opencode-project-session-data-integrity.md`.
