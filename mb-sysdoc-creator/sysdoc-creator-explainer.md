@@ -1,7 +1,7 @@
 ---
 title: "sysdoc-creator-explainer"
 doc-id: "mb-1b1e5218"
-updated: "2026-10-15"
+updated: "2026-10-16"
 ---
 # sysdoc-creator — Explainer
 
@@ -11,7 +11,7 @@ examined by mb-config-manager through the register cycle
 ([[[mybizz-config-docs:mb-config-manager/config-manager-agent|config-manager agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md)) — the examination verifies this
 suite's state and never runs the subject skill itself.
 
-## 1. What it is
+## What it is
 
 `mb-sysdoc-creator` is the skill that turns "document this system" into a
 verified, four-document canonical suite: a config (what exists and what it is
@@ -33,7 +33,7 @@ skill's core commitment is the reverse: research first, draft second, and
 nothing enters a canonical document on a source's say-so when it could be
 checked live.
 
-## 2. What it can do
+## What it can do
 
 - Enforced research-before-drafting: issuer and version identification,
   authoritative sources, live verification of every verifiable value, and
@@ -51,7 +51,7 @@ checked live.
 - A learnings file that compounds the skill's own documentation craft across
   runs, read in full before any research.
 
-## 3. Suitability
+## Suitability
 
 **Best for:** creating the canonical four-document suite for any component of
 this system — a tool, skill, service, or corpus — and for refreshing an
@@ -71,7 +71,7 @@ mb-config-manager). Also wrong for casual use: it is expensive by design —
 every run does real research and demands two human gates — so invoking it for a
 quick note wastes its whole apparatus.
 
-## 4. Why it works this way
+## Why it works this way
 
 **Why research-first rather than intake-first.** The skill's value is entirely
 in refusing to trust its inputs. Supplied material is a lead, never ground
@@ -106,7 +106,7 @@ finding the developer decides. mb-config-manager examines its suites through
 the register cycle and orders a Refresh when the source moves; the skill is
 never run to examine itself.
 
-## 5. What has to happen
+## What has to happen
 
 - The developer (or mb-config-manager, for a Refresh) invokes it explicitly
   and stands at both approval gates; nothing is drafted before the first,

@@ -40,7 +40,7 @@ Enforcement for AI Coding Agents]]; procedures in
 |---|---|---|---|---|
 | Rule source location | — | `C:\dev\project-library-global\rules-cupcake-global\` — 20 `.md` source documents | live folder listing | |
 | Deployment target | `cupcake.policies.*` for project-local | all rules global — `cupcake.global.policies.*` package namespace | v0.3.0 docs structure; live files | |
-| Source↔deployed correspondence | — | 20 sources ↔ 19 deployed rule files with sources, plus 1 deployed rule with no source (the control-plane rule — see open items); the bash-governance source compiles into the cross-project rule file | live listings, both sides | |
+| Source↔deployed correspondence | — | 21 sources ↔ 20 deployed rule files, each with its source; the bash-governance source compiles into the cross-project rule file | live listings, both sides | |
 | cup-block-task-tool.rego | — | blocks the `task` tool and known spawn-tool equivalents (checked against the denylist) | deployed file; source doc | |
 | cup-block-anvil-yaml-writes.rego | — | any write to `anvil.yaml`, any Anvil project | deployed file; source doc | |
 | cup-no_test_tampering.rego | — | deleting, skipping or gutting a test file | deployed file; source doc | |
@@ -95,7 +95,6 @@ Enforcement for AI Coding Agents]]; procedures in
 
 ## Open items
 
-1. The control-plane rule is the one deployed rule with no source document in `rules-cupcake-global/` — reconciliation open.
-2. Skills-dir ancestor case: the skills-dir protection resolves scope against the session cwd, so a session started in an ancestor of the protected tree may treat writes into it as in-project. The carried two-step check runs developer-side from a session in `/home/dev-p`: first a cwd-independent liveness probe (an outbound-network deny on a non-allowlisted fetch), then an ungranted skills-dir write probe; only an allow under confirmed enforcement indicts the rule. Both probes are written as the reference's "Skills-dir ancestor case" check.
-3. Protected-file rules (`AGENTS.md`, `CLAUDE.md`, `opencode.json`, `package.json`) block by default, including a developer-approved same-turn edit — accepted friction; revisit decision pending.
-4. The deeper documentation under `docs/` at tag `v0.3.0` was not fetched this run; the standard is taken from the README, LICENSE and releases page actually fetched.
+1. Skills-dir ancestor case: the skills-dir protection resolves scope against the session cwd, so a session started in an ancestor of the protected tree may treat writes into it as in-project. The carried two-step check runs developer-side from a session in `/home/dev-p`: first a cwd-independent liveness probe (an outbound-network deny on a non-allowlisted fetch), then an ungranted skills-dir write probe; only an allow under confirmed enforcement indicts the rule. Both probes are written as the reference's "Skills-dir ancestor case" check.
+2. Protected-file rules (`AGENTS.md`, `CLAUDE.md`, `opencode.json`, `package.json`) block by default, including a developer-approved same-turn edit — accepted friction; revisit decision pending.
+3. The deeper documentation under `docs/` at tag `v0.3.0` was not fetched this run; the standard is taken from the README, LICENSE and releases page actually fetched.
