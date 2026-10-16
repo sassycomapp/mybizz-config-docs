@@ -1,9 +1,11 @@
 ---
 title: "mb-close-out-learnings"
 doc-id: "mb-07f09f8b"
-updated: "2026-10-15"
+updated: "2026-10-16"
 ---
 # mb-close-out — Learnings
+
+What differs from, or adds to, the standard in the MyBizz setup, and why. Read in full before any research, examination or proposal for this system.
 
 | ID | Learning | Why it holds | Source |
 |---|---|---|---|

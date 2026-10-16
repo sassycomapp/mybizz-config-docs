@@ -1,7 +1,7 @@
 ---
 title: "mb-close-out-config"
 doc-id: "mb-e1c4d0bf"
-updated: "2026-10-15"
+updated: "2026-10-16"
 ---
 # mb-close-out — Config
 
@@ -116,4 +116,4 @@ Settings of the `mb-close-out` skill, governed by [[[mybizz-config-docs:mb-sysdo
 
 ## Open items
 
-1. commit-all has no suite yet. The reference points commit-all's expected output and its BLOCKED and FAILED handling to [[[mybizz-os-docs:operating-procedures/commit-all-repositories|commit all repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md) until the commit-all suite exists; update that pointer when it lands.
+None.

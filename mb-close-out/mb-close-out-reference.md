@@ -1,7 +1,7 @@
 ---
 title: "mb-close-out-reference"
 doc-id: "mb-4b40508e"
-updated: "2026-10-15"
+updated: "2026-10-16"
 ---
 # mb-close-out — Reference
 
@@ -95,7 +95,7 @@ curl -s -X POST http://127.0.0.1:8321/memory/<memory-id>/review \
 
 ### Step 9 — Verify and report
 
-- Commit all ran as the close-out's last step (Step 7, line 3). Its expected output and its BLOCKED and FAILED handling are defined by commit-all itself: [[[mybizz-os-docs:operating-procedures/commit-all-repositories|commit all repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md) — not here.
+- Commit all ran as the close-out's last step (Step 7, line 3). Its expected output and its BLOCKED and FAILED handling are defined by commit-all itself: [[[mybizz-config-docs:commit-all/commit-all-reference|commit-all reference]]](C:/mybizz/mybizz-config-docs/commit-all/commit-all-reference.md) — not here.
 - Governed facts: `grep "remembered as fact" /tmp/memory-governor-worker.log | tail -10` is the record of what landed and its fact numbers. If recall shows nothing but the worker log confirms the write, the fact exists; never re-submit.
 - The governor review queue must be empty before the close-out ends.
 - Report: the session page, facts with their numbers, project documents, the commit summary, anything flagged.
@@ -124,4 +124,4 @@ Never report DONE with an unverified step.
 - Never end a close-out with a non-empty governor review queue.
 - Never write to the retired sessions-log or facts-log — they no longer exist.
 
-Sub-procedure detail is owned by its own suite: `mb-submit-memory` Steps 1–4 and 6–9 → [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-reference|mb-submit-memory reference]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-reference.md); commit-all behavior → [[[mybizz-os-docs:operating-procedures/commit-all-repositories|commit all repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md) (commit-all's own suite lands next); the four projects and `mb-project-docs` → [[[mb-project-docs:mb-project-docs|mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md).
+Sub-procedure detail is owned by its own suite: `mb-submit-memory` Steps 1–4 and 6–9 → [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-reference|mb-submit-memory reference]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-reference.md); commit-all behavior → [[[mybizz-config-docs:commit-all/commit-all-reference|commit-all reference]]](C:/mybizz/mybizz-config-docs/commit-all/commit-all-reference.md); the four projects and `mb-project-docs` → [[[mb-project-docs:mb-project-docs|mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md).
