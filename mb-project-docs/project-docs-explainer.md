@@ -1,7 +1,7 @@
 ---
 title: "project-docs-explainer"
 doc-id: "mb-9730dd51"
-updated: "2026-10-15"
+updated: "2026-10-16"
 ---
 # mb-project-docs — Explainer
 
@@ -43,7 +43,7 @@ The skill works on one project at a time, the one you are in. It does not hold a
 
 **Why verification comes before writing.** Files that describe a project age quickly, and an unchecked claim becomes a false fact that everyone then trusts. A fact the skill cannot check becomes an open item, so the gap is visible instead of hidden.
 
-**Why code repositories use `theme\docs` and need an Anvil app.** A code repository is an Anvil app — the project's App 1, its development workspace. Its files are uploaded to Anvil, and the folder `theme\assets` is the one Anvil serves on the app's website. The folder `theme\docs` is a separate folder that you chose for these files. If the Anvil app does not exist yet, there is nowhere right to put the files, so the skill ends and tells you to create the app first.
+**Why code repositories use `theme\assets\docs\appN` and need an Anvil app.** A code repository is an Anvil app: the project's App 1 (its development workspace), App 3 or App 5. Anvil carries only the files under `theme\assets`, and only in a folder that was first uploaded through Anvil itself. A folder created on the hard drive and pushed is never carried, and an emptied folder is lost. So the developer creates each app's docs folder once, through Anvil's upload, with `pilot-doc.txt` in it for good, and the skill writes into it from then on. If the Anvil app or the folder does not exist yet, the skill stops and gives the developer the steps.
 
 **Why it runs at close-out.** That is the moment when you know what changed in the session, and the one moment you already approve things. The skill's changes join the single approval of the close-out and need no gate of their own.
 

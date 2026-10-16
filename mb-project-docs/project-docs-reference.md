@@ -1,7 +1,7 @@
 ---
 title: "project-docs-reference"
 doc-id: "mb-6950e749"
-updated: "2026-10-15"
+updated: "2026-10-16"
 ---
 # mb-project-docs — Reference
 
@@ -11,7 +11,7 @@ Usage and execution for the `mb-project-docs` skill. The skill's source, `mb-pro
 
 | Source | Link | Issuer version | Date checked |
 |---|---|---|---|
-| Skill source (the issuer standard) | [[[mb-project-docs:mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md) (`C:\mybizz\mb-project-docs\mb-project-docs.md`) | `6835cfe` (2026-10-15) | 2026-10-15 |
+| Skill source (the issuer standard) | [[[mb-project-docs:mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md) (`C:\mybizz\mb-project-docs\mb-project-docs.md`) | `66fb55a` (2026-10-16) | 2026-10-15 |
 | Doc suite specification | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | `mb-f4adba8c` (2026-10-15) | 2026-10-15 |
 | Repository organization | [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | `mb-f38fd0aa` (2026-10-14) | 2026-10-15 |
 
@@ -28,7 +28,7 @@ Usage and execution for the `mb-project-docs` skill. The skill's source, `mb-pro
 ## Procedure
 
 1. Identify the project from the repository folder. Not in the project table: STOP, BLOCKED.
-2. Destination. Documentation repository: the root. Code repository: `anvil.yaml` and `theme\` must both exist, then `theme\docs`. Otherwise STOP, BLOCKED, tell the developer to create the Anvil app, create nothing.
+2. Destination. Documentation repository: the root. Code repository: `theme\assets\docs\appN`. `anvil.yaml` missing: STOP, BLOCKED, tell the developer to create the Anvil app. `theme\assets\docs\appN` missing: STOP, BLOCKED, give the developer the one-time setup: (1) on the hard drive, create a folder named `appN` (the app's number) holding one file, `pilot-doc.txt`; (2) in the Anvil editor, open Assets, create the folder `docs` if it is missing, and upload the `appN` folder into it with Add asset > Upload folder; (3) pull the code repository; (4) delete the folder from the hard drive. Create nothing.
 3. Read the specification, the existing files, the agent file, `repo-organization.md`, the session and the real state.
 4. Validate config, reference and explainer against the real state. Collect what the session changed. Place each item in the one file that owns it.
 5. Draft only the changes. Self-check each file against its stray-line test.
@@ -98,7 +98,8 @@ The `Installed version` check is developer-run: bash commands naming `/mnt/c/myb
 
 - Do not run for more than one project.
 - Do not write `AGENTS.md` or `agents.md`.
-- Do not create `theme\docs` in a repository that has no `anvil.yaml` or no `theme\`.
+- Do not create `theme\assets\docs\appN` locally; it exists only after the developer uploads it through Anvil.
+- Do not remove `pilot-doc.txt` from `theme\assets\docs\appN`.
 - Do not copy repository paths, remotes or GBrain sources into the files; point to `repo-organization`.
 - Do not regenerate the explainer.
 - Do not put a rule in config or a reason in the reference.
