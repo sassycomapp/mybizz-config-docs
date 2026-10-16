@@ -12,7 +12,7 @@ One row per MyBizz skill and system. Written only by mb-config-manager, with the
 | anvil-agent-references | skill | `anvil-agent-references` | | | | Active |
 | archify | skill | `archify` | | | | Active |
 | cloudflare | service | `cloudflare` | | | | Deferred |
-| commit-all | script | `commit-all` | | | | Active |
+| commit-all | script | `commit-all` | `6dd62c8` | 2026-10-16 | 2026-10-16 | Active |
 | cupcake | plugin | `cupcake` | 0.3.0 | 2025-11-27 | 2026-10-16 | Active |
 | gbrain | application | `gbrain` | | | | Active |
 | gbrain-dream-cycle | script | `gbrain-dream-cycle` | | | | Active |
