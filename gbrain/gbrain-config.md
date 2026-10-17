@@ -1,7 +1,7 @@
 ---
 title: "gbrain-config"
 doc-id: "mb-b677b7b4"
-updated: "2026-10-10"
+updated: "2026-10-17"
 ---
 # GBrain — Configuration
 
@@ -196,13 +196,11 @@ API keys live in the environment only, never in `config.json` (verified).
 `config.json` does carry the database URL with the local password — stated
 here precisely; masked per the standing decision above.
 
-## OpenCode skills (GBrain skillpack — mb-3-cs)
+## OpenCode skills
 
 | Item | Value |
 |---|---|
-| Bundle | tracks CLI (0.46.1.0 when inventoried; the CLI is now 0.59.18.0 — re-inventory before trusting the count); **65 entries inventoried 2026-09-13** — 60 skill directories + 4 underscore metadata files (`_AGENT_README.md`-class); `skillify` absent (regenerated bundle dropped it) |
-| Destination | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs/.opencode/skills/` (project-local, gitignored) |
-| Note | the bundle regenerates with the CLI — entry counts/shapes change per regeneration; exams compare against the last recorded state, not older snapshots |
+| GBrain agent skills | Not installed. No project's `.opencode/skills` folder holds GBrain skills, and no global skill folder does |
 
 ## Master explainer maintenance rule (settled, 2026-09-06)
 

@@ -1,7 +1,7 @@
 ---
 title: "gbrain-explainer"
 doc-id: "mb-3187a352"
-updated: "2026-10-14"
+updated: "2026-10-17"
 ---
 # GBrain — Explainer
 
@@ -219,6 +219,14 @@ installed but is not this environment's operational path — the custom sync
 script is. One real overlap trap: the gstack orchestrator derives its own
 source IDs and fails on path overlap with manually registered sources; run
 `gbrain dream --source <id>` directly against the existing source instead.
+
+GBrain ships its own agent skills, and none of them is installed. GBrain serves
+here as the search index over the documentation repositories, not as a personal
+knowledge base, so its intake skills have nothing to work on. Its administration
+skills would let an agent set up, upgrade or repair GBrain, and those actions are
+reserved for the developer. Its search skills would give agents a second set of
+rules for GBrain beside `mb-submit-memory` and the memory governor, and one job
+has one set of rules.
 
 ## 11. Known Limitations, Honestly Stated
 
