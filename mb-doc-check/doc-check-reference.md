@@ -13,10 +13,10 @@ Every command is run as `python3 /mnt/c/mybizz/scripts/mb-doc-check.py <command>
 
 | Source | Link | Issuer version | Date checked |
 |---|---|---|---|
-| `mb-doc-check.py` (source repo `mybizz-scripts`) | `C:\mybizz\scripts\mb-doc-check.py` | commit `236fdde` (2026-10-15) | 2026-10-15 |
-| `mb-doc-check.sources` | `C:\mybizz\scripts\mb-doc-check.sources` | current | 2026-10-15 |
-| Repository and source list | [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | current | 2026-10-15 |
-| Commit-all procedure | [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md) | current | 2026-10-15 |
+| `mb-doc-check.py` (source repo `mybizz-scripts`) | `C:\mybizz\scripts\mb-doc-check.py` | commit `236fdde` | 2026-10-20 |
+| `mb-doc-check.sources` | `C:\mybizz\scripts\mb-doc-check.sources` | current | 2026-10-20 |
+| Repository and source list | [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | current | 2026-10-20 |
+| Commit-all procedure | [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md) | current | 2026-10-20 |
 
 ## Checks
 
@@ -57,7 +57,7 @@ All are read-only; the agent runs every one.
 | `THE COMMIT IS STOPPED` with `points to no document` | A link you typed names a document that does not exist | Correct the name, or write the words without a link, then commit again |
 | `is a name shared by several documents (N); write the one you mean, for example [[source-id:name]]` | The name exists in several repositories | Write one of the suggested `[[source-id:name]]` links, then commit again |
 | `was deleted and new document(s) were added in the same commit` | The program cannot tell a rename from a deletion | If it is a rename, put the printed `doc-id` line into the new document's frontmatter. If the old document is really gone, commit with `MB_DELETE_OK=1 bash /mnt/c/mybizz/scripts/commit-all.sh "message"` |
-| `NOTHING TO COMMIT` | Only the `updated` date differed, so the file was put back | Nothing. Change a document for real before committing |
+| `NOTHING TO COMMIT` | Only the `updated` date differed, so the file is put back | Nothing. Change a document for real before committing |
 | `documents given a permanent code`, `given a title`, `'updated' date set`, `links written in the standard form`, `line endings changed to LF` | Information: the program completed documents | Nothing |
 | `links made specific because two documents now share a name` | A new document created a shared name, so existing links were rewritten as `[[source-id:name]]` | Nothing |
 | `pasted paths left as text (no such document in the documentation repositories)` | A path that looks like a document path points to no document | Nothing, unless it should have been a link |
@@ -101,7 +101,7 @@ python3 /mnt/c/mybizz/scripts/mb-doc-check.py sources-check
 
 **A link opens nothing in MarkText.** Open the document with File > Open, hold Ctrl and click. A document pasted into a new tab has no folder.
 
-**`slug-selftest` reports differences.** GBrain's page-name rule changed. Stop and paste the output to Claude. Links written since the change may carry names GBrain does not know.
+**`slug-selftest` reports differences.** GBrain's page-name rule differs from the program's copy. Stop and paste the output to Claude. Links may carry page names GBrain does not know.
 
 ## Do not
 

@@ -1,18 +1,12 @@
 ---
 title: "mb-memory-system-diagnostic-learnings"
 doc-id: "mb-dde12f3e"
-updated: "2026-10-05"
+updated: "2026-10-20"
 ---
 # mb-memory-system-diagnostic — Learnings
 
-Transient way-station for exam-run knowledge: patterns, decisions, nuances. No
-narrative, no history. Every entry is eventually dropped or written into a
-**permanent home** (skill / config / reference / explainer) — then deleted from
-here immediately on graduation. The plan is never an absorption destination —
-it is transient; pruning into a plan destroys the knowledge when the next cycle
-overwrites it. Entries never accumulate. Cross-cutting learnings (guard classes,
-graduation rules) live in the orchestrator's own
-[[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md), not here.
+What differs from, or adds to, the standard in the MyBizz setup, and why. Read
+in full before any research, examination or proposal for this system.
 
-| # | learning | right action | destination |
+| ID | Learning | Why it holds | Source |
 |---|---|---|---|

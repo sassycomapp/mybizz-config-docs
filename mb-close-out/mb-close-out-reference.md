@@ -1,7 +1,7 @@
 ---
 title: "mb-close-out-reference"
 doc-id: "mb-4b40508e"
-updated: "2026-10-16"
+updated: "2026-10-20"
 ---
 # mb-close-out — Reference
 
@@ -11,9 +11,9 @@ Execution procedure for `/mb-close-out`. Run only on explicit developer invocati
 
 | Source | Link | Issuer version | Date checked |
 |---|---|---|---|
-| Skill source (the issuer standard) | `C:\mybizz\mb-close-out\mb-close-out.md` | `5499a8f` | 2026-10-15 |
-| Installed copy | `~/.config/opencode/skills/mb-close-out/SKILL.md` | body matches `5499a8f` | 2026-10-15 |
-| Repository and catalog registers | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) · [[[mybizz-os-docs:os-reference-docs/skills-catalog\|skills catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | — | 2026-10-15 |
+| Skill source (the issuer standard) | `C:\mybizz\mb-close-out\mb-close-out.md` | `5499a8f` | 2026-10-20 |
+| Installed copy | `~/.config/opencode/skills/mb-close-out/SKILL.md` | body matches `5499a8f` | 2026-10-20 |
+| Repository and catalog registers | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) · [[[mybizz-os-docs:os-reference-docs/skills-catalog\|skills catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | — | 2026-10-20 |
 
 ## Checks
 
@@ -38,7 +38,7 @@ Execution procedure for `/mb-close-out`. Run only on explicit developer invocati
 
 ### Step 1 — Session page
 
-Write the session summary as a file, `sessions/<YYYY-MM-DD>-<short-slug>.md`: in the current repository when it is on the commit-all list, otherwise in `C:\mybizz\mybizz-config-docs\sessions\`. Body only; the commit hook adds the frontmatter, and commit all imports the page into GBrain. Never use `put_page` or `gbrain capture` for it (the reason is in the explainer). One screen: what was done and the evidence, the decisions and standards the developer set, quirks, the documents written or changed, what is open. The documents hold the detail; the page says what happened and where to look.
+Write the session summary as a file, `sessions/<YYYY-MM-DD>-<short-slug>.md`: in the current repository when it is on the commit-all list, otherwise in `C:\mybizz\mybizz-config-docs\sessions\`. Body only; the commit hook adds the frontmatter, and commit all imports the page into GBrain. Never use `put_page` or `gbrain capture` for it (the reason is in the explainer). One screen: the work done and its evidence, the developer's decisions and standards, the quirks, the documents written or updated, what is open. The documents hold the detail; the page says what happened and where to look.
 
 ### Step 2 — Candidate facts
 
@@ -106,7 +106,7 @@ curl -s -X POST http://127.0.0.1:8321/memory/<memory-id>/review \
 |---|---|
 | DONE | Every step verified; review queue empty |
 | DONE_WITH_REVIEWS_PENDING | Governed facts still `under_review` — list each open memory id |
-| BLOCKED | State what stopped the run and what was tried |
+| BLOCKED | State what stopped the run and the attempts made |
 
 Never report DONE with an unverified step.
 
@@ -122,6 +122,6 @@ Never report DONE with an unverified step.
 - Never resolve `under_review` by re-submitting with a different confidence — resolve through Step 8 only.
 - Never treat an agent-side recall miss as evidence a governed fact is lost — the worker log is the record.
 - Never end a close-out with a non-empty governor review queue.
-- Never write to the retired sessions-log or facts-log — they no longer exist.
+- Never create a sessions log or a facts log.
 
 Sub-procedure detail is owned by its own suite: `mb-submit-memory` Steps 1–4 and 6–9 → [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-reference|mb-submit-memory reference]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-reference.md); commit-all behavior → [[[mybizz-config-docs:commit-all/commit-all-reference|commit-all reference]]](C:/mybizz/mybizz-config-docs/commit-all/commit-all-reference.md); the four projects and `mb-project-docs` → [[[mb-project-docs:mb-project-docs|mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md).

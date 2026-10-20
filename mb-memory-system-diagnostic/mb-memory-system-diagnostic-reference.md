@@ -1,7 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-reference"
 doc-id: "mb-b0ec721d"
-updated: "2026-10-14"
+updated: "2026-10-20"
 ---
 # mb-memory-system-diagnostic — Reference: Invocation, Sections, Gates, Reporting
 
@@ -9,14 +9,9 @@ Companion to [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-
 current state) and [[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-explainer.md) (what it is
 and why). The installed `SKILL.md` is the authoritative procedure; this
 reference carries the exact commands, interpretation rules, and report formats
-an agent consults while running it. The config-management exam set for this
-suite (Exam Plan ·
-Exam Report ·
-Log ·
-[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings.md) ·
-Exam Skill) is synthesized and
-consumed per the [[[mybizz-config-docs:mb-config-manager/config-manager-agent|Config Manager]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) plan-driven cycle —
-the exam verifies this suite's state and never runs the diagnostic itself.
+an agent consults while running it. Read the suite's
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings.md) in full before any
+research, examination or proposal for this system.
 
 ---
 
@@ -107,11 +102,10 @@ missing-remote findings logged and dispositioned).
 ## Section 2 — PostgreSQL Instance B
 
 **Run the live init-model check first, before any other Instance B command.**
-Log which command(s) actually work; a mismatch against
-`postgresql-reference.md` is a finding routed to a documentation correction
-(developer-approved before editing) — never a live-system fix. If both paths
-work, log both as currently valid and note the doc as due for a reconciling
-update regardless.
+Log which command(s) actually work; a live result that contradicts the record
+— or a management path that has stopped working — is a finding routed to a
+documentation correction to `postgresql-reference.md` (developer-approved
+before editing) — never a live-system fix.
 
 ```bash
 ps -p 1 -o comm=
@@ -140,8 +134,9 @@ SELECT has_database_privilege('memory_governor_svc', 'gbrain', 'CONNECT');      
 SELECT has_database_privilege('memory_governor_svc', 'memory_governor', 'CONNECT');  -- expect true
 ```
 
-Pass: cluster `online`; RLS coverage matches the recorded 62/62; role
-isolation holds both directions; init-model check completed and logged.
+Pass: cluster `online`; every table has row-level security switched on
+(`tables` equals `rls_tables`); role isolation confirms scoped access both
+directions; init-model check completed and logged.
 
 ## Section 3 — Memory Governor
 
@@ -331,6 +326,39 @@ only. §2 and §3 reach both databases through the gbrain config's
 /home/dev-p/.gbrain/config.json)`) — never source `.env` (agent-forbidden by
 the secrets guard); keep conninfo a single argument so psql errors cannot
 echo it.
+
+## Authoritative sources
+
+| Source | Link | Issuer version | Date checked |
+|---|---|---|---|
+| Skill source artifact (issuer: MyBizz) | `C:\mybizz\mb-memory-system-diagnostic\mb-memory-system-diagnostic.md` — repository `sassycomapp/mb-memory-system-diagnostic` | `7b47fe6` | — |
+| Installed skill | `~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md` | `7b47fe6` — body identical to the source artifact body | — |
+| [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|Doc Suite Specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | `C:\mybizz\mybizz-config-docs\mb-sysdoc-creator\doc-suite-specification.md` | — | — |
+| ADR `dev-tooling-source-repos-must-be-github-backed` | `C:\dev\project-library-global\adr-global\adr-dev-tooling-source-repos-must-be-github-backed.md` | — | — |
+
+## Checks
+
+| Check | Method | Run by |
+|---|---|---|
+| Installed version | `git -C /mnt/c/mybizz/mb-memory-system-diagnostic rev-parse HEAD` | agent |
+| §1 GBrain core | the §1 command block — `gbrain --version`, `gbrain doctor --fast --json`, `gbrain sources status`, `gbrain stats`, `git remote -v` per source | agent |
+| §2 init model | the §2 init-model command block, run before any other Instance B command | agent |
+| §2 RLS coverage | the §2 psql table/RLS count — passes only when every table has row-level security switched on | agent |
+| §2 role isolation | the §2 `has_database_privilege` queries — never `SET ROLE` | agent |
+| §3 Memory Governor | the §3 command block — 422 curl, worker process, outbox counts, register state, unit states | agent |
+| §4/§5/§10 gate approvals | the §4, §5 and §10 asks, answered explicitly before any write | developer |
+| §4 governed write (positive) | the §4 script and unconditional cleanup, only after the yes | agent |
+| §5 governed write (negative) | the §5 submit, review resolution and cleanup, only after the yes | agent |
+| §6 Graphify | the §6 command block — version, `built_at_commit` vs live HEAD, one live query | agent |
+| §7 log sweep | the §7 `journalctl` sweep and loopback confirmation | agent |
+| §7 developer's direct answer | the §7 question, answered and logged verbatim | developer |
+| §8 mb-submit-memory prerequisites | the §8 command block — registered source, governor reachable | agent |
+| §9 backups | the §9 listings and `sha256sum` pair check | agent |
+| §10 Dream Cycle state report | the §10 `cycle_freshness` read | agent |
+| §10 real Dream Cycle run | the §10 gated `gbrain dream` run and mandatory post-run verification, only after the yes | agent |
+| `gh repo create` remediation | the §1 ADR sequence for a source missing a GitHub remote | developer |
+| `graphify update` remediation | the §6 stale-graph remediation, run from the repo root | developer |
+| Works | the developer invokes the skill; a run reaching the §11 roll-up with the honest verdict is the evidence | developer |
 
 ## Do not
 

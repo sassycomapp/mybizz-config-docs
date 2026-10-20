@@ -15,7 +15,7 @@ steady-state functional reference only.
 | Folder | Reference document |
 |---|---|
 | `opencode/` | [[[mybizz-config-docs:opencode/opencode-reference\|Commands, Verification, Troubleshooting]]](C:/mybizz/mybizz-config-docs/opencode/opencode-reference.md) |
-| `gstack/` | [[[mybizz-config-docs:gstack/gstack-reference\|GStack Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-reference.md), [[[mybizz-config-docs:gstack/gstack-skills-reference\|GStack Skills Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-skills-reference.md) |
+| `gstack/` | [[[mybizz-config-docs:gstack/gstack-reference\|GStack Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-reference.md), GStack Skills Reference |
 | `gbrain/` | [[[mybizz-config-docs:gbrain/gbrain-reference\|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md) |
 | `postgresql/` | [[[mybizz-config-docs:postgresql/postgresql-reference\|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md) |
 | `matt-pocock-skills/` | Matt Pocock Skills Reference |

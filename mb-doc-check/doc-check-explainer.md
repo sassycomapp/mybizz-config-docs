@@ -1,7 +1,7 @@
 ---
 title: "doc-check-explainer"
 doc-id: "mb-632b78c3"
-updated: "2026-10-15"
+updated: "2026-10-20"
 ---
 # mb-doc-check — Explainer
 
@@ -15,9 +15,9 @@ It is not an AI. It makes no judgments. For the same documents it always produce
 
 ## What it can do
 
-At every commit the program looks at two pictures of the repository: the committed state, and the state that is about to be committed. Comparing them tells it what is new, what moved and what was deleted.
+At every commit the program looks at two pictures of the repository: the committed state, and the state that is about to be committed. Comparing them tells it what is new, what has moved and what has been deleted.
 
-**Identity comes from the `doc-id`.** Every document carries a permanent random code in its frontmatter. When a file appears under a new name or in a new folder, the program matches it to the old file by that code, not by the name and not by the content. So a document that was renamed and completely rewritten is still recognised as the same document. This holds across repositories too: a document cut from one covered repository and pasted into another keeps its `doc-id`, and every link to it follows it.
+**Identity comes from the `doc-id`.** Every document carries a permanent random code in its frontmatter. When a file appears under a new name or in a new folder, the program matches it to the old file by that code, not by the name and not by the content. So a document renamed and completely rewritten is still recognised as the same document. This holds across repositories too: a document cut from one covered repository and pasted into another keeps its `doc-id`, and every link to it follows it.
 
 **Then, for every document in the commit,** it:
 
@@ -35,7 +35,7 @@ At every commit the program looks at two pictures of the repository: the committ
 ## Suitability
 
 - **Best for:** keeping a body of documentation, written mostly by AI agents across several repositories, consistent and navigable without anyone having to remember a rule.
-- **Good for:** renaming and moving documents; retiring documents into `obsolete`; bringing an existing repository under the rules in one pass; checking a repository at any time without changing it.
+- **Good for:** renaming and moving documents; bringing an existing repository under the rules in one pass; checking a repository at any time without changing it.
 - **Not good for:** documents outside the covered repositories; commits made from Windows programs (the hook only exists in WSL's Git); judging whether a document's content is right. It checks form and links, never meaning.
 
 ## Why it works this way
@@ -48,7 +48,7 @@ At every commit the program looks at two pictures of the repository: the committ
 
 **It fails open.** If the program itself breaks, it says so and lets the commit through. A helper's bug must never stop your work. The price is that one commit goes unchecked, and the next commit of those documents, or the `check` command, corrects it.
 
-**It is repeatable.** Running it twice gives the same result as running it once. That makes every step safe to retry, and it is what allowed whole repositories to be converted in one pass and checked afterwards.
+**It is repeatable.** Running it twice gives the same result as running it once. That makes every step safe to retry, and it is what makes converting a whole repository in one pass safe.
 
 **The settings are files, not calls to GBrain.** The hook must be fast, work with no network and not depend on anything running. So the folder-to-source table lives in a file. `sources-check` compares that file with GBrain whenever you want to be sure it is true.
 
@@ -56,7 +56,7 @@ At every commit the program looks at two pictures of the repository: the committ
 
 **The `updated` date moves only on a real change.** The date is useful only if it can be trusted. A line-ending conversion, or a commit whose only effect would be the date itself, must not move it. So such documents are put back, and the commit says "NOTHING TO COMMIT".
 
-**Exemptions are by name and by folder, never by judgment.** Files named `tmp-...`, folders such as `stencils`, `quarantine`, `backups`, `catalogue` and `logs`, Anvil app roots, `obsolete` folders and `SKILL.md` files are not part of the documentation to be kept consistent: they are scratch or generated material, retired material, or installed skills with their own format. Because the program applies the list mechanically, nobody has to decide case by case.
+**Exemptions are by name and by folder, never by judgment.** Files named `tmp-...`, folders such as `stencils`, `quarantine`, `backups`, `catalogue` and `logs`, Anvil app roots and `SKILL.md` files are not part of the documentation to be kept consistent: they are scratch or generated material, or installed skills with their own format. Because the program applies the list mechanically, nobody has to decide case by case.
 
 **Repaired files join the same commit.** When a rename in one repository makes a link in another repository wrong, the program corrects that file. The correction stays uncommitted in the other repository until that repository is committed, which is why one command commits all of them together.
 

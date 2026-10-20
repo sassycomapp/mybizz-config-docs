@@ -1,7 +1,7 @@
 ---
 title: "config-manager-explainer"
 doc-id: "mb-c28cb8f9"
-updated: "2026-10-14"
+updated: "2026-10-20"
 ---
 # mb-config-manager — Explainer
 
@@ -13,9 +13,8 @@ applications, services — degrades quietly: a value drifts, a version falls beh
 a file disappears. The developer's attention is on building, not on watching
 configs. This agent watches instead: invoked on demand, it examines one system's
 live state against its recorded configuration, reports what differs, and changes
-only what the developer approves. It is an OpenCode agent invoked through
-`/mb-config-manager`, installed at `~/.config/opencode/agents/mb-config-manager.md`
-with a command wrapper beside it.
+only what the developer approves. It is an OpenCode agent with a command
+wrapper beside it.
 
 ## What it can do
 

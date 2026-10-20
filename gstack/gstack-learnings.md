@@ -1,18 +1,15 @@
 ---
 title: "gstack-learnings"
 doc-id: "mb-560c62ee"
-updated: "2026-10-01"
+updated: "2026-10-20"
 ---
 # GStack — Learnings
 
-Transient way-station for exam-run knowledge: patterns, decisions, nuances. No
-narrative, no history. Every entry is eventually dropped or written into a
-**permanent home** (skill / config / reference / explainer / reference) — then
-deleted from here immediately on graduation. The plan is never an absorption
-destination — it is transient; pruning into a plan destroys the knowledge when the next cycle overwrites it. Entries never accumulate. Cross-cutting learnings (guard classes, graduation rules) live in the orchestrator's own [[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md), not here.
+What differs from, or adds to, the standard in the MyBizz setup, and why.
+Read in full before any research, examination or proposal for this system.
 
-| # | learning | right action | destination |
+| ID | Learning | Why it holds | Source |
 |---|---|---|---|
-| LE-1 | The `bin/` tree is mixed-interpreter: most scripts are bash, but `gstack-gbrain-detect` was rewritten to TypeScript/Bun (shebang `#!/usr/bin/env -S bun run`; the script comment documents the rewrite). Running `bash <name>` on a Bun script yields confusing multi-line errors — invocation must follow the individual script's shebang. Reference's `bash .../gstack-brain-sync` verified still correct (bash). | Add a bin-tree note to [[[mybizz-config-docs:gstack/gstack-reference\|GStack Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-reference.md) documenting the mixed interpreters and the shebang-follow rule | gstack-reference.md (via docs governance) |
-| LE-2 | Generated SKILL.md preambles hardcode OpenClaw/Claude host roots (`~/.openclaw/skills/gstack/bin`, `~/.claude/skills/gstack/bin`) for their runtime-path detection; on this OpenCode host those default resolutions are absent or discouraged, and the preamble's `|| true` fallbacks keep the skill running without ever resolving `~/.config/opencode/skills/gstack/bin` at load time. Proven live 2026-09-16 (Tier 3 GS3-1): skills load and work, but preamble runtime-path detection does not match the installed host layout. The global AGENTS.md GStack-binary-path rule is the authoritative resolution chain. | Document in [[[mybizz-config-docs:gstack/gstack-reference\|GStack Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-reference.md) (pair with LE-1's bin-tree note): on the OpenCode host the correct runtime root is `~/.config/opencode/skills/gstack/bin`, not the preamble defaults | gstack-reference.md (via docs governance) |
-| LE-3 | GStack artifacts live at `~/.gstack/projects/$SLUG/` (per-skill sub-directories: ceo-plans, designs, retros, checkpoints, qa-reports, health, security-audits, specs); later skills find prior output by re-computing the same deterministic `$SLUG` via `gstack-slug`. The AGENTS.md `gstack-outputs/` copy lane is a **convention only — it does not exist on this system** outside backups (verified 2026-09-16), so `~/.gstack/projects/$SLUG/` is the sole authoritative location. Recorded as the annotated fact in [[[mybizz-config-docs:gstack/gstack-reference\|GStack Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-reference.md) §Artifact locations (2026-09-16) | No action — fact already in permanent home (reference) | resolved — permanent home exists |
+| L1 | The clone carries two MyBizz-local commits on top of the upstream `1.58.1.0` base — Brain Context Load sections in skill sources plus `.gitignore` additions — unpushed. Any upstream upgrade must rebase them; the installed state is version plus local modifications, not pure upstream. | A pristine-upstream assumption would mis-describe every future upgrade of this system. | live `git log` / `git branch -v` |
+| L2 | `question_tuning: true` opts MyBizz into gstack's per-question preference tuning; the issuer default is `false`. | Deliberate opt-in: gstack skills adapt their questions to the recorded developer preferences. | `/mnt/c/mybizz/gstack/plan-tune/SKILL.md.tmpl` |
+| L3 | `artifacts_sync_mode: full` syncs all allowlisted working state into the local git-backed brain worktree; the issuer default is `off`. | Deliberate opt-in: plans, designs, retros and learnings persist in the brain worktree for later skills to find. | `/mnt/c/mybizz/gstack/docs/gbrain-sync.md` |

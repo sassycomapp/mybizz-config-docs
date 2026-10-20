@@ -1,7 +1,7 @@
 ---
 title: "2026-09-15-007-opencode-config-suite"
 doc-id: "mb-9c2693c3"
-updated: "2026-10-14"
+updated: "2026-10-20"
 ---
 # Session 007 — mb-config-opencode config-management suite built, installed, run #1 HEALTHY
 
@@ -58,7 +58,7 @@ updated: "2026-10-14"
 6. **Gate approved all items (Phases 4–5).** F-4 and F-5 **approved and
    applied**: [[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md) §Global config updated (4th root, docs-manager
    row, 13-pattern note, 2026-09-15 re-verified banner, AGENTS.md ~16.2 KB) and
-   [[[mybizz-config-docs:opencode/opencode-permission-access-control-model|Permission & Access Control Model]]](C:/mybizz/mybizz-config-docs/opencode/opencode-permission-access-control-model.md) per-agent bullet updated.
+   Permission & Access Control Model per-agent bullet updated.
    **F-6** security confirmation recorded: `opencode debug config` stdout carries
    **literal API values** while the source `.jsonc` correctly holds `{env:...}`
    placeholders — confirms the sensitive-data guard class, the capture-delete

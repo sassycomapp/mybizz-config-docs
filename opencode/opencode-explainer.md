@@ -1,267 +1,64 @@
 ---
 title: "opencode-explainer"
 doc-id: "mb-4e022a9c"
-updated: "2026-10-14"
+updated: "2026-10-20"
 ---
 # OpenCode Explainer
 
-*Companion note: for current confirmed state (identity, global-config content,
-plugin state, skill discovery, Active Project Standard) see [[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md).
-For commands and the restart/verification procedures, see [[[mybizz-config-docs:opencode/opencode-reference|Commands, Verification, Troubleshooting]]](C:/mybizz/mybizz-config-docs/opencode/opencode-reference.md).
-For the permission layers and the verified merge, see
-[[[mybizz-config-docs:opencode/opencode-permission-access-control-model|Permission & Access Control Model]]](C:/mybizz/mybizz-config-docs/opencode/opencode-permission-access-control-model.md). For how this system is examined and
-kept healthy by the config-management apparatus, see §8 below and the suite's exam
-set (Exam Plan / `-exam-report.md` / `-log.md` / `-learnings.md`).*
+State: [[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md). Execution: [[[mybizz-config-docs:opencode/opencode-reference|OpenCode Reference]]](C:/mybizz/mybizz-config-docs/opencode/opencode-reference.md). Differences from the standard: [[[mybizz-config-docs:opencode/opencode-learnings|OpenCode Learnings]]](C:/mybizz/mybizz-config-docs/opencode/opencode-learnings.md).
 
----
+## 1. What it is
 
-## 1. Opening
+OpenCode is the agent harness the MyBizz environment runs inside — the program that reads the global rules file, discovers skills, loads plugins, evaluates permissions on every tool call, and connects its agents to MCP servers. Every other system in the estate — Cupcake, GBrain, the memory governor's tooling, the PDLF application — is either a plugin running inside OpenCode or a tool its agents call. OpenCode spans every layer of the environment: the supporting systems run inside or beside it, PDLF is built in it, and the PDLF layer builds the shipped estate through it. Nothing inside it travels to the shipped estate — it is the harness for every layer except the one it produces.
 
-OpenCode is the actual harness this entire environment runs inside — the
-program that reads `AGENTS.md`, loads skills, enforces (or fails to
-enforce) permissions, and decides which tool calls an agent can make.
-Every other system documented in this project — Cupcake, GBrain, Memory
-Governor, Sentinel, the PDLF application itself — is either a plugin
-running inside OpenCode, or a tool OpenCode's agents call. Understanding
-OpenCode's own real behavior, including its genuine rough edges, matters
-more than any single tool built on top of it.
+## 2. What it can do
 
-**OpenCode spans every layer of the environment** (see
-the supporting-systems, PDLF and shipped layers for the layer map): the
-supporting systems run inside or beside it, PDLF is built in it,
-and the PDLF layer builds the
-shipped estate through it — and nothing in it travels to the shipped
-estate. It is the harness for every layer except the one it produces.
+- Run interactive agent sessions with a chosen default agent and per-agent permission overrides, so a planning agent can be held to read-and-reason while a build agent writes.
+- Discover skills from several configured roots and make them available to every session.
+- Load plugins from its plugin folder at process start and let them evaluate every tool call.
+- Connect local and remote MCP servers; GBrain is served to it this way.
+- Enforce a permission layer: per-pattern rules for file edits, shell commands, web fetches, task delegation and external directories.
+- Merge a per-project config with the global config, so projects specialize without replacing the baseline.
+- Serve a browser-based web UI on the network, protected by a password, listing the projects mounted in the home folder.
+- Persist projects and sessions in a local database on the machine.
 
-This document exists because several real, costly incidents traced back
-not to Cupcake, not to GBrain, but to OpenCode's own underlying mechanics
-— behaving in ways that were reasonable, once understood, but genuinely
-surprising the first time each one was hit.
+## 3. Suitability
 
----
+**Best for:** being the single harness for the whole estate. Every layer MyBizz runs already assumes it, and its own permission layer plus the Cupcake plugin give two independent enforcement planes over the same tool calls.
 
-## 2. Plugins Load Once, Not Per-Session
+**Good for:** project-specific permission tuning without touching the global baseline; local MCP integration such as GBrain; skills shared across every project; browser-based work through the web UI.
 
-The single most consequential mechanical fact about OpenCode, discovered
-the hard way, more than once: **a plugin is loaded exactly once, when the
-OpenCode process itself starts — never per chat session, and never
-automatically on a file change.**
+**Not good for:** per-skill permission rules — no skill identity reaches any plugin, so that need routes through the cupcake suite's rules instead. Frequent plugin or config iteration without restarts — nothing hot-reloads. Policing its own database housekeeping — MyBizz's maintenance scripts exist because the issuer ships none. Running any plugin or skill from a second discoverable path — deduplication is by path, not file identity, so a second path means a second running copy. Skill inventory as a reference — that is the skills catalog's job ([[[mybizz-os-docs:os-reference-docs/skills-catalog|Skills Catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md)); project lists and status belong to repo-organization ([[[mybizz-os-docs:os-reference-docs/repo-organization|Repo Organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md)).
 
-Editing a plugin's own code on disk, while OpenCode is already running,
-has zero visible effect. No error. No warning. The old, already-loaded
-version keeps running silently, exactly as if nothing had changed, until
-the whole process is fully quit and relaunched. This applies identically
-to Cupcake's plugin, to MCP server entries like GBrain's, and to any other
-plugin registered with OpenCode. Verified live twice: the Cupcake
-suspension (2026-09-06) and its reactivation (2026-09-08) each required a
-full process restart to take effect.
+## 4. Why it works this way
 
-**A related, distinct trap: OpenCode does not deduplicate plugins by real
-file identity — only by the path it was told to load.** If the same plugin
-exists at two separate discovery paths — even a global copy and a symlink
-pointing at that exact same file — OpenCode loads both as two independent
-instances. Confirmed directly: this caused Cupcake's cross-project grant
-system to decrement its write count by two for every single real write,
-not one, because the plugin was genuinely running twice. A symlink did not
-fix this — only removing the second discovery path entirely did. The
-lesson generalizes beyond Cupcake specifically: **a plugin, skill, or MCP
-entry must exist at exactly one discoverable path, never two, even if both
-point at identical content.**
+**Configs merge, not replace.** A project config overrides the global config only for conflicting keys, and nested permission maps merge deeply. This is why each app repo can carry a full baseline and still inherit anything the global config adds: a project can add or override, but it cannot silently weaken a global deny-list. An explicit re-declaration of a deny pattern as `allow` remains possible — it is a visible act in a config file, and MyBizz treats it as a security-review finding.
 
----
+**Plugins load once, at process start.** State kept by a plugin — a counter, a cache — stays coherent because exactly one instance runs. Deduplication is by discovery path, not by file identity, so exactly-one-path-per-plugin is a hard hygiene rule: a second path, even a symlink to the same file, means a genuinely second running instance.
 
-## 3. Skill Discovery — Several Real, Different Mechanisms, Not One
+**Deny patterns match command text.** A harmless command that merely mentions a denied string is refused like the real thing. That makes the deny-list strong — there are no parsing tricks to slip through — and it shapes how commands are written: incidental matches are rephrased, real matches are respected.
 
-Skills reach OpenCode through more than one real pathway, and they are not
-all installed the same way — confirmed directly by a full, real audit of
-every skill on this machine (2026-09-08, the full inventory is
-[[[mybizz-os-docs:os-reference-docs/skills-catalog|Skills Catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md)):
+**Two enforcement layers sit above every tool call.** OpenCode's own permission system is the interaction gate: it asks the developer or blocks by pattern. Cupcake is the policy layer: it enforces the written rules mechanically. Both evaluate the same call; neither substitutes for the other. The agent's own refusal, under its own written rules, is not proof of enforcement — the enforcement layer's evaluation is. The current enforcement posture is standing policy, recorded in the cupcake suite's [[[mybizz-config-docs:cupcake/cupcake-config|Operational status]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md).
 
-- **Plain, real folders** — no symlink at all. This project's own custom
-  skills (`mb-project-docs`, `mb-submit-memory`, etc.) work this way.
-- **Symlinks to a real folder elsewhere on the same drive** — most
-  third-party skills (Anvil, GStack's individual skills, Archify).
-- **A hybrid pattern** — GStack's own top-level entry is a real folder,
-  but individual skills *inside* that folder are themselves further
-  symlinks to yet another location.
-- **A two-hop pattern** — Magdoub's wireframe skill points to an empty
-  intermediate folder, which in turn points to the real content sitting in
-  a completely separate directory tree (`~/.claude/skills/`).
+**Skill discovery scans more than one root.** A skill can therefore be found twice and logged as a duplicate; when every entry resolves to the same file the warning is a routing fact, not an error. One of the roots is reachable under two names, through a link — one folder, not two copies.
 
-No single "correct" install method exists across every skill-set; what
-matters is that whichever method is used, it resolves correctly from
-OpenCode's own real discovery path.
+**Windows and WSL disagree about what a link is.** A link created from inside WSL toward a Windows-drive target produces a link type Windows Explorer cannot read at all; the reverse direction fails from the WSL side. Only a link created from the Windows side, toward a target on the Windows drive, works from both sides — and creating it unprivileged requires Windows Developer Mode. Hence the standing practice: Windows-side links, verified from both sides.
 
----
+**The web UI trusts real folders and ignores links.** Every project therefore reaches it as a real mounted folder, which is why each project carries its own bind mount into the home folder's projects directory. The UI also reopens the last active project regardless of start folder, and its "recent projects" list is the browser's memory, not OpenCode's — so a stale entry there is browser state, not database corruption.
 
-## 4. The `drvfs` Symlink Trap — Windows and WSL Disagree About What a Link Is
+**The session database has no built-in housekeeping.** Stale project rows survive folder renames, and stored session data grows without limit — both are upstream gaps, not misconfigurations. MyBizz compensates with two scripts of different characters: a manual cleanup, gated behind an explicit typed confirmation because folder-existence checks can false-positive on an unmounted drive, and a scheduled prune, safe unattended because its criterion is purely a timestamp.
 
-A real, structural incompatibility, confirmed directly through forensic
-inspection of the actual filesystem reparse-point tags: **a symlink
-created from inside WSL, pointing at a folder on the Windows drive,
-produces a special "LX symlink" type that Windows Explorer cannot read at
-all** — it shows as an empty, 0-byte file, not a broken link, not an
-error, just apparently nothing.
+**The harness holds the current major version line.** The successor line does not run the Cupcake plugin, and the policy layer is load-bearing — a harness that drops its enforcement layer is not adoptable. Upgrades therefore wait on policy-layer compatibility.
 
-The reverse direction has the opposite problem: a symlink created from the
-*Windows* side, pointing back *into* WSL's own internal filesystem,
-displays correctly in Explorer but cannot be resolved from WSL's own side.
+**One WSL distribution exists**, and the working environment is its default — explicit distro and user flags on Windows-triggered commands remain as identity-proofing, so a command can never silently act as a different user or machine context.
 
-**The only combination that works reliably both ways: create the symlink
-from the Windows side, using `mklink /D`, pointing at a target that itself
-lives on the Windows drive** — never a WSL-internal path. This requires
-Windows Developer Mode to be enabled for an unprivileged account to create
-this specific kind of link at all; without it, only a junction (a
-different, slightly less capable link type) is available without elevated
-permissions.
+## 5. What has to happen
 
----
-
-## 5. Global vs. Per-Project Configuration — and the Verified Merge
-
-Two separate, distinct config layers exist:
-
-- **Global** — `~/.config/opencode/opencode.jsonc`, applies everywhere,
-  every project, unless overridden.
-- **Per-project** — an `opencode.json` sitting inside a specific project's
-  own folder, overriding the global config for that project only.
-
-**The merge semantics are now verified, not assumed (2026-09-09):**
-configuration files are **merged together, not replaced** — project config
-overrides global config only for conflicting keys; non-conflicting
-settings from both survive; and nested permission maps **merge deeply**
-(verified empirically with `opencode debug config`: a project-level bash
-allow override and all thirteen global deny patterns were both present in
-the resolved map). The upstream documentation is authoritative:
-opencode.ai/docs/config, "Precedence order."
-
-**A separate, now-resolved incident: the global folder itself briefly held
-two files at once** — `opencode.json` and `opencode.jsonc`, both real,
-both loaded, with genuinely different content in each, and no clear,
-verified answer for which one would win if they ever conflicted. Confirmed
-and fixed 2026-09-01: consolidated into a single `opencode.jsonc`, the
-other deleted. One file, one source of truth, going forward — see
-[[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md) for the real, current content.
-
----
-
-## 6. Stale Database Rows, and the Two-WSL-Distro Risk
-
-OpenCode tracks known projects and sessions in its own local database,
-with no built-in cleanup when a project folder is renamed or moved — the
-old row simply lingers, sometimes causing OpenCode to open the wrong,
-stale project on startup. A real, dedicated script
-(`opencode-db-cleanup.sh`) exists specifically for this, run manually,
-right after any project rename or move — never scheduled automatically,
-since a false positive (like a temporarily unmounted drive) could
-otherwise delete real history unattended.
-
-**A separate, more subtle risk, confirmed real on this specific machine
-(distros verified live 2026-09-09): two WSL distributions are installed,
-and the actual working environment lives in the non-default one.** Any
-command triggered from the Windows side — a scheduled task, a shortcut —
-that invokes `wsl.exe` without explicitly naming the correct distro and
-user risks silently running against the wrong environment entirely, with
-no visible error. Every real, Windows-triggered command touching this
-environment must explicitly specify `-d <distro> -u <user>`.
-
----
-
-## 7. Known Limitations, Honestly Stated
-
-**No native session-start hook exists.** There is no OpenCode mechanism
-that automatically runs a checklist or prompt at the start of every
-session — the session-start checklist is a human-run practice, pasted
-manually, not a technical control.
-
-**No skill-identity field reaches any plugin.** Confirmed directly, from
-OpenCode's own real source: the event a plugin receives for any tool call
-carries the tool name, arguments, and session ID — never which skill, if
-any, triggered the call. Per-skill permission rules are not currently
-possible for this reason, confirmed structurally, not assumed.
-
-**Plugin deduplication is by path, not identity** — covered fully in
-Section 2. Anything relying on a plugin's state (like a count or a cache)
-must ensure that plugin is discoverable from exactly one path.
-
----
-
-## 8. Config maintenance — how this system is examined and kept healthy
-
-This suite participates in the config-management system (`mb-config-manager`).
-The roles of the seven suite files, and the exam cycle that runs them, are the
-architecture described in [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md) — emulated from the
-PostgreSQL pilot. The short local version:
-
-- [[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md) is the **spec** — the ideal state every exam checks
-  against. OpenCode is working well; the exam verifies that and changes nothing.
-- Before each exam run, the config-manager synthesizes Exam Plan:
-  a fresh job-spec built from this spec, the last report, the log, and the
-  learnings. The plan is transient (the file is live; contents rewritten each
-  cycle).
-- The exam runs the installed skill (`mb-config-opencode`) with the plan in hand —
-  detection fully autonomous; healing gated. **This module has no agent-healable
-  items**: the harness's own config, plugin tree, and process are beyond agent
-  repair by design — every repair is developer-run or proposed.
-- **The self-referential trap, named:** the config-manager itself lives **inside**
-  this harness (`~/.config/opencode/skills/`, plugin, skills). The exam therefore
-  never touches the plugin tree, never restarts the running process (it would
-  interrupt the very session running the exam), and never edits its own
-  config file. Self-health of the config-manager is step-0 of every exam cycle
-  (register ↔ installed skill ↔ source hash), never a finding of this module.
-- **Scope boundary with sibling modules:** cupcake **enforcement** (rules compile +
-  firing) belongs to `mb-config-cupcake` — this exam owns the plugin's
-  **discoverability/dedup mechanics** (exactly one discoverable path). GBrain
-  **server** liveness belongs to `mb-config-gbrain` — this exam owns the
-  `mcp.gbrain` **config entry**. The **session database** and its cleanup belong
-  to [[[mybizz-config-docs:opencode/opencode-project-session-data-integrity|Project & Session Data Integrity]]](C:/mybizz/mybizz-config-docs/opencode/opencode-project-session-data-integrity.md) (agent content reads
-  guard-denied — the exam checks presence only, via directory listing). Full skill
-  **inventory** belongs to [[[mybizz-os-docs:os-reference-docs/skills-catalog|Skills Catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) — this exam checks
-  discovery **mechanics**, never re-audits the inventory.
-- Several checks are permanently **developer-run**: `opencode.jsonc` content
-  (sensitive-data guard class), the session-data doc content (proven denial), and
-  everything in Tier 3 (full restart; WSL default-distro check via `wsl.exe`;
-  the upgrade decision).
-- The run rewrites Exam Report (current state, no history), appends
-  one row to Log, files new learnings, and prunes absorbed entries.
-
-## 9. S.W.O.T.
-
-**Strengths.** Three independently-verified hard facts underpin every other
-system's exam: configs **merge** (project overrides global only on conflict;
-nested maps merge deeply — verified 2026-09-09); plugins load **once** at process
-start (verified twice); deny patterns match command **text** (verified live). The
-suite's probe set is deliberately small because the mechanics are proven.
-
-**Weaknesses.** The deepest checks are developer-run by natural law (full restart
-kills the session that asks; `wsl.exe` is Windows-side; config content is
-sensitive-guarded). Version/behavior drift between spec and reality is only as
-visible as the exams' spot-probes make it — a deep merge re-verification is not
-performed each run.
-
-**Opportunities.** Every other config-manager module inherits OpenCode's verified
-truths (merge, load-once, text-matching) — the harness is the foundation layer
-the whole estate builds on; one healthy exam here pays forward across all
-modules. The plugin/skill inventory stays a docs-side concern, so the exam stays
-small and fast.
-
-**Threats.** A future OpenCode upgrade could silently change merge, load, or
-deny-matching behavior (mitigated: OC1/OC2 re-verify, never assume); a second
-discoverable plugin path could revive the double-load class of bug (mitigated:
-OC1-5 watches exactly-one-path); a "Paused" project's config could be mistaken
-for stale and removed (mitigated: the Active-Project Standard is checked, and the
-spec explicitly forbids treating Paused configs as stale).
-
----
-
-*Companion documents: [[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md) (current configuration, real skill
-inventory, active-project standard),
-[[[mybizz-config-docs:opencode/opencode-permission-access-control-model|Permission & Access Control Model]]](C:/mybizz/mybizz-config-docs/opencode/opencode-permission-access-control-model.md) (the permission layers),
-[[[mybizz-config-docs:opencode/opencode-project-session-data-integrity|Project & Session Data Integrity]]](C:/mybizz/mybizz-config-docs/opencode/opencode-project-session-data-integrity.md) (the session database),
-[[[mybizz-config-docs:opencode/opencode-reference|Commands, Verification, Troubleshooting]]](C:/mybizz/mybizz-config-docs/opencode/opencode-reference.md) (procedures). Config-management set:
-Exam Plan / `-exam-report.md` / `-log.md` / `-learnings.md`.
-Exam skill canonical source: Opencode Skill. Architecture:
-[[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md). The environment layer map:
-the supporting-systems, PDLF and shipped layers.*
-
-*End of document*
+- The developer restarts OpenCode after any plugin or global-config change, and runs the Cupcake enforcement probe afterwards.
+- Every plugin keeps exactly one discoverable path; the plugin folder holds `.js` files only; no file path enters the `plugin` config list.
+- Every new project gets its bind mount — a new line in the fstab table — and an app repo additionally gets its `opencode.json` baseline.
+- After any project folder is renamed or moved, the developer runs the session-database cleanup script and confirms it with the typed confirmation word.
+- The scheduled session prune keeps running; its dated backups are the evidence that it works.
+- OpenCode stays on its current major version line until the Cupcake plugin runs on the successor.
+- [[[mb-sysdoc-creator:mb-sysdoc-creator|mb-sysdoc-creator]]](C:/mybizz/mb-sysdoc-creator/mb-sysdoc-creator.md) refreshes this suite; the skills catalog and repo-organization documents stay current so this suite can point at them instead of restating them.
+- The gbrain and cupcake suites keep owning their own facts; this suite points at them rather than duplicating them.

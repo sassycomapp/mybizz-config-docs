@@ -1,7 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-explainer"
 doc-id: "mb-dd98962e"
-updated: "2026-10-14"
+updated: "2026-10-20"
 ---
 # mb-memory-system-diagnostic — What It Is, What It Does, and Why It Is Built This Way
 
@@ -99,11 +99,11 @@ per-component work; producing a durable, honest run record (the report file)
 even from an aborted run; surfacing documented drift between component
 suites and live reality (the init-model check is the built-in example).
 
-**Not good for:** standing per-component conformance — that is the
-`mb-config-*` exam modules' job (detection-only, per-component, part of the
-config-management cycle); Cupcake policy or security posture — the cupcake
-exam and the cso review own that, and this skill may never execute Cupcake
-anyway; PostgreSQL Instance A / the `pdlf` ledger — outside the memory
+**Not good for:** standing per-component conformance — each component's own
+config suite is that component's standing record, and a point-in-time
+diagnostic does not replace it; Cupcake policy or security posture — this
+skill may never execute Cupcake, and a diagnostic pass is not a security
+review; PostgreSQL Instance A / the `pdlf` ledger — outside the memory
 ecosystem by definition; scheduled monitoring — the skill
 is invocation-only by design.
 
@@ -174,19 +174,28 @@ failure.
 ## Where It Sits in the System
 
 The diagnostic is downstream of the six components' standing config suites —
-it reads their recorded constants (the RLS coverage, the high-risk
-category list, the dream-cycle FAIL-expected reading, the ADR's remediation
-sequence) instead of re-deriving them — and upstream of nothing: no build,
-deploy, or enforcement consumes its output. It complements the `mb-config-*`
-exams rather than duplicating them: those are per-component, detection-only,
-and gate-resolving; this is cross-component, interactive, and treats defects
-in place. It participates in the config-management exam cycle via
-`mb-config-mb-memory-system-diagnostic` (detection-only — the exam verifies
-this suite's state and never runs the diagnostic). It depends on the gbrain
-CLI, the Governor's API and environment, the graphify CLI, the two backup
-locations, and a developer present at the gates. Invocation is explicit-only;
-nothing schedules it, and no skill chains into it without the developer
-naming it.
+it reads their recorded constants (the high-risk category list, the
+dream-cycle FAIL-expected reading, the ADR's remediation sequence) instead of
+re-deriving them — and upstream of nothing: no build, deploy, or enforcement
+consumes its output. It depends on the gbrain CLI, the Governor's API and
+environment, the graphify CLI, the two backup locations, and a developer
+present at the gates. Invocation is explicit-only; nothing schedules it, and
+no skill chains into it without the developer naming it.
+
+## What Has to Happen
+
+The developer keeps the ecosystem's standing parts alive: the Memory Governor
+running, the Instance-B backup cycle fresh, and Anthropic credits available
+for the LLM spend a real Dream Cycle run costs. The component suites'
+recorded constants stay current — the diagnostic reads those records instead
+of re-deriving them, so a stale record surfaces as a diagnostic finding
+rather than silently changing a verdict. Invocation stays explicit: the
+developer names the skill when a check is wanted, and nothing schedules it.
+Every documentation correction the diagnostic surfaces waits for developer
+approval before any file is edited — the skill never silently rewrites
+another suite's documents. The run report is replaced at the start of every
+run; it is the run's record only until the next run replaces it, so anything
+standing belongs in these four documents.
 
 ## Honest Limits
 
@@ -196,8 +205,8 @@ naming it.
   candidates, and LLM spend plus minutes for a real Dream Cycle run; a
   declined §10 leaves the Dream Cycle's live state unproven for that run.
 - The skill trusts recorded constants from the sibling suites; if those
-  suites drift, §2/§5 read them incorrectly — the exam modules, not this
-  skill, are the standing guard on those records.
+  suites drift, §2/§5 read them incorrectly — the component suites' own
+  documentation cycles, not this skill, keep those records current.
 - §9 can only report backups — it never creates or refreshes dumps, so a
   failing backup habit surfaces as findings, not repairs.
 
@@ -216,13 +225,7 @@ reporting (the report file is metrics and verdicts, not prose).
 formats), [[[mb-memory-system-diagnostic:mb-memory-system-diagnostic|Skill]]](C:/mybizz/mb-memory-system-diagnostic/mb-memory-system-diagnostic.md) (the procedure — canonical
 artifact in its own repository `C:\mybizz\mb-memory-system-diagnostic\mb-memory-system-diagnostic.md`, installed copy at
 `~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md`),
-Exam Plan / 
-Exam Report /
-Log /
-[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings.md) /
-Exam Skill (the config-management
-exam set — the diagnostic's own standing check inventory; the diagnostic is
-never executed by its exam). Ecosystem boundary:
+[[[mybizz-config-docs:mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-memory-system-diagnostic/mb-memory-system-diagnostic-learnings.md). Ecosystem boundary:
 `archify/output/memory-ecosystem-project/memory-ecosystem-scope.md`.*
 
 *End of document*

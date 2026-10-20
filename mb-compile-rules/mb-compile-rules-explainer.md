@@ -1,7 +1,7 @@
 ---
 title: "mb-compile-rules-explainer"
 doc-id: "mb-3c93f17d"
-updated: "2026-10-15"
+updated: "2026-10-20"
 ---
 # mb-compile-rules — Explainer
 
@@ -31,14 +31,12 @@ rejected is removed immediately, not left for later cleanup.
   apply the developer's keep-or-remove decision.
 - **Safe amendment of live rules.** The same cycle, applied minimally to
   an existing rule — small diffs on proven text, a rollback backup the
-  scanner can never pick up, and a full re-test. Proven end-to-end in
-  live use.
-- **Guardrails against its own failure modes.** The pipeline encodes the
-  corrections learned the hard way: testing and placement are one action
-  (the checker only ever evaluates what is really installed), a rule's
-  internal package name must match its real location or it loads silently
-  and never fires, and the compiled file carries exactly one `cup-`
-  prefix while the source keeps its own name.
+  scanner can never pick up, and a full re-test.
+- **Guardrails against its own failure modes.** Testing and placement
+  are one action (the checker only ever evaluates what is really
+  installed), a rule's internal package name must match its real
+  location or it loads silently and never fires, and the compiled file
+  carries exactly one `cup-` prefix while the source keeps its own name.
 - **A hard boundary on who presses the button.** The agent drafts,
   checks, places, and proposes tests — but every real test command is run
   by the developer in their own terminal, by design and by standing rule.
@@ -53,26 +51,25 @@ rejected is removed immediately, not left for later cleanup.
   [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)); re-verifying a rule after a
   system change; onboarding a new rule from a plain-language proposal.
 - **Not good for:** as proof on its own — an offline syntax pass is
-  evidence, not verification; several real rules passed offline and
-  failed live; for speed at the expense of the cycle — skipping the
-  health check or the real tests is exactly how the recorded live crashes
-  and the one total outage happened; for anything requiring judgment
+  evidence, not verification, and a rule can pass offline and still fail
+  live; for speed at the expense of the cycle — skipping the health
+  check or the real tests is how an unvalidated file reaches the live
+  folder and crashes evaluation; for anything requiring judgment
   about *what* should be blocked — that is the developer's authoring
   decision, made in the plain-language source; this skill never invents
   rules.
 
 ## Why it works this way
 
-**Why placement and testing are one action.** The first live use proved
-the checker cannot evaluate a draft file in isolation — it only ever sees
+**Why placement and testing are one action.** The checker cannot evaluate
+a draft file in isolation — it only ever sees
 what is actually installed. A "test first, deploy later" workflow is
 therefore impossible by construction; the pipeline treats placement as the
 test's beginning, with an immediate health check so a bad file is caught
 in seconds.
 
-**Why the internal name must match the folder.** The same live testing
-proved a rule with the wrong internal namespace loads without error and
-silently never fires — the most dangerous failure mode in a security
+**Why the internal name must match the folder.** A rule with the wrong
+internal namespace loads without error and silently never fires — the most dangerous failure mode in a security
 system: protection that appears present but does nothing. The name rule
 turns that silent gap into a checked property.
 
@@ -83,9 +80,9 @@ misuse its own guard. Principled: the agent has an interest in its test
 results; the developer does not. Real output from the developer's terminal
 is the only honest verdict.
 
-**Why one single, complete write per rule.** A real crash once came from
-three dependent edits landing out of order, leaving the live file
-referencing a helper that was never written. Atomic writes make that
+**Why one single, complete write per rule.** Dependent parallel edits
+land out of order and leave the live file referencing a helper the
+pipeline never wrote. One single, complete write per rule makes that
 failure impossible.
 
 **Why the source keeps its own name.** The rule sources are the
@@ -93,7 +90,7 @@ developer's plain-language documents, named for their subjects; the
 `cup-` prefix belongs to the compiled, enforcement side of the pipeline.
 Forcing the prefix onto sources — and doubling it where a compiled name
 already carried one — would break the prerequisite step for most of the
-estate. The corrected convention keeps the two sides of the pipeline
+estate. The convention keeps the two sides of the pipeline
 distinct: sources as written, compiled files always prefixed exactly
 once.
 
@@ -108,8 +105,8 @@ touch the machine's filesystem is
 [[sec-local-filesystem-access-boundary|Local Filesystem Access
 Boundary]]. An enforcement file is itself a security control — an
 unvalidated one entering the live folder by any other path (a careless
-"add everything" save) was the recorded cause of the one total outage.
-This pipeline is the sanctioned door, and its gates are the review.
+"add everything" save) can crash evaluation entirely. This pipeline is
+the sanctioned door, and its gates are the review.
 
 ## What has to happen
 
@@ -121,7 +118,7 @@ This pipeline is the sanctioned door, and its gates are the review.
   to stay body-identical to it — a stale installed copy silently executes
   a superseded procedure.
 - Rules belong to Cupcake: the estate lives in its configuration
-  ([[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)), and every new or changed
+  ([[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)), and every new or amended
   rule reaches the live folder only through this pipeline.
 - Cupcake stays active and enforcing — standing policy; its current state
   is recorded in its own configuration.

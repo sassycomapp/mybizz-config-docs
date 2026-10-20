@@ -1,7 +1,7 @@
 ---
 title: "mb-close-out-config"
 doc-id: "mb-e1c4d0bf"
-updated: "2026-10-16"
+updated: "2026-10-20"
 ---
 # mb-close-out — Config
 
@@ -12,9 +12,9 @@ Settings of the `mb-close-out` skill, governed by [[[mybizz-config-docs:mb-sysdo
 | Field | Value |
 |---|---|
 | Issuer | MyBizz |
-| Installed version | `5499a8f` — latest commit of the source repository (2026-10-15) |
+| Installed version | `5499a8f` — latest commit of the source repository |
 | Standard taken from | `C:\mybizz\mb-close-out\mb-close-out.md` at commit `5499a8f` |
-| Last researched | 2026-10-15 |
+| Last researched | 2026-10-20 |
 
 ## Component
 
@@ -31,21 +31,20 @@ Settings of the `mb-close-out` skill, governed by [[[mybizz-config-docs:mb-sysdo
 |---|---|---|---|---|
 | Source document | the issuer standard itself | `C:\mybizz\mb-close-out\mb-close-out.md` (86 lines) | [[[mb-close-out:mb-close-out]]](C:/mybizz/mb-close-out/mb-close-out.md) | |
 | Installed copy | — | `~/.config/opencode/skills/mb-close-out/SKILL.md` (90 lines) | [[[mb-close-out:mb-close-out]]](C:/mybizz/mb-close-out/mb-close-out.md) | |
-| Copy sync | bodies byte-identical below the frontmatter | verified 2026-10-15 | [[[mb-close-out:mb-close-out]]](C:/mybizz/mb-close-out/mb-close-out.md) | L2 |
+| Copy sync | bodies byte-identical below the frontmatter | verified | [[[mb-close-out:mb-close-out]]](C:/mybizz/mb-close-out/mb-close-out.md) | L2 |
 | Frontmatter | differs between the copies by design | OpenCode format (`name`, `description`) on the installed copy; corpus format (`title`, `doc-id`, `updated`) on the source | [[[mb-close-out:mb-close-out]]](C:/mybizz/mb-close-out/mb-close-out.md) | L2 |
 | Drift detection | body diff of the two copies below the frontmatter | same | [[[mb-close-out:mb-close-out]]](C:/mybizz/mb-close-out/mb-close-out.md) | L1 |
-| Skills-catalog status | row present, status OK | OK (checked 2026-10-15) | [[[mybizz-os-docs:os-reference-docs/skills-catalog\|skills catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | |
 
 ## Source repository
 
 | Setting | Issuer standard | MyBizz value | Source | Learning |
 |---|---|---|---|---|
 | Local path | — | `C:\mybizz\mb-close-out` (WSL `/mnt/c/mybizz/mb-close-out`) | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | |
-| GitHub | — | `mb-close-out`, Public (developer-confirmed 2026-10-15); remote `https://github.com/sassycomapp/mb-close-out.git` | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | |
+| GitHub | — | `mb-close-out`, Public (developer-confirmed); remote `https://github.com/sassycomapp/mb-close-out.git` | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | |
 | Commit-all list | — | member — committed, GBrain-updated and pushed by commit all | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | |
 | Cupcake readiness | — | fallback (no skeleton); global policies only | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | |
 | Dream-cycle eligible | — | no | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | |
-| GBrain source | — | `mb-close-out`, federated, 1 page (verified 2026-10-15) | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | |
+| GBrain source | — | `mb-close-out`, federated, 1 page | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | |
 
 ## Procedure structure
 
@@ -101,18 +100,16 @@ Settings of the `mb-close-out` skill, governed by [[[mybizz-config-docs:mb-sysdo
 
 | Setting | Issuer standard | MyBizz value | Source | Learning |
 |---|---|---|---|---|
-| Cupcake rule coverage | no component-specific rule (27 active policies grepped 2026-10-15); Rules 1–3 of the skill mirror standing general rules | same | [[[mybizz-config-docs:cupcake/cupcake-config]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) | |
-| Cupcake enforcement | per the operational status in [[[mybizz-config-docs:cupcake/cupcake-config]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) | Active and enforcing everywhere (verified 2026-10-15) | [[[mybizz-config-docs:cupcake/cupcake-config]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) | |
-| security-global | the grant discipline implements the verified cross-project write boundary | boundary document present at the cited path (2026-10-15) | [[[default:security-global/infrastructure/sec-local-filesystem-access-boundary]]](C:/dev/project-library-global/security-global/infrastructure/sec-local-filesystem-access-boundary.md) | |
-| Related skills | mb-submit-memory Steps 1–4 and 6–9 (governed facts); mb-project-docs Steps 1–6 and 7 (its Rule 8: the close-out gate is its Step 6 approval) | verified against the installed skills 2026-10-15 | [[[mb-submit-memory:mb-submit-memory]]](C:/mybizz/mb-submit-memory/mb-submit-memory.md) · [[[mb-project-docs:mb-project-docs\|mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md) | |
-| Retired artifacts | sessions-log and facts-log, retired by decision; the skill writes to neither | neither file exists | [[[mb-close-out:mb-close-out]]](C:/mybizz/mb-close-out/mb-close-out.md) | |
+| Cupcake rule coverage | no component-specific rule (27 active policies); Rules 1–3 of the skill mirror standing general rules | same | [[[mybizz-config-docs:cupcake/cupcake-config]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) | |
+| Cupcake enforcement | per the Operational status in [[[mybizz-config-docs:cupcake/cupcake-config]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) | Active and enforcing everywhere (per the Operational status) | [[[mybizz-config-docs:cupcake/cupcake-config]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) | |
+| security-global | the grant discipline implements the verified cross-project write boundary | boundary document present at the cited path | [[[default:security-global/infrastructure/sec-local-filesystem-access-boundary]]](C:/dev/project-library-global/security-global/infrastructure/sec-local-filesystem-access-boundary.md) | |
+| Related skills | mb-submit-memory Steps 1–4 and 6–9 (governed facts); mb-project-docs Steps 1–6 and 7 (its Rule 8: the close-out gate is its Step 6 approval) | verified against the installed skills | [[[mb-submit-memory:mb-submit-memory]]](C:/mybizz/mb-submit-memory/mb-submit-memory.md) · [[[mb-project-docs:mb-project-docs\|mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md) | |
 
 ## Registers
 
 | Setting | Issuer standard | MyBizz value | Source | Learning |
 |---|---|---|---|---|
-| Skills catalog (mybizz-os-docs) | row present, status OK | OK (checked 2026-10-15) | [[[mybizz-os-docs:os-reference-docs/skills-catalog\|skills catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | |
-| mybizz-config-docs corpus register | none exists | flagged, not created (checked 2026-10-15) | folder listing | |
+| Skills catalog (mybizz-os-docs) | row present, status OK | OK | [[[mybizz-os-docs:os-reference-docs/skills-catalog\|skills catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | |
 
 ## Open items
 

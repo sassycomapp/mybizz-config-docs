@@ -1,17 +1,13 @@
 ---
 title: "mb-submit-memory-reference"
 doc-id: "mb-c96f4742"
-updated: "2026-10-14"
+updated: "2026-10-20"
 ---
 # mb-submit-memory — Reference: Usage, Invocation, and the Full Cycle
 
 Companion to [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-config.md) (current state) and
-[[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-explainer.md) (the memory-system map and design
-reasoning). **The subject skill's own `SKILL.md` is the authoritative
-procedure.** Config-management set: Exam Plan
-(transient job-spec — read second, every run), Exam Report
-(last verified state), Log (chronological events),
-[[[mybizz-config-docs:mb-submit-memory/submit-memory-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/submit-memory-learnings.md) (transient knowledge). Agent-facing.
+[[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-explainer.md) (design reasoning). **The subject
+skill's own `SKILL.md` is the authoritative procedure.** Agent-facing.
 
 ## Invocation
 
@@ -24,30 +20,29 @@ developer — never inferred or guessed.
 
 ## Prerequisites — in order, before anything else
 
-1. **Target path is inside a registered GBrain source:**
+1. **The target path is inside a registered GBrain source:**
    ```bash
    gbrain sources list
    ```
-   If not, STOP and report. This skill never registers a source itself.
-2. **The memory governor must be running** — both processes, API and worker
-   (verified by a live check first; since 2026-09-15 they run as systemd user
-   services, so they normally start by themselves):
+   If not, STOP and report. Never register a source as part of this skill.
+2. **The memory governor is running** — API and worker:
    ```bash
    ss -tlnp | grep 8321
    systemctl --user is-active memory-governor-api memory-governor-worker
    ```
    If either is not active: `systemctl --user start memory-governor-api
-   memory-governor-worker`. Manual fallback, only when the units are down (from
-   the governor folder):
+   memory-governor-worker`. Manual fallback, only when the units are down
+   (from the governor folder):
    ```bash
    cd /home/dev-p/memory-governor && set -a && source .env && set +a && setsid nohup .venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8321 >> /tmp/memory-governor.log 2>&1 < /dev/null &
    ```
    `.env` must be sourced first — without it the governor cannot reach its
-   database and every submission 401s. Never read, print, or copy `.env`'s
-   contents.
-3. **Enforcement note:** with Cupcake active, the apply step's loopback API
-   call is permitted by the outbound-network rule's loopback exemption
-   (amended 2026-09-08, live-verified). Do not remove that exemption.
+   database and every submission fails authentication. Never read, print,
+   or copy `.env`'s contents.
+3. **Enforcement:** with Cupcake active, the apply step's loopback API call
+   is permitted by the outbound-network rule's loopback exemption (standing
+   policy — [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) › Operational status).
+   Do not remove that exemption.
 
 ## The full cycle (one continuous run)
 
@@ -57,11 +52,13 @@ developer — never inferred or guessed.
 2. **Backup** — none needed: the target file is only read; the original is
    never modified.
 3. **Detect** — query GBrain for related content using real phrases from
-   the file's actual content (verified working command form):
+   the file's actual content:
    ```bash
    gbrain call recall '{"grep": "<a real, specific phrase from the content>"}'
    ```
-   More than one query if the content spans more than one topic. Then form:
+   More than one query if the content spans more than one topic. Read the
+   actual results — a zero result is itself a finding (the content is
+   likely new). Then form:
    - **Confidence** (`method: "model_based"`): 0.85+ clearly stated and
      nothing related found, or found content squarely agrees · 0.5–0.85
      understandable but genuinely ambiguous or partial unconfirmed overlap ·
@@ -71,6 +68,7 @@ developer — never inferred or guessed.
      which project's source holds the conflict, `resolution: null` (never
      resolved by the skill) · deliberate replacement of known-outdated
      content → supersession: `resolution: "closed_by_new_fact"`.
+   Do not submit anything in this step.
 4. **Report** — inline, before submitting: real file path, plain content
    description, query results, confidence score with band and why,
    contradiction outcome. Then stop and wait in the same run.
@@ -78,10 +76,15 @@ developer — never inferred or guessed.
    exactly what they return), a clarification request, or a rejection (skip
    this file). Apply never runs without this approval, for this exact file,
    in this same run.
-6. **Apply** — submit through the governor's API:
+6. **Apply** — choose the credential by invocation context: typed directly
+   by the developer → `MEMORY_GOVERNOR_WRITER_MANUAL_SUBMISSION`; a PDLF
+   step's own routine housekeeping → `MEMORY_GOVERNOR_WRITER_PDLF_STEP_SYNC`.
+   If it is genuinely unclear which applies, ask the developer rather than
+   guess. Submit through the governor's API:
    ```
    POST http://127.0.0.1:8321/memory/candidate
-   Header: X-Governor-Credential: <manual_submission or pdlf_step_sync>
+   Header: X-Governor-Credential: $MEMORY_GOVERNOR_WRITER_MANUAL_SUBMISSION
+           (or $MEMORY_GOVERNOR_WRITER_PDLF_STEP_SYNC, per the credential rule above)
    Body:
    {
      "owning_project": "<project slug>",
@@ -97,7 +100,12 @@ developer — never inferred or guessed.
    ```
    Leave `content` out entirely — the governor reads the real file itself
    from `source_ref`. A `writer_identity` in the body is never trusted —
-   provenance is derived from the authenticating credential.
+   provenance is derived from the authenticating credential. Give the
+   developer the submission as one WSL command in exactly this form, so the
+   credential stays inside the command and never remains in the terminal:
+   ```bash
+   (set -a; . /home/dev-p/memory-governor/.env; set +a; curl -sS -X POST http://127.0.0.1:8321/memory/candidate -H "X-Governor-Credential: $MEMORY_GOVERNOR_WRITER_MANUAL_SUBMISSION" -H "Content-Type: application/json" -d '(the body above, on one line)'; echo)
+   ```
 7. **Verify** — read the real response: `"promoted"` (durable; report the
    real `memory_id`) or `"under_review"` (waiting in the governor's review
    queue — not an error; report plainly, do not resolve or resubmit). An
@@ -125,6 +133,30 @@ submitted, promoted, under review, rejected at Step 5.
 Never mark a run `DONE` if any Step 7 verification was skipped. Never run
 Step 6 without an explicit approval on record from within the same run.
 
+## Authoritative sources
+
+| Source | Link | Issuer version | Date checked |
+|---|---|---|---|
+| Skill canonical source | `/mnt/c/mybizz/mb-submit-memory/mb-submit-memory.md` | `30eb158` | 2026-10-20 |
+| Memory governor repository | `/home/dev-p/memory-governor` (git remote `sassycomapp/memory-governor.git`) | `0.1.0` (`486ae4b`) | 2026-10-20 |
+| Doc Suite Specification | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | — | 2026-10-20 |
+| GBrain suite | [[[mybizz-config-docs:gbrain/gbrain-config\|GBrain Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md) | 0.59.18.0 | 2026-10-20 |
+
+## Checks
+
+| Check | Method | Run by |
+|---|---|---|
+| Target path in a registered source | `gbrain sources list` | agent |
+| Governor running | `ss -tlnp \| grep 8321` + `systemctl --user is-active memory-governor-api memory-governor-worker` | agent |
+| Auth gate | Unauthenticated `GET http://127.0.0.1:8321/memory/review-queue` expects HTTP 422 | agent |
+| Detect surface | `gbrain call recall '{"grep": "<phrase>"}'` | agent |
+| MEMORY_VERBS surface | `gbrain config get mcp_surface` → `verbs` | agent |
+| Installed ↔ source body identity | Body diff of `~/.config/opencode/skills/mb-submit-memory/SKILL.md` against the canonical source (frontmatter differs by design) | agent |
+| Upstream push state — skill repo | `curl -s https://api.github.com/repos/sassycomapp/mb-submit-memory/commits/main \| grep -m1 '"sha"'` against local `git rev-parse HEAD` | developer |
+| Upstream push state — governor repo | `curl -s https://api.github.com/repos/sassycomapp/memory-governor/commits/main \| grep -m1 '"sha"'` against local `git rev-parse HEAD` | developer |
+| Credentialed project enumeration | From the governor folder: source `.env`, then `psql "$MEMORY_GOVERNOR_DATABASE_URL" -c 'SELECT project_id, dormant, created_at FROM projects ORDER BY project_id;'` | developer |
+| Past-run evidence | Read the run-log lane; list `registers/candidates/` | agent |
+
 ## Do not
 
 - Do not call `gbrain remember` or `gbrain sync` for anything meant to be
@@ -135,6 +167,8 @@ Step 6 without an explicit approval on record from within the same run.
   resubmit with a different confidence to force promotion.
 - Do not auto-trigger this skill — invocation is always explicit.
 - Do not read, print, or copy `.env` or any credential value.
-- Do not treat a zero result from the fact search as proof that no governed fact exists — `recall` reads the facts of one source, and a fact written before 2026-10-01 may sit in `memory-governor-code` (Step 3).
+- Do not treat a zero recall result as proof that no governed fact exists —
+  `recall` reads the facts of one source; query more than once on
+  multi-topic content.
 - Do not conflate `mg-grant`/`mg-revoke` (Cupcake's cross-project grant
   tools) with anything in the memory-governor system.

@@ -1,22 +1,19 @@
 ---
 title: "mb-submit-memory-explainer"
 doc-id: "mb-91eb637f"
-updated: "2026-10-14"
+updated: "2026-10-20"
 ---
 # mb-submit-memory — Explainer
 
-*Companion note: current state in [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-config.md); the full
-cycle in [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-reference|Reference: Usage, Invocation, and the Full Cycle]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-reference.md); the subject skill's own `SKILL.md`
-is the authoritative procedure. For how this system is examined and kept
-healthy by the config-management apparatus, see §5 below and the suite's
-exam set (Exam Plan / `-exam-report.md` /
-Log / [[[mybizz-config-docs:mb-submit-memory/submit-memory-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/submit-memory-learnings.md)).*
+Current state in [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-config.md); procedures in
+[[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-reference|Reference: Usage, Invocation, and the Full Cycle]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-reference.md); the subject skill's own
+`SKILL.md` is the authoritative procedure.
 
-## 1. What this actually is
+## 1. What it is
 
 This skill is the front door of the memory system's security gate. The
 memory governor — a small, strict program on this machine — decides what
-is allowed to become *permanent* memory, and this skill is the sanctioned
+is allowed to become permanent memory, and this skill is the sanctioned
 way anything reaches that decision: it reads a real file, checks the new
 content against everything already known, forms an honest judgment about
 how confident it is and whether anything contradicts, shows that judgment
@@ -26,55 +23,20 @@ the easy way to write memory — the one-command path that skips all checking
 path" is just a hope; this skill makes the correct path *available and
 habitual*, which is the only way the gate actually gets used.
 
-## 2. The memory system in plain terms — what this skill sits inside
+## 2. What it can do
 
-The memory system has two storage layers in one brain. The first is a
-mirror of everything written down in the projects — kept current by the
-sync process, deliberately unchecked, because its authority comes from
-being a faithful mirror of real files. The second is durable memory:
-facts meant to survive and be trusted later. Only the second layer is
-gated, because only it claims to be *believed* rather than merely *stored*.
-
-Three things can write to the gated layer, with very different relationships
-to the gate:
-
-- **The dream cycle** — the autonomous background process — writes through
-  its own phases and *cannot* pass through the gate: there is no hook where
-  a gate could attach. It is governed instead by a manual discipline. This
-  is a permanent, stated limit of the system, not an oversight.
-- **PDLF's step-completion process** submits through the gate under its own
-  credential, automatically, as part of its routine.
-- **Everything else — a human or an agent submitting real content — goes
-  through this skill**, under the `manual_submission` credential.
-
-The gate itself is deliberately simple where it matters: its decision
-engine is fully deterministic (no AI judgment decides a candidate's fate),
-it has only two possible automatic outcomes (promote straight through, or
-route to the developer's review list — it can never quietly reject or
-quarantine anything), and it derives *who* submitted a candidate from the
-cryptographic credential used, never from anything the request claims.
-
-Three couplings make the system genuinely complex, and all three have bitten:
-
-- **The name coupling.** A submission names a project, and the gate's
-  background writer hands the approved memory to GBrain *by that project's
-  name*. If the name doesn't match a real GBrain source exactly, the
-  submission succeeds at the gate and then silently fails five retries
-  later — approved memory that never actually arrived. The registry of
-  projects the gate knows and GBrain's own list of sources are two separate
-  systems that drift independently.
-- **The startup coupling.** The gate reads its configuration and database
-  credentials from the environment at the moment it starts, not from files
-  it hunts for. Started carelessly, it runs but cannot reach anything —
-  every submission fails authentication. Its permanent automatic start always starts it the correct way; the risk returns only if it is ever started by hand (the reference documents the one correct manual start).
-- **The default-source coupling (2026-09-30).** Before every write, the gate's
-  worker sets GBrain's brain-level default source to the submission's project. A
-  default that names a source that no longer exists stops `gbrain sync`; `sync-gbrain.sh` therefore resets the default before every sync, so it corrects itself. The write itself names the owning project's source, so the fact lands there whatever folder the worker runs in.
-
-One more living reality: the quick, ungoverned path is not hypothetical —
-the tool surface that carries it is explicitly enabled and sits in every
-session next to this skill. The system's designers knew this; the gate was
-built knowing the easy path would always exist. This skill is the counterweight.
+- Submits the content of one real file into durable memory through the
+  gate, with a genuine confidence and contradiction judgment formed and
+  shown before anything is sent.
+- Pauses in place for the developer's decision and finishes the same run
+  without re-invocation.
+- Walks a whole folder one file at a time — every file receives its own
+  judgment and its own approval.
+- Handles deliberate replacement of known-outdated facts as supersessions,
+  which the gate processes atomically without blocking.
+- Submits under the writer credential that honestly names who drove the
+  submission: the developer directly, or a PDLF step's own routine
+  housekeeping.
 
 ## 3. Suitability
 
@@ -89,10 +51,10 @@ built knowing the easy path would always exist. This skill is the counterweight.
   generated by the dream cycle (it has its own, ungated path by design);
   forcing a submission past review (the skill refuses by design — the
   review queue exists precisely so nothing becomes permanent unexamined);
-  use while the gate's API is down (the run blocks loudly — start the
+  running while the gate's API is down (the run blocks loudly — start the
   governor first, per the reference).
 
-## 4. Why it works the way it does
+## 4. Why it works this way
 
 **Why it pauses before submitting.** The skill forms a genuine judgment —
 confidence and contradiction — but never acts on it alone. The gate's own
@@ -111,95 +73,97 @@ agent, not a developer-verified fact. Downstream logic is allowed to weigh
 that honestly. Pretending the score was human-verified would poison the
 one thing the gate runs on.
 
+**Why two writer credentials.** The gate derives provenance from the
+authenticating credential, so the credential chosen must say honestly who
+drove the submission. A developer's deliberate act and a pipeline's routine
+housekeeping are different origins, and the gate's records keep them
+distinct.
+
+**Why the default visibility is `project_local`.** A governed fact is
+meant to be recalled by the agents that work in its owning project;
+`project_local` gives them exactly that while keeping the fact scoped to
+the project. A wider audience is a deliberate developer choice, never a
+default.
+
 **Why the gate's security checks are worth their friction.** The gate
 cannot see conversational context — it only sees tool calls and
 credentials — so it enforces mechanically what a conversation cannot:
-origin, count, and review. When a rule it enforces causes a false positive
-(as the outbound-network rule did for the gate's own local traffic), the
-correction goes through the same tested pipeline as any other rule —
-proven 2026-09-08, when the rule was amended to always allow the machine's
-own internal addresses and the pipeline was re-verified live.
+origin, count, and review. When a rule it enforces would block legitimate
+traffic — the outbound-network rule and the gate's own loopback API calls
+— the resolution is an explicit loopback exemption in the rule itself,
+made through the same tested pipeline as any other rule change.
 
-**Why the API being down matters and how it was fixed.** The gate is a
-real program someone must start; until 2026-09-08 it had only ever been
-started by hand, and on that day it was found not running — a memory
-system whose gate is closed. It was brought up live and verified end-to-end
-(authentication gating correctly observed), and a permanent auto-start
-installation was recommended, approved and executed (systemd user units,
-verified 2026-09-15) so "the gate was closed" stops being a possible state.
+**Why the permanent auto-start exists.** The gate is a real program: a
+closed gate means durable memory silently stops accumulating while the
+quick path keeps working. The governor runs as systemd user units that
+start on boot and restart on failure, so a closed gate is not a normal
+state; only a stopped unit or a hand start that skips the environment
+files puts it there. The reference documents the one correct manual start.
 
-**Open questions.** The permanent auto-start installation was executed and
-verified on 2026-09-15; the skill has a source copy in its own repository and one installed copy; the governor's own records of past submissions' project names were
-partly verified on 2026-09-15 (no endpoint lists all project rows); and the gate-vs-quick-path tension is
-managed by documented discipline rather than mechanics — the honest,
-currently-accepted state.
+**Three couplings make the system genuinely complex.**
 
-## 5. Config maintenance — how this system is examined and kept healthy
+- **The name coupling.** A submission names a project, and the gate's
+  background writer hands the approved memory to GBrain *by that project's
+  name*. If the name does not match a real GBrain source exactly, the
+  submission succeeds at the gate and then silently fails at the write.
+  The gate's project registry and GBrain's own list of sources are two
+  separate systems that drift independently.
+- **The startup coupling.** The gate reads its configuration and database
+  credentials from the environment at the moment it starts, not from files
+  it hunts for. Started carelessly, it runs but cannot reach anything.
+  The automatic start always starts it the correct way; the risk returns
+  only with a hand start.
+- **The default-source coupling.** Before every write, the gate's worker
+  sets GBrain's brain-level default source to the submission's project. A
+  default that names a source that no longer exists stops `gbrain sync`;
+  the sync script therefore resets the default before every sync, so the
+  system corrects itself. The write itself names the owning project's
+  source, so the fact lands there whatever folder the worker runs in.
 
-This suite participates in the config-management system (`mb-config-manager`).
-The roles of the suite files, and the exam cycle that runs them, are the
-architecture described in [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md) — emulated from the
-PostgreSQL pilot. The short local version:
+**Where it sits.** The memory system has two storage layers in one brain:
+the mirror, kept current by the sync process and deliberately unchecked —
+its authority comes from being a faithful copy of real files — and
+durable memory, facts meant to be believed later, the only gated layer.
+Three writers reach the gated layer: the dream cycle, which cannot pass
+through the gate and is governed by discipline instead (a permanent,
+stated limit of the system, not an oversight); PDLF's step-completion
+process, which submits under its own credential as routine; and this
+skill, under the manual-submission credential, for everything a human or
+an agent submits as real content. The gate itself is deliberately simple
+where it matters: its decision engine is fully deterministic, it has only
+two automatic outcomes (promote straight through, or route to the
+developer's review list — it can never quietly reject or quarantine
+anything), and it derives *who* submitted from the cryptographic
+credential, never from anything the request claims. The quick, ungoverned
+path is real, enabled, and sits in every session next to this skill; the
+gate is designed for that reality, and this skill is the counterweight.
 
-- [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-config.md) is the **spec** — the ideal state every exam
-  checks against. The submission skill is working well; the exam verifies that
-  and changes nothing.
-- Before each exam run, the config-manager synthesizes
-  Exam Plan: a fresh job-spec built from this spec, the
-  last report, the log, and the learnings. The plan is transient (the file is
-  live; contents rewritten each cycle).
-- The exam runs the installed skill (`mb-config-mb-submit-memory`) with the
-  plan in hand — detection fully autonomous; healing gated. **Agent-healable
-  items are suite-folder file repairs only**; every repair to the system
-  itself is developer-run or proposed.
-- **Scope boundary with the parent modules:** governor internals (binary,
-  database, worker, registration, start/stop) belong to
-  `mb-config-memory-governor`; Cupcake conformance belongs to
-  `mb-config-cupcake`; gbrain surface mechanics belong to `mb-config-gbrain`.
-  This module cross-references their reports and never re-probes them; it owns
-  the skill's configuration state, the governance-chain expectations recorded
-  in the spec, and the discipline doctrine.
-- Several checks are permanently **developer-run**: anything credentialed
-  (agent-side `.env` sourcing is a proven permanent denial class — the
-  bundle-handoff pattern applies), the governor start/stop, and everything in
-  Tier 3 (the auto-start installation and the restricted-folder deletion).
-- The run rewrites Exam Report (current state, no
-  history), appends one row to Log, files new learnings
-  to [[[mybizz-config-docs:mb-submit-memory/submit-memory-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/submit-memory-learnings.md), and prunes absorbed entries.
+## 5. What has to happen
 
-## 6. S.W.O.T.
-
-**Strengths.** The governed path is one continuous, self-pausing run with a
-real judgment (confidence + contradiction) formed before any submission; the
-gate's deterministic engine and credential-derived provenance; the skill's
-doctrine survived its first live denials intact (2026-09-14: `under_review`
-left to the developer, the credential denial honored absolutely); proven end to
-end again on GBrain 0.59.18.0 (2026-09-30: promoted, nothing left in review).
-
-**Weaknesses.** The governor was found down once (2026-09-08) — since
-2026-09-15 it runs under systemd, which removes that failure mode but not a
-stopped unit; several checks are permanently developer-run (anything credentialed);
-the subject skill's source copy lives in its own repository (`C:\mybizz\mb-submit-memory\mb-submit-memory.md`), and the installed copy must be kept identical to it.
-
-**Opportunities.** The config-management exam adds standing verification that
-never existed between runs: the auth-gate probe, the detect-surface probe, the
-governance-chain conformance checks, and the logs-lane check — catching the
-"gate quietly closed" class (the 2026-09-08 find) before it bites a real
-submission.
-
-**Threats.** The ungoverned quick path is real, enabled, and sits in every
-session next to this skill — the counterweight is documented discipline, not
-mechanics; a governor started by hand the wrong way 401s every submission (the automatic start avoids this); project-registry and gbrain-source naming drift silently kills
-flushes (operational learning #2) — the credentialed Tier 3 check is the only
-close watch on it. A stale brain default would stop every sync, but `sync-gbrain.sh` resets it before each one.
+- The developer keeps the governor's systemd user units enabled. The units
+  load the governor's environment, so a manual start is needed only when a
+  unit is down, and then exactly as the reference documents.
+- The loopback exemption in Cupcake's outbound-network rule stays in
+  place; the apply step depends on it.
+- MEMORY_VERBS stays enabled on the GBrain surface, and the discipline
+  routing durable submissions through this skill stays documented and
+  followed — it is not mechanical.
+- The installed copy stays body-identical to the canonical source, and the
+  canonical repository stays committed and pushed; the body diff is the
+  verification, never a hash.
+- Every submission's `owning_project` keeps matching a registered GBrain
+  source exactly.
+- Credentials stay in the governor's `.env`, referenced by name only;
+  anything credentialed stays developer-run — agent-side sourcing of that
+  file is a standing denial class.
+- The run-log lane keeps receiving every run, and its learnings file is
+  read first on every run.
 
 ---
 
-*Companion documents: [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-config.md) (the spec),
-[[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-reference|Reference: Usage, Invocation, and the Full Cycle]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-reference.md) (procedures and rules), the subject skill's
-`SKILL.md` (authoritative procedure), Exam Plan /
-`-exam-report.md` / Log / [[[mybizz-config-docs:mb-submit-memory/submit-memory-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/submit-memory-learnings.md)
-(config-management set), Submit Memory Skill (exam skill canonical
-source). Architecture: [[[mybizz-config-docs:mb-config-manager/config-manager-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-explainer.md).
-The full memory-system map: [[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md). The gate's own
-suite: [[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) + `-reference.md` + `-explainer.md`.*
+*Companion documents: [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-config.md) (state),
+[[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-reference|Reference: Usage, Invocation, and the Full Cycle]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-reference.md) (procedures and rules), the subject
+skill's `SKILL.md` (authoritative procedure). The gate's own suite:
+[[[mybizz-config-docs:memory-governor/memory-governor-config|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) with its `-reference.md`
+and `-explainer.md`. The full memory-system map:
+[[[mybizz-os-docs:os-reference-docs/memory-master-explainer|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md).*

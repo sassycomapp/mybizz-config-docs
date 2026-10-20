@@ -1,78 +1,72 @@
 ---
 title: "mb-submit-memory-config"
 doc-id: "mb-e76d96dd"
-updated: "2026-10-10"
+updated: "2026-10-20"
 ---
 # mb-submit-memory — Configuration
 
-Canonical current-state configuration record. Agent-facing. States facts,
-not history — decisions and reasoning in [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-explainer.md);
-the full cycle in [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-reference|Reference: Usage, Invocation, and the Full Cycle]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-reference.md); the skill's own
-`SKILL.md` is the authoritative procedure. All values verified live
-2026-09-08 unless noted; rows and sections dated 2026-09-30 were re-verified after
-the GBrain upgrade to 0.59.18.0.
+State of the governed-submission skill: what exists, what it is set to, and
+the issuer's standard for it. Procedures in [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-reference|Reference: Usage, Invocation, and the Full Cycle]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-reference.md); reasoning in
+[[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-explainer.md); the skill's own `SKILL.md` is the
+authoritative procedure.
 
 ## Identity
 
-| Item | Value |
+| Field | Value |
 |---|---|
-| Skill name | `mb-submit-memory` — custom (mb-*) skill |
-| Location | `~/.config/opencode/skills/mb-submit-memory/SKILL.md` (real file, 2026-08-25) — the installed copy; its source is `C:\mybizz\mb-submit-memory\mb-submit-memory.md`, kept identical (the folder's skill slot now holds the `mb-config-mb-submit-memory` exam-skill source per developer instruction; the 13,502 B fingerprint above is the repo-side anchor). The exam-skill source↔installed pair is hash-verified each cycle |
-| Invocation | `/mb-submit-memory (path)` — path always given explicitly by the developer, never inferred; never auto-triggered |
-| Structure | Single file (13,502 B). A 25-byte `Zone.Identifier` sidecar in the installed dir was removed 2026-09-08 |
-| Modus operandi | learnings → backup (none needed) → detect → report → **pause for inline approval** → apply → verify → log → learnings — one continuous run |
+| Issuer | MyBizz |
+| Installed version | Commit `30eb158` of the canonical source; the installed copy is body-identical (13,272 B, sha256 `e3acd8d9…`) |
+| Standard taken from | `30eb158` — the canonical source at the installed version |
+| Last researched | 2026-10-20 |
 
-## What it does — one line
+## Skill
 
-Submits real, developer-authored file content into durable GBrain memory,
-exclusively through the memory-governor's API — the single, correct governed
-path. Never calls `gbrain remember` or `gbrain sync` directly.
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Canonical skill source | The canonical file is the skill's authoritative text | `/mnt/c/mybizz/mb-submit-memory/mb-submit-memory.md` (12,625 B) | `/mnt/c/mybizz/mb-submit-memory/mb-submit-memory.md` | |
+| Installed copy | Body identical to the canonical source; frontmatter differs by design | One physical file at two directory entries: `~/.config/opencode/skills/mb-submit-memory/SKILL.md` and `~/.config/skills/mb-submit-memory/` | Live body diff | L1, L2 |
+| Invocation | `/mb-submit-memory (path)`; the path is always given explicitly; never auto-triggered | Same as standard | `/mnt/c/mybizz/mb-submit-memory/mb-submit-memory.md` | |
+| Run cycle | Learnings → backup → detect → report → approval → apply → verify → log → learnings, one continuous run | Same as standard | `/mnt/c/mybizz/mb-submit-memory/mb-submit-memory.md` | |
+| Writer credentials | Two credentials, chosen by invocation context, referenced by name only | `MEMORY_GOVERNOR_WRITER_MANUAL_SUBMISSION` and `MEMORY_GOVERNOR_WRITER_PDLF_STEP_SYNC`, environment variables in `/home/dev-p/memory-governor/.env` | `/mnt/c/mybizz/mb-submit-memory/mb-submit-memory.md` | |
+| Submission command form | One WSL command, `(set -a; . /home/dev-p/memory-governor/.env; set +a; curl …)`, credential inside the command | Same as standard | `/mnt/c/mybizz/mb-submit-memory/mb-submit-memory.md` | |
+| Visibility | `project_local` | `project_local` — the default, agent-recallable | `/mnt/c/mybizz/mb-submit-memory/mb-submit-memory.md`; live recall | L3 |
 
-## Downstream system — the memory governor (verified live 2026-09-08)
+## Downstream system — memory governor
 
-| Item | Value |
-|---|---|
-| App | `/home/dev-p/memory-governor` (WSL-native, deliberate — do not relocate); git remote `sassycomapp/memory-governor.git` |
-| Version | pyproject declares `0.1.0`; a stray empty file `0.48.2.0` sits in the repo root (origin unconfirmed, likely a shell artifact of 2026-09-06) — deletion pending (developer; restricted folder) |
-| API | `http://127.0.0.1:8321` — **ACTIVE as of 2026-09-08** (started detached, log-verified, survives shell exit); auth-gates unauthenticated calls correctly (HTTP 422 credential-required, observed live) |
-| Start procedure (manual fallback — the systemd units normally start it) | `cd /home/dev-p/memory-governor && set -a && source .env && set +a && setsid nohup .venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8321 >> /tmp/memory-governor.log 2>&1 < /dev/null &` — `.env` must be sourced first (no dotenv autoload) |
-| Permanent auto-start | **Installed and verified 2026-09-15 (session 005):** systemd enabled in WSL; the governor runs as two auto-start, auto-restart user services (`memory-governor-api`, `memory-governor-worker`) |
-| Stop and start | `systemctl --user stop memory-governor-api`, wait 60 seconds, `systemctl --user stop memory-governor-worker`; start both with `systemctl --user start memory-governor-api memory-governor-worker` (the order used for the GBrain upgrade, 2026-09-30). Re-verified 2026-09-30: both units active, port 8321 held by one listener, an unauthenticated `GET /memory/review-queue` answers 422 |
-| Database | `memory_governor` on WSL-native PostgreSQL 16 (server verified up today). DB-level state (5 tables, 5 real candidate rows, owner `memory_governor_svc`) verified 2026-09-05 by [[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md); re-check requires the service credential (not accessed) |
-| Its own GBrain source | `memory-governor-code` — registered (46 pages listed 2026-09-30, 53 in early September); the 2026-09-05 recommendation was actioned. Facts written before 2026-10-01 may still sit in it; new governed facts go to the owning project's source |
-| Past-run evidence | `/tmp/memory-governor.log` — clean startup + `POST /memory/projects` 201 + `POST /memory/candidate` 201; `registers/candidates/` holds the real candidate records |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| App location | — | `/home/dev-p/memory-governor` (WSL-native; git remote `sassycomapp/memory-governor.git`) | Live check | |
+| Version | — | pyproject `0.1.0`, commit `486ae4b` | Live check | |
+| API | — | `http://127.0.0.1:8321`, one listener | Live probe | |
+| Auth gate | — | Unauthenticated `GET /memory/review-queue` answers HTTP 422 | Live probe | |
+| Auto-start | — | systemd user units `memory-governor-api` and `memory-governor-worker`, active and enabled, `Restart=on-failure`, `EnvironmentFile=.env` | Unit files | |
+| Database | — | Recorded in the governor suite | [[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) | |
+| Governor's GBrain source | — | `memory-governor-code`, registered (46 pages) | `gbrain sources list` | |
+| Past-run evidence | — | `registers/candidates/` candidate records and the run-log lane | Live check | |
 
-## Governance chain state (all verified 2026-09-08)
+## GBrain dependency
 
-| Item | State |
-|---|---|
-| Cupcake enforcement | **ACTIVE** |
-| Outbound-network rule | **Amended 2026-09-08** — loopback destinations (`127.0.0.1`, `localhost`, `::1`) always allowed; the skill's API path is now permitted under active enforcement. Formal eval tests pending developer run; one real loopback call already passed live |
-| MEMORY_VERBS | **Enabled** (`gbrain config get mcp_surface` → `verbs`; re-verified 2026-09-30) — the ungoverned quick path (`gbrain remember`) is a live tool surface; the discipline routing durable submissions through this skill is documented, not mechanical |
-| mg-grant / mg-revoke | **Cupcake's** cross-project grant tools (`~/.config/cupcake/bin/`) — the "mg-" prefix has no connection to the memory governor; do not conflate |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| GBrain version | — | 0.59.18.0 — full GBrain state recorded in the gbrain suite | `gbrain --version` | |
+| MEMORY_VERBS surface | — | Enabled (`gbrain config get mcp_surface` → `verbs`) | Live check | |
+| Reranker | — | On — recorded in the gbrain suite | [[[mybizz-config-docs:gbrain/gbrain-config\|GBrain Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md) | |
+| This skill's source page | — | `mb-submit-memory` source, federated (1 page) | `gbrain sources list` | |
 
-## GBrain upgrade check — 2026-09-30 (0.46.1.0 → 0.59.18.0, schema 128 → 169)
+## Governance chain
 
-| Item | State |
-|---|---|
-| Commands this skill uses | `gbrain sources list` (same JSON keys in both versions) and `gbrain call recall '{"grep": …}'` (inputs unchanged; new optional `source_id`). The governor API path does not depend on GBrain's version |
-| End-to-end proof | `/mb-submit-memory` on `os-reference-docs/environment-explainer.md` (source `mybizz-os-docs`) → `promoted`, memory_id `2cb82774-957c-4772-be3e-8d421f030c4a`; nothing left in review, nothing rejected. Step 4 report: confidence 0.85 (`model_based`), contradiction none (field omitted). Log: `/mnt/c/mybizz/logs/mb-submit-memory/2026-09-30T165533+0200.md` |
-| Where the fact lands | The owning project's documentation source (the worker names it on every write since 2026-10-01). The run of 2026-09-30, before that change, landed in `memory-governor-code` |
-| Governor project registry | The run registered the governor project `mybizz-os-docs` (learning recorded), so later submissions to that source do not 404 |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Cupcake enforcement | — | Active and enforcing — standing policy | [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) › Operational status | |
+| Outbound-network rule | Loopback destinations are always allowed | The active rule's loopback exemption names the governor API at 127.0.0.1:8321 | Cupcake active policy | |
+| mg-grant / mg-revoke | — | Cupcake's cross-project grant tools (`~/.config/cupcake/bin/`); no connection to the memory governor | Live check | |
 
-## Naming drift — RESOLVED (source-side)
+## Logs lane
 
-The old naming open item is closed: the source it concerned no longer
-exists, and its documents are now in the `pdlf` source.
-
-## Logs
-
-`/mnt/c/mybizz/logs/mb-submit-memory/` — three run logs (`2026-08-27T060743+0200.md`, `2026-09-14T222823+0200.md`, `2026-09-30T165533+0200.md`) + `learnings.md` (8 durable entries at 2026-09-15; one added 2026-09-30: the governor project `mybizz-os-docs` was registered). Verified live 2026-09-15 (exam run #1); the 2026-09-30 log is named in that run's own report.
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Log location | — | `/mnt/c/mybizz/logs/mb-submit-memory/` — four run logs and `learnings.md` (9 entries) | Live check | |
 
 ## Open items
 
-- Governor-side `owning_project` verification — executed 2026-09-15 (exam run #1 Tier 3): credential accepted, review queue empty (nothing pending); every evidenced `owning_project` (`mybizz-config-docs`, `makepdlf-project-library`) matches a registered gbrain source exactly. Boundary: no documented API endpoint enumerates all project rows — full enumeration would require a new read endpoint (developer feature decision) or a credentialed DB query (developer-run).
-- Permanent auto-start installation (systemd migration) — **executed and verified 2026-09-15** (see Downstream system); closed.
-- Stray `0.48.2.0` file deletion — pending developer (restricted folder).
-- Dual SKILL.md copies — dissolved 2026-09-15 (exam run #1 gate): the mirror slot was repurposed as the exam-skill source; the subject skill has one installed copy, with its source in its own repository.
-- Near-identical duplicate copy of `environment-explainer.md` in the `pdlf` source (found by the 2026-09-30 run) — developer decision whether to keep both.
+None.

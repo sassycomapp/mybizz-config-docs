@@ -1,178 +1,120 @@
 ---
 title: "postgresql-config"
 doc-id: "mb-a8b414df"
-updated: "2026-10-10"
+updated: "2026-10-20"
 ---
 # PostgreSQL — Configuration
 
-Canonical, current-state configuration record for every PostgreSQL instance on
-this machine. Pure facts and settings — no narrative, no history, no design
-rationale. For the "why," see [[[mybizz-config-docs:postgresql/postgresql-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-explainer.md). For commands and
-procedures, see [[[mybizz-config-docs:postgresql/postgresql-reference|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md). Last fully verified live: 2026-10-05.
+Settings sheet for every PostgreSQL instance on this machine. Commands and
+procedures: [[[mybizz-config-docs:postgresql/postgresql-reference|Reference]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md). What the system is and why:
+[[[mybizz-config-docs:postgresql/postgresql-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-explainer.md).
 
-**Two entirely separate instances exist. Do not confuse them.** The layer
-placement: Instance B hosts the supporting-systems layer's memory; Instance A
-hosts the PDLF layer's ledger (see
-the supporting-systems, PDLF and shipped layers for the layer map).
+## Identity
 
-## The two PostgreSQL installations at a glance
-
-This machine runs **two separate PostgreSQL installations. Both are installed,
-running and needed; neither replaces the other.** Each serves a different part
-of the system:
-
-| | Instance A | Instance B |
-|---|---|---|
-| Program | PostgreSQL 15 | PostgreSQL 16 |
-| Runs on | Windows | WSL installation `Ubuntu` (Ubuntu 24.04) |
-| Serves | PDLF — the `pdlf` build ledger | GBrain (`gbrain`) and the Memory Governor (`memory_governor`) |
-| Port | `5433` | `5432` |
-| Reached from WSL | PowerShell bridge, always with `-p 5433` | directly, `localhost:5432` |
-| Starts | automatically with Windows (service `postgresql-x64-15`) | automatically with WSL (systemd, `postgresql.service`) |
-| Current use | running; the ledger's tables stay empty until PDLF runs a real project | running; holds GBrain's memory and the governor's records |
-
-**The rule that follows:** every database command names its instance and its
-port. Port 5432 reaches Instance B from both sides of the WSL boundary, so a
-command meant for the ledger that omits `-p 5433` reaches GBrain's server
-instead, without any error.
-
----
-
-## Instance A — Windows-native PostgreSQL 15 (the PDLF ledger host)
-
-| Item | Value |
+| Field | Value |
 |---|---|
-| Version | 15.14, compiled by Visual C++ build 1944, 64-bit (verified live 2026-10-05) |
-| Install path | `C:\Program Files\PostgreSQL\15\` |
-| Data directory | `C:\Program Files\PostgreSQL\15\data` |
-| Port | `5433` |
-| Host (from Windows) | `127.0.0.1` or `localhost` (equivalent) |
-| Reached from WSL via | PowerShell bridge only, always with `-p 5433` — see [[[mybizz-config-docs:postgresql/postgresql-reference\|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md). A bare `psql` to `localhost:5432` connects to Instance B instead, silently — from WSL directly, and from Windows via WSL's port relay (Windows port 5432 belongs to WSL's relay, which is why this instance listens on 5433). |
-| Auth method | `scram-sha-256` for all users/addresses, including `0.0.0.0/0` and `::/0`. No trust paths. `pg_hba.conf` is readable only by superuser — verification requires superuser access. |
-| Service (real) | `postgresql-x64-15`, StartType: Automatic — expected Running at every exam; status is live-checked each exam (Running, verified 2026-10-05) |
-| Service (dead duplicate) | `PostgreSQL` — Status: Stopped, StartType: Automatic. Same data directory as above. Harmless; cannot conflict since only one process can bind the port. Do not start it. |
-| Logging | `logging_collector` = off — Instance A writes no log files while it stays off (`data\log\` holds only historical files, newest 2025-10-08). Faults surface via SCM/Event Viewer and probe errors. `SHOW log_directory` is superuser-only. (Verified 2026-10-05.) |
-| Binary (for the WSL PowerShell bridge) | `C:\Program Files\PostgreSQL\15\bin\psql.exe` |
+| Issuer | PostgreSQL Global Development Group (WSL instance via the Ubuntu archive package; Windows instance via the EDB installer) |
+| Installed version | WSL: 16.15 / Windows: 15.14 |
+| Standard taken from | PostgreSQL 16.15 (WSL instance) and PostgreSQL 15.14 (Windows instance) |
+| Last researched | 2026-10-20 |
 
-### Roles
+## Estate census
 
-| Role | Notes |
-|---|---|
-| `postgres` | Superuser. Credential: `PGADMIN_USER`/`PGADMIN_PASSWORD` in `C:\pdlf\.env` (referenced by variable name only — never printed) |
-| `pdlf_agent` | Owns the `pdlf` database. Password stored as `PGPASSWORD` in the same `.env` |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| PostgreSQL installations | — | Two, entirely separate: Instance A (Windows) and Instance B (WSL) | — | — |
+| WSL installations | — | One: `Ubuntu` (the default). Every WSL command names it explicitly (`wsl -d Ubuntu ...`) | — | — |
+| Windows services | — | One: `postgresql-x64-15` | — | — |
+| Windows registry product keys | — | One: `postgresql-x64-15` | — | — |
+| Port listeners (543x range) | [Default port 5432](https://www.postgresql.org/docs/16/runtime-config-connection.html#GUC-PORT) | Windows 5432 = WSL's localhost relay to Instance B; Windows 5433 = Instance A; WSL 5432 = Instance B; no other listeners | [Default port](https://www.postgresql.org/docs/16/runtime-config-connection.html#GUC-PORT) | L1 |
 
-Historically removed roles (`pgvector_user`, `pgvector_readonly`) must remain
-absent — reappearance is a finding.
+## Instance A — Windows, the PDLF ledger
 
-### Databases (verified live 2026-10-05)
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Version | — | 15.14, compiled by Visual C++ build 1944, 64-bit | — | — |
+| Install path | — | `C:\Program Files\PostgreSQL\15\` | [EDB installer](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) | — |
+| Data directory | — | `C:\Program Files\PostgreSQL\15\data` | — | — |
+| Port | [5432](https://www.postgresql.org/docs/15/runtime-config-connection.html#GUC-PORT) | `5433` | [Port default](https://www.postgresql.org/docs/15/runtime-config-connection.html#GUC-PORT) | L1 |
+| `listen_addresses` | [localhost](https://www.postgresql.org/docs/15/runtime-config-connection.html#GUC-LISTEN-ADDRESSES) | `localhost` | [listen_addresses default](https://www.postgresql.org/docs/15/runtime-config-connection.html#GUC-LISTEN-ADDRESSES) | — |
+| `pg_hba.conf` | — (contents are deployment-specific) | Local rules only; readable by superuser only — verification requires superuser access | — | — |
+| `password_encryption` | [scram-sha-256](https://www.postgresql.org/docs/15/runtime-config-connection.html#GUC-PASSWORD-ENCRYPTION) | `scram-sha-256` | [password_encryption default](https://www.postgresql.org/docs/15/runtime-config-connection.html#GUC-PASSWORD-ENCRYPTION) | — |
+| `logging_collector` | [off](https://www.postgresql.org/docs/15/runtime-config-logging.html#GUC-LOGGING-COLLECTOR) | `off` — Instance A writes no log files; faults surface via SCM/Event Viewer and probe errors; `SHOW log_directory` is superuser-only | [logging_collector default](https://www.postgresql.org/docs/15/runtime-config-logging.html#GUC-LOGGING-COLLECTOR) | — |
+| Service | — | `postgresql-x64-15`, StartType: Automatic, Running | — | — |
+| Bridge binary | — | `C:\Program Files\PostgreSQL\15\bin\psql.exe` | — | — |
+| Backup output | — | `pg_dump.exe` writes Instance A dumps directly to `C:\backup-gbrain\` on port 5433 | — | — |
+| Serves | — | PDLF — the `pdlf` build ledger. Schema contract: [[[pdlf:pdlf-library/specifications-local/spec-postgres-ledger\|Spec: Postgres Ledger]]](C:/pdlf/pdlf-library/specifications-local/spec-postgres-ledger.md) | — | — |
+| PDLF project `.env` | — | Sources cleanly; Windows-path values are quoted; carries `PGPORT=5433`; `PSQL_WIN_PATH` has zero consumers, kept for future use | — | — |
 
-| Database | Owner | Size | Notes |
-|---|---|---|---|
-| `pdlf` | `pdlf_agent` | 7,877 kB | The PDLF build ledger. 7 tables, all currently hold 0 rows (verified live 2026-10-05). Extensions: `plpgsql` only |
-| `postgres` (admin) | `postgres` | 8,425 kB | Holds no user tables. Baseline backup: `postgres_admin_backup_2026-09-05.dump` (194,019 bytes, `C:\Users\dev-p\`) |
-| `template0` / `template1` | `postgres` | ~7,297 kB each | Standard. `template0` is not connectable (`datallowconn = false` — verified live 2026-10-05) |
+### Instance A roles
 
-### `pdlf` — table inventory
+| Role | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| `postgres` | — | Superuser. Credential held as `PGADMIN_USER`/`PGADMIN_PASSWORD` in `C:\pdlf\.env` (referenced by variable name only — never printed) | — | — |
+| `pdlf_agent` | — | Owns the `pdlf` database. Password held as `PGPASSWORD` in the same `.env` | — | — |
+| `pgvector_user` / `pgvector_readonly` | — | Absent. Reappearance is a finding | — | — |
 
-`projects`, `steps`, `gates`, `deviations`, `bft_records`, `isc`,
-`triage_findings` — all in schema `public`, all owned by `pdlf_agent`. All
-seven currently hold 0 rows (verified live 2026-10-05).
+### Instance A databases
 
-The schema documented in
-[[[pdlf:pdlf-library/specifications-local/spec-postgres-ledger|Spec: Postgres Ledger]]](C:/pdlf/pdlf-library/specifications-local/spec-postgres-ledger.md)
-matches the live database; the specification file is authoritative for
-column-level detail (including `resolution_note`/`resolved_at` on
-`triage_findings`).
+| Database | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| `pdlf` | — | Owner `pdlf_agent`; 7,893 kB; seven tables in schema `public`, all owned by `pdlf_agent`, all holding 0 rows (the ledger fills when PDLF runs a real project); extensions: `plpgsql` only. Tables: `projects`, `steps`, `gates`, `deviations`, `bft_records`, `isc`, `triage_findings`. Column-level detail: [[[pdlf:pdlf-library/specifications-local/spec-postgres-ledger\|Spec: Postgres Ledger]]](C:/pdlf/pdlf-library/specifications-local/spec-postgres-ledger.md) | — | — |
+| `postgres` (admin) | — | Owner `postgres`; 8,469 kB; PostgreSQL's own catalogs only — no user tables, no `vecs` schema. Baseline backup: `postgres_admin_backup_2026-09-05.dump` (194,019 bytes, `C:\Users\dev-p\`) | — | — |
+| `template0` / `template1` | Standard system databases | Owner `postgres`; ~7,297 kB each; `template0` is not connectable (`datallowconn = false`) | — | — |
 
-### Project `.env` integrity
+## Instance B — WSL, the memory-system host
 
-The project `.env` sources cleanly; Windows-path values are quoted. It carries
-`PGPORT=5433` (the ledger's port). `PSQL_WIN_PATH`
-has zero consumers — kept for future use.
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Version | — | 16.15 (Ubuntu 24.04 package) | — | — |
+| Cluster | — | `16/main`, online | `man pg_lsclusters` | — |
+| Port | [5432](https://www.postgresql.org/docs/16/runtime-config-connection.html#GUC-PORT) | `5432` | [Port default](https://www.postgresql.org/docs/16/runtime-config-connection.html#GUC-PORT) | — |
+| `listen_addresses` | [localhost](https://www.postgresql.org/docs/16/runtime-config-connection.html#GUC-LISTEN-ADDRESSES) | `localhost` — loopback only | [listen_addresses default](https://www.postgresql.org/docs/16/runtime-config-connection.html#GUC-LISTEN-ADDRESSES) | — |
+| Data directory | Ubuntu cluster convention | `/var/lib/postgresql/16/main` | `man pg_lsclusters` | — |
+| Config directory | Ubuntu convention: `/etc/postgresql/<version>/<cluster>/` | `/etc/postgresql/16/main/` — `postgresql.conf`, `pg_hba.conf`, `pg_ident.conf`, `start.conf`, `conf.d/`, `environment`. `pg_hba.conf` is root/postgres-owned, not readable by `dev-p` | `man pg_lsclusters` | — |
+| Log file | — | `/var/log/postgresql/postgresql-16-main.log` | — | — |
+| `password_encryption` | [scram-sha-256](https://www.postgresql.org/docs/16/runtime-config-connection.html#GUC-PASSWORD-ENCRYPTION) | `scram-sha-256` | [password_encryption default](https://www.postgresql.org/docs/16/runtime-config-connection.html#GUC-PASSWORD-ENCRYPTION) | — |
+| `autovacuum` | [on](https://www.postgresql.org/docs/16/runtime-config-autovacuum.html#GUC-AUTOVACUUM) | `on`, cluster-wide | [autovacuum default](https://www.postgresql.org/docs/16/runtime-config-autovacuum.html#GUC-AUTOVACUUM) | — |
+| Row-level security (`gbrain`) | — (the issuer mandates no coverage; the feature is opt-in per table) | Enabled on every table in `gbrain` | [Row security](https://www.postgresql.org/docs/16/ddl-rowsecurity.html) | — |
+| `systemd` | — | PID 1 in WSL. `/etc/wsl.conf` sets `systemd=true` and carries no `[boot]` command: `postgresql.service` (enabled) owns the cluster, the two governor user units own the memory processes; `start-memory-system.sh` stays on disk as a manual fallback only | — | — |
+| Management tooling | — | `systemctl` and `service` both manage PostgreSQL; `pg_ctlcluster` is the cluster-level start/stop tool | — | — |
+| Memory governor units | — | `memory-governor-api` and `memory-governor-worker` (systemd user units, active) | [[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) | — |
+| Connection string (`gbrain`) | — | `postgresql://postgres:<password>@localhost:5432/gbrain` — the password lives only in `~/.gbrain/config.json` (`database_url`) and `~/.pgpass`; referenced by variable name in every command | — | — |
+| Connection string (`memory_governor`) | — | Held in the governor's own `.env` as `MEMORY_GOVERNOR_DATABASE_URL` (referenced by name only) | — | — |
+| Serves | — | GBrain (`gbrain`) and the memory governor (`memory_governor`). GBrain's own facts (version, reranker, embedding model) live in [[[mybizz-config-docs:gbrain/gbrain-config\|GBrain Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md); governor facts in [[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) | — | — |
 
----
+### Instance B roles
 
-## Instance B — WSL-native PostgreSQL 16 (the memory-system host)
+| Role | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| `postgres` | — | Owns `gbrain` and every table in it. Password held only in `~/.pgpass` and `~/.gbrain/config.json` (`database_url`) — never quoted in documents | — | — |
+| `memory_governor_svc` | — | Owns `memory_governor` (all five tables). Scoped — cannot connect to `gbrain`. Password in the governor's own `.env` (`MEMORY_GOVERNOR_DATABASE_URL`) | — | — |
+| `ledger_writer` / `ledger_approver` | — | Login-capable test roles from the memory governor's own RLS live-testing, cited as the verified precedent in [[[default:security-global/infrastructure/sec-database-access-control\|Database Access Control]]](C:/dev/project-library-global/security-global/infrastructure/sec-database-access-control.md). Own nothing — `gbrain`'s tables are all owned by `postgres` | — | — |
 
-| Item | Value |
-|---|---|
-| Version | 16.15 (Ubuntu 24.04 package) (verified live 2026-10-05) |
-| Cluster name | `main` — status `online` (verified live 2026-10-05) |
-| Port | `5432` |
-| Host (from WSL) | `localhost` or `127.0.0.1` |
-| Data directory | `/var/lib/postgresql/16/main` |
-| Config directory | `/etc/postgresql/16/main/` (`postgresql.conf`, `pg_hba.conf`, `pg_ident.conf`, `start.conf`, `conf.d/`, `environment`) — `pg_hba.conf` is root/postgres-owned, not readable by `dev-p` |
-| Log file | `/var/log/postgresql/postgresql-16-main.log` |
-| Connection string (gbrain DB) | `postgresql://postgres:<password>@localhost:5432/gbrain` — the password lives only in `~/.gbrain/config.json` (`database_url`) and `~/.pgpass`; reference by variable name in every command |
-| Connection string (governor DB) | In `memory_governor`'s own `.env` as `MEMORY_GOVERNOR_DATABASE_URL` (referenced by name only) |
-| Management tooling | systemd is PID 1; `systemctl` and `service` both work; `pg_ctlcluster` remains the cluster-level start/stop tool. |
-| Boot config | `/etc/wsl.conf` carries no `[boot]` command: under systemd, `postgresql.service` (enabled) owns the cluster and the two governor user units own the memory processes; the script remains on disk as a manual fallback only. |
-| Autovacuum posture | `on` (cluster-wide). Hot-table recency is the health signal: `content_chunks` and `pages` vacuum within days of writes (recency re-checked each exam). The `facts` table showing `last_autovacuum = never` is **normal** — it is low-write; flag only if a *hot* table stops vacuuming. |
+### Instance B databases
 
-### Role-isolation test method (authoritative)
-
-Role access is tested via `has_database_privilege(role, db, 'CONNECT')` — never
-via `SET ROLE` (from a superuser session `SET ROLE` always succeeds; impersonation
-proves nothing about the role's own privileges). Expected: `memory_governor_svc`
-→ `gbrain` = false; → `memory_governor` = true; `ledger_writer` → `gbrain` = false.
-
-### Roles
-
-| Role | Notes |
-|---|---|
-| `postgres` | Owns `gbrain`. Password: held only in `~/.pgpass` and `~/.gbrain/config.json` (`database_url`) — never quoted in corpus documents |
-| `memory_governor_svc` | Owns `memory_governor` (all 5 tables). Scoped — cannot connect to `gbrain`. Password in `memory_governor`'s own `.env` (`MEMORY_GOVERNOR_DATABASE_URL`). |
-| `ledger_writer` / `ledger_approver` | Login-capable test roles from the memory governor's own RLS live-testing — cited as the verified precedent in [[[default:security-global/infrastructure/sec-database-access-control\|Database Access Control]]](C:/dev/project-library-global/security-global/infrastructure/sec-database-access-control.md). Own nothing (`gbrain`'s tables are all owned by `postgres`). |
-
-### Databases (verified live 2026-10-05)
-
-| Database | Owner | Size | Notes |
-|---|---|---|---|
-| `gbrain` | `postgres` | 242 MB | GBrain's memory/vector store. **2,477 pages, 7,171 chunks, 7,171 embedded (100%)** — point-in-time at exam (grows with every sync; exams check coverage % + growth explainability, never exact equality). 93 tables, all with RLS enabled, all owned by `postgres`. Schema v169, embedding `openai:text-embedding-3-large` (1536d). Extensions: `plpgsql` 1.0, `vector` 0.6.0, `pg_trgm` 1.6, `pgcrypto` 1.3 |
-| `memory_governor` | `memory_governor_svc` | 8,359 kB | 5 tables (all owned by `memory_governor_svc`): `projects`, `memory_candidates`, `policy_versions`, `memory_events`, `audit_log`. See [[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md). |
-| `postgres` (admin) | `postgres` | 7,345 kB | Standard, unremarkable. |
-| `template0` / `template1` | `postgres` | ~7.3–7.6 MB each | Standard, unmodified. |
-
-Removed database `compliance_ledger` must remain absent — reappearance is a
-finding. Its baseline backup: `compliance_ledger_backup_2026-09-05.dump`
-(6,149 bytes, `/home/dev-p/`).
-
----
-
-## Instance census: exactly two instances
-
-Windows registry: one PostgreSQL product. Windows services: two registrations,
-one data directory. No `Program Files (x86)` install. WSL: one installation,
-`Ubuntu` (the default); one cluster. Port listeners: Windows 5432 = WSL's
-relay (to Instance B), Windows 5433 = Instance A; WSL 5432 = Instance B; no
-other listeners in the 543x range on either side. A manually-compiled,
-never-registered instance can't be mathematically excluded, but no evidence
-of one exists.
-
-`Ubuntu` is the only WSL installation and the default. Every WSL command
-names it explicitly (`wsl -d Ubuntu ...`).
+| Database | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| `gbrain` | — | Owner `postgres`; 263 MB; GBrain's memory/vector store; every table has row-level security enabled; all tables owned by `postgres`. Extensions: `plpgsql` 1.0, `vector` 0.6.0, `pg_trgm` 1.6, `pgcrypto` 1.3. Page and chunk counts are read live with the commands in [[[mybizz-config-docs:postgresql/postgresql-reference\|Reference]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md), never recorded here — they move with every sync | [pgvector](https://github.com/pgvector/pgvector); [supplied extensions](https://www.postgresql.org/docs/16/contrib.html) | — |
+| `memory_governor` | — | Owner `memory_governor_svc`; 8,359 kB; five tables, all owned by `memory_governor_svc`: `projects`, `memory_candidates`, `policy_versions`, `memory_events`, `audit_log`. Detail: [[[mybizz-config-docs:memory-governor/memory-governor-config\|Memory Governor Configuration]]](C:/mybizz/mybizz-config-docs/memory-governor/memory-governor-config.md) | — | — |
+| `postgres` (admin) | — | Owner `postgres`; 7,503 kB; standard | — | — |
+| `template0` / `template1` | Standard system databases | Owner `postgres`; ~7.3–7.6 MB each; unmodified | — | — |
+| `compliance_ledger` | — | Absent. Reappearance is a finding — it means something is recreating it. Baseline backup: `compliance_ledger_backup_2026-09-05.dump` (6,149 bytes, `/home/dev-p/`) | — | — |
 
 ## Backups (estate-wide)
 
-| Location | Role | Notes |
-|---|---|---|
-| `/home/dev-p/backup-gbrain/` | **Default** | WSL-native, same host as Instance B — fastest to produce and restore (name is historical) |
-| `/mnt/c/backup-gbrain/` (`C:\backup-gbrain`) | **Security net** | Windows-drive copy — survives a full WSL distro reinstall or loss; also the direct dump target for Instance A (Windows `pg_dump.exe` writes there natively) |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Locations | — | `/home/dev-p/backup-gbrain/` (default — same host as Instance B); `/mnt/c/backup-gbrain/` (security net — survives a full WSL reinstall; also Instance A's direct dump target, since Windows `pg_dump.exe` writes there natively) | — | — |
+| Coverage | — | Every data-bearing database on both instances, always: Instance A `pdlf` + `postgres` (admin); Instance B `gbrain` + `memory_governor` + `postgres` (admin). Templates excluded — standard system objects, rebuildable from the install; `template0` is not connectable and cannot be dumped normally | — | — |
+| Format | — | `pg_dump -Fc` (custom, compressed); one file per database (pg_dump is per-database by design). Naming: `<db>-db-backup-YYYY-MM-DD.dump`, admin databases disambiguated `-a-`/`-b-` by instance | — | — |
+| Cadence | — | Weekly: Task Scheduler task `SundayBackup` runs `C:\mybizz\scripts\sunday-backup.sh` every Sunday at 10:00; a missed start is not caught up; a missed or failed run is reported at the next logon. An extra cycle always runs before upgrades, schema changes or destructive operations | — | — |
+| Retention | — | The two most recent verified cycles in each location; older dumps are deleted at the cycle that supersedes them | — | — |
+| Pair rule | — | Dump once, copy to both locations immediately, hash-verify (`cmp`/sha256). A mismatched pair means re-dump and re-copy both sides — never copy one way twice | — | — |
+| Cycle record | — | The Sunday task reports the result in a pop-up and writes a log to `C:\mybizz\logs\sunday-backup\`; the latest log is the record of the latest cycle | — | — |
+| Windows credential source | — | The task reads `%APPDATA%\postgresql\pgpass.conf` for Instance A dumps; `pgpass.conf` exists on Windows | — | — |
+| Markdown export lane | — | `gbrain export --dir /mnt/c/backup-dream-cycle/` runs in the same Sunday task, after the DB dumps. Second line of defense for DB-only pages; the PostgreSQL dump remains line one | — | — |
 
-- **Coverage: every data-bearing database on both instances, always** (developer default): Instance A `pdlf` + `postgres` (admin); Instance B `gbrain` + `memory_governor` + `postgres` (admin). **Templates excluded** — standard system objects, rebuildable from the install itself; `template0` is not connectable and cannot be dumped normally.
-- Format: `pg_dump -Fc` (custom, compressed); one file per database (pg_dump is per-database by design). Naming: `<db>-db-backup-YYYY-MM-DD.dump`, admin DBs disambiguated `-a-` / `-b-` by instance.
-- **Cadence: weekly (7 days), exam-enforced** — every config-management exam checks dump age; older than 7 days = finding that forces a fresh cycle. Run every Sunday at 10:00 by the Task Scheduler task `SundayBackup` (`C:\mybizz\scripts\sunday-backup.sh`); a missed start is not caught up, and a missed or failed run is reported at the next logon. Event-triggered extras: always before upgrades, schema changes, or destructive operations.
-- **Retention: the two most recent verified cycles in each location; older dumps are deleted at the cycle that supersedes them**.
-- **Live-database rule:** never re-dump one side of the pair; dump once, copy to both locations immediately, then hash-verify (`cmp`/sha256). A mismatched pair means re-dump + re-copy both, never copy one way twice.
-- Result of each cycle: the Sunday task reports it in a pop-up and writes a log to `C:\mybizz\logs\sunday-backup\`; the latest log is the record of the latest cycle.
-- Instance-A dumps are produced by `pg_dump.exe` on Windows (run by the Sunday task, which reads the Windows password file `%APPDATA%\postgresql\pgpass.conf`), written directly to `C:\backup-gbrain\` on port 5433; the task copies each dump to the other location and hash-checks the pair. Instance-B dumps are agent-runnable.
-- **Second lane — markdown export:** dream-synthesized concept pages are DB-only (no backing file); their second line of defense is `gbrain export --dir /mnt/c/backup-dream-cycle/` (`C:\backup-dream-cycle`) — run by the Sunday task, after the DB dumps. The PostgreSQL dump remains line one; the export adds file-lane-visible, human-readable recovery for DB-only content.
+## Open items
 
-## Items deliberately left in place
-
-- The dead duplicate `PostgreSQL` Windows service — cosmetic only, left in
-  place deliberately. Removing the registration (`sc delete PostgreSQL`)
-  is available to the developer if ever wanted.
-- `pg_hba.conf` content on Instance B — root/postgres-owned, not readable
-  by `dev-p`; the scram posture verification requires superuser access
-  (`pg_hba.conf` is not readable by `dev-p`).
+None.

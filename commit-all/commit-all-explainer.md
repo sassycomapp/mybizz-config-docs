@@ -1,13 +1,13 @@
 ---
 title: "commit-all-explainer"
 doc-id: "mb-a85c9c4f"
-updated: "2026-10-16"
+updated: "2026-10-20"
 ---
 # commit-all — Explainer
 
 ## What it is
 
-Commit-all is the one command that closes the books after any work: it commits every documentation repository and the scripts repository with a single message, refreshes GBrain so the changed documents are searchable, pushes everything to GitHub, and prints one summary table. It solves a bookkeeping problem: with more than a dozen repositories, ending work means many commits that must not be forgotten, in an order that keeps the search index and the remote copy in step with what is on disk.
+Commit-all is the one command that closes the books after any work: it commits every documentation repository and the scripts repository with a single message, refreshes GBrain so the updated documents are searchable, pushes everything to GitHub, and prints one summary table. It solves a bookkeeping problem: with more than a dozen repositories, ending work means many commits that must not be forgotten, in an order that keeps the search index and the remote copy in step with what is on disk.
 
 ## What it can do
 
@@ -19,7 +19,7 @@ Commit-all is the one command that closes the books after any work: it commits e
 
 ## Suitability
 
-Best for ending any documentation or skill work anywhere in the division, and for the last step of a close-out. Good for a catch-up run when a previous ending was skipped. Not good for application code repositories, where a commit is a deliberate code change; not for the memory governor's code, which is committed by hand; not for the Anvil reference clone, which is never pushed. When the whole end-of-session sequence is wanted — session page, facts, project documents, then the commit — mb-close-out orchestrates it and calls commit-all as its last step.
+Best for ending any documentation or skill work anywhere in the division, and for the last step of a close-out. Good for a catch-up run when repositories still hold uncommitted work. Not good for application code repositories, where a commit is a deliberate code change; not for the memory governor's code, which is committed by hand; not for the Anvil reference clone, which is never pushed. When the whole end-of-session sequence is wanted — session page, facts, project documents, then the commit — mb-close-out orchestrates it and calls commit-all as its last step.
 
 ## Why it works this way
 

@@ -1,102 +1,114 @@
 ---
 title: "graphify-config"
 doc-id: "mb-765e162c"
-updated: "2026-10-04"
+updated: "2026-10-20"
 ---
 # Graphify Configuration
 
-Canonical current-state configuration record. Agent-facing. States facts, not
-history or rules — reasoning in [[[mybizz-config-docs:graphify/graphify-explainer|Graphify Explainer]]](C:/mybizz/mybizz-config-docs/graphify/graphify-explainer.md), commands and rules in
-[[[mybizz-config-docs:graphify/graphify-reference|Graphify Reference]]](C:/mybizz/mybizz-config-docs/graphify/graphify-reference.md). All values verified live 2026-09-14 (config-management
-run #1; earlier full verification 2026-09-08) unless noted.
+Canonical current-state record: what exists and what each thing is set to.
+Commands and rules: [[[mybizz-config-docs:graphify/graphify-reference|Graphify Reference]]](C:/mybizz/mybizz-config-docs/graphify/graphify-reference.md). Reasons:
+[[[mybizz-config-docs:graphify/graphify-explainer|Graphify Explainer]]](C:/mybizz/mybizz-config-docs/graphify/graphify-explainer.md). Differences from the issuer
+standard: [[[mybizz-config-docs:graphify/graphify-learnings|Graphify Learnings]]](C:/mybizz/mybizz-config-docs/graphify/graphify-learnings.md).
 
-## Identity (machine-wide install)
+## Identity
 
-| Item | Value |
+| Field | Value |
 |---|---|
-| Version | `0.9.40` (CLI and package agree) |
-| Upstream latest (PyPI) | `0.9.61` (verified live 2026-09-14) — environment is behind; upgrade not performed |
-| PyPI distribution | `graphifyy` (double-y; other `graphify*` packages unaffiliated) |
-| Official repository | `github.com/Graphify-Labs/graphify` (default branch: `v8`) |
-| Former URL | `github.com/safishamsi/graphify` — now serves the same org repo (alias) |
-| Maintainer | Safi Shamsi (Graphify Labs) |
-| Executable | `/home/dev-p/.local/bin/graphify` |
-| Python module | `/home/dev-p/.local/lib/python3.12/site-packages/graphify/` (Python 3.12.3) |
-| Install method | `pip install --break-system-packages` (user site-packages) + `graphifyy[mcp]` extra (`mcp` 2.0.0) |
-| Skill (OpenCode) | `~/.config/opencode/skills/graphify/` — `SKILL.md` + `references/`, version marker `.graphify_version` |
-| Security scan | SkillsLLM: PASSED, no issues; scanned 2026-04-16 (pip-audit + npm-audit; no semgrep) |
-| Python requirement | >= 3.10 (package metadata) |
+| Issuer | Graphify Labs |
+| Installed version | `0.9.40` (CLI and package agree) |
+| Standard taken from | 0.9.40 |
+| Last researched | 2026-10-20 |
 
-## Install surface — what each step wrote
+## Install
 
-| Step | Wrote |
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| PyPI distribution | `graphifyy` (other `graphify*` packages are unaffiliated) | `graphifyy` | https://pypi.org/project/graphifyy/ | |
+| Official repository | `github.com/Graphify-Labs/graphify` (default branch `v8`) | Same | https://github.com/Graphify-Labs/graphify | |
+| Maintainer | Safi Shamsi (Graphify Labs) | Same | https://github.com/Graphify-Labs | |
+| Executable | — | `/home/dev-p/.local/bin/graphify` | — | |
+| Python module | — | `/home/dev-p/.local/lib/python3.12/site-packages/graphify/` (Python 3.12.3) | — | |
+| Install method | — | `pip install graphifyy --break-system-packages` (user site-packages) + `graphifyy[mcp]` extra (`mcp` 2.0.0) | — | |
+| Python requirement | >= 3.10 | 3.12.3 in use | Package metadata | |
+| OpenCode skill | `~/.config/opencode/skills/graphify/` — `SKILL.md`, `references/`, version marker `.graphify_version` | Present at the standard location | `graphify install --platform opencode` | |
+| Skills catalog row | — | Vendor skill, Operational; the installed copy is its own source | [[[mybizz-os-docs:os-reference-docs/skills-catalog\|skills-catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | |
+| API key | Needed only for semantic (doc/paper/image) extraction | None configured | `graphify --help` (extract) | L1 |
+
+## Scope — repositories
+
+Scope is nine app repositories, three per project. Each repository holds a
+code graph under `graphify-out/`, its own `.graphifyignore`, and a
+`.graphify_root` marker holding its own absolute path.
+
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| mb-3-cs repositories | — | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-app1`, `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-app3`, `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-app5` | — | |
+| mb-4-ecom repositories | — | `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-app1`, `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-app3`, `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-app5` | — | |
+| mb-5-pdlf repositories | — | `/mnt/c/dev/dev-mb-5-pdlf/mb-5-pdlf-app1`, `/mnt/c/dev/dev-mb-5-pdlf/mb-5-pdlf-app3`, `/mnt/c/dev/dev-mb-5-pdlf/mb-5-pdlf-app5` | — | |
+| Repositories outside scope | — | The `app2` repository of each project (holds no graphify artifacts) | — | |
+| `.graphifyignore` (all nine) | gitignore syntax, user-defined | `.opencode/` and `opencode.json` (two lines; tracked in git) | — | |
+| `.graphify_root` (all nine) | — | Holds the repository's own absolute path | — | |
+| Repository `.gitignore` (graphify lines) | — | `.opencode/`, `agents.md`, `opencode.json`, `graphify-out/`; mb-3-cs-app1 also `tests/` | — | |
+| `graphify-out/.graphify_build.json` | — | `{"gitignore": false}` in mb-3-cs-app1; absent in the other eight | — | |
+
+## Build
+
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| Extraction mode | `--backend` auto-detects from API keys; semantic extraction available | `--code-only`: local AST extraction, no AI backend, no API key, no model calls | `graphify --help` (extract) | L1 |
+| Community labels | LLM naming via `--backend`/`--model` (`label`, `cluster-only`) | Deterministic representative-node names (no labeling backend installed) | `graphify --help` | L1 |
+| Graph refresh | Manual command; optional `watch` or post-commit-hook automation | Manual refresh after every code commit in the repository | `graphify --help` | L4 |
+| Storage | — | `directed: false` (undirected) in all nine graphs | — | |
+
+## Graph state — nine repositories
+
+`built_at_commit` equals the repository HEAD in all nine graphs. Confidence
+labels: EXTRACTED (read from syntax), INFERRED (the tool's guess), AMBIGUOUS
+(unresolved). Ghost nodes are empty-`source_file` name references from Anvil
+UI templates the extractor cannot structurally parse.
+
+| Repository | Nodes | Links | Confidence | Communities | Ghost nodes |
+|---|---|---|---|---|---|
+| mb-3-cs-app1 | 566 | 460 | 443 EXTRACTED / 17 INFERRED | 158 | 96 |
+| mb-3-cs-app3 | 10 | 6 | 6 EXTRACTED | 4 | 2 |
+| mb-3-cs-app5 | 10 | 6 | 6 EXTRACTED | 4 | 2 |
+| mb-4-ecom-app1 | 10 | 6 | 6 EXTRACTED | 4 | 2 |
+| mb-4-ecom-app3 | 10 | 6 | 6 EXTRACTED | 4 | 2 |
+| mb-4-ecom-app5 | 10 | 6 | 6 EXTRACTED | 4 | 2 |
+| mb-5-pdlf-app1 | 5 | 3 | 3 EXTRACTED | 2 | 1 |
+| mb-5-pdlf-app3 | 10 | 6 | 6 EXTRACTED | 4 | 2 |
+| mb-5-pdlf-app5 | 10 | 6 | 6 EXTRACTED | 4 | 2 |
+
+## graphify-out/ contents
+
+| Entry | Presence |
 |---|---|
-| Package install | CLI + module (paths above) |
-| `graphify install --platform opencode`, run from mb-3-cs root | Global: `~/.config/opencode/skills/graphify/` (`SKILL.md`, `references/`). Repo-local: `.opencode/plugins/graphify.js`, `.opencode/opencode.json` (plugin registration), `.opencode/node_modules/` |
-| MCP extra | `mcp` 2.0.0 into the same user site-packages |
+| `graph.json`, `GRAPH_REPORT.md`, `manifest.json`, `cache/`, `.graphify_analysis.json`, `.graphify_root` | All nine repositories |
+| `graph.html` | mb-3-cs-app1 |
+| `.graphify_build.json` (`{"gitignore": false}`) | mb-3-cs-app1 |
+| `.graphify_labels.json` + `.graphify_labels.json.sig` (community labels) | mb-3-cs-app1 |
+| Machine-local dated backup folders (untracked) | mb-3-cs-app1 (four) |
 
-`.opencode/plugins/graphify.js` is a `tool.execute.before` hook that prepends a
-reminder string to bash commands; it writes no files of its own.
+## OpenCode integration
 
-## Scope configuration — mb-3-cs
+| Setting | Issuer standard | MyBizz value | Source | Learning |
+|---|---|---|---|---|
+| MCP entry | `graphify opencode install` writes an AGENTS.md section + a `tool.execute.before` plugin | Manual `mcp.graphify` entry in each repository's root `opencode.json`: type `local`, enabled `true`, command `["/usr/bin/python3", "-m", "graphify.serve", "<repo>/graphify-out/graph.json"]` | `graphify --help` | L2 |
+| MCP tools | 10 in the installed `serve.py`: `graph_stats`, `get_node`, `get_neighbors`, `get_community`, `god_nodes`, `shortest_path`, `query_graph`, `list_prs`, `get_pr_impact`, `triage_prs` (prefixed `graphify_` in OpenCode) | Same | Installed `serve.py` | |
+| PR-triage tools | — | Present but unused (require a GitHub CLI/token) | — | |
+| API key for MCP | — | None; the 7 core tools need none | Installed `serve.py` | |
+| Global OpenCode config | — | No graphify entry | — | |
+| `.opencode/opencode.json` | Plugin registration written by `graphify opencode install` | Present only in mb-3-cs-app1, holding `$schema` only; absent in the other eight | — | |
+| `.opencode/plugins/graphify.js` | `tool.execute.before` hook that prepends a reminder string to bash commands; writes no files | Present in all nine | — | |
+| AGENTS.md guidance block | — | `<!-- BEGIN GRAPH MEMORY GUIDANCE -->` … `<!-- END GRAPH MEMORY GUIDANCE -->` shared GBrain + Graphify block in mb-3-cs-app1 only; owner [[[mybizz-os-docs:os-reference-docs/memory-master-explainer\|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md) | — | |
 
-| File | Content |
-|---|---|
-| `/mnt/c/dev/dev-mb-3-cs/mb-3-cs/.graphifyignore` | `.opencode/` and `opencode.json` (exactly two lines; tracked in git) |
-| Repo `.gitignore` (graphify-relevant lines) | `graphify-out/`, `.opencode/`, `agents.md`, `opencode.json`, `tests/` |
-| `graphify-out/.graphify_build.json` | `{"gitignore": false}` — persisted from a prior `--no-gitignore` run; sticks until reset |
-| `graphify-out/.graphify_root` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs` (absolute, machine-specific) |
-
-`.graphifyignore` does not list `agents.md` though `.gitignore` does — no
-effect (markdown is not a code-extraction target).
-
-## Current graph state — mb-3-cs (verified live 2026-09-08)
-
-| Item | Value |
-|---|---|
-| Nodes / Edges | 537 / 434 |
-| Communities | 155 |
-| Confidence | 417 EXTRACTED (96%) / 17 INFERRED (4%) / 0 AMBIGUOUS |
-| `built_at_commit` | `59175d9e504808ab278336e70b189066a2eae7e2` |
-| Live HEAD at check | same commit — graph current (rebuilt 2026-09-14 via the documented full code-only rebuild: `extract --force --code-only` + `cluster-only`, run from the repo root — see the cwd note under §Open items) |
-| Directed | `false` (stored undirected) |
-| Artifact | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs/graphify-out/graph.json` |
-| Ghost template nodes | 95 (empty `source_file`; Anvil UI templates — see explainer) |
-| `tests/` | In the graph; gitignored |
-
-## graphify-out/ inventory — mb-3-cs
-
-| Entry | Kind |
-|---|---|
-| `graph.json`, `GRAPH_REPORT.md`, `graph.html`, `manifest.json` | Primary outputs |
-| `.graphify_analysis.json`, `.graphify_build.json`, `.graphify_labels.json`, `.graphify_labels.json.sig`, `.graphify_root` | Build-state sidecars |
-| `cache/` | Per-machine AST cache |
-| `2026-08-15/` | Manual backup of the prior graph state (537 nodes, `built_at_commit` `e29cbd1b…`); machine-local, untracked |
-| `2026-09-14/` | Auto-backup refreshed during the 2026-09-14 Tier 3 run (surviving snapshot: the post-realign, pre-rebuild state — 562 nodes; the earlier 574-node pre-realign state was overwritten by the same-day backups); machine-local, untracked |
-
-## OpenCode MCP integration — mb-3-cs
-
-| Item | Value |
-|---|---|
-| Scope | Project `opencode.json` (gitignored) |
-| Entry | `mcp.graphify`, type `local`, enabled `true` |
-| Command | `["/usr/bin/python3", "-m", "graphify.serve", "/mnt/c/dev/dev-mb-3-cs/mb-3-cs/graphify-out/graph.json"]` |
-| API key | None for the 7 core tools |
-| Tools (10, verified in installed `serve.py`) | `graph_stats`, `get_node`, `get_neighbors`, `get_community`, `god_nodes`, `shortest_path`, `query_graph` + 3 PR-triage (`list_prs`, `get_pr_impact`, `triage_prs`); prefixed `graphify_` in OpenCode |
-| PR-triage tools | Unused here; require a GitHub CLI/token |
-
-## Related integration facts
+## Related facts
 
 | Item | State |
 |---|---|
-| AGENTS.md (mb-3-cs) | `<!-- BEGIN GRAPH MEMORY GUIDANCE -->` … `<!-- END GRAPH MEMORY GUIDANCE -->` block, lines 102–126; encodes the graph-provenance check; single shared block for GBrain + Graphify guidance (owner: [[[mybizz-os-docs:os-reference-docs/memory-master-explainer\|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md)) |
-| Git hooks / merge driver | Not installed, not registered — deliberate (decision record: [[[mybizz-config-docs:graphify/graphify-explainer\|Graphify Explainer]]](C:/mybizz/mybizz-config-docs/graphify/graphify-explainer.md)) |
-| mb-3-cs project status | Paused ([[[mybizz-config-docs:opencode/opencode-config\|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md)) — deployment waits on PDLF completion |
+| Git hooks / merge driver | Not installed, not registered (L4) |
 | GBrain | Never ingests `graphify-out/`; no shared backend; separate MCP servers |
-| Community labels | Deterministic representative-node names (LLM labeling package `anthropic` not installed) — accepted state |
 
 ## Open items
 
-- `--exclude` flag: absent from 0.9.40 help (re-confirmed 2026-09-14); prior suite claimed it functional — unverified in this version.
-- **`built_at_commit` cwd quirk (found by the 2026-09-14 full rebuild):** `graphify extract` stamps the commit from the invoking working directory's git repo, not the scanned path — a rebuild run from another repo stamped that repo's HEAD onto this graph (caught by the procedure's provenance-confirmation step, fixed by re-running from the repo root). Rebuilds here always run from the target repo root.
-- Upgrade decision open: upstream `0.9.61` / repo `v8` ships features absent in 0.9.40 (`graphify prs`, HTTP MCP transport, multi-project MCP) and recommends committing `graphify-out/` for team setups — incompatible with the standing local decision (see explainer) unless re-decided. Exam GF3-2 outcome 2026-09-14: stay on 0.9.40 (no check failed).
+None.

@@ -1,7 +1,7 @@
 ---
 title: "mb-compile-rules-reference"
 doc-id: "mb-c2e50820"
-updated: "2026-10-15"
+updated: "2026-10-20"
 ---
 # mb-compile-rules — Reference
 
@@ -40,8 +40,7 @@ name; the skill never invents one.
 - **`opa check` is agent-safe** (invokes `opa`, never `cupcake`): run it
   on every draft before placement; do not proceed on a non-zero exit.
 - **One rule, one single complete write.** A helper function must be in
-  the same write as any rule that calls it — dependent parallel edits
-  caused a real live crash.
+  the same write as any rule that calls it.
 - **The package name must match the deployment folder, decided before
   drafting.** Global target (`~/.config/cupcake/policies/opencode/`) →
   `cupcake.global.policies.(name)`. Project-local
@@ -67,8 +66,8 @@ belong here:
 - `cupcake eval` is inert: it never executes a real tool call — nothing
   is created or modified; the permission-slip decrement only happens in
   live use.
-- The agent does not run it — standing rule; every real test in this
-  environment's rule history was run by the developer.
+- The agent does not run it — standing rule; the developer runs every
+  real test.
 
 ## Amendment pattern
 
@@ -86,11 +85,11 @@ belong here:
 
 | Source | Link | Issuer version | Date checked |
 |---|---|---|---|
-| Canonical source (issuer: MyBizz) | `C:\mybizz\mb-compile-rules\mb-compile-rules.md` | `2e2ac13` | 2026-10-15 |
-| Cupcake reference — evaluation schema, invocation and grants | [[[mybizz-config-docs:cupcake/cupcake-reference\|Cupcake Reference]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-reference.md) | Cupcake `0.3.0` estate | 2026-10-15 |
-| System integrity — division context, section 6 | [[[mybizz-os-docs:os-reference-docs/system-integrity-explainer\|System Integrity Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/system-integrity-explainer.md) | — | 2026-10-15 |
-| Skills catalog — install record | [[[mybizz-os-docs:os-reference-docs/skills-catalog\|Skills Catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | — | 2026-10-15 |
-| Repository organization — source-repo listing | [[[mybizz-os-docs:os-reference-docs/repo-organization\|Repository Organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | — | 2026-10-15 |
+| Canonical source (issuer: MyBizz) | `C:\mybizz\mb-compile-rules\mb-compile-rules.md` | `2e2ac13` | 2026-10-20 |
+| Cupcake reference — evaluation schema, invocation and grants | [[[mybizz-config-docs:cupcake/cupcake-reference\|Cupcake Reference]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-reference.md) | Cupcake `0.3.0` estate | 2026-10-20 |
+| System integrity — division context, section 6 | [[[mybizz-os-docs:os-reference-docs/system-integrity-explainer\|System Integrity Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/system-integrity-explainer.md) | — | 2026-10-20 |
+| Skills catalog — install record | [[[mybizz-os-docs:os-reference-docs/skills-catalog\|Skills Catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | — | 2026-10-20 |
+| Repository organization — source-repo listing | [[[mybizz-os-docs:os-reference-docs/repo-organization\|Repository Organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | — | 2026-10-20 |
 
 ## Checks
 
@@ -101,7 +100,7 @@ belong here:
 | Deployment target | All rules global — read the estate rows in [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) | agent |
 | Live policy folder | `ls ~/.config/cupcake/policies/opencode/builtins/` — deployed rules, grants-data files, backups never loaded | developer |
 | Binaries | `ls ~/.cupcake/bin/` — `cupcake` and `opa` present | developer |
-| Works | Source↔deployed correspondence current in [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md); the newest rule on record went through this pipeline end-to-end | agent |
+| Works | Source↔deployed correspondence current in [[[mybizz-config-docs:cupcake/cupcake-config\|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md); every rule on record entered the live folder through this pipeline | agent |
 
 ## Do not
 
@@ -114,7 +113,7 @@ belong here:
 - Do not choose the deployment target after drafting.
 - Do not let any `.rego` file enter a live policy folder by any path other
   than this pipeline — an unvalidated file there can crash evaluation
-  entirely (the recorded incident).
+  entirely.
 - Do not use `time.*` or `opa.runtime().env` in any rule — both fail
   silently in the live engine.
 - Do not leave a failed or rejected file in a scanned policy folder —

@@ -1,7 +1,7 @@
 ---
 title: "sysdoc-creator-config"
 doc-id: "mb-7688c176"
-updated: "2026-10-15"
+updated: "2026-10-20"
 ---
 # sysdoc-creator — Config
 
@@ -12,9 +12,9 @@ State of the `mb-sysdoc-creator` skill.
 | Field | Value |
 |---|---|
 | Issuer | MyBizz |
-| Installed version | Source commit `61ffe23` |
-| Standard taken from | Own repository `C:\mybizz\mb-sysdoc-creator\` (origin `sassycomapp/mb-sysdoc-creator`), commit `61ffe23` |
-| Last researched | 2026-10-15 |
+| Installed version | Source commit `d16e30d` |
+| Standard taken from | Own repository `C:\mybizz\mb-sysdoc-creator\` (origin `sassycomapp/mb-sysdoc-creator`), commit `d16e30d` |
+| Last researched | 2026-10-20 |
 
 ## Documents in this folder
 
@@ -37,23 +37,23 @@ State of the `mb-sysdoc-creator` skill.
 |---|---|---|---|---|
 | Canonical skill definition | A system MyBizz built takes its standard from its own source files | `C:\mybizz\mb-sysdoc-creator\mb-sysdoc-creator.md` — own repository, origin `sassycomapp/mb-sysdoc-creator` | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md); [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | — |
 | Installed copy | An OpenCode skill installs as `~/.config/opencode/skills/{name}/SKILL.md` | `~/.config/opencode/skills/mb-sysdoc-creator/SKILL.md` | [[[mybizz-os-docs:os-reference-docs/skills-catalog\|skills-catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | — |
-| Source↔installed sync | Installed body = canonical body; only frontmatter may differ | Byte-identical (body hash `9d53bcf94b3049e1`) | [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-reference\|reference]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-reference.md) Checks | — |
+| Source↔installed sync | Installed body = canonical body; only frontmatter may differ | Byte-identical (body hash `a796f7965dee4717`) | [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-reference\|reference]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-reference.md) Checks | — |
 
 ## GBrain
 
 | Setting | Issuer standard | MyBizz value | Source | Learning |
 |---|---|---|---|---|
-| GBrain pages | — | `mb-sysdoc-creator`; `mb-sysdoc-creator/doc-suite-specification`; `mb-sysdoc-creator/sysdoc-creator-config`; `mb-sysdoc-creator/sysdoc-creator-reference`; `mb-sysdoc-creator/sysdoc-creator-explainer` | GBrain resolve, live 2026-10-14 | — |
+| GBrain pages | — | `mb-sysdoc-creator`; `mb-sysdoc-creator/doc-suite-specification`; `mb-sysdoc-creator/sysdoc-creator-config`; `mb-sysdoc-creator/sysdoc-creator-reference`; `mb-sysdoc-creator/sysdoc-creator-explainer` | GBrain resolve and search | — |
 | Source registration | — | Own repository registered as federated GBrain source `mb-sysdoc-creator`; suite pages on the `mybizz-config-docs` host source | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md); GBrain search | — |
-| Memory Governor treatment | — | None — outputs are developer-authored documents synced as ordinary corpus | memory-governor suite grep, 2026-10-14 | — |
+| Memory Governor treatment | — | None — outputs are developer-authored documents synced as ordinary corpus | memory-governor suite grep | — |
 
 ## Integrations
 
 | Setting | Issuer standard | MyBizz value | Source | Learning |
 |---|---|---|---|---|
-| Cupcake | — | No component-specific rule existed at research time (2026-10-14). Standing rules that bind the skill's operation: no cross-project filesystem writes by default (grants required); no autonomous commits. Live enforcement status: [[[mybizz-config-docs:cupcake/cupcake-config\|cupcake-config]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md) Current Operational Status | policy inventory grep, 2026-10-14 | — |
-| security-global | — | None found that changes this system's defaults (2026-10-14) | grep at `C:\dev\project-library-global\security-global\`, 2026-10-14 | — |
-| Related skills | — | mb-config-manager (examines this suite, register cycle); mb-compile-rules; mb-submit-memory; mb-doc-check | [[[mybizz-config-docs:mb-config-manager/config-manager-agent\|config-manager agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) | — |
+| Cupcake | — | No component-specific rule. Standing rules that bind the skill's operation: no cross-project filesystem writes by default (grants required); no autonomous commits. Live enforcement status: [[[mybizz-config-docs:cupcake/cupcake-config\|cupcake-config]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md), section "Operational status" | policy inventory grep | — |
+| security-global | — | None found that changes this system's defaults | grep at `C:\dev\project-library-global\security-global\` | — |
+| Related skills | — | mb-compile-rules; mb-submit-memory; mb-doc-check | [[[mybizz-os-docs:os-reference-docs/skills-catalog\|skills-catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | — |
 
 ## Open items
 

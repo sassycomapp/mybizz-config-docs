@@ -1,18 +1,13 @@
 ---
 title: "postgresql-learnings"
 doc-id: "mb-9b586d8e"
-updated: "2026-10-01"
+updated: "2026-10-20"
 ---
 # PostgreSQL — Learnings
 
-Transient way-station for exam-run knowledge: patterns, decisions, nuances. No
-narrative, no history. Every entry is eventually dropped or written into a
-**permanent home** (skill / config / reference / explainer) — then deleted from
-here immediately on graduation. The plan is never an absorption destination — it
-is transient; pruning into a plan destroys the knowledge when the next cycle
-overwrites it. Entries never accumulate. Cross-cutting learnings (guard classes,
-graduation rules) live in the orchestrator's own
-[[[mybizz-config-docs:mb-config-manager/config-manager-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-learnings.md), not here.
+What differs from, or adds to, the standard in the MyBizz setup, and why.
+Read in full before any research, review or proposal for this system.
 
-<!-- empty — both current learnings graduated 2026-09-13 (facts-autovacuum →
-     config.md; SET-ROLE method → skill) -->
+| ID | Learning | Why it holds | Source |
+|---|---|---|---|
+| L1 | Instance A listens on 5433, not the issuer's default port, because Windows port 5432 belongs to WSL's localhost relay to Instance B; every Instance A command carries `-p 5433` explicitly. | The only MyBizz setting that departs from an issuer-set value: the relay makes the default port serve Instance B on both sides of the WSL boundary, so an unnamed port silently reaches the wrong server. | Live port-listener checks; the issuer's documented default port in the PostgreSQL runtime configuration ([[[mybizz-config-docs:postgresql/postgresql-config\|Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md), Instance A port row) |

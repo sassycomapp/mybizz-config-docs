@@ -1,153 +1,94 @@
 ---
 title: "opencode-reference"
 doc-id: "mb-2a5a7cdf"
-updated: "2026-10-14"
+updated: "2026-10-20"
 ---
-# OpenCode Reference — Commands, Verification, Troubleshooting
+# OpenCode Reference
 
-Companion to [[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md) (current state),
-[[[mybizz-config-docs:opencode/opencode-permission-access-control-model|Permission & Access Control Model]]](C:/mybizz/mybizz-config-docs/opencode/opencode-permission-access-control-model.md) (the permission layers),
-[[[mybizz-config-docs:opencode/opencode-project-session-data-integrity|Project & Session Data Integrity]]](C:/mybizz/mybizz-config-docs/opencode/opencode-project-session-data-integrity.md) (session database
-maintenance), and [[[mybizz-config-docs:opencode/opencode-explainer|OpenCode Explainer]]](C:/mybizz/mybizz-config-docs/opencode/opencode-explainer.md) (mechanics and real incidents).
-Config-management set: Exam Plan (transient job-spec — read
-second, every run), Exam Report (last verified state),
-Log (chronological events), [[[mybizz-config-docs:opencode/opencode-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/opencode/opencode-learnings.md)
-(transient knowledge). Agent-facing.
+What an agent needs while working with OpenCode. State lives in [[[mybizz-config-docs:opencode/opencode-config|OpenCode Configuration]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md); orientation in [[[mybizz-config-docs:opencode/opencode-explainer|OpenCode Explainer]]](C:/mybizz/mybizz-config-docs/opencode/opencode-explainer.md); differences from the standard in [[[mybizz-config-docs:opencode/opencode-learnings|OpenCode Learnings]]](C:/mybizz/mybizz-config-docs/opencode/opencode-learnings.md).
 
----
+## Authoritative sources
 
-## Inspecting current configuration
+| Source | Link | Issuer version | Date checked |
+|---|---|---|---|
+| Configuration schema | https://opencode.ai/config.json | 1.19.0 | 2026-10-20 |
+| Configuration guide (precedence and merge) | https://opencode.ai/docs/config | 1.19.0 | 2026-10-20 |
+| Source repository | https://github.com/anomalyco/opencode | 1.19.0 | 2026-10-20 |
 
-```bash
-cat ~/.config/opencode/opencode.jsonc
-cat <project-root>/opencode.json 2>/dev/null || echo "no per-project override"
-```
+## Checks
 
-**Inspecting the RESOLVED configuration** (global + project merged, as
-OpenCode will actually apply it) — added 2026-09-09:
+| Check | Method | Run by |
+|---|---|---|
+| Installed version | `opencode --version` | agent |
+| Global config content | read `~/.config/opencode/opencode.jsonc`, masking any secret value | agent |
+| Merged config | `cd <project-root> && opencode debug config` — run from project roots only; it registers the folder as a project | agent |
+| Resolved paths | `opencode debug paths` | agent |
+| Plugin set | inspect from inside the running OpenCode process — this version writes no plugin-load log lines | agent |
+| Cupcake enforcement | after any OpenCode or Cupcake restart, a fetch to a non-allowlisted domain must be denied | developer |
+| Skill discoverable | `test -r ~/.config/opencode/skills/<skill-name>/SKILL.md && echo readable` | agent |
+| Duplicate-skill warning | `grep -ia "duplicate skill name" ~/.local/share/opencode/log/*.log \| tail -5`; the `i-have-adhd` warning is expected | agent |
+| Bash deny-list | a command whose text matches a deny pattern is refused before execution | agent |
+| Web UI | reach the server started per the restart procedure; the project box lists real folders under `/home/dev-p` only | agent |
+| Session prune | dated backup folders exist under `/mnt/c/backup-wsl/opencode-session-prune/` | agent |
+| Cleanup backups | dated folders exist under `/mnt/c/backup-wsl/opencode-db-cleanup/` | agent |
+| Session database files | `ls ~/.local/share/opencode/opencode.db*` — presence only | agent |
+| WSL distributions | `wsl.exe -l -v` — expect exactly one, `Ubuntu` | agent |
+| Works | the running session itself: OpenCode serving, GBrain MCP connected, Cupcake evaluating tool calls | agent |
 
-```bash
-cd <project-root> && opencode debug config
-```
+## Procedures
 
-This is the authoritative way to answer any "which setting wins?" question
-— it prints the fully merged, resolved configuration including managed
-settings. Verified live 2026-09-09: a per-project `permission.bash`
-override and the global deny patterns were both present in the resolved
-output (deep merge confirmed).
+### Restart OpenCode (required after any plugin or global config change)
 
-## Restarting OpenCode (required after any plugin or global config change)
+1. `pkill -f "opencode web"`
+2. `cd ~`
+3. `opencode web --hostname 0.0.0.0`
+4. Have the developer run the Cupcake enforcement check.
 
-```bash
-pkill -f "opencode web"
-cd <project-root>
-opencode web --hostname 0.0.0.0
-```
+There is no reload mechanism — plugin and config changes are read only at process start.
 
-Plugin and global config changes are only read at process start — see
-[[[mybizz-config-docs:opencode/opencode-explainer|OpenCode Explainer]]](C:/mybizz/mybizz-config-docs/opencode/opencode-explainer.md) §2. There is no reload mechanism; a full restart
-is the only way to pick up a change. Verified live 2026-09-08 (the Cupcake
-reactivation) and 2026-09-09 (the plugin re-rename).
+### Start the web UI
 
-## Confirming a plugin is loaded exactly once
+1. `cd ~ && opencode web --hostname 0.0.0.0`
+2. The server is protected by `OPENCODE_SERVER_PASSWORD`.
 
-```bash
-grep -ia 'loading plugin' ~/.local/share/opencode/log/*.log | tail -5
-```
+### Register a project
 
-Check the most recent session's timestamp block specifically. Exactly one
-line per real plugin file is correct. Two lines for the same plugin in the
-same session means it's discoverable from two separate paths — find and
-remove the duplicate discovery path, not the plugin itself.
+1. `cd <project-root> && opencode debug config` — project roots only; from any other folder it registers that folder as a project.
+2. Give the project its bind mount: a new `/etc/fstab` line with `bind,nofail`, exposing it at `~/projects/<name>`.
+3. For an app repo, write an `opencode.json` following the app-repo baseline in the [[[mybizz-config-docs:opencode/opencode-config|config]]](C:/mybizz/mybizz-config-docs/opencode/opencode-config.md)'s Projects table.
 
-## Verifying a skill is genuinely discoverable
+### Clean the session database (run after renaming or moving any project folder)
 
-```bash
-test -r ~/.config/opencode/skills/<skill-name>/SKILL.md && echo "readable"
-```
+1. `bash /mnt/c/mybizz/scripts/opencode-db-cleanup.sh`
+2. Confirm with a typed capital `YES` — it accepts nothing else.
+3. Run it on demand only; never schedule it.
 
-Confirms the real file resolves and is readable through OpenCode's actual
-discovery path — not just that a folder or symlink exists.
+### Create a Windows-visible symlink
 
-## Verifying the bash deny-list is live
+1. From the Windows side, with Developer Mode enabled: `cmd.exe /c mklink /D C:\path\to\link C:\path\to\real\target`
+2. Verify from both sides — Windows: `cmd.exe /c dir C:\path\to\` shows `<SYMLINKD>`; WSL: `readlink -v /mnt/c/path/to/link` plus `ls -la /mnt/c/path/to/`.
+3. Trust the link only when both sides agree.
 
-The global config's destructive-command deny patterns are enforced on real
-tool calls — confirmed live 2026-09-09: an agent command containing
-`rm -rf` was refused by the `rm -rf *` deny pattern (the harness
-permission layer, not Cupcake — the denial message names the OpenCode
-permission rules). Any command whose text matches a deny pattern is
-refused before execution; construct commands knowing this, and never
-work around a deny by rephrasing.
+### Check Developer Mode
 
-## Creating a correct, Windows-visible symlink
+`reg.exe query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /v AllowDevelopmentWithoutDevLicense` — a missing key or a value of `0` means it is off.
 
-**Never** create it from WSL pointing at a Windows-drive target — see
-[[[mybizz-config-docs:opencode/opencode-explainer|OpenCode Explainer]]](C:/mybizz/mybizz-config-docs/opencode/opencode-explainer.md) §4. From the Windows side instead (Developer Mode
-must be enabled):
+### Run a Windows-triggered command against WSL
 
-```bash
-cmd.exe /c mklink /D C:\path\to\link C:\path\to\real\target
-```
-
-Verify from both sides:
-
-```bash
-# Windows
-cmd.exe /c dir C:\path\to\ 
-# should show <SYMLINKD> link [C:\path\to\real\target]
-
-# WSL
-readlink -v /mnt/c/path/to/link
-ls -la /mnt/c/path/to/
-```
-
-Both must agree before trusting the link.
-
-## Checking whether Developer Mode is enabled
-
-```bash
-reg.exe query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /v AllowDevelopmentWithoutDevLicense 2>&1
-```
-
-A missing key or value `0` means it's off. Enable via **Settings →
-Privacy & Security → For Developers → Developer Mode** if a real, native
-symlink (`mklink /D`) is needed rather than a junction.
-
-## Recovering from a stale/wrong project on startup
-
-```bash
-bash /mnt/c/mybizz/scripts/opencode-db-cleanup.sh
-```
-
-Run this proactively, right after renaming or moving any project's own
-root folder. On-demand only, deliberately not scheduled. Full detail:
-`daily-ops.md`.
-
-## Running any Windows-triggered command against WSL
-
-```
-wsl.exe -d Ubuntu -u dev-p -- <command>
-```
-
-**Always specify `-d` and `-u` explicitly.** Verified live 2026-09-09:
-the machine's distros are `Ubuntu-22.04` (the DEFAULT — and stopped) and
-`Ubuntu` (the working environment). Omitting either flag risks silently
-running against the wrong one, with no visible error.
+`wsl.exe -d Ubuntu -u dev-p -- <command>` — always pass both flags.
 
 ## Do not
 
-- Do not assume a plugin or config edit takes effect without a full
-  restart (`pkill` + relaunch) — no hot-reload exists.
-- Do not create a symlink from WSL pointing at a Windows-drive target —
-  confirmed unreadable by Windows Explorer.
-- Do not invoke `wsl.exe` from any Windows-triggered command (a
-  scheduled task, a shortcut) without explicit `-d`/`-u` flags.
-- Do not trust a single-sided symlink check — verify from both Windows
-  and WSL before treating a link as working.
-- Do not assume per-skill permission rules are achievable — no
-  skill-identity field reaches any plugin, confirmed against OpenCode's
-  own source.
-- Do not include `rm -rf`, destructive git, or piped-curl patterns in a
-  command whose text might also match an allow intent — the deny patterns
-  match the command TEXT and refuse it before execution (confirmed live
-  2026-09-09). Rephrase or split the command instead.
+- Do not edit a plugin or the global config and expect an effect without a full restart — nothing hot-reloads.
+- Do not create a second discoverable path for any plugin — even a symlink to the identical file double-loads it.
+- Do not put a file path in the `plugin` config list — the list accepts folders; the plugin folder loads `.js` files automatically.
+- Do not build plugin verification on log lines — this version writes none.
+- Do not create a WSL-side symlink pointing at a Windows-drive target — Windows Explorer cannot read it.
+- Do not trust a single-sided symlink check — verify from Windows and WSL.
+- Do not omit `-d Ubuntu -u dev-p` from a Windows-triggered `wsl.exe` command.
+- Do not run `opencode debug config` from a folder that must not become a project.
+- Do not treat the `i-have-adhd` duplicate-skill warning as a fault — both entries resolve to one file.
+- Do not assume a project config can silently weaken the global deny-list — nested maps merge deeply; an explicit re-declaration of a deny pattern as `allow` is a security-review finding.
+- Do not work around a deny pattern by disguising intent — rephrase only when the text match is incidental; if the match is on the action's real substance, stop.
+- Do not schedule `opencode-db-cleanup.sh` — folder-existence checks can false-positive on a temporarily unmounted drive.
+- Do not rely on the agent's own refusal as proof of enforcement — the proof is the enforcement layer's own evaluation.

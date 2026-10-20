@@ -1,15 +1,12 @@
 ---
 title: "sysdoc-creator-explainer"
 doc-id: "mb-1b1e5218"
-updated: "2026-10-16"
+updated: "2026-10-20"
 ---
 # sysdoc-creator — Explainer
 
 Companion to [[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-config.md) (the state) and
-[[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-reference.md) (the execution form). This suite is
-examined by mb-config-manager through the register cycle
-([[[mybizz-config-docs:mb-config-manager/config-manager-agent|config-manager agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md)) — the examination verifies this
-suite's state and never runs the subject skill itself.
+[[[mybizz-config-docs:mb-sysdoc-creator/sysdoc-creator-reference|Reference]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/sysdoc-creator-reference.md) (the execution form).
 
 ## What it is
 
@@ -17,7 +14,7 @@ suite's state and never runs the subject skill itself.
 verified, four-document canonical suite: a config (what exists and what it is
 set to), a reference (how to execute), an explainer (what it is, whether to use
 it, why it works this way), and a learnings file (what differs from the standard
-here, and why). The developer — or mb-config-manager — invokes it naming a
+here, and why). The developer invokes it naming a
 system and supplies whatever they have; the skill treats all of it as leads to
 investigate, never as text to transcribe. It is a prose procedure with no
 executable code and no runtime dependencies, in two modes: Create for a system
@@ -55,8 +52,8 @@ checked live.
 
 **Best for:** creating the canonical four-document suite for any component of
 this system — a tool, skill, service, or corpus — and for refreshing an
-existing suite when the component's state has moved. Every suite in
-`mybizz-config-docs` was produced this way.
+existing suite when the component's state has moved. The suites in
+`mybizz-config-docs` are its output.
 
 **Good for:** targeted corrections to live suites ordered by the developer,
 pre-write verification of procedures, and folding a live event into a suite as
@@ -66,8 +63,7 @@ its worked example.
 tool: write it directly); converting cross-references into resolvable links
 ([[[mybizz-config-docs:mb-doc-check/doc-check-explainer|mb-doc-check]]](C:/mybizz/mybizz-config-docs/mb-doc-check/doc-check-explainer.md) writes every link in the stored form at
 every commit); submitting content into governed memory (right tool:
-mb-submit-memory); examining whether a suite is still true (right tool:
-mb-config-manager). Also wrong for casual use: it is expensive by design —
+mb-submit-memory). Also wrong for casual use: it is expensive by design —
 every run does real research and demands two human gates — so invoking it for a
 quick note wastes its whole apparatus.
 
@@ -101,14 +97,11 @@ the developer ever sees it.
 **Where it sits.** It is the producer of most of `mybizz-config-docs` and a
 consumer of the rest: every suite it writes becomes GBrain-indexed corpus via
 ordinary host-source sync, and its own learnings file shapes its next run. It
-never installs, upgrades or updates any system — a newer issuer release is a
-finding the developer decides. mb-config-manager examines its suites through
-the register cycle and orders a Refresh when the source moves; the skill is
-never run to examine itself.
+never installs, upgrades or updates any system.
 
 ## What has to happen
 
-- The developer (or mb-config-manager, for a Refresh) invokes it explicitly
+- The developer invokes it explicitly
   and stands at both approval gates; nothing is drafted before the first,
   nothing written before the second.
 - The developer runs commit-all; documents reach GBrain and the division only
@@ -116,7 +109,5 @@ never run to examine itself.
 - After any edit to the canonical source, the installed copy is re-synced
   body-to-body — only frontmatter may differ — and the sync is verified by
   the reference's body-hash check.
-- mb-config-manager examines this suite through the register cycle and orders
-  a Refresh when the source moves.
 - Grants are requested when a destination becomes confirmable, before drafts —
   never self-issued, never worked around.

@@ -1,11 +1,11 @@
 ---
 title: "doc-suite-specification"
 doc-id: "mb-f4adba8c"
-updated: "2026-10-15"
+updated: "2026-10-20"
 ---
 # Doc Suite Specification — config / reference / explainer / learnings
 
-The one specification for the documents that describe every skill and system kept by System Integrity. mb-sysdoc-creator writes documents to it. mb-config-manager reads documents by it. Read it before writing or changing any of these documents.
+The one specification for the documents that describe every skill and system kept by System Integrity. mb-sysdoc-creator writes documents to it. Read it before writing or changing any of these documents.
 
 ---
 
@@ -29,7 +29,7 @@ The one specification for the documents that describe every skill and system kep
 
 ## One fact, one home
 
-Every fact exists in exactly one document. A fact written twice drifts. If a fact appears in two documents, one of them is wrong about where it belongs.
+Every fact exists in exactly one document. A fact written twice drifts. If a fact appears in two documents, one of them is wrong about where it belongs. A document may point to another suite's document for a fact that lives there.
 
 ---
 
@@ -87,8 +87,8 @@ Every fact exists in exactly one document. A fact written twice drifts. If a fac
 - Procedures, as numbered steps.
 - **Authoritative sources** (required):
 
-| Source | Link | Issuer version | Date checked |
-|---|---|---|---|
+| Source | Link | Issuer version |
+|---|---|---|
 
 - **Checks** (required): how to read each config setting live, the installed version, and whether the system works.
 

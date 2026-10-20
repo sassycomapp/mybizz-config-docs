@@ -1,25 +1,21 @@
 ---
 title: "mb-archify-scope-reference"
 doc-id: "mb-09517645"
-updated: "2026-10-14"
+updated: "2026-10-20"
 ---
 
 # mb-archify-scope — Reference
 
 Invocation, the nine phases, aborts, outputs, and failure rules. Mid-task
-lookup. What the skill is and why: [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-explainer.md).
-Current state: [[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-config.md). The canonical
-contract is the spec itself ([[[mb-archify-scope:mb-archify-scope|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md)) —
+lookup. What the skill is and why:
+[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-explainer.md).
+Current state:
+[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-config.md).
+Learnings:
+[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-learnings.md).
+The canonical contract is the spec itself
+([[[mb-archify-scope:mb-archify-scope|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md)) —
 change spec and installed copy together.
-
-The config-management exam set for this suite ([[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-exam-plan|Exam
-Plan]]](mb-archify-scope-exam-plan) · Exam Report ·
-Log ·
-[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-learnings.md) ·
-Exam Skill) is
-synthesized and consumed per the [[[mybizz-config-docs:mb-config-manager/config-manager-agent|Config Manager]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md)
-plan-driven cycle — the exam verifies this suite's state against the spec and
-never runs the subject skill itself.
 
 ## Invocation
 
@@ -54,10 +50,10 @@ never runs the subject skill itself.
    commands, protocols, API paths. *Completion: the claim is traced to a
    specific place in the source.*
 4. **Preliminary scope** — present the pipeline as single words with arrows
-   before any topology. Choose the type via the decision tree (below) and
-   `archify guide "<scenario>" --json`; state `type + why`; record whether the
-   guide agrees. *Completion: the developer approves the type (and its cost) or
-   the skill reshapes.*
+   before any topology. Choose the type via the decision tree (below) and its
+   guide check; state `type + why`; record whether the guide agrees.
+   *Completion: the developer approves the type (and its cost) or the skill
+   reshapes.*
 5. **Scope the source** — produce the **Node Inventory** (at most 12 primary
    nodes; every node earns its place on the main path or a short needed side
    branch), exactly **one Main Path**, the **Deferred List** (explicitly named
@@ -105,9 +101,10 @@ not a re-wording. Never end on a refusal.
 
 ## Type decision tree
 
-Run `archify guide "<scenario>" --json` when ambiguous; state `type + why`
-regardless. The developer's subject takes priority over the guide — record any
-disagreement.
+Run `node /home/dev-p/.config/skills/archify/bin/archify.mjs guide "<scenario>" --json`
+when ambiguous — the `archify` binary is not on PATH, so invoke the CLI through
+node. State `type + why` regardless. The developer's subject takes priority
+over the guide — record any disagreement.
 
 | Type | Use for |
 |---|---|
@@ -146,23 +143,13 @@ conditions) · decisions (what the developer approved, verbatim)
 }
 ```
 
-## Layout budgets (dataflow worked example)
+## Layout budget
 
 The authoritative per-type budget lives in the Archify package at
 `renderers/<type>/README.md` — read it at Phase 5, never from memory. The
-dataflow budget is the worked example that justified this skill and the trap
-most likely to recur:
-
-| Constant | Value (dataflow) |
-|---|---|
-| Stages (2–5) | centers `x = 100 + stage×215`; band 168 wide; header `y=46` |
-| Row tops (row 0–4) | `y = 128, 242, 356, 470, 584` (+ `yOffset`) |
-| Default node | 112×58 |
-| Node spacing | ≥10px between any two nodes |
-| Flow length | ≥34px between endpoints |
-| Showcase rhythm | every nonzero segment ≥8px; interior turns ≥16px |
-| Automatic Port Spread | default; skipped for explicit `via`/`channelX`/`channelY`/`labelAt`/non-auto routes |
-| Repair order | quality_profile → node overlap → edge-through-node/endpoint-direction → crossings/corridors/rhythm → label clearance |
+verified values live in the
+[[[mybizz-config-docs:mb-archify-scope/mb-archify-scope-config|Configuration]]](C:/mybizz/mybizz-config-docs/mb-archify-scope/mb-archify-scope-config.md)
+§Layout budget (dataflow).
 
 **Corridor rule (all grid types):** a flow crossing a stage/lane band must pass
 through a row band empty of nodes. Plan each crossing at an empty band, or plan
@@ -179,8 +166,28 @@ hand-route around them.
    frontmatter; installed: skill frontmatter).
 4. The installed-copy write touches `~/.config/opencode/skills/` — grant-required
    under standing Cupcake policy; run it developer-side or under an explicit
-   grant. Enforcement state as of 2026-10-04: ACTIVE
-   ([[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md), Current Operational Status).
+   grant. Enforcement state per
+   [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md)
+   §Operational status.
+
+## Authoritative sources
+
+| Source | Link | Issuer version | Date checked |
+|---|---|---|---|
+| Scoping Skill Specification (repo) | [[[mb-archify-scope:mb-archify-scope\|mb-archify-scope.md]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md) | commit `cfcf0fa` (branch `main`) | 2026-10-20 |
+| Archify per-type layout budgets | `renderers/<type>/README.md` in the installed archify package (`~/.config/skills/archify/`) | archify 2.16.0 | 2026-10-20 |
+| archify CLI | `~/.config/skills/archify/bin/archify.mjs` (invoke through `node`; not on PATH) | archify 2.16.0 | 2026-10-20 |
+
+## Checks
+
+| Check | Method | Run by |
+|---|---|---|
+| Body equality | `diff` of `/mnt/c/mybizz/mb-archify-scope/mb-archify-scope.md` and `~/.config/opencode/skills/mb-archify-scope/SKILL.md` after deleting each frontmatter block (first `---` through the closing `---`) — the bodies must be identical | agent |
+| Installed version | `git -C /mnt/c/mybizz/mb-archify-scope log -1 --format="%h %s"` | agent |
+| Works (dependency health) | `node /home/dev-p/.config/skills/archify/bin/archify.mjs doctor` — expects every check ok, "Archify is ready" | agent |
+| Works (end to end) | a live `/mb-archify-scope` scoping run on a small subject — the skill's own Phase 7 gate makes this developer-run | developer |
+| GBrain source | `gbrain sources list` — `mb-archify-scope` listed, federated, 1 page | agent |
+| Layout budget current | compare the Configuration §Layout budget (dataflow) rows against `renderers/dataflow/README.md` in the installed archify package | agent |
 
 ## Do not
 
@@ -189,7 +196,7 @@ hand-route around them.
 - Do not proceed past Phase 7 without the developer's explicit approval.
 - Do not copy the repo spec over the installed SKILL.md — it replaces the
   skill frontmatter (`name`/`description`) with doc frontmatter; sync is
-  body-to-body (confirmed-live, 2026-10-07).
+  body-to-body (proven by the Body equality check above).
 - Do not proceed past a failed probe — work returns to Phase 5 for reshaping,
   never onward.
 - Do not write Phase 9 learnings unasked.

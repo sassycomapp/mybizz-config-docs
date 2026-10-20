@@ -1,7 +1,7 @@
 ---
 title: "config-manager-config"
 doc-id: "mb-48323f1a"
-updated: "2026-10-15"
+updated: "2026-10-20"
 ---
 # mb-config-manager — Configuration
 
@@ -14,8 +14,8 @@ State of the configuration-management agent. Standard:
 |---|---|
 | Issuer | MyBizz |
 | Installed version | `17e9046` (last commit of `config-manager-agent.md`) |
-| Standard taken from | `config-manager-agent.md`, commit `17e9046`, 2026-10-14 |
-| Last researched | 2026-10-15 |
+| Standard taken from | `config-manager-agent.md`, commit `17e9046` |
+| Last researched | 2026-10-20 |
 
 ## Settings — behaviour
 
@@ -55,8 +55,8 @@ State of the configuration-management agent. Standard:
 | Setting | Issuer standard | MyBizz value | Source | Learning |
 |---|---|---|---|---|
 | Agent source | `config-manager-agent.md` in this folder | as standard | agent file itself | |
-| Agent installed | Developer-set agent path | `/home/dev-p/.config/opencode/agents/mb-config-manager.md` | install verified 2026-10-15 | |
-| Command wrapper | Developer-set command path | `/home/dev-p/.config/opencode/command/mb-config-manager.md` | install verified 2026-10-15 | |
+| Agent installed | Developer-set agent path | `/home/dev-p/.config/opencode/agents/mb-config-manager.md` | live check | |
+| Command wrapper | Developer-set command path | `/home/dev-p/.config/opencode/command/mb-config-manager.md` | live check | |
 
 ## Open items
 

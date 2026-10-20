@@ -1,7 +1,7 @@
 ---
 title: "project-docs-reference"
 doc-id: "mb-6950e749"
-updated: "2026-10-16"
+updated: "2026-10-20"
 ---
 # mb-project-docs — Reference
 
@@ -11,16 +11,16 @@ Usage and execution for the `mb-project-docs` skill. The skill's source, `mb-pro
 
 | Source | Link | Issuer version | Date checked |
 |---|---|---|---|
-| Skill source (the issuer standard) | [[[mb-project-docs:mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md) (`C:\mybizz\mb-project-docs\mb-project-docs.md`) | `66fb55a` (2026-10-16) | 2026-10-15 |
-| Doc suite specification | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | `mb-f4adba8c` (2026-10-15) | 2026-10-15 |
-| Repository organization | [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | `mb-f38fd0aa` (2026-10-14) | 2026-10-15 |
+| Skill source (the issuer standard) | [[[mb-project-docs:mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md) (`C:\mybizz\mb-project-docs\mb-project-docs.md`) | `66fb55a` | 2026-10-20 |
+| Doc suite specification | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | `mb-f4adba8c` | 2026-10-20 |
+| Repository organization | [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | `mb-f38fd0aa` | 2026-10-20 |
 
 ## Usage
 
 1. Work in the project's repository (documentation or code). Run for one project at a time.
 2. Invoke `/mb-project-docs`. At close-out, `/mb-close-out` invokes it for you (Step 3).
 3. First time in a repository: give the skill your own description of what the project is and why it exists, in the same message. Otherwise it asks once.
-4. Read the presentation: per file new, changed or unchanged, the lines that were no longer true, the open items, the README change, and the lines of `AGENTS.md` that will change.
+4. Read the presentation: per file new, changed or unchanged, the lines that are no longer true, the open items, the README change, and the lines of `AGENTS.md` that will change.
 5. Approve, correct or reject. Corrections are applied exactly.
 6. Run the terminal line the skill hands you. It copies the reference over `AGENTS.md`.
 7. Documentation repository: `commit-all.sh`. Code repository: commit it yourself.
@@ -34,7 +34,7 @@ Usage and execution for the `mb-project-docs` skill. The skill's source, `mb-pro
 5. Draft only the changes. Self-check each file against its stray-line test.
 6. Present once, then stop.
 7. After approval: write config, explainer, README and the reference; hand over the copy line.
-8. Report what was written and the copy line.
+8. Report the files written and the copy line.
 
 ## The copy line
 
@@ -77,13 +77,12 @@ Hand the exact line to the developer. Never run it. No grant exists for Git.
 
 | Check | Method | Run by |
 |---|---|---|
-| Installed version | `git -C /mnt/c/mybizz/mb-project-docs log -1 --format='%h %ad' --date=short` | developer |
+| Installed version | `git -C /mnt/c/mybizz/mb-project-docs log -1 --format='%h %ad' --date=short` | agent |
+| Source current with origin | `git -C /mnt/c/mybizz/mb-project-docs ls-remote origin HEAD` must equal the short sha from `git log -1` (exact match, one call) | agent |
 | Two copies in sync | body-diff `~/.config/opencode/skills/mb-project-docs/SKILL.md` against [[[mb-project-docs:mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md) (file tools) | agent |
 | Helper script present | read `C:\mybizz\scripts\agents-from-reference.sh` (file tools) | agent |
 | Project table matches repo-organization | compare the source's Step 1 table against [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) § Names | agent |
 | Works | the installed `SKILL.md` carries `name` and `description` frontmatter and OpenCode lists the skill as available | agent |
-
-The `Installed version` check is developer-run: bash commands naming `/mnt/c/mybizz` paths are policy-blocked for the agent (proved live 2026-10-15).
 
 ## Completion statuses
 
@@ -91,8 +90,8 @@ The `Installed version` check is developer-run: bash commands naming `/mnt/c/myb
 |---|---|
 | DONE | Files written, approved, copy line handed over |
 | BLOCKED | Not a covered project, specification missing, or no Anvil app in a code repository |
-| PERMISSION_REQUIRED | A policy blocked an action; the grant line was handed over |
-| CANCELLED | The developer declined at the presentation; nothing was written |
+| PERMISSION_REQUIRED | A policy blocks an action; the grant line is handed over |
+| CANCELLED | The developer declines at the presentation; nothing is written |
 
 ## Do not
 

@@ -1,7 +1,7 @@
 ---
 title: "cupcake-explainer"
 doc-id: "mb-258b7bd2"
-updated: "2026-10-16"
+updated: "2026-10-20"
 ---
 # Cupcake — Mechanical Policy Enforcement for AI Coding Agents
 
@@ -55,6 +55,10 @@ client applications from attackers.
 - Control over its own failure mode: on an evaluation crash it blocks the
   tool call, so a broken guard stops the agent instead of letting it act
   unguarded.
+- Capabilities that ship with the engine but are unused in this setup:
+  MCP-call governance, LLM-as-Judge review, guardrail libraries (NeMo,
+  Invariant), signals, Claude Code context injection, post-edit checks and
+  rulebook actions with audit.
 
 ## Suitability
 
@@ -108,9 +112,9 @@ confirmed to fail silently in the compiled engine.
   hook.
 - **Three redundant layers deny sub-agent spawning.** Each layer alone has a
   gap; together they close it.
-- **mb-compile-rules is the only path by which a rule becomes live.** The
-  config-management exam cycle is what keeps "enforcement is live" a
-  verified claim rather than an assumption.
+- **mb-compile-rules is the only path by which a rule becomes live.** Live
+  verification after every compile keeps "enforcement is live" a verified
+  claim rather than an assumption.
 
 ## What has to happen
 
@@ -126,7 +130,5 @@ confirmed to fail silently in the compiled engine.
 - After any restart, upgrade or configuration change of OpenCode or Cupcake,
   a liveness probe proves enforcement: a fetch to a non-allowlisted domain
   must be denied.
-- The standing exam keeps the enforcement claim verified; denials received
-  during work double as liveness evidence.
-- Upstream releases are recorded, not installed: the developer decides every
-  upgrade.
+- The reference's Checks keep the enforcement claim verified; denials
+  received during work double as liveness evidence.

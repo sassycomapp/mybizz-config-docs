@@ -1,7 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-config"
 doc-id: "mb-2b9404b5"
-updated: "2026-10-05"
+updated: "2026-10-20"
 ---
 # mb-memory-system-diagnostic — Configuration
 
@@ -17,13 +17,17 @@ States facts, not history — reasoning in
 
 | Item | Value |
 |---|---|
+| Issuer | MyBizz |
+| Installed version | `7b47fe6` (source repository HEAD) |
+| Standard taken from | `7b47fe6` |
+| Last researched | 2026-10-20 |
 | Component | `mb-memory-system-diagnostic` — gated, stepwise health-check skill for the memory ecosystem |
 | Run surface | OpenCode agent procedure; invoked explicitly as `/mb-memory-system-diagnostic` |
 | Source artifact | `C:\mybizz\mb-memory-system-diagnostic\mb-memory-system-diagnostic.md` — the skill's own repository (GitHub-backed: `sassycomapp/mb-memory-system-diagnostic`; registered as the federated GBrain source `mb-memory-system-diagnostic`) |
-| Installed skill | `~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md` — copy of the source artifact body; the installed frontmatter (`name`/`description`) is kept exactly on every refresh |
+| Installed skill | `~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md` — body identical to the source artifact body; the installed frontmatter (`name`/`description`) is kept exactly |
 | Skill frontmatter | source: `title`/`doc-id`/`updated` (`title`/`doc-id` = `mb-memory-system-diagnostic`, the filename stem); installed copy: `name`/`description` |
 | Ecosystem boundary | `archify/output/memory-ecosystem-project/memory-ecosystem-scope.md` (scope card) |
-| Standing references | `postgresql/postgresql-reference.md`; `gbrain/gbrain-reference.md`; `gbrain-dream-cycle/gbrain-dream-cycle-reference.md` + `-log.md`; `memory-governor/memory-governor-reference.md`; ADR `dev-tooling-source-repos-must-be-github-backed` (`C:\dev\project-library-global\adr-global\`) |
+| Standing references | `postgresql/postgresql-reference.md`; `gbrain/gbrain-reference.md`; `gbrain-dream-cycle/gbrain-dream-cycle-reference.md`; `memory-governor/memory-governor-reference.md`; ADR `dev-tooling-source-repos-must-be-github-backed` (`C:\dev\project-library-global\adr-global\`) |
 
 ## Scope
 
@@ -66,7 +70,7 @@ governed write; §10 real Dream Cycle run; §1's `gh repo create` remediation;
 |---|---|---|
 | Run report | `C:\mybizz\mybizz-config-docs\mb-memory-system-diagnostic\mb-memory-system-diagnostic-run-report.md` | one file, replaced at the start of every run; one result block appended per section as it closes during the run, then the §11 roll-up |
 
-## Live-verified component presence (2026-09-28)
+## Live-verified component presence
 
 | Item | Verified state |
 |---|---|
@@ -97,4 +101,4 @@ component's own config suite (`gbrain-config.md`, `memory-governor-config.md`,
 
 ## Open items
 
-(none currently)
+None.

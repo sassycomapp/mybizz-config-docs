@@ -1,7 +1,7 @@
 ---
 title: "project-docs-config"
 doc-id: "mb-f7c435e5"
-updated: "2026-10-16"
+updated: "2026-10-20"
 ---
 # mb-project-docs — Config
 
@@ -10,17 +10,17 @@ updated: "2026-10-16"
 | Field | Value |
 |---|---|
 | Issuer | MyBizz |
-| Installed version | `66fb55a` (2026-10-16) — the skill declares no version field |
+| Installed version | `66fb55a` — the skill declares no version field |
 | Standard taken from | `C:\mybizz\mb-project-docs\mb-project-docs.md` at `66fb55a` |
-| Last researched | 2026-10-15 |
+| Last researched | 2026-10-20 |
 
 ## Installed surface
 
 | Setting | Issuer standard | MyBizz value | Source | Learning |
 |---|---|---|---|---|
-| Installed copy | `~/.config/opencode/skills/mb-project-docs/SKILL.md` | same | [[[mybizz-os-docs:os-reference-docs/skills-catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md); verified live 2026-10-15 | — |
+| Installed copy | `~/.config/opencode/skills/mb-project-docs/SKILL.md` | same | [[[mybizz-os-docs:os-reference-docs/skills-catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | — |
 | Authoritative copy | `C:\mybizz\mb-project-docs\mb-project-docs.md` (GitHub-backed public repository) | same | [[[mybizz-os-docs:os-reference-docs/skills-catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md); [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | — |
-| Currency check | diff of the two copies' bodies — no version field exists | same; bodies identical on 2026-10-15 | installed `SKILL.md`; source | — |
+| Currency check | diff of the two copies' bodies — no version field exists | same; byte-identical below frontmatter | installed `SKILL.md`; source | — |
 | Helper script | `C:\mybizz\scripts\agents-from-reference.sh` | same; behaviour verified against its recorded description | [[[mybizz-config-docs:mb-project-docs/project-docs-reference]]](C:/mybizz/mybizz-config-docs/mb-project-docs/project-docs-reference.md) § The copy line | — |
 
 ## Form
@@ -38,7 +38,7 @@ updated: "2026-10-16"
 |---|---|---|---|---|
 | Covered projects | `mb-3-cs`, `mb-4-ecom`, `mb-5-pdlf`, `pdlf` | same | source Step 1; [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) § Names | — |
 | Documentation repositories | `{slug}-project-library` under `C:\dev\dev-{slug}\`; `pdlf` at `C:\pdlf` | same | source Step 1; [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | — |
-| Code repositories | `{slug}-app1` (the development workspace), `{slug}-app3` and `{slug}-app5`; none for `pdlf` | same | source Step 1 | |
+| Code repositories | `{slug}-app1` (the development workspace), `{slug}-app3` and `{slug}-app5`; none for `pdlf` | same | source Step 1 | — |
 
 ## Destination
 
@@ -70,9 +70,9 @@ updated: "2026-10-16"
 |---|---|---|---|---|
 | Close-out | Step 3 of `/mb-close-out` runs the skill to its Step 6 inside the close-out gate, then runs its Step 7 | same, verified live | `~/.config/opencode/skills/mb-close-out/SKILL.md` | — |
 | Global `AGENTS.md` | Rule "Project documents": agents read the README and the three files on entering a project | same, verified live | `~/.config/opencode/AGENTS.md` | — |
-| Commit hook | covers the documentation repositories only; code repositories are outside it | same | [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) § Commit hook | — |
+| Commit hook | covers the documentation repositories; code repositories are outside it | same | [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) § Commit hook | — |
 | Git | documentation repositories committed with `commit-all.sh`; code repositories committed by the developer; `.gitignore` never touched | same | source Step 7, hard rule 6; [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | — |
-| Grants | a policy block ends in a developer-run `mg-grant` or `net-grant` | same, proved live 2026-10-15 | [[[mybizz-os-docs:operating-procedures/grant-paths]]](C:/mybizz/mybizz-os-docs/operating-procedures/grant-paths.md) | — |
+| Grants | a policy block ends in a developer-run `mg-grant` or `net-grant` | same, proved live | [[[mybizz-os-docs:operating-procedures/grant-paths]]](C:/mybizz/mybizz-os-docs/operating-procedures/grant-paths.md) | — |
 
 ## Open items
 

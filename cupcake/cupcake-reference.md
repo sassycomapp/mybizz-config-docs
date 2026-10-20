@@ -1,7 +1,7 @@
 ---
 title: "cupcake-reference"
 doc-id: "mb-e79d3d01"
-updated: "2026-10-16"
+updated: "2026-10-20"
 ---
 # Cupcake — Reference
 
@@ -61,7 +61,8 @@ post-normalization names.
 **The agent does not run this** — standing rule regardless of enforcement
 status; `cupcake_exec_protection` blocks direct execution of the binary,
 including `eval`, `--help`, `--version`, `verify` and `inspect`. Every real
-test in this environment's rule history was run by the developer.
+test is run by the developer. Run it from `~/.config/cupcake/fallback` —
+eval fails to start from a folder with no `.cupcake` skeleton.
 
 ## mg-grant / mg-revoke — cross-project access
 
@@ -139,8 +140,7 @@ restart OpenCode fully:
 cp ~/.config/opencode/plugin/cupcake.js.bak-20261016-known-good ~/.config/opencode/plugin/cupcake.js
 ```
 
-The historical diagnostic sequence (developer's own terminal; valid for
-understanding and for any pre-amendment plugin version):
+The diagnostic sequence (developer's own terminal):
 
 1. Isolate whether the checker crashes standalone: pipe a read event through
    the evaluation invocation above; note the exit code.
@@ -192,7 +192,7 @@ rebuild the rule set.
 | A rule file in the global policy folder does not compile | Every tool call everywhere is blocked with `Cupcake exited with code 1` | Run the crash diagnostic above; remove the bad file; confirm a clean `allow` with the evaluation health check |
 | The `cupcake` or `opa` binary is missing or not on the path | Every tool call is blocked | Restore the binaries in `~/.cupcake/bin/` and the `/usr/local/bin/cupcake` link; run `cupcake --version` and `opa version` |
 | Evaluation takes longer than the plugin's 5-second limit | A tool call is blocked with a timeout message | Repeat the call once. If it recurs, run the evaluation invocation by hand and time it |
-| The plugin is not loaded (damaged file, second copy, or an OpenCode version that cannot run it) | No `loading plugin` line in the log; a liveness probe fetch succeeds; nothing is blocked | Restore the restore point, keep exactly one plugin copy, keep OpenCode on version 1, restart fully, run the liveness probe |
+| The plugin is not loaded (damaged file, second copy, or an OpenCode version that cannot run it) | No `msg="loading plugin"` line in the log; a liveness probe fetch succeeds; nothing is blocked | Restore the restore point, keep exactly one plugin copy, keep OpenCode on version 1, restart fully, run the liveness probe |
 | A project `.cupcake/opencode.json` sets `failMode` to `open` | Nothing shows until Cupcake fails; then actions in that folder are allowed | No project carries a skeleton; the Skeletons check finds any that appears |
 | The grant lock is busy for 10 seconds | One grant decrement is skipped; the count reads one high until expiry | Revoke the grant when the work is done |
 
@@ -203,9 +203,9 @@ run the liveness probe: a fetch to a non-allowlisted domain must be denied.
 
 | Source | Link | Issuer version | Date checked |
 |---|---|---|---|
-| README (installed version) | github.com/eqtylab/cupcake/blob/v0.3.0/README.md | v0.3.0 | 2026-10-14 |
-| LICENSE (installed version) | github.com/eqtylab/cupcake/blob/v0.3.0/LICENSE | v0.3.0 | 2026-10-14 |
-| Releases | github.com/eqtylab/cupcake/releases | v0.5.1 latest | 2026-10-14 |
+| README (installed version) | github.com/eqtylab/cupcake/blob/v0.3.0/README.md | v0.3.0 | 2026-10-20 |
+| LICENSE (installed version) | github.com/eqtylab/cupcake/blob/v0.3.0/LICENSE | v0.3.0 | 2026-10-20 |
+| OpenCode plugin reference (installed version) | github.com/eqtylab/cupcake/blob/v0.3.0/docs/agents/opencode/plugin-reference.md | v0.3.0 | 2026-10-20 |
 
 ## Checks
 
@@ -219,10 +219,10 @@ run the liveness probe: a fetch to a non-allowlisted domain must be denied.
 | Spawn denylist | read `~/.config/opencode/spawn-tools-denylist.json` | agent |
 | OPA version | `opa version` | agent |
 | Plugin loaded exactly once | the log grep above | agent |
-| Works — enforcement liveness (agent-side) | an outbound-network deny on a non-allowlisted fetch, expected to deny, plus the plugin-load grep | agent |
+| Works — enforcement liveness (agent-side) | a `webfetch` of `https://example.com` is denied with "Policy Violation — Outbound network access requires authorisation" and a read of `README.md` is allowed; plus the plugin-load grep | agent |
 | Skills-dir ancestor case | From an OpenCode session started in `/home/dev-p`: first the liveness probe, a fetch to a non-allowlisted domain, expected to deny; then an ungranted write of a test file into `~/.config/opencode/skills/`, expected to deny. An allow under confirmed liveness indicts the skills-dir rule | developer |
-| Works — authoritative | the evaluation health check: a harmless read must return a clean `allow` | developer |
-| Skeletons | List the `.cupcake` folders under `/mnt/c/dev`, `/mnt/c/mybizz`, `/mnt/c/pdlf`, `/mnt/c/data-mybizz-mgt` and `/home/dev-p`: only `~/.cupcake` exists. Pipe a webfetch event for a non-allowlisted domain through the evaluation invocation for every OpenCode project folder, run from the fallback home, and for `/home/dev-p`, run from `~`; every one returns `deny` | developer |
+| Works — authoritative | the evaluation health check, run from `~/.config/cupcake/fallback` (eval fails to start from a folder with no `.cupcake` skeleton): a harmless read must return a clean `allow` | developer |
+| Skeletons | List the `.cupcake` folders under `/mnt/c/dev`, `/mnt/c/mybizz`, `/mnt/c/pdlf`, `/mnt/c/data-mybizz-mgt` and `/home/dev-p`: only `~/.cupcake` exists — no project carries a `.cupcake` folder. Pipe a webfetch event for a non-allowlisted domain through the evaluation invocation with each project folder as `cwd`, run from `~/.config/cupcake/fallback` — eval fails to start from a folder with no `.cupcake` skeleton; every one returns `deny` | developer |
 | Fail closed | Create a folder whose `.cupcake` holds only `policies/opencode/cup-noop-fallback.rego`; open it as an OpenCode project; a read by the Build agent is blocked with `Cupcake exited with code 1`; then delete the folder and its OpenCode project | developer |
 | Grant decrement serialization | the count-2 parallel-writes re-probe: two writes in one parallel batch decrement exactly, the third denies; run after any lock or decrement change | developer |
 | Denials during a run | every denial received is recorded as liveness evidence; a denied check becomes developer-run, never retried | agent |

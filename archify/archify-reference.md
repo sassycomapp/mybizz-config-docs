@@ -1,16 +1,14 @@
 ---
 title: "archify-reference"
 doc-id: "mb-c9f14557"
-updated: "2026-10-14"
+updated: "2026-10-20"
 ---
 # Archify — Reference
 
 Invocation, commands, authoring procedure, and failure rules. Mid-task lookup.
-For what Archify is and why it works this way: [[[mybizz-config-docs:archify/archify-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/archify/archify-explainer.md).
-Config-management exam set: Exam Plan (run job-spec),
-Exam Report (current verified state), Log (events),
-[[[mybizz-config-docs:archify/archify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/archify/archify-learnings.md) (transient lessons). Scoping: [[[mb-archify-scope:mb-archify-scope|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md)
-(the scoping skill's canonical spec).
+State: [[[mybizz-config-docs:archify/archify-config|Configuration]]](C:/mybizz/mybizz-config-docs/archify/archify-config.md). What Archify is and why it works this way: [[[mybizz-config-docs:archify/archify-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/archify/archify-explainer.md).
+What differs from the standard and why: [[[mybizz-config-docs:archify/archify-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/archify/archify-learnings.md).
+Scoping: [[[mb-archify-scope:mb-archify-scope|Scoping Skill Specification]]](C:/mybizz/mb-archify-scope/mb-archify-scope.md) (the scoping skill's canonical specification).
 
 ---
 
@@ -30,7 +28,7 @@ All `node bin/archify.mjs ...` commands run from the skill package root
 
 | Type | Use for |
 |---|---|
-| [[[mb-3-cs-project-library:docs-local/architecture\|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md) | Components, services, storage, cloud/security boundaries, infrastructure |
+| `architecture` | Components, services, cloud/security boundaries, infrastructure |
 | `workflow` | Processes, approval gates, tool calls, runbooks, CI/CD |
 | `sequence` | API call chains, request lifecycles, async traces, returns |
 | `dataflow` | Pipelines, ETL/ELT, lineage, governance, consumers |
@@ -42,7 +40,7 @@ When ambiguous: `node bin/archify.mjs guide "<scenario>" --json`
 
 | Mermaid | Archify type |
 |---|---|
-| `flowchart` / `graph` | `workflow` (or [[[mb-3-cs-project-library:docs-local/architecture\|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md) for a component map) |
+| `flowchart` / `graph` | `workflow` (or `architecture` for a component map) |
 | `sequenceDiagram` | `sequence` |
 | `stateDiagram` | `lifecycle` |
 
@@ -59,14 +57,14 @@ Read the Mermaid for topology and meaning; author fresh Archify JSON. Never mech
    node bin/archify.mjs validate <type> <candidate.json> --quality showcase --json
    ```
 
-   A showcase pass = all 9 artifact checks, 0 composition errors, 0 warnings. A receipt with only 4 artifact checks is basic validation, never showcase acceptance. If `meta.quality_profile` is omitted or misspelled, fix it before geometry. Workflow v2 geometry diagnosis: `node bin/archify.mjs validate workflow <candidate.json> --layout-json` — use the stable compiler receipt; solver internals are not authoring controls.
+   A showcase pass = all 9 artifact checks, 0 composition errors, 0 warnings. A receipt with only 4 artifact checks is basic validation, never showcase acceptance. If `meta.quality_profile` is omitted or misspelled, fix it before geometry. Workflow v2 geometry diagnosis: `node bin/archify.mjs validate workflow <candidate.json> --layout-json` — use the stable compiler receipt; solver internals are not authoring controls. The canonical workflow layout, pin, migration and receipt contract is `renderers/workflow/README.md`.
 5. **Deliver — the final acceptance command, run once:**
 
    ```bash
    node bin/archify.mjs deliver <type> <input.json> <output.html> --quality showcase --json
    ```
 
-   A non-zero exit can never be described as success. A failed delivery preserves any previous output — never run `visual-check` on that path; it would inspect the stale last-good artifact, not the failed candidate.
+   A non-zero exit can never be described as success. A failed delivery preserves any previous output — never run `visual-check` on that path; it would inspect the stale last-good artifact, not the failed candidate. Delivery freezes the exact specification bytes into a private same-directory snapshot, renders and checks that snapshot, atomically commits the HTML, and reports SHA-256 plus byte counts for both specification and artifact.
 6. **After successful delivery, collect bounded browser evidence:**
 
    ```bash
@@ -74,7 +72,7 @@ Read the Mermaid for topology and meaning; author fresh Archify JSON. Never mech
    ```
 
    Measures first-screen containment at 1440×900, 1600×1000, 1920×1080, and 2048×1320; the machine receipt remains `visualReview: "pending"`. Chrome absence reports `skipped`, never a false pass.
-   **Calibration note (verified live 2026-09-15):** Showcase desktop containment
+   **Calibration note:** Showcase desktop containment
    (`scrollHeight <= innerHeight`) is not satisfiable for card-bearing artifacts in
    the current viewer build — the shipped reference example fails the identical
    overflow check at all four viewports, and a 9/9-validated artifact overflowed
@@ -86,9 +84,9 @@ Read the Mermaid for topology and meaning; author fresh Archify JSON. Never mech
 ### Correction rounds
 
 Apply only each `diagnostics[]` subject's `supportedFixes`; change only the diagnosed subject, verify its evidence. Continue while the objective error count reaches a new minimum. If two consecutive rounds do not improve that best count, stop and report the unresolved diagnostics truthfully.
-**Override order (verified live 2026-09-15):** crossing → endpoint direction → label.
+**Override order:** crossing → endpoint direction → label.
 After crossings and endpoint-direction are clean, the remaining diagnostics are
-label-route-clearance only; two focused repair rounds took a full candidate from
+label-route-clearance only; two focused repair rounds take a full candidate from
 17 → 0 diagnostics. Keep single-diagnostic repairs until the count reaches a new
 minimum, then stop.
 
@@ -109,16 +107,33 @@ minimum, then stop.
 | `node bin/archify.mjs brands [name] [--json]` / `brands capture <url> [--json]` | Brand-mark discovery / digest-pinned capture |
 | `node scripts/check-update.mjs [--ack "<eventKey>"]` | Update-awareness checker |
 
+## Authoritative sources
+
+| Source | Link | Issuer version | Date checked |
+|---|---|---|---|
+| `SKILL.md` (installed) | `C:\mybizz\archify\archify\SKILL.md` | 2.16 | 2026-10-20 |
+| `schemas/` (installed) | `C:\mybizz\archify\archify\schemas\` | 2.16.0 | 2026-10-20 |
+| `references/` (installed) | `C:\mybizz\archify\archify\references\` | 2.16.0 | 2026-10-20 |
+| `skill-release.json` | `C:\mybizz\archify\archify\skill-release.json` | 2.16.0 | 2026-10-20 |
+
+## Checks
+
+| Check | Method | Run by |
+|---|---|---|
+| Installed version | read `package.json` or `skill-release.json` — both carry `2.16.0` | agent |
+| Works | `node bin/archify.mjs doctor` — 15 checks, all ok, "Archify is ready." | agent |
+| Discovery symlink | `readlink ~/.config/opencode/skills/archify` — resolves to `/mnt/c/mybizz/archify/archify` | agent |
+| Scoping skill sync | strip frontmatter from the canonical specification and the installed copy, hash both bodies, require equal hashes | agent |
+| Each config setting | read the row's Source file live | agent |
+
 ## Authoring invariants (imperatives)
 
 - **Type choice is the highest-leverage scoping decision.** Run
   `node bin/archify.mjs guide "<scenario>" --json` at scope time; record type+why.
   `dataflow` is a strict stage/row grid (stage centers `x=100+stage×215`, band 168,
   header `y=46`; row tops `y=128,242,356,470,584`) that punishes dense crossing flows;
-  [[[mb-3-cs-project-library:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md) uses free `pos` and forgives edge count. Choose the forgiving type
-  unless the subject genuinely demands grid semantics (verified live 2026-09-15:
-  keyword-driven `dataflow` failed repeatedly; guide-consistent [[[mb-3-cs-project-library:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-library/docs-local/architecture.md)
-  validated clean in two repair rounds).
+  `architecture` uses free `pos` and forgives edge count. Choose the forgiving type
+  unless the subject genuinely demands grid semantics.
 - **Probe before connecting.** A components+boundary-only stub `validate` runs in
   seconds and surfaces the composition/desktop-readability failure class before any
   flow/label work. Abort-and-reshape on probe failure — never author past a failed
@@ -126,33 +141,42 @@ minimum, then stop.
 - **Desktop readability is a viewBox-width constraint.** At 1440px desktop the viewer
   scales the whole SVG down; a 1360-wide viewBox dropped an 8.4px sublabel to 5.7px
   (`composition/desktop-readability`). Size the viewBox for ≤~1240 usable width and
-  widen long-label nodes instead of shrinking copy (verified live 2026-09-15).
+  widen long-label nodes instead of shrinking copy.
 - **Explicit `via`/`fromSide` must hit exact side-midpoint anchors.** With explicit
   geometry the renderer pins ports at node side midpoints; a `via` not sharing the
   port coordinate makes a diagonal final segment and fails `endpoint-side-direction`.
-  Automatic Port Spread is skipped for explicit routes. Derive `via` coordinates from
-  computed port midpoints, or leave the side automatic — never mix one hardcoded port
-  with several automatic ones on the same side (verified live 2026-09-15).
+  Derive `via` coordinates from computed port midpoints, or leave the side automatic —
+  never mix one hardcoded port with several automatic ones on the same side.
+- **Automatic Port Spread is a default renderer behavior** for architecture, workflow,
+  dataflow, and lifecycle. It skips single relationships and explicit `via`,
+  `channelX`, `channelY`, `labelAt`, or non-`auto` routes. Near-parallel ports get an
+  outside bridge, so automatic routing never creates a segment under 8px or an
+  interior turn under 16px. Architecture keeps unobstructed facing automatic ports
+  (`left`/`right` or `top`/`bottom`) on one shared axis when their offset is under
+  16px and both ports retain corner clearance; if exactly one endpoint was spread,
+  only the unshared endpoint may move onto that axis; if both endpoints were spread,
+  keep the outside bridge so competing ports remain distinct.
 - **The shared-corridor read pair needs physical separation.** Bidirectional flows
   between two adjacent nodes collide on a shared ~70px channel; labels cannot coexist
   there. Route one over the top, one along the bottom, each on its own orthogonal
   channel with its own label band. In the corridor plan, name a separate lane for
-  each anti-parallel pair (verified live 2026-09-15, developer ⇄ GBrain).
+  each anti-parallel pair.
 - One obvious main path; side branches leave the nearest main-path node. Remove low-value edges before adding routing controls.
 - Omit `meta.visual_preset` by default so every diagram opens in `classic`; set `signal-flow`, `blueprint`, or `editorial` only on explicit request. Color mode and visual preset are independent — switching Light/Dark must preserve the current preset.
 - Omit `meta.subtitle` by default. Never invent a subtitle that restates the title, nodes, or cards.
-- Treat the artifact as a first-screen desktop deliverable: check 1440×900, 1600×1000, 1920×1080, plus 2048×1320 for large-desktop intent. Require `document.documentElement.scrollWidth <= window.innerWidth` and `scrollHeight <= window.innerHeight` at every checked size. Repair overflow by removing genuinely redundant content or compacting spacing — never with `overflow: hidden`, clipped content, an internal diagram scroller, stretched SVG height, or smaller typography.
+- **Treat the artifact as a first-screen desktop deliverable**, not a shallow strip: one responsive artifact for laptops and external displays — never device-specific HTML or an alternate topology. The viewer adapts only the outer reading width from the live viewport; it preserves the authored SVG/viewBox, proportions, semantic geometry, and normal document flow. On a wide or tall desktop, use enough authored vertical rhythm that the diagram panel and its conclusion cards occupy the screen as a balanced whole; runtime scaling cannot repair an over-compressed Y layout or an undersized explicit `meta.viewBox`. Check 1440×900, 1600×1000, 1920×1080, plus 2048×1320 for large-desktop intent. Require `document.documentElement.scrollWidth <= window.innerWidth` and `scrollHeight <= window.innerHeight` at every checked size, and visually check that the diagram stays comfortably readable and vertically balanced at the largest checked viewport. Repair overflow by removing genuinely redundant content or compacting spacing before shrinking nodes, labels, or the main panel. If the largest viewport still shows a conspicuous empty lower band at the viewer's width cap, redistribute authored Y positions and increase the viewBox height proportionally — never filler copy or decorative cards. Narrow/mobile layouts may scroll vertically when containment requires it. Never counterfeit a pass with `overflow: hidden`, clipped content, an internal diagram scroller, stretched SVG height, or smaller typography.
+- Optional viewer capabilities are reader features, not extra authoring work: `meta.animation: "trace"` is opt-in motion; `meta.views` is optional, at most five curated chapters. Omit both unless the user asks.
 - Omit `meta.legend` for the truthful `auto` default; when needed use only `mode: auto|all|hidden` with renderer-supported `entries.<kind>.label|visible` — labels never change semantics.
 - Choose one primary authored language. `meta.locale` accepts only `"en"` or `"zh-CN"` (it localizes Viewer UI only — authored content is never translated). For every other language, omit `meta.locale` and explicitly disclose the English Viewer fallback.
 - Preserve exact product names, code identifiers, commands, protocols, API paths, and environment names inside localized copy.
 - Brand identity is optional and explicit: use built-in IDs discovered via `brands "<name>" --json`; for unknown official URLs supplied by the user, run `brands capture "<url>" --json` and author the returned digest-pinned object. Never infer a brand from a vague role such as "database"; never let a badge replace the semantic type, label, or relationship facts.
 - Sequence diagrams: omit `meta.column_fit` for the stable `fixed` layout; set `"spread"` only when a wide viewBox would otherwise leave unused space or labels do not fit — never shorten semantic labels before trying `spread`.
-- Component types: `frontend`, `backend`, `database`, `cloud`, [[[pdlf:pdlf-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security|Security Check]]](C:/pdlf/pdlf-library/docs-local/pdlf-testing-seed-material/ci-based-checks-format/checks/security.md), `messagebus`, `external`; variants: `default`, `emphasis`, `security`, `dashed`.
-- Relationship labels are semantic data. On collision: move the label, adjust route or spacing, then shorten wording while preserving meaning. Omit only wording already fully implied by both endpoints and containing no protocol, action, direction, sync/async behavior, or cross-boundary mechanism. Deleting a meaningful label is not a geometry repair.
+- Component types: `frontend`, `backend`, `database`, `cloud`, `security`, `messagebus`, `external`; variants: `default`, `emphasis`, `security`, `dashed`.
+- Relationship labels are semantic data. On collision: move the label, adjust route or spacing, then shorten wording while preserving meaning. Omit only wording already fully implied by both endpoints and containing no protocol, action, direction, sync/async behavior, or cross-boundary mechanism. Deleting a meaningful label is not a geometry repair. If a relationship starts unlabeled because its endpoints fully imply it, explain why the wording is redundant — a semantic authoring choice, not a geometry repair.
 - Omit `meta.engineering_profile` by default. Enable `deployment-ownership` only when the user explicitly asks for a production deployment topology, ownership handoff, or fail-closed deployment review and the source facts are known. Never remove the profile merely to pass validation — repair the facts or report the diagnostics truthfully.
 - Spacing means clear gap, not center distance. A relationship label's clear gap must exceed its measured mask width; follow the label-preserving repair order.
 - Automatic routes own their endpoint sides: the first and final segment must leave/enter perpendicular to that side. Never accept an edge crossing an unrelated opaque node, an ambiguous shared corridor, or a relationship label masking another route.
-- Lifecycle: event/terminal column `N` in `0..2` aligns exactly beneath main column `N + 2`. A recoverable state uses `type: "failure"` plus a real transition back to the active state.
+- Lifecycle: phase columns `0..4` occupy the main rail; event/terminal column `N` in `0..2` aligns exactly beneath main column `N + 2`. A recoverable state uses `type: "failure"` plus a real transition back to the active state.
 - Update awareness: after the first candidate exists, run `node scripts/check-update.mjs` once. `silent` → continue without mentioning it. `update_available` → show one compact notice (installed version, latest, the checker's fixed local summary, release-notes link; label `security` severity as a security update), then acknowledge by running the checker again with `--ack "<eventKey>"`. Never quote, summarize, or translate the remote manifest's summary; never download, install, or execute an update; silence is never consent.
 - Do not read `renderers/shared/geometry.mjs`, renderer source, validator source, tests, or benchmarks before the first candidate exists. Inspect implementation only for an unsupported internal diagnostic or after two focused repairs fail.
 - When shell access is unavailable: hand-place architecture SVG into `assets/template.html` using CSS semantic classes, and follow the visual review contract in `references/delivery-contract.md`.

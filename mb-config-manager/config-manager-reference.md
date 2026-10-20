@@ -1,7 +1,7 @@
 ---
 title: "config-manager-reference"
 doc-id: "mb-8ddcefac"
-updated: "2026-10-15"
+updated: "2026-10-20"
 ---
 # mb-config-manager — Reference
 
@@ -26,8 +26,8 @@ kinds**. Never restate it here.
 
 | Source | Link | Issuer version | Date checked |
 |---|---|---|---|
-| Orchestrator agent (the standard) | [[[mybizz-config-docs:mb-config-manager/config-manager-agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) | `17e9046` | 2026-10-15 |
-| Doc suite specification | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | current | 2026-10-15 |
+| Orchestrator agent (the standard) | [[[mybizz-config-docs:mb-config-manager/config-manager-agent]]](C:/mybizz/mybizz-config-docs/mb-config-manager/config-manager-agent.md) | `17e9046` | — |
+| Doc suite specification | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | current | — |
 
 ## Checks
 

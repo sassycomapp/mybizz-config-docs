@@ -13,20 +13,6 @@ Status: PASS
 Metrics:
 | Metric | Value |
 |---|---|
-| version | 0.59.18.0 (upgrade available: 0.60.292.0, notify mode — not a defect) |
-| doctor exit code | 0 |
-| doctor status / score | warnings / health_score 95, brain_checks_score 100 (only warn: DB checks skipped in --fast mode, by design) |
-| pages / chunks / embedded | 2287 / 7073 / 7073 (100%) |
-| sources | 19 registered, all reachable, 0 fails, embed 100% |
-| sources with GitHub remote | 19/19 (per dev-tooling-source-repos-must-be-github-backed ADR) |
-Findings: (none)
-Remediation: (n/a)
-Developer decision: (n/a)
-## Section 1 — GBrain core
-Status: PASS
-Metrics:
-| Metric | Value |
-|---|---|
 | version | 0.59.18.0 (upgrade available 0.60.292.0 — notify mode, not a defect) |
 | doctor exit code | 0 |
 | doctor status / score | warnings / health_score 95, brain_checks_score 100; only warn = DB checks skipped in --fast mode (by design) |
@@ -118,22 +104,6 @@ Metrics:
 | graphs found | 9 (mb-3-cs app1/3/5, mb-4-ecom app1/3/5, mb-5-pdlf app1/3/5) |
 | built_at_commit vs live HEAD | 9/9 MATCH (no stale graphs) |
 | node counts | 566 (mb-3-cs-app1), 5-10 each for the other eight |
-| links in root graph.json | 0 stored (root file = node index + communities; dated 2026-10-18 snapshot for mb-3-cs-app1 carries 562 nodes / 457 links) |
-| live query | real result — BFS depth=2 from "Project Purpose", 14 nodes, edges reconstructed live from sources ([EXTRACTED] markers with src=loc) |
-Findings:
-- (observation, not scored) Root graph.json files store 0 links; edges are reconstructed at query time from source files and render correctly in live queries. Not a staleness or defect signal — commit hashes all match.
-Remediation: (n/a)
-Developer decision: (n/a)
-
-## Section 6 — Graphify (read-only)
-Status: PASS
-Metrics:
-| Metric | Value |
-|---|---|
-| installed version | 0.9.40 (/home/dev-p/.local/bin/graphify) |
-| graphs found | 9 (mb-3-cs app1/3/5, mb-4-ecom app1/3/5, mb-5-pdlf app1/3/5) |
-| built_at_commit vs live HEAD | 9/9 MATCH (no stale graphs) |
-| node counts | 566 (mb-3-cs-app1), 5-10 each for the other eight |
 | links stored | root graph.json carries 0 links; dated 2026-10-18 snapshot carries 457 links (562 nodes) for mb-3-cs-app1 |
 | live query | real result: BFS depth=2 from "Project Purpose" over mb-3-cs-app1 graph — 14 nodes, [EXTRACTED] edges with src=loc rendered |
 Findings:
@@ -170,19 +140,6 @@ Metrics:
 Findings: (none)
 Remediation: (n/a)
 Developer decision: (n/a)
-
-## Section 8 — mb-submit-memory (prerequisite state only)
-Status: PASS
-Metrics:
-| Metric | Value |
-|---|---|
-| registered sources | 19 (S1 full list) |
-| governor reachable | 127.0.0.1:8321 LISTEN (pid 443) — cross-ref S3 |
-| API + worker units | both active (running) — cross-ref S3 |
-| governed write paths proven live | S4 (positive) + S5 (negative) this run |
-Findings: (none)
-Remediation: (n/a)
-Developer decision: (n/a)
 ## Section 9 — Backups (Instance B only: gbrain + memory_governor)
 Status: REMEDIATED
 Metrics:
@@ -200,19 +157,6 @@ Findings:
 - Scheduled SundayBackup did not run this morning (no log for 2026-10-18); per postgresql-config.md a missed start is not caught up — reported at next logon. Developer informed here.
 Remediation: agent-runnable Instance-B cycle executed per documented script shape (pg_dump -Fc gbrain + memory_governor + postgres-b to /home/dev-p/backup-gbrain/, copied to /mnt/c/backup-gbrain/, sha256 pair-verified 3/3). Instance-A lane + gbrain export lane remain the developer's Sunday-task territory.
 Developer decision: remediate (2026-10-18 ~13:05 SAST)
-
-## Section 10 — Dream Cycle (state report)
-Status: STATE REPORT LOGGED — run/ask pending
-Metrics:
-| Metric | Value |
-|---|---|
-| live cycle_freshness via doctor --fast | field not present (not emitted in --fast mode; carries no reading) |
-| recorded doctor baseline (2026-09-30) | 30/100 — only FAIL was cycle_freshness, accepted per dream-cycle reference (stamp updates only when the cycle's sync phase processes real new commits; FAIL on a freshly-synced brain is documented-expected, open item 3) |
-| last acceptance-run evidence (2026-09-06) | full gbrain dream --json EXIT:0; 23 phases: 11 ok / 11 skipped / 1 warn; pages 1666 -> 1755 (+89 synthesized); chunks 5437 -> 5526; embed 100%; extract_atoms 182s; post-run eval: 0 contradictions, 7 findings |
-| today's fast doctor | health_score 95, brain_checks_score 100 (no dream checks surfaced in fast mode) |
-Findings: (none — this is a state report, not a pass/fail)
-Remediation: (n/a)
-Developer decision: PENDING — real-run gate (LLM spend, minutes, changes the brain)
 
 ## Section 10 — Dream Cycle (real run)
 Status: REMEDIATED-equivalent — RUN COMPLETED + POST-RUN VERIFICATION DONE
