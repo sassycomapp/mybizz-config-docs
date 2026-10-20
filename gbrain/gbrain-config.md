@@ -1,7 +1,7 @@
 ---
 title: "gbrain-config"
 doc-id: "mb-b677b7b4"
-updated: "2026-10-17"
+updated: "2026-10-20"
 ---
 # GBrain — Configuration
 
@@ -83,7 +83,19 @@ is the correct tool — full account in [[[mybizz-config-docs:gbrain/gbrain-refe
 | ------------- | ------------------------------- | -------------------------------- |
 | Embedding     | OpenAI (text-embedding-3-large) | ✓ active                         |
 | Chat / Expand | OpenAI (gpt-5.2)                | ✓ active, will move to Anthropic |
-| Reranker      | ZeroEntropy                     | ✓ confirmed active               |
+| Reranker      | Voyage (`voyage:rerank-2.5`)    | ✓ active                         |
+
+## Search settings
+
+| Setting | Value |
+|---|---|
+| `search.reranker.enabled` | `true` |
+| `search.reranker.model` | `voyage:rerank-2.5` |
+| `search.reranker.timeout_ms` | `20000` |
+| `GBRAIN_QUERY_EMBED_TIMEOUT_MS` | `15000`, set in `~/.bashrc` and in the `gbrain` MCP environment in `~/.config/opencode/opencode.jsonc` |
+| Voyage account | Payment method on the organization that holds the API key (standard limits for `rerank-2.5`: 2000 requests and 2M tokens per minute) |
+| `/etc/gai.conf` | `precedence ::ffff:0:0/96  100` (IPv4 addresses are tried first) |
+| `systemd-timesyncd` in WSL | Disabled; Windows keeps the WSL clock |
 
 ## Live database statistics (verified 2026-09-13 — point-in-time; grows with every sync)
 
@@ -174,7 +186,7 @@ environment's operational path; the custom script is (verified against
 | Scope | global `~/.config/opencode/opencode.jsonc`, entry `mcp.gbrain` |
 | Type / command | `local`; `["/home/dev-p/.bun/bin/gbrain", "serve"]` |
 | Enabled | `true` |
-| Environment passed | `OPENAI_API_KEY`, `ZEROENTROPY_API_KEY` |
+| Environment passed | `OPENAI_API_KEY`, `VOYAGE_API_KEY`, `GBRAIN_QUERY_EMBED_TIMEOUT_MS` |
 | MCP bootstrap | servers start once at OpenCode process boot, never per chat session — config changes need a full process restart |
 | Server version | `gbrain serve` was restarted with OpenCode after the 2026-09-30 upgrade — one process running the new code |
 
@@ -189,7 +201,7 @@ value appears nowhere in this suite.
 |---|---|---|
 | `OPENAI_API_KEY` | required, present (env-only) | embeddings + default chat/expansion |
 | `ANTHROPIC_API_KEY` | required, present (env-only) | Dream Cycle `extract_atoms` phase |
-| `ZEROENTROPY_API_KEY` | present, reserved (env-only) | not the active embedding provider |
+| `VOYAGE_API_KEY` | required, present (env-only, `~/.bashrc`) | reranker (`voyage:rerank-2.5`) |
 | Database URL | in `~/.gbrain/config.json`, **masked everywhere in this suite** | local Postgres connection (local-dev value) |
 
 API keys live in the environment only, never in `config.json` (verified).

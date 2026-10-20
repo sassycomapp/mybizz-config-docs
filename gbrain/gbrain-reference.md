@@ -1,7 +1,7 @@
 ---
 title: "gbrain-reference"
 doc-id: "mb-bb4cbd8d"
-updated: "2026-10-14"
+updated: "2026-10-20"
 ---
 # GBrain — Reference: Commands, Mechanics, Incidents, Troubleshooting
 
@@ -340,6 +340,28 @@ trusting its own claims. If confirmed stale: delete (untracked) or gitignore
 never print, copy, or archive the values.
 
 ---
+
+## Reranker and search timing
+
+**Read the settings:**
+`gbrain config get search.reranker.enabled`, `gbrain config get search.reranker.model`, `gbrain config get search.reranker.timeout_ms`, `echo $GBRAIN_QUERY_EMBED_TIMEOUT_MS`.
+
+**Health:** `gbrain doctor 2>&1 | grep reranker_health`.
+
+**Failure log:** `~/.gbrain/audit/rerank-failures-<year>-W<week>.jsonl`. Read the latest reasons with `tail -3 <file> | jq -r '.ts + "  " + .reason + "  " + .error_summary'`.
+
+**Works test:** run eight searches and count new lines in the failure log. Pass is 0 new lines.
+
+```bash
+F=$(ls -t ~/.gbrain/audit/rerank-failures-*.jsonl | head -1); b=$(wc -l < $F); for q in "memory governor review queue" "cupcake grant rules" "graphify code graph" "postgres ledger port" "mb-close-out steps" "dream cycle purge" "opencode plugin loading" "sentinel review steps"; do gbrain search "$q" >/dev/null 2>&1; done; echo "new rerank failures: $(( $(wc -l < $F) - b ))"
+```
+
+**Fix by reason:**
+1. `rate_limit` with "payment method": add the payment method on the billing page of the Voyage organization that holds the API key (dashboard.voyageai.com/organization/billing/payment-methods). Confirm on dashboard.voyageai.com/organization/rate-limits that `rerank-2.5` shows 2000 RPM.
+2. `network` or "timed out": check the clock with `journalctl --since '-5min' --no-pager | grep -c 'Clock change detected'` (pass is 0), and check `grep '^precedence' /etc/gai.conf` shows the IPv4 line.
+3. "query embed deadline exceeded": check `echo $GBRAIN_QUERY_EMBED_TIMEOUT_MS` shows `15000`.
+
+**Do not** lower `search.reranker.timeout_ms` below `20000` or `GBRAIN_QUERY_EMBED_TIMEOUT_MS` below `15000`. **Do not** re-enable `systemd-timesyncd` in WSL.
 
 ## Authority Model
 

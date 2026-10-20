@@ -1,7 +1,7 @@
 ---
 title: "README"
 doc-id: "mb-46a3cb92"
-updated: "2026-10-07"
+updated: "2026-10-20"
 ---
 # mybizz-config-docs — README
 
@@ -18,9 +18,9 @@ steady-state functional reference only.
 | `gstack/` | [[[mybizz-config-docs:gstack/gstack-reference\|GStack Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-reference.md), [[[mybizz-config-docs:gstack/gstack-skills-reference\|GStack Skills Reference]]](C:/mybizz/mybizz-config-docs/gstack/gstack-skills-reference.md) |
 | `gbrain/` | [[[mybizz-config-docs:gbrain/gbrain-reference\|Reference: Commands, Mechanics, Incidents, Troubleshooting]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-reference.md) |
 | `postgresql/` | [[[mybizz-config-docs:postgresql/postgresql-reference\|Reference: Commands, Procedures, and Troubleshooting]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-reference.md) |
-| `matt-pocock-skills/` | [[[mybizz-config-docs:matt-pocock-skills/matt-pocock-skills-reference\|Matt Pocock Skills Reference]]](C:/mybizz/mybizz-config-docs/matt-pocock-skills/matt-pocock-skills-reference.md) |
-| `anvil-agent-references/` | [[[mybizz-config-docs:anvil-agent-references/anvil-agent-references-reference\|Reference: Install, Skills, and Technical Detail]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-references-reference.md) |
-| `magdoub-wireframe/` | [[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-reference\|Reference: Invocation, Operation, Update]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-reference.md) |
+| `matt-pocock-skills/` | Matt Pocock Skills Reference |
+| `anvil-agent-references/` | Reference: Install, Skills, and Technical Detail |
+| `magdoub-wireframe/` | Reference: Invocation, Operation, Update |
 | `graphify/` | [[[mybizz-config-docs:graphify/graphify-reference\|Graphify Reference]]](C:/mybizz/mybizz-config-docs/graphify/graphify-reference.md) |
 
 **Not here, despite an earlier plan to place it here:** individual projects' `{slug}-config.yaml`

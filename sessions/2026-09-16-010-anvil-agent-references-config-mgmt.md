@@ -1,7 +1,7 @@
 ---
 title: "2026-09-16-010-anvil-agent-references-config-mgmt"
 doc-id: "mb-aa0339ab"
-updated: "2026-10-14"
+updated: "2026-10-20"
 ---
 # Session 010 — anvil-agent-references config-management suite build + run #1 + W-1..W-5 closure
 
@@ -25,7 +25,7 @@ closed **by direct resolution**, not left as governance flags.
   stubs 63 (spec said 62), gbrain source indexed 34 pages (spec said 0).
 
 ### Phase 1 — Suite build-out
-- [[[mybizz-config-docs:anvil-agent-references/anvil-agent-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/anvil-agent-references/anvil-agent-learnings.md) — preamble + table added.
+- Learnings — preamble + table added.
 - Log — created, seeded with documented history
   (install 2026-08-12, suite creation 2026-09-06, build-out, run #1).
 - Exam Plan — bootstrap, hand-written (format

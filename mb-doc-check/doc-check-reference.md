@@ -1,7 +1,7 @@
 ---
 title: "doc-check-reference"
 doc-id: "mb-08c8ef59"
-updated: "2026-10-15"
+updated: "2026-10-20"
 ---
 # mb-doc-check — Reference: Commands, Messages, Procedures, Troubleshooting
 
@@ -28,7 +28,7 @@ All are read-only; the agent runs every one.
 | Settings file | Read `mb-doc-check.sources`, then `python3 /mnt/c/mybizz/scripts/mb-doc-check.py sources-check`. It must say `everything matches` | agent |
 | Covered repositories vs GBrain | `sources-check`. Its `note` lines about code sources not in the file are informational | agent |
 | Page-name rule vs GBrain | `python3 /mnt/c/mybizz/scripts/mb-doc-check.py slug-selftest`. It must report `0 difference(s)` | agent |
-| Works | `check --root <repo>` must end with `all clear`; `bash /mnt/c/mybizz/mybizz-config-docs/gbrain/tests/run-tests.sh` must end with `OK` | agent |
+| Works | `check --root <repo>` must end with `all clear`; `bash /mnt/c/mybizz/mybizz-config-docs/mb-doc-check/tests/run-tests.sh` must end with `OK` | agent |
 
 ---
 

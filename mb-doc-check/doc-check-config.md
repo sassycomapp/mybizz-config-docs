@@ -1,7 +1,7 @@
 ---
 title: "doc-check-config"
 doc-id: "mb-e7e60242"
-updated: "2026-10-15"
+updated: "2026-10-20"
 ---
 # mb-doc-check — Configuration
 
@@ -28,7 +28,7 @@ Canonical current-state record of the `mb-doc-check` program. Agent-facing. What
 | How it runs | — | As a git `pre-commit` hook in each of the covered repositories listed in [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md): `python3 /mnt/c/mybizz/scripts/mb-doc-check.py hook`. A commit made in WSL runs it; a commit made from a Windows program does not | [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | |
 | Failure behavior | — | If the program itself fails with an internal error, it prints "skipped because of an internal problem" and lets the commit through. A bug never blocks work. The skipped documents are corrected at their next commit | `mb-doc-check.py` at `236fdde` | |
 | Network and GBrain | — | None, except two commands: `sources-check` calls the `gbrain` command, and `slug-selftest` runs GBrain's own page-name function with `bun` | `mb-doc-check.py` at `236fdde` | |
-| Tests | — | 150 automated tests (Python `unittest`), stored in `mybizz-config-docs\gbrain\tests` and run with `bash /mnt/c/mybizz/mybizz-config-docs/gbrain/tests/run-tests.sh`. It ends with `OK` | live run 2026-10-15 | |
+| Tests | — | 150 automated tests (Python `unittest`), stored in `mybizz-config-docs\mb-doc-check\tests` and run with `bash /mnt/c/mybizz/mybizz-config-docs/mb-doc-check/tests/run-tests.sh`. It ends with `OK` | live run 2026-10-15 | |
 
 ## Settings — covered repositories
 

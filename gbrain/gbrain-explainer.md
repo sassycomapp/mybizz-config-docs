@@ -1,7 +1,7 @@
 ---
 title: "gbrain-explainer"
 doc-id: "mb-3187a352"
-updated: "2026-10-17"
+updated: "2026-10-20"
 ---
 # GBrain — Explainer
 
@@ -140,6 +140,18 @@ gap, not a missing-key state. API keys live in the environment only, never in
 GBrain's own config file in plaintext — a confirmed exposure discipline, not
 a preference. (The config file does carry the local database URL; masked
 throughout this suite per the standing masking decision — config.md.)
+
+### Reranking and search timing
+
+GBrain finds candidate passages by meaning and by keyword, then sends the best 25 to Voyage's `rerank-2.5` model, which orders them by how well each one answers the question. Reranking puts the right document first far more often than either method alone.
+
+Voyage usually answers in under two seconds, but some answers take close to ten. GBrain therefore waits up to 20 seconds. If Voyage still has not answered, search returns its results in their unranked order instead of failing, so a slow reranker never stops a search.
+
+Before searching, OpenAI turns the question into numbers. OpenAI's first call in a session can take about seven seconds, so GBrain waits up to 15 seconds for it.
+
+Two WSL settings keep these calls reliable. Addresses are tried IPv4 first, because WSL has no working IPv6 route and an IPv6 attempt hangs until it times out. Only Windows sets the WSL clock, because a second time service inside WSL made the clock jump, and every jump cut calls short.
+
+Voyage only gives full speed to an account with a payment method on the organization that holds the API key. Without one, it allows three requests a minute, which a few searches use up.
 
 ## 7. Upstream Scope — A Larger Product Than This Environment Runs
 

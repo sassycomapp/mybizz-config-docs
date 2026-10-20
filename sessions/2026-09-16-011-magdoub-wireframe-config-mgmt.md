@@ -1,7 +1,7 @@
 ---
 title: "2026-09-16-011-magdoub-wireframe-config-mgmt"
 doc-id: "mb-c10b1e79"
-updated: "2026-10-14"
+updated: "2026-10-20"
 ---
 # Session 011 — magdoub-wireframe config-management suite
 
@@ -22,7 +22,7 @@ reconciled, skill re-installed (re-hash `c570e38d0b490808`).
 
 1. **Orientation (Phase 0)** — read `config-setup-prompt.md` (the generic method),
    the config-manager explainer/reference/register, the target's three existing
-   docs ([[[mybizz-config-docs:magdoub-wireframe/magdoub-wireframe-config|Configuration]]](C:/mybizz/mybizz-config-docs/magdoub-wireframe/magdoub-wireframe-config.md), `-reference.md`, `-explainer.md`, all Live
+   docs (Configuration, `-reference.md`, `-explainer.md`, all Live
    2026-09-06), and the fresh `matt-pocock-skills/` suite as format template
    (the freshest completed suite — the prompt's own pointer to `gbrain-dream-cycle/`
    was noted as superseded by three newer suites). Register row existed at `WIP`:

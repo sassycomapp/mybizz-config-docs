@@ -1,7 +1,7 @@
 ---
 title: "config-manager-register"
 doc-id: "mb-6ce71949"
-updated: "2026-10-16"
+updated: "2026-10-20"
 ---
 # mb-config-manager — Register
 
@@ -9,7 +9,6 @@ One row per MyBizz skill and system. Written only by mb-config-manager, with the
 
 | System | Kind | Docs folder | Installed version | Last updated | Last checked | State |
 |---|---|---|---|---|---|---|
-| anvil-agent-references | skill | `anvil-agent-references` | | | | Active |
 | archify | skill | `archify` | | | | Active |
 | cloudflare | service | `cloudflare` | | | | Deferred |
 | commit-all | script | `commit-all` | `6dd62c8` | 2026-10-16 | 2026-10-16 | Active |
@@ -18,9 +17,6 @@ One row per MyBizz skill and system. Written only by mb-config-manager, with the
 | gbrain-dream-cycle | script | `gbrain-dream-cycle` | | | | Active |
 | graphify | skill | `graphify` | | | | Active |
 | gstack | skill | `gstack` | | | | Active |
-| i-have-adhd | skill | `i-have-adhd` | | | | Active |
-| magdoub-wireframe | skill | `magdoub-wireframe` | | | | Active |
-| matt-pocock-skills | skill | `matt-pocock-skills` | | | | Active |
 | mb-archify-scope | skill | `mb-archify-scope` | | | | Active |
 | mb-close-out | skill | `mb-close-out` | `5499a8f` | 2026-10-15 | 2026-10-15 | Active |
 | mb-compile-rules | skill | `mb-compile-rules` | `2e2ac13` | 2026-10-15 | 2026-10-15 | Active |
