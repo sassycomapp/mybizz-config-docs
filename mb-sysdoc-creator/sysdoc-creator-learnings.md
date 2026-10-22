@@ -1,7 +1,7 @@
 ---
 title: "sysdoc-creator-learnings"
 doc-id: "mb-ad2e912c"
-updated: "2026-10-20"
+updated: "2026-10-22"
 ---
 
 # sysdoc-creator — Learnings
@@ -28,3 +28,4 @@ in full before any research, examination or proposal for this system.
 | L16 | Re-verify every old open item; never carry one forward. | Historical claims silently expire; a stale open item reports done work as outstanding. | Developer-approved lesson |
 | L17 | Request the destination grant at Phase 0, since the destination is always the system's folder. | The destination is knowable before drafting; a late request converts a plan into a stall. | Developer-approved lesson |
 | L18 | On Refresh, check the learnings table's own structure (columns, ID scheme) against the specification, not only the rows' content. | Off-spec table structure survives a content-only refresh silently. | Developer-approved lesson |
+| L19 | Before writing a `[[name]]` link into a suite document, confirm the target's real source and slug in GBrain; an invented name points nowhere and blocks the commit. | The commit hook can only resolve a name that matches a real document; this run invented three link names and the developer had to supply the source-qualified paths. | anvil-cli suite run, 2026-10-22 (developer-approved) |

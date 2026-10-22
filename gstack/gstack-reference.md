@@ -1,7 +1,7 @@
 ---
 title: "gstack-reference"
 doc-id: "mb-c02446bd"
-updated: "2026-10-20"
+updated: "2026-10-22"
 ---
 # GStack Reference
 
@@ -24,13 +24,14 @@ rules, or user instruction — the stricter layer wins.
 
 ## Invoking skills
 
-- The slash command is the skill's frontmatter `name:` field. OpenCode loads
-  a skill only when its `name:` matches the folder containing it: the tree
-  folder is `gstack-qa/`, the shortcut is `qa`, the command is `/qa`.
-- Type bare names. The one prefixed command is `/gstack-upgrade`; the
-  aggregate router entry is `/gstack`.
-- `skill_prefix` is false; gstack's setup, upgrade and relink tools read
-  that setting and create plain shortcuts only.
+- Every gstack skill is linked as `~/.config/opencode/skills/gstack-<name>`
+  → `/mnt/c/mybizz/gstack/.opencode/skills/gstack-<name>`; the slash command
+  is the skill's name, which is unchanged — link `gstack-cso`, command
+  `/cso`.
+- Type bare names. `gstack-upgrade` is the one skill whose name itself
+  carries the prefix; the aggregate router entry is `/gstack`.
+- The former short-name links (`cso`, `qa-only`, …) were removed, so every
+  skill loads exactly once — do not recreate them.
 - Resolve gstack tooling through `$GSTACK_BIN`
   (`~/.config/opencode/skills/gstack/bin`). The generated preambles default
   to OpenClaw and Claude host roots that do not resolve on this host — never
@@ -65,7 +66,7 @@ rules, or user instruction — the stricter layer wins.
 | `/ship` | Detect + merge base, run tests, bump VERSION, update CHANGELOG, create PR. |
 | `/land-and-deploy` | Merges PR, waits for CI, verifies production health via canary. |
 | `/landing-report` | Read-only queue dashboard — claimed VERSION slots and open PRs. |
-| `/gstack-upgrade` | Upgrades the installed GStack — rebase the MyBizz-local commits first ([[[mybizz-config-docs:gstack/gstack-learnings\|Learnings L1]]](C:/mybizz/mybizz-config-docs/gstack/gstack-learnings.md)). |
+| `/gstack-upgrade` | Upgrades the installed GStack — rebase the one MyBizz-local commit first ([[[mybizz-config-docs:gstack/gstack-learnings\|Learnings L1]]](C:/mybizz/mybizz-config-docs/gstack/gstack-learnings.md)); the version is pinned — see Do not. |
 
 ### Design
 
@@ -313,8 +314,9 @@ cd /mnt/c/mybizz/gstack && bun run scripts/gen-skill-docs.ts --host opencode --r
 ```
 
 - Rebuild after any change to skill sources. The loaded tree reflects the
-  sources only once rebuilt — the MyBizz Brain Context Load sections are
-  live in 10 loaded skills because the tree is built from the local sources.
+  sources only once rebuilt — the Brain Context Load sections are generated
+  by the installed version itself (`scripts/resolvers/gbrain.ts`); the local
+  tree carries no skill-source patch for them.
 
 ## Artifact locations
 
@@ -387,20 +389,19 @@ it as the live GBrain version — refresh it by re-running
 
 | Source | Link | Issuer version | Date checked |
 |---|---|---|---|
-| GStack repository | https://github.com/garrytan/gstack | 1.58.1.0 | 2026-10-20 |
-| Brain-sync documentation | `/mnt/c/mybizz/gstack/docs/gbrain-sync.md` | 1.58.1.0 | 2026-10-20 |
-| Configuration template | `/mnt/c/mybizz/gstack/config.yaml` | 1.58.1.0 | 2026-10-20 |
-| Skill-doc generator | `/mnt/c/mybizz/gstack/scripts/gen-skill-docs.ts` | 1.58.1.0 | 2026-10-20 |
-| GBrain integration guide | `/mnt/c/mybizz/gstack/USING_GBRAIN_WITH_GSTACK.md` | 1.58.1.0 | 2026-10-20 |
+| GStack repository | https://github.com/garrytan/gstack | 1.91.164.0 | 2026-10-22 |
+| Brain-sync documentation | `/mnt/c/mybizz/gstack/docs/gbrain-sync.md` | 1.91.164.0 | 2026-10-22 |
+| Configuration template | `/mnt/c/mybizz/gstack/config.yaml` | 1.91.164.0 | 2026-10-22 |
+| Skill-doc generator | `/mnt/c/mybizz/gstack/scripts/gen-skill-docs.ts` | 1.91.164.0 | 2026-10-22 |
+| GBrain integration guide | `/mnt/c/mybizz/gstack/USING_GBRAIN_WITH_GSTACK.md` | 1.91.164.0 | 2026-10-22 |
 
 ## Checks
 
 | Check | Method | Run by |
 |---|---|---|
-| Installed version | `cat /mnt/c/mybizz/gstack/VERSION` — package.json agrees | agent |
-| Local commits | `git -C /mnt/c/mybizz/gstack log --oneline -3`; `git -C /mnt/c/mybizz/gstack branch -v` — expect `main` ahead 2 on the MyBizz commits | agent |
-| Topology | `ls /mnt/c/mybizz/gstack/.opencode/skills \| wc -l` → 54; `readlink -f ~/.config/opencode/skills/gstack/bin` resolves into the clone | agent |
-| Loaded-tree currency | `grep -rl 'Brain Context Load' /mnt/c/mybizz/gstack/.opencode/skills/ \| wc -l` → 10 | agent |
+| Installed version | `cat /mnt/c/mybizz/gstack/VERSION` | agent |
+| Local commits | `git -C /mnt/c/mybizz/gstack log -2 --format='%h %s'` — expect `d8775cc20` on `c580561e8`; `git -C /mnt/c/mybizz/gstack branch --show-current` — expect `mybizz-c580561` | agent |
+| Topology | `ls -la ~/.config/opencode/skills \| grep gstack- \| wc -l` → 57; `readlink -f ~/.config/opencode/skills/gstack/bin` resolves into the clone | agent |
 | Runtime settings | read `~/.gstack/config.yaml` against [[[mybizz-config-docs:gstack/gstack-config\|GStack Configuration]]](C:/mybizz/mybizz-config-docs/gstack/gstack-config.md) | agent |
 | Repo policy | read `~/.gstack/gbrain-repo-policy.json` — 8 repositories, all `read-write` | agent |
 | Detection snapshot | `/mnt/c/mybizz/gstack/bin/gstack-gbrain-detect` — bun shebang; rewrites `~/.gstack/gbrain-detection.json`; verify status `ok` and the GBrain version against `gbrain --version` | developer |
@@ -408,6 +409,7 @@ it as the live GBrain version — refresh it by re-running
 
 ## Do not
 
+- Do not upgrade GStack — pinned for PDLF at `c580561` (`1.91.164.0`); only the developer upgrades.
 - Do not hand-edit any `SKILL.md` — regenerate (SKILL.md generation, above).
 - Do not delete `~/.config/opencode/skills/gstack/bin` — actively managed,
   not leftover.
