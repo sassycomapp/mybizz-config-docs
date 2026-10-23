@@ -1,7 +1,7 @@
 ---
 title: "mb-close-out-reference"
 doc-id: "mb-4b40508e"
-updated: "2026-10-20"
+updated: "2026-10-23"
 ---
 # mb-close-out — Reference
 
@@ -11,8 +11,8 @@ Execution procedure for `/mb-close-out`. Run only on explicit developer invocati
 
 | Source | Link | Issuer version | Date checked |
 |---|---|---|---|
-| Skill source (the issuer standard) | `C:\mybizz\mb-close-out\mb-close-out.md` | `5499a8f` | 2026-10-20 |
-| Installed copy | `~/.config/opencode/skills/mb-close-out/SKILL.md` | body matches `5499a8f` | 2026-10-20 |
+| Skill source (the issuer standard) | `C:\mybizz\mb-close-out\mb-close-out.md` | `ae96ad0` | 2026-10-20 |
+| Installed copy | `~/.config/opencode/skills/mb-close-out/SKILL.md` | body matches `ae96ad0` | 2026-10-20 |
 | Repository and catalog registers | [[[mybizz-os-docs:os-reference-docs/repo-organization\|repo organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) · [[[mybizz-os-docs:os-reference-docs/skills-catalog\|skills catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | — | 2026-10-20 |
 
 ## Checks
@@ -49,7 +49,7 @@ Write the session summary as a file, `sessions/<YYYY-MM-DD>-<short-slug>.md`: in
 
 ### Step 3 — Project documents
 
-When the session worked in one of the four projects (mb-3-cs, mb-4-ecom, mb-5-pdlf, pdlf), run `/mb-project-docs` up to its Step 6. Its presentation goes into the gate message. Otherwise skip this step.
+When the session worked in one of the three projects (mb-3-cs, mb-4-ecom, pdlf), run `/mb-project-docs` up to its Step 6. Its presentation goes into the gate message. Otherwise skip this step.
 
 ### Step 4 — Changed files
 
@@ -124,4 +124,4 @@ Never report DONE with an unverified step.
 - Never end a close-out with a non-empty governor review queue.
 - Never create a sessions log or a facts log.
 
-Sub-procedure detail is owned by its own suite: `mb-submit-memory` Steps 1–4 and 6–9 → [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-reference|mb-submit-memory reference]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-reference.md); commit-all behavior → [[[mybizz-config-docs:commit-all/commit-all-reference|commit-all reference]]](C:/mybizz/mybizz-config-docs/commit-all/commit-all-reference.md); the four projects and `mb-project-docs` → [[[mb-project-docs:mb-project-docs|mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md).
+Sub-procedure detail is owned by its own suite: `mb-submit-memory` Steps 1–4 and 6–9 → [[[mybizz-config-docs:mb-submit-memory/mb-submit-memory-reference|mb-submit-memory reference]]](C:/mybizz/mybizz-config-docs/mb-submit-memory/mb-submit-memory-reference.md); commit-all behavior → [[[mybizz-config-docs:commit-all/commit-all-reference|commit-all reference]]](C:/mybizz/mybizz-config-docs/commit-all/commit-all-reference.md); the three projects and `mb-project-docs` → [[[mb-project-docs:mb-project-docs|mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md).

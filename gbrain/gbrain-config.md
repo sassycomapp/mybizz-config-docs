@@ -1,7 +1,7 @@
 ---
 title: "gbrain-config"
 doc-id: "mb-b677b7b4"
-updated: "2026-10-20"
+updated: "2026-10-23"
 ---
 # GBrain — Configuration
 
@@ -129,7 +129,7 @@ gbrain-everything`, `mcp.publish_skills: true`.
 - By type: concept 1,404, atom 564, note 182, code 45, extract_receipt 32, email 5, session 4, media 4, session-summary 2, session-log 1, learning 1
 - Current values: `gbrain stats`
 
-## Registered sources (19)
+## Registered sources (18)
 
 | Source ID | Path | Pages | Federation |
 |---|---|---|---|
@@ -139,7 +139,6 @@ gbrain-everything`, `mcp.publish_skills: true`.
 | `dev-root-hub` | `/mnt/c/dev/dev-root` | 12 | **federated** |
 | `mb-3-cs-project-library` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library` | 564 | **federated** |
 | `mb-4-ecom-project-library` | `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-project-library` | 5 | **federated** |
-| `mb-5-pdlf-project-library` | `/mnt/c/dev/dev-mb-5-pdlf/mb-5-pdlf-project-library` | 9 | **federated** |
 | `mb-archify-scope` | `/mnt/c/mybizz/mb-archify-scope` | 1 | **federated** |
 | `mb-close-out` | `/mnt/c/mybizz/mb-close-out` | 1 | **federated** |
 | `mb-compile-rules` | `/mnt/c/mybizz/mb-compile-rules` | 1 | **federated** |
@@ -167,8 +166,8 @@ every other source is federated. Application code is not indexed in GBrain at
 all — agents read app code directly from the app folders
 ([[[mybizz-os-docs:os-reference-docs/repo-organization|repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md)).
 
-**Source names:** the Anvil project names are `mb-3-cs`, `mb-4-ecom` and
-`mb-5-pdlf`; `-code` occurs only in source ids.
+**Source names:** the Anvil project names are `mb-3-cs` and `mb-4-ecom`;
+`-code` occurs only in source ids.
 `anvil-agent-references-code` is a read-only clone of Anvil's own public
 repository `anvil-works/anvil-agent-references`; the developer has no GitHub
 repository of his own for it. Its `-code` ending distinguishes it from the

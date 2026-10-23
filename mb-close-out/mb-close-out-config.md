@@ -1,7 +1,7 @@
 ---
 title: "mb-close-out-config"
 doc-id: "mb-e1c4d0bf"
-updated: "2026-10-20"
+updated: "2026-10-23"
 ---
 # mb-close-out — Config
 
@@ -12,8 +12,8 @@ Settings of the `mb-close-out` skill, governed by [[[mybizz-config-docs:mb-sysdo
 | Field | Value |
 |---|---|
 | Issuer | MyBizz |
-| Installed version | `5499a8f` — latest commit of the source repository |
-| Standard taken from | `C:\mybizz\mb-close-out\mb-close-out.md` at commit `5499a8f` |
+| Installed version | `ae96ad0` — latest commit of the source repository |
+| Standard taken from | `C:\mybizz\mb-close-out\mb-close-out.md` at commit `ae96ad0` |
 | Last researched | 2026-10-20 |
 
 ## Component
@@ -61,7 +61,7 @@ Settings of the `mb-close-out` skill, governed by [[[mybizz-config-docs:mb-sysdo
 |---|---|---|---|---|
 | Step 1 — Session page | file `sessions/<YYYY-MM-DD>-<short-slug>.md` in the current repository when it is on the commit-all list, else `C:\mybizz\mybizz-config-docs\sessions\`; commit all imports it into GBrain | same | [[[mb-close-out:mb-close-out]]](C:/mybizz/mb-close-out/mb-close-out.md) | |
 | Step 2 — Candidate facts | advisory/governed routing; governed → fact file + mb-submit-memory Steps 1–4 | same | [[[mb-close-out:mb-close-out]]](C:/mybizz/mb-close-out/mb-close-out.md) | |
-| Step 3 — Project documents | [[[mb-project-docs:mb-project-docs\|mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md) Steps 1–6, for the four projects mb-3-cs, mb-4-ecom, mb-5-pdlf, pdlf | same | [[[mb-close-out:mb-close-out]]](C:/mybizz/mb-close-out/mb-close-out.md) | |
+| Step 3 — Project documents | [[[mb-project-docs:mb-project-docs\|mb-project-docs]]](C:/mybizz/mb-project-docs/mb-project-docs.md) Steps 1–6, for the three projects mb-3-cs, mb-4-ecom, pdlf | same | [[[mb-close-out:mb-close-out]]](C:/mybizz/mb-close-out/mb-close-out.md) | |
 | Step 4 — Changed files | `bash /mnt/c/mybizz/scripts/commit-all.sh --status` | same | [[[mb-close-out:mb-close-out]]](C:/mybizz/mb-close-out/mb-close-out.md) | |
 | Step 5 — Gate | one approval; satisfies mb-submit-memory Step 5 and mb-project-docs Step 6 | same | [[[mb-close-out:mb-close-out]]](C:/mybizz/mb-close-out/mb-close-out.md) | |
 | Step 6 — After approval | GBrain `remember` (advisory); mb-submit-memory Steps 6–9; mb-project-docs Step 7 | same | [[[mb-close-out:mb-close-out]]](C:/mybizz/mb-close-out/mb-close-out.md) | |

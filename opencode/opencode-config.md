@@ -1,7 +1,7 @@
 ---
 title: "opencode-config"
 doc-id: "mb-c7616d53"
-updated: "2026-10-20"
+updated: "2026-10-23"
 ---
 # OpenCode Configuration
 
@@ -75,10 +75,10 @@ GBrain's own settings and version live in the gbrain suite: [[[mybizz-config-doc
 | What a project is | an opened folder becomes a project | every repository an agent works in is an OpenCode project; the project list and per-project status are owned by repo-organization | [[[mybizz-os-docs:os-reference-docs/repo-organization\|Repo Organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | |
 | Bind mounts | — | every project is reachable at `~/projects/<name>` through an `/etc/fstab` line with `bind,nofail`; a new project gets a new line | developer-stated; live `~/projects` listing | |
 | Registration | opening a folder registers it | `opencode debug config` run from the project folder; it calls no AI model | live check | L6 |
-| Per-repo config files | an `opencode.json` in a project root merges with the global config | 10 files: `mb-3-cs-app1`, `mb-3-cs-app3`, `mb-3-cs-app5`, `mb-3-cs-project-library`, `mb-4-ecom-app1`, `mb-4-ecom-app3`, `mb-4-ecom-app5`, `mb-5-pdlf-app1`, `mb-5-pdlf-app3`, `mb-5-pdlf-app5` | live listings | |
+| Per-repo config files | an `opencode.json` in a project root merges with the global config | 7 files: `mb-3-cs-app1`, `mb-3-cs-app3`, `mb-3-cs-app5`, `mb-3-cs-project-library`, `mb-4-ecom-app1`, `mb-4-ecom-app3`, `mb-4-ecom-app5` | live listings | |
 | App-repo baseline | — | `default_agent: build`; edit `*: allow` plus `**/anvil.yaml: deny` and theme/template protections (`form_template.yaml`, `parameters.yaml`, `templates.yaml`: `deny`; `theme.css`, `standard-page.html`: `ask`); the 13-pattern bash deny-list; `external_directory *: allow`; a project-local `mcp.graphify` entry pointing at that repo's `graphify-out/graph.json`; `agent.plan.permission.edit: deny` | live project configs | L4 |
 | `mb-3-cs-project-library` | — | minimal: `default_agent: plan`; edit `*: allow`; the 13-pattern bash deny-list; `external_directory *: allow`; `agent.plan.permission.edit: deny`; no theme rows, no MCP entry | live project config | L4 |
-| No-config repos | — | `mb-4-ecom-project-library`, `mb-5-pdlf-project-library`, `pdlf` carry no `opencode.json` | live listings | L4 |
+| No-config repos | — | `mb-4-ecom-project-library` and `pdlf` carry no `opencode.json` | live listings | L4 |
 | Merge semantics | configs are merged, not replaced — a project overrides the global config only for conflicting keys, and nested permission maps merge deeply | relied on throughout; a project config cannot silently weaken the global deny-list | https://opencode.ai/docs/config | |
 
 ## Web UI

@@ -40,7 +40,6 @@ One row per repository the hook covers. The folder in GBrain's list must equal t
 | `dev-root-hub` | `/mnt/c/dev/dev-root` | `/mnt/c/dev/dev-root` | same | |
 | `mb-3-cs-project-library` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library` | same | |
 | `mb-4-ecom-project-library` | `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-project-library` | `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-project-library` | same | |
-| `mb-5-pdlf-project-library` | `/mnt/c/dev/dev-mb-5-pdlf/mb-5-pdlf-project-library` | `/mnt/c/dev/dev-mb-5-pdlf/mb-5-pdlf-project-library` | same | |
 | `mybizz-config-docs` | `/mnt/c/mybizz/mybizz-config-docs` | `/mnt/c/mybizz/mybizz-config-docs` | same | |
 | `mybizz-os-docs` | `/mnt/c/mybizz/mybizz-os-docs` | `/mnt/c/mybizz/mybizz-os-docs` | same | |
 | `data-mybizz-mgt` | `/mnt/c/data-mybizz-mgt` | `/mnt/c/data-mybizz-mgt` | same | |

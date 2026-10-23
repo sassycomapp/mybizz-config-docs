@@ -1,7 +1,7 @@
 ---
 title: "graphify-config"
 doc-id: "mb-765e162c"
-updated: "2026-10-20"
+updated: "2026-10-23"
 ---
 # Graphify Configuration
 
@@ -36,7 +36,7 @@ standard: [[[mybizz-config-docs:graphify/graphify-learnings|Graphify Learnings]]
 
 ## Scope — repositories
 
-Scope is nine app repositories, three per project. Each repository holds a
+Scope is six app repositories, three per project. Each repository holds a
 code graph under `graphify-out/`, its own `.graphifyignore`, and a
 `.graphify_root` marker holding its own absolute path.
 
@@ -44,12 +44,11 @@ code graph under `graphify-out/`, its own `.graphifyignore`, and a
 |---|---|---|---|---|
 | mb-3-cs repositories | — | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-app1`, `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-app3`, `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-app5` | — | |
 | mb-4-ecom repositories | — | `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-app1`, `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-app3`, `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-app5` | — | |
-| mb-5-pdlf repositories | — | `/mnt/c/dev/dev-mb-5-pdlf/mb-5-pdlf-app1`, `/mnt/c/dev/dev-mb-5-pdlf/mb-5-pdlf-app3`, `/mnt/c/dev/dev-mb-5-pdlf/mb-5-pdlf-app5` | — | |
 | Repositories outside scope | — | The `app2` repository of each project (holds no graphify artifacts) | — | |
-| `.graphifyignore` (all nine) | gitignore syntax, user-defined | `.opencode/` and `opencode.json` (two lines; tracked in git) | — | |
-| `.graphify_root` (all nine) | — | Holds the repository's own absolute path | — | |
+| `.graphifyignore` (all six) | gitignore syntax, user-defined | `.opencode/` and `opencode.json` (two lines; tracked in git) | — | |
+| `.graphify_root` (all six) | — | Holds the repository's own absolute path | — | |
 | Repository `.gitignore` (graphify lines) | — | `.opencode/`, `agents.md`, `opencode.json`, `graphify-out/`; mb-3-cs-app1 also `tests/` | — | |
-| `graphify-out/.graphify_build.json` | — | `{"gitignore": false}` in mb-3-cs-app1; absent in the other eight | — | |
+| `graphify-out/.graphify_build.json` | — | `{"gitignore": false}` in mb-3-cs-app1; absent in the other five | — | |
 
 ## Build
 
@@ -58,11 +57,11 @@ code graph under `graphify-out/`, its own `.graphifyignore`, and a
 | Extraction mode | `--backend` auto-detects from API keys; semantic extraction available | `--code-only`: local AST extraction, no AI backend, no API key, no model calls | `graphify --help` (extract) | L1 |
 | Community labels | LLM naming via `--backend`/`--model` (`label`, `cluster-only`) | Deterministic representative-node names (no labeling backend installed) | `graphify --help` | L1 |
 | Graph refresh | Manual command; optional `watch` or post-commit-hook automation | Manual refresh after every code commit in the repository | `graphify --help` | L4 |
-| Storage | — | `directed: false` (undirected) in all nine graphs | — | |
+| Storage | — | `directed: false` (undirected) in all six graphs | — | |
 
-## Graph state — nine repositories
+## Graph state — six repositories
 
-`built_at_commit` equals the repository HEAD in all nine graphs. Confidence
+`built_at_commit` equals the repository HEAD in all six graphs. Confidence
 labels: EXTRACTED (read from syntax), INFERRED (the tool's guess), AMBIGUOUS
 (unresolved). Ghost nodes are empty-`source_file` name references from Anvil
 UI templates the extractor cannot structurally parse.
@@ -75,15 +74,12 @@ UI templates the extractor cannot structurally parse.
 | mb-4-ecom-app1 | 10 | 6 | 6 EXTRACTED | 4 | 2 |
 | mb-4-ecom-app3 | 10 | 6 | 6 EXTRACTED | 4 | 2 |
 | mb-4-ecom-app5 | 10 | 6 | 6 EXTRACTED | 4 | 2 |
-| mb-5-pdlf-app1 | 5 | 3 | 3 EXTRACTED | 2 | 1 |
-| mb-5-pdlf-app3 | 10 | 6 | 6 EXTRACTED | 4 | 2 |
-| mb-5-pdlf-app5 | 10 | 6 | 6 EXTRACTED | 4 | 2 |
 
 ## graphify-out/ contents
 
 | Entry | Presence |
 |---|---|
-| `graph.json`, `GRAPH_REPORT.md`, `manifest.json`, `cache/`, `.graphify_analysis.json`, `.graphify_root` | All nine repositories |
+| `graph.json`, `GRAPH_REPORT.md`, `manifest.json`, `cache/`, `.graphify_analysis.json`, `.graphify_root` | All six repositories |
 | `graph.html` | mb-3-cs-app1 |
 | `.graphify_build.json` (`{"gitignore": false}`) | mb-3-cs-app1 |
 | `.graphify_labels.json` + `.graphify_labels.json.sig` (community labels) | mb-3-cs-app1 |
@@ -98,8 +94,8 @@ UI templates the extractor cannot structurally parse.
 | PR-triage tools | — | Present but unused (require a GitHub CLI/token) | — | |
 | API key for MCP | — | None; the 7 core tools need none | Installed `serve.py` | |
 | Global OpenCode config | — | No graphify entry | — | |
-| `.opencode/opencode.json` | Plugin registration written by `graphify opencode install` | Present only in mb-3-cs-app1, holding `$schema` only; absent in the other eight | — | |
-| `.opencode/plugins/graphify.js` | `tool.execute.before` hook that prepends a reminder string to bash commands; writes no files | Present in all nine | — | |
+| `.opencode/opencode.json` | Plugin registration written by `graphify opencode install` | Present only in mb-3-cs-app1, holding `$schema` only; absent in the other five | — | |
+| `.opencode/plugins/graphify.js` | `tool.execute.before` hook that prepends a reminder string to bash commands; writes no files | Present in all six | — | |
 | AGENTS.md guidance block | — | `<!-- BEGIN GRAPH MEMORY GUIDANCE -->` … `<!-- END GRAPH MEMORY GUIDANCE -->` shared GBrain + Graphify block in mb-3-cs-app1 only; owner [[[mybizz-os-docs:os-reference-docs/memory-master-explainer\|Master Explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/memory-master-explainer.md) | — | |
 
 ## Related facts

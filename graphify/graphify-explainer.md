@@ -1,7 +1,7 @@
 ---
 title: "graphify-explainer"
 doc-id: "mb-c1bcfdd3"
-updated: "2026-10-20"
+updated: "2026-10-23"
 ---
 # Graphify Explainer
 
@@ -19,7 +19,7 @@ GBrain, in this environment, deliberately does not answer (see
 the memory mechanisms).
 
 In the MyBizz setup, Graphify maintains one code graph per app repository —
-nine repositories across the three MyBizz projects — and serves each to
+six repositories across the two MyBizz projects — and serves each to
 agents through OpenCode's MCP. It runs entirely on this machine. Code parsing
 uses tree-sitter — the same deterministic parser technology a syntax
 highlighter uses, not a language model — so the code side of any graph is

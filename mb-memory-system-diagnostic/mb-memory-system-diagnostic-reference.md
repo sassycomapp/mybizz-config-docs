@@ -1,7 +1,7 @@
 ---
 title: "mb-memory-system-diagnostic-reference"
 doc-id: "mb-b0ec721d"
-updated: "2026-10-20"
+updated: "2026-10-23"
 ---
 # mb-memory-system-diagnostic — Reference: Invocation, Sections, Gates, Reporting
 
@@ -334,7 +334,7 @@ echo it.
 | Skill source artifact (issuer: MyBizz) | `C:\mybizz\mb-memory-system-diagnostic\mb-memory-system-diagnostic.md` — repository `sassycomapp/mb-memory-system-diagnostic` | `7b47fe6` | — |
 | Installed skill | `~/.config/opencode/skills/mb-memory-system-diagnostic/SKILL.md` | `7b47fe6` — body identical to the source artifact body | — |
 | [[[mybizz-config-docs:mb-sysdoc-creator/doc-suite-specification\|Doc Suite Specification]]](C:/mybizz/mybizz-config-docs/mb-sysdoc-creator/doc-suite-specification.md) | `C:\mybizz\mybizz-config-docs\mb-sysdoc-creator\doc-suite-specification.md` | — | — |
-| ADR `dev-tooling-source-repos-must-be-github-backed` | `C:\dev\project-library-global\adr-global\adr-dev-tooling-source-repos-must-be-github-backed.md` | — | — |
+| ADR `dev-tooling-source-repos-must-be-github-backed` | `C:\mybizz\mybizz-os-docs\os-decisions\adr-dev-tooling-source-repos-must-be-github-backed.md` | — | — |
 
 ## Checks
 
