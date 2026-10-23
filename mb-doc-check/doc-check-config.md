@@ -1,7 +1,7 @@
 ---
 title: "doc-check-config"
 doc-id: "mb-e7e60242"
-updated: "2026-10-20"
+updated: "2026-10-23"
 ---
 # mb-doc-check — Configuration
 
@@ -64,7 +64,7 @@ Not covered: the code repositories, the Anvil clone and the memory governor's fo
 | `@eol` in `mb-doc-check.sources` | — | `lf`. Every committed document is stored with LF line endings. Without the line the endings are left as they are | `mb-doc-check.sources` | |
 | Stored link form | — | `[[[source-id:page-name|Shown text]]](C:/full/windows/path.md)`. Without shown text, the part from the pipe to the closing brackets is absent. Inside a markdown table row, the pipe before the shown text is written with a backslash in front of it, so the table keeps its columns. A link to a document outside the C: drive has no path part: `[[source-id:page-name]]`, because no clickable path exists | [[[mybizz-os-docs:os-reference-docs/documentation-linking-explainer]]](C:/mybizz/mybizz-os-docs/os-reference-docs/documentation-linking-explainer.md) | |
 | Page name | GBrain's rule | The path from the repository root in lower case, spaces as hyphens, accents removed, without `.md`. A port of GBrain's own rule | `slug-selftest`, read live (0 differences) | |
-| Frontmatter | — | `title` (the file name without `.md`, quoted), `doc-id` (`mb-` and eight hexadecimal characters, permanent) and `updated` (`"YYYY-MM-DD"`, the date of the last real change). Other fields are left alone | [[[mybizz-os-docs:os-reference-docs/frontmatter-conventions]]](C:/mybizz/mybizz-os-docs/os-reference-docs/frontmatter%20conventions.md) | |
+| Frontmatter | — | `title` (the file name without `.md`, quoted), `doc-id` (`mb-` and eight hexadecimal characters, permanent) and `updated` (`"YYYY-MM-DD"`, the date of the last real change). Other fields are left alone | [[[mybizz-os-docs:os-reference-docs/frontmatter-conventions]]](C:/mybizz/mybizz-os-docs/os-reference-docs/frontmatter-conventions.md) | |
 | Environment variables | — | `MB_DELETE_OK=1` lets a commit that deletes and adds documents at once go through (see the reference). `MB_DOC_CHECK_SOURCES` and `MB_DOC_CHECK_ROOTS` replace the two settings files. `MB_GBRAIN_DIR` and `MB_GBRAIN_BIN` point `slug-selftest` and `sources-check` at a different GBrain. `MB_DOC_CHECK_TODAY`, `MB_DOC_CHECK_ANYPATH` and `MB_DOC_CHECK_KEEP_SOURCES` exist for the automated tests only | `mb-doc-check.py` at `236fdde` | |
 
 ## What it reads and writes
