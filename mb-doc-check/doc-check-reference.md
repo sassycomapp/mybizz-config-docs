@@ -1,7 +1,7 @@
 ---
 title: "doc-check-reference"
 doc-id: "mb-08c8ef59"
-updated: "2026-10-20"
+updated: "2026-10-23"
 ---
 # mb-doc-check — Reference: Commands, Messages, Procedures, Troubleshooting
 
@@ -13,7 +13,7 @@ Every command is run as `python3 /mnt/c/mybizz/scripts/mb-doc-check.py <command>
 
 | Source | Link | Issuer version | Date checked |
 |---|---|---|---|
-| `mb-doc-check.py` (source repo `mybizz-scripts`) | `C:\mybizz\scripts\mb-doc-check.py` | commit `236fdde` | 2026-10-20 |
+| `mb-doc-check.py` (source repo `mybizz-scripts`) | `C:\mybizz\scripts\mb-doc-check.py` | commit `20afe8c` | 2026-10-23 |
 | `mb-doc-check.sources` | `C:\mybizz\scripts\mb-doc-check.sources` | current | 2026-10-20 |
 | Repository and source list | [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | current | 2026-10-20 |
 | Commit-all procedure | [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md) | current | 2026-10-20 |
