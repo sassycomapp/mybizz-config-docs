@@ -1,13 +1,12 @@
 ---
 title: "cupcake-config"
 doc-id: "mb-afd0ad78"
-updated: "2026-10-20"
+updated: "2026-10-23"
 ---
 # Cupcake — Configuration
 
 Canonical current-state configuration record. Agent-facing. States facts, not
-history or rules — reasoning in [[cupcake-explainer|Mechanical Policy
-Enforcement for AI Coding Agents]]; procedures in
+history or rules — reasoning in [[[mybizz-config-docs:cupcake/cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md); procedures in
 [[[mybizz-config-docs:cupcake/cupcake-reference|Cupcake Reference]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-reference.md).
 
 ## Identity

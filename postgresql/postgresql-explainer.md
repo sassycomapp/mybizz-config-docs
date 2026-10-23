@@ -1,7 +1,7 @@
 ---
 title: "postgresql-explainer"
 doc-id: "mb-e4410ed0"
-updated: "2026-10-20"
+updated: "2026-10-23"
 ---
 # PostgreSQL — Explainer
 
@@ -59,8 +59,7 @@ any client application.
   developer-side system that needs real relational guarantees on one
   machine.
 - **Not good for:** the shipped estate — client instances hold their data
-  in Anvil's own Data Tables ([[adr-client-instance-architecture|Client
-  Instance Architecture]]), not in any database of MyBizz; file-lane
+  in Anvil's own Data Tables ([[[default:adr-global/adr-client-instance-architecture|Client Instance Architecture]]](C:/dev/project-library-global/adr-global/adr-client-instance-architecture.md)), not in any database of MyBizz; file-lane
   content, whose home is the documentation repositories (a database mirror
   of files is a backup lane, not the primary store); and single-user
   scratch work, for which a flat file is the right tool.
@@ -77,8 +76,7 @@ and the high-stakes database on physically separate servers means a
 problem in one — a bad sync, a runaway process, a corrupted write — can
 never reach across and damage the other. The separation also mirrors the
 environment's own access-control pattern: each server has its own,
-separately scoped roles ([[sec-database-access-control|Database Access
-Control]] cites this arrangement as its verified precedent).
+separately scoped roles ([[[default:security-global/infrastructure/sec-database-access-control|Database Access Control]]](C:/dev/project-library-global/security-global/infrastructure/sec-database-access-control.md) cites this arrangement as its verified precedent).
 
 **The port topology and the trap it prevents.** WSL's localhost relay
 binds Windows' port for Instance B to that same Instance B, so one port

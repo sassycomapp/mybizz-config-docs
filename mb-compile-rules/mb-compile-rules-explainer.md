@@ -1,7 +1,7 @@
 ---
 title: "mb-compile-rules-explainer"
 doc-id: "mb-3c93f17d"
-updated: "2026-10-20"
+updated: "2026-10-23"
 ---
 # mb-compile-rules — Explainer
 
@@ -102,8 +102,7 @@ skill and dependency review
 the layered check-before-trust chain is
 [[[default:security-global/principles/sec-defense-in-depth|Defense in Depth]]](C:/dev/project-library-global/security-global/principles/sec-defense-in-depth.md), and the boundary on what may
 touch the machine's filesystem is
-[[sec-local-filesystem-access-boundary|Local Filesystem Access
-Boundary]]. An enforcement file is itself a security control — an
+[[[default:security-global/infrastructure/sec-local-filesystem-access-boundary|Local Filesystem Access Boundary]]](C:/dev/project-library-global/security-global/infrastructure/sec-local-filesystem-access-boundary.md). An enforcement file is itself a security control — an
 unvalidated one entering the live folder by any other path (a careless
 "add everything" save) can crash evaluation entirely. This pipeline is
 the sanctioned door, and its gates are the review.
@@ -125,11 +124,8 @@ the sanctioned door, and its gates are the review.
 - The developer commits with commit-all, which also syncs these documents
   into the memory system.
 
-*Companion documents: [[mb-compile-rules-config|mb-compile-rules
-Configuration]] (state), [[mb-compile-rules-reference|mb-compile-rules
-Reference]] (commands and rules),
+*Companion documents: [[[mybizz-config-docs:mb-compile-rules/mb-compile-rules-config|mb-compile-rules Configuration]]](C:/mybizz/mybizz-config-docs/mb-compile-rules/mb-compile-rules-config.md) (state), [[[mybizz-config-docs:mb-compile-rules/mb-compile-rules-reference|mb-compile-rules Reference]]](C:/mybizz/mybizz-config-docs/mb-compile-rules/mb-compile-rules-reference.md) (commands and rules),
 [[[mybizz-config-docs:mb-compile-rules/mb-compile-rules-learnings|mb-compile-rules Learnings]]](C:/mybizz/mybizz-config-docs/mb-compile-rules/mb-compile-rules-learnings.md) (deviations),
 canonical source `C:\mybizz\mb-compile-rules\mb-compile-rules.md` (the
 authoritative procedure). System context:
-[[cupcake-explainer|Mechanical Policy Enforcement for AI Coding
-Agents]].*
+[[[mybizz-config-docs:cupcake/cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md).*

@@ -82,13 +82,14 @@ Not covered: the code repositories, the Anvil clone and the memory governor's fo
 | Folders | Names starting with `.` or `tmp-`; `.git`, `node_modules`, `__pycache__`; `stencils`, `quarantine`, `backups`, `catalogue`, `logs`; any folder that contains `anvil.yaml` (an Anvil app root) and everything below it |
 | `SKILL.md` | Never edited |
 | Empty files | No frontmatter is added |
-| Pasted paths in backticks or code blocks | Never converted to links (literal locations) |
+| Pasted paths in backticks or code blocks | Never converted to links (literal locations). A backtick quote ends at a blank line |
 
 ## What stops a commit
 
 | Situation | Result |
 |---|---|
 | A link you just typed points to no document | The commit is stopped; the message names the file and line |
+| A link you just typed names a source that is not in `mb-doc-check.sources` | Stopped, as a link that points to no document |
 | A link you just typed names several documents | Stopped; the message lists the exact `[[source-id:name]]` links you can write |
 | Damaged frontmatter | Stopped; the message names the file |
 | A commit deletes documents and adds new ones at once, and links point to a deleted one | Stopped, because the program cannot tell a rename from a deletion. `MB_DELETE_OK=1` overrides it |

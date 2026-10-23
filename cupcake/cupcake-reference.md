@@ -1,13 +1,12 @@
 ---
 title: "cupcake-reference"
 doc-id: "mb-e79d3d01"
-updated: "2026-10-20"
+updated: "2026-10-23"
 ---
 # Cupcake — Reference
 
 Execution only. Values live in [[[mybizz-config-docs:cupcake/cupcake-config|Cupcake Configuration]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-config.md);
-reasons in [[cupcake-explainer|Mechanical Policy Enforcement for AI Coding
-Agents]].
+reasons in [[[mybizz-config-docs:cupcake/cupcake-explainer|Mechanical Policy Enforcement for AI Coding Agents]]](C:/mybizz/mybizz-config-docs/cupcake/cupcake-explainer.md).
 
 ## Invoking mb-compile-rules
 
