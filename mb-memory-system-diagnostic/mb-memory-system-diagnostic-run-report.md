@@ -1,11 +1,11 @@
 ---
 title: "mb-memory-system-diagnostic-run-report"
 doc-id: "mb-9c32dd94"
-updated: "2026-10-20"
+updated: "2026-10-25"
 ---
 # Memory System Diagnostic — Run Report
 
-Run start: 2026-10-18 12:30 UTC
+Run start: 2026-10-25 10:52 SAST
 Run scope: GBrain, PostgreSQL Instance B (WSL), Memory Governor, mb-submit-memory, Graphify, Dream Cycle. Instance A / pdlf out of scope.
 
 ## Section 1 — GBrain core
@@ -13,28 +13,30 @@ Status: PASS
 Metrics:
 | Metric | Value |
 |---|---|
-| version | 0.59.18.0 (upgrade available 0.60.292.0 — notify mode, not a defect) |
+| version | 0.59.18.0 (upgrade available 0.60.444.0 — notify mode, not a defect) |
 | doctor exit code | 0 |
-| doctor status / score | warnings / health_score 95, brain_checks_score 100; only warn = DB checks skipped in --fast mode (by design) |
-| pages / chunks / embedded | 2287 / 7073 / 7073 (100%) |
-| sources | 19 registered, all reachable, 0 fails, embed 100% |
-| sources with GitHub remote | 19/19 (ADR: dev-tooling-source-repos-must-be-github-backed) |
+| doctor status / score | warnings / health_score 95, brain_checks_score 100, actions[] empty |
+| pages / chunks / embedded | 2248 / 6482 / 6482 (100%) |
+| sources | 18 registered, all reachable, 0 fails, embed 100% |
+| sources with GitHub remote | 18/18 (ADR: dev-tooling-source-repos-must-be-github-backed) |
+| observation | mb-4-ecom-project-library sync LAG 20h (unsynced repo work exists; not a §1 defect — flagged for commit-all context) |
 Findings: (none)
 Remediation: (n/a)
 Developer decision: (n/a)
+
 ## Section 2 — PostgreSQL Instance B (WSL, v16; gbrain + memory_governor only)
 Status: PASS
 Metrics:
 | Metric | Value |
 |---|---|
 | live init system (PID 1) | systemd — matches reconciled record 2026-09-28 |
-| management path: systemctl | works (active/exited, enabled) |
-| management path: service | works (same unit) |
-| cluster | 16/main, port 5432, online |
-| gbrain DB tables / RLS-enabled | 93 / 93 (all tables) |
-| login roles | ledger_approver, ledger_writer, memory_governor_svc, postgres |
-| role isolation: memory_governor_svc -> gbrain CONNECT | false (expected) |
-| role isolation: memory_governor_svc -> memory_governor CONNECT | true (expected) |
+| management path: systemctl | pass (postgresql.service active since 2026-10-23 18:08 SAST) |
+| management path: service | pass (same unit) |
+| cluster status | 16/main, port 5432, online |
+| gbrain tables / RLS-enabled | 93 / 93 (100%) |
+| login roles | postgres, memory_governor_svc, ledger_approver, ledger_writer |
+| role isolation: svc→gbrain CONNECT | false (expected false) |
+| role isolation: svc→memory_governor CONNECT | true (expected true) |
 Findings: (none)
 Remediation: (n/a)
 Developer decision: (n/a)
@@ -44,159 +46,136 @@ Status: PASS
 Metrics:
 | Metric | Value |
 |---|---|
-| API listen | 127.0.0.1:8321, pid 443 |
-| API curl /memory/review-queue | HTTP 422 (auth gate works — credential required, value never read) |
-| worker process | alive (pid 445, app.worker) |
+| API listener | 127.0.0.1:8321 (python pid 501) |
+| API status code | 422 (auth gate verified — API up) |
+| worker process | present (pid 502, running since Oct 24) |
 | outbox pending | 0 |
-| outbox permanently_failed | 0 |
-| register git-clean | yes (no porcelain output) |
-| memory-governor-api unit | active (running) since 2026-10-16 07:17:43 SAST |
-| memory-governor-worker unit | active (running) since 2026-10-16 07:17:43 SAST |
-Findings: (none)
+| permanently_failed | 0 |
+| register git-clean | yes (porcelain empty) |
+| systemd unit: api | active (running) since 2026-10-23 18:08 SAST |
+| systemd unit: worker | active (running) since 2026-10-23 18:08 SAST |
+Findings: (none) — one run-mechanics event: the §3 append via bash heredoc was blocked by the sensitive-data guard; logging resumed via Edit tool on developer approval (logged for §7)
 Remediation: (n/a)
-Developer decision: (n/a)
+Developer decision: retry via Edit tool — approved 2026-10-25
 
-## Section 4 — Governed write, positive path
+## Section 4 — Governed write, positive path (heavyweight — developer-approved)
 Status: PASS
 Metrics:
 | Metric | Value |
 |---|---|
-| submit status | 201 promoted (POST /memory/candidate, memory_id cb75a8d6-c4d8-4f25-befe-916d0e797a72) |
-| worker-processed count | 2 events (candidate_created + register_write), both processed_at set |
-| candidate status in DB | promoted |
-| GBrain presence | true (facts row id 127, entity mb-diag-pos-c9fda0f9) |
-| visibility | private (project_local mapped to private per gbrain.py:92) |
-| register written | true (registers/candidates/<mid>.json + 1 row in register-memory-governor.md) |
-| cleanup: memory_events / audit_log / memory_candidates / projects | 3 / 1 / 1 / 1 rows deleted, all re-checked 0 left |
-| cleanup: GBrain fact | expired (expired_at 2026-10-18 12:46:25+02) |
-| cleanup: disposable sources | both removed (mb-diag-pos-c9fda0f9, mb-diag-pos-3d5f7389) |
-Findings:
-- (process) Script run 1 failed: wrong project-create route (/projects -> 404; correct: POST /memory/projects). Fixed in place, rerun clean.
-- (process) GBrain fact verification initially used wrong column name (text; actual: fact). Fixed in place.
-- (process) CLI `gbrain forget 127` returned not_found (DB integer id is not the CLI-facing opaque fact id); fact expired via direct SQL UPDATE instead — end state identical, verified.
-- (leftover) Worker's register_write committed diagnostic artifacts (90ab979 chore(register): cb75a8d6...); working tree now carries the cleanup (D candidates/<mid>.json, M register-memory-governor.md). Same shape as prior diagnostic (5135485); resolves at next commit-all.
-- (leftover) rm of /tmp/opencode/mb-diag-src-* blocked by the policy engine (no grant slip for shell write to that path); two disposable tmp dirs remain on disk.
-Remediation: in-place script fixes (route, column); cleanup completed and re-verified.
-Developer decision: (n/a) — gate answered "Run it" at section start
+| submit | HTTP 201, status promoted, decision_path auto_promote, risk_level low (fact, project_local, confidence 0.9) |
+| worker-processed count | 3 events for the memory_id (candidate_created no-op + register_write + gbrain_write), all processed_at set |
+| GBrain presence | true (facts row written into the disposable owning-project source) |
+| visibility | private (project_local → private mapping verified) |
+| register written | true (registers/candidates/<id>.json + register-memory-governor.md both contain the memory_id) |
+| cleanup | forget rc 0 (fact expired; audit row then cascaded with source removal), governor DB rows left 0/0/0 (events, audit_log, candidates), disposable project deleted |
+| source removal | diag-pos-1025 removed via sources remove --confirm-destructive; sources list 0 matches; facts rows 0 |
+| brain default | restored to "default" after test (worker's GBrain write had switched it) |
+| test artifacts | script /tmp/opencode/section4_positive.py; register git artifact for the test memory_id remains as a permanent audit record (by design) |
+Findings: (none)
+Remediation: (n/a)
+Developer decision: approved 2026-10-25 (heavyweight gate); report append re-denied once by path guard after §3 — grant re-issued by developer
 
-## Section 5 — Governed write, negative path
+## Section 5 — Governed write, negative path (heavyweight — developer-approved)
 Status: PASS
 Metrics:
 | Metric | Value |
 |---|---|
-| submit status | 201, status field = under_review (never promoted) — memory_type=policy |
-| submit classification | high_risk_type path taken (status field under_review confirms; classification field null in response) |
-| review-queue presence | 1 (memory_candidates row with status=under_review) |
-| review resolution | HTTP 200, new_status=rejected (decision=reject, reviewer=diagnostic-skill) |
-| final state | rejected (DB re-read) |
-| cleanup | 2 memory_events, 2 audit_log, 1 memory_candidates, 1 projects row deleted; re-checked 0 left; 0 live GBrain facts with test marker |
-| cleanup: disposable source | mb-diag-neg-fb79d5ca removed (0 mb-diag sources remain) |
+| submit | HTTP 201, status under_review — NOT promoted (policy type with confidence 0.99: high_risk_type routes to review regardless of confidence, determinism proven) |
+| classification | high_risk_type, risk_level high, decision_path needs_review |
+| review-queue presence | true (candidate listed on GET /memory/review-queue) |
+| review resolution | HTTP 200 (decision reject, reviewer diagnostic-skill) |
+| final state | rejected |
+| cleanup | governor DB rows left 0/0/0 (events, audit_log, candidates), disposable project deleted; no GBrain fact/source involved (rejected candidates fire no writes) |
+| test artifacts | script /tmp/opencode/section5_negative.py; first attempt aborted on a script bug (non-optional payload arg) — its candidate was cleaned up by the finally block before the corrected re-run |
 Findings: (none)
 Remediation: (n/a)
-Developer decision: (n/a) — gate answered "Run it" at section start
+Developer decision: approved 2026-10-25 (heavyweight gate, approved together with §4)
 
 ## Section 6 — Graphify (read-only)
 Status: PASS
 Metrics:
 | Metric | Value |
 |---|---|
-| installed version | 0.9.40 (/home/dev-p/.local/bin/graphify) |
-| graphs found | 9 (mb-3-cs app1/3/5, mb-4-ecom app1/3/5, mb-5-pdlf app1/3/5) |
-| built_at_commit vs live HEAD | 9/9 MATCH (no stale graphs) |
-| node counts | 566 (mb-3-cs-app1), 5-10 each for the other eight |
-| links stored | root graph.json carries 0 links; dated 2026-10-18 snapshot carries 457 links (562 nodes) for mb-3-cs-app1 |
-| live query | real result: BFS depth=2 from "Project Purpose" over mb-3-cs-app1 graph — 14 nodes, [EXTRACTED] edges with src=loc rendered |
-Findings:
-- (observation) Root graph.json stores 0 links; edges are reconstructed at query time from source files and render correctly. Not a staleness or defect signal — commit hashes all match.
+| installed version | graphify 0.9.40 |
+| graphs found | 6 (mb-3-cs-app1/app3/app5, mb-4-ecom-app1/app3/app5), all built 2026-10-18 in one batch |
+| built_at_commit vs HEAD | match on all 6 graphs (no stale graph) |
+| active-project graph (mb-3-cs-app5) | 10 nodes / 6 links / 0 hyperedges |
+| live query returned a real result | yes — content-matched question (Form1/BaseLayout) returned BFS traversal, 8 nodes + 6 extracted edges. First phrasing (grid data refresh) matched nothing: the graph holds only 10 scaffold nodes, so that was query-content mismatch, not a surface defect |
+Findings: (none)
 Remediation: (n/a)
 Developer decision: (n/a)
 
-## Section 7 — Policy-engine interaction (memory-system effect only)
-Status: FINDINGS — developer decision required
+## Section 7 — Cupcake interaction (memory-system effect only)
+Status: PASS
 Metrics:
 | Metric | Value |
 |---|---|
-| deny/block lines in governor journald logs this run (since 12:30) | 0 |
-| governor units processing this run's traffic | normal — 201 submit, 200 review, worker no-op handlers logged |
-| loopback exemption held | yes (all 127.0.0.1:8321 API calls in S4/S5 succeeded) |
-| enforcement blocks observed on agent commands during this run | 4 (all pre-execution denials surfaced in tool output) |
-Findings (the 4 blocks, all false-positive content matches, none touching actual secret values):
-1. S3 report append heredoc — "attempts to access sensitive data" (content contained the word "credential-required"). Append did not land; re-appended via file-tool.
-2. grep for a governor constant whose name contains "CREDENTIAL" — "attempts to access sensitive data". Switched to file reads.
-3. Combined rm -rf /tmp/opencode/mb-diag-src-* + psql cleanup — "writes to a path with no active grant slip". DB cleanup re-run separately; two disposable tmp dirs remain on disk (also logged in S4).
-4. Report append heredoc containing the enforcement engine's own name — "Direct execution of the policy-engine binary is not permitted". Re-appended via file-tool without the literal name.
-Remediation: (none in-skill — this section cannot reconfigure the engine)
-Developer decision: resolved in-section — no live fix applied (skill cannot reconfigure the engine); findings + verbatim developer answer recorded for follow-up.
+| denial/block lines in this run's governor logs (journald, since 10:52 SAST) | 0 |
+| loopback exemption held | yes — all §4/§5 API calls succeeded (201/200 throughout); worker journald log shows the run's own events (4446 gbrain_write fact #133, 4448 candidate_created, 4449 review_resolved) processed with no policy interference |
+| developer's direct answer | "No, nothing" |
+| agent-side context (not a §7 defect) | two policy events hit the diagnostic agent's own actions this run: §3 report-append blocked by sensitive-data guard (developer approved Edit-tool lane); §4 report-append denied by path guard (developer re-issued grant). Neither touched the memory system |
+Findings: (none)
+Remediation: (n/a) — this section cannot remediate Cupcake; none needed
+Developer decision: (n/a)
 
 ## Section 8 — mb-submit-memory (prerequisite state only)
 Status: PASS
 Metrics:
 | Metric | Value |
 |---|---|
-| registered sources | 19 (S1 full list) |
-| governor reachable | 127.0.0.1:8321 LISTEN (pid 443) — cross-ref S3 |
-| API + worker units | both active (running) — cross-ref S3 |
-| governed write paths proven live | S4 (positive) + S5 (negative) this run |
+| registered source | mb-submit-memory (federated, 1 page, last sync 2026-10-24) |
+| governor reachable | yes — 127.0.0.1:8321 listening (cross-referenced: proven live by §3 API check and §4/§5 real submissions) |
 Findings: (none)
 Remediation: (n/a)
 Developer decision: (n/a)
-## Section 9 — Backups (Instance B only: gbrain + memory_governor)
-Status: REMEDIATED
-Metrics:
-| Metric | Value |
-|---|---|
-| dumps present at check time, both DBs, both locations | yes (Oct 7 + Oct 11 pairs) |
-| newest dump age at check time | 7d3h (window: <= 7 days) — OVER |
-| pair hash match (Oct 11, both DBs) | yes |
-| Oct 7 vs Oct 11 governor dumps differ | yes (identical size was coincidence) |
-| scheduled SundayBackup run today (2026-10-18) | MISSING — no log; logs end at 2026-10-11 10:01 |
-| remediation cycle dumps (2026-10-18) | gbrain 83,119,715 B; memory_governor 60,089 B; postgres-b 1,093 B |
-| new pair hash match (all 3, both locations) | 3/3 MATCH |
-Findings:
-- Backup age exceeded the 7-day window for both Instance-B databases at check time.
-- Scheduled SundayBackup did not run this morning (no log for 2026-10-18); per postgresql-config.md a missed start is not caught up — reported at next logon. Developer informed here.
-Remediation: agent-runnable Instance-B cycle executed per documented script shape (pg_dump -Fc gbrain + memory_governor + postgres-b to /home/dev-p/backup-gbrain/, copied to /mnt/c/backup-gbrain/, sha256 pair-verified 3/3). Instance-A lane + gbrain export lane remain the developer's Sunday-task territory.
-Developer decision: remediate (2026-10-18 ~13:05 SAST)
 
-## Section 10 — Dream Cycle (real run)
-Status: REMEDIATED-equivalent — RUN COMPLETED + POST-RUN VERIFICATION DONE
+## Section 9 — Backups (Instance B only — gbrain + memory_governor)
+Status: PASS
 Metrics:
 | Metric | Value |
 |---|---|
-| gbrain dream --json exit / status | 0 / ok, 17.2 min (2026-10-18 11:12 UTC stamp) |
-| phases (per .phase field, 23 total) | 13 ok / 10 skipped / 0 warn / 0 fail |
-| long phases (force-evict deadline warnings, informational #1972) | extract_atoms 234.7s, synthesize_concepts 392.2s, propose_takes 376.4s — all completed ok |
-| phase yields | extract_atoms: 55 atoms (36 pages); synthesize_concepts: 136 concepts (T1=9 T2=14 T3=113); propose_takes: 147 proposals (run propose-20261018112329-f33a6bd8); embed: 58 new chunks |
-| purge phase | 358 soft-deleted pages past the 72h recovery window hard-purged (by-design autopilot purge) |
-| stats delta (before -> after) | pages 2287 -> 2370; chunks 7073 -> 6350; embedded 6350/6350 (100% held); links 2434 -> 2741 (+307) |
-| cycle_freshness re-check (full doctor) | fail — documented-expected (dream-cycle config open item 3: stamp advances only when the sync phase processes real new commits; sync skipped — no new commits). NOT a defect. |
-| post-run eval (mandatory) | 0 contradictions; 1 temporal_evolution finding (memory-governor-config + memory-governor-explainer pair); 0 supersession / 0 regression / 0 negation_artifact; 9 pairs no_contradiction; judge errors 0; cost $0.0328 |
-Findings:
-- (reviewed) The single eval finding is temporal_evolution on the memory-governor config/explainer pair — informational (a claim evolved across doc versions), no contradiction, no action. Probe summary view does not render per-finding text; raw-finding hunt blocked by a 5th policy-engine false positive (find over ~/.gbrain) — verdict/counts verified across three probe reads instead.
-- (observation) consolidate promoted 0 facts into 0 takes across 3 buckets; grade_takes/calibration_profile no-op (no resolved takes) — consistent with a brain that has ungraded proposals only.
-Remediation: (n/a — run + verification are the deliverable)
-Developer decision: gate answered "Run the Dream Cycle" (2026-10-18 ~13:10 SAST)
+| dump age | 0 days (both databases dumped 2026-10-25 10:00) |
+| presence in both locations | gbrain + memory_governor dumps present in /home/dev-p/backup-gbrain/ and /mnt/c/backup-gbrain/ (prior 2026-10-20 sets also retained in both) |
+| hash match | yes — gbrain pair sha256 ff1d3f81…c89de identical; memory_governor pair sha256 6f2fd68e…0f6e identical |
+Findings: (none)
+Remediation: (n/a)
+Developer decision: (n/a)
+
+## Section 10 — Dream Cycle (real run — developer-approved)
+Status: PASS
+Metrics:
+| Metric | Value |
+|---|---|
+| pre-run cycle_freshness | field not present in doctor --fast (DB-check-dependent; fast mode skips DB checks by design) |
+| real run | gbrain dream --json completed — per-phase via .phase: 13 ok, 10 skipped (legitimate: sync/backlinks/lint/patterns/drift/enrich/skillopt/synthesize/extract/conversation_facts_backfill), 0 warn; heaviest phase synthesize_concepts 217385ms |
+| page/chunk delta | pages 2248→2254 (+6); chunks 6482→5752 (−730, consolidation merging); links 3103→2748 (−355); embedded 5752/5752 (100%) |
+| cycle_freshness re-check (full doctor) | FAIL — sources never-completed/stale (default 1683h; most never full-cycled); documented expected state: the dream's sync phase skipped on an already-synced brain, so nothing was stamped (dream-cycle reference, freshness bookkeeping) |
+| doctor health score | 15/100 unhealthy — exactly matches the recorded Doctor baseline (15/100, cycle_freshness the only distinct FAIL, recorded as expected state) |
+| contradiction eval (mandatory) | 0 contradictions; 3 findings — 1 temporal_supersession + 2 temporal_evolution (document-lifecycle verdicts, reviewed: map to memory-governor-config, the prior run-report page, and the 2026-09-15 auto-start fact — all part of the already-reconciled 2026-09-28 systemd story; no action). 0 judge errors, cost $0.0315 |
+Findings: (none) — cycle_freshness FAIL is the documented expected state, not a defect
+Remediation: (n/a)
+Developer decision: approved 2026-10-25 (heavyweight gate)
 
 ## Summary
 
 | # | Section | Status | Key metric |
 |---|---|---|---|
-| 1 | GBrain core | PASS | doctor exit 0, score 95/brain 100, 19/19 sources with GitHub remotes, embed 100% |
-| 2 | PostgreSQL Instance B | PASS | cluster online; 93/93 tables RLS; role isolation correct both directions |
-| 3 | Memory Governor | PASS | HTTP 422 auth gate; worker alive; outbox 0 pending, 0 permanently failed; both units active |
-| 4 | Governed write (positive) | PASS | 201 promoted; worker 2/2; GBrain private; register written; cleanup verified 0 left |
-| 5 | Governed write (negative) | PASS | under_review (never promoted); review -> rejected; cleanup verified 0 left |
-| 6 | Graphify | PASS | 9/9 graphs commit-matched; live query traverses (14 nodes) |
-| 7 | Policy-engine interaction | FINDINGS logged | 0 governor-log denials; loopback held; 4 agent-command false-positive blocks this run |
-| 8 | mb-submit-memory | PASS | both prerequisites hold; write paths proven live in S4/S5 |
-| 9 | Backups | REMEDIATED | found 7d3h-old dumps + missed SundayBackup; fresh cycle run, 3/3 pairs hash-matched |
-| 10 | Dream Cycle | RUN COMPLETED | exit 0, 13 ok/10 skipped/0 fail, 17.2 min; +136 concepts; eval 0 contradictions |
+| 1 | GBrain core | PASS | doctor exit 0, health 95, 18/18 sources reachable with GitHub remotes, embed 100% |
+| 2 | PostgreSQL Instance B | PASS | cluster online, RLS 93/93, role isolation both directions correct, systemd init model matches record |
+| 3 | Memory Governor | PASS | API 422 (auth gate verified), worker alive, outbox pending 0, permanently_failed 0, both units active |
+| 4 | Governed write (positive) | PASS | 201 promoted → worker processed 3 events → private GBrain fact + register verified → cleanup complete |
+| 5 | Governed write (negative) | PASS | policy type with 0.99 confidence held at under_review (high_risk_type) → rejected → cleanup complete |
+| 6 | Graphify | PASS | 0.9.40; 6/6 graphs fresh (built_at_commit = HEAD); live query returned real traversal |
+| 7 | Cupcake interaction | PASS | 0 policy denials in governor logs, loopback held, developer answer "No, nothing" |
+| 8 | mb-submit-memory | PASS | source registered, governor reachable (cross-referenced §3–5) |
+| 9 | Backups | PASS | both DBs, both locations, 0 days old, sha256 pairs identical |
+| 10 | Dream Cycle | PASS | real run: 13 phases ok / 0 warn, brain changed (+6 pages, −730 chunks), contradiction probe 0 contradictions |
 
 ## Aggregate verdict
-9/10 sections PASS, 1 REMEDIATED (S9 backups), 1 real dream run completed with mandatory verification (S10), 0 ABORTED — memory system fully functional, with follow-up items below.
+
+10/10 sections PASS, 0 REMEDIATED, 0 ABORTED — memory system fully functional.
 
 ## Findings requiring developer follow-up
-1. SundayBackup task did not run this morning (2026-10-18) — Instance-B lane was remediated in-run; the Instance-A lane (pdlf + postgres-a, developer-run) and the gbrain export lane are now also past-due. Run C:\mybizz\scripts\sunday-backup.sh or investigate why the task did not fire.
-2. Policy-engine false positives on diagnostic commands (5 this run): the words "credential"/engine-name in command content, an rm of diagnostic temp dirs, and a find over ~/.gbrain. Consider allow-listing the diagnostic suite's command shapes or adjusting pattern scope.
-3. Leftovers from S4: commit 90ab979 (diagnostic register artifacts) in the memory-governor repo HEAD with uncommitted working-tree cleanup (D + M in registers/) — resolves at next commit-all, matching precedent 5135485; two disposable dirs /tmp/opencode/mb-diag-src-* (rm denied).
-4. gbrain forget CLI: DB integer fact ids are not accepted ("Ids come from remember/recall"); the S4 cleanup had to expire via SQL. Consider a CLI-visible opaque-id path or documenting the id mapping.
+
+None. Observations (not defects): gbrain 0.60.444.0 upgrade available (notify mode); mb-4-ecom-project-library carries 20h sync LAG (unsynced repo work — resolves on next commit-all); cycle_freshness FAIL is the documented expected state on an already-synced brain.
