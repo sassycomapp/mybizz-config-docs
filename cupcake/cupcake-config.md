@@ -1,7 +1,7 @@
 ---
 title: "cupcake-config"
 doc-id: "mb-afd0ad78"
-updated: "2026-10-23"
+updated: "2026-10-29"
 ---
 # Cupcake — Configuration
 
@@ -51,7 +51,7 @@ history or rules — reasoning in [[[mybizz-config-docs:cupcake/cupcake-explaine
 | cup-no_autonomous_commits_pushes_merges_releases_or_deployments.rego | — | git commit/push/merge grantable through commit allowances; publish and deploy deny absolutely | deployed file; source doc | |
 | cup-no_rewriting_or_destroying_development_history.rego | — | force-push, rebase, amend, branch/tag deletion | deployed file; source doc | |
 | cup-no_destructive_database_operations.rego | — | DROP (9 object types), unconditioned DELETE, TRUNCATE | deployed file; source doc | |
-| cup-no_cross_project_filesystem_access_by_default.rego | — | writes outside the current project blocked unless `/tmp/`-exempt or granted; skills-dir writes require a grant from every session; bash-mediated write shapes feed the same boundary; reads never blocked | deployed file | L3 |
+| cup-no_cross_project_filesystem_access_by_default.rego | — | writes outside the current project blocked unless `/tmp/`-exempt or granted; an agent in any repository of a business may write anywhere in that business's folder, by real path or link; skills-dir writes require a grant from every session; bash-mediated write shapes feed the same boundary; reads never blocked | deployed file | L3 |
 | cup-no_access_to_secrets_unless_explicitly_required.rego | — | reading known secret-file patterns, via Read/Grep or bash | deployed file; source doc | |
 | cup-outbound_network_access_is_allowlist_only.rego | — | fetch/curl/wget to a domain outside the allowlist, minus loopback and developer-issued network grants | deployed file | |
 | cup-no_autonomous_installation_or_connection_of_tools.rego | — | registering a new MCP server, plugin, or skill | deployed file; source doc | |
