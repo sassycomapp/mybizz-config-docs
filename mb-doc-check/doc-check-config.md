@@ -1,7 +1,7 @@
 ---
 title: "doc-check-config"
 doc-id: "mb-e7e60242"
-updated: "2026-10-23"
+updated: "2026-10-31"
 ---
 # mb-doc-check — Configuration
 
@@ -15,15 +15,15 @@ Canonical current-state record of the `mb-doc-check` program. Agent-facing. What
 |---|---|
 | Issuer | MyBizz. GBrain is the issuer for the page-name rule and the source-id list |
 | Installed version | commit `20afe8c`. The program has no release system; 89,966 bytes live |
-| Standard taken from | `mb-doc-check.py` and `mb-doc-check.sources` at commit `20afe8c`; GBrain's source list and page-name rule |
-| Last researched | 2026-10-20 |
+| Standard taken from | `mb-doc-check.py` at commit `20afe8c`; the live `mb-doc-check.sources`, whose source list must equal GBrain's (`sources-check`); GBrain's source list and page-name rule |
+| Last researched | 2026-10-30 |
 
 ## Settings — program
 
 | Setting | Issuer standard | MyBizz value | Source | Learning |
 |---|---|---|---|---|
 | Name | — | `mb-doc-check`, a Python program (standard library only). It is not an OpenCode skill | `mb-doc-check.py` at `20afe8c` | |
-| Location | — | `C:\mybizz\scripts\mb-doc-check.py` (WSL: `/mnt/c/mybizz/scripts/mb-doc-check.py`), 89,030 bytes | live check | |
+| Location | — | `C:\mybizz\scripts\mb-doc-check.py` (WSL: `/mnt/c/mybizz/scripts/mb-doc-check.py`), 89,966 bytes | live check | |
 | Settings file | — | `mb-doc-check.sources`, in the same folder | `mb-doc-check.py` at `20afe8c` | |
 | How it runs | — | As a git `pre-commit` hook in each of the covered repositories listed in [[[mybizz-os-docs:operating-procedures/commit-all-repositories]]](C:/mybizz/mybizz-os-docs/operating-procedures/commit-all-repositories.md): `python3 /mnt/c/mybizz/scripts/mb-doc-check.py hook`. A commit made in WSL runs it; a commit made from a Windows program does not | [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md) | |
 | Failure behavior | — | If the program itself fails with an internal error, it prints "skipped because of an internal problem" and lets the commit through. A bug never blocks work. The skipped documents are corrected at their next commit | `mb-doc-check.py` at `20afe8c` | |
@@ -38,6 +38,7 @@ One row per repository the hook covers. The folder in GBrain's list must equal t
 |---|---|---|---|---|
 | `default` | `/mnt/c/dev/project-library-global` | `/mnt/c/dev/project-library-global` | `mb-doc-check.sources`; `sources-check` | |
 | `dev-root-hub` | `/mnt/c/dev/dev-root` | `/mnt/c/dev/dev-root` | same | |
+| `mb-3-cs-project-context` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-context` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-context` | same | |
 | `mb-3-cs-project-library` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library` | same | |
 | `mb-4-ecom-project-library` | `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-project-library` | `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-project-library` | same | |
 | `mybizz-config-docs` | `/mnt/c/mybizz/mybizz-config-docs` | `/mnt/c/mybizz/mybizz-config-docs` | same | |

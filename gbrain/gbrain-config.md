@@ -1,7 +1,7 @@
 ---
 title: "gbrain-config"
 doc-id: "mb-b677b7b4"
-updated: "2026-10-23"
+updated: "2026-10-31"
 ---
 # GBrain — Configuration
 
@@ -36,7 +36,7 @@ GBrain-specific state, commands, and incidents.
 | Issuer | Garry Tan — `github.com/garrytan/gbrain` (MIT) |
 | Installed version | `0.59.18.0` (tag `v0.59.18.0`, commit `045a6138`) |
 | Standard taken from | `0.59.18.0` |
-| Last researched | 2026-10-20 |
+| Last researched | 2026-10-30 |
 | Upstream | `github.com/garrytan/gbrain` — MIT; by Garry Tan. **Not distributed on npm** — the npm `gbrain` package is unrelated and shadows the binary (upstream warning; see the Reference Do-not list) |
 | Engine | PostgreSQL, self-hosted, WSL-native — the server version, extensions and this database's place in the estate are owned by [[[mybizz-config-docs:postgresql/postgresql-config\|PostgreSQL Configuration]]](C:/mybizz/mybizz-config-docs/postgresql/postgresql-config.md) |
 | Connection | `postgresql://postgres:***@localhost:5432/gbrain` |
@@ -129,16 +129,17 @@ gbrain-everything`, `mcp.publish_skills: true`.
 - By type: concept 1,404, atom 564, note 182, code 45, extract_receipt 32, email 5, session 4, media 4, session-summary 2, session-log 1, learning 1
 - Current values: `gbrain stats`
 
-## Registered sources (18)
+## Registered sources (19)
 
 | Source ID | Path | Pages | Federation |
 |---|---|---|---|
-| `default` | `/mnt/c/dev/project-library-global` | 1,080 | **federated** |
+| `default` | `/mnt/c/dev/project-library-global` | 1,083 | **federated** |
 | `anvil-agent-references-code` | `/mnt/c/mybizz/anvil-agent-references` | 34 | isolated (explicit) |
-| `data-mybizz-mgt` | `/mnt/c/data-mybizz-mgt` | 12 | **federated** |
+| `data-mybizz-mgt` | `/mnt/c/data-mybizz-mgt` | 14 | **federated** |
 | `dev-root-hub` | `/mnt/c/dev/dev-root` | 12 | **federated** |
-| `mb-3-cs-project-library` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library` | 564 | **federated** |
-| `mb-4-ecom-project-library` | `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-project-library` | 5 | **federated** |
+| `mb-3-cs-project-context` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-context` | 303 | **federated** |
+| `mb-3-cs-project-library` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library` | 51 | **federated** |
+| `mb-4-ecom-project-library` | `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-project-library` | 3 | **federated** |
 | `mb-archify-scope` | `/mnt/c/mybizz/mb-archify-scope` | 1 | **federated** |
 | `mb-close-out` | `/mnt/c/mybizz/mb-close-out` | 1 | **federated** |
 | `mb-compile-rules` | `/mnt/c/mybizz/mb-compile-rules` | 1 | **federated** |
@@ -148,9 +149,9 @@ gbrain-everything`, `mcp.publish_skills: true`.
 | `mb-submit-memory` | `/mnt/c/mybizz/mb-submit-memory` | 1 | **federated** |
 | `mb-sysdoc-creator` | `/mnt/c/mybizz/mb-sysdoc-creator` | 1 | **federated** |
 | `memory-governor-code` | `/home/dev-p/memory-governor` | 46 | unset |
-| `mybizz-config-docs` | `/mnt/c/mybizz/mybizz-config-docs` | 139 | **federated** |
-| `mybizz-os-docs` | `/mnt/c/mybizz/mybizz-os-docs` | 26 | **federated** |
-| `pdlf` | `/mnt/c/pdlf` | 309 | **federated** |
+| `mybizz-config-docs` | `/mnt/c/mybizz/mybizz-config-docs` | 138 | **federated** |
+| `mybizz-os-docs` | `/mnt/c/mybizz/mybizz-os-docs` | 30 | **federated** |
+| `pdlf` | `/mnt/c/pdlf` | 329 | **federated** |
 
 Counts are per-source as listed on the Last researched date (point-in-time;
 re-list with `gbrain sources list` for current values). One source exists per
