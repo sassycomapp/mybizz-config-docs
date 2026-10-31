@@ -1,7 +1,7 @@
 ---
 title: "cupcake-learnings"
 doc-id: "mb-a3fa7539"
-updated: "2026-10-20"
+updated: "2026-10-31"
 ---
 # Cupcake — Learnings
 
@@ -19,3 +19,4 @@ Read in full before any research, examination or proposal for this system.
 | L9 | The plugin is one file, `~/.config/opencode/plugin/cupcake.js`, not the folder the issuer documents. OpenCode loads it, and the liveness probe proves it enforces. | One global file is the only copy, so no project copy can override it. | v0.3.0 plugin reference; liveness probe |
 | L10 | The rules protecting `AGENTS.md`, `CLAUDE.md`, `opencode.json` and `package.json` block an agent's edit even when the developer approves it in the same turn. This stays. | An agent never writes these files; the developer changes them in the terminal, which Cupcake does not govern. | Developer decision |
 | L11 | A session started in `/home/dev-p`, above the skills folder, still has an ungranted write into `~/.config/opencode/skills/` blocked. | The skills-folder protection holds whatever folder the session starts in. | Developer check |
+| L12 | The sensitive-data builtin is amended by MyBizz: its secret keywords and data patterns match on the file name only — never on folders, never on documents or code; "auth" and "private" are not keywords; a Bash command is blocked only when a whole-word read command (cat, less, more, head, tail, grep, awk, sed) names a real secret file path. | Plain word matching blocked security documents, the sessions folder, the /cso scan and a ledger INSERT; a file name that describes a subject does not hold a value. | live builtin sensitive_data_protection.rego; developer-stated reason |

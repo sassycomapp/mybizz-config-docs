@@ -1,7 +1,7 @@
 ---
 title: "opencode-config"
 doc-id: "mb-c7616d53"
-updated: "2026-10-23"
+updated: "2026-10-31"
 ---
 # OpenCode Configuration
 
@@ -14,7 +14,7 @@ Settings sheet for the OpenCode agent harness. Execution lives in [[[mybizz-conf
 | Issuer | OpenCode (`github.com/anomalyco/opencode`) |
 | Installed version | 1.19.0 |
 | Standard taken from | 1.19.0 — the issuer's documentation and configuration schema for the installed version |
-| Last researched | 2026-10-20 |
+| Last researched | 2026-10-31 |
 
 ## Global configuration (`~/.config/opencode/opencode.jsonc`)
 
@@ -24,7 +24,7 @@ Settings sheet for the OpenCode agent harness. Execution lives in [[[mybizz-conf
 | `default_agent` | agent selection is configurable | `plan` | https://opencode.ai/config.json | |
 | `permission.edit` | per-file-pattern write rule | `*: allow`; `**/anvil.yaml: deny` | https://opencode.ai/config.json | |
 | `permission.webfetch` | fetch permission is configurable | `ask` | https://opencode.ai/config.json | |
-| `permission.bash` | per-command-pattern rule | `*: ask` with 13 `deny` patterns (destructive git, `DROP`/`TRUNCATE` SQL, `curl`/`wget` piped to a shell) | https://opencode.ai/config.json | |
+| `permission.bash` | per-command-pattern rule | `*: allow` with the 13 `deny` patterns unchanged (destructive git, `DROP`/`TRUNCATE` SQL, `curl`/`wget` piped to a shell) | https://opencode.ai/config.json | L9 |
 | `permission.task` | task-delegation permission is configurable | `deny` | https://opencode.ai/config.json | L1 |
 | `permission.external_directory` | per-path-glob rule for work outside the project | `*: allow` | https://opencode.ai/config.json | |
 | `agent.plan.permission.edit` | per-agent permission overrides | `deny` — the plan agent cannot write | https://opencode.ai/config.json | |
@@ -76,8 +76,8 @@ GBrain's own settings and version live in the gbrain suite: [[[mybizz-config-doc
 | Bind mounts | — | every project is reachable at `~/projects/<name>` through an `/etc/fstab` line with `bind,nofail`; a new project gets a new line | developer-stated; live `~/projects` listing | |
 | Registration | opening a folder registers it | `opencode debug config` run from the project folder; it calls no AI model | live check | L6 |
 | Per-repo config files | an `opencode.json` in a project root merges with the global config | 7 files: `mb-3-cs-app1`, `mb-3-cs-app3`, `mb-3-cs-app5`, `mb-3-cs-project-library`, `mb-4-ecom-app1`, `mb-4-ecom-app3`, `mb-4-ecom-app5` | live listings | |
-| App-repo baseline | — | `default_agent: build`; edit `*: allow` plus `**/anvil.yaml: deny` and theme/template protections (`form_template.yaml`, `parameters.yaml`, `templates.yaml`: `deny`; `theme.css`, `standard-page.html`: `ask`); the 13-pattern bash deny-list; `external_directory *: allow`; a project-local `mcp.graphify` entry pointing at that repo's `graphify-out/graph.json`; `agent.plan.permission.edit: deny` | live project configs | L4 |
-| `mb-3-cs-project-library` | — | minimal: `default_agent: plan`; edit `*: allow`; the 13-pattern bash deny-list; `external_directory *: allow`; `agent.plan.permission.edit: deny`; no theme rows, no MCP entry | live project config | L4 |
+| App-repo baseline | — | `default_agent: build`; edit `*: allow` plus `**/anvil.yaml: deny` and theme/template protections (`form_template.yaml`, `parameters.yaml`, `templates.yaml`: `deny`; `theme.css`, `standard-page.html`: `ask`); bash `*: allow` with the 13 deny patterns; `external_directory *: allow`; a project-local `mcp.graphify` entry pointing at that repo's `graphify-out/graph.json`; `agent.plan.permission.edit: deny` and plan-agent bash `*: ask` | live project configs | L4, L9 |
+| `mb-3-cs-project-library` | — | minimal: `default_agent: plan`; `instructions: ["AGENTS.md"]`; edit `*: ask` with `**/anvil.yaml: deny`; bash `*: ask` with five deny patterns (`rm -rf *`, `rm -r -f *`, `git commit*`, `git push*`, `git reset --hard*`); `webfetch: ask`; `external_directory` allows four named `mb-3-cs` app-repo globs; `agent.plan.permission.edit: deny`; no theme rows, no MCP entry | live project config | L4 |
 | No-config repos | — | `mb-4-ecom-project-library` and `pdlf` carry no `opencode.json` | live listings | L4 |
 | Merge semantics | configs are merged, not replaced — a project overrides the global config only for conflicting keys, and nested permission maps merge deeply | relied on throughout; a project config cannot silently weaken the global deny-list | https://opencode.ai/docs/config | |
 

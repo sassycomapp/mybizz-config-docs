@@ -1,7 +1,7 @@
 ---
 title: "opencode-learnings"
 doc-id: "mb-cecab1e4"
-updated: "2026-10-20"
+updated: "2026-10-31"
 ---
 # OpenCode — Learnings
 
@@ -17,3 +17,4 @@ What differs from, or adds to, the standard in the MyBizz setup, and why. Read i
 | L6 | `opencode debug config` opens the folder it runs from as a project and calls no AI model. | It is both the merged-config inspector and a project-registration act; run it from project roots only. | Developer-approved finding |
 | L7 | The plugin folder loads only `.js` files; the `plugin` config list accepts folder paths, and a file path in it is rejected. The MyBizz setup carries no `plugin` list entry and relies on folder auto-loading. | Prevents re-introducing a rejected `plugin` entry or a file the loader ignores. | Developer-stated correction; live global config |
 | L8 | This OpenCode version writes no plugin-load log lines; plugin checks are made inside OpenCode. | Prevents building verification on log lines that do not exist. | Developer-stated correction |
+| L9 | Bash runs `*: allow` for the Build agent — in the global config and in every app-repo config — with the 13 deny patterns kept; the Plan agent has bash `*: ask`. | `ask` prompted the developer before every command; Cupcake still guards writes, secrets, network, commits and gates. | live configs; developer decision |

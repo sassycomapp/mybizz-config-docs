@@ -1,7 +1,7 @@
 ---
 title: "cupcake-config"
 doc-id: "mb-afd0ad78"
-updated: "2026-10-29"
+updated: "2026-10-31"
 ---
 # Cupcake — Configuration
 
@@ -16,7 +16,7 @@ history or rules — reasoning in [[[mybizz-config-docs:cupcake/cupcake-explaine
 | Issuer | EQTYLab — engine and upstream documentation; MyBizz — plugin amendments, custom rules, grant tools |
 | Installed version | `0.3.0` |
 | Standard taken from | `github.com/eqtylab/cupcake` at tag `v0.3.0` |
-| Last researched | 2026-10-20 |
+| Last researched | 2026-10-31 |
 
 ## Engine and install
 
@@ -37,9 +37,9 @@ history or rules — reasoning in [[[mybizz-config-docs:cupcake/cupcake-explaine
 
 | Setting | Issuer standard | MyBizz value | Source | Learning |
 |---|---|---|---|---|
-| Rule source location | — | `C:\dev\project-library-global\rules-cupcake-global\` — 21 `.md` source documents | live folder listing | |
+| Rule source location | — | `C:\dev\project-library-global\rules-cupcake-global\` — 22 `.md` source documents | live folder listing | |
 | Deployment target | `cupcake.policies.*` for project-local | all rules global — `cupcake.global.policies.*` package namespace | v0.3.0 docs structure; live files | |
-| Source↔deployed correspondence | — | 21 sources ↔ 20 deployed rule files, each with its source; the bash-governance source compiles into the cross-project rule file | live listings, both sides | |
+| Source↔deployed correspondence | — | 22 sources ↔ 21 deployed rule files, each with its source; the bash-governance source compiles into the cross-project rule file | live listings, both sides | |
 | cup-block-task-tool.rego | — | blocks the `task` tool and known spawn-tool equivalents (checked against the denylist) | deployed file; source doc | |
 | cup-block-anvil-yaml-writes.rego | — | any write to `anvil.yaml`, any Anvil project | deployed file; source doc | |
 | cup-no_test_tampering.rego | — | deleting, skipping or gutting a test file | deployed file; source doc | |
@@ -53,6 +53,7 @@ history or rules — reasoning in [[[mybizz-config-docs:cupcake/cupcake-explaine
 | cup-no_destructive_database_operations.rego | — | DROP (9 object types), unconditioned DELETE, TRUNCATE | deployed file; source doc | |
 | cup-no_cross_project_filesystem_access_by_default.rego | — | writes outside the current project blocked unless `/tmp/`-exempt or granted; an agent in any repository of a business may write anywhere in that business's folder, by real path or link; skills-dir writes require a grant from every session; bash-mediated write shapes feed the same boundary; reads never blocked | deployed file | L3 |
 | cup-no_access_to_secrets_unless_explicitly_required.rego | — | reading known secret-file patterns, via Read/Grep or bash | deployed file; source doc | |
+| cup-no_agent_gate_approval.rego | — | agent bash may not run pdlf-gate.sh in any form except a whole shell segment ending pdlf-gate.sh --check, and may not write the PDLF ledger's gates table by SQL; SELECT stays free | deployed file; source doc | |
 | cup-outbound_network_access_is_allowlist_only.rego | — | fetch/curl/wget to a domain outside the allowlist, minus loopback and developer-issued network grants | deployed file | |
 | cup-no_autonomous_installation_or_connection_of_tools.rego | — | registering a new MCP server, plugin, or skill | deployed file; source doc | |
 | cup-no_unapproved_executable_or_build_path_changes.rego | — | writes to CI workflows, Dockerfile, deploy config, `package.json` | deployed file; source doc | |
@@ -61,7 +62,7 @@ history or rules — reasoning in [[[mybizz-config-docs:cupcake/cupcake-explaine
 | cup-the_ai_may_never_weaken_the_controls_governing_itself.rego | — | writes to `opencode.json` permissions and `spawn-tools-denylist.json` | deployed file; source doc | |
 | cup-protect-cupcake-control-plane.rego | — | absolute, ungrantable block on the control plane: the live config folder, the plugin file, the rule-authoring source folder, any project `.cupcake/opencode.json`; denies invoking the grant tools by name in bash | deployed file | |
 | builtin — system_protection.rego | shipped builtin | blocks access to critical system paths; bash indicators anchored to real path starts, `/dev/null` stream family exempted | deployed file | |
-| builtin — sensitive_data_protection.rego | shipped builtin | blocks credential/secret-shaped files; SSH-key matching by exact basename | deployed file | |
+| builtin — sensitive_data_protection.rego | shipped builtin | amended by MyBizz: secret keywords (credential, secret, token, apikey, api_key, api-key, password, passwd) and data patterns (.db, .sqlite, session, cookie, database.yml/.json, connection.json, .htpasswd, wp-config.php) match on the file name only — never folders, never documents or code (.md, .py, .js, .ts, .tsx, .jsx, .html, .css, .rego, .sh); "auth" and "private" are not keywords; a Bash command is blocked only when a whole-word read command (cat, less, more, head, tail, grep, awk, sed) names a real secret path (.env files, key and certificate files, SSH keys, .aws/, .ssh/, .npmrc, .pypirc, .git-credentials, .netrc, .htpasswd, or a data file whose name carries a secret word); direct credential-store commands (security find-generic-password, security dump-keychain, gpg --export, ssh-add -l, aws configure get, gcloud auth print-access-token, docker login, git config --get) still block by name | deployed file | L12 |
 | builtin — cupcake_exec_protection.rego | shipped builtin | blocks direct execution of the `cupcake` binary, including relative and wrapper forms; cannot see inside a script file's contents | deployed file | |
 | Aggregator | — | `system/evaluate.rego` — not a rule | live inventory | |
 
