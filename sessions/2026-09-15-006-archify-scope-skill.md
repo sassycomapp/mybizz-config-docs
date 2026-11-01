@@ -1,7 +1,7 @@
 ---
 title: "2026-09-15-006-archify-scope-skill"
 doc-id: "mb-6c56787b"
-updated: "2026-10-31"
+updated: "2026-11-01"
 ---
 # Session 006 — mb-archify-scope
 
@@ -27,7 +27,7 @@ plus the Archify authoring learnings gained from the Run Learnings (memory-ecosy
    - Output folder: `C:\mybizz\mybizz-config-docs\archify\output\`
 
 3. **First live run — memory-ecosystem architecture diagram.** Scope approved:
-   [[[mb-3-cs-project-context:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-context/docs-local/architecture.md) type (guide-consistent), 9 primary nodes, one store with two
+   [[[mb-3-cs-project-context:docs-local/mb-3-cs-architecture-reference|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-context/docs-local/mb-3-cs-architecture-reference.md) type (guide-consistent), 9 primary nodes, one store with two
    badges (GBrain: mirror/durable), read paths as primary nodes, one
    `security-group` "durable gate" boundary. Probe (nodes-only) passed before
    connecting. Authoring converged 17 → 0 diagnostics over two focused repair
@@ -59,7 +59,7 @@ plus the Archify authoring learnings gained from the Run Learnings (memory-ecosy
 ## Key learnings (detailed in the run learnings file)
 
 - Type choice is the highest-leverage scoping decision; run
-  `archify guide "<scenario>" --json` at scope time; prefer [[[mb-3-cs-project-context:docs-local/architecture|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-context/docs-local/architecture.md)
+  `archify guide "<scenario>" --json` at scope time; prefer [[[mb-3-cs-project-context:docs-local/mb-3-cs-architecture-reference|Architecture]]](C:/dev/dev-mb-3-cs/mb-3-cs-project-context/docs-local/mb-3-cs-architecture-reference.md)
   (free pos, edge-tolerant) unless grid semantics are required
 - Probe (components+boundary stub) before connecting — catches
   desktop-readability/font-scale and overlap classes pre-flight
