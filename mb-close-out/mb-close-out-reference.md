@@ -1,7 +1,7 @@
 ---
 title: "mb-close-out-reference"
 doc-id: "mb-4b40508e"
-updated: "2026-10-23"
+updated: "2026-11-04"
 ---
 # mb-close-out — Reference
 
@@ -77,7 +77,8 @@ Produce one fully literal block, in this order:
 
 1. The `AGENTS.md` copy line from Step 6.3, when there is one.
 2. Any line produced by Rules 1, 2 or 6.
-3. `bash /mnt/c/mybizz/scripts/commit-all.sh "close-out: <topic>"` — commit all is the close-out's last step.
+3. `bash /mnt/c/mybizz/scripts/commit-all.sh "close-out: <topic>"`.
+4. For each app code repository whose project documents changed at Step 6.3: `cd <repository path> && git pull --no-rebase && git add theme/assets/docs && git commit -m "close-out: <topic>" && git push`. Commit all does not cover app code repositories, and the pull takes in any change the Anvil editor made first.
 
 The developer pastes the output back.
 
@@ -95,7 +96,7 @@ curl -s -X POST http://127.0.0.1:8321/memory/<memory-id>/review \
 
 ### Step 9 — Verify and report
 
-- Commit all ran as the close-out's last step (Step 7, line 3). Its expected output and its BLOCKED and FAILED handling are defined by commit-all itself: [[[mybizz-config-docs:commit-all/commit-all-reference|commit-all reference]]](C:/mybizz/mybizz-config-docs/commit-all/commit-all-reference.md) — not here.
+- Commit all ran (Step 7, line 3), and each app code repository's commit (Step 7, line 4) pushed. Its expected output and its BLOCKED and FAILED handling are defined by commit-all itself: [[[mybizz-config-docs:commit-all/commit-all-reference|commit-all reference]]](C:/mybizz/mybizz-config-docs/commit-all/commit-all-reference.md) — not here.
 - Governed facts: `grep "remembered as fact" /tmp/memory-governor-worker.log | tail -10` is the record of what landed and its fact numbers. If recall shows nothing but the worker log confirms the write, the fact exists; never re-submit.
 - The governor review queue must be empty before the close-out ends.
 - Report: the session page, facts with their numbers, project documents, the commit summary, anything flagged.
