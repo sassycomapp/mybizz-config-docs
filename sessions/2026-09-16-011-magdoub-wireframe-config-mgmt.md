@@ -1,7 +1,7 @@
 ---
 title: "2026-09-16-011-magdoub-wireframe-config-mgmt"
 doc-id: "mb-c10b1e79"
-updated: "2026-10-20"
+updated: "2026-11-06"
 ---
 # Session 011 — magdoub-wireframe config-management suite
 
@@ -15,7 +15,7 @@ zero live defects), Tier 3 executed at the gate (all items approved), committed
 as `7977eb4` (developer-executed after the autonomous-commits guard denial) and
 pushed; gbrain sync completed and verified. Governance flag W-4 left open for
 docs-governance pickup — **then resolved the same day by direct developer
-decision**: [[[default:adr-global/adr-design-rules|Wireframe Design Rules]]](C:/dev/project-library-global/adr-global/adr-design-rules.md) gained §A (Magdoub-skill exemption), suite
+decision**: Wireframe Design Rules gained §A (Magdoub-skill exemption), suite
 reconciled, skill re-installed (re-hash `c570e38d0b490808`).
 
 ## What was done (with evidence)
@@ -77,7 +77,7 @@ reconciled, skill re-installed (re-hash `c570e38d0b490808`).
        71★/5 fork/32 commits, last commit 2026-03-01 · spawn-capability benign in
        this environment); open item 3 **closed** via spec application
        (gate-approved, the established precedent).
-     - W-4 [[[default:adr-global/adr-design-rules|Wireframe Design Rules]]](C:/dev/project-library-global/adr-global/adr-design-rules.md) ADR reconciliation **flagged to docs governance**
+     - W-4 Wireframe Design Rules ADR reconciliation **flagged to docs governance**
        (open item 4 stays open pending governance pickup).
      - W-5 old single-file reference **retained for now** (open item 5 stays
        open; retirement rides with future suite maintenance).
@@ -139,8 +139,8 @@ reconciled, skill re-installed (re-hash `c570e38d0b490808`).
 ## Open / next (updated 2026-09-16 with the W-4 resolution)
 
 - **Governance flag W-4 — RESOLVED same-day.** The developer decided the
-  [[[default:adr-global/adr-design-rules|Wireframe Design Rules]]](C:/dev/project-library-global/adr-global/adr-design-rules.md) ADR reconciliation directly (not left to docs-governance
-  pickup): [[[default:adr-global/adr-design-rules|Wireframe Design Rules]]](C:/dev/project-library-global/adr-global/adr-design-rules.md) gained
+  Wireframe Design Rules ADR reconciliation directly (not left to docs-governance
+  pickup): Wireframe Design Rules gained
   **Section A — Applicability (Magdoub Wireframe Skill exemption)**: the ADR
   applies only to wireframes NOT created by the Magdoub skill; Magdoub output is
   an exploratory comparison artifact (different genre, exempt as an artifact);
