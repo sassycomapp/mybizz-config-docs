@@ -1,7 +1,7 @@
 ---
 title: "postgresql-explainer"
 doc-id: "mb-e4410ed0"
-updated: "2026-10-23"
+updated: "2026-11-08"
 ---
 # PostgreSQL — Explainer
 
@@ -59,7 +59,7 @@ any client application.
   developer-side system that needs real relational guarantees on one
   machine.
 - **Not good for:** the shipped estate — client instances hold their data
-  in Anvil's own Data Tables ([[[default:adr-global/adr-client-instance-architecture|Client Instance Architecture]]](C:/dev/project-library-global/adr-global/adr-client-instance-architecture.md)), not in any database of MyBizz; file-lane
+  in their own databases on DigitalOcean ([[[default:adr-global/adr-client-instance-architecture|Client Instance Architecture]]](C:/dev/project-library-global/adr-global/adr-client-instance-architecture.md)), not in this local PostgreSQL; file-lane
   content, whose home is the documentation repositories (a database mirror
   of files is a backup lane, not the primary store); and single-user
   scratch work, for which a flat file is the right tool.
