@@ -1,7 +1,7 @@
 ---
 title: "sentinel-explainer"
 doc-id: "mb-d54f779d"
-updated: "2026-10-20"
+updated: "2026-11-10"
 ---
 # Sentinel — What It Is and Why It Works This Way
 
@@ -13,7 +13,7 @@ Companion to [[[mybizz-config-docs:mb-sentinel-review/sentinel-config|Sentinel C
 The applications built through PDLF hold real client money, real client
 data, and real personal information belonging to their clients' own
 customers — and every line of their code is written by an AI agent.
-Regulatory duties (POPIA) make protecting that data mandatory for every
+Regulatory duties (UK GDPR) make protecting that data mandatory for every
 application, not optional. Sentinel is MyBizz's answer: the step-triggered
 security review for PDLF. At defined steps it reads the real
 security-standard documents, reasons about the real feature being built,

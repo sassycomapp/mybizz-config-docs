@@ -1,7 +1,7 @@
 ---
 title: "sentinel-reference"
 doc-id: "mb-a075fac8"
-updated: "2026-10-20"
+updated: "2026-11-10"
 ---
 # Sentinel Reference — Usage, Invocation, and Worked Examples
 
@@ -54,7 +54,7 @@ On FLAG or ESCALATE, present the finding in plain words, one line per item: step
 | 38 | [[[default:security-global/testing/sec-testing-coverage-minimum\|Security Test Coverage Minimum]]](C:/dev/project-library-global/security-global/testing/sec-testing-coverage-minimum.md) + the matched threat-model document's own Verification Requirements |
 | 45 | [[[default:security-global/requirements/sec-requirements-release-readiness\|Release Readiness]]](C:/dev/project-library-global/security-global/requirements/sec-requirements-release-readiness.md) + [[[default:specifications-global/spec-observability\|Observability Requirements]]](C:/dev/project-library-global/specifications-global/spec-observability.md) (the monitoring standard behind the release check) |
 
-Secondary references are read when the feature touches their domain, not on every pass — for example the regulatory-compliance baseline (POPIA) when personal data is involved, and the observability spec behind the Step 45 release check. If no document clearly matches: ESCALATE, not an assumed CLEAR.
+Secondary references are read when the feature touches their domain, not on every pass — for example the regulatory-compliance baseline (UK GDPR) when personal data is involved, and the observability spec behind the Step 45 release check. If no document clearly matches: ESCALATE, not an assumed CLEAR.
 
 ## The governing ADR — checked at every data-touching review
 
