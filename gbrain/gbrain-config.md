@@ -1,7 +1,7 @@
 ---
 title: "gbrain-config"
 doc-id: "mb-b677b7b4"
-updated: "2026-10-31"
+updated: "2026-11-12"
 ---
 # GBrain — Configuration
 
@@ -129,7 +129,7 @@ gbrain-everything`, `mcp.publish_skills: true`.
 - By type: concept 1,404, atom 564, note 182, code 45, extract_receipt 32, email 5, session 4, media 4, session-summary 2, session-log 1, learning 1
 - Current values: `gbrain stats`
 
-## Registered sources (19)
+## Registered sources (20)
 
 | Source ID | Path | Pages | Federation |
 |---|---|---|---|
@@ -143,6 +143,7 @@ gbrain-everything`, `mcp.publish_skills: true`.
 | `mb-archify-scope` | `/mnt/c/mybizz/mb-archify-scope` | 1 | **federated** |
 | `mb-close-out` | `/mnt/c/mybizz/mb-close-out` | 1 | **federated** |
 | `mb-compile-rules` | `/mnt/c/mybizz/mb-compile-rules` | 1 | **federated** |
+| `mb-form-builder` | `/mnt/c/mybizz/mb-form-builder` | 0 | **federated** |
 | `mb-memory-system-diagnostic` | `/mnt/c/mybizz/mb-memory-system-diagnostic` | 1 | **federated** |
 | `mb-project-docs` | `/mnt/c/mybizz/mb-project-docs` | 1 | **federated** |
 | `mb-sentinel-review` | `/mnt/c/mybizz/mb-sentinel-review` | 1 | **federated** |

@@ -1,7 +1,7 @@
 ---
 title: "doc-check-config"
 doc-id: "mb-e7e60242"
-updated: "2026-10-31"
+updated: "2026-11-12"
 ---
 # mb-doc-check — Configuration
 
@@ -52,6 +52,7 @@ One row per repository the hook covers. The folder in GBrain's list must equal t
 | `mb-sysdoc-creator` | `/mnt/c/mybizz/mb-sysdoc-creator` | `/mnt/c/mybizz/mb-sysdoc-creator` | same | |
 | `mb-submit-memory` | `/mnt/c/mybizz/mb-submit-memory` | `/mnt/c/mybizz/mb-submit-memory` | same | |
 | `mb-archify-scope` | `/mnt/c/mybizz/mb-archify-scope` | `/mnt/c/mybizz/mb-archify-scope` | same | |
+| `mb-form-builder` | `/mnt/c/mybizz/mb-form-builder` | `/mnt/c/mybizz/mb-form-builder` | same | |
 | `mb-close-out` | `/mnt/c/mybizz/mb-close-out` | `/mnt/c/mybizz/mb-close-out` | same | |
 
 Not covered: the code repositories, the Anvil clone and the memory governor's folder. The full list of repositories and sources is in [[[mybizz-os-docs:os-reference-docs/repo-organization]]](C:/mybizz/mybizz-os-docs/os-reference-docs/repo-organization.md).
