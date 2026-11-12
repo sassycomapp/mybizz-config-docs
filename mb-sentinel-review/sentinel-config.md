@@ -1,7 +1,7 @@
 ---
 title: "sentinel-config"
 doc-id: "mb-967f5148"
-updated: "2026-10-20"
+updated: "2026-11-12"
 ---
 # Sentinel Configuration
 
@@ -32,10 +32,9 @@ updated: "2026-10-20"
 | 14 — Build notes: plan-ceo-review | Medium | Wired (Phase B): invocation and gate-proof in `b14-build-plan` | SKILL.md §1 | |
 | 15 — Build notes: plan-eng-review | High | Wired (Phase B): invocation and gate-proof in `b15-build-plan` | SKILL.md §1 | |
 | 16 — Domain model | Low/Medium | Wired: invocation item 7 and gate-proof item 9 of `b16-reference` | SKILL.md §1 | |
-| 17 — Data tables | High | Built (`c17`), not wired | SKILL.md §1 | |
-| 19 — Tickets | Medium | Built (`c19`), not wired | SKILL.md §1 | |
-| 20 — Design | Medium/High | Built (`c20`), not wired | SKILL.md §1 | |
-| 21 — Concept lock | Medium | Built (`c21`), not wired | SKILL.md §1 | |
+| 17 — Data tables | High | Wired (Phase C): invocation and gate-proof in `c17-reference` item 19 | SKILL.md §1 | |
+| 19 — Tickets | Medium | Wired (Phase C): invocation and gate-proof in `c19-reference` item 13 | SKILL.md §1 | |
+| 21 — Concept lock | Medium | Wired (Phase C): invocation and gate-proof in `c21-reference` item 9 | SKILL.md §1 | |
 | 34 — Architecture verification | Very High | Built (`d34`), not wired | SKILL.md §1 | |
 | 35 — Build | High | Built (`e35`), not wired | SKILL.md §1 | |
 | 36 — PDLF triage source | Existing PDLF triage source step | Writes to the ledger as ordinary triage; not Sentinel-wired | SKILL.md §1 | |

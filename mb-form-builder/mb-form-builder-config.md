@@ -27,7 +27,7 @@ procedure in
 |---|---|---|---|---|
 | Name | `mb-form-builder` | `mb-form-builder` | [[[mybizz-os-docs:os-reference-docs/skills-catalog\|skills catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md), row `mybizz / mb-form-builder` | |
 | What it is | writes one feature's Anvil forms from its approved screen requirements, as HTML templates built from m3-custom-theme components, each with its empty Python class and its spec sheet; never wires handlers, never commits | identical to standard | repo spec (Reference §Authoritative sources) | |
-| Invocation | the developer names the application and the feature; model-invoked — the description carries the trigger (mo-ui-production section 4, step 9) | identical to standard | repo spec (Reference §Authoritative sources) | |
+| Invocation | the developer names the application and the feature; model-invoked — the description carries the trigger (the mb-form-builder step of mo-ui-production section 4) | identical to standard | repo spec (Reference §Authoritative sources) | |
 | Catalog category | — | mybizz / mb-form-builder / Operational / Both hosts | [[[mybizz-os-docs:os-reference-docs/skills-catalog\|skills catalog]]](C:/mybizz/mybizz-os-docs/os-reference-docs/skills-catalog.md) | |
 | Structure | eight numbered sections: Rules It Follows, Input, Gate, Output per Form, Old Forms, Checks, Report, Never | identical to standard | repo spec (Reference §Authoritative sources) | |
 

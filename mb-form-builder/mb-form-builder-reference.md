@@ -22,7 +22,7 @@ change spec and installed copy together.
 Run in build mode, when the developer asks to build or rebuild one feature's
 forms, naming the application and the feature (for example "mb-3-cs App 1,
 feature `bookings`"). Model-invoked: the description carries the trigger
-(mo-ui-production section 4, step 9).
+(the mb-form-builder step of mo-ui-production section 4).
 
 ## The eight sections (ordered)
 
@@ -57,7 +57,7 @@ feature `bookings`"). Model-invoked: the description carries the trigger
    `self.init_components(**properties)` then `translate_form(self)`, one
    `@handle` per event the screen requirement uses, body `pass`, one-line
    docstring naming the server function, no other logic); the spec sheet at
-   `theme/assets/docs/app1/<package path>/<FormName>.md` with the six contents
+   `theme/assets/docs/app{n}/<package path>/<FormName>.md` with the six contents
    spec-ui-standards section 14.2 lists, holding no secret, key, password or user
    data; the form's entry in `access-matrix.yaml` under `forms`, keyed by module
    path, with every role's scope; the form's phrase keys in `en.py`.
