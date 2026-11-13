@@ -1,7 +1,7 @@
 ---
 title: "sentinel-config"
 doc-id: "mb-967f5148"
-updated: "2026-11-12"
+updated: "2026-11-13"
 ---
 # Sentinel Configuration
 
@@ -35,11 +35,11 @@ updated: "2026-11-12"
 | 17 — Data tables | High | Wired (Phase C): invocation and gate-proof in `c17-reference` item 19 | SKILL.md §1 | |
 | 19 — Tickets | Medium | Wired (Phase C): invocation and gate-proof in `c19-reference` item 13 | SKILL.md §1 | |
 | 21 — Concept lock | Medium | Wired (Phase C): invocation and gate-proof in `c21-reference` item 9 | SKILL.md §1 | |
-| 34 — Architecture verification | Very High | Built (`d34`), not wired | SKILL.md §1 | |
-| 35 — Build | High | Built (`e35`), not wired | SKILL.md §1 | |
+| 34 — Architecture verification | Very High | Wired (Phase D): invocation and gate-proof in `d34-reference` item 9 | SKILL.md §1 | |
+| 35 — Build | High | Wired (Phase E): invocation and gate-proof in `e35-reference` item 18 | SKILL.md §1 | |
 | 36 — PDLF triage source | Existing PDLF triage source step | Writes to the ledger as ordinary triage; not Sentinel-wired | SKILL.md §1 | |
-| 37 — Code review | Very High | Built (`e37`), not wired | SKILL.md §1 | |
-| 38 — QA | High | Built (`e38`), not wired | SKILL.md §1 | |
+| 37 — Code review | Very High | Wired (Phase E): invocation and gate-proof in `e37-reference` item 7 | SKILL.md §1 | |
+| 38 — QA | High | Wired (Phase E): invocation and gate-proof in `e38-reference` item 7 | SKILL.md §1 | |
 | 39 — Triage | — (findings enter as ordinary governed findings) | Built (`e39`), not wired | SKILL.md §1 | |
 | 45 — Canary | Medium | Built (`f45`), not wired | SKILL.md §1 | |
 | 46 — LEARN | — (lessons enter GBrain) | Built (`f46`), not wired | SKILL.md §1 | |
