@@ -41,8 +41,8 @@ updated: "2026-11-13"
 | 37 — Code review | Very High | Wired (Phase E): invocation and gate-proof in `e37-reference` item 7 | SKILL.md §1 | |
 | 38 — QA | High | Wired (Phase E): invocation and gate-proof in `e38-reference` item 7 | SKILL.md §1 | |
 | 39 — Triage | — (findings enter as ordinary governed findings) | Built (`e39`), not wired | SKILL.md §1 | |
-| 45 — Canary | Medium | Built (`f45`), not wired | SKILL.md §1 | |
-| 46 — LEARN | — (lessons enter GBrain) | Built (`f46`), not wired | SKILL.md §1 | |
+| 45 — Production check | Medium | Wired (Phase F): invocation and gate-proof in `f45-reference` item 6 | SKILL.md §1 | |
+| 46 — Learning | — (lessons enter GBrain through `mb-submit-memory`) | Built (`f46`); not Sentinel-wired | SKILL.md §1 | |
 
 ## Scope and environment
 
