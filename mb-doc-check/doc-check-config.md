@@ -1,7 +1,7 @@
 ---
 title: "doc-check-config"
 doc-id: "mb-e7e60242"
-updated: "2026-11-12"
+updated: "2026-11-14"
 ---
 # mb-doc-check — Configuration
 
@@ -37,7 +37,6 @@ One row per repository the hook covers. The folder in GBrain's list must equal t
 | Setting (source id) | Issuer standard (folder per GBrain) | MyBizz value (folder in `.sources`) | Source | Learning |
 |---|---|---|---|---|
 | `default` | `/mnt/c/dev/project-library-global` | `/mnt/c/dev/project-library-global` | `mb-doc-check.sources`; `sources-check` | |
-| `dev-root-hub` | `/mnt/c/dev/dev-root` | `/mnt/c/dev/dev-root` | same | |
 | `mb-3-cs-project-context` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-context` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-context` | same | |
 | `mb-3-cs-project-library` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library` | same | |
 | `mb-4-ecom-project-library` | `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-project-library` | `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-project-library` | same | |

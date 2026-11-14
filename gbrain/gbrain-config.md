@@ -129,14 +129,13 @@ gbrain-everything`, `mcp.publish_skills: true`.
 - By type: concept 1,404, atom 564, note 182, code 45, extract_receipt 32, email 5, session 4, media 4, session-summary 2, session-log 1, learning 1
 - Current values: `gbrain stats`
 
-## Registered sources (20)
+## Registered sources (19)
 
 | Source ID | Path | Pages | Federation |
 |---|---|---|---|
 | `default` | `/mnt/c/dev/project-library-global` | 1,083 | **federated** |
 | `anvil-agent-references-code` | `/mnt/c/mybizz/anvil-agent-references` | 34 | isolated (explicit) |
 | `data-mybizz-mgt` | `/mnt/c/data-mybizz-mgt` | 14 | **federated** |
-| `dev-root-hub` | `/mnt/c/dev/dev-root` | 12 | **federated** |
 | `mb-3-cs-project-context` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-context` | 303 | **federated** |
 | `mb-3-cs-project-library` | `/mnt/c/dev/dev-mb-3-cs/mb-3-cs-project-library` | 51 | **federated** |
 | `mb-4-ecom-project-library` | `/mnt/c/dev/dev-mb-4-ecom/mb-4-ecom-project-library` | 3 | **federated** |

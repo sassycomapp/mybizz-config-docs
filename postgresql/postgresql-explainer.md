@@ -1,7 +1,7 @@
 ---
 title: "postgresql-explainer"
 doc-id: "mb-e4410ed0"
-updated: "2026-11-08"
+updated: "2026-11-14"
 ---
 # PostgreSQL — Explainer
 
@@ -25,7 +25,7 @@ applies: if it is not in `pdlf`, it did not happen. The remaining databases
 are PostgreSQL's own administrative databases, not part of MyBizz.
 
 The two servers serve two different layers of the environment (the
-division docmap, `C:\dev\dev-root\docmap.md`, maps the layers). Instance
+division docmap, `C:\mybizz\mybizz-os-docs\os-reference-docs\docmap.md`, maps the layers). Instance
 B, inside WSL, hosts the supporting-systems layer's memory — GBrain and
 the memory governor are supporting systems built before and beneath PDLF.
 Instance A, on Windows, hosts the PDLF layer's own ledger. Neither server
