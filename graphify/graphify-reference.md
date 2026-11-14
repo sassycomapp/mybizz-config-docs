@@ -1,7 +1,7 @@
 ---
 title: "graphify-reference"
 doc-id: "mb-eda396e1"
-updated: "2026-10-20"
+updated: "2026-11-14"
 ---
 # Graphify Reference
 
@@ -68,8 +68,8 @@ Rules:
 
 - Build and refresh with `--code-only` only; no AI backend and no API key is
   involved (L1).
-- Refresh a repository's graph after every code commit:
-  `cd <repo> && graphify update <repo>`.
+- A repository's graph is refreshed after every code commit: `commit-all` runs
+  `cd <repo> && graphify update <repo>` for each app repository committed since its last graph.
 - Run every `extract`/`update` from inside the target repo root — `extract`
   stamps `built_at_commit` from the invoking working directory's git repo,
   not the scanned path (L3).
