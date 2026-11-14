@@ -1,7 +1,7 @@
 ---
 title: "opencode-config"
 doc-id: "mb-c7616d53"
-updated: "2026-10-31"
+updated: "2026-11-14"
 ---
 # OpenCode Configuration
 
@@ -101,7 +101,7 @@ GBrain's own settings and version live in the gbrain suite: [[[mybizz-config-doc
 | Built-in cleanup | none — the issuer ships no command that deletes stale project rows | MyBizz compensates with `opencode-db-cleanup.sh` (below) | https://github.com/anomalyco/opencode/issues/25004 | |
 | Orphaned sessions | sessions keep referencing a renamed or moved folder | MyBizz compensates with the same script | https://github.com/anomalyco/opencode/issues/23248 | |
 | `opencode-db-cleanup.sh` | — | `/mnt/c/mybizz/scripts/opencode-db-cleanup.sh`; manual, on demand; full-database backup first; requires a typed capital `YES`; backups to `/mnt/c/backup-wsl/opencode-db-cleanup/<timestamp>/` | developer-approved finding | |
-| `opencode-session-prune.sh` | — | `/mnt/c/mybizz/scripts/opencode-session-prune.sh`; Task Scheduler task `OpenCodeSessionPrune`, daily at 17:05; deletes sessions older than 60 days; full-database backup first, dependent rows cleaned through foreign-key discovery, then `VACUUM`; backups to `/mnt/c/backup-wsl/opencode-session-prune/<timestamp>/` | developer-approved finding | |
+| `opencode-session-prune.sh` | — | `/mnt/c/mybizz/scripts/opencode-session-prune.sh`; run by the Task Scheduler task `MorningTasks` at the first logon of each day; deletes sessions older than 60 days; full-database backup first, dependent rows cleaned through foreign-key discovery, then `VACUUM`; backups to `/mnt/c/backup-wsl/opencode-session-prune/<timestamp>/` | developer-approved finding | |
 
 ## WSL hosting
 

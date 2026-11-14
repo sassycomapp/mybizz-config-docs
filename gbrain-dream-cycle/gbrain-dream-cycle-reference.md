@@ -1,7 +1,7 @@
 ---
 title: "gbrain-dream-cycle-reference"
 doc-id: "mb-afe3a341"
-updated: "2026-10-20"
+updated: "2026-11-14"
 ---
 # GBrain Dream Cycle — Reference: Invocation, Verification, Diagnostics
 
@@ -9,7 +9,7 @@ Companion to [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-config|
 [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-explainer|Explainer]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-explainer.md) (reasoning) and
 [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-learnings|Learnings]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-learnings.md) (what differs and why). Agent-facing.
 
-**Invocation model:** manual — the cycle runs by hand weekly, after the Sunday
+**Invocation model:** manual — the cycle runs by hand weekly, after the weekly
 backup, through `/mb-memory-system-diagnostic`; autopilot is off by decision
 (L2). Nothing runs unless run, which makes the post-run verification procedure
 below mandatory, not optional: an unverified dream run is an unknown-state run.
@@ -173,6 +173,6 @@ directly.
 - Do not run a full dream cycle to diagnose a single failing phase —
   isolate with `--phase`.
 - Do not re-enable autopilot or put the dream cycle on a scheduler — it runs
-  by hand weekly, after the Sunday backup (L2).
+  by hand weekly, after the weekly backup (L2).
 - Do not count `--dry-run` as a dream run for the governor discipline, and do
   not follow doctor's autopilot remediation suggestion (L1, L2).

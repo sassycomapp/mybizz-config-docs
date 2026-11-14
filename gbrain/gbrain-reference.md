@@ -1,7 +1,7 @@
 ---
 title: "gbrain-reference"
 doc-id: "mb-bb4cbd8d"
-updated: "2026-10-20"
+updated: "2026-11-14"
 ---
 # GBrain — Reference: Commands, Mechanics, Incidents, Troubleshooting
 
@@ -172,7 +172,7 @@ corpus pages. See the
 
 ### Dream Cycle
 
-Runs by hand weekly, after the Sunday backup, through the memory diagnostic
+Runs by hand weekly, after the weekly backup, through the memory diagnostic
 (`mb-memory-system-diagnostic`). Invocation, phase order, and diagnostics:
 [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-reference|Dream Cycle Reference]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-reference.md).
 Fact that affects source management: dream phases (including
@@ -502,4 +502,4 @@ opencode web --hostname 0.0.0.0
 - Do not use `gbrain upgrade`, `gbrain self-upgrade` or plain `gbrain apply-migrations --yes` for this install — use the procedure above.
 - Do not leave `sources.default` naming a source that does not exist — every sync then fails.
 - Do not remove `memory-governor-code` before the facts stored in it are understood.
-- Do not re-enable the `gbrain autopilot` schedule or put the dream cycle on a scheduler — autopilot is off by decision; the dream cycle runs by hand weekly, after the Sunday backup, through the memory diagnostic ([[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-config|Dream Cycle Configuration]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-config.md)).
+- Do not re-enable the `gbrain autopilot` schedule or put the dream cycle on a scheduler — autopilot is off by decision; the dream cycle runs by hand weekly, after the weekly backup, through the memory diagnostic ([[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-config|Dream Cycle Configuration]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-config.md)).

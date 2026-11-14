@@ -1,7 +1,7 @@
 ---
 title: "gbrain-dream-cycle-explainer"
 doc-id: "mb-957d54e7"
-updated: "2026-10-20"
+updated: "2026-11-14"
 ---
 # GBrain Dream Cycle — Explainer
 
@@ -40,7 +40,7 @@ Memory Governor structurally cannot intercept it (a permanent limit), so its
 output reaches durable memory unreviewed; the compensation is a manual,
 always-applied discipline: every dream run is followed by a
 suspected-contradictions evaluation whose findings get reviewed. And **it runs
-only when invoked** — by hand, weekly, after the Sunday backup. Scheduled
+only when invoked** — by hand, weekly, after the weekly backup. Scheduled
 automation is deliberately not used; §4 gives the reasons.
 
 ## 2. What It Can Do
@@ -86,7 +86,7 @@ owns that.
 
 ## 4. Why It Works This Way
 
-**Why it runs by hand, weekly, after the Sunday backup.** Upstream designs the
+**Why it runs by hand, weekly, after the weekly backup.** Upstream designs the
 dream cycle as an autonomous nightly cron — "the most important cron job," part
 of a large self-running schedule. MyBizz deliberately runs it the other way.
 The cycle is expensive and content-changing; its failure modes are silent (a
@@ -135,7 +135,7 @@ differentiator.
 
 - Autopilot and schedulers stay off. Doctor's remediation advice to install
   autopilot is deliberately not followed (L2).
-- The cycle runs by hand weekly, after the Sunday backup, through
+- The cycle runs by hand weekly, after the weekly backup, through
   `/mb-memory-system-diagnostic`.
 - After every run, the contradiction check runs and its findings are reviewed.
 - `ANTHROPIC_API_KEY` stays present and valid; its presence and validity are

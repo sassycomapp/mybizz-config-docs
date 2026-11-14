@@ -1,7 +1,7 @@
 ---
 title: "postgresql-config"
 doc-id: "mb-a8b414df"
-updated: "2026-10-20"
+updated: "2026-11-14"
 ---
 # PostgreSQL — Configuration
 
@@ -108,12 +108,12 @@ procedures: [[[mybizz-config-docs:postgresql/postgresql-reference|Reference]]](C
 | Locations | — | `/home/dev-p/backup-gbrain/` (default — same host as Instance B); `/mnt/c/backup-gbrain/` (security net — survives a full WSL reinstall; also Instance A's direct dump target, since Windows `pg_dump.exe` writes there natively) | — | — |
 | Coverage | — | Every data-bearing database on both instances, always: Instance A `pdlf` + `postgres` (admin); Instance B `gbrain` + `memory_governor` + `postgres` (admin). Templates excluded — standard system objects, rebuildable from the install; `template0` is not connectable and cannot be dumped normally | — | — |
 | Format | — | `pg_dump -Fc` (custom, compressed); one file per database (pg_dump is per-database by design). Naming: `<db>-db-backup-YYYY-MM-DD.dump`, admin databases disambiguated `-a-`/`-b-` by instance | — | — |
-| Cadence | — | Weekly: Task Scheduler task `SundayBackup` runs `C:\mybizz\scripts\sunday-backup.sh` every Sunday at 10:00; a missed start is not caught up; a missed or failed run is reported at the next logon. An extra cycle always runs before upgrades, schema changes or destructive operations | — | — |
-| Retention | — | The two most recent verified cycles in each location; older dumps are deleted at the cycle that supersedes them | — | — |
+| Cadence | — | Weekly: the Task Scheduler task `MorningTasks` runs `C:\mybizz\scripts\weekly-backup.sh` at the first logon 7 or more days after the last successful cycle; a failed cycle is reported in a pop-up and tried again at the next logon. An extra cycle always runs before upgrades, schema changes or destructive operations | — | — |
+| Retention | — | The two most recent verified cycles in each location, and in the off-PC copy `G:\My Drive\mybizz-backups\database\` (Google Drive), which `MorningTasks` fills after each successful cycle; older dumps are deleted at the cycle that supersedes them | — | — |
 | Pair rule | — | Dump once, copy to both locations immediately, hash-verify (`cmp`/sha256). A mismatched pair means re-dump and re-copy both sides — never copy one way twice | — | — |
-| Cycle record | — | The Sunday task reports the result in a pop-up and writes a log to `C:\mybizz\logs\sunday-backup\`; the latest log is the record of the latest cycle | — | — |
+| Cycle record | — | `MorningTasks` reports a failed cycle in a pop-up; the cycle writes a log to `C:\mybizz\logs\weekly-backup\`; the latest log is the record of the latest cycle | — | — |
 | Windows credential source | — | The task reads `%APPDATA%\postgresql\pgpass.conf` for Instance A dumps; `pgpass.conf` exists on Windows | — | — |
-| Markdown export lane | — | `gbrain export --dir /mnt/c/backup-dream-cycle/` runs in the same Sunday task, after the DB dumps. Second line of defense for DB-only pages; the PostgreSQL dump remains line one | — | — |
+| Markdown export lane | — | `gbrain export --dir /mnt/c/backup-dream-cycle/` runs in the same weekly cycle, after the DB dumps. Second line of defense for DB-only pages; the PostgreSQL dump remains line one | — | — |
 
 ## Open items
 

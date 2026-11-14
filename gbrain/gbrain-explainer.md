@@ -1,7 +1,7 @@
 ---
 title: "gbrain-explainer"
 doc-id: "mb-3187a352"
-updated: "2026-10-20"
+updated: "2026-11-14"
 ---
 # GBrain — Explainer
 
@@ -271,10 +271,10 @@ with an error — the incident playbook is in the reference.
 
 ## What has to happen
 
-- **The developer runs the Dream Cycle by hand weekly**, after the Sunday backup, through the memory diagnostic (`mb-memory-system-diagnostic`). Nothing GBrain-related is scheduled; autopilot stays off.
+- **The developer runs the Dream Cycle by hand weekly**, after the weekly backup, through the memory diagnostic (`mb-memory-system-diagnostic`). Nothing GBrain-related is scheduled; autopilot stays off.
 - **The sync runs with every commit all** (the standing script). Files moved or deleted in a source need a full resync of that source, or their pages linger in the brain.
 - **API keys stay in the environment**, and the Voyage payment method stays on the organization that holds the key — the reranker degrades to three requests a minute without it.
-- **The Sunday backup cycle keeps covering the `gbrain` and `memory_governor` databases** (the estate convention is owned by the PostgreSQL suite).
+- **The weekly backup cycle keeps covering the `gbrain` and `memory_governor` databases** (the estate convention is owned by the PostgreSQL suite).
 - **Several checks stay developer-run**: `config.json` content (the sensitive-data guard), full sync samples (content-changing), MCP restart behavior, and any upgrade decision.
 - **The master explainer is passed to every memory-component run** and updated by each such session, committed and pushed at that run's close-out — standing authorization.
 - **This suite is kept current by `mb-sysdoc-creator` research runs** against the doc-suite specification.

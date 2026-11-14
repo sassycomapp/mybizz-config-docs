@@ -1,7 +1,7 @@
 ---
 title: "gbrain-config"
 doc-id: "mb-b677b7b4"
-updated: "2026-11-12"
+updated: "2026-11-14"
 ---
 # GBrain — Configuration
 
@@ -207,7 +207,7 @@ environment's operational path; the custom script is.
 | Item | Verified state |
 |---|---|
 | Autopilot | Off by decision — no GBrain schedule exists in crontab or anywhere else |
-| Dream cycle cadence | Runs by hand weekly, after the Sunday backup, through the memory diagnostic (`mb-memory-system-diagnostic`); see [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-config\|Dream Cycle Configuration]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-config.md) |
+| Dream cycle cadence | Runs by hand weekly, after the weekly backup, through the memory diagnostic (`mb-memory-system-diagnostic`); see [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-config\|Dream Cycle Configuration]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-config.md) |
 | Sync | Manual: `bash /mnt/c/mybizz/scripts/sync-gbrain.sh`, or as part of `commit-all.sh` (about two minutes, longer after many changes; log in `C:\mybizz\logs\gbrain-logs\sync-<timestamp>.log`) |
 | GBrain job queue | No GBrain worker runs. The `facts-absorb` and `extract` jobs created by syncs wait and expire — see Job expiry above |
 

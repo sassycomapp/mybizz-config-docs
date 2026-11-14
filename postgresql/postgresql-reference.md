@@ -1,7 +1,7 @@
 ---
 title: "postgresql-reference"
 doc-id: "mb-5bad908d"
-updated: "2026-10-20"
+updated: "2026-11-14"
 ---
 # PostgreSQL — Reference
 
@@ -285,8 +285,8 @@ on. Direct `psql` access is appropriate specifically when:
 | WSL census | `wsl.exe -l -v` — one installation, `Ubuntu`, the default | agent |
 | Windows service and registry census | `Get-Service -Name "*postgresql*"`, and `reg query HKLM\SOFTWARE\PostgreSQL /s` via `powershell.exe -NoProfile -Command "..."` — one product key | agent |
 | Port listeners | `ss -tlnp` (WSL side); `netstat -ano` filtered to the 543x range (Windows side) | agent |
-| Backups fresh and paired | List both backup locations for the two most recent cycles; `cmp` each pair; read the latest log in `C:\mybizz\logs\sunday-backup\` | agent |
-| `SundayBackup` task | `schtasks /query /tn SundayBackup /v /fo list` via `powershell.exe` — Status Ready, last result 0 | agent |
+| Backups fresh and paired | List both backup locations for the two most recent cycles; `cmp` each pair; read the latest log in `C:\mybizz\logs\weekly-backup\` | agent |
+| `MorningTasks` task | `schtasks /query /tn MorningTasks /v /fo list` via `powershell.exe` — Status Ready; the last `weekly-backup` line in `C:\mybizz\logs\morning-tasks\morning-tasks.log` reads OK | agent |
 | `pgpass.conf` present (Windows) | `Test-Path "$env:APPDATA\postgresql\pgpass.conf"` via `powershell.exe` | agent |
 | Instance A superuser rows (`pg_hba_file_rules`, `SHOW data_directory`) | Superuser connection over the bridge with `PGADMIN_PASSWORD` | developer |
 | PDLF `.env` integrity | Read `C:\pdlf\.env` directly: variable names, quoted Windows paths, `PGPORT=5433` | developer |

@@ -1,7 +1,7 @@
 ---
 title: "gbrain-dream-cycle-config"
 doc-id: "mb-c6df61ed"
-updated: "2026-10-20"
+updated: "2026-11-14"
 ---
 # GBrain Dream Cycle — Configuration
 
@@ -33,7 +33,7 @@ confirmed full phase sequence.
 |---|---|---|---|---|
 | Parent system | — | GBrain (parent suite: [[[mybizz-config-docs:gbrain/gbrain-config\|Configuration]]](C:/mybizz/mybizz-config-docs/gbrain/gbrain-config.md)) | https://github.com/garrytan/gbrain/tree/v0.59.18.0 | |
 | Schema pack coupling | — | `gbrain-everything@1.0.0` (sha8 `7021205a`) — the only installed pack; dream phases operate within its extractability rules | MCP `get_active_schema_pack`; `list_schema_packs` | |
-| Invocation model | Nightly autonomous schedule (upstream autopilot design) | Manual: run by hand weekly, after the Sunday backup, through `/mb-memory-system-diagnostic`. Autopilot is off by decision; no schedule exists or is wanted | https://github.com/garrytan/gbrain/tree/v0.59.18.0 | L2 |
+| Invocation model | Nightly autonomous schedule (upstream autopilot design) | Manual: run by hand weekly, after the weekly backup, through `/mb-memory-system-diagnostic`. Autopilot is off by decision; no schedule exists or is wanted | https://github.com/garrytan/gbrain/tree/v0.59.18.0 | L2 |
 | Trigger surfaces | `gbrain dream` | `gbrain dream` (full), `gbrain dream --phase <name>` (single phase), `gbrain dream --source <id>` (source-scoped); `/sync-gbrain --dream` exists but is not used in this environment — the cycle runs from `/mb-memory-system-diagnostic` (overlap trap: [[[mybizz-config-docs:gbrain-dream-cycle/gbrain-dream-cycle-reference\|Reference]]](C:/mybizz/mybizz-config-docs/gbrain-dream-cycle/gbrain-dream-cycle-reference.md)) | `gbrain dream --help` (0.59.18.0) | |
 | Dream config keys | `dream.*` surface exists (triage cascade, synthesis turn cap, per-phase gates) | None set; upstream defaults apply | `gbrain config get dream` | |
 | `purge` retention | Pages soft-deleted more than 72 hours earlier are hard-deleted | Same (issuer default in force) | https://github.com/garrytan/gbrain/tree/v0.59.18.0 | |
